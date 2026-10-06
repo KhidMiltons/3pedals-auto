@@ -621,7 +621,7 @@ async function loadSession(){
 }
 function refreshAccountUI(){
   $("accountText").textContent=me?`Signed in as ${(profile&&profile.name)||me.email}`:"Not signed in";
-  $("accountOpen").textContent=me?"My account":"Create account / Login";
+  $("accountOpen").textContent="";
   $("adminWrap").hidden=!(profile&&profile.is_admin);
 }
 function openAuth(mode="register",msg=""){
