@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<base target="_top">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>3 Pedals Auto KE – Cars for sale</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f5ef;--surface:#fff;--ink:#0d0d0d;--mute:#5e5848;--line:#e3dcc8;--blue:#946c00;--gold:#d4a017;--gold-ink:#0d0d0d;--alt:#0d0d0d;--alt-ink:#e3b341;--err:#b42318;--ok:#2b7a3d;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d0d0d;--surface:#1a1a1a;--ink:#f5f1e6;--mute:#a8a08a;--line:#333026;--blue:#e3b341;--gold:#e3b341;--gold-ink:#0d0d0d;--alt:#f5f1e6;--alt-ink:#0d0d0d;--err:#ff8a7a;--ok:#69db7c}}
+:root[data-theme="dark"]{--bg:#0d0d0d;--surface:#1a1a1a;--ink:#f5f1e6;--mute:#a8a08a;--line:#333026;--blue:#e3b341;--gold:#e3b341;--gold-ink:#0d0d0d;--alt:#f5f1e6;--alt-ink:#0d0d0d;--err:#ff8a7a;--ok:#69db7c}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Barlow,system-ui,sans-serif}
+h1,h2,h3{font-family:"Barlow Condensed","Arial Narrow",sans-serif;line-height:1.05;margin:0;letter-spacing:.01em}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 18px}
+header{background:#0d0d0d;color:#fff;border-bottom:3px solid #d4a017}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:14px;padding-bottom:14px}
+.logo{font:700 28px "Barlow Condensed",sans-serif;color:#e3b341;letter-spacing:.03em;text-transform:uppercase}
+nav{display:flex;gap:4px}
+nav button{background:none;border:0;color:inherit;padding:8px 14px;border-radius:6px;cursor:pointer;font-weight:600;opacity:.8}
+nav button[aria-selected="true"]{background:#d4a017;color:#0d0d0d;opacity:1}
+.hero{padding:34px 0 22px}
+.hero h1{font-size:clamp(38px,7vw,68px);max-width:12em}
+.hero h1::after{content:"";display:block;width:64px;height:5px;background:var(--gold);margin-top:12px}
+.hero p{color:var(--mute);max-width:34em;margin:10px 0 0}
+.filters{display:grid;grid-template-columns:2fr repeat(3,1fr);gap:10px;margin:18px 0 8px}
+@media(max-width:700px){.filters{grid-template-columns:1fr 1fr}.filters input{grid-column:1/-1}}
+input,select,textarea{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 12px}
+label{display:block;font-weight:600;font-size:14px;margin:12px 0 4px}
+.count{color:var(--mute);margin:8px 0 14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;padding-bottom:40px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;text-align:left;cursor:pointer;padding:0}
+.card:hover{border-color:var(--blue)}
+.swatch{height:96px;display:flex;align-items:flex-end;padding:10px 12px;font:700 40px "Barlow Condensed",sans-serif;color:rgba(255,255,255,.92)}
+.card .body{padding:12px 14px 14px}
+.card h3{font-size:22px}
+.price{font:700 24px "Barlow Condensed",sans-serif;color:var(--blue);margin-top:6px}
+.meta{color:var(--mute);font-size:14px}
+.tag{display:inline-block;font-size:12px;font-weight:600;border:1px solid var(--line);border-radius:99px;padding:1px 9px;margin:6px 4px 0 0}
+.btn{background:var(--gold);color:var(--gold-ink);border:0;border-radius:6px;padding:11px 18px;font-weight:600;cursor:pointer}
+.btn.alt{background:var(--alt);color:var(--alt-ink)}
+.btn.ghost{background:none;border:1px solid var(--line);color:var(--ink)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:20px;margin-bottom:40px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:600px){.two{grid-template-columns:1fr}}
+.cols{display:grid;grid-template-columns:1.2fr 1fr;gap:20px;padding-bottom:20px}
+@media(max-width:800px){.cols{grid-template-columns:1fr}}
+.svc{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.svc:last-child{border:0}
+.svc b{display:block}
+.garage-hero{border-left:6px solid var(--gold);padding-left:16px}
+.note{padding:12px 14px;border-radius:6px;border:1px solid var(--ok);color:var(--ok);margin-top:14px;font-weight:600}
+dialog{border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);max-width:520px;width:calc(100% - 28px);padding:0}
+dialog::backdrop{background:rgba(0,0,0,.55)}
+dialog .swatch{height:120px}
+dialog .in{padding:18px}
+.specs{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;margin:12px 0}
+.specs span{color:var(--mute);font-size:14px}
+footer{border-top:1px solid var(--line);padding:22px 0 30px;color:var(--mute);font-size:14px}
+[hidden]{display:none!important}
+@media(prefers-reduced-motion:no-preference){.note{animation:pop .25s ease-out}@keyframes pop{from{transform:translateY(4px);opacity:0}}}
+.btn{display:inline-block;text-decoration:none}
+.btn.wa{background:var(--gold);color:var(--gold-ink)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:6px 0 22px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:18px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:4px}
+.tile:hover{border-color:var(--blue)}
+.tile h3{font-size:26px}
+.contact a{color:var(--blue);font-weight:600}
+.fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));background:#0d0d0d;color:#e3b341;border:2px solid #d4a017;text-decoration:none;font-weight:600;padding:12px 18px;border-radius:99px;box-shadow:0 4px 14px rgba(0,0,0,.3);z-index:5}
+footer{padding-bottom:80px}
+.seg{border:1px solid var(--line);border-radius:6px;padding:8px 14px 12px;display:flex;gap:20px;flex-wrap:wrap;margin:0}
+.seg legend{font-weight:600;font-size:14px;padding:0 6px}
+.seg label{display:flex;gap:8px;align-items:center;margin:0;font-weight:500}
+.seg input{width:auto}
+.prev{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.prev img{width:88px;height:66px;object-fit:cover;border-radius:6px;border:1px solid var(--line)}
+.swatch.has{height:150px;text-shadow:0 1px 5px rgba(0,0,0,.7)}
+.gal .main{width:100%;height:230px;object-fit:cover;display:block}
+.thumbs{display:flex;gap:6px;padding:8px 18px 0;flex-wrap:wrap}
+.thumbs button{padding:0;border:2px solid transparent;border-radius:6px;background:none;cursor:pointer}
+.thumbs button[aria-current="true"]{border-color:var(--gold)}
+.thumbs img{width:60px;height:46px;object-fit:cover;display:block;border-radius:4px}
+.specs a{color:var(--blue);font-weight:600;word-break:break-word}
+.specs b{word-break:break-word}
+nav a.navlink{color:inherit;text-decoration:none;padding:7px 13px;border-radius:6px;font-weight:600;border:1px solid #d4a017;white-space:nowrap}
+a.tile{text-decoration:none;color:inherit}
+.auth-left{position:fixed;left:14px;top:50%;transform:translateY(-50%);z-index:20}.auth-left button{border:1px solid #d4a017;background:#0d0d0d;color:#e3b341;padding:9px 12px;border-radius:6px;font-weight:600;cursor:pointer}.account-pill{display:inline-flex;align-items:center;gap:8px;margin-left:auto;font-size:13px;color:#e3b341}.account-pill button{border:0;background:none;color:#e3b341;cursor:pointer;font-weight:600}.authbox{max-width:520px}.authbox .switch{margin-top:12px;color:var(--mute);font-size:14px}.authbox .switch button{border:0;background:none;color:var(--blue);font-weight:600;cursor:pointer;padding:0}.admin-table{width:100%;border-collapse:collapse;font-size:14px}.admin-table th,.admin-table td{border-bottom:1px solid var(--line);padding:8px;text-align:left}
+
+/* 3 Pedals professional UI refresh */
+:root{
+  --bg:#f3f4f6;--surface:#ffffff;--surface-2:#f8fafc;--ink:#111827;--mute:#64748b;
+  --line:#dbe1e8;--blue:#9a7000;--gold:#d7a928;--gold-ink:#111827;--alt:#111827;--alt-ink:#f8fafc;
+  --shadow-sm:0 2px 8px rgba(15,23,42,.06);--shadow:0 10px 28px rgba(15,23,42,.09);--radius:12px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0b0f14;--surface:#121820;--surface-2:#171f29;--ink:#f3f4f6;--mute:#9aa6b2;--line:#27313d;
+  --blue:#e3b341;--gold:#e3b341;--gold-ink:#111827;--alt:#f3f4f6;--alt-ink:#111827;
+  --shadow-sm:0 2px 8px rgba(0,0,0,.18);--shadow:0 14px 34px rgba(0,0,0,.25);
+}}
+body{background:var(--bg);color:var(--ink);font-size:16px}
+.wrap{max-width:1180px;padding-left:24px;padding-right:24px}
+header{position:sticky;top:0;z-index:30;background:rgba(13,13,13,.97);border-bottom:1px solid #3b3525;box-shadow:0 4px 18px rgba(0,0,0,.16)}
+header .wrap{min-height:76px;display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"brand account nav";align-items:center;gap:20px;padding-top:10px;padding-bottom:10px}
+.logo{grid-area:brand;font-size:30px;letter-spacing:.055em;white-space:nowrap}
+.account-pill{grid-area:account;justify-self:end;margin-left:0;padding:7px 11px 7px 13px;border:1px solid rgba(227,179,65,.35);border-radius:999px;background:rgba(255,255,255,.045)}
+.account-pill button{padding:5px 2px;border-radius:6px}.account-pill button:hover{background:rgba(227,179,65,.1)}
+nav{grid-area:nav;display:flex;align-items:center;gap:5px;padding:4px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08);border-radius:11px}
+nav button,nav a.navlink{min-height:40px;display:inline-flex;align-items:center;justify-content:center;padding:8px 14px;border-radius:8px;border:0;font-size:14px;line-height:1;white-space:nowrap}
+nav button:hover,nav a.navlink:hover{background:rgba(255,255,255,.09);opacity:1}
+nav button[aria-selected="true"]{background:var(--gold);color:#111;box-shadow:0 2px 8px rgba(215,169,40,.22)}
+nav a.navlink{border:0;color:#fff}
+.hero{padding:54px 0 28px}.hero h1{font-size:clamp(42px,6vw,72px);max-width:13em;letter-spacing:-.015em}.hero h1::after{width:72px;height:4px;margin-top:18px;border-radius:99px}.hero p{font-size:17px;line-height:1.65;max-width:46em;margin-top:15px}
+.hero>div[style*="display:flex"]{gap:10px!important;margin-top:24px!important;align-items:center}
+.btn{min-height:44px;padding:11px 18px;border-radius:9px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;box-shadow:var(--shadow-sm);font-size:14px;font-weight:700;letter-spacing:.01em;transition:transform .16s ease,box-shadow .16s ease,background .16s ease,border-color .16s ease}
+.btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(15,23,42,.12)}
+.btn.ghost{background:var(--surface);border-color:var(--line);color:var(--ink)}.btn.ghost:hover{border-color:#b8c2ce;background:var(--surface-2)}
+.btn.alt{background:#111827;color:#fff}.btn.alt:hover{background:#1f2937}.btn.wa{background:var(--gold);color:#111827}
+.tiles{gap:16px;margin:10px 0 28px}.tile{min-height:128px;padding:20px 20px 18px;border-radius:var(--radius);border:1px solid var(--line);box-shadow:var(--shadow-sm);position:relative;transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease;background:var(--surface)}
+.tile:hover{transform:translateY(-2px);border-color:#c4ccd6;box-shadow:var(--shadow)}.tile h3{font-size:28px}.tile:after{content:"↗";position:absolute;right:18px;top:18px;font-size:18px;color:var(--blue);font-weight:700}.tile .meta{margin-top:5px;max-width:26em}
+.panel{padding:24px;border-radius:var(--radius);border-color:var(--line);box-shadow:var(--shadow-sm);margin-bottom:40px}.panel h2{font-size:30px;margin-bottom:8px}
+.contact .svc{padding:15px 0;align-items:center}.svc b{font-size:15px}.contact a{color:var(--blue);text-decoration:none}.contact a:hover{text-decoration:underline}
+input,select,textarea{min-height:44px;padding:10px 13px;border-radius:9px;border-color:var(--line);background:var(--surface);transition:border-color .15s,box-shadow .15s}
+textarea{min-height:92px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(154,112,0,.12);outline:none}
+label{font-size:13px;letter-spacing:.02em;margin:15px 0 6px}.filters{gap:10px;margin:20px 0 12px}.filters input,.filters select{box-shadow:var(--shadow-sm)}
+.card{border-radius:var(--radius);border-color:var(--line);box-shadow:var(--shadow-sm);transition:transform .16s,box-shadow .16s,border-color .16s}.card:hover{border-color:#c1cad5;box-shadow:var(--shadow);transform:translateY(-2px)}
+.card .body{padding:16px 16px 17px}.card h3{font-size:24px}.price{font-size:26px;color:var(--blue)}
+.tag{padding:3px 9px;border-radius:999px;background:var(--surface-2)}
+.garage-hero{border-left:0;border-top:4px solid var(--gold);padding-left:0;padding-top:24px}.garage-hero h1{max-width:14em}
+.cols{gap:24px}.cols .panel{height:100%}.svc{padding:14px 0}
+.fab{right:24px;bottom:24px;padding:12px 17px;border-radius:999px;background:#111827;color:#f3c65d;border:1px solid #d4a017;box-shadow:0 10px 24px rgba(0,0,0,.2);font-size:14px}
+.auth-left{left:18px;top:auto;bottom:24px;transform:none;z-index:40}.auth-left button{min-height:40px;padding:8px 13px;border-radius:9px;background:#111827;color:#f3c65d;border:1px solid rgba(227,179,65,.55);box-shadow:0 8px 20px rgba(0,0,0,.18);font-size:13px;font-weight:700}.auth-left button:hover{background:#1f2937;transform:translateY(-1px)}
+dialog{border-radius:16px;border-color:var(--line);box-shadow:0 24px 70px rgba(0,0,0,.28)}dialog .in{padding:26px}.authbox .in>h2{font-size:32px;margin-bottom:6px}.authbox .in>.btn{margin-top:8px;margin-right:6px}.authbox .switch{padding-top:14px;border-top:1px solid var(--line)}
+.seg{border-radius:10px;border-color:var(--line);padding:10px 14px 12px;background:var(--surface-2)}
+.note{border-radius:10px;padding:14px 16px}.admin-table th,.admin-table td{padding:11px 9px}
+footer{padding:28px 0 36px;border-top:1px solid var(--line)}
+footer .wrap{font-size:13px}
+
+/* Give form action areas a consistent alignment */
+form .btn{margin-top:10px}#sellForm>.btn,#bBtn{min-width:160px}
+
+@media(max-width:900px){
+  header .wrap{grid-template-columns:1fr auto;grid-template-areas:"brand account" "nav nav";gap:9px 12px;padding-top:10px;padding-bottom:10px}
+  nav{justify-content:flex-start;overflow-x:auto;scrollbar-width:none}nav::-webkit-scrollbar{display:none}
+  .account-pill{justify-self:end}
+}
+@media(max-width:600px){
+  .wrap{padding-left:16px;padding-right:16px}.logo{font-size:25px}.account-pill{font-size:12px}
+  nav{width:100%}nav button,nav a.navlink{flex:1;min-width:max-content;padding-left:12px;padding-right:12px}
+  .hero{padding-top:38px}.hero h1{font-size:42px}.hero>div[style*="display:flex"]{align-items:stretch}.hero>div[style*="display:flex"] .btn{flex:1}
+  .tiles{grid-template-columns:1fr 1fr}.tile{min-height:120px;padding:17px}.tile h3{font-size:24px}.tile:after{right:14px;top:14px}
+  .panel{padding:18px}.fab{right:16px;bottom:16px}.auth-left{left:16px;bottom:16px}.auth-left button{padding:8px 11px}
+}
+@media(max-width:430px){.tiles{grid-template-columns:1fr}.hero>div[style*="display:flex"]{flex-direction:column}.hero>div[style*="display:flex"] .btn{width:100%}.account-pill span{display:none}}
+
+.demo{background:#fff4cf;color:#4a3a00;text-align:center;padding:9px 16px;font-size:14px;font-weight:600}
+.acts{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.acts .btn{margin:0;padding:7px 13px;min-height:0}
+dialog.wide{max-width:720px}
+dialog.wide .in{max-height:80vh;overflow:auto}
+.st{font-size:12px;font-weight:600;border:1px solid var(--line);border-radius:99px;padding:1px 9px;white-space:nowrap}
+.eyebrow{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.14em;color:var(--blue);margin-bottom:10px}.project-intro{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:26px 28px;margin:6px 0 34px;background:linear-gradient(135deg,var(--surface),var(--surface-2));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm)}.project-intro h2{font-size:32px;margin-bottom:6px}.project-intro p{margin:0;max-width:680px}.project-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;padding-bottom:50px}.project-card{overflow:hidden;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);transition:transform .18s,box-shadow .18s}.project-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}.project-featured{grid-column:1/-1;display:grid;grid-template-columns:1.25fr 1fr}.project-media{position:relative;min-height:300px;background:#111827;overflow:hidden}.project-media video{width:100%;height:100%;min-height:300px;display:block;object-fit:cover}.project-type{position:absolute;left:16px;top:16px;padding:6px 10px;border-radius:999px;background:#111827;color:#fff;font-size:11px;font-weight:800;letter-spacing:.1em}.project-body{padding:24px}.project-kicker{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);font-weight:800}.project-body h2{font-size:30px;margin:8px 0 10px}.project-body p{color:var(--mute);margin:0;line-height:1.65}.project-placeholder{min-height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:linear-gradient(135deg,#111827,#263342);color:#fff;text-align:center}.project-placeholder span{font-size:11px;letter-spacing:.15em;color:#e3b341;font-weight:800}.project-placeholder strong{font:700 34px "Barlow Condensed",sans-serif}.contact-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;padding-bottom:60px}.contact-card{min-height:145px;padding:22px;text-decoration:none;color:inherit;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);display:flex;flex-direction:column;justify-content:center;gap:5px;transition:.18s}.contact-card:hover{transform:translateY(-2px);border-color:#c4ccd6;box-shadow:var(--shadow)}.contact-card span{font-size:11px;letter-spacing:.13em;font-weight:800;color:var(--blue)}.contact-card strong{font:700 27px "Barlow Condensed",sans-serif}.contact-card small{color:var(--mute)}@media(max-width:760px){.project-intro{align-items:flex-start;flex-direction:column}.project-grid{grid-template-columns:1fr}.project-featured{grid-column:auto;display:block}.contact-grid{grid-template-columns:1fr}}@media(max-width:600px){.project-intro{padding:20px}.project-intro h2{font-size:28px}.project-body{padding:20px}.project-media,.project-media video{min-height:220px}.contact-card strong{font-size:24px}}
+/* Admin-managed projects */
+.project-admin-grid{display:grid;grid-template-columns:minmax(280px,360px) 1fr;gap:18px;align-items:start}
+.project-admin-form{position:sticky;top:18px}
+.project-admin-list{display:grid;gap:10px}
+.project-admin-item{border:1px solid var(--line);background:var(--surface-2);border-radius:12px;padding:14px;display:flex;gap:14px;justify-content:space-between;align-items:flex-start}
+.project-admin-item .thumb{width:110px;height:76px;border-radius:9px;overflow:hidden;background:#111;flex:0 0 110px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.project-admin-item .thumb img,.project-admin-item .thumb video{width:100%;height:100%;object-fit:cover}
+.project-admin-item .meta-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:7px}
+.project-admin-item .badge{display:inline-flex;padding:4px 8px;border-radius:99px;background:var(--surface);border:1px solid var(--line);font-size:11px;font-weight:700}
+.project-admin-item .badge.live{border-color:#86efac;background:#f0fdf4;color:#166534}
+.project-admin-item .badge.draft{color:#92400e;background:#fffbeb;border-color:#fde68a}
+.project-admin-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.project-form-note{font-size:12px;color:var(--mute);line-height:1.5;margin-top:7px}
+.project-public-empty{padding:28px;text-align:center;border:1px dashed var(--line);border-radius:12px;background:var(--surface-2)}
+.project-public-empty h3{margin-bottom:6px}
+.project-card .project-image{width:100%;height:100%;object-fit:cover;display:block}
+.project-card .project-article{min-height:230px;padding:24px;display:flex;flex-direction:column;justify-content:flex-end;background:linear-gradient(135deg,var(--surface-2),var(--surface))}
+@media(max-width:900px){.project-admin-grid{grid-template-columns:1fr}.project-admin-form{position:static}}
+@media(max-width:600px){.project-admin-item{flex-direction:column}.project-admin-item .thumb{width:100%;height:170px;flex-basis:auto}.project-admin-item>div:last-child{width:100%}}
+</style>
+</head>
+<body>
+<div class="auth-left" id="adminWrap" hidden><button id="adminOpen">Admin panel</button></div>
+<header><div class="wrap">
+  <div class="logo" style="cursor:pointer" onclick="show('home')">3 Pedals Auto KE</div>
+  <div class="account-pill"><span id="accountText">Not signed in</span><button id="accountOpen">Create account / Login</button></div>
+  <nav role="tablist" aria-label="Sections">
+    <button role="tab" data-tab="home" aria-selected="true">Home</button>
+    <button role="tab" data-tab="buy" aria-selected="false">Buy a car</button>
+    <button role="tab" data-tab="sell" aria-selected="false">Sell your car</button>
+    <button role="tab" data-tab="projects" aria-selected="false">Our projects</button>
+    <button role="tab" data-tab="about" aria-selected="false">About us</button>
+    <button role="tab" data-tab="contact" aria-selected="false">Contact us</button>
+    <a class="navlink" id="gLink" href="garage.html">3 Pedals Garage ↗</a>
+  </nav>
+</div></header>
+<div class="demo" id="demoBar" hidden>Demo mode: these are sample cars. Accounts, listings and bookings switch on once the site is connected to its database (see SETUP.md).</div>
+
+<main class="wrap">
+<section id="home">
+  <div class="hero"><h1>Buy and sell cars with 3 Pedals Auto KE.</h1>
+  <p>Talk to us directly on WhatsApp. We reply to questions about any car, viewings and selling your car.</p>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
+    <a class="btn wa" href="https://wa.me/254791961807?text=Hello%203%20Pedals%20Auto%20KE%2C%20I%27d%20like%20to%20enquire." target="_blank" rel="noopener">Chat on WhatsApp</a>
+    <a class="btn ghost" href="tel:+254791961807">Call +254 791 961 807</a>
+    <a class="btn alt" href="garage.html">Visit 3 Pedals Garage ↗</a>
+  </div></div>
+  <div class="tiles">
+    <button class="tile" data-go="buy"><h3>Buy a car</h3><span class="meta">Browse checked cars for sale</span></button>
+    <button class="tile" data-go="sell"><h3>Sell your car</h3><span class="meta">List it in two minutes</span></button>
+    <a class="tile" id="gTile" href="garage.html"><h3>3 Pedals Garage</h3><span class="meta">Service, repairs and inspections</span></a>
+    <button class="tile" id="accountTile"><h3>My account</h3><span class="meta">Manage your vehicles and bookings</span></button>
+  </div>
+  <div class="project-intro"><div><span class="eyebrow">3 PEDALS AUTO KE</span><h2>Built around cars, people and real work.</h2><p class="meta">Explore our latest vehicle work, inspections, restorations, servicing stories and automotive updates.</p></div><button class="btn alt" data-go="projects">Explore our projects ↗</button></div>
+</section>
+
+<section id="buy" hidden>
+  <div class="hero"><h1>Find a car that's been checked, not just cleaned.</h1>
+  <p>Book any car for a pre-purchase inspection at 3 Pedals Garage before you pay.</p></div>
+  <div class="filters">
+    <input id="q" type="search" placeholder="Search make or model" aria-label="Search make or model">
+    <select id="make" aria-label="Make"></select>
+    <select id="max" aria-label="Maximum price">
+      <option value="0">Any price</option><option value="1000000">Up to 1,000,000</option><option value="2000000">Up to 2,000,000</option><option value="3500000">Up to 3,500,000</option>
+    </select>
+    <select id="sort" aria-label="Sort">
+      <option value="new">Newest first</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option><option value="km">Lowest mileage</option>
+    </select>
+  </div>
+  <div class="count" id="count"></div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<section id="sell" hidden>
+  <div class="hero"><h1>List your car in two minutes.</h1><p>Add photos and your WhatsApp number so buyers can chat with you directly. Car yards add their full business details.</p></div>
+  <div class="panel"><form id="sellForm" onsubmit="return false">
+    <fieldset class="seg"><legend>I am a</legend>
+      <label><input type="radio" name="stype" value="private" checked> Private seller</label>
+      <label><input type="radio" name="stype" value="yard"> Car yard / dealer</label>
+    </fieldset>
+    <div id="privFields"><label for="sName">Your name (optional)</label><input id="sName" autocomplete="name"></div>
+    <div id="yardFields" hidden>
+      <div class="two">
+        <div><label for="yName">Car yard name</label><input id="yName"></div>
+        <div><label for="yContact">Contact person</label><input id="yContact"></div>
+        <div><label for="yLoc">Location / address</label><input id="yLoc" placeholder="Street, area, town"></div>
+        <div><label for="yPhone">Phone number</label><input id="yPhone" type="tel"></div>
+        <div><label for="yEmail">Email (optional)</label><input id="yEmail" type="email"></div>
+        <div><label for="yWeb">Website or social link (optional)</label><input id="yWeb"></div>
+      </div>
+    </div>
+    <div class="two">
+      <div><label for="sMake">Make</label><input id="sMake" placeholder="Toyota"></div>
+      <div><label for="sModel">Model</label><input id="sModel" placeholder="Harrier"></div>
+      <div><label for="sYear">Year</label><input id="sYear" type="number" min="1990" max="2026" placeholder="2018"></div>
+      <div><label for="sPrice">Asking price (KES)</label><input id="sPrice" type="number" min="0" placeholder="2400000"></div>
+      <div><label for="sKm">Mileage (km)</label><input id="sKm" type="number" min="0" placeholder="64000"></div>
+      <div><label for="sFuel">Fuel</label><select id="sFuel"><option>Petrol</option><option>Diesel</option><option>Hybrid</option><option>Electric</option></select></div>
+    </div>
+    <label for="sDesc">Description</label><textarea id="sDesc" rows="3" placeholder="Service history, condition, reason for selling"></textarea>
+    <label for="sPhotos">Car photos (1 to 4)</label><input id="sPhotos" type="file" accept="image/*" multiple>
+    <div id="prev" class="prev" aria-live="polite"></div>
+    <label for="sWa">WhatsApp number</label><input id="sWa" type="tel" placeholder="0712 345 678 or +254712345678">
+    <p class="meta">Buyers tap a button to chat with you on this number.</p>
+    <input id="hp1" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
+    <p id="sErr" class="meta" style="color:var(--err)" role="alert"></p>
+    <button class="btn" id="sBtn">Submit listing</button>
+    <div class="note" id="sOk" hidden></div>
+  </form></div>
+</section>
+
+
+<section id="projects" hidden>
+  <div class="hero"><span class="eyebrow">OUR PROJECTS</span><h1>Real work. Real cars. Real stories.</h1><p>See what the 3 Pedals team has been working on — workshop work, vehicle builds, photography, videos and practical automotive stories.</p></div>
+  <div id="publicProjects" class="project-grid"><div class="project-public-empty"><h3>Loading our latest work…</h3><p class="meta">Published projects will appear here.</p></div></div>
+</section>
+
+<section id="about" hidden><div class="hero"><span class="eyebrow">ABOUT US</span><h1>3 Pedals Auto KE</h1><p>We bring vehicle sales, honest advice and professional garage services together under one automotive brand.</p></div><div class="cols"><div class="panel"><h2>What we do</h2><p>We help clients buy and sell vehicles while giving them access to servicing, repairs and pre-purchase inspections through 3 Pedals Garage.</p><p class="meta">Our focus is straightforward communication, careful vehicle checks and a professional experience from enquiry to ownership.</p></div><div class="panel"><h2>Our approach</h2><div class="svc"><div><b>Transparent</b><span class="meta">Clear information before you decide.</span></div></div><div class="svc"><div><b>Practical</b><span class="meta">Advice based on the actual vehicle and your needs.</span></div></div><div class="svc"><div><b>Connected</b><span class="meta">Sales and garage support in one place.</span></div></div></div></div></section>
+
+<section id="contact" hidden><div class="hero"><span class="eyebrow">CONTACT US</span><h1>Let’s talk about your car.</h1><p>Choose the channel that works best for you. For the fastest response, message us on WhatsApp.</p></div><div class="contact-grid"><a class="contact-card" href="https://wa.me/254791961807" target="_blank" rel="noopener"><span>WHATSAPP</span><strong>+254 791 961 807</strong><small>Fastest way to reach us</small></a><a class="contact-card" href="tel:+254791961807"><span>PHONE</span><strong>+254 791 961 807</strong><small>Mon–Sat, 8am–6pm</small></a><a class="contact-card" href="mailto:miltonangwenyi@gmail.com"><span>EMAIL</span><strong>miltonangwenyi@gmail.com</strong><small>Appointments and enquiries</small></a><div class="contact-card"><span>ADDRESS</span><strong>P.O. Box 462-00516</strong><small>3 Pedals Auto KE</small></div></div></section>
+
+</main>
+
+<footer><div class="wrap">3 Pedals Auto KE · P.O. Box 462-00516 · WhatsApp +254 791 961 807 · miltonangwenyi@gmail.com. Prices in KES.</div></footer>
+
+<a class="fab" href="https://wa.me/254791961807?text=Hello%203%20Pedals%20Auto%20KE" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">WhatsApp us</a>
+
+<dialog id="dlg" aria-label="Car details"></dialog>
+<dialog id="authDlg" class="authbox"><div class="in"><h2 id="authTitle">Create your account</h2><p class="meta">Create an account to list vehicles and book garage appointments.</p><label id="authNameLabel">Full name</label><input id="authName"><label>Email</label><input id="authEmail" type="email"><label>Phone</label><input id="authPhone" type="tel"><label>Password</label><input id="authPassword" type="password"><p id="authErr" class="meta" style="color:var(--err)"></p><button class="btn" id="authSubmit">Create account</button> <button class="btn ghost" id="authClose">Close</button><p class="switch"><span id="authSwitchText">Already have an account?</span> <button id="authSwitch">Log in</button></p></div></dialog>
+<dialog id="adminDlg" class="authbox wide"><div class="in"><h2>Admin panel</h2><div id="adminPanel"></div><div class="acts" style="margin-top:16px"><button class="btn ghost" id="adminClose">Close</button></div></div></dialog>
+<dialog id="accDlg" class="authbox wide"><div class="in"><h2>My account</h2><div id="accBody"></div></div></dialog>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script>
+const fmt=n=>Number(n).toLocaleString("en-US");
+// Database connection. Fill in config.js (see SETUP.md). Without it the site runs in demo mode with sample cars.
+const CFG=window.SB_CONFIG||{};
+const sb=(CFG.url&&!/^PASTE/.test(CFG.url)&&window.supabase)?window.supabase.createClient(CFG.url,CFG.key):null;
+let me=null,profile=null;
+const colors=["#111111","#8a6508","#2a2a2a","#a67c00","#1c1c1c","#6b5206","#3b3b3b","#7d5a00"];
+const HOUSE={type:"yard",name:"3 Pedals Auto KE",contact:"",location:"P.O. Box 462-00516",phone:"+254791961807",email:"miltonangwenyi@gmail.com",web:"",whatsapp:"254791961807"};
+let cars=[
+ {make:"Toyota",model:"Harrier",year:2018,price:3200000,km:48000,fuel:"Petrol",desc:"One owner, full dealer service history, sunroof."},
+ {make:"Mazda",model:"CX-5",year:2017,price:2650000,km:71000,fuel:"Diesel",desc:"Clean interior, new tyres, no accident history."},
+ {make:"Subaru",model:"Forester",year:2016,price:1950000,km:92000,fuel:"Petrol",desc:"AWD, recently serviced, minor paint touch-ups."},
+ {make:"Honda",model:"Fit",year:2015,price:850000,km:104000,fuel:"Petrol",desc:"Economical city car, reliable and easy to park."},
+ {make:"Nissan",model:"X-Trail",year:2019,price:3450000,km:39000,fuel:"Petrol",desc:"Seven seats, reverse camera, low mileage."},
+ {make:"Toyota",model:"Vitz",year:2014,price:720000,km:118000,fuel:"Petrol",desc:"First-time buyer favourite, cheap to run."},
+ {make:"Mercedes-Benz",model:"C200",year:2016,price:3300000,km:66000,fuel:"Petrol",desc:"Leather seats, service book up to date."},
+ {make:"Toyota",model:"Prius",year:2017,price:1500000,km:83000,fuel:"Hybrid",desc:"Battery health report available on request."}
+].map((c,i)=>({...c,id:String(i),color:colors[i%colors.length],seller:HOUSE,photos:[]}));
+// Where the separate garage site lives. Change this if the garage is on another address.
+const GARAGE_URL="__TPA_GARAGE_URL__".indexOf("__")===0?"garage.html":"__TPA_GARAGE_URL__";
+const $=id=>document.getElementById(id);
+$("gLink").href=GARAGE_URL;$("gTile").href=GARAGE_URL;
+
+// Tabs
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>show(b.dataset.tab));
+function show(t){
+  ["home","buy","sell","projects","about","contact"].forEach(s=>$(s).hidden=s!==t);
+  document.querySelectorAll("nav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===t));
+  scrollTo(0,0);
+}
+try{const h=location.hash.replace("#","");if(["buy","sell","projects","about","contact"].includes(h))show(h)}catch(_){}
+
+let authMode="register";
+async function loadSession(){
+  if(!sb)return;
+  const {data:{session}}=await sb.auth.getSession();
+  me=session?session.user:null;profile=null;
+  if(me){const {data}=await sb.from("profiles").select("*").eq("id",me.id).maybeSingle();profile=data}
+  refreshAccountUI();
+}
+function refreshAccountUI(){
+  $("accountText").textContent=me?`Signed in as ${(profile&&profile.name)||me.email}`:"Not signed in";
+  $("accountOpen").textContent=me?"My account":"Create account / Login";
+  $("adminWrap").hidden=!(profile&&profile.is_admin);
+}
+function openAuth(mode="register",msg=""){
+  if(!sb){alert("Accounts are not switched on yet. Please contact us on WhatsApp.");return}
+  authMode=mode;const login=mode==="login";
+  $("authTitle").textContent=login?"Log in":"Create your account";
+  $("authSubmit").textContent=login?"Log in":"Create account";
+  $("authNameLabel").hidden=login;$("authName").hidden=login;
+  $("authSwitchText").textContent=login?"Need an account?":"Already have an account?";
+  $("authSwitch").textContent=login?"Create one":"Log in";
+  $("authErr").textContent=msg;$("authDlg").showModal();
+}
+$("accountOpen").onclick=()=>me?openAccount():openAuth("login");
+$("accountTile").onclick=()=>me?openAccount():openAuth("register");
+$("authClose").onclick=()=>$("authDlg").close();
+$("authSwitch").onclick=()=>openAuth(authMode==="login"?"register":"login");
+$("authSubmit").onclick=async()=>{
+  const email=$("authEmail").value.trim().toLowerCase(),pass=$("authPassword").value,name=$("authName").value.trim(),phone=$("authPhone").value.trim(),err=$("authErr"),b=$("authSubmit");
+  if(!email||!pass){err.textContent="Email and password are required.";return}
+  if(authMode==="register"){
+    if(!name){err.textContent="Enter your name.";return}
+    if(pass.length<8){err.textContent="Use a password of at least 8 characters.";return}
+  }
+  b.disabled=true;err.textContent="";
+  const res=authMode==="register"?await sb.auth.signUp({email,password:pass,options:{data:{name,phone}}}):await sb.auth.signInWithPassword({email,password:pass});
+  b.disabled=false;
+  if(res.error){err.textContent=res.error.message;return}
+  if(authMode==="register"&&!res.data.session){err.textContent="Account created. Check your email for a confirmation link, then log in.";return}
+  $("authPassword").value="";$("authDlg").close();
+};
+async function openAccount(){
+  const d=$("accDlg"),box=$("accBody");
+  if(!d.open)d.showModal();
+  box.innerHTML='<p class="meta">Loading…</p>';
+  const [l,b]=await Promise.all([
+    sb.from("listings").select("*").eq("owner",me.id).order("created_at",{ascending:false}),
+    sb.from("bookings").select("*").eq("user_id",me.id).order("created_at",{ascending:false})]);
+  const L=l.data||[],B=b.data||[],label={pending:"Waiting for approval",approved:"Live",rejected:"Not approved"};
+  box.innerHTML=`<p class="meta">${esc(me.email)}</p>
+  <h3>My listings</h3>${L.map(x=>`<div class="svc"><div><b>${esc(x.year+" "+x.make+" "+x.model)}</b><span class="meta">KES ${fmt(x.price)} · <span class="st">${label[x.status]||esc(x.status)}</span></span></div><div class="acts"><button class="btn ghost" data-del="${x.id}">Delete</button></div></div>`).join("")||'<p class="meta">You have no listings yet.</p>'}
+  <h3 style="margin-top:18px">My garage bookings</h3>${B.map(x=>`<div class="svc"><div><b>${esc(x.service)}</b><span class="meta">${esc(x.date)} · ${esc(x.car||"")} · ${esc(x.ref)}</span></div><span class="st">${esc(x.status)}</span></div>`).join("")||'<p class="meta">No bookings yet.</p>'}
+  <div class="acts" style="margin-top:18px">${profile&&profile.is_admin?'<button class="btn" id="accAdmin">Open admin panel</button>':""}<button class="btn ghost" id="accOut">Log out</button><button class="btn ghost" id="accClose">Close</button></div>`;
+  box.querySelectorAll("[data-del]").forEach(bt=>bt.onclick=async()=>{
+    if(!confirm("Delete this listing?"))return;
+    await sb.from("listings").delete().eq("id",bt.dataset.del);openAccount();loadListings();
+  });
+  $("accOut").onclick=async()=>{await sb.auth.signOut();d.close()};
+  $("accClose").onclick=()=>d.close();
+  if($("accAdmin"))$("accAdmin").onclick=()=>{d.close();openAdmin()};
+}
+async function getProjectsAdmin(){
+  const {data,error}=await sb.from("projects").select("*").order("created_at",{ascending:false});
+  if(error){console.error(error);return []}
+  return data||[];
+}
+async function getPublishedProjects(){
+  if(!sb)return [];
+  const {data,error}=await sb.from("projects").select("*").eq("published",true).order("created_at",{ascending:false});
+  if(error){console.error(error);return []}
+  return data||[];
+}
+function projectMedia(p,admin=false){
+  if(!p.media_url)return `<div class="project-placeholder"><span>${esc(p.type||"ARTICLE")}</span><strong>${esc(p.category||"3 Pedals KE")}</strong></div>`;
+  if(p.type==="video")return `<div class="project-media"><video controls playsinline preload="metadata"><source src="${esc(p.media_url)}" type="${esc(p.media_mime||"video/mp4")}">Your browser does not support video playback.</video><span class="project-type">VIDEO</span></div>`;
+  return `<div class="project-media"><img class="project-image" src="${esc(p.media_url)}" alt="${esc(p.title)}" loading="lazy"><span class="project-type">PHOTO</span></div>`;
+}
+function renderPublicProjects(list){
+  const box=$("publicProjects");
+  if(!list.length){box.innerHTML='<div class="project-public-empty"><h3>No published projects yet</h3><p class="meta">Our latest work will appear here once it is published by the 3 Pedals team.</p></div>';return}
+  box.innerHTML=list.map((p,i)=>`<article class="project-card${i===0?" project-featured":""}">${p.type==="article"?`<div class="project-article"><span class="project-type">ARTICLE</span><span class="project-kicker">${esc(p.category||"3 Pedals KE")}</span><h2>${esc(p.title)}</h2></div>`:projectMedia(p)}<div class="project-body"><span class="project-kicker">${esc(p.category||"3 Pedals KE")}</span><h2>${esc(p.title)}</h2><p>${esc(p.description||"")}</p>${p.type==="article"&&p.body?`<details style="margin-top:12px"><summary style="cursor:pointer;font-weight:700">Read article</summary><div class="meta" style="white-space:pre-wrap;margin-top:10px">${esc(p.body)}</div></details>`:""}</div></article>`).join("");
+}
+async function loadProjects(){
+  if(!sb){
+    $("publicProjects").innerHTML='<article class="project-card project-featured"><div class="project-media"><video controls playsinline preload="metadata"><source src="project-video-01.mp4" type="video/mp4">Your browser does not support video playback.</video><span class="project-type">VIDEO</span></div><div class="project-body"><span class="project-kicker">Garage / Behind the scenes</span><h2>Inside the 3 Pedals Garage</h2><p>Connect the site to Supabase to manage this project from the admin panel.</p></div></article>';
+    return;
+  }
+  renderPublicProjects(await getPublishedProjects());
+}
+function projectFormHtml(p={}){
+  return `<div class="panel project-admin-form" style="margin:0"><h3>${p.id?"Edit project":"Add a project"}</h3>
+    <form id="projectForm" onsubmit="return false" data-id="${esc(p.id||"")}">
+      <label for="pTitle">Title</label><input id="pTitle" required maxlength="140" value="${esc(p.title||"")}" placeholder="e.g. Restoring a classic Charger">
+      <label for="pType">Project type</label><select id="pType"><option value="video"${p.type==="video"?" selected":""}>Video</option><option value="photo"${p.type==="photo"?" selected":""}>Photo</option><option value="article"${p.type==="article"?" selected":""}>Article</option></select>
+      <label for="pCategory">Category</label><input id="pCategory" maxlength="80" value="${esc(p.category||"")}" placeholder="Garage / Restoration / Advice">
+      <label for="pDescription">Short description</label><textarea id="pDescription" maxlength="500" rows="3" placeholder="What should visitors know about this project?">${esc(p.description||"")}</textarea>
+      <div id="articleBodyWrap" ${p.type!=="article"?"hidden":""}><label for="pBody">Article content</label><textarea id="pBody" rows="8" placeholder="Write the full story or article here…">${esc(p.body||"")}</textarea></div>
+      <div id="mediaWrap" ${p.type==="article"?"hidden":""}><label for="pMedia">${p.id?"Replace media (optional)":"Media file"}</label><input id="pMedia" type="file" accept="${p.type==="video"?"video/*":"image/*"}" ${p.id?"":"required"}><p class="project-form-note">Video: MP4 is recommended. Photos: JPG, PNG or WebP. Keep uploads reasonably sized for mobile visitors.</p></div>
+      ${p.media_url?`<p class="project-form-note">Current media is already attached. Leave the upload empty to keep it.</p>`:""}
+      <label style="display:flex;gap:8px;align-items:center;margin-top:12px"><input id="pPublished" type="checkbox" style="width:auto" ${p.published!==false?"checked":""}> Publish this project publicly</label>
+      <div class="acts" style="margin-top:14px"><button class="btn" id="projectSave">${p.id?"Save changes":"Create project"}</button>${p.id?'<button class="btn ghost" type="button" id="projectCancel">Cancel</button>':""}</div>
+      <p id="projectFormErr" class="meta" style="color:var(--err);margin-top:8px" role="alert"></p>
+    </form></div>`;
+}
+async function uploadProjectMedia(file){
+  const ext=(file.name.split(".").pop()||"bin").toLowerCase().replace(/[^a-z0-9]/g,"");
+  const path=`${me.id}/${crypto.randomUUID()}.${ext}`;
+  const {error}=await sb.storage.from("projects").upload(path,file,{upsert:false,contentType:file.type||undefined,cacheControl:"3600"});
+  if(error)throw error;
+  const {data}=sb.storage.from("projects").getPublicUrl(path);
+  return {url:data.publicUrl,path,mime:file.type||null};
+}
+async function saveProject(existing=null){
+  const err=$("projectFormErr");err.textContent="";
+  const type=$("pType").value,title=$("pTitle").value.trim(),category=$("pCategory").value.trim(),description=$("pDescription").value.trim(),body=$("pBody")?.value.trim()||"",published=$("pPublished").checked,file=$("pMedia").files[0];
+  if(!title){err.textContent="Please add a project title.";return}
+  if(type!=="article"&&!existing&&!file){err.textContent="Please choose a media file.";return}
+  const btn=$("projectSave");btn.disabled=true;btn.textContent="Saving…";
+  try{
+    let media_url=existing?.media_url||null,media_path=existing?.media_path||null;
+    if(type!=="article"&&file){
+      const uploaded=await uploadProjectMedia(file);media_url=uploaded.url;media_path=uploaded.path;
+      if(existing?.media_path)await sb.storage.from("projects").remove([existing.media_path]);
+    }
+    const payload={title,type,category,description,body:type==="article"?body:null,media_url,media_path,media_mime:type==="article"?null:(file?.type||existing?.media_mime||null),published};
+    let q;
+    if(existing?.id)q=await sb.from("projects").update(payload).eq("id",existing.id);
+    else q=await sb.from("projects").insert({...payload,author_id:me.id});
+    if(q.error)throw q.error;
+    await loadProjects();
+    await openAdmin();
+  }catch(e){console.error(e);err.textContent=e.message||"Could not save the project. Check the Supabase setup and try again.";btn.disabled=false;btn.textContent=existing?"Save changes":"Create project"}
+}
+async function deleteProject(p){
+  if(!confirm(`Delete “${p.title}” permanently?`))return;
+  const {error}=await sb.from("projects").delete().eq("id",p.id);
+  if(error){alert(error.message);return}
+  if(p.media_path)await sb.storage.from("projects").remove([p.media_path]);
+  await loadProjects();await openAdmin();
+}
+function adminProjectsHtml(P){
+  return `<div class="project-admin-grid"><div id="projectEditor">${projectFormHtml()}</div><div><div class="acts" style="justify-content:space-between;margin-bottom:10px"><div><h3 style="margin:0">Portfolio</h3><span class="meta">${P.length} project${P.length===1?"":"s"}</span></div><button class="btn ghost" id="projectNew">+ New project</button></div><div class="project-admin-list">${P.map(p=>`<div class="project-admin-item"><div class="thumb">${p.type==="video"&&p.media_url?`<video muted preload="metadata"><source src="${esc(p.media_url)}"></video>`:p.type==="photo"&&p.media_url?`<img src="${esc(p.media_url)}" alt="">`:`<span>${esc(p.type||"article")}</span>`}</div><div style="flex:1;min-width:0"><b>${esc(p.title)}</b><div class="meta-row"><span class="badge">${esc(p.type)}</span><span class="badge ${p.published?"live":"draft"}">${p.published?"Published":"Draft"}</span>${p.category?`<span class="badge">${esc(p.category)}</span>`:""}</div><p class="meta" style="margin-top:7px">${esc(p.description||"")}</p><div class="project-admin-actions"><button class="btn ghost" data-project-edit="${esc(p.id)}">Edit</button><button class="btn ghost" data-project-delete="${esc(p.id)}">Delete</button></div></div></div>`).join("")||'<p class="meta">No projects yet. Add your first video, photo or article.</p>'}</div></div></div>`;
+}
+async function openAdmin(){
+  if(!sb||!profile||!profile.is_admin)return;
+  if(!$("adminDlg").open)$("adminDlg").showModal();
+  $("adminPanel").innerHTML='<p class="meta">Loading dashboard…</p>';
+  const [l,b,p,pr]=await Promise.all([
+    sb.from("listings").select("*").order("created_at",{ascending:false}),
+    sb.from("bookings").select("*").order("created_at",{ascending:false}),
+    sb.from("profiles").select("*"),
+    sb.from("projects").select("*").order("created_at",{ascending:false})
+  ]);
+  const L=l.data||[],B=b.data||[],P=p.data||[],PR=pr.data||[];
+  if(pr.error){console.error(pr.error);$("adminPanel").innerHTML='<p class="meta" style="color:var(--err)">The Projects table is not set up yet. Run the supplied Supabase project setup SQL, then reopen the admin panel.</p>';return}
+  $("adminPanel").innerHTML=`<p class="meta">${P.length} users · ${L.length} listings · ${B.length} bookings · ${PR.length} projects</p>
+  <div class="panel" style="margin:16px 0"><h3>Our Projects</h3><p class="meta">Create portfolio entries, upload media, save articles, and control what is visible publicly.</p>${adminProjectsHtml(PR)}</div>
+  <h3>Listings</h3>${L.map(x=>`<div class="svc"><div><b>${esc(x.year+" "+x.make+" "+x.model)}</b><span class="meta">KES ${fmt(x.price)} · ${esc(x.seller_name||"")} · +${esc(x.whatsapp||"")} · <span class="st">${esc(x.status)}</span></span></div><div class="acts">${x.status!=="approved"?`<button class="btn" data-a="approve" data-id="${x.id}">Approve</button>`:""}${x.status!=="rejected"?`<button class="btn ghost" data-a="reject" data-id="${x.id}">Reject</button>`:""}<button class="btn ghost" data-a="del" data-id="${x.id}">Delete</button></div></div>`).join("")||'<p class="meta">No listings yet.</p>'}
+  <h3 style="margin-top:18px">Garage bookings</h3>${B.map(x=>`<div class="svc"><div><b>${esc(x.service)}</b><span class="meta">${esc(x.date)} · ${esc(x.name)} · ${esc(x.phone)} · ${esc(x.car||"")} · ${esc(x.ref)}</span></div><select data-bk="${x.id}" aria-label="Booking status">${["new","confirmed","done","cancelled"].map(s=>`<option${s===x.status?" selected":""}>${s}</option>`).join("")}</select></div>`).join("")||'<p class="meta">No bookings yet.</p>'}
+  <h3 style="margin-top:18px">Users</h3>${P.map(u=>`<p class="meta">${esc(u.name||"")} · ${esc(u.email||"")} · ${esc(u.phone||"")}${u.is_admin?" · admin":""}</p>`).join("")}`;
+  bindProjectAdmin(PR);
+}
+function bindProjectAdmin(PR){
+  $("projectNew")?.addEventListener("click",()=>{$("projectEditor").innerHTML=projectFormHtml();bindProjectForm(null);});
+  $("projectForm")&&bindProjectForm(null);
+  $("adminPanel").querySelectorAll("[data-project-edit]").forEach(b=>b.onclick=()=>{const p=PR.find(x=>String(x.id)===b.dataset.projectEdit);if(p){$("projectEditor").innerHTML=projectFormHtml(p);bindProjectForm(p);scrollTo(0,$("projectEditor").getBoundingClientRect().top+scrollY-80)}});
+  $("adminPanel").querySelectorAll("[data-project-delete]").forEach(b=>b.onclick=()=>{const p=PR.find(x=>String(x.id)===b.dataset.projectDelete);if(p)deleteProject(p)});
+}
+function bindProjectForm(existing){
+  $("pType")?.addEventListener("change",()=>{const a=$("pType").value==="article";$("articleBodyWrap").hidden=!a;$("mediaWrap").hidden=a;$("pMedia").required=!a&&!existing;});
+  $("projectForm")?.addEventListener("submit",()=>saveProject(existing));
+  $("projectCancel")?.addEventListener("click",()=>openAdmin());
+}
+$("adminOpen").onclick=openAdmin;$('adminClose').onclick=()=>$("adminDlg").close();
+$("adminPanel").onclick=async e=>{
+  const b=e.target.closest("[data-a]");if(!b)return;
+  const id=b.dataset.id,a=b.dataset.a;
+  if(a==="del"){if(!confirm("Delete this listing permanently?"))return;await sb.from("listings").delete().eq("id",id)}
+  else await sb.from("listings").update({status:a==="approve"?"approved":"rejected"}).eq("id",id);
+  openAdmin();loadListings();
+};
+$("adminPanel").onchange=async e=>{const s=e.target.closest("[data-bk]");if(s)await sb.from("bookings").update({status:s.value}).eq("id",s.dataset.bk)};
+
+const rowToCar=(r,i)=>({id:r.id,make:r.make,model:r.model,year:r.year,price:r.price,km:r.km||0,fuel:r.fuel||"",desc:r.description||"",photos:r.photos||[],color:colors[i%colors.length],
+  seller:{type:r.seller_type,name:r.seller_name,contact:r.contact,location:r.location,phone:r.phone,email:r.email,web:r.web,whatsapp:r.whatsapp}});
+async function loadListings(){
+  if(!sb)return;
+  const {data,error}=await sb.from("listings").select("*").eq("status","approved").order("created_at",{ascending:false});
+  if(error){$("grid").innerHTML='<p class="meta">We could not load the cars right now. Please refresh in a moment.</p>';return}
+  cars=data.map(rowToCar);makes();render();
+}
+// Listings
+function makes(){
+  const m=[...new Set(cars.map(c=>c.make))].sort(), cur=$("make").value;
+  $("make").innerHTML='<option value="">All makes</option>'+m.map(x=>`<option>${x}</option>`).join("");
+  $("make").value=cur;
+}
+const hasPh=c=>c.photos&&c.photos[0]?" has":"";
+const bgOf=c=>c.photos&&c.photos[0]?`${c.color} url('${c.photos[0]}') center/cover`:c.color;
+function render(){
+  const q=$("q").value.trim().toLowerCase(),mk=$("make").value,mx=+$("max").value,s=$("sort").value;
+  let r=cars.filter(c=>(!q||(c.make+" "+c.model).toLowerCase().includes(q))&&(!mk||c.make===mk)&&(!mx||c.price<=mx));
+  r.sort((a,b)=>s==="low"?a.price-b.price:s==="high"?b.price-a.price:s==="km"?a.km-b.km:b.year-a.year);
+  $("count").textContent=r.length+(r.length===1?" car":" cars")+" found";
+  $("grid").innerHTML=r.length?r.map(c=>`<button class="card" data-id="${c.id}">
+    <div class="swatch${hasPh(c)}" style="background:${bgOf(c)}">${c.year}</div>
+    <div class="body"><h3>${esc(c.make)} ${esc(c.model)}</h3>
+    <div class="price">KES ${fmt(c.price)}</div>
+    <span class="tag">${fmt(c.km)} km</span><span class="tag">${esc(c.fuel)}</span><span class="tag">${c.seller&&c.seller.type==="yard"?"Car yard":"Private"}</span></div></button>`).join("")
+    :'<p class="meta">No cars match these filters. Clear the search or raise the price limit.</p>';
+}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+["q","make","max","sort"].forEach(i=>$(i).addEventListener("input",render));
+$("grid").onclick=e=>{const b=e.target.closest(".card");if(b)detail(b.dataset.id)};
+
+function detail(id){
+  const c=cars.find(x=>x.id===id),d=$("dlg"),s=c.seller||{},ph=c.photos||[];
+  const tel=x=>`<a href="tel:${esc(String(x).replace(/[^\d+]/g,""))}">${esc(x)}</a>`;
+  const rows=[["Mileage",esc(fmt(c.km))+" km"],["Fuel",esc(c.fuel)]];
+  if(s.type==="yard"){
+    rows.push(["Car yard",esc(s.name)]);
+    if(s.contact)rows.push(["Contact",esc(s.contact)]);
+    if(s.location)rows.push(["Location",esc(s.location)]);
+    if(s.phone)rows.push(["Phone",tel(s.phone)]);
+    if(s.email)rows.push(["Email",`<a href="mailto:${esc(s.email)}">${esc(s.email)}</a>`]);
+    if(s.web){const u=/^https?:\/\//i.test(s.web)?s.web:"https://"+s.web;rows.push(["Website",`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(s.web)}</a>`])}
+  }else rows.push(["Seller","Private seller"+(s.name?", "+esc(s.name):"")]);
+  const msg=`Hello, I'm interested in the ${c.year} ${c.make} ${c.model} (KES ${fmt(c.price)}) listed on 3 Pedals Auto KE.`;
+  const wa=s.whatsapp?`<a class="btn wa" href="https://wa.me/${esc(s.whatsapp)}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">Chat on WhatsApp</a>`:"";
+  const gal=ph.length?`<div class="gal"><img class="main" id="mainImg" src="${ph[0]}" alt="${esc(c.make+" "+c.model)} photo 1">${ph.length>1?`<div class="thumbs">${ph.map((p,i)=>`<button data-i="${i}" aria-label="Photo ${i+1}" aria-current="${i===0}"><img src="${p}" alt=""></button>`).join("")}</div>`:""}</div>`
+    :`<div class="swatch" style="background:${c.color}">${c.year}</div>`;
+  d.innerHTML=`${gal}<div class="in">
+  <h2>${esc(c.make)} ${esc(c.model)} <span class="meta">${c.year}</span></h2><div class="price">KES ${fmt(c.price)}</div>
+  <div class="specs">${rows.map(r=>`<span>${r[0]}</span><b>${r[1]}</b>`).join("")}</div>
+  <p>${esc(c.desc||"")}</p>
+  <p class="meta">Stay safe: view the car in person, check the logbook, and never pay before you have inspected it.</p>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">${wa}<button class="btn alt" id="insp">Book inspection at the garage</button><button class="btn ghost" id="cls">Close</button></div></div>`;
+  d.showModal();
+  d.querySelectorAll(".thumbs button").forEach(t=>t.onclick=()=>{
+    $("mainImg").src=ph[+t.dataset.i];
+    d.querySelectorAll(".thumbs button").forEach(x=>x.setAttribute("aria-current",x===t));
+  });
+  $("cls").onclick=()=>d.close();
+  $("insp").onclick=()=>{const q="service="+encodeURIComponent("Pre-purchase inspection")+"&car="+encodeURIComponent(`${c.year} ${c.make} ${c.model}`);(window.top||window).location.href=GARAGE_URL+(GARAGE_URL.includes("?")?"&":"?")+q};
+}
+$("dlg").addEventListener("click",e=>{if(e.target===$("dlg"))$("dlg").close()});
+
+// Email delivery: the WordPress plugin fills in the endpoint. Standalone, it stays empty and the mailto fallback is used.
+const ENDPOINT="__TPA_ENDPOINT__".indexOf("__")===0?"":"__TPA_ENDPOINT__";
+async function sendForm(type,data,hp){
+  if(!ENDPOINT)return false;
+  try{const r=await fetch(ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({type,data,website:hp||""})});return r.ok}catch(e){return false}
+}
+// Sell
+let photos=[];
+const modeYard=()=>document.querySelector('input[name="stype"]:checked').value==="yard";
+function sellMode(){$("yardFields").hidden=!modeYard();$("privFields").hidden=modeYard()}
+document.querySelectorAll('input[name="stype"]').forEach(r=>r.onchange=sellMode);
+function normWa(raw){
+  let d=String(raw).replace(/\D/g,"");if(d.startsWith("00"))d=d.slice(2);
+  if(/^0[17]\d{8}$/.test(d))return"254"+d.slice(1);
+  if(/^[17]\d{8}$/.test(d))return"254"+d;
+  if(/^254[17]\d{8}$/.test(d))return d;
+  if(String(raw).trim().startsWith("+")&&d.length>=10&&d.length<=15)return d;
+  return"";
+}
+function shrink(f){return new Promise((res,rej)=>{
+  const u=URL.createObjectURL(f),i=new Image();
+  i.onload=()=>{const m=900,k=Math.min(1,m/Math.max(i.width,i.height)),c=document.createElement("canvas");
+    c.width=Math.round(i.width*k);c.height=Math.round(i.height*k);c.getContext("2d").drawImage(i,0,0,c.width,c.height);
+    URL.revokeObjectURL(u);res(c.toDataURL("image/jpeg",.78))};
+  i.onerror=()=>{URL.revokeObjectURL(u);rej()};i.src=u})}
+$("sPhotos").onchange=async e=>{
+  const err=$("sErr"),all=[...e.target.files];err.textContent="";photos=[];$("prev").innerHTML="";
+  if(all.length>4)err.textContent="Only the first 4 photos are used.";
+  for(const f of all.slice(0,4)){
+    if(!f.type.startsWith("image/")||f.size>15*1024*1024){err.textContent="A file was skipped because it isn't an image or is over 15 MB.";continue}
+    try{const x=await shrink(f);photos.push(x);const im=new Image();im.src=x;im.alt="Selected photo "+photos.length;$("prev").appendChild(im)}
+    catch(_){err.textContent="One photo couldn't be read. Try a JPG or PNG."}
+  }
+};
+$("sBtn").onclick=async()=>{
+  const v=i=>$(i).value.trim(),err=$("sErr"),yard=modeYard(),ok=$("sOk"),btn=$("sBtn");
+  ok.hidden=true;
+  if(!sb){err.textContent="Online listing is not switched on yet. Please WhatsApp us your car details.";return}
+  if(!me){openAuth("login","Please sign in or create an account before listing a vehicle.");return}
+  if(!v("sMake")||!v("sModel")||!v("sYear")||!v("sPrice")){err.textContent="Add make, model, year and asking price to submit.";return}
+  if(!photos.length){err.textContent="Add at least one photo of the car.";return}
+  const wa=normWa($("sWa").value);
+  if(!wa){err.textContent="Enter a valid WhatsApp number, for example 0712 345 678.";return}
+  if(yard&&(!v("yName")||!v("yLoc")||!v("yPhone"))){err.textContent="Car yards need a yard name, location and phone number.";return}
+  btn.disabled=true;btn.textContent="Uploading photos…";err.textContent="";
+  try{
+    const urls=[];
+    for(let i=0;i<photos.length;i++){
+      const blob=await (await fetch(photos[i])).blob();
+      const path=`${me.id}/${Date.now()}-${i}.jpg`;
+      const up=await sb.storage.from("car-photos").upload(path,blob,{contentType:"image/jpeg"});
+      if(up.error)throw up.error;
+      urls.push(sb.storage.from("car-photos").getPublicUrl(path).data.publicUrl);
+    }
+    const row={owner:me.id,make:v("sMake"),model:v("sModel"),year:+v("sYear"),price:+v("sPrice"),km:+v("sKm")||0,fuel:$("sFuel").value,description:v("sDesc"),photos:urls,
+      seller_type:yard?"yard":"private",seller_name:yard?v("yName"):(v("sName")||(profile&&profile.name)||""),contact:yard?v("yContact"):"",location:yard?v("yLoc"):"",
+      phone:yard?v("yPhone"):((profile&&profile.phone)||""),email:yard?v("yEmail"):"",web:yard?v("yWeb"):"",whatsapp:wa};
+    const ins=await sb.from("listings").insert(row);
+    if(ins.error)throw ins.error;
+    $("sellForm").reset();photos=[];$("prev").innerHTML="";sellMode();
+    ok.textContent="Thank you! Your listing was received. We review every listing before it goes live, and you can follow its status under My account.";ok.hidden=false;
+  }catch(e){err.textContent="We couldn't submit that listing: "+(e.message||"please try again.")}
+  btn.disabled=false;btn.textContent="Submit listing";
+};
+
+document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>show(b.dataset.go));
+if(!sb){$("demoBar").hidden=false;makes();render()}
+else{cars=[];$("grid").innerHTML='<p class="meta">Loading cars…</p>';sb.auth.onAuthStateChange(()=>setTimeout(loadSession,0));loadListings();loadSession()}
+// Lets the garage site send visitors here to log in or create an account
+if(location.hash==="#login")openAuth("login");if(location.hash==="#register")openAuth("register");
+loadProjects();
+</script>
+</body>
+</html>

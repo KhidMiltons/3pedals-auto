@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<base target="_top">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>3 Pedals Garage – Servicing and repairs</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f5ef;--surface:#fff;--ink:#0d0d0d;--mute:#5e5848;--line:#e3dcc8;--blue:#946c00;--gold:#d4a017;--gold-ink:#0d0d0d;--alt:#0d0d0d;--alt-ink:#e3b341;--err:#b42318;--ok:#2b7a3d;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d0d0d;--surface:#1a1a1a;--ink:#f5f1e6;--mute:#a8a08a;--line:#333026;--blue:#e3b341;--gold:#e3b341;--gold-ink:#0d0d0d;--alt:#f5f1e6;--alt-ink:#0d0d0d;--err:#ff8a7a;--ok:#69db7c}}
+:root[data-theme="dark"]{--bg:#0d0d0d;--surface:#1a1a1a;--ink:#f5f1e6;--mute:#a8a08a;--line:#333026;--blue:#e3b341;--gold:#e3b341;--gold-ink:#0d0d0d;--alt:#f5f1e6;--alt-ink:#0d0d0d;--err:#ff8a7a;--ok:#69db7c}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Barlow,system-ui,sans-serif}
+h1,h2,h3{font-family:"Barlow Condensed","Arial Narrow",sans-serif;line-height:1.05;margin:0;letter-spacing:.01em}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 18px}
+header{background:#0d0d0d;color:#fff;border-bottom:3px solid #d4a017}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:14px;padding-bottom:14px}
+.logo{font:700 28px "Barlow Condensed",sans-serif;color:#e3b341;letter-spacing:.03em;text-transform:uppercase}
+nav{display:flex;gap:4px}
+nav button{background:none;border:0;color:inherit;padding:8px 14px;border-radius:6px;cursor:pointer;font-weight:600;opacity:.8}
+nav button[aria-selected="true"]{background:#d4a017;color:#0d0d0d;opacity:1}
+.hero{padding:34px 0 22px}
+.hero h1{font-size:clamp(38px,7vw,68px);max-width:12em}
+.hero h1::after{content:"";display:block;width:64px;height:5px;background:var(--gold);margin-top:12px}
+.hero p{color:var(--mute);max-width:34em;margin:10px 0 0}
+.filters{display:grid;grid-template-columns:2fr repeat(3,1fr);gap:10px;margin:18px 0 8px}
+@media(max-width:700px){.filters{grid-template-columns:1fr 1fr}.filters input{grid-column:1/-1}}
+input,select,textarea{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 12px}
+label{display:block;font-weight:600;font-size:14px;margin:12px 0 4px}
+.count{color:var(--mute);margin:8px 0 14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;padding-bottom:40px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;text-align:left;cursor:pointer;padding:0}
+.card:hover{border-color:var(--blue)}
+.swatch{height:96px;display:flex;align-items:flex-end;padding:10px 12px;font:700 40px "Barlow Condensed",sans-serif;color:rgba(255,255,255,.92)}
+.card .body{padding:12px 14px 14px}
+.card h3{font-size:22px}
+.price{font:700 24px "Barlow Condensed",sans-serif;color:var(--blue);margin-top:6px}
+.meta{color:var(--mute);font-size:14px}
+.tag{display:inline-block;font-size:12px;font-weight:600;border:1px solid var(--line);border-radius:99px;padding:1px 9px;margin:6px 4px 0 0}
+.btn{background:var(--gold);color:var(--gold-ink);border:0;border-radius:6px;padding:11px 18px;font-weight:600;cursor:pointer}
+.btn.alt{background:var(--alt);color:var(--alt-ink)}
+.btn.ghost{background:none;border:1px solid var(--line);color:var(--ink)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:20px;margin-bottom:40px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:600px){.two{grid-template-columns:1fr}}
+.cols{display:grid;grid-template-columns:1.2fr 1fr;gap:20px;padding-bottom:20px}
+@media(max-width:800px){.cols{grid-template-columns:1fr}}
+.svc{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.svc:last-child{border:0}
+.svc b{display:block}
+.garage-hero{border-left:6px solid var(--gold);padding-left:16px}
+.note{padding:12px 14px;border-radius:6px;border:1px solid var(--ok);color:var(--ok);margin-top:14px;font-weight:600}
+dialog{border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);max-width:520px;width:calc(100% - 28px);padding:0}
+dialog::backdrop{background:rgba(0,0,0,.55)}
+dialog .swatch{height:120px}
+dialog .in{padding:18px}
+.specs{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;margin:12px 0}
+.specs span{color:var(--mute);font-size:14px}
+footer{border-top:1px solid var(--line);padding:22px 0 30px;color:var(--mute);font-size:14px}
+[hidden]{display:none!important}
+@media(prefers-reduced-motion:no-preference){.note{animation:pop .25s ease-out}@keyframes pop{from{transform:translateY(4px);opacity:0}}}
+.btn{display:inline-block;text-decoration:none}
+.btn.wa{background:var(--gold);color:var(--gold-ink)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:6px 0 22px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:18px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:4px}
+.tile:hover{border-color:var(--blue)}
+.tile h3{font-size:26px}
+.contact a{color:var(--blue);font-weight:600}
+.fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));background:#0d0d0d;color:#e3b341;border:2px solid #d4a017;text-decoration:none;font-weight:600;padding:12px 18px;border-radius:99px;box-shadow:0 4px 14px rgba(0,0,0,.3);z-index:5}
+footer{padding-bottom:80px}
+.seg{border:1px solid var(--line);border-radius:6px;padding:8px 14px 12px;display:flex;gap:20px;flex-wrap:wrap;margin:0}
+.seg legend{font-weight:600;font-size:14px;padding:0 6px}
+.seg label{display:flex;gap:8px;align-items:center;margin:0;font-weight:500}
+.seg input{width:auto}
+.prev{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.prev img{width:88px;height:66px;object-fit:cover;border-radius:6px;border:1px solid var(--line)}
+.swatch.has{height:150px;text-shadow:0 1px 5px rgba(0,0,0,.7)}
+.gal .main{width:100%;height:230px;object-fit:cover;display:block}
+.thumbs{display:flex;gap:6px;padding:8px 18px 0;flex-wrap:wrap}
+.thumbs button{padding:0;border:2px solid transparent;border-radius:6px;background:none;cursor:pointer}
+.thumbs button[aria-current="true"]{border-color:var(--gold)}
+.thumbs img{width:60px;height:46px;object-fit:cover;display:block;border-radius:4px}
+.specs a{color:var(--blue);font-weight:600;word-break:break-word}
+.specs b{word-break:break-word}
+nav a.navlink{color:inherit;text-decoration:none;padding:7px 13px;border-radius:6px;font-weight:600;border:1px solid #d4a017;white-space:nowrap}
+a.tile{text-decoration:none;color:inherit}
+.auth-left{position:fixed;left:14px;top:50%;transform:translateY(-50%);z-index:20}.auth-left button{border:1px solid #d4a017;background:#0d0d0d;color:#e3b341;padding:9px 12px;border-radius:6px;font-weight:600;cursor:pointer}.account-pill{display:inline-flex;align-items:center;gap:8px;margin-left:auto;font-size:13px;color:#e3b341}.account-pill button{border:0;background:none;color:#e3b341;cursor:pointer;font-weight:600}.authbox{max-width:520px}.authbox .switch{margin-top:12px;color:var(--mute);font-size:14px}.authbox .switch button{border:0;background:none;color:var(--blue);font-weight:600;cursor:pointer;padding:0}.admin-table{width:100%;border-collapse:collapse;font-size:14px}.admin-table th,.admin-table td{border-bottom:1px solid var(--line);padding:8px;text-align:left}
+
+/* 3 Pedals professional UI refresh */
+:root{
+  --bg:#f3f4f6;--surface:#ffffff;--surface-2:#f8fafc;--ink:#111827;--mute:#64748b;
+  --line:#dbe1e8;--blue:#9a7000;--gold:#d7a928;--gold-ink:#111827;--alt:#111827;--alt-ink:#f8fafc;
+  --shadow-sm:0 2px 8px rgba(15,23,42,.06);--shadow:0 10px 28px rgba(15,23,42,.09);--radius:12px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0b0f14;--surface:#121820;--surface-2:#171f29;--ink:#f3f4f6;--mute:#9aa6b2;--line:#27313d;
+  --blue:#e3b341;--gold:#e3b341;--gold-ink:#111827;--alt:#f3f4f6;--alt-ink:#111827;
+  --shadow-sm:0 2px 8px rgba(0,0,0,.18);--shadow:0 14px 34px rgba(0,0,0,.25);
+}}
+body{background:var(--bg);color:var(--ink);font-size:16px}
+.wrap{max-width:1180px;padding-left:24px;padding-right:24px}
+header{position:sticky;top:0;z-index:30;background:rgba(13,13,13,.97);border-bottom:1px solid #3b3525;box-shadow:0 4px 18px rgba(0,0,0,.16)}
+header .wrap{min-height:76px;display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"brand account nav";align-items:center;gap:20px;padding-top:10px;padding-bottom:10px}
+.logo{grid-area:brand;font-size:30px;letter-spacing:.055em;white-space:nowrap}
+.account-pill{grid-area:account;justify-self:end;margin-left:0;padding:7px 11px 7px 13px;border:1px solid rgba(227,179,65,.35);border-radius:999px;background:rgba(255,255,255,.045)}
+.account-pill button{padding:5px 2px;border-radius:6px}.account-pill button:hover{background:rgba(227,179,65,.1)}
+nav{grid-area:nav;display:flex;align-items:center;gap:5px;padding:4px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08);border-radius:11px}
+nav button,nav a.navlink{min-height:40px;display:inline-flex;align-items:center;justify-content:center;padding:8px 14px;border-radius:8px;border:0;font-size:14px;line-height:1;white-space:nowrap}
+nav button:hover,nav a.navlink:hover{background:rgba(255,255,255,.09);opacity:1}
+nav button[aria-selected="true"]{background:var(--gold);color:#111;box-shadow:0 2px 8px rgba(215,169,40,.22)}
+nav a.navlink{border:0;color:#fff}
+.hero{padding:54px 0 28px}.hero h1{font-size:clamp(42px,6vw,72px);max-width:13em;letter-spacing:-.015em}.hero h1::after{width:72px;height:4px;margin-top:18px;border-radius:99px}.hero p{font-size:17px;line-height:1.65;max-width:46em;margin-top:15px}
+.hero>div[style*="display:flex"]{gap:10px!important;margin-top:24px!important;align-items:center}
+.btn{min-height:44px;padding:11px 18px;border-radius:9px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;box-shadow:var(--shadow-sm);font-size:14px;font-weight:700;letter-spacing:.01em;transition:transform .16s ease,box-shadow .16s ease,background .16s ease,border-color .16s ease}
+.btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(15,23,42,.12)}
+.btn.ghost{background:var(--surface);border-color:var(--line);color:var(--ink)}.btn.ghost:hover{border-color:#b8c2ce;background:var(--surface-2)}
+.btn.alt{background:#111827;color:#fff}.btn.alt:hover{background:#1f2937}.btn.wa{background:var(--gold);color:#111827}
+.tiles{gap:16px;margin:10px 0 28px}.tile{min-height:128px;padding:20px 20px 18px;border-radius:var(--radius);border:1px solid var(--line);box-shadow:var(--shadow-sm);position:relative;transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease;background:var(--surface)}
+.tile:hover{transform:translateY(-2px);border-color:#c4ccd6;box-shadow:var(--shadow)}.tile h3{font-size:28px}.tile:after{content:"↗";position:absolute;right:18px;top:18px;font-size:18px;color:var(--blue);font-weight:700}.tile .meta{margin-top:5px;max-width:26em}
+.panel{padding:24px;border-radius:var(--radius);border-color:var(--line);box-shadow:var(--shadow-sm);margin-bottom:40px}.panel h2{font-size:30px;margin-bottom:8px}
+.contact .svc{padding:15px 0;align-items:center}.svc b{font-size:15px}.contact a{color:var(--blue);text-decoration:none}.contact a:hover{text-decoration:underline}
+input,select,textarea{min-height:44px;padding:10px 13px;border-radius:9px;border-color:var(--line);background:var(--surface);transition:border-color .15s,box-shadow .15s}
+textarea{min-height:92px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(154,112,0,.12);outline:none}
+label{font-size:13px;letter-spacing:.02em;margin:15px 0 6px}.filters{gap:10px;margin:20px 0 12px}.filters input,.filters select{box-shadow:var(--shadow-sm)}
+.card{border-radius:var(--radius);border-color:var(--line);box-shadow:var(--shadow-sm);transition:transform .16s,box-shadow .16s,border-color .16s}.card:hover{border-color:#c1cad5;box-shadow:var(--shadow);transform:translateY(-2px)}
+.card .body{padding:16px 16px 17px}.card h3{font-size:24px}.price{font-size:26px;color:var(--blue)}
+.tag{padding:3px 9px;border-radius:999px;background:var(--surface-2)}
+.garage-hero{border-left:0;border-top:4px solid var(--gold);padding-left:0;padding-top:24px}.garage-hero h1{max-width:14em}
+.cols{gap:24px}.cols .panel{height:100%}.svc{padding:14px 0}
+.fab{right:24px;bottom:24px;padding:12px 17px;border-radius:999px;background:#111827;color:#f3c65d;border:1px solid #d4a017;box-shadow:0 10px 24px rgba(0,0,0,.2);font-size:14px}
+.auth-left{left:18px;top:auto;bottom:24px;transform:none;z-index:40}.auth-left button{min-height:40px;padding:8px 13px;border-radius:9px;background:#111827;color:#f3c65d;border:1px solid rgba(227,179,65,.55);box-shadow:0 8px 20px rgba(0,0,0,.18);font-size:13px;font-weight:700}.auth-left button:hover{background:#1f2937;transform:translateY(-1px)}
+dialog{border-radius:16px;border-color:var(--line);box-shadow:0 24px 70px rgba(0,0,0,.28)}dialog .in{padding:26px}.authbox .in>h2{font-size:32px;margin-bottom:6px}.authbox .in>.btn{margin-top:8px;margin-right:6px}.authbox .switch{padding-top:14px;border-top:1px solid var(--line)}
+.seg{border-radius:10px;border-color:var(--line);padding:10px 14px 12px;background:var(--surface-2)}
+.note{border-radius:10px;padding:14px 16px}.admin-table th,.admin-table td{padding:11px 9px}
+footer{padding:28px 0 36px;border-top:1px solid var(--line)}
+footer .wrap{font-size:13px}
+
+/* Give form action areas a consistent alignment */
+form .btn{margin-top:10px}#sellForm>.btn,#bBtn{min-width:160px}
+
+@media(max-width:900px){
+  header .wrap{grid-template-columns:1fr auto;grid-template-areas:"brand account" "nav nav";gap:9px 12px;padding-top:10px;padding-bottom:10px}
+  nav{justify-content:flex-start;overflow-x:auto;scrollbar-width:none}nav::-webkit-scrollbar{display:none}
+  .account-pill{justify-self:end}
+}
+@media(max-width:600px){
+  .wrap{padding-left:16px;padding-right:16px}.logo{font-size:25px}.account-pill{font-size:12px}
+  nav{width:100%}nav button,nav a.navlink{flex:1;min-width:max-content;padding-left:12px;padding-right:12px}
+  .hero{padding-top:38px}.hero h1{font-size:42px}.hero>div[style*="display:flex"]{align-items:stretch}.hero>div[style*="display:flex"] .btn{flex:1}
+  .tiles{grid-template-columns:1fr 1fr}.tile{min-height:120px;padding:17px}.tile h3{font-size:24px}.tile:after{right:14px;top:14px}
+  .panel{padding:18px}.fab{right:16px;bottom:16px}.auth-left{left:16px;bottom:16px}.auth-left button{padding:8px 11px}
+}
+@media(max-width:430px){.tiles{grid-template-columns:1fr}.hero>div[style*="display:flex"]{flex-direction:column}.hero>div[style*="display:flex"] .btn{width:100%}.account-pill span{display:none}}
+
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="logo" style="cursor:pointer" onclick="show('home')">3 Pedals Garage</div>
+  <div class="account-pill"><span id="accountText">Not signed in</span><button id="accountOpen">Log in to book</button></div>
+  <nav role="tablist" aria-label="Sections">
+    <button role="tab" data-tab="home" aria-selected="true">Home</button>
+    <button role="tab" data-tab="book" aria-selected="false">Services &amp; booking</button>
+    <a class="navlink" id="cLink" href="index.html">Cars for sale ↗</a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+<section id="home">
+  <div class="hero garage-hero"><h1>Servicing, repairs and inspections you can trust.</h1>
+  <p>Book a slot online, message us on WhatsApp, or call. We confirm every booking personally.</p>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
+    <a class="btn wa" href="https://wa.me/254791961807?text=Hello%203%20Pedals%20Garage%2C%20I%27d%20like%20to%20book%20a%20service." target="_blank" rel="noopener">Chat on WhatsApp</a>
+    <a class="btn ghost" href="tel:+254791961807">Call +254 791 961 807</a>
+  </div></div>
+  <div class="tiles">
+    <button class="tile" data-go="book"><h3>Book a service</h3><span class="meta">Pick a service and a date</span></button>
+    <button class="tile" id="inspTile"><h3>Pre-purchase inspection</h3><span class="meta">Get a car checked before you buy</span></button>
+    <a class="tile" id="cTile" href="index.html"><h3>Cars for sale</h3><span class="meta">Browse 3 Pedals Auto KE listings</span></a>
+  </div>
+  <div class="panel contact"><h2>Visit or contact the garage</h2>
+    <div class="svc"><div><b>WhatsApp</b><span class="meta">Fastest way to reach us</span></div><a href="https://wa.me/254791961807" target="_blank" rel="noopener">+254 791 961 807</a></div>
+    <div class="svc"><div><b>Email</b><span class="meta">Appointments and enquiries</span></div><a href="mailto:miltonangwenyi@gmail.com">miltonangwenyi@gmail.com</a></div>
+    <div class="svc"><div><b>Phone</b><span class="meta">Mon–Sat, 8am–6pm</span></div><a href="tel:+254791961807">+254 791 961 807</a></div>
+    <div class="svc"><div><b>Postal address</b><span class="meta">Send letters and documents here</span></div><span>P.O. Box 462-00516</span></div>
+  </div>
+</section>
+
+<section id="book" hidden>
+  <div class="hero garage-hero"><h1>Services and booking</h1><p>Choose a service, pick a date, and we'll confirm by phone.</p></div>
+  <div class="cols">
+    <div class="panel" style="margin:0"><h2 style="margin-bottom:6px">Services</h2><div id="svcList"></div></div>
+    <div class="panel" style="margin:0"><h2>Book a slot</h2>
+      <p class="note" id="loginNote" hidden style="border-color:var(--gold);color:var(--ink);font-weight:500">You need an account to book. <a id="loginLink" href="index.html#login" style="color:var(--blue);font-weight:600">Log in or create one</a>, then come back here.</p>
+      <form onsubmit="return false">
+        <label for="bSvc">Service</label><select id="bSvc"></select>
+        <label for="bCar">Your car</label><input id="bCar" placeholder="e.g. 2015 Mazda Demio, or a car you want checked">
+        <div class="two"><div><label for="bDate">Date</label><input id="bDate" type="date"></div>
+        <div><label for="bName">Name</label><input id="bName"></div></div>
+        <label for="bPhone">Phone</label><input id="bPhone" type="tel">
+        <input id="hp2" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
+        <p id="bErr" class="meta" style="color:var(--err)" role="alert"></p>
+        <button class="btn alt" id="bBtn">Book service</button>
+      </form>
+      <div class="note" id="bOk" hidden></div>
+      <div id="mineBox" hidden><h3 style="margin-top:20px">Your bookings</h3><div id="mine"></div></div>
+      <p class="meta" style="margin-top:14px">Open Mon–Sat, 8am–6pm. Closed Sundays.<br>Prefer email? Write to <a href="mailto:miltonangwenyi@gmail.com" style="color:var(--blue);font-weight:600">miltonangwenyi@gmail.com</a>.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap">3 Pedals Garage · P.O. Box 462-00516 · WhatsApp +254 791 961 807 · miltonangwenyi@gmail.com. Prices in KES.</div></footer>
+<a class="fab" href="https://wa.me/254791961807?text=Hello%203%20Pedals%20Garage" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">WhatsApp us</a>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script>
+// Where the separate cars-for-sale site lives. Change this if it is on another address.
+const CARS_URL="__TPA_CARS_URL__".indexOf("__")===0?"index.html":"__TPA_CARS_URL__";
+const fmt=n=>Number(n).toLocaleString("en-US");
+const $=id=>document.getElementById(id);
+$("cLink").href=CARS_URL;$("cTile").href=CARS_URL;
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+// Accounts come from the same database as the cars site, so one login works on both.
+const CFG=window.SB_CONFIG||{};
+const sb=(CFG.url&&!/^PASTE/.test(CFG.url)&&window.supabase)?window.supabase.createClient(CFG.url,CFG.key):null;
+let me=null,profile=null;
+const authUrl=m=>CARS_URL.split("#")[0]+"#"+m;
+const loginHtml=()=>`You need an account to book. <a href="${authUrl("login")}" style="color:var(--blue);font-weight:600">Log in or create one</a>, then come back here.`;
+async function loadSession(){
+  if(sb){
+    const {data:{session}}=await sb.auth.getSession();me=session?session.user:null;profile=null;
+    if(me){const {data}=await sb.from("profiles").select("name,phone").eq("id",me.id).maybeSingle();profile=data||{}}
+  }
+  refreshAccount();
+}
+async function renderMine(){
+  if(!sb||!me){$("mineBox").hidden=true;return}
+  const {data}=await sb.from("bookings").select("*").eq("user_id",me.id).order("created_at",{ascending:false});
+  const list=data||[];$("mineBox").hidden=!list.length;
+  $("mine").innerHTML=list.map(b=>`<div class="svc"><div><b>${esc(b.service)}</b><span class="meta">${esc(b.date)} · ${esc(b.car||"")} · ${esc(b.ref)}</span></div><span class="meta">${esc(b.status)}</span></div>`).join("");
+}
+function refreshAccount(){
+  $("accountText").textContent=me?`Signed in as ${(profile&&profile.name)||me.email}`:"Not signed in";
+  $("accountOpen").textContent=me?"Log out":"Log in to book";
+  if(me&&profile){if(!$("bName").value)$("bName").value=profile.name||"";if(!$("bPhone").value)$("bPhone").value=profile.phone||""}
+  $("loginNote").innerHTML=sb?loginHtml():"Online booking isn't switched on yet. Please WhatsApp or call us to book.";
+  $("loginNote").hidden=!!me;
+  renderMine();
+}
+$("accountOpen").onclick=async()=>{if(me&&sb)await sb.auth.signOut();else(window.top||window).location.href=authUrl("login")};
+const services=[
+ ["Oil and filter change",3500,"45 min"],["Full service",8500,"3 hrs"],["Brake pads and discs check",6000,"2 hrs"],
+ ["Wheel alignment and balancing",3000,"1 hr"],["Computer diagnostics",2500,"1 hr"],["Pre-purchase inspection",5000,"2 hrs"]
+];
+$("svcList").innerHTML=services.map(s=>`<div class="svc"><div><b>${s[0]}</b><span class="meta">About ${s[2]}</span></div><b>KES ${fmt(s[1])}</b></div>`).join("");
+$("bSvc").innerHTML=services.map(s=>`<option>${s[0]}</option>`).join("");
+
+function show(t){
+  ["home","book"].forEach(s=>$(s).hidden=s!==t);
+  document.querySelectorAll("nav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===t));
+  scrollTo(0,0);
+}
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>show(b.dataset.tab));
+document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>show(b.dataset.go));
+$("inspTile").onclick=()=>{show("book");$("bSvc").value="Pre-purchase inspection"};
+
+// Opened from a car listing: ?service=...&car=...
+try{
+  const q=new URLSearchParams((window.top||window).location.search),sv=q.get("service"),car=q.get("car");
+  if(sv||car){show("book");if(sv&&services.some(s=>s[0]===sv))$("bSvc").value=sv;if(car)$("bCar").value=car.slice(0,120)}
+}catch(_){}
+
+$("bDate").min=new Date().toISOString().slice(0,10);
+$("bBtn").onclick=async()=>{
+  const v=i=>$(i).value.trim(),err=$("bErr"),ok=$("bOk"),btn=$("bBtn");
+  ok.hidden=true;
+  if(!sb){err.textContent="Online booking isn't switched on yet. Please WhatsApp or call us.";return}
+  if(!me){err.textContent="Please log in or create an account to book.";$("loginNote").hidden=false;return}
+  if(!v("bName")||!v("bPhone")||!v("bDate")){err.textContent="Add your name, phone and a date to book.";return}
+  if(new Date($("bDate").value+"T12:00").getDay()===0){err.textContent="We're closed on Sundays. Pick another date.";return}
+  err.textContent="";btn.disabled=true;btn.textContent="Booking…";
+  const ref="3P-"+Math.floor(1000+Math.random()*9000);
+  const row={ref,user_id:me.id,service:$("bSvc").value,car:v("bCar")||"Not given",date:v("bDate"),name:v("bName"),phone:v("bPhone")};
+  const {error}=await sb.from("bookings").insert(row);
+  btn.disabled=false;btn.textContent="Book service";
+  if(error){err.textContent="We couldn't save that booking. Please try again, or WhatsApp us.";return}
+  const msg=`Hello 3 Pedals Garage, I just booked ${row.service} for ${row.date} (ref ${ref}). Name: ${row.name}.`;
+  ok.textContent=`Booking received: ${row.service} on ${row.date}, reference ${ref}. We'll call ${row.name} on ${row.phone} to confirm.`;
+  const a=document.createElement("a");a.className="btn wa";a.href="https://wa.me/254791961807?text="+encodeURIComponent(msg);a.target="_blank";a.rel="noopener";a.textContent="Confirm on WhatsApp";a.style.cssText="display:block;text-align:center;margin-top:10px";
+  ok.appendChild(a);ok.hidden=false;renderMine();
+};
+if(sb)sb.auth.onAuthStateChange(()=>setTimeout(loadSession,0));
+loadSession();
+</script>
+</body>
+</html>
