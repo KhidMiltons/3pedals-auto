@@ -1131,8 +1131,24 @@ $("sBtn").onclick=async()=>{
       yard_name:yard?v("yName"):"",
       yard_location:yard?v("yLoc"):""
     };
-    const ins=await sb.from("listings").insert(row);
+    const ins=await sb.from("listings").insert(row).select("id").single();
     if(ins.error)throw ins.error;
+
+    // Send a server-side notification to the 3 Pedals Auto KE admin.
+    // The Resend API key is never exposed in this public website.
+    try{
+      const {data:sessionData}=await sb.auth.getSession();
+      const accessToken=sessionData?.session?.access_token;
+      if(accessToken&&CFG.url){
+        const notify=await fetch(`${CFG.url}/functions/v1/notify-new-listing`,{
+          method:"POST",
+          headers:{"Content-Type":"application/json","Authorization":`Bearer ${accessToken}`},
+          body:JSON.stringify({listing_id:ins.data.id})
+        });
+        if(!notify.ok)console.warn("Listing notification failed",await notify.text());
+      }
+    }catch(notificationError){console.warn("Listing notification failed",notificationError)}
+
     $("sellForm").reset();photos=[];$("prev").innerHTML="";sellMode();
     ok.textContent="Thank you! Your listing was received. We review every listing before it goes live, and you can follow its status under My account.";ok.hidden=false;
   }catch(e){err.textContent="We couldn't submit that listing: "+(e.message||"please try again.")}
