@@ -353,7 +353,7 @@ footer{color:var(--mute)!important}
 </style>
 
 <style id="auto-quote-rail">
-/* Web-powered automotive quote rail */
+/*  automotive quote rail */
 .home-with-quote{display:block;margin-top:8px}.home-with-quote>div:last-child{width:100%}.auto-quote-rail{position:relative;left:auto;top:auto;bottom:auto;transform:none;width:248px;max-width:100%;margin:0 0 26px 0;z-index:auto}
 .auto-quote-rail{border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,rgba(255,255,255,.72),rgba(246,244,239,.92));box-shadow:0 18px 45px rgba(24,25,27,.08);overflow:hidden}
 .auto-quote-top{padding:16px 18px 10px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:10px}
@@ -473,7 +473,7 @@ main>section{contain:layout style}
 <section id="home">
   <div class="home-with-quote">
     <aside class="auto-quote-rail" id="autoQuoteRail" aria-label="Automotive quote of the day">
-      <div class="auto-quote-top"><span class="auto-quote-label">Motoring wisdom</span><span class="auto-quote-live">Web powered</span></div>
+      <div class="auto-quote-top"><span class="auto-quote-label">Motoring wisdom</span><span class="auto-quote-live"></span></div>
       <div class="auto-quote-body auto-quote-loading" id="autoQuoteBody">
         <div class="auto-quote-mark">“</div>
         <div class="auto-quote-text" id="autoQuoteText">Loading a thought from automotive history…</div>
@@ -1167,7 +1167,7 @@ if(location.hash==="#login")openAuth("login");if(location.hash==="#register")ope
 loadProjects();
 loadJournal();
 
-// Web-powered automotive quote rail. It refreshes from public quote pages, with a local fallback.
+//  automotive quote rail. It refreshes from public quote pages, with a local fallback.
 (()=>{
   const textEl=document.getElementById('autoQuoteText'),authorEl=document.getElementById('autoQuoteAuthor'),sourceEl=document.getElementById('autoQuoteSource'),updatedEl=document.getElementById('autoQuoteUpdated'),bodyEl=document.getElementById('autoQuoteBody'),nextBtn=document.getElementById('autoQuoteNext');
   if(!textEl)return;
