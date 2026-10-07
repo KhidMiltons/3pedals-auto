@@ -540,8 +540,9 @@ main>section{contain:layout style}
       </div>
     </div>
     <div class="two">
-      <div><label for="sMake">Make</label><input id="sMake" placeholder="Toyota"></div>
-      <div><label for="sModel">Model</label><input id="sModel" placeholder="Harrier"></div>
+      <div><label for="sMake">Make</label><select id="sMake"><option value="">Select make</option></select></div>
+      <div><label for="sModel">Model</label><select id="sModel" disabled><option value="">Select make first</option></select></div>
+      <div><label for="sVariant">Variant</label><select id="sVariant" disabled><option value="">Select model first</option></select></div>
       <div><label for="sYear">Year</label><input id="sYear" type="number" min="1990" max="2026" placeholder="2018"></div>
       <div><label for="sPrice">Asking price (KES)</label><input id="sPrice" type="number" min="0" placeholder="2400000"></div>
       <div><label for="sKm">Mileage (km)</label><input id="sKm" type="number" min="0" placeholder="64000"></div>
@@ -1045,6 +1046,25 @@ function shrink(f){return new Promise((res,rej)=>{
     c.width=Math.round(i.width*k);c.height=Math.round(i.height*k);c.getContext("2d").drawImage(i,0,0,c.width,c.height);
     URL.revokeObjectURL(u);res(c.toDataURL("image/jpeg",.78))};
   i.onerror=()=>{URL.revokeObjectURL(u);rej()};i.src=u})}
+function populateSellVehicleFilters(){
+  const mk=$("sMake"),mf=$("sModel"),vr=$("sVariant");
+  const makeNames=Object.keys(MODEL_FAMILIES).sort((a,b)=>a.localeCompare(b));
+  mk.innerHTML='<option value="">Select make</option>'+makeNames.map(x=>`<option value="${esc(x)}">${esc(x==="Mercedes-Benz"?"Mercedes":x)}</option>`).join("");
+  mf.innerHTML='<option value="">Select make first</option>';mf.disabled=true;
+  vr.innerHTML='<option value="">Select model first</option>';vr.disabled=true;
+  mk.onchange=()=>{
+    const make=mk.value, models=make?Object.keys(MODEL_FAMILIES[make]||{}).sort((a,b)=>a.localeCompare(b)):[];
+    mf.innerHTML='<option value="">Select model</option>'+models.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
+    mf.disabled=!make;mf.value="";vr.innerHTML='<option value="">Select model first</option>';vr.disabled=true;
+  };
+  mf.onchange=()=>{
+    const make=mk.value, model=mf.value, variants=(MODEL_FAMILIES[make]||{})[model]||[];
+    vr.innerHTML='<option value="">Select variant</option>'+variants.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
+    vr.disabled=!model;vr.value="";
+  };
+}
+populateSellVehicleFilters();
+
 function renderPhotoPreviews(){
   const box=$("prev");box.innerHTML="";
   photos.forEach((x,index)=>{
@@ -1075,7 +1095,7 @@ $("sBtn").onclick=async()=>{
   ok.hidden=true;
   if(!sb){err.textContent="Online listing is not switched on yet. Please WhatsApp us your car details.";return}
   if(!me){openAuth("login","Please sign in or create an account before listing a vehicle.");return}
-  if(!v("sMake")||!v("sModel")||!v("sYear")||!v("sPrice")){err.textContent="Add make, model, year and asking price to submit.";return}
+  if(!v("sMake")||!v("sModel")||!v("sVariant")||!v("sYear")||!v("sPrice")){err.textContent="Select make, model, variant, year and asking price to submit.";return}
   if(!photos.length){err.textContent="Add at least one photo of the car.";return}
   const wa=normWa($("sWa").value);
   if(!wa){err.textContent="Enter a valid WhatsApp number, for example 0712 345 678.";return}
@@ -1096,7 +1116,7 @@ $("sBtn").onclick=async()=>{
     const row={
       owner:ownerId,
       make:v("sMake"),
-      model:v("sModel"),
+      model:v("sVariant"),
       year:+v("sYear"),
       price:+v("sPrice"),
       km:+v("sKm")||0,
