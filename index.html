@@ -350,19 +350,6 @@ dialog{background:var(--surface)!important;color:var(--ink)!important}
 footer{color:var(--mute)!important}
 @media(max-width:800px){header .wrap{grid-template-columns:1fr auto;grid-template-areas:"brand account" "nav nav";gap:10px}.account-pill{justify-self:end}.logo{font-size:27px!important}nav{width:100%;overflow-x:auto;justify-content:flex-start}nav button,nav a.navlink{flex:0 0 auto}}
 @media(max-width:520px){.logo{font-size:24px!important}.account-pill{padding:3px!important}.account-pill button{width:40px!important;height:40px!important}.hero{padding-top:42px!important}.hero h1{font-size:clamp(38px,11vw,56px)!important}}
-
-.logo-image{display:flex!important;align-items:center!important;height:52px!important;width:150px!important;overflow:hidden!important}
-.logo-image img{display:block!important;width:150px!important;height:auto!important;max-height:52px!important;object-fit:contain!important;object-position:left center!important;filter:drop-shadow(0 5px 14px rgba(0,0,0,.18));transition:transform .35s cubic-bezier(.22,1,.36,1),filter .35s ease!important}
-.logo-image:hover img{transform:scale(1.025)!important;filter:drop-shadow(0 7px 18px rgba(0,0,0,.24))!important}
-@media(max-width:760px){.logo-image{width:112px!important;height:42px!important}.logo-image img{width:112px!important;max-height:42px!important}}
-
-.hero-brand-logo img{width:min(290px,78vw)}}
-
-
-
-
-
-
 </style>
 
 <style id="auto-quote-rail">
@@ -471,6 +458,7 @@ main>section{contain:layout style}
   <nav role="tablist" aria-label="Sections">
     <button role="tab" data-tab="home" aria-selected="true">Home</button>
     <button role="tab" data-tab="buy" aria-selected="false">Buy a car</button>
+    <a class="navlink" href="inventory.html">Inventory ↗</a>
     <button role="tab" data-tab="sell" aria-selected="false">Sell your car</button>
     <button role="tab" data-tab="projects" aria-selected="false">Our projects</button>
     <button role="tab" data-tab="journal" aria-selected="false">3 Pedals Journal</button>
@@ -496,13 +484,14 @@ main>section{contain:layout style}
     </aside>
     <div>
   <div class="hero"><h1>Buy and sell cars with 3 Pedals Auto KE.</h1>
-  <p>Automotive Excellence Reimagined, For Those Who Appreciate the Drive.</p>
+  <p>Talk to us directly on WhatsApp. We reply to questions about any car, viewings and selling your car.</p>
   <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
+    <a class="btn wa" href="https://wa.me/254750495841?text=Hello%203%20Pedals%20Auto%20KE%2C%20I%27d%20like%20to%20enquire." target="_blank" rel="noopener">Chat on WhatsApp</a>
+    <a class="btn ghost" href="tel:+254750495841">Call +254 750 495 841</a>
     <a class="btn alt" href="garage.html">Visit 3 Pedals Garage ↗</a>
-    <a class="btn wa" href="https://wa.me/254750495841" target="_blank" rel="noopener">Chat on WhatsApp</a>
   </div></div>
   <div class="tiles">
-    <button class="tile" data-go="buy"><h3>Buy a car</h3><span class="meta">Browse checked cars for sale</span></button>
+    <a class="tile" href="inventory.html"><h3>Browse inventory</h3><span class="meta">View cars currently listed for sale</span></a>
     <button class="tile" data-go="sell"><h3>Sell your car</h3><span class="meta">List it in two minutes</span></button>
     <a class="tile" id="gTile" href="garage.html"><h3>3 Pedals Garage</h3><span class="meta">Service, repairs and inspections</span></a>
     <button class="tile" id="accountTile"><h3>My account</h3><span class="meta">Manage your vehicles and bookings</span></button>
@@ -581,16 +570,13 @@ main>section{contain:layout style}
 
 <section id="about" hidden><div class="hero"><span class="eyebrow">ABOUT US</span><h1>3 Pedals Auto KE</h1><p>We bring vehicle sales, honest advice and professional garage services together under one automotive brand.</p></div><div class="cols"><div class="panel"><h2>What we do</h2><p>We help clients buy and sell vehicles while giving them access to servicing, repairs and pre-purchase inspections through 3 Pedals Garage.</p><p class="meta">Our focus is straightforward communication, careful vehicle checks and a professional experience from enquiry to ownership.</p></div><div class="panel"><h2>Our approach</h2><div class="svc"><div><b>Transparent</b><span class="meta">Clear information before you decide.</span></div></div><div class="svc"><div><b>Practical</b><span class="meta">Advice based on the actual vehicle and your needs.</span></div></div><div class="svc"><div><b>Connected</b><span class="meta">Sales and garage support in one place.</span></div></div></div></div></section>
 
-<section id="contact" hidden><div class="hero"><span class="eyebrow">CONTACT US</span><h1>Let’s talk about your car.</h1><p>Choose the channel that works best for you. For the fastest response, message us on WhatsApp.</p></div><div class="contact-grid"><a class="contact-card" href="https://wa.me/254750495841" target="_blank" rel="noopener"><span>💬 WHATSAPP</span><strong>Message us</strong><small>Fastest way to reach us</small></a><a class="contact-card" href="tel:+254750495841"><span>📞 CALL</span><strong>+254 750 495 841</strong><small>Call us directly</small></a><a class="contact-card" href="mailto:miltonangwenyi@gmail.com"><span>✉️ EMAIL</span><strong>miltonangwenyi@gmail.com</strong><small>Appointments and enquiries</small></a><a class="contact-card" href="https://instagram.com/3pedalsauto" target="_blank" rel="noopener"><span>📸 INSTAGRAM</span><strong>@3pedalsauto</strong><small>Follow us on Instagram</small></a><a class="contact-card" href="https://facebook.com/3pedalsauto" target="_blank" rel="noopener"><span>📘 FACEBOOK</span><strong>3 Pedals Auto KE</strong><small>Follow us on Facebook</small></a><a class="contact-card" href="https://twitter.com/3pedalsauto" target="_blank" rel="noopener"><span>𝕏 TWITTER</span><strong>@3pedalsauto</strong><small>Follow us on X / Twitter</small></a><a class="contact-card" href="https://tiktok.com/@3pedalsauto" target="_blank" rel="noopener"><span>🎵 TIKTOK</span><strong>tiktok.com/@3pedalsauto</strong><small>Follow us on TikTok</small></a><div class="contact-card"><span>📍 ADDRESS</span><strong>P.O. Box 462-00516</strong><small>3 Pedals Auto KE</small></div></div></section>
+<section id="contact" hidden><div class="hero"><span class="eyebrow">CONTACT US</span><h1>Let’s talk about your car.</h1><p>Choose the channel that works best for you. For the fastest response, message us on WhatsApp.</p></div><div class="contact-grid"><a class="contact-card" href="https://wa.me/254750495841" target="_blank" rel="noopener"><span>WHATSAPP</span><strong>Message us</strong><small>Fastest way to reach us</small></a><a class="contact-card" href="mailto:miltonangwenyi@gmail.com"><span>EMAIL</span><strong>miltonangwenyi@gmail.com</strong><small>Appointments and enquiries</small></a><div class="contact-card"><span>ADDRESS</span><strong>P.O. Box 462-00516</strong><small>3 Pedals Auto KE</small></div></div></section>
 
 </main>
 
-<a class="fab" href="https://wa.me/254750495841" target="_blank" rel="noopener" aria-label="Chat with 3 Pedals Auto KE on WhatsApp">WhatsApp</a>
+<footer><div class="wrap">3 Pedals Auto KE · P.O. Box 462-00516 · WhatsApp +254 791 961 807 · miltonangwenyi@gmail.com. Prices in KES.</div></footer>
 
-<footer>
-
-<div class="wrap">3 Pedals Auto KE · P.O. Box 462-00516 · WhatsApp +254 750 495 841 · miltonangwenyi@gmail.com. Prices in KES.</div></footer>
-
+<a class="fab" href="https://wa.me/254750495841?text=Hello%203%20Pedals%20Auto%20KE" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">WhatsApp us</a>
 
 <dialog id="dlg" aria-label="Car details"></dialog>
 <dialog id="authDlg" class="authbox"><div class="in"><h2 id="authTitle">Create your account</h2><p class="meta">Create an account to list vehicles and book garage appointments.</p><label id="authNameLabel">Full name</label><input id="authName"><label>Email</label><input id="authEmail" type="email"><label>Phone</label><input id="authPhone" type="tel"><label>Password</label><input id="authPassword" type="password"><p id="authErr" class="meta" style="color:var(--err)"></p><button class="btn" id="authSubmit">Create account</button> <button class="btn ghost" id="authClose">Close</button><p class="switch"><span id="authSwitchText">Already have an account?</span> <button id="authSwitch">Log in</button></p></div></dialog>
@@ -600,14 +586,6 @@ main>section{contain:layout style}
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
 <script>
-// SOCIAL LINKS — edit these four values later when you have your final handles/URLs.
-const SOCIALS={
-  instagram:{url:"https://instagram.com/3pedalsauto",label:"@3pedalsauto"},
-  facebook:{url:"https://facebook.com/3pedalsauto",label:"3 Pedals Auto KE"},
-  twitter:{url:"https://twitter.com/3pedalsauto",label:"@3pedalsauto"},
-  tiktok:{url:"https://tiktok.com/@3pedalsauto",label:"tiktok.com/@3pedalsauto"}
-};
-
 const fmt=n=>Number(n).toLocaleString("en-US");
 // Database connection. Fill in config.js (see SETUP.md). Without it the site runs in demo mode with sample cars.
 const CFG=window.SB_CONFIG||{};
@@ -952,7 +930,7 @@ $("adminPanel").onclick=async e=>{
 $("adminPanel").onchange=async e=>{const s=e.target.closest("[data-bk]");if(s)await sb.from("bookings").update({status:s.value}).eq("id",s.dataset.bk)};
 
 const rowToCar=(r,i)=>({id:r.id,make:r.make,model:r.model,year:r.year,price:r.price,km:r.km||0,fuel:r.fuel||"",desc:r.description||"",photos:r.photos||[],color:colors[i%colors.length],
-  seller:{type:r.seller_type,name:r.seller_name,contact:r.contact,location:r.location,phone:r.phone,email:r.email,web:r.web,whatsapp:r.whatsapp}});
+  seller:{type:r.seller_type,name:r.seller_name,contact:r.contact,location:r.location,phone:r.seller_phone||r.phone,email:r.seller_email||r.email,web:r.web,whatsapp:r.whatsapp}});
 async function loadListings(){
   if(!sb)return;
   const {data,error}=await sb.from("listings").select("*").eq("status","approved").order("created_at",{ascending:false});
