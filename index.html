@@ -932,7 +932,7 @@ $("adminPanel").onclick=async e=>{
 };
 $("adminPanel").onchange=async e=>{const s=e.target.closest("[data-bk]");if(s)await sb.from("bookings").update({status:s.value}).eq("id",s.dataset.bk)};
 
-const rowToCar=(r,i)=>({id:r.id,make:r.make,model:r.model,year:r.year,price:r.price,km:r.km||0,fuel:r.fuel||"",desc:r.description||"",photos:r.photos||[],color:colors[i%colors.length],
+const rowToCar=(r,i)=>({id:r.id,make:String(r.make||"").trim(),model:String(r.model||"").trim(),year:r.year,price:r.price,km:r.km||0,fuel:r.fuel||"",desc:r.description||"",photos:r.photos||[],color:colors[i%colors.length],
   seller:{type:r.seller_type,name:r.seller_name,contact:r.contact,location:r.location,phone:r.seller_phone||r.phone,email:r.seller_email||r.email,web:r.web,whatsapp:r.whatsapp}});
 async function loadListings(){
   if(!sb)return;
@@ -964,15 +964,16 @@ const MODEL_FAMILIES={
 "Kia":{"Sportage":["Sportage"],"Sorento":["Sorento"],"Picanto":["Picanto"],"Rio":["Rio"],"Seltos":["Seltos"],"Carnival":["Carnival"]},
 "Jeep":{"Wrangler":["Wrangler"],"Grand Cherokee":["Grand Cherokee"],"Cherokee":["Cherokee"],"Compass":["Compass"],"Renegade":["Renegade"]}
 };
-function familyFor(make,model){const mm=String(model||"").toLowerCase(),cat=MODEL_FAMILIES[make]||{};for(const [f,vs] of Object.entries(cat)){if(mm===f.toLowerCase()||vs.some(v=>mm===v.toLowerCase())||mm.includes(f.toLowerCase())||vs.some(v=>mm.includes(v.toLowerCase())))return f}return model||"Other"}
-function variantFor(make,model){const f=familyFor(make,model),vs=(MODEL_FAMILIES[make]||{})[f]||[],mm=String(model||"").toLowerCase();return vs.find(v=>mm===v.toLowerCase()||mm.includes(v.toLowerCase()))||model||""}
-function updateBuyFilters(){const mk=$("make").value,mf=$("model").value,cv=$("variant").value;const models=[...new Set(cars.filter(c=>!mk||c.make===mk).map(c=>familyFor(c.make,c.model)))].sort();$("model").innerHTML='<option value="">All models</option>'+models.map(x=>`<option>${esc(x)}</option>`).join("");if(models.includes(mf))$("model").value=mf;const variants=[...new Set(cars.filter(c=>(!mk||c.make===mk)&&(!mf||familyFor(c.make,c.model)===mf)).map(c=>variantFor(c.make,c.model)).filter(Boolean))].sort();$("variant").innerHTML='<option value="">All variants</option>'+variants.map(x=>`<option>${esc(x)}</option>`).join("");if(variants.includes(cv))$("variant").value=cv}
-function makes(){const m=[...new Set(cars.map(c=>c.make))].sort(),cur=$("make").value;$("make").innerHTML='<option value="">All makes</option>'+m.map(x=>`<option value="${esc(x)}">${esc(x==="Mercedes-Benz"?"Mercedes":x)}</option>`).join("");$("make").value=cur;updateBuyFilters()}
+function canonicalMake(make){const raw=String(make||"").trim();const key=raw.toLowerCase().replace(/[\s_-]+/g,"");const known=Object.keys(MODEL_FAMILIES).find(x=>x.toLowerCase().replace(/[\s_-]+/g,"")===key);return known||raw}
+function familyFor(make,model){const mk=canonicalMake(make),mm=String(model||"").trim().toLowerCase(),cat=MODEL_FAMILIES[mk]||{};for(const [f,vs] of Object.entries(cat)){if(mm===f.toLowerCase()||vs.some(v=>mm===v.toLowerCase())||mm.includes(f.toLowerCase())||vs.some(v=>mm.includes(v.toLowerCase())))return f}return String(model||"").trim()||"Other"}
+function variantFor(make,model){const mk=canonicalMake(make),f=familyFor(mk,model),vs=(MODEL_FAMILIES[mk]||{})[f]||[],mm=String(model||"").trim().toLowerCase();return vs.find(v=>mm===v.toLowerCase()||mm.includes(v.toLowerCase()))||String(model||"").trim()||""}
+function updateBuyFilters(){const mk=$("make").value,mf=$("model").value,cv=$("variant").value;const models=[...new Set(cars.filter(c=>!mk||canonicalMake(c.make)===mk).map(c=>familyFor(c.make,c.model)).filter(Boolean))].sort();$("model").innerHTML='<option value="">All models</option>'+models.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");if(models.includes(mf))$("model").value=mf;const activeModel=$("model").value;const variants=[...new Set(cars.filter(c=>(!mk||canonicalMake(c.make)===mk)&&(!activeModel||familyFor(c.make,c.model)===activeModel)).map(c=>variantFor(c.make,c.model)).filter(Boolean))].sort();$("variant").innerHTML='<option value="">All variants</option>'+variants.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");if(variants.includes(cv))$("variant").value=cv}
+function makes(){const m=[...new Set(cars.map(c=>canonicalMake(c.make)).filter(Boolean))].sort(),cur=$("make").value;$("make").innerHTML='<option value="">All makes</option>'+m.map(x=>`<option value="${esc(x)}">${esc(x==="Mercedes-Benz"?"Mercedes":x)}</option>`).join("");if(m.includes(cur))$("make").value=cur;else $("make").value="";updateBuyFilters()}
 const hasPh=c=>c.photos&&c.photos[0]?" has":"";
 const bgOf=c=>c.photos&&c.photos[0]?`${c.color} url('${c.photos[0]}') center/cover`:c.color;
 function render(){
   const q=$("q").value.trim().toLowerCase(),mk=$("make").value,mf=$("model").value,vr=$("variant").value,mx=+$("max").value,s=$("sort").value;
-  let r=cars.filter(c=>(!q||(c.make+" "+c.model).toLowerCase().includes(q))&&(!mk||c.make===mk)&&(!mf||familyFor(c.make,c.model)===mf)&&(!vr||variantFor(c.make,c.model)===vr)&&(!mx||c.price<=mx));
+  let r=cars.filter(c=>(!q||(c.make+" "+c.model).toLowerCase().includes(q))&&(!mk||canonicalMake(c.make)===mk)&&(!mf||familyFor(c.make,c.model)===mf)&&(!vr||variantFor(c.make,c.model)===vr)&&(!mx||c.price<=mx));
   r.sort((a,b)=>s==="low"?a.price-b.price:s==="high"?b.price-a.price:s==="km"?a.km-b.km:b.year-a.year);
   $("count").textContent=r.length+(r.length===1?" car":" cars")+" found";
   $("grid").innerHTML=r.length?r.map(c=>`<button class="card" data-id="${c.id}">
