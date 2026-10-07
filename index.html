@@ -155,6 +155,22 @@ dialog{border-radius:16px;border-color:var(--line);box-shadow:0 24px 70px rgba(0
 footer{padding:28px 0 36px;border-top:1px solid var(--line)}
 footer .wrap{font-size:13px}
 
+/* Account profile + listing photo controls */
+.profile-card{display:grid;grid-template-columns:92px 1fr;gap:18px;align-items:center;padding:16px;border:1px solid var(--line);border-radius:14px;background:var(--surface-2);margin:12px 0 20px}
+.profile-avatar{width:88px;height:88px;border-radius:50%;object-fit:cover;border:1px solid rgba(227,179,65,.4);background:var(--surface);display:grid;place-items:center;color:var(--gold);font-size:28px;font-weight:700;overflow:hidden}
+.profile-avatar img{width:100%;height:100%;object-fit:cover}
+.profile-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.profile-actions .btn{margin-top:0}
+.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+.photo-item{position:relative;width:88px;height:66px}
+.photo-item img{width:88px;height:66px;object-fit:cover;border-radius:6px;border:1px solid var(--line);display:block}
+.photo-remove{position:absolute;right:-6px;top:-6px;width:23px;height:23px;border:1px solid rgba(255,255,255,.8);border-radius:50%;background:#111;color:#fff;display:grid;place-items:center;font-size:14px;line-height:1;cursor:pointer;box-shadow:0 3px 8px rgba(0,0,0,.22)}
+.photo-remove:hover{background:#8b1e1e}
+.sell-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.sell-actions .btn{margin-top:0}
+.account-listing-photo{width:72px;height:52px;object-fit:cover;border-radius:7px;border:1px solid var(--line);margin-right:8px;vertical-align:middle}
+@media(max-width:600px){.profile-card{grid-template-columns:1fr}.profile-grid{grid-template-columns:1fr}}
+
 /* Give form action areas a consistent alignment */
 form .btn{margin-top:10px}#sellForm>.btn,#bBtn{min-width:160px}
 
@@ -469,8 +485,8 @@ main>section{contain:layout style}
   <div class="hero"><h1>Buy and sell cars with 3 Pedals Auto KE.</h1>
   <p>Talk to us directly on WhatsApp. We reply to questions about any car, viewings and selling your car.</p>
   <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
-    <a class="btn wa" href="https://wa.me/254791961807?text=Hello%203%20Pedals%20Auto%20KE%2C%20I%27d%20like%20to%20enquire." target="_blank" rel="noopener">Chat on WhatsApp</a>
-    <a class="btn ghost" href="tel:+254791961807">Call +254 791 961 807</a>
+    <a class="btn wa" href="https://wa.me/254750495841?text=Hello%203%20Pedals%20Auto%20KE%2C%20I%27d%20like%20to%20enquire." target="_blank" rel="noopener">Chat on WhatsApp</a>
+    <a class="btn ghost" href="tel:+254750495841">Call +254 750 495 841</a>
     <a class="btn alt" href="garage.html">Visit 3 Pedals Garage ↗</a>
   </div></div>
   <div class="tiles">
@@ -535,7 +551,7 @@ main>section{contain:layout style}
     <p class="meta">Buyers tap a button to chat with you on this number.</p>
     <input id="hp1" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
     <p id="sErr" class="meta" style="color:var(--err)" role="alert"></p>
-    <button class="btn" id="sBtn">Submit listing</button>
+    <div class="sell-actions"><button class="btn" id="sBtn">Proceed with listing</button><button class="btn ghost" type="button" id="sCancel">Cancel listing</button></div>
     <div class="note" id="sOk" hidden></div>
   </form></div>
 </section>
@@ -553,13 +569,13 @@ main>section{contain:layout style}
 
 <section id="about" hidden><div class="hero"><span class="eyebrow">ABOUT US</span><h1>3 Pedals Auto KE</h1><p>We bring vehicle sales, honest advice and professional garage services together under one automotive brand.</p></div><div class="cols"><div class="panel"><h2>What we do</h2><p>We help clients buy and sell vehicles while giving them access to servicing, repairs and pre-purchase inspections through 3 Pedals Garage.</p><p class="meta">Our focus is straightforward communication, careful vehicle checks and a professional experience from enquiry to ownership.</p></div><div class="panel"><h2>Our approach</h2><div class="svc"><div><b>Transparent</b><span class="meta">Clear information before you decide.</span></div></div><div class="svc"><div><b>Practical</b><span class="meta">Advice based on the actual vehicle and your needs.</span></div></div><div class="svc"><div><b>Connected</b><span class="meta">Sales and garage support in one place.</span></div></div></div></div></section>
 
-<section id="contact" hidden><div class="hero"><span class="eyebrow">CONTACT US</span><h1>Let’s talk about your car.</h1><p>Choose the channel that works best for you. For the fastest response, message us on WhatsApp.</p></div><div class="contact-grid"><a class="contact-card" href="https://wa.me/254791961807" target="_blank" rel="noopener"><span>WHATSAPP</span><strong>+254 791 961 807</strong><small>Fastest way to reach us</small></a><a class="contact-card" href="tel:+254791961807"><span>PHONE</span><strong>+254 791 961 807</strong><small>Mon–Sat, 8am–6pm</small></a><a class="contact-card" href="mailto:miltonangwenyi@gmail.com"><span>EMAIL</span><strong>miltonangwenyi@gmail.com</strong><small>Appointments and enquiries</small></a><div class="contact-card"><span>ADDRESS</span><strong>P.O. Box 462-00516</strong><small>3 Pedals Auto KE</small></div></div></section>
+<section id="contact" hidden><div class="hero"><span class="eyebrow">CONTACT US</span><h1>Let’s talk about your car.</h1><p>Choose the channel that works best for you. For the fastest response, message us on WhatsApp.</p></div><div class="contact-grid"><a class="contact-card" href="https://wa.me/254750495841" target="_blank" rel="noopener"><span>WHATSAPP</span><strong>Message us</strong><small>Fastest way to reach us</small></a><a class="contact-card" href="mailto:miltonangwenyi@gmail.com"><span>EMAIL</span><strong>miltonangwenyi@gmail.com</strong><small>Appointments and enquiries</small></a><div class="contact-card"><span>ADDRESS</span><strong>P.O. Box 462-00516</strong><small>3 Pedals Auto KE</small></div></div></section>
 
 </main>
 
 <footer><div class="wrap">3 Pedals Auto KE · P.O. Box 462-00516 · WhatsApp +254 791 961 807 · miltonangwenyi@gmail.com. Prices in KES.</div></footer>
 
-<a class="fab" href="https://wa.me/254791961807?text=Hello%203%20Pedals%20Auto%20KE" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">WhatsApp us</a>
+<a class="fab" href="https://wa.me/254750495841?text=Hello%203%20Pedals%20Auto%20KE" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">WhatsApp us</a>
 
 <dialog id="dlg" aria-label="Car details"></dialog>
 <dialog id="authDlg" class="authbox"><div class="in"><h2 id="authTitle">Create your account</h2><p class="meta">Create an account to list vehicles and book garage appointments.</p><label id="authNameLabel">Full name</label><input id="authName"><label>Email</label><input id="authEmail" type="email"><label>Phone</label><input id="authPhone" type="tel"><label>Password</label><input id="authPassword" type="password"><p id="authErr" class="meta" style="color:var(--err)"></p><button class="btn" id="authSubmit">Create account</button> <button class="btn ghost" id="authClose">Close</button><p class="switch"><span id="authSwitchText">Already have an account?</span> <button id="authSwitch">Log in</button></p></div></dialog>
@@ -575,7 +591,7 @@ const CFG=window.SB_CONFIG||{};
 const sb=(CFG.url&&!/^PASTE/.test(CFG.url)&&window.supabase)?window.supabase.createClient(CFG.url,CFG.key):null;
 let me=null,profile=null;
 const colors=["#111111","#8a6508","#2a2a2a","#a67c00","#1c1c1c","#6b5206","#3b3b3b","#7d5a00"];
-const HOUSE={type:"yard",name:"3 Pedals Auto KE",contact:"",location:"P.O. Box 462-00516",phone:"+254791961807",email:"miltonangwenyi@gmail.com",web:"",whatsapp:"254791961807"};
+const HOUSE={type:"yard",name:"3 Pedals Auto KE",contact:"",location:"P.O. Box 462-00516",phone:"+254750495841",email:"miltonangwenyi@gmail.com",web:"",whatsapp:"254750495841"};
 let cars=[
  {make:"Toyota",model:"Harrier",year:2018,price:3200000,km:48000,fuel:"Petrol",desc:"One owner, full dealer service history, sunroof."},
  {make:"Mazda",model:"CX-5",year:2017,price:2650000,km:71000,fuel:"Diesel",desc:"Clean interior, new tyres, no accident history."},
@@ -620,7 +636,7 @@ async function loadSession(){
   refreshAccountUI();
 }
 function refreshAccountUI(){
-  $("accountText").textContent=me?`Signed in as ${(profile&&profile.name)||me.email}`:"Not signed in";
+  $("accountText").textContent=me?`Signed in as ${(profile&&profile.name)||me?.user_metadata?.name||me.email}`:"Not signed in";
   $("accountOpen").textContent="";
   $("adminWrap").hidden=!(profile&&profile.is_admin);
 }
@@ -652,6 +668,42 @@ $("authSubmit").onclick=async()=>{
   if(authMode==="register"&&!res.data.session){err.textContent="Account created. Check your email for a confirmation link, then log in.";return}
   $("authPassword").value="";$("authDlg").close();
 };
+function initialsFor(name,email){const x=String(name||email||"?").trim().split(/\s+/).filter(Boolean);return ((x[0]||"?")[0]+(x[1]||"")[0]).toUpperCase()}
+function profileAvatarUrl(){return (profile&&profile.avatar_url)||me?.user_metadata?.avatar_url||""}
+function profileName(){return (profile&&profile.name)||me?.user_metadata?.name||""}
+function profilePhone(){return (profile&&profile.phone)||me?.user_metadata?.phone||""}
+async function saveAccountProfile(){
+  const name=$("accName").value.trim(),phone=$("accPhone").value.trim(),err=$("accProfileErr"),btn=$("accSaveProfile");
+  if(!name){err.textContent="Please enter your name.";return}
+  btn.disabled=true;err.textContent="Saving…";
+  try{
+    const meta={...(me.user_metadata||{}),name,phone};
+    const au=await sb.auth.updateUser({data:meta});
+    if(au.error)throw au.error;
+    const pu=await sb.from("profiles").update({name,phone}).eq("id",me.id);
+    if(pu.error)console.warn("Profile table update failed; account metadata was saved.",pu.error);
+    me=au.data.user||me;profile={...(profile||{}),name,phone};
+    refreshAccountUI();err.textContent="Account details saved.";
+    setTimeout(()=>openAccount(),350);
+  }catch(e){err.textContent=e.message||"Could not save your details."}
+  btn.disabled=false;
+}
+async function changeProfilePhoto(file){
+  const err=$("accProfileErr");if(!file)return;
+  if(!file.type.startsWith("image/")||file.size>10*1024*1024){err.textContent="Choose an image under 10 MB.";return}
+  err.textContent="Uploading profile picture…";
+  try{
+    const x=await shrink(file),blob=await (await fetch(x)).blob(),path=`${me.id}/profile-${Date.now()}.jpg`;
+    const up=await sb.storage.from("car-photos").upload(path,blob,{contentType:"image/jpeg"});
+    if(up.error)throw up.error;
+    const url=sb.storage.from("car-photos").getPublicUrl(path).data.publicUrl;
+    const au=await sb.auth.updateUser({data:{...(me.user_metadata||{}),avatar_url:url}});
+    if(au.error)throw au.error;
+    const pu=await sb.from("profiles").update({avatar_url:url}).eq("id",me.id);
+    if(pu.error)console.warn("Avatar saved to account metadata; profiles.avatar_url may not exist yet.",pu.error);
+    me=au.data.user||me;profile={...(profile||{}),avatar_url:url};refreshAccountUI();err.textContent="Profile picture updated.";openAccount();
+  }catch(e){err.textContent=e.message||"Could not upload that profile picture."}
+}
 async function openAccount(){
   const d=$("accDlg"),box=$("accBody");
   if(!d.open)d.showModal();
@@ -659,14 +711,23 @@ async function openAccount(){
   const [l,b]=await Promise.all([
     sb.from("listings").select("*").eq("owner",me.id).order("created_at",{ascending:false}),
     sb.from("bookings").select("*").eq("user_id",me.id).order("created_at",{ascending:false})]);
-  const L=l.data||[],B=b.data||[],label={pending:"Waiting for approval",approved:"Live",rejected:"Not approved"};
-  box.innerHTML=`<p class="meta">${esc(me.email)}</p>
-  <h3>My listings</h3>${L.map(x=>`<div class="svc"><div><b>${esc(x.year+" "+x.make+" "+x.model)}</b><span class="meta">KES ${fmt(x.price)} · <span class="st">${label[x.status]||esc(x.status)}</span></span></div><div class="acts"><button class="btn ghost" data-del="${x.id}">Delete</button></div></div>`).join("")||'<p class="meta">You have no listings yet.</p>'}
+  const L=l.data||[],B=b.data||[],label={pending:"Waiting for approval",approved:"Live",rejected:"Not approved"},avatar=profileAvatarUrl(),name=profileName(),phone=profilePhone();
+  box.innerHTML=`<div class="profile-card">
+    <div class="profile-avatar">${avatar?`<img src="${esc(avatar)}" alt="Profile picture">`:esc(initialsFor(name,me.email))}</div>
+    <div><h3 style="margin:0 0 4px">Your profile</h3><p class="meta" style="margin:0">${esc(me.email)}</p>
+      <div class="profile-actions"><label class="btn ghost" style="display:inline-flex;align-items:center;cursor:pointer;margin:0">Change picture<input id="accPhoto" type="file" accept="image/*" hidden></label></div>
+    </div>
+  </div>
+  <div class="profile-grid"><div><label for="accName">Full name</label><input id="accName" value="${esc(name)}" autocomplete="name"></div><div><label for="accPhone">Phone</label><input id="accPhone" value="${esc(phone)}" type="tel" autocomplete="tel"></div></div>
+  <p id="accProfileErr" class="meta" style="color:var(--err)"></p><div class="acts"><button class="btn" id="accSaveProfile">Save account details</button></div>
+  <h3 style="margin-top:22px">My listings</h3>${L.map(x=>`<div class="svc"><div><b>${esc(x.year+" "+x.make+" "+x.model)}</b><span class="meta">KES ${fmt(x.price)} · <span class="st">${label[x.status]||esc(x.status)}</span></span></div><div class="acts"><button class="btn ghost" data-del="${x.id}">Delete</button></div></div>`).join("")||'<p class="meta">You have no listings yet.</p>'}
   <h3 style="margin-top:18px">My garage bookings</h3>${B.map(x=>`<div class="svc"><div><b>${esc(x.service)}</b><span class="meta">${esc(x.date)} · ${esc(x.car||"")} · ${esc(x.ref)}</span></div><span class="st">${esc(x.status)}</span></div>`).join("")||'<p class="meta">No bookings yet.</p>'}
   <div class="acts" style="margin-top:18px">${profile&&profile.is_admin?'<button class="btn" id="accAdmin">Open admin panel</button>':""}<button class="btn ghost" id="accOut">Log out</button><button class="btn ghost" id="accClose">Close</button></div>`;
+  $("accPhoto").onchange=e=>changeProfilePhoto(e.target.files[0]);
+  $("accSaveProfile").onclick=saveAccountProfile;
   box.querySelectorAll("[data-del]").forEach(bt=>bt.onclick=async()=>{
-    if(!confirm("Delete this listing?"))return;
-    await sb.from("listings").delete().eq("id",bt.dataset.del);openAccount();loadListings();
+    if(!confirm("Delete this listing? This will remove the listing from your account."))return;
+    const {error}=await sb.from("listings").delete().eq("id",bt.dataset.del);if(error){alert(error.message);return}openAccount();loadListings();
   });
   $("accOut").onclick=async()=>{await sb.auth.signOut();d.close()};
   $("accClose").onclick=()=>d.close();
@@ -716,7 +777,7 @@ function renderJournal(list){
 function openJournalArticle(p){
   if(!p)return;
   const d=$("dlg");
-  d.innerHTML=`<div class="in journal-modal"><div class="article-head"><span class="project-kicker">${esc(p.category||"Automotive Journal")}</span><h2>${esc(p.title)}</h2><p class="meta">3 Pedals Journal${p.created_at?` · ${esc(new Date(p.created_at).toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"}))}`:""}</p></div><div class="article-body">${esc(p.body)}</div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:24px"><a class="btn wa" href="https://wa.me/254791961807?text=${encodeURIComponent("Hello, I just read the 3 Pedals Journal article: "+p.title)}" target="_blank" rel="noopener">Discuss this story on WhatsApp</a><button class="btn ghost" id="journalClose">Close</button></div></div>`;
+  d.innerHTML=`<div class="in journal-modal"><div class="article-head"><span class="project-kicker">${esc(p.category||"Automotive Journal")}</span><h2>${esc(p.title)}</h2><p class="meta">3 Pedals Journal${p.created_at?` · ${esc(new Date(p.created_at).toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"}))}`:""}</p></div><div class="article-body">${esc(p.body)}</div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:24px"><a class="btn wa" href="https://wa.me/254750495841?text=${encodeURIComponent("Hello, I just read the 3 Pedals Journal article: "+p.title)}" target="_blank" rel="noopener">Discuss this story on WhatsApp</a><button class="btn ghost" id="journalClose">Close</button></div></div>`;
   d.showModal();$("journalClose").onclick=()=>d.close();
 }
 async function loadJournal(){
@@ -956,14 +1017,30 @@ function shrink(f){return new Promise((res,rej)=>{
     c.width=Math.round(i.width*k);c.height=Math.round(i.height*k);c.getContext("2d").drawImage(i,0,0,c.width,c.height);
     URL.revokeObjectURL(u);res(c.toDataURL("image/jpeg",.78))};
   i.onerror=()=>{URL.revokeObjectURL(u);rej()};i.src=u})}
+function renderPhotoPreviews(){
+  const box=$("prev");box.innerHTML="";
+  photos.forEach((x,index)=>{
+    const wrap=document.createElement("div");wrap.className="photo-item";
+    const im=new Image();im.src=x;im.alt="Selected photo "+(index+1);
+    const rm=document.createElement("button");rm.type="button";rm.className="photo-remove";rm.setAttribute("aria-label","Remove photo "+(index+1));rm.title="Remove photo";rm.textContent="×";
+    rm.onclick=()=>{photos.splice(index,1);renderPhotoPreviews()};
+    wrap.append(im,rm);box.appendChild(wrap);
+  });
+}
 $("sPhotos").onchange=async e=>{
-  const err=$("sErr"),all=[...e.target.files];err.textContent="";photos=[];$("prev").innerHTML="";
+  const err=$("sErr"),all=[...e.target.files];err.textContent="";
   if(all.length>6)err.textContent="Only the first 6 photos are used.";
   for(const f of all.slice(0,6)){
+    if(photos.length>=6)break;
     if(!f.type.startsWith("image/")||f.size>15*1024*1024){err.textContent="A file was skipped because it isn't an image or is over 15 MB.";continue}
-    try{const x=await shrink(f);photos.push(x);const im=new Image();im.src=x;im.alt="Selected photo "+photos.length;$("prev").appendChild(im)}
+    try{const x=await shrink(f);photos.push(x);renderPhotoPreviews()}
     catch(_){err.textContent="One photo couldn't be read. Try a JPG or PNG."}
   }
+  e.target.value="";
+};
+$("sCancel").onclick=()=>{
+  if(!confirm("Cancel this listing? Your entered details and selected photos will be cleared."))return;
+  $("sellForm").reset();photos=[];renderPhotoPreviews();sellMode();$("sErr").textContent="";$("sOk").hidden=true;show("buy");
 };
 $("sBtn").onclick=async()=>{
   const v=i=>$(i).value.trim(),err=$("sErr"),yard=modeYard(),ok=$("sOk"),btn=$("sBtn");
@@ -985,9 +1062,26 @@ $("sBtn").onclick=async()=>{
       if(up.error)throw up.error;
       urls.push(sb.storage.from("car-photos").getPublicUrl(path).data.publicUrl);
     }
-    const row={owner:me.id,make:v("sMake"),model:v("sModel"),year:+v("sYear"),price:+v("sPrice"),km:+v("sKm")||0,fuel:$("sFuel").value,description:v("sDesc"),photos:urls,
-      seller_type:yard?"yard":"private",seller_name:yard?v("yName"):(v("sName")||(profile&&profile.name)||""),contact:yard?v("yContact"):"",location:yard?v("yLoc"):"",
-      phone:yard?v("yPhone"):((profile&&profile.phone)||""),email:yard?v("yEmail"):"",web:yard?v("yWeb"):"",whatsapp:wa};
+    const {data:userData,error:userError}=await sb.auth.getUser();
+    if(userError||!userData?.user?.id)throw new Error("Your login session has expired. Please log in again.");
+    const ownerId=userData.user.id;
+    const row={
+      owner:ownerId,
+      make:v("sMake"),
+      model:v("sModel"),
+      year:+v("sYear"),
+      price:+v("sPrice"),
+      km:+v("sKm")||0,
+      fuel:$("sFuel").value,
+      description:v("sDesc"),
+      photos:urls,
+      whatsapp:wa,
+      seller_name:yard?v("yName"):(v("sName")||(profile&&profile.name)||userData.user.email||""),
+      seller_phone:yard?v("yPhone"):((profile&&profile.phone)||""),
+      seller_email:yard?v("yEmail"):(userData.user.email||""),
+      yard_name:yard?v("yName"):"",
+      yard_location:yard?v("yLoc"):""
+    };
     const ins=await sb.from("listings").insert(row);
     if(ins.error)throw ins.error;
     $("sellForm").reset();photos=[];$("prev").innerHTML="";sellMode();
