@@ -350,6 +350,9 @@ dialog{background:var(--surface)!important;color:var(--ink)!important}
 footer{color:var(--mute)!important}
 @media(max-width:800px){header .wrap{grid-template-columns:1fr auto;grid-template-areas:"brand account" "nav nav";gap:10px}.account-pill{justify-self:end}.logo{font-size:27px!important}nav{width:100%;overflow-x:auto;justify-content:flex-start}nav button,nav a.navlink{flex:0 0 auto}}
 @media(max-width:520px){.logo{font-size:24px!important}.account-pill{padding:3px!important}.account-pill button{width:40px!important;height:40px!important}.hero{padding-top:42px!important}.hero h1{font-size:clamp(38px,11vw,56px)!important}}
+
+.brand-slogan{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted,#77746d);margin:-2px 0 0 2px;white-space:nowrap}
+@media(max-width:760px){.brand-slogan{display:none}}
 </style>
 
 <style id="auto-quote-rail">
@@ -453,7 +456,7 @@ main>section{contain:layout style}
 <body>
 <div class="auth-left" id="adminWrap" hidden><button id="adminOpen">Admin panel</button></div>
 <header><div class="wrap">
-  <div class="logo" style="cursor:pointer" onclick="window.location.reload()" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){window.location.reload()}">3 Pedals Auto KE</div>
+  <div class="logo" style="cursor:pointer" onclick="window.location.reload()" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){window.location.reload()}">3 Pedals Auto KE</div><div id="brandSlogan" class="brand-slogan">Driven by Passion. Defined by Excellence.</div>
   <div class="account-pill" aria-label="Account"><span id="accountText">Not signed in</span><button id="accountOpen" aria-label="Open account" title="Account"></button></div>
   <nav role="tablist" aria-label="Sections">
     <button role="tab" data-tab="home" aria-selected="true">Home</button>
@@ -472,7 +475,7 @@ main>section{contain:layout style}
 <section id="home">
   <div class="home-with-quote">
     <aside class="auto-quote-rail" id="autoQuoteRail" aria-label="Automotive quote of the day">
-      <div class="auto-quote-top"><span class="auto-quote-label">Motoring wisdom</span><span class="auto-quote-live">Web powered</span></div>
+      <div class="auto-quote-top"><span class="auto-quote-label">Motoring wisdom</span></div>
       <div class="auto-quote-body auto-quote-loading" id="autoQuoteBody">
         <div class="auto-quote-mark">“</div>
         <div class="auto-quote-text" id="autoQuoteText">Loading a thought from automotive history…</div>
@@ -483,7 +486,7 @@ main>section{contain:layout style}
     </aside>
     <div>
   <div class="hero"><h1>Buy and sell cars with 3 Pedals Auto KE.</h1>
-  <p>Talk to us directly on WhatsApp. We reply to questions about any car, viewings and selling your car.</p>
+  <p>Automotive Excellence Reimagined, For Those Who Appreciate the Drive.</p>
   <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
     <a class="btn alt" href="garage.html">Visit 3 Pedals Garage ↗</a>
     <a class="btn wa" href="https://wa.me/254750495841" target="_blank" rel="noopener">Chat on WhatsApp</a>
