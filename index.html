@@ -506,8 +506,10 @@ main>section{contain:layout style}
   <div class="hero"><h1>Find a car that's been checked, not just cleaned.</h1>
   <p>Book any car for a pre-purchase inspection at 3 Pedals Garage before you pay.</p></div>
   <div class="filters">
-    <input id="q" type="search" placeholder="Search make or model" aria-label="Search make or model">
+    <input id="q" type="search" placeholder="Search make, model or variant" aria-label="Search make, model or variant">
     <select id="make" aria-label="Make"></select>
+    <select id="model" aria-label="Model"><option value="">All models</option></select>
+    <select id="variant" aria-label="Variant"><option value="">All variants</option></select>
     <select id="max" aria-label="Maximum price">
       <option value="0">Any price</option><option value="1000000">Up to 1,000,000</option><option value="2000000">Up to 2,000,000</option><option value="3500000">Up to 3,500,000</option>
     </select>
@@ -937,17 +939,39 @@ async function loadListings(){
   if(error){$("grid").innerHTML='<p class="meta">We could not load the cars right now. Please refresh in a moment.</p>';return}
   cars=data.map(rowToCar);makes();render();
 }
-// Listings
-function makes(){
-  const m=[...new Set(cars.map(c=>c.make))].sort(), cur=$("make").value;
-  $("make").innerHTML='<option value="">All makes</option>'+m.map(x=>`<option>${x}</option>`).join("");
-  $("make").value=cur;
-}
+// Listings: cascading Make -> Model -> available Variant filters.
+const MODEL_FAMILIES={
+"Mercedes-Benz":{"A-Class":["A180","A200","A250"],"C-Class":["C180","C200","C220","C250","C300","C350","C400"],"E-Class":["E200","E220","E250","E300","E350","E400","E450"],"S-Class":["S350","S400","S450","S500","S560","S580"],"GLA":["GLA180","GLA200","GLA250"],"GLC":["GLC200","GLC220","GLC250","GLC300"],"GLE":["GLE300","GLE350","GLE400","GLE450","GLE500"],"GLS":["GLS450","GLS500","GLS580"]},
+"Toyota":{"Corolla":["Corolla","Axio","Fielder"],"Camry":["Camry"],"Crown":["Crown","Athlete","Majesta"],"Harrier":["Harrier","240G","300G","350G","Hybrid"],"Land Cruiser":["Prado","V8","ZX","70 Series","80 Series","100 Series","200 Series","300 Series"],"RAV4":["RAV4"],"Fortuner":["Fortuner"],"Hilux":["Hilux","Revo"],"Vitz":["Vitz","RS"],"Yaris":["Yaris"],"Aqua":["Aqua"],"Prius":["Prius","Alpha","PHV"],"Noah":["Noah"],"Voxy":["Voxy"],"Alphard":["Alphard"],"Hiace":["Hiace"]},
+"Nissan":{"X-Trail":["X-Trail"],"Qashqai":["Qashqai"],"Juke":["Juke"],"Patrol":["Patrol","Y61","Y62"],"Navara":["Navara"],"Note":["Note"],"Dualis":["Dualis"],"Serena":["Serena"],"Tiida":["Tiida"],"March":["March"]},
+"Subaru":{"Forester":["Forester","XT"],"Outback":["Outback"],"Impreza":["Impreza","WRX","WRX STI"],"Legacy":["Legacy"],"XV":["XV","Crosstrek"],"Levorg":["Levorg"],"BRZ":["BRZ"]},
+"Mazda":{"CX-3":["CX-3"],"CX-5":["CX-5"],"CX-7":["CX-7"],"CX-9":["CX-9"],"Mazda2":["Mazda2"],"Mazda3":["Mazda3"],"Mazda6":["Mazda6"],"Demio":["Demio"],"Axela":["Axela"],"Atenza":["Atenza"]},
+"Honda":{"Fit":["Fit","RS","Hybrid"],"Civic":["Civic","Type R"],"Accord":["Accord"],"CR-V":["CR-V"],"Vezel":["Vezel","Hybrid"],"HR-V":["HR-V"],"Freed":["Freed"],"Shuttle":["Shuttle"],"Stepwgn":["Stepwgn"]},
+"BMW":{"1 Series":["116i","118i","120i"],"2 Series":["218i","220i"],"3 Series":["318i","320i","325i","328i","330i","335i","340i"],"4 Series":["420i","430i","435i","440i"],"5 Series":["520i","523i","525i","528i","530i","535i","540i"],"7 Series":["730i","740i","750i"],"X1":["X1"],"X3":["X3"],"X5":["X5"],"X6":["X6"],"X7":["X7"]},
+"Audi":{"A1":["A1"],"A3":["A3","S3"],"A4":["A4","S4"],"A5":["A5","S5"],"A6":["A6","S6"],"A7":["A7","S7"],"A8":["A8"],"Q3":["Q3"],"Q5":["Q5"],"Q7":["Q7"],"Q8":["Q8"]},
+"Volkswagen":{"Golf":["Golf","GTI","R"],"Polo":["Polo","GTI"],"Passat":["Passat"],"Tiguan":["Tiguan"],"Touareg":["Touareg"],"Amarok":["Amarok"],"Transporter":["Transporter"]},
+"Lexus":{"IS":["IS200","IS250","IS300","IS350"],"ES":["ES250","ES300h","ES350"],"GS":["GS250","GS300","GS350","GS450h"],"LS":["LS460","LS500","LS500h"],"NX":["NX200","NX300","NX300h"],"RX":["RX270","RX350","RX450h"],"LX":["LX450","LX470","LX570","LX600"]},
+"Mitsubishi":{"Outlander":["Outlander"],"Pajero":["Pajero","Pajero Sport"],"Lancer":["Lancer","Evolution"],"ASX":["ASX"],"Eclipse Cross":["Eclipse Cross"],"Canter":["Canter"]},
+"Ford":{"Ranger":["Ranger"],"Everest":["Everest"],"Mustang":["Mustang","GT"],"Explorer":["Explorer"],"Escape":["Escape"],"F-150":["F-150"],"Transit":["Transit"]},
+"Land Rover":{"Range Rover":["Range Rover","Autobiography"],"Range Rover Sport":["Range Rover Sport"],"Range Rover Evoque":["Evoque"],"Discovery":["Discovery"],"Defender":["Defender"],"Freelander":["Freelander"]},
+"Porsche":{"911":["Carrera","Turbo","GT3"],"Cayenne":["Cayenne","GTS","Turbo"],"Macan":["Macan","S","GTS","Turbo"],"Panamera":["Panamera"],"Taycan":["Taycan"]},
+"Volvo":{"XC40":["XC40"],"XC60":["XC60"],"XC90":["XC90"],"S60":["S60"],"S90":["S90"]},
+"Peugeot":{"208":["208"],"308":["308"],"3008":["3008"],"5008":["5008"],"508":["508"],"Partner":["Partner"]},
+"Isuzu":{"D-Max":["D-Max"],"MU-X":["MU-X"],"N-Series":["N-Series"]},
+"Suzuki":{"Swift":["Swift"],"Jimny":["Jimny"],"Vitara":["Vitara"],"Baleno":["Baleno"],"Alto":["Alto"]},
+"Hyundai":{"Tucson":["Tucson"],"Santa Fe":["Santa Fe"],"Elantra":["Elantra"],"Kona":["Kona"],"Palisade":["Palisade"],"i10":["i10"],"i20":["i20"]},
+"Kia":{"Sportage":["Sportage"],"Sorento":["Sorento"],"Picanto":["Picanto"],"Rio":["Rio"],"Seltos":["Seltos"],"Carnival":["Carnival"]},
+"Jeep":{"Wrangler":["Wrangler"],"Grand Cherokee":["Grand Cherokee"],"Cherokee":["Cherokee"],"Compass":["Compass"],"Renegade":["Renegade"]}
+};
+function familyFor(make,model){const mm=String(model||"").toLowerCase(),cat=MODEL_FAMILIES[make]||{};for(const [f,vs] of Object.entries(cat)){if(mm===f.toLowerCase()||vs.some(v=>mm===v.toLowerCase())||mm.includes(f.toLowerCase())||vs.some(v=>mm.includes(v.toLowerCase())))return f}return model||"Other"}
+function variantFor(make,model){const f=familyFor(make,model),vs=(MODEL_FAMILIES[make]||{})[f]||[],mm=String(model||"").toLowerCase();return vs.find(v=>mm===v.toLowerCase()||mm.includes(v.toLowerCase()))||model||""}
+function updateBuyFilters(){const mk=$("make").value,mf=$("model").value,cv=$("variant").value;const models=[...new Set(cars.filter(c=>!mk||c.make===mk).map(c=>familyFor(c.make,c.model)))].sort();$("model").innerHTML='<option value="">All models</option>'+models.map(x=>`<option>${esc(x)}</option>`).join("");if(models.includes(mf))$("model").value=mf;const variants=[...new Set(cars.filter(c=>(!mk||c.make===mk)&&(!mf||familyFor(c.make,c.model)===mf)).map(c=>variantFor(c.make,c.model)).filter(Boolean))].sort();$("variant").innerHTML='<option value="">All variants</option>'+variants.map(x=>`<option>${esc(x)}</option>`).join("");if(variants.includes(cv))$("variant").value=cv}
+function makes(){const m=[...new Set(cars.map(c=>c.make))].sort(),cur=$("make").value;$("make").innerHTML='<option value="">All makes</option>'+m.map(x=>`<option value="${esc(x)}">${esc(x==="Mercedes-Benz"?"Mercedes":x)}</option>`).join("");$("make").value=cur;updateBuyFilters()}
 const hasPh=c=>c.photos&&c.photos[0]?" has":"";
 const bgOf=c=>c.photos&&c.photos[0]?`${c.color} url('${c.photos[0]}') center/cover`:c.color;
 function render(){
-  const q=$("q").value.trim().toLowerCase(),mk=$("make").value,mx=+$("max").value,s=$("sort").value;
-  let r=cars.filter(c=>(!q||(c.make+" "+c.model).toLowerCase().includes(q))&&(!mk||c.make===mk)&&(!mx||c.price<=mx));
+  const q=$("q").value.trim().toLowerCase(),mk=$("make").value,mf=$("model").value,vr=$("variant").value,mx=+$("max").value,s=$("sort").value;
+  let r=cars.filter(c=>(!q||(c.make+" "+c.model).toLowerCase().includes(q))&&(!mk||c.make===mk)&&(!mf||familyFor(c.make,c.model)===mf)&&(!vr||variantFor(c.make,c.model)===vr)&&(!mx||c.price<=mx));
   r.sort((a,b)=>s==="low"?a.price-b.price:s==="high"?b.price-a.price:s==="km"?a.km-b.km:b.year-a.year);
   $("count").textContent=r.length+(r.length===1?" car":" cars")+" found";
   $("grid").innerHTML=r.length?r.map(c=>`<button class="card" data-id="${c.id}">
@@ -958,7 +982,10 @@ function render(){
     :'<p class="meta">No cars match these filters. Clear the search or raise the price limit.</p>';
 }
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-["q","make","max","sort"].forEach(i=>$(i).addEventListener("input",render));
+["q","max","sort"].forEach(i=>$(i).addEventListener("input",render));
+$("make").addEventListener("change",()=>{updateBuyFilters();render()});
+$("model").addEventListener("change",()=>{updateBuyFilters();render()});
+$("variant").addEventListener("change",render);
 $("grid").onclick=e=>{const b=e.target.closest(".card");if(b)detail(b.dataset.id)};
 
 function detail(id){
