@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>3 Pedals Auto KE — Admin Verification</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<style>
+:root{--bg:#f5f5f3;--card:#fff;--ink:#151515;--muted:#6b6b67;--line:#ddd;--ok:#176b3a;--bad:#9b2525;--gold:#9a7400}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Arial,sans-serif}.wrap{max-width:1200px;margin:auto;padding:24px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:22px}.brand{font-weight:800;font-size:21px}.brand span{display:block;color:var(--muted);font-size:12px;font-weight:400;margin-top:2px}.actions{display:flex;gap:8px;flex-wrap:wrap}button{border:0;border-radius:8px;padding:10px 15px;font-weight:700;cursor:pointer}.primary{background:#151515;color:#fff}.ghost{background:#eee;color:#222}.danger{background:#fff0f0;color:var(--bad);border:1px solid #e2bcbc}.approve{background:#e8f6ed;color:var(--ok);border:1px solid #b9ddc6}.reject{background:#fff3e8;color:#8a4b00;border:1px solid #e6c79e}.notice{padding:14px 16px;border-radius:10px;background:#fff;border:1px solid var(--line);margin-bottom:18px}.notice.err{color:var(--bad);background:#fff4f4}.notice.ok{color:var(--ok);background:#f0fbf4}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}.stat b{font-size:26px;display:block}.stat span{color:var(--muted);font-size:13px}.tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}.tab.active{background:#151515;color:#fff}.listing{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:14px;overflow:hidden}.summary{padding:16px;display:flex;gap:16px;justify-content:space-between;align-items:flex-start}.vehicle h2{font-size:19px;margin:0 0 5px}.meta{color:var(--muted)}.status{display:inline-block;border-radius:999px;padding:4px 9px;font-size:12px;font-weight:700;background:#eee}.status.pending{background:#fff4d5;color:#765900}.status.approved{background:#e8f6ed;color:var(--ok)}.status.rejected{background:#ffe9e9;color:var(--bad)}.details{display:none;border-top:1px solid var(--line);padding:16px}.listing.open .details{display:block}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.photos{display:flex;gap:8px;overflow:auto}.photos img{width:145px;height:105px;object-fit:cover;border-radius:8px;border:1px solid var(--line);background:#eee}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.field{background:#fafafa;border:1px solid #eee;border-radius:8px;padding:10px}.field strong{display:block;font-size:11px;text-transform:uppercase;color:var(--muted);margin-bottom:3px}.desc{white-space:pre-wrap}.empty{text-align:center;padding:40px;background:#fff;border:1px dashed #ccc;border-radius:12px;color:var(--muted)}#login{max-width:430px;margin:90px auto;background:#fff;border:1px solid var(--line);border-radius:14px;padding:25px}label{display:block;font-weight:700;font-size:13px;margin:14px 0 6px}input{width:100%;padding:12px;border:1px solid #ccc;border-radius:8px;font:inherit}.hidden{display:none!important}@media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}.grid,.fields{grid-template-columns:1fr}.summary{flex-direction:column}.top{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<div id="login" class="hidden"><div class="brand">3 Pedals Auto KE<span>Admin verification</span></div><h1>Sign in</h1><p class="meta">Only approved 3 Pedals Auto KE administrators can access vehicle verification.</p><label>Email</label><input id="email" type="email" autocomplete="username"><label>Password</label><input id="password" type="password" autocomplete="current-password"><p id="loginErr" class="notice err hidden"></p><button id="loginBtn" class="primary" style="width:100%;margin-top:15px">Sign in</button></div>
+<div id="app" class="wrap hidden">
+  <header class="top"><div class="brand">3 Pedals Auto KE<span>Vehicle verification dashboard</span></div><div class="actions"><button class="ghost" id="refresh">Refresh</button><button class="ghost" id="logout">Sign out</button></div></header>
+  <div id="notice" class="notice hidden"></div>
+  <div class="stats"><div class="stat"><b id="pendingCount">0</b><span>Pending verification</span></div><div class="stat"><b id="approvedCount">0</b><span>Approved / live</span></div><div class="stat"><b id="rejectedCount">0</b><span>Rejected</span></div><div class="stat"><b id="totalCount">0</b><span>Total listings</span></div></div>
+  <div class="tabs"><button class="tab active" data-filter="pending">Pending</button><button class="tab" data-filter="approved">Approved</button><button class="tab" data-filter="rejected">Rejected</button><button class="tab" data-filter="all">All</button></div>
+  <div id="listings"></div>
+</div>
+<script>
+const CFG=window.SB_CONFIG||{};
+const sb=(CFG.url&&!/^PASTE/.test(CFG.url)&&window.supabase)?window.supabase.createClient(CFG.url,CFG.key):null;
+let filter="pending",all=[];
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function showNotice(msg,type=""){const n=$("notice");n.textContent=msg;n.className="notice"+(type?" "+type:"");n.classList.remove("hidden");}
+function hideNotice(){$("notice").classList.add("hidden")}
+function fmt(n){return Number(n||0).toLocaleString("en-KE")}
+function statusBadge(s){return `<span class="status ${esc(s)}">${esc(s)}</span>`}
+function photosOf(x){return Array.isArray(x.photos)?x.photos:[]}
+function render(){
+ const list=filter==="all"?all:all.filter(x=>String(x.status||"").toLowerCase()===filter);
+ $("pendingCount").textContent=all.filter(x=>x.status==="pending").length;
+ $("approvedCount").textContent=all.filter(x=>x.status==="approved").length;
+ $("rejectedCount").textContent=all.filter(x=>x.status==="rejected").length;
+ $("totalCount").textContent=all.length;
+ if(!list.length){$("listings").innerHTML=`<div class="empty">No ${filter==="all"?"vehicle listings":filter+" vehicle listings"} found.</div>`;return}
+ $("listings").innerHTML=list.map(x=>{
+  const photos=photosOf(x),name=x.seller_name||"—",phone=x.seller_phone||x.phone||x.whatsapp||"—";
+  return `<article class="listing" data-id="${esc(x.id)}">
+   <div class="summary"><div class="vehicle"><h2>${esc(x.year||"")} ${esc(x.make||"")} ${esc(x.model||"")}</h2><div class="meta">KES ${fmt(x.price)} · ${fmt(x.km)} km · ${esc(x.fuel||"Fuel not specified")}</div><div style="margin-top:8px">${statusBadge(x.status||"unknown")}</div></div><div class="actions"><button class="ghost" data-view="${esc(x.id)}">View details</button>${x.status!=="approved"?`<button class="approve" data-action="approve" data-id="${esc(x.id)}">Approve</button>`:""}${x.status!=="rejected"?`<button class="reject" data-action="reject" data-id="${esc(x.id)}">Reject</button>`:""}<button class="danger" data-action="delete" data-id="${esc(x.id)}">Delete</button></div></div>
+   <div class="details"><div class="grid"><div><div class="fields"><div class="field"><strong>Seller</strong>${esc(name)}</div><div class="field"><strong>WhatsApp / phone</strong>${esc(phone)}</div><div class="field"><strong>Email</strong>${esc(x.seller_email||x.email||"—")}</div><div class="field"><strong>Location</strong>${esc(x.yard_location||x.location||"—")}</div><div class="field"><strong>Year</strong>${esc(x.year||"—")}</div><div class="field"><strong>Make</strong>${esc(x.make||"—")}</div><div class="field"><strong>Model / variant</strong>${esc(x.model||"—")}</div><div class="field"><strong>Price</strong>KES ${fmt(x.price)}</div></div><div class="field" style="margin-top:9px"><strong>Description</strong><div class="desc">${esc(x.description||"No description provided.")}</div></div></div><div><strong>Vehicle photos</strong><div class="photos" style="margin-top:8px">${photos.length?photos.map(p=>`<img src="${esc(p)}" alt="Vehicle photo" loading="lazy">`).join(""):"<span class=\"meta\">No photos uploaded.</span>"}</div></div></div></div>`
+ }).join("");
+}
+async function load(){
+ if(!sb){showNotice("Supabase is not configured. Make sure this page is uploaded beside config.js.","err");return}
+ hideNotice();$("listings").innerHTML='<div class="empty">Loading listings…</div>';
+ const {data,error}=await sb.from("listings").select("*").order("created_at",{ascending:false});
+ if(error){showNotice("Could not load listings: "+error.message,"err");return}
+ all=data||[];render();
+}
+async function checkAdmin(){
+ if(!sb){$("login").classList.remove("hidden");showNotice("Supabase is not configured.","err");return}
+ const {data:{user}}=await sb.auth.getUser();
+ if(!user){$("login").classList.remove("hidden");$("app").classList.add("hidden");return}
+ const {data:profile,error}=await sb.from("profiles").select("is_admin").eq("id",user.id).single();
+ if(error||!profile?.is_admin){$("login").classList.remove("hidden");$("app").classList.add("hidden");$("loginErr").textContent="This account is not an administrator.";$("loginErr").classList.remove("hidden");await sb.auth.signOut();return}
+ $("login").classList.add("hidden");$("app").classList.remove("hidden");await load();
+}
+$("loginBtn").onclick=async()=>{const email=$("email").value.trim(),password=$("password").value,err=$("loginErr");err.classList.add("hidden");if(!email||!password){err.textContent="Enter your email and password.";err.classList.remove("hidden");return}const {error}=await sb.auth.signInWithPassword({email,password});if(error){err.textContent=error.message;err.classList.remove("hidden");return}checkAdmin()};
+$("logout").onclick=async()=>{await sb.auth.signOut();location.reload()};
+$("refresh").onclick=load;
+document.querySelectorAll("[data-filter]").forEach(b=>b.onclick=()=>{filter=b.dataset.filter;document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");render()});
+$("listings").onclick=async e=>{
+ const view=e.target.closest("[data-view]");if(view){view.closest(".listing").classList.toggle("open");return}
+ const b=e.target.closest("[data-action]");if(!b)return;const id=b.dataset.id,a=b.dataset.action;
+ if(a==="delete"&&!confirm("Delete this listing permanently? This cannot be undone."))return;
+ if(a!=="delete"&&!confirm(`${a==="approve"?"Approve":"Reject"} this vehicle listing?`))return;
+ b.disabled=true;
+ const q=a==="delete"?sb.from("listings").delete().eq("id",id):sb.from("listings").update({status:a==="approve"?"approved":"rejected"}).eq("id",id);
+ const {error}=await q;if(error){showNotice("Action failed: "+error.message,"err");b.disabled=false;return}
+ showNotice(a==="delete"?"Listing deleted.":`Listing ${a}d successfully.`,"ok");await load();
+};
+sb?.auth.onAuthStateChange(()=>setTimeout(checkAdmin,0));checkAdmin();
+</script>
+</body></html>
