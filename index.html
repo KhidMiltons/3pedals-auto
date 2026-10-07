@@ -485,9 +485,8 @@ main>section{contain:layout style}
   <div class="hero"><h1>Buy and sell cars with 3 Pedals Auto KE.</h1>
   <p>Talk to us directly on WhatsApp. We reply to questions about any car, viewings and selling your car.</p>
   <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
-    <a class="btn wa" href="https://wa.me/254750495841?text=Hello%203%20Pedals%20Auto%20KE%2C%20I%27d%20like%20to%20enquire." target="_blank" rel="noopener">Chat on WhatsApp</a>
-    <a class="btn ghost" href="tel:+254750495841">Call +254 750 495 841</a>
     <a class="btn alt" href="garage.html">Visit 3 Pedals Garage ↗</a>
+    <a class="btn wa" href="https://wa.me/254750495841" target="_blank" rel="noopener">Chat on WhatsApp</a>
   </div></div>
   <div class="tiles">
     <button class="tile" data-go="buy"><h3>Buy a car</h3><span class="meta">Browse checked cars for sale</span></button>
@@ -569,13 +568,14 @@ main>section{contain:layout style}
 
 <section id="about" hidden><div class="hero"><span class="eyebrow">ABOUT US</span><h1>3 Pedals Auto KE</h1><p>We bring vehicle sales, honest advice and professional garage services together under one automotive brand.</p></div><div class="cols"><div class="panel"><h2>What we do</h2><p>We help clients buy and sell vehicles while giving them access to servicing, repairs and pre-purchase inspections through 3 Pedals Garage.</p><p class="meta">Our focus is straightforward communication, careful vehicle checks and a professional experience from enquiry to ownership.</p></div><div class="panel"><h2>Our approach</h2><div class="svc"><div><b>Transparent</b><span class="meta">Clear information before you decide.</span></div></div><div class="svc"><div><b>Practical</b><span class="meta">Advice based on the actual vehicle and your needs.</span></div></div><div class="svc"><div><b>Connected</b><span class="meta">Sales and garage support in one place.</span></div></div></div></div></section>
 
-<section id="contact" hidden><div class="hero"><span class="eyebrow">CONTACT US</span><h1>Let’s talk about your car.</h1><p>Choose the channel that works best for you. For the fastest response, message us on WhatsApp.</p></div><div class="contact-grid"><a class="contact-card" href="https://wa.me/254750495841" target="_blank" rel="noopener"><span>WHATSAPP</span><strong>Message us</strong><small>Fastest way to reach us</small></a><a class="contact-card" href="mailto:miltonangwenyi@gmail.com"><span>EMAIL</span><strong>miltonangwenyi@gmail.com</strong><small>Appointments and enquiries</small></a><div class="contact-card"><span>ADDRESS</span><strong>P.O. Box 462-00516</strong><small>3 Pedals Auto KE</small></div></div></section>
+<section id="contact" hidden><div class="hero"><span class="eyebrow">CONTACT US</span><h1>Let’s talk about your car.</h1><p>Choose the channel that works best for you. For the fastest response, message us on WhatsApp.</p></div><div class="contact-grid"><a class="contact-card" href="https://wa.me/254750495841" target="_blank" rel="noopener"><span>💬 WHATSAPP</span><strong>Message us</strong><small>Fastest way to reach us</small></a><a class="contact-card" href="tel:+254750495841"><span>📞 CALL</span><strong>+254 750 495 841</strong><small>Call us directly</small></a><a class="contact-card" href="mailto:miltonangwenyi@gmail.com"><span>✉️ EMAIL</span><strong>miltonangwenyi@gmail.com</strong><small>Appointments and enquiries</small></a><a class="contact-card" href="https://instagram.com/3pedalsauto" target="_blank" rel="noopener"><span>📸 INSTAGRAM</span><strong>@3pedalsauto</strong><small>Follow us on Instagram</small></a><a class="contact-card" href="https://facebook.com/3pedalsauto" target="_blank" rel="noopener"><span>📘 FACEBOOK</span><strong>3 Pedals Auto KE</strong><small>Follow us on Facebook</small></a><a class="contact-card" href="https://twitter.com/3pedalsauto" target="_blank" rel="noopener"><span>𝕏 TWITTER</span><strong>@3pedalsauto</strong><small>Follow us on X / Twitter</small></a><a class="contact-card" href="https://tiktok.com/@3pedalsauto" target="_blank" rel="noopener"><span>🎵 TIKTOK</span><strong>tiktok.com/@3pedalsauto</strong><small>Follow us on TikTok</small></a><div class="contact-card"><span>📍 ADDRESS</span><strong>P.O. Box 462-00516</strong><small>3 Pedals Auto KE</small></div></div></section>
 
 </main>
 
-<footer><div class="wrap">3 Pedals Auto KE · P.O. Box 462-00516 · WhatsApp +254 791 961 807 · miltonangwenyi@gmail.com. Prices in KES.</div></footer>
+<a class="fab" href="https://wa.me/254750495841" target="_blank" rel="noopener" aria-label="Chat with 3 Pedals Auto KE on WhatsApp">WhatsApp</a>
 
-<a class="fab" href="https://wa.me/254750495841?text=Hello%203%20Pedals%20Auto%20KE" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">WhatsApp us</a>
+<footer><div class="wrap">3 Pedals Auto KE · P.O. Box 462-00516 · WhatsApp +254 750 495 841 · miltonangwenyi@gmail.com. Prices in KES.</div></footer>
+
 
 <dialog id="dlg" aria-label="Car details"></dialog>
 <dialog id="authDlg" class="authbox"><div class="in"><h2 id="authTitle">Create your account</h2><p class="meta">Create an account to list vehicles and book garage appointments.</p><label id="authNameLabel">Full name</label><input id="authName"><label>Email</label><input id="authEmail" type="email"><label>Phone</label><input id="authPhone" type="tel"><label>Password</label><input id="authPassword" type="password"><p id="authErr" class="meta" style="color:var(--err)"></p><button class="btn" id="authSubmit">Create account</button> <button class="btn ghost" id="authClose">Close</button><p class="switch"><span id="authSwitchText">Already have an account?</span> <button id="authSwitch">Log in</button></p></div></dialog>
@@ -585,6 +585,14 @@ main>section{contain:layout style}
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
 <script>
+// SOCIAL LINKS — edit these four values later when you have your final handles/URLs.
+const SOCIALS={
+  instagram:{url:"https://instagram.com/3pedalsauto",label:"@3pedalsauto"},
+  facebook:{url:"https://facebook.com/3pedalsauto",label:"3 Pedals Auto KE"},
+  twitter:{url:"https://twitter.com/3pedalsauto",label:"@3pedalsauto"},
+  tiktok:{url:"https://tiktok.com/@3pedalsauto",label:"tiktok.com/@3pedalsauto"}
+};
+
 const fmt=n=>Number(n).toLocaleString("en-US");
 // Database connection. Fill in config.js (see SETUP.md). Without it the site runs in demo mode with sample cars.
 const CFG=window.SB_CONFIG||{};
