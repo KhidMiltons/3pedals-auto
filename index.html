@@ -351,8 +351,18 @@ footer{color:var(--mute)!important}
 @media(max-width:800px){header .wrap{grid-template-columns:1fr auto;grid-template-areas:"brand account" "nav nav";gap:10px}.account-pill{justify-self:end}.logo{font-size:27px!important}nav{width:100%;overflow-x:auto;justify-content:flex-start}nav button,nav a.navlink{flex:0 0 auto}}
 @media(max-width:520px){.logo{font-size:24px!important}.account-pill{padding:3px!important}.account-pill button{width:40px!important;height:40px!important}.hero{padding-top:42px!important}.hero h1{font-size:clamp(38px,11vw,56px)!important}}
 
-.brand-slogan{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted,#77746d);margin:-2px 0 0 2px;white-space:nowrap}
-@media(max-width:760px){.brand-slogan{display:none}}
+.logo-image{display:flex!important;align-items:center!important;height:52px!important;width:150px!important;overflow:hidden!important}
+.logo-image img{display:block!important;width:150px!important;height:auto!important;max-height:52px!important;object-fit:contain!important;object-position:left center!important;filter:drop-shadow(0 5px 14px rgba(0,0,0,.18));transition:transform .35s cubic-bezier(.22,1,.36,1),filter .35s ease!important}
+.logo-image:hover img{transform:scale(1.025)!important;filter:drop-shadow(0 7px 18px rgba(0,0,0,.24))!important}
+@media(max-width:760px){.logo-image{width:112px!important;height:42px!important}.logo-image img{width:112px!important;max-height:42px!important}}
+
+.hero-brand-logo img{width:min(290px,78vw)}}
+
+
+
+
+
+
 </style>
 
 <style id="auto-quote-rail">
@@ -456,7 +466,7 @@ main>section{contain:layout style}
 <body>
 <div class="auth-left" id="adminWrap" hidden><button id="adminOpen">Admin panel</button></div>
 <header><div class="wrap">
-  <div class="logo" style="cursor:pointer" onclick="window.location.reload()" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){window.location.reload()}">3 Pedals Auto KE</div><div id="brandSlogan" class="brand-slogan">Driven by Passion. Defined by Excellence.</div>
+  <div class="logo" style="cursor:pointer" onclick="window.location.reload()" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){window.location.reload()}">3 Pedals Auto KE</div>
   <div class="account-pill" aria-label="Account"><span id="accountText">Not signed in</span><button id="accountOpen" aria-label="Open account" title="Account"></button></div>
   <nav role="tablist" aria-label="Sections">
     <button role="tab" data-tab="home" aria-selected="true">Home</button>
@@ -475,7 +485,7 @@ main>section{contain:layout style}
 <section id="home">
   <div class="home-with-quote">
     <aside class="auto-quote-rail" id="autoQuoteRail" aria-label="Automotive quote of the day">
-      <div class="auto-quote-top"><span class="auto-quote-label">Motoring wisdom</span></div>
+      <div class="auto-quote-top"><span class="auto-quote-label">Motoring wisdom</span><span class="auto-quote-live">Web powered</span></div>
       <div class="auto-quote-body auto-quote-loading" id="autoQuoteBody">
         <div class="auto-quote-mark">“</div>
         <div class="auto-quote-text" id="autoQuoteText">Loading a thought from automotive history…</div>
@@ -577,7 +587,9 @@ main>section{contain:layout style}
 
 <a class="fab" href="https://wa.me/254750495841" target="_blank" rel="noopener" aria-label="Chat with 3 Pedals Auto KE on WhatsApp">WhatsApp</a>
 
-<footer><div class="wrap">3 Pedals Auto KE · P.O. Box 462-00516 · WhatsApp +254 750 495 841 · miltonangwenyi@gmail.com. Prices in KES.</div></footer>
+<footer>
+
+<div class="wrap">3 Pedals Auto KE · P.O. Box 462-00516 · WhatsApp +254 750 495 841 · miltonangwenyi@gmail.com. Prices in KES.</div></footer>
 
 
 <dialog id="dlg" aria-label="Car details"></dialog>
