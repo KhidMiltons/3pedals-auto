@@ -39,15 +39,26 @@ nav button[aria-selected="true"]{background:#d4a017;color:#0d0d0d;opacity:1}
 input,select,textarea{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 12px}
 label{display:block;font-weight:600;font-size:14px;margin:12px 0 4px}
 .count{color:var(--mute);margin:8px 0 14px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;padding-bottom:40px}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;text-align:left;cursor:pointer;padding:0}
-.card:hover{border-color:var(--blue)}
-.swatch{height:96px;display:flex;align-items:flex-end;padding:10px 12px;font:700 40px "Playfair Display",Georgia,serif;color:rgba(255,255,255,.92)}
-.card .body{padding:12px 14px 14px}
-.card h3{font-size:22px}
-.price{font:700 24px "Playfair Display",Georgia,serif;color:var(--blue);margin-top:6px}
-.meta{color:var(--mute);font-size:14px}
-.tag{display:inline-block;font-size:12px;font-weight:600;border:1px solid var(--line);border-radius:99px;padding:1px 9px;margin:6px 4px 0 0}
+.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;padding-bottom:40px}
+.card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;text-align:left;cursor:pointer;padding:0;min-width:0;box-shadow:0 8px 24px rgba(0,0,0,.07);transition:transform .28s cubic-bezier(.22,1,.36,1),box-shadow .28s ease,border-color .28s ease}
+.card:hover{transform:translateY(-7px);border-color:rgba(227,179,65,.65);box-shadow:0 18px 42px rgba(0,0,0,.15)}
+.card:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.swatch{height:148px;display:flex;align-items:flex-end;padding:10px 12px;font:700 34px "Playfair Display",Georgia,serif;color:rgba(255,255,255,.94);background-position:center;transition:transform .5s cubic-bezier(.22,1,.36,1),filter .35s ease}
+.card:hover .swatch{transform:scale(1.035);filter:saturate(1.08)}
+.card .body{padding:12px 13px 14px}
+.card h3{font-size:18px;line-height:1.15;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.price{font:700 21px "Playfair Display",Georgia,serif;color:var(--blue);margin-top:5px}
+.meta{color:var(--mute);font-size:13px}
+.tag{display:inline-block;font-size:11px;font-weight:700;border:1px solid var(--line);border-radius:99px;padding:2px 8px;margin:7px 3px 0 0}
+.yard-badge{position:absolute;left:10px;top:10px;z-index:2;padding:6px 9px;border-radius:999px;background:rgba(15,15,15,.82);color:#fff;font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;backdrop-filter:blur(8px)}
+.yard-line{display:flex;gap:6px;align-items:center;margin-top:9px;padding-top:9px;border-top:1px solid var(--line);font-size:12px;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.yard-line strong{color:var(--ink);overflow:hidden;text-overflow:ellipsis}
+.card-reveal{max-height:0;opacity:0;overflow:hidden;transition:max-height .3s ease,opacity .25s ease}
+.card:hover .card-reveal,.card:focus-visible .card-reveal{max-height:70px;opacity:1}
+@media(max-width:1300px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:1050px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:760px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.swatch{height:125px}.card h3{font-size:16px}}
+@media(max-width:480px){.grid{grid-template-columns:1fr 1fr}.swatch{height:110px}.card .body{padding:10px}.price{font-size:18px}}
 .btn{background:var(--gold);color:var(--gold-ink);border:0;border-radius:6px;padding:11px 18px;font-weight:600;cursor:pointer}
 .btn.alt{background:var(--alt);color:var(--alt-ink)}
 .btn.ghost{background:none;border:1px solid var(--line);color:var(--ink)}
@@ -535,6 +546,7 @@ main>section{contain:layout style}
         <div><label for="yLoc">Location / address</label><input id="yLoc" placeholder="Street, area, town"></div>
         <div><label for="yPhone">Phone number</label><input id="yPhone" type="tel"></div>
         <div><label for="yEmail">Email (optional)</label><input id="yEmail" type="email"></div>
+        <div><label for="yWeb">Website (optional)</label><input id="yWeb" type="url" placeholder="https://example.com"></div>
         <div><label for="yWeb">Website or social link (optional)</label><input id="yWeb"></div>
       </div>
     </div>
@@ -941,7 +953,7 @@ $("adminPanel").onclick=async e=>{
 $("adminPanel").onchange=async e=>{const s=e.target.closest("[data-bk]");if(s)await sb.from("bookings").update({status:s.value}).eq("id",s.dataset.bk)};
 
 const rowToCar=(r,i)=>({id:r.id,make:String(r.make||"").trim(),model:String(r.model||"").trim(),year:r.year,price:r.price,km:r.km||0,fuel:r.fuel||"",desc:r.description||"",photos:r.photos||[],color:colors[i%colors.length],
-  seller:{type:r.seller_type,name:r.seller_name,contact:r.contact,location:r.location,phone:r.seller_phone||r.phone,email:r.seller_email||r.email,web:r.web,whatsapp:r.whatsapp}});
+  seller:{type:r.seller_type||((r.yard_name||r.yard_location)?"yard":"private"),name:r.yard_name||r.seller_name,contact:r.contact,location:r.yard_location||r.location,phone:r.seller_phone||r.phone,email:r.seller_email||r.email,web:r.web,whatsapp:r.whatsapp}});
 async function loadListings(){
   if(!sb)return;
   const {data,error}=await sb.from("listings").select("*").eq("status","approved").order("created_at",{ascending:false});
@@ -984,12 +996,17 @@ function render(){
   let r=cars.filter(c=>(!q||(c.make+" "+c.model).toLowerCase().includes(q))&&(!mk||canonicalMake(c.make)===mk)&&(!mf||familyFor(c.make,c.model)===mf)&&(!vr||variantFor(c.make,c.model)===vr)&&(!mx||c.price<=mx));
   r.sort((a,b)=>s==="low"?a.price-b.price:s==="high"?b.price-a.price:s==="km"?a.km-b.km:b.year-a.year);
   $("count").textContent=r.length+(r.length===1?" car":" cars")+" found";
-  $("grid").innerHTML=r.length?r.map(c=>`<button class="card" data-id="${c.id}">
-    <div class="swatch${hasPh(c)}" style="background:${bgOf(c)}">${c.year}</div>
-    <div class="body"><h3>${esc(c.make)} ${esc(c.model)}</h3>
-    <div class="price">KES ${fmt(c.price)}</div>
-    <span class="tag">${fmt(c.km)} km</span><span class="tag">${esc(c.fuel)}</span><span class="tag">${c.seller&&c.seller.type==="yard"?"Car yard":"Private"}</span></div></button>`).join("")
-    :'<p class="meta">No cars match these filters. Clear the search or raise the price limit.</p>';
+  $("grid").innerHTML=r.length?r.map(c=>{
+    const isYard=c.seller&&c.seller.type==="yard",yardName=c.seller?.name||"Car yard",loc=c.seller?.location||"";
+    return `<button class="card" data-id="${c.id}">
+      ${isYard?`<span class="yard-badge">🏢 Car Yard</span>`:""}
+      <div class="swatch${hasPh(c)}" style="background:${bgOf(c)}">${c.year}</div>
+      <div class="body"><h3>${esc(c.make)} ${esc(c.model)}</h3>
+      <div class="price">KES ${fmt(c.price)}</div>
+      <span class="tag">${fmt(c.km)} km</span><span class="tag">${esc(c.fuel||"N/A")}</span><span class="tag">${isYard?"Yard listing":"Private"}</span>
+      ${isYard?`<div class="yard-line">🏢 <strong>${esc(yardName)}</strong></div><div class="card-reveal">${loc?`<div class="yard-line">📍 ${esc(loc)}</div><div class="meta" style="margin-top:7px">Open vehicle for contacts & directions ↗</div>`:""}</div>`:""}
+      </div></button>`;
+  }).join("") :'<p class="meta">No cars match these filters. Clear the search or raise the price limit.</p>';
 }
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 ["q","max","sort"].forEach(i=>$(i).addEventListener("input",render));
@@ -1133,9 +1150,11 @@ $("sBtn").onclick=async()=>{
       description:v("sDesc"),
       photos:urls,
       whatsapp:wa,
+      seller_type:yard?"yard":"private",
       seller_name:yard?v("yName"):(v("sName")||(profile&&profile.name)||userData.user.email||""),
       seller_phone:yard?v("yPhone"):((profile&&profile.phone)||""),
       seller_email:yard?v("yEmail"):(userData.user.email||""),
+      web:yard?v("yWeb"):"",
       yard_name:yard?v("yName"):"",
       yard_location:yard?v("yLoc"):""
     };
