@@ -53,13 +53,16 @@ function render(r){
   const sellerName=r.yard_name||r.seller_name||'Seller';
   const location=r.yard_location||r.location||'';
   const mapUrl=location?`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`:'';
+  const yardLink=isYard?`<a class="btn ghost" href="yard.html?name=${encodeURIComponent(sellerName)}">🏢 View ${esc(sellerName)} profile</a>`:'';
   const sellerBits=[
     isYard?`<div class="yard-label">🏢 CAR YARD LISTING</div>`:'',
+    isYard?`<p class="meta">This vehicle is listed by a verified car-yard account on 3 Pedals Auto KE.</p>`:'',
     location?`<p>📍 <strong>${esc(location)}</strong></p>`:'',
     phone?`<p>📞 ${esc(phone)}</p>`:'',
     r.seller_email?`<p>✉️ ${esc(r.seller_email)}</p>`:'',
     r.web?`<p>🌐 <a href="${esc(/^https?:\/\//i.test(r.web)?r.web:'https://'+r.web)}" target="_blank" rel="noopener">${esc(r.web)}</a></p>`:'',
-    mapUrl?`<a class="btn ghost" href="${esc(mapUrl)}" target="_blank" rel="noopener">📍 Get directions to this yard</a>`:''
+    mapUrl?`<a class="btn ghost" href="${esc(mapUrl)}" target="_blank" rel="noopener">📍 Get directions to this yard</a>`:'',
+    yardLink
   ].join('');
   $('app').outerHTML=`<div class="vehicle"><div>${gallery}</div><article class="info"><span class="eyebrow">3 Pedals Auto KE · Approved listing</span><h1>${esc(r.make)} ${esc(r.model)} <span class="year">${esc(r.year||'')}</span></h1><div class="price">KES ${fmt(r.price)}</div><span class="status">Available to enquire</span><div class="ref">Vehicle reference: <strong>${ref}</strong></div><div class="specs"><div class="spec"><span>Mileage</span><strong>${fmt(r.km)} km</strong></div><div class="spec"><span>Fuel</span><strong>${esc(r.fuel||'Not specified')}</strong></div><div class="spec"><span>Make</span><strong>${esc(r.make||'')}</strong></div><div class="spec"><span>Model / Variant</span><strong>${esc(r.model||'')}</strong></div></div><p class="desc">${esc(r.description||'No description provided.')}</p><div class="seller"><h3>${isYard?"Car Yard":"Seller"}</h3><p><strong>${esc(sellerName)}</strong></p>${sellerBits}</div><div class="actions">${wa?`<a class="btn gold" href="https://wa.me/${esc(wa)}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">💬 WhatsApp Enquiry</a>`:''}${phone?`<a class="btn dark" href="tel:${esc(waNumber(phone))}">📞 Call Seller</a>`:''}<button class="btn ghost" type="button" id="shareBtn">↗ Share vehicle</button><button class="btn ghost" type="button" id="copyBtn">⧉ Copy details</button><a class="btn ghost" href="index.html#buy">← More cars</a></div><div class="note">For your safety, inspect the vehicle in person, verify ownership documents and complete payment only after you are satisfied with the car and paperwork.</div></article></div>`;
   document.querySelectorAll('.thumb').forEach(b=>b.onclick=()=>{const i=+b.dataset.photo;$('mainPhoto').src=photos[i];document.querySelectorAll('.thumb').forEach(x=>x.setAttribute('aria-current',String(x===b))) });
