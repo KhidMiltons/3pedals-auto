@@ -593,7 +593,7 @@ main>section{contain:layout style}
 
 </main>
 
-<footer><div class="wrap"><span id="footerBrand">3 Pedals Auto KE</span> · <span id="footerAddress">P.O. Box 462-00516</span> · WhatsApp <span id="footerPhone">+254 750 495 841</span> · <span id="footerEmail">miltonangwenyi@gmail.com</span>. <span id="footerNote">Prices in KES.</span></div></footer>
+<footer><div class="wrap"><span id="footerBrand">3 Pedals Auto KE</span> · <span id="footerNote">Prices in KES.</span></div></footer>
 
 <a class="fab" id="publicWhatsappFab" href="https://wa.me/254750495841?text=Hello%203%20Pedals%20Auto%20KE" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">WhatsApp us</a>
 
@@ -612,7 +612,7 @@ const sb=(CFG.url&&!/^PASTE/.test(CFG.url)&&window.supabase)?window.supabase.cre
 let me=null,profile=null;
 const colors=["#111111","#8a6508","#2a2a2a","#a67c00","#1c1c1c","#6b5206","#3b3b3b","#7d5a00"];
 const HOUSE={type:"yard",name:"3 Pedals Auto KE",contact:"",location:"P.O. Box 462-00516",phone:"+254750495841",email:"miltonangwenyi@gmail.com",web:"",whatsapp:"254750495841"};
-let siteSettings={contact_email:"miltonangwenyi@gmail.com",whatsapp_number:"254750495841",postal_address:"P.O. Box 462-00516",instagram_url:"https://instagram.com/3pedalsauto",facebook_url:"https://facebook.com/3pedalsauto",twitter_url:"https://twitter.com/3pedalsauto",tiktok_url:"https://tiktok.com/@3pedalsauto",footer_note:"Prices in KES.",footer_whatsapp_number:"254791961807",footer_brand:"3 Pedals Auto KE"};
+let siteSettings={contact_email:"miltonangwenyi@gmail.com",whatsapp_number:"254750495841",postal_address:"P.O. Box 462-00516",instagram_url:"https://instagram.com/3pedalsauto",facebook_url:"https://facebook.com/3pedalsauto",twitter_url:"https://twitter.com/3pedalsauto",tiktok_url:"https://tiktok.com/@3pedalsauto",footer_note:"Prices in KES.",footer_brand:"3 Pedals Auto KE"};
 async function loadSiteSettings(){
   if(!sb)return;
   const {data,error}=await sb.from("site_settings").select("*").eq("id",1).maybeSingle();if(error||!data){if(error)console.warn("Public site settings unavailable; using built-in contact details.",error);return}
@@ -621,7 +621,7 @@ async function loadSiteSettings(){
   setHref("publicWhatsapp",wa);setHref("publicWhatsappFab",`${wa}?text=${encodeURIComponent("Hello 3 Pedals Auto KE")}`);setHref("publicWhatsappHero",`${wa}?text=${encodeURIComponent("Hello 3 Pedals Auto KE, I'd like to enquire.")}`);
   setHref("publicEmailLink",`mailto:${siteSettings.contact_email||""}`);$("publicEmail").textContent=siteSettings.contact_email||"Email us";
   $("publicAddress").textContent=siteSettings.postal_address||"Contact us for our address";
-  const footerDigits=String(siteSettings.footer_whatsapp_number||siteSettings.whatsapp_number||"").replace(/\D/g,"");$("footerBrand").textContent=siteSettings.footer_brand||"";$("footerAddress").textContent=siteSettings.postal_address||"";$("footerPhone").textContent=footerDigits?"+"+footerDigits:"";$("footerEmail").textContent=siteSettings.contact_email||"";$("footerNote").textContent=siteSettings.footer_note||"";
+  $("footerBrand").textContent=siteSettings.footer_brand||"";$("footerNote").textContent=siteSettings.footer_note||"";
   [["publicInstagram","instagram_url"],["publicFacebook","facebook_url"],["publicTwitter","twitter_url"],["publicTiktok","tiktok_url"]].forEach(([id,key])=>{const a=$(id),url=String(siteSettings[key]||"").trim();if(a){a.hidden=!url;if(url)a.href=url}});
 }
 let cars=[
