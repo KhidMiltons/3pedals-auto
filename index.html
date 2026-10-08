@@ -181,18 +181,6 @@ footer .wrap{font-size:13px}
 .sell-actions .btn{margin-top:0}
 .account-listing-photo{width:72px;height:52px;object-fit:cover;border-radius:7px;border:1px solid var(--line);margin-right:8px;vertical-align:middle}
 @media(max-width:600px){.profile-card{grid-template-columns:1fr}.profile-grid{grid-template-columns:1fr}}
-.account-section{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
-.account-section h3{margin:0 0 8px;font-size:20px}
-.account-section .meta{line-height:1.55}
-.account-danger{border-color:rgba(168,52,52,.35);background:rgba(168,52,52,.035)}
-.account-danger h3{color:#9b2c2c}
-.account-danger .btn{border-color:rgba(168,52,52,.4);color:#8d2424}
-.account-danger .btn:hover{background:rgba(168,52,52,.07)}
-.account-field-note{font-size:12px;color:var(--mute);margin-top:5px;line-height:1.45}
-.account-type-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.account-type-option{display:flex;align-items:flex-start;gap:10px;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);cursor:pointer}
-.account-type-option input{min-height:auto;margin-top:3px}
-@media(max-width:600px){.account-type-grid{grid-template-columns:1fr}}
 
 /* Give form action areas a consistent alignment */
 form .btn{margin-top:10px}#sellForm>.btn,#bBtn{min-width:160px}
@@ -554,9 +542,7 @@ main>section{contain:layout style}
 <section id="sell" hidden>
   <div class="hero"><h1>List your car in two minutes.</h1><p>Add photos and your WhatsApp number so buyers can chat with you directly. Car yards add their full business details.</p></div>
   <div class="panel"><form id="sellForm" onsubmit="return false">
-    <fieldset class="seg" id="sellTypeDisplay"><legend>Listing as</legend>
-      <strong id="sellTypeLabel">Private seller</strong>
-    </fieldset>
+    <fieldset class="seg" id="sellTypeDisplay"><legend>Listing as</legend><strong id="sellTypeLabel">Private seller</strong></fieldset>
     <div id="privFields"><label for="sName">Your name (optional)</label><input id="sName" autocomplete="name"></div>
     <div id="yardFields" hidden>
       <div class="two">
@@ -565,8 +551,7 @@ main>section{contain:layout style}
         <div><label for="yLoc">Location / address</label><input id="yLoc" placeholder="Street, area, town"></div>
         <div><label for="yPhone">Phone number</label><input id="yPhone" type="tel"></div>
         <div><label for="yEmail">Email (optional)</label><input id="yEmail" type="email"></div>
-        <div><label for="yWeb">Website (optional)</label><input id="yWeb" type="url" placeholder="https://example.com"></div>
-        <div><label for="yWeb">Website or social link (optional)</label><input id="yWeb"></div>
+        <div><label for="yWeb">Website or social link (optional)</label><input id="yWeb" type="url" placeholder="https://example.com"></div>
       </div>
     </div>
     <div class="two">
@@ -612,7 +597,7 @@ main>section{contain:layout style}
 <a class="fab" href="https://wa.me/254750495841?text=Hello%203%20Pedals%20Auto%20KE" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">WhatsApp us</a>
 
 <dialog id="dlg" aria-label="Car details"></dialog>
-<dialog id="authDlg" class="authbox"><div class="in"><h2 id="authTitle">Create your account</h2><p class="meta">Create an account to list vehicles and book garage appointments.</p><label id="authNameLabel">Full name</label><input id="authName"><label>Email</label><input id="authEmail" type="email"><label>Phone</label><input id="authPhone" type="tel"><fieldset id="authAccountType" class="seg" style="margin-top:10px"><legend>Account type</legend><label><input type="radio" name="accountType" value="private" checked> Private seller</label><label><input type="radio" name="accountType" value="yard"> Car yard / dealer</label></fieldset><p id="authTypeHint" class="meta" style="margin-top:8px">Private seller accounts are for individuals selling their own vehicles.</p><label>Password</label><input id="authPassword" type="password"><p id="authErr" class="meta" style="color:var(--err)"></p><button class="btn" id="authSubmit">Create account</button> <button class="btn ghost" id="authClose">Close</button><p class="switch"><span id="authSwitchText">Already have an account?</span> <button id="authSwitch">Log in</button></p></div></dialog>
+<dialog id="authDlg" class="authbox"><div class="in"><h2 id="authTitle">Create your account</h2><p class="meta">Create an account to list vehicles and book garage appointments.</p><label id="authNameLabel">Full name</label><input id="authName"><label>Email</label><input id="authEmail" type="email"><label>Phone</label><input id="authPhone" type="tel"><fieldset class="seg" id="authTypeWrap"><legend>Account type</legend><label><input type="radio" name="accountType" value="private" checked> Private seller</label><label><input type="radio" name="accountType" value="yard"> Car yard / dealer</label></fieldset><p id="authTypeHint" class="meta">Private seller accounts are for individuals selling their own vehicles.</p><label>Password</label><input id="authPassword" type="password"><p id="authErr" class="meta" style="color:var(--err)"></p><button class="btn" id="authSubmit">Create account</button> <button class="btn ghost" id="authClose">Close</button><p class="switch"><span id="authSwitchText">Already have an account?</span> <button id="authSwitch">Log in</button></p></div></dialog>
 <dialog id="adminDlg" class="authbox wide"><div class="in"><h2>Admin panel</h2><div id="adminPanel"></div><div class="acts" style="margin-top:16px"><button class="btn ghost" id="adminClose">Close</button></div></div></dialog>
 <dialog id="accDlg" class="authbox wide"><div class="in"><h2>My account</h2><div id="accBody"></div></div></dialog>
 
@@ -662,16 +647,25 @@ function show(t){
 try{const h=location.hash.replace("#","");if(["buy","sell","projects","journal","about","contact"].includes(h))show(h)}catch(_){}
 
 let authMode="register";
+function normalizeAccountType(value){return String(value||"").trim().toLowerCase()==="yard"?"yard":"private"}
 function accountType(){
-  return String((profile&&profile.account_type)||me?.user_metadata?.account_type||"private").toLowerCase()==="yard"?"yard":"private";
+  const metadataType=me?.user_metadata?.account_type;
+  if(metadataType==="yard"||metadataType==="private")return metadataType;
+  return normalizeAccountType(profile?.account_type);
 }
 async function syncAccountType(){
   if(!me||!sb)return;
-  const type=accountType();
-  if(!profile||profile.account_type!==type){
-    const {data,error}=await sb.from("profiles").update({account_type:type}).eq("id",me.id).select("*").maybeSingle();
-    if(!error&&data)profile=data;
-  }
+  const metadataType=me.user_metadata?.account_type;
+  if(metadataType!=="yard"&&metadataType!=="private")return;
+  if(profile?.account_type===metadataType)return;
+  const {data,error}=await sb.from("profiles").update({account_type:metadataType}).eq("id",me.id).select("*").maybeSingle();
+  if(error)console.warn("Account type profile sync failed; the selected type remains in account metadata.",error);
+  if(data)profile=data;
+  else if(profile)profile={...profile,account_type:metadataType};
+}
+function updateAuthTypeHint(){
+  const type=document.querySelector('input[name="accountType"]:checked')?.value||"private";
+  $("authTypeHint").textContent=type==="yard"?"Car yard / dealer accounts are for businesses listing vehicles from a yard or dealership.":"Private seller accounts are for individuals selling their own vehicles.";
 }
 async function loadSession(){
   if(!sb)return;
@@ -679,17 +673,12 @@ async function loadSession(){
   me=session?session.user:null;profile=null;
   if(me){const {data}=await sb.from("profiles").select("*").eq("id",me.id).maybeSingle();profile=data;await syncAccountType()}
   refreshAccountUI();
-  if(document.getElementById("sellTypeLabel"))sellMode();
+  if($("sellTypeLabel"))sellMode();
 }
 function refreshAccountUI(){
-  const type=accountType();
   $("accountText").textContent=me?`Signed in as ${(profile&&profile.name)||me?.user_metadata?.name||me.email}`:"Not signed in";
   $("accountOpen").textContent="";
   $("adminWrap").hidden=!(profile&&profile.is_admin);
-}
-function updateAuthTypeHint(){
-  const type=document.querySelector('input[name="accountType"]:checked')?.value||"private";
-  $("authTypeHint").textContent=type==="yard"?"Car yard / dealer accounts are for businesses listing vehicles from a yard or dealership.":"Private seller accounts are for individuals selling their own vehicles.";
 }
 function openAuth(mode="register",msg=""){
   if(!sb){alert("Accounts are not switched on yet. Please contact us on WhatsApp.");return}
@@ -697,10 +686,10 @@ function openAuth(mode="register",msg=""){
   $("authTitle").textContent=login?"Log in":"Create your account";
   $("authSubmit").textContent=login?"Log in":"Create account";
   $("authNameLabel").hidden=login;$("authName").hidden=login;
-  $("authAccountType").hidden=login;$("authTypeHint").hidden=login;
+  $("authTypeWrap").hidden=login;$("authTypeHint").hidden=login;updateAuthTypeHint();
   $("authSwitchText").textContent=login?"Need an account?":"Already have an account?";
   $("authSwitch").textContent=login?"Create one":"Log in";
-  $("authErr").textContent=msg;updateAuthTypeHint();$("authDlg").showModal();
+  $("authErr").textContent=msg;$("authDlg").showModal();
 }
 $("accountOpen").onclick=()=>me?openAccount():openAuth("login");
 $("accountTile").onclick=()=>me?openAccount():openAuth("register");
@@ -727,37 +716,18 @@ function profileAvatarUrl(){return (profile&&profile.avatar_url)||me?.user_metad
 function profileName(){return (profile&&profile.name)||me?.user_metadata?.name||""}
 function profilePhone(){return (profile&&profile.phone)||me?.user_metadata?.phone||""}
 async function saveAccountProfile(){
-  const name=$("accName").value.trim(),phone=$("accPhone").value.trim(),email=$("accEmail").value.trim().toLowerCase(),newPass=$("accPassword").value,confirmPass=$("accPasswordConfirm").value,err=$("accProfileErr"),btn=$("accSaveProfile");
-  const type=document.querySelector('input[name="accAccountType"]:checked')?.value||accountType();
+  const name=$("accName").value.trim(),phone=$("accPhone").value.trim(),err=$("accProfileErr"),btn=$("accSaveProfile");
   if(!name){err.textContent="Please enter your name.";return}
-  if(email&&!/^\S+@\S+\.\S+$/.test(email)){err.textContent="Enter a valid email address.";return}
-  if(newPass&&newPass.length<8){err.textContent="Use a password of at least 8 characters.";return}
-  if(newPass!==confirmPass){err.textContent="The new passwords do not match.";return}
-  btn.disabled=true;err.textContent="Saving your account…";
+  btn.disabled=true;err.textContent="Saving…";
   try{
-    const meta={...(me.user_metadata||{}),name,phone,account_type:type};
-    let emailChanged=false,passwordChanged=false;
-    if(email&&email!==String(me.email||"").toLowerCase()){
-      const ae=await sb.auth.updateUser({email,data:meta});
-      if(ae.error)throw ae.error;
-      me=ae.data.user||me;emailChanged=true;
-    }else{
-      const au=await sb.auth.updateUser({data:meta,password:newPass||undefined});
-      if(au.error)throw au.error;
-      me=au.data.user||me;passwordChanged=!!newPass;
-    }
-    if(emailChanged&&newPass){
-      const ap=await sb.auth.updateUser({password:newPass});
-      if(ap.error)throw ap.error;
-      me=ap.data.user||me;passwordChanged=true;
-    }
-    const pu=await sb.from("profiles").update({name,phone,account_type:type}).eq("id",me.id).select("*").maybeSingle();
-    if(pu.error)console.warn("Profile row update failed; Auth account metadata was saved.",pu.error);
-    profile=pu.data||{...(profile||{}),name,phone,account_type:type};
-    refreshAccountUI();
-    err.textContent=emailChanged?"Details saved. Check your new email for the confirmation link to finish the email change.":passwordChanged?"Account details and password updated.":"Account details saved.";
-    $("accPassword").value="";$("accPasswordConfirm").value="";
-    setTimeout(()=>openAccount(),700);
+    const meta={...(me.user_metadata||{}),name,phone};
+    const au=await sb.auth.updateUser({data:meta});
+    if(au.error)throw au.error;
+    const pu=await sb.from("profiles").update({name,phone}).eq("id",me.id);
+    if(pu.error)console.warn("Profile table update failed; account metadata was saved.",pu.error);
+    me=au.data.user||me;profile={...(profile||{}),name,phone};
+    refreshAccountUI();err.textContent="Account details saved.";
+    setTimeout(()=>openAccount(),350);
   }catch(e){err.textContent=e.message||"Could not save your details."}
   btn.disabled=false;
 }
@@ -767,45 +737,15 @@ async function changeProfilePhoto(file){
   err.textContent="Uploading profile picture…";
   try{
     const x=await shrink(file),blob=await (await fetch(x)).blob(),path=`${me.id}/profile-${Date.now()}.jpg`;
-    const up=await sb.storage.from("avatars").upload(path,blob,{contentType:"image/jpeg",upsert:true});
+    const up=await sb.storage.from("car-photos").upload(path,blob,{contentType:"image/jpeg"});
     if(up.error)throw up.error;
-    const url=sb.storage.from("avatars").getPublicUrl(path).data.publicUrl;
+    const url=sb.storage.from("car-photos").getPublicUrl(path).data.publicUrl;
     const au=await sb.auth.updateUser({data:{...(me.user_metadata||{}),avatar_url:url}});
     if(au.error)throw au.error;
     const pu=await sb.from("profiles").update({avatar_url:url}).eq("id",me.id);
-    if(pu.error&&pu.code!="42703")throw pu.error;
+    if(pu.error)console.warn("Avatar saved to account metadata; profiles.avatar_url may not exist yet.",pu.error);
     me=au.data.user||me;profile={...(profile||{}),avatar_url:url};refreshAccountUI();err.textContent="Profile picture updated.";openAccount();
   }catch(e){err.textContent=e.message||"Could not upload that profile picture."}
-}
-async function removeProfilePhoto(){
-  const err=$("accProfileErr");
-  if(!confirm("Remove your profile picture?"))return;
-  err.textContent="Removing profile picture…";
-  try{
-    const au=await sb.auth.updateUser({data:{...(me.user_metadata||{}),avatar_url:null}});
-    if(au.error)throw au.error;
-    const pu=await sb.from("profiles").update({avatar_url:null}).eq("id",me.id);
-    if(pu.error&&pu.code!="42703")console.warn("Profile avatar column could not be cleared.",pu.error);
-    me=au.data.user||me;profile={...(profile||{}),avatar_url:""};err.textContent="Profile picture removed.";openAccount();
-  }catch(e){err.textContent=e.message||"Could not remove the profile picture."}
-}
-async function deleteMyAccount(){
-  const phrase=prompt("This permanently deletes your account, profile, listings, bookings and uploaded car photos. Type DELETE to continue.");
-  if(phrase!=="DELETE")return;
-  const second=confirm("Final confirmation: permanently delete your 3 Pedals Auto KE account?");
-  if(!second)return;
-  const btn=$("accDeleteAccount"),err=$("accProfileErr");
-  btn.disabled=true;err.textContent="Deleting your account…";
-  try{
-    const {data:sessionData}=await sb.auth.getSession(),token=sessionData?.session?.access_token;
-    if(!token)throw new Error("Your login session has expired. Please log in again.");
-    const r=await fetch(`${CFG.url}/functions/v1/delete-account`,{method:"POST",headers:{Authorization:`Bearer ${token}`,"Content-Type":"application/json"},body:"{}"});
-    const body=await r.json().catch(()=>({}));
-    if(!r.ok)throw new Error(body.error||"We could not delete your account.");
-    await sb.auth.signOut();
-    $("accDlg").close();me=null;profile=null;refreshAccountUI();
-    alert("Your account has been permanently deleted.");
-  }catch(e){err.textContent=e.message||"We could not delete your account.";btn.disabled=false}
 }
 async function openAccount(){
   const d=$("accDlg"),box=$("accBody");
@@ -814,37 +754,20 @@ async function openAccount(){
   const [l,b]=await Promise.all([
     sb.from("listings").select("*").eq("owner",me.id).order("created_at",{ascending:false}),
     sb.from("bookings").select("*").eq("user_id",me.id).order("created_at",{ascending:false})]);
-  const L=l.data||[],B=b.data||[],label={pending:"Waiting for approval",approved:"Live",rejected:"Not approved",sold:"Sold"},avatar=profileAvatarUrl(),name=profileName(),phone=profilePhone(),type=accountType();
+  const L=l.data||[],B=b.data||[],label={pending:"Waiting for approval",approved:"Live",rejected:"Not approved",sold:"Sold"},avatar=profileAvatarUrl(),name=profileName(),phone=profilePhone();
   box.innerHTML=`<div class="profile-card">
     <div class="profile-avatar">${avatar?`<img src="${esc(avatar)}" alt="Profile picture">`:esc(initialsFor(name,me.email))}</div>
     <div><h3 style="margin:0 0 4px">Your profile</h3><p class="meta" style="margin:0">${esc(me.email)}</p>
-      <div class="profile-actions"><label class="btn ghost" style="display:inline-flex;align-items:center;cursor:pointer;margin:0">Change picture<input id="accPhoto" type="file" accept="image/*" hidden></label><button type="button" class="btn ghost" id="accRemovePhoto">Remove picture</button></div>
+      <div class="profile-actions"><label class="btn ghost" style="display:inline-flex;align-items:center;cursor:pointer;margin:0">Change picture<input id="accPhoto" type="file" accept="image/*" hidden></label></div>
     </div>
   </div>
-  <div class="account-section"><h3>Account information</h3><p class="meta">Manage the details other parts of 3 Pedals Auto KE use to identify you.</p>
-    <div class="profile-grid">
-      <div><label for="accName">Full name</label><input id="accName" value="${esc(name)}" autocomplete="name"></div>
-      <div><label for="accPhone">Phone</label><input id="accPhone" value="${esc(phone)}" type="tel" autocomplete="tel"></div>
-    </div>
-    <label for="accEmail">Email address</label><input id="accEmail" value="${esc(me.email||"")}" type="email" autocomplete="email"><div class="account-field-note">Changing your email may require confirmation from the new email address.</div>
-    <div class="profile-grid">
-      <div><label for="accPassword">New password</label><input id="accPassword" type="password" autocomplete="new-password" placeholder="Leave blank to keep it"></div>
-      <div><label for="accPasswordConfirm">Confirm new password</label><input id="accPasswordConfirm" type="password" autocomplete="new-password" placeholder="Repeat new password"></div>
-    </div>
-    <label>Account type</label><div class="account-type-grid">
-      <label class="account-type-option"><input type="radio" name="accAccountType" value="private" ${type==="private"?"checked":""}><span><strong>Private seller</strong><br><small class="meta">For an individual selling their own vehicles.</small></span></label>
-      <label class="account-type-option"><input type="radio" name="accAccountType" value="yard" ${type==="yard"?"checked":""}><span><strong>Car yard / dealer</strong><br><small class="meta">For a business or dealership selling vehicles.</small></span></label>
-    </div>
-    <p id="accProfileErr" class="meta" style="color:var(--err)"></p><div class="acts"><button class="btn" id="accSaveProfile">Save account changes</button></div>
-  </div>
-  <h3 style="margin-top:22px">My listings</h3>${L.map(x=>`<div class="svc"><div><b>${esc(x.year+" "+x.make+" "+x.model)}</b><span class="meta">KES ${fmt(x.price)} · <span class="st">${label[x.status]||esc(x.status)}</span></span></div><div class="acts">${x.status==="approved"?`<button class="btn ghost" data-sold="${x.id}">Mark as sold</button><button class="btn ghost" data-view="${x.id}">View listing</button>`:""}<button class="btn ghost" data-del="${x.id}">Delete</button></div></div>`).join("")||'<p class="meta">You have no listings yet.</p>'}
+  <div class="profile-grid"><div><label for="accName">Full name</label><input id="accName" value="${esc(name)}" autocomplete="name"></div><div><label for="accPhone">Phone</label><input id="accPhone" value="${esc(phone)}" type="tel" autocomplete="tel"></div></div>
+  <p id="accProfileErr" class="meta" style="color:var(--err)"></p><div class="acts"><button class="btn" id="accSaveProfile">Save account details</button></div>
+   <h3 style="margin-top:22px">My listings</h3>${L.map(x=>`<div class="svc"><div><b>${esc(x.year+" "+x.make+" "+x.model)}</b><span class="meta">${sellerTypeForListing(x)==="yard"?"Car yard / dealer":"Private seller"} · KES ${fmt(x.price)} · <span class="st">${label[x.status]||esc(x.status)}</span></span></div><div class="acts">${x.status==="approved"?`<button class="btn ghost" data-sold="${x.id}">Mark as sold</button><button class="btn ghost" data-view="${x.id}">View listing</button>`:""}<button class="btn ghost" data-del="${x.id}">Delete</button></div></div>`).join("")||'<p class="meta">You have no listings yet.</p>'}
   <h3 style="margin-top:18px">My garage bookings</h3>${B.map(x=>`<div class="svc"><div><b>${esc(x.service)}</b><span class="meta">${esc(x.date)} · ${esc(x.car||"")} · ${esc(x.ref)}</span></div><span class="st">${esc(x.status)}</span></div>`).join("")||'<p class="meta">No bookings yet.</p>'}
-  <div class="account-section account-danger"><h3>Delete account</h3><p class="meta">Permanently removes your account, profile, listings, bookings and uploaded vehicle/profile photos. This cannot be undone.</p><button class="btn" id="accDeleteAccount">Permanently delete my account</button></div>
   <div class="acts" style="margin-top:18px">${profile&&profile.is_admin?'<button class="btn" id="accAdmin">Open admin panel</button>':""}<button class="btn ghost" id="accOut">Log out</button><button class="btn ghost" id="accClose">Close</button></div>`;
   $("accPhoto").onchange=e=>changeProfilePhoto(e.target.files[0]);
-  $("accRemovePhoto").onclick=removeProfilePhoto;
   $("accSaveProfile").onclick=saveAccountProfile;
-  $("accDeleteAccount").onclick=deleteMyAccount;
   box.querySelectorAll("[data-sold]").forEach(bt=>bt.onclick=async()=>{
     if(!confirm("Mark this vehicle as SOLD? It will immediately be removed from the public Buy inventory."))return;
     bt.disabled=true;bt.textContent="Updating…";
@@ -1024,7 +947,7 @@ async function openAdmin(){
   if(pr.error){console.error(pr.error);$("adminPanel").innerHTML='<p class="meta" style="color:var(--err)">The Projects table is not set up yet. Run the supplied Supabase project setup SQL, then reopen the admin panel.</p>';return}
   $("adminPanel").innerHTML=`<p class="meta">${P.length} users · ${L.length} listings · ${B.length} bookings · ${PR.length} projects</p>
   <div class="panel" style="margin:16px 0"><h3>Our Projects</h3><p class="meta">Create portfolio entries, upload media, save articles, and control what is visible publicly.</p>${adminProjectsHtml(PR)}</div>
-  <h3>Listings</h3>${L.map(x=>`<div class="svc"><div><b>${esc(x.year+" "+x.make+" "+x.model)}</b><span class="meta">KES ${fmt(x.price)} · ${esc(x.seller_name||"")} · +${esc(x.whatsapp||"")} · <span class="st">${esc(x.status)}</span></span></div><div class="acts">${x.status!=="approved"?`<button class="btn" data-a="approve" data-id="${x.id}">Approve</button>`:""}${x.status!=="rejected"?`<button class="btn ghost" data-a="reject" data-id="${x.id}">Reject</button>`:""}<button class="btn ghost" data-a="del" data-id="${x.id}">Delete</button></div></div>`).join("")||'<p class="meta">No listings yet.</p>'}
+   <h3>Listings</h3>${L.map(x=>`<div class="svc"><div><b>${esc(x.year+" "+x.make+" "+x.model)}</b><span class="meta">${sellerTypeForListing(x)==="yard"?"Car yard / dealer":"Private seller"} · KES ${fmt(x.price)} · ${esc(x.seller_name||"")} · +${esc(x.whatsapp||"")} · <span class="st">${esc(x.status)}</span></span></div><div class="acts">${x.status!=="approved"?`<button class="btn" data-a="approve" data-id="${x.id}">Approve</button>`:""}${x.status!=="rejected"?`<button class="btn ghost" data-a="reject" data-id="${x.id}">Reject</button>`:""}<button class="btn ghost" data-a="del" data-id="${x.id}">Delete</button></div></div>`).join("")||'<p class="meta">No listings yet.</p>'}
   <h3 style="margin-top:18px">Garage bookings</h3>${B.map(x=>`<div class="svc"><div><b>${esc(x.service)}</b><span class="meta">${esc(x.date)} · ${esc(x.name)} · ${esc(x.phone)} · ${esc(x.car||"")} · ${esc(x.ref)}</span></div><select data-bk="${x.id}" aria-label="Booking status">${["new","confirmed","done","cancelled"].map(s=>`<option${s===x.status?" selected":""}>${s}</option>`).join("")}</select></div>`).join("")||'<p class="meta">No bookings yet.</p>'}
   <h3 style="margin-top:18px">Users</h3>${P.map(u=>`<p class="meta">${esc(u.name||"")} · ${esc(u.email||"")} · ${esc(u.phone||"")}${u.is_admin?" · admin":""}</p>`).join("")}`;
   bindProjectAdmin(PR);
@@ -1057,8 +980,14 @@ $("adminPanel").onclick=async e=>{
 };
 $("adminPanel").onchange=async e=>{const s=e.target.closest("[data-bk]");if(s)await sb.from("bookings").update({status:s.value}).eq("id",s.dataset.bk)};
 
+function sellerTypeForListing(r){
+  const type=String(r?.seller_type||r?.account_type||"").trim().toLowerCase().replace(/[\s_-]+/g," ");
+  if(["yard","dealer","car yard","car dealer","business"].includes(type))return "yard";
+  if(["private","private seller","individual"].includes(type))return "private";
+  return [r?.yard_name,r?.yard_location,r?.yard_contact].some(v=>String(v||"").trim())?"yard":"private";
+}
 const rowToCar=(r,i)=>({id:r.id,make:String(r.make||"").trim(),model:String(r.model||"").trim(),year:r.year,price:r.price,km:r.km||0,fuel:r.fuel||"",desc:r.description||"",photos:r.photos||[],color:colors[i%colors.length],
-  seller:{type:r.seller_type||((r.yard_name||r.yard_location)?"yard":"private"),name:r.yard_name||r.seller_name,contact:r.contact||r.yard_contact,location:r.yard_location||r.location,phone:r.seller_phone||r.phone,email:r.seller_email||r.email,web:r.web||r.yard_web,whatsapp:r.whatsapp}});
+  seller:{type:sellerTypeForListing(r),name:r.yard_name||r.seller_name,contact:r.contact||r.yard_contact,location:r.yard_location||r.location,phone:r.seller_phone||r.phone,email:r.seller_email||r.email,web:r.web||r.yard_web,whatsapp:r.whatsapp}});
 async function loadListings(){
   if(!sb)return;
   const {data,error}=await sb.from("listings").select("*").eq("status","approved").order("created_at",{ascending:false});
@@ -1108,7 +1037,7 @@ function render(){
       <div class="swatch${hasPh(c)}" style="background:${bgOf(c)}">${c.year}</div>
       <div class="body"><h3>${esc(c.make)} ${esc(c.model)}</h3>
       <div class="price">KES ${fmt(c.price)}</div>
-      <span class="tag">${fmt(c.km)} km</span><span class="tag">${esc(c.fuel||"N/A")}</span><span class="tag">${isYard?"Dealer":"Private"}</span>
+      <span class="tag">${fmt(c.km)} km</span><span class="tag">${esc(c.fuel||"N/A")}</span><span class="tag">${isYard?"Car yard / dealer":"Private seller"}</span>
       ${isYard?`<div class="yard-line">🏢 <button type="button" class="yard-link" data-yard-name="${esc(yardName)}">${esc(yardName)}</button></div>${loc?`<div class="yard-line">📍 ${esc(loc)}</div>`:""}<div class="card-reveal"><span>View dealer profile →</span></div>`:""}
       </div></button>`;
   }).join("") :'<p class="meta">No cars match these filters. Clear the search or raise the price limit.</p>';
@@ -1165,13 +1094,7 @@ async function sendForm(type,data,hp){
 // Sell
 let photos=[];
 const modeYard=()=>accountType()==="yard";
-function sellMode(){
-  const yard=modeYard();
-  $("yardFields").hidden=!yard;
-  $("privFields").hidden=yard;
-  $("sellTypeLabel").textContent=yard?"Car yard / dealer":"Private seller";
-}
-
+function sellMode(){const yard=modeYard();$("yardFields").hidden=!yard;$("privFields").hidden=yard;if($("sellTypeLabel"))$("sellTypeLabel").textContent=yard?"Car yard / dealer":"Private seller"}
 function normWa(raw){
   let d=String(raw).replace(/\D/g,"");if(d.startsWith("00"))d=d.slice(2);
   if(/^0[17]\d{8}$/.test(d))return"254"+d.slice(1);
@@ -1232,8 +1155,6 @@ $("sCancel").onclick=()=>{
 };
 $("sBtn").onclick=async()=>{
   const v=i=>$(i).value.trim(),err=$("sErr"),yard=modeYard(),ok=$("sOk"),btn=$("sBtn");
-  if(me&&!profile)await loadSession();
-  sellMode();
   ok.hidden=true;
   if(!sb){err.textContent="Online listing is not switched on yet. Please WhatsApp us your car details.";return}
   if(!me){openAuth("login","Please sign in or create an account before listing a vehicle.");return}
@@ -1266,11 +1187,14 @@ $("sBtn").onclick=async()=>{
       description:v("sDesc"),
       photos:urls,
       whatsapp:wa,
+      seller_type:accountType(),
       seller_name:yard?v("yName"):(v("sName")||(profile&&profile.name)||userData.user.email||""),
       seller_phone:yard?v("yPhone"):((profile&&profile.phone)||""),
       seller_email:yard?v("yEmail"):(userData.user.email||""),
+      contact:yard?v("yContact"):"",
       yard_name:yard?v("yName"):"",
-      yard_location:yard?v("yLoc"):""
+      yard_location:yard?v("yLoc"):"",
+      yard_web:yard?v("yWeb"):""
     };
     const ins=await sb.from("listings").insert(row).select("id").single();
     if(ins.error)throw ins.error;
