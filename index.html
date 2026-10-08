@@ -987,7 +987,7 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",
 $("make").addEventListener("change",()=>{updateBuyFilters();render()});
 $("model").addEventListener("change",()=>{updateBuyFilters();render()});
 $("variant").addEventListener("change",render);
-$("grid").onclick=e=>{const b=e.target.closest(".card");if(b)detail(b.dataset.id)};
+$("grid").onclick=e=>{const b=e.target.closest(".card");if(b)window.location.href=`vehicle.html?id=${encodeURIComponent(b.dataset.id)}`;};
 
 function detail(id){
   const c=cars.find(x=>x.id===id),d=$("dlg"),s=c.seller||{},ph=c.photos||[];
