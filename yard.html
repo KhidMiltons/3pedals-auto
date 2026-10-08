@@ -8,6 +8,59 @@
 <style>
 :root{--ink:#171717;--mute:#6d6d6d;--line:#e7e3da;--surface:#fff;--soft:#f7f5f0;--gold:#d4a017;--blue:#172b4d}*{box-sizing:border-box}body{margin:0;background:var(--soft);color:var(--ink);font-family:Manrope,Arial,sans-serif}.wrap{width:min(1380px,calc(100% - 36px));margin:auto}.head{background:rgba(255,255,255,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}.headin{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:14px}.logo{font:700 24px 'Playfair Display',Georgia,serif}.back{color:var(--ink);text-decoration:none;border:1px solid var(--line);border-radius:9px;padding:9px 13px;background:#fff;font-weight:800}.hero{padding:52px 0 28px}.eyebrow{font-size:11px;font-weight:800;letter-spacing:.16em;color:var(--blue)}h1{font:700 clamp(40px,6vw,70px)/1.02 'Playfair Display',Georgia,serif;margin:8px 0 10px}.hero p{color:var(--mute);max-width:720px}.profile{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr);gap:18px;margin-bottom:30px}.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 14px 38px rgba(0,0,0,.06)}.yardmark{width:72px;height:72px;border-radius:18px;background:var(--ink);color:var(--gold);display:grid;place-items:center;font-size:32px;float:left;margin:0 18px 12px 0}.details{min-height:118px}.details h2{margin:0 0 7px;font:700 30px 'Playfair Display',Georgia,serif}.detail{margin:8px 0;color:var(--mute)}.detail a{color:var(--ink);font-weight:700}.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border-radius:9px;padding:11px 14px;font-weight:800;border:1px solid var(--line);background:#fff;color:var(--ink)}.btn.primary{background:var(--ink);color:#fff;border-color:var(--ink)}.btn.gold{background:var(--gold);color:#1c1605;border-color:var(--gold)}.statgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--soft)}.stat b{display:block;font-size:24px}.stat span{color:var(--mute);font-size:12px}.sectionhead{display:flex;justify-content:space-between;align-items:end;gap:14px;margin:18px 0 14px}.sectionhead h2{font:700 32px 'Playfair Display',Georgia,serif;margin:0}.sectionhead span{color:var(--mute);font-size:13px}.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;padding-bottom:50px}.card{background:#fff;border:1px solid var(--line);border-radius:15px;overflow:hidden;text-decoration:none;color:inherit;display:block;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}.card:hover{transform:translateY(-6px);box-shadow:0 18px 38px rgba(0,0,0,.1);border-color:#d7c59a}.photo{aspect-ratio:4/3;background:#ddd;overflow:hidden}.photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .45s ease}.card:hover img{transform:scale(1.045)}.cardbody{padding:13px}.cardbody h3{font-size:16px;margin:0 0 6px}.price{font:700 19px 'Playfair Display',Georgia,serif;color:var(--blue)}.tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:9px}.tag{font-size:10px;padding:5px 7px;border-radius:999px;background:var(--soft);color:var(--mute)}.empty{text-align:center;padding:50px;color:var(--mute)}footer{padding:26px 0 42px;color:var(--mute);font-size:12px}@media(max-width:1100px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}@media(max-width:850px){.profile{grid-template-columns:1fr}.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:600px){.wrap{width:min(100% - 24px,1380px)}.hero{padding-top:34px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.panel{padding:18px}.headin{min-height:64px}.logo{font-size:21px}.back{font-size:12px}.stat b{font-size:20px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important}}
+/* Match the main 3 Pedals site: warm neutral surfaces, champagne gold, and glass overlays. */
+:root{--ink:#1a1b1d;--mute:#77746d;--line:#dedbd3;--surface:rgba(251,250,247,.82);--soft:#f3f1ec;--gold:#b7a06a;--blue:#9a8661;--premium-ease:cubic-bezier(.22,1,.36,1);--premium-shadow:0 18px 50px rgba(24,25,27,.10)}
+@media(prefers-color-scheme:dark){:root{--ink:#f0eee8;--mute:#9a9891;--line:#2d3034;--surface:rgba(24,26,29,.82);--soft:#111315;--gold:#b8a67d;--blue:#b8a67d;--premium-shadow:0 18px 55px rgba(0,0,0,.28)}}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{min-height:100vh;background:radial-gradient(circle at 12% -8%,rgba(183,160,106,.14),transparent 32%),radial-gradient(circle at 88% 8%,rgba(255,255,255,.55),transparent 28%),var(--soft);color:var(--ink);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+@media(prefers-color-scheme:dark){body{background:radial-gradient(circle at 12% -8%,rgba(183,160,106,.10),transparent 32%),radial-gradient(circle at 88% 8%,rgba(255,255,255,.035),transparent 28%),var(--soft)}}
+body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(120deg,transparent,rgba(255,255,255,.035),transparent 70%)}
+.wrap{width:min(1280px,calc(100% - 48px))}
+.head{background:rgba(20,21,22,.86);color:#f0eee8;border-bottom:1px solid rgba(183,160,106,.22);box-shadow:0 10px 32px rgba(0,0,0,.17);backdrop-filter:blur(22px) saturate(125%);-webkit-backdrop-filter:blur(22px) saturate(125%)}
+.headin{min-height:76px}
+.logo{color:#c9b784;letter-spacing:.055em;text-transform:uppercase;font-size:25px}
+.back{color:#e6e2d8;background:rgba(255,255,255,.055);border-color:rgba(255,255,255,.13);backdrop-filter:blur(14px);transition:transform .35s var(--premium-ease),background .25s,border-color .25s,box-shadow .25s}
+.back:hover{transform:translateY(-2px);background:rgba(183,160,106,.12);border-color:rgba(183,160,106,.42);box-shadow:0 8px 24px rgba(0,0,0,.18)}
+.hero{padding:54px 0 30px;animation:yardRise .65s var(--premium-ease) both}
+.eyebrow{color:var(--blue);letter-spacing:.19em}
+h1{position:relative;letter-spacing:-.025em;text-wrap:balance}
+h1:after{content:"";display:block;width:72px;height:3px;margin-top:17px;border-radius:99px;background:linear-gradient(90deg,var(--gold),rgba(183,160,106,.15));box-shadow:0 0 18px rgba(183,160,106,.20);transition:width .55s var(--premium-ease)}
+.hero:hover h1:after{width:108px}
+.hero p,.detail,.sectionhead span{color:var(--mute)}
+.profile{gap:18px;margin-bottom:34px;animation:yardRise .72s .08s var(--premium-ease) both}
+.panel,.card{background:var(--surface);border:1px solid var(--line);box-shadow:var(--premium-shadow);backdrop-filter:blur(18px) saturate(125%);-webkit-backdrop-filter:blur(18px) saturate(125%)}
+.panel{border-radius:18px;transition:transform .35s var(--premium-ease),border-color .3s,box-shadow .3s}
+.panel:hover{border-color:rgba(183,160,106,.34);box-shadow:0 20px 52px rgba(24,25,27,.13)}
+.yardmark{border:1px solid rgba(183,160,106,.34);background:linear-gradient(145deg,rgba(27,28,30,.96),rgba(27,28,30,.76));color:#c9b784;box-shadow:0 10px 26px rgba(0,0,0,.16)}
+.details h2,.sectionhead h2{color:var(--ink);letter-spacing:-.02em}
+.detail a{color:var(--blue);text-decoration:none;transition:color .2s}
+.detail a:hover{color:var(--gold);text-decoration:underline}
+.btn{color:var(--ink);background:rgba(255,255,255,.42);border-color:var(--line);box-shadow:0 3px 12px rgba(24,25,27,.06);transition:transform .25s var(--premium-ease),box-shadow .25s,border-color .25s,background .25s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 9px 22px rgba(24,25,27,.12);border-color:rgba(183,160,106,.48)}
+.btn.primary{background:rgba(27,28,30,.94);color:#f0eee8;border-color:rgba(183,160,106,.36)}
+.btn.gold{background:linear-gradient(135deg,#c5b17c,#b7a06a);color:#181818;border-color:rgba(183,160,106,.68)}
+.stat{background:rgba(183,160,106,.075);border-color:var(--line);backdrop-filter:blur(12px)}
+.stat b{font-family:'Playfair Display',Georgia,serif;color:var(--ink)}
+.sectionhead{margin-top:22px}
+.grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+.card{position:relative;border-radius:16px;box-shadow:0 8px 28px rgba(24,25,27,.08);transition:transform .42s var(--premium-ease),box-shadow .42s var(--premium-ease),border-color .28s;animation:yardRise .55s var(--premium-ease) both;animation-delay:calc(var(--card-index,0)*45ms)}
+.card:hover,.card:focus-visible{transform:translateY(-5px);box-shadow:0 18px 42px rgba(24,25,27,.15);border-color:rgba(183,160,106,.52);outline:none}
+.card:focus-visible{box-shadow:0 0 0 3px rgba(183,160,106,.32),0 18px 42px rgba(24,25,27,.15)}
+.photo{background:linear-gradient(135deg,rgba(183,160,106,.16),rgba(24,25,27,.12));aspect-ratio:4/3}
+.photo img{transition:transform .7s var(--premium-ease),filter .4s}
+.card:hover .photo img{transform:scale(1.045);filter:saturate(1.05)}
+.cardbody{padding:15px 15px 17px}
+.cardbody h3{font-size:18px;line-height:1.2}
+.price{color:var(--blue);font-size:22px}
+.tag{background:rgba(183,160,106,.09);border:1px solid rgba(183,160,106,.14);color:var(--mute);padding:5px 8px}
+.empty{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--premium-shadow);backdrop-filter:blur(18px)}
+footer{border-top:1px solid var(--line);color:var(--mute)}
+@keyframes yardRise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:1200px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:980px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:720px){.wrap{width:calc(100% - 32px)}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.hero{padding-top:40px}.sectionhead h2{font-size:28px}}
+@media(max-width:520px){.wrap{width:calc(100% - 24px)}.headin{min-height:66px}.logo{font-size:19px}.back{padding:9px 10px;font-size:11px}.hero{padding-top:32px}.grid{grid-template-columns:1fr;gap:12px}.cardbody{padding:14px}.profile{gap:12px}.sectionhead{align-items:flex-start;flex-direction:column;gap:4px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.hero,.profile,.card{animation:none!important}.hero h1:after,.back,.panel,.btn,.card,.card img{transition:none!important}}
 </style>
 </head>
 <body>
@@ -24,19 +77,28 @@ const CFG=window.SB_CONFIG||{};
 const sb=(CFG.url&&!/^PASTE/.test(CFG.url)&&window.supabase)?window.supabase.createClient(CFG.url,CFG.key):null;const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt=n=>Number(n||0).toLocaleString('en-KE');const qs=new URLSearchParams(location.search);const wanted=qs.get('name')||'';
 function mapUrl(x){return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x)}`}
+function yardType(r){
+ const value=String(r?.seller_type||r?.account_type||'').trim().toLowerCase().replace(/[\s_-]+/g,' ');
+ if(['yard','dealer','car yard','car dealer','business'].includes(value))return 'yard';
+ if(['private','private seller','individual'].includes(value))return 'private';
+ return [r?.yard_name,r?.yard_location,r?.yard_contact].some(x=>String(x||'').trim())?'yard':'private';
+}
+function yardNameFor(r){return String(r?.yard_name||r?.seller_name||'').trim()}
 async function init(){
- if(!sb||/^PASTE_/.test(CFG.key)){document.getElementById('grid').innerHTML='<div class="panel empty">The live database connection is not configured.</div>';return}
+ if(!wanted){document.getElementById('yardName').textContent='Car yard';document.getElementById('countText').textContent='No yard selected';document.getElementById('grid').innerHTML='<div class="panel empty">Choose a yard from the vehicle listings to see its inventory.</div>';return}
+ if(!sb||/^PASTE_/.test(CFG.key)){document.getElementById('yardName').textContent=wanted;document.getElementById('grid').innerHTML='<div class="panel empty">The live database connection is not configured.</div>';return}
  const {data,error}=await sb.from('listings').select('*').eq('status','approved').order('created_at',{ascending:false});
- if(error){document.getElementById('grid').innerHTML='<div class="panel empty">We could not load this yard right now. Please try again.</div>';return}
- const rows=(data||[]).filter(r=>String(r.yard_name||'').trim().toLowerCase()===wanted.trim().toLowerCase() || (!r.yard_name && String(r.seller_name||'').trim().toLowerCase()===wanted.trim().toLowerCase() && (r.seller_type==='yard'||r.yard_location)));
- if(!rows.length){document.getElementById('yardName').textContent=wanted||'Car yard';document.getElementById('grid').innerHTML='<div class="panel empty">No currently available vehicles were found for this yard.</div>';return}
- const first=rows[0],name=first.yard_name||first.seller_name||wanted,loc=first.yard_location||first.location||'',phone=first.seller_phone||first.phone||'',email=first.seller_email||first.email||'',web=first.web||'';
+ if(error){document.getElementById('yardName').textContent=wanted;document.getElementById('countText').textContent='Inventory unavailable';document.getElementById('grid').innerHTML='<div class="panel empty">We could not load this yard right now. Please try again.</div>';return}
+ const key=wanted.trim().toLowerCase();
+ const rows=(data||[]).filter(r=>yardType(r)==='yard'&&yardNameFor(r).toLowerCase()===key);
+ if(!rows.length){document.getElementById('yardName').textContent=wanted;document.getElementById('title').textContent=wanted;document.getElementById('countText').textContent='0 available vehicles';document.getElementById('vehicleCount').textContent='0';document.getElementById('priceRange').textContent='—';document.getElementById('grid').innerHTML='<div class="panel empty">No currently available vehicles were found for this yard.</div>';return}
+ const first=rows[0],name=yardNameFor(first)||wanted,loc=first.yard_location||first.location||'',phone=first.seller_phone||first.phone||'',email=first.seller_email||first.email||'',web=first.web||first.yard_web||'',contact=first.contact||first.yard_contact||'';
  document.title=`${name} | 3 Pedals Auto KE`;document.getElementById('title').textContent=name;document.getElementById('yardName').textContent=name;
- document.getElementById('contacts').innerHTML=[loc?`<div class="detail">📍 <strong>${esc(loc)}</strong></div>`:'',phone?`<div class="detail">📞 <a href="tel:${esc(phone.replace(/\D/g,''))}">${esc(phone)}</a></div>`:'',email?`<div class="detail">✉️ <a href="mailto:${esc(email)}">${esc(email)}</a></div>`:'',web?`<div class="detail">🌐 <a href="${esc(/^https?:\/\//i.test(web)?web:'https://'+web)}" target="_blank" rel="noopener">${esc(web)}</a></div>`:''].join('');
+ document.getElementById('contacts').innerHTML=[contact?`<div class="detail">Contact: <strong>${esc(contact)}</strong></div>`:'',loc?`<div class="detail">📍 <strong>${esc(loc)}</strong></div>`:'',phone?`<div class="detail">📞 <a href="tel:${esc(phone.replace(/\D/g,''))}">${esc(phone)}</a></div>`:'',email?`<div class="detail">✉️ <a href="mailto:${esc(email)}">${esc(email)}</a></div>`:'',web?`<div class="detail">🌐 <a href="${esc(/^https?:\/\//i.test(web)?web:'https://'+web)}" target="_blank" rel="noopener">${esc(web)}</a></div>`:''].join('');
  const wa=(first.whatsapp||phone||'').replace(/\D/g,'');document.getElementById('actions').innerHTML=[phone?`<a class="btn primary" href="tel:${esc(phone.replace(/\D/g,''))}">📞 Call yard</a>`:'',wa?`<a class="btn gold" href="https://wa.me/${esc(wa)}?text=${encodeURIComponent('Hello '+name+', I found your vehicles on 3 Pedals Auto KE and would like to enquire.') }" target="_blank" rel="noopener">💬 WhatsApp yard</a>`:'',loc?`<a class="btn" href="${esc(mapUrl(loc))}" target="_blank" rel="noopener">📍 Get directions</a>`:'',web?`<a class="btn" href="${esc(/^https?:\/\//i.test(web)?web:'https://'+web)}" target="_blank" rel="noopener">🌐 Visit website</a>`:''].join('');
  document.getElementById('vehicleCount').textContent=rows.length;const prices=rows.map(r=>Number(r.price||0)).filter(Boolean);if(prices.length){const lo=Math.min(...prices),hi=Math.max(...prices);document.getElementById('priceRange').textContent=lo===hi?'KES '+fmt(lo):'KES '+fmt(lo)+'–'+fmt(hi)}document.getElementById('countText').textContent=`${rows.length} available ${rows.length===1?'vehicle':'vehicles'}`;
- document.getElementById('grid').innerHTML=rows.map(r=>{const photo=Array.isArray(r.photos)&&r.photos[0]?r.photos[0]:'';return `<a class="card" href="vehicle.html?id=${encodeURIComponent(r.id)}"><div class="photo">${photo?`<img src="${esc(photo)}" alt="${esc((r.year||'')+' '+(r.make||'')+' '+(r.model||''))}" loading="lazy">`:`<div style="height:100%;display:grid;place-items:center;color:#777">${esc(r.year||'')}</div>`}</div><div class="cardbody"><h3>${esc(r.year||'')} ${esc(r.make||'')} ${esc(r.model||'')}</h3><div class="price">KES ${fmt(r.price)}</div><div class="tags"><span class="tag">${fmt(r.km)} km</span><span class="tag">${esc(r.fuel||'N/A')}</span><span class="tag">Approved</span></div></div></a>`}).join('');
+ document.getElementById('grid').innerHTML=rows.map((r,i)=>{const photo=Array.isArray(r.photos)&&r.photos[0]?r.photos[0]:'';return `<a class="card" style="--card-index:${i}" href="vehicle.html?id=${encodeURIComponent(r.id)}"><div class="photo">${photo?`<img src="${esc(photo)}" alt="${esc((r.year||'')+' '+(r.make||'')+' '+(r.model||''))}" loading="lazy">`:`<div style="height:100%;display:grid;place-items:center;color:var(--mute)">${esc(r.year||'')}</div>`}</div><div class="cardbody"><h3>${esc(r.year||'')} ${esc(r.make||'')} ${esc(r.model||'')}</h3><div class="price">KES ${fmt(r.price)}</div><div class="tags"><span class="tag">${fmt(r.km)} km</span><span class="tag">${esc(r.fuel||'N/A')}</span><span class="tag">Car yard / dealer</span></div></div></a>`}).join('');
 }
-init();
+init().catch(error=>{console.error('Could not initialize the yard profile:',error);document.getElementById('countText').textContent='Inventory unavailable';document.getElementById('grid').innerHTML='<div class="panel empty">We could not load this yard right now. Please refresh and try again.</div>'});
 </script>
 </body></html>
