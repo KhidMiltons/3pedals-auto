@@ -1032,7 +1032,7 @@ function detail(id){
   const tel=x=>`<a href="tel:${esc(String(x).replace(/[^\d+]/g,""))}">${esc(x)}</a>`;
   const rows=[["Mileage",esc(fmt(c.km))+" km"],["Fuel",esc(c.fuel)]];
   if(s.type==="yard"){
-    rows.push(["Car yard",esc(s.name)]);
+    rows.push(["Seller","Car yard"+(s.name?" — "+esc(s.name):"")]);
     if(s.contact)rows.push(["Contact",esc(s.contact)]);
     if(s.location)rows.push(["Location",esc(s.location)]);
     if(s.phone)rows.push(["Phone",tel(s.phone)]);
