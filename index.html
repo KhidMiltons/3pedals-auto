@@ -1165,7 +1165,6 @@ $("sBtn").onclick=async()=>{
       seller_name:yard?v("yName"):(v("sName")||(profile&&profile.name)||userData.user.email||""),
       seller_phone:yard?v("yPhone"):((profile&&profile.phone)||""),
       seller_email:yard?v("yEmail"):(userData.user.email||""),
-      web:yard?v("yWeb"):"",
       yard_name:yard?v("yName"):"",
       yard_location:yard?v("yLoc"):""
     };
