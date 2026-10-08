@@ -714,7 +714,7 @@ async function openAccount(){
   const [l,b]=await Promise.all([
     sb.from("listings").select("*").eq("owner",me.id).order("created_at",{ascending:false}),
     sb.from("bookings").select("*").eq("user_id",me.id).order("created_at",{ascending:false})]);
-  const L=l.data||[],B=b.data||[],label={pending:"Waiting for approval",approved:"Live",rejected:"Not approved"},avatar=profileAvatarUrl(),name=profileName(),phone=profilePhone();
+  const L=l.data||[],B=b.data||[],label={pending:"Waiting for approval",approved:"Live",rejected:"Not approved",sold:"Sold"},avatar=profileAvatarUrl(),name=profileName(),phone=profilePhone();
   box.innerHTML=`<div class="profile-card">
     <div class="profile-avatar">${avatar?`<img src="${esc(avatar)}" alt="Profile picture">`:esc(initialsFor(name,me.email))}</div>
     <div><h3 style="margin:0 0 4px">Your profile</h3><p class="meta" style="margin:0">${esc(me.email)}</p>
@@ -723,11 +723,20 @@ async function openAccount(){
   </div>
   <div class="profile-grid"><div><label for="accName">Full name</label><input id="accName" value="${esc(name)}" autocomplete="name"></div><div><label for="accPhone">Phone</label><input id="accPhone" value="${esc(phone)}" type="tel" autocomplete="tel"></div></div>
   <p id="accProfileErr" class="meta" style="color:var(--err)"></p><div class="acts"><button class="btn" id="accSaveProfile">Save account details</button></div>
-  <h3 style="margin-top:22px">My listings</h3>${L.map(x=>`<div class="svc"><div><b>${esc(x.year+" "+x.make+" "+x.model)}</b><span class="meta">KES ${fmt(x.price)} · <span class="st">${label[x.status]||esc(x.status)}</span></span></div><div class="acts"><button class="btn ghost" data-del="${x.id}">Delete</button></div></div>`).join("")||'<p class="meta">You have no listings yet.</p>'}
+  <h3 style="margin-top:22px">My listings</h3>${L.map(x=>`<div class="svc"><div><b>${esc(x.year+" "+x.make+" "+x.model)}</b><span class="meta">KES ${fmt(x.price)} · <span class="st">${label[x.status]||esc(x.status)}</span></span></div><div class="acts">${x.status==="approved"?`<button class="btn ghost" data-sold="${x.id}">Mark as sold</button><button class="btn ghost" data-view="${x.id}">View listing</button>`:""}<button class="btn ghost" data-del="${x.id}">Delete</button></div></div>`).join("")||'<p class="meta">You have no listings yet.</p>'}
   <h3 style="margin-top:18px">My garage bookings</h3>${B.map(x=>`<div class="svc"><div><b>${esc(x.service)}</b><span class="meta">${esc(x.date)} · ${esc(x.car||"")} · ${esc(x.ref)}</span></div><span class="st">${esc(x.status)}</span></div>`).join("")||'<p class="meta">No bookings yet.</p>'}
   <div class="acts" style="margin-top:18px">${profile&&profile.is_admin?'<button class="btn" id="accAdmin">Open admin panel</button>':""}<button class="btn ghost" id="accOut">Log out</button><button class="btn ghost" id="accClose">Close</button></div>`;
   $("accPhoto").onchange=e=>changeProfilePhoto(e.target.files[0]);
   $("accSaveProfile").onclick=saveAccountProfile;
+  box.querySelectorAll("[data-sold]").forEach(bt=>bt.onclick=async()=>{
+    if(!confirm("Mark this vehicle as SOLD? It will immediately be removed from the public Buy inventory."))return;
+    bt.disabled=true;bt.textContent="Updating…";
+    const {data,error}=await sb.rpc("mark_listing_sold",{listing_id:bt.dataset.sold});
+    if(error){alert(error.message||"Could not mark this vehicle as sold.");bt.disabled=false;bt.textContent="Mark as sold";return}
+    if(data!==true){alert("We could not mark this vehicle as sold. Please try again.");bt.disabled=false;bt.textContent="Mark as sold";return}
+    openAccount();loadListings();
+  });
+  box.querySelectorAll("[data-view]").forEach(bt=>bt.onclick=()=>{window.location.href=`vehicle.html?id=${encodeURIComponent(bt.dataset.view)}`});
   box.querySelectorAll("[data-del]").forEach(bt=>bt.onclick=async()=>{
     if(!confirm("Delete this listing? This will remove the listing from your account."))return;
     const {error}=await sb.from("listings").delete().eq("id",bt.dataset.del);if(error){alert(error.message);return}openAccount();loadListings();
