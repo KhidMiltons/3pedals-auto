@@ -181,6 +181,18 @@ footer .wrap{font-size:13px}
 .sell-actions .btn{margin-top:0}
 .account-listing-photo{width:72px;height:52px;object-fit:cover;border-radius:7px;border:1px solid var(--line);margin-right:8px;vertical-align:middle}
 @media(max-width:600px){.profile-card{grid-template-columns:1fr}.profile-grid{grid-template-columns:1fr}}
+.account-section{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.account-section h3{margin:0 0 8px;font-size:20px}
+.account-section .meta{line-height:1.55}
+.account-danger{border-color:rgba(168,52,52,.35);background:rgba(168,52,52,.035)}
+.account-danger h3{color:#9b2c2c}
+.account-danger .btn{border-color:rgba(168,52,52,.4);color:#8d2424}
+.account-danger .btn:hover{background:rgba(168,52,52,.07)}
+.account-field-note{font-size:12px;color:var(--mute);margin-top:5px;line-height:1.45}
+.account-type-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.account-type-option{display:flex;align-items:flex-start;gap:10px;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);cursor:pointer}
+.account-type-option input{min-height:auto;margin-top:3px}
+@media(max-width:600px){.account-type-grid{grid-template-columns:1fr}}
 
 /* Give form action areas a consistent alignment */
 form .btn{margin-top:10px}#sellForm>.btn,#bBtn{min-width:160px}
@@ -715,18 +727,37 @@ function profileAvatarUrl(){return (profile&&profile.avatar_url)||me?.user_metad
 function profileName(){return (profile&&profile.name)||me?.user_metadata?.name||""}
 function profilePhone(){return (profile&&profile.phone)||me?.user_metadata?.phone||""}
 async function saveAccountProfile(){
-  const name=$("accName").value.trim(),phone=$("accPhone").value.trim(),err=$("accProfileErr"),btn=$("accSaveProfile");
+  const name=$("accName").value.trim(),phone=$("accPhone").value.trim(),email=$("accEmail").value.trim().toLowerCase(),newPass=$("accPassword").value,confirmPass=$("accPasswordConfirm").value,err=$("accProfileErr"),btn=$("accSaveProfile");
+  const type=document.querySelector('input[name="accAccountType"]:checked')?.value||accountType();
   if(!name){err.textContent="Please enter your name.";return}
-  btn.disabled=true;err.textContent="Saving…";
+  if(email&&!/^\S+@\S+\.\S+$/.test(email)){err.textContent="Enter a valid email address.";return}
+  if(newPass&&newPass.length<8){err.textContent="Use a password of at least 8 characters.";return}
+  if(newPass!==confirmPass){err.textContent="The new passwords do not match.";return}
+  btn.disabled=true;err.textContent="Saving your account…";
   try{
-    const meta={...(me.user_metadata||{}),name,phone};
-    const au=await sb.auth.updateUser({data:meta});
-    if(au.error)throw au.error;
-    const pu=await sb.from("profiles").update({name,phone}).eq("id",me.id);
-    if(pu.error)console.warn("Profile table update failed; account metadata was saved.",pu.error);
-    me=au.data.user||me;profile={...(profile||{}),name,phone};
-    refreshAccountUI();err.textContent="Account details saved.";
-    setTimeout(()=>openAccount(),350);
+    const meta={...(me.user_metadata||{}),name,phone,account_type:type};
+    let emailChanged=false,passwordChanged=false;
+    if(email&&email!==String(me.email||"").toLowerCase()){
+      const ae=await sb.auth.updateUser({email,data:meta});
+      if(ae.error)throw ae.error;
+      me=ae.data.user||me;emailChanged=true;
+    }else{
+      const au=await sb.auth.updateUser({data:meta,password:newPass||undefined});
+      if(au.error)throw au.error;
+      me=au.data.user||me;passwordChanged=!!newPass;
+    }
+    if(emailChanged&&newPass){
+      const ap=await sb.auth.updateUser({password:newPass});
+      if(ap.error)throw ap.error;
+      me=ap.data.user||me;passwordChanged=true;
+    }
+    const pu=await sb.from("profiles").update({name,phone,account_type:type}).eq("id",me.id).select("*").maybeSingle();
+    if(pu.error)console.warn("Profile row update failed; Auth account metadata was saved.",pu.error);
+    profile=pu.data||{...(profile||{}),name,phone,account_type:type};
+    refreshAccountUI();
+    err.textContent=emailChanged?"Details saved. Check your new email for the confirmation link to finish the email change.":passwordChanged?"Account details and password updated.":"Account details saved.";
+    $("accPassword").value="";$("accPasswordConfirm").value="";
+    setTimeout(()=>openAccount(),700);
   }catch(e){err.textContent=e.message||"Could not save your details."}
   btn.disabled=false;
 }
@@ -742,9 +773,39 @@ async function changeProfilePhoto(file){
     const au=await sb.auth.updateUser({data:{...(me.user_metadata||{}),avatar_url:url}});
     if(au.error)throw au.error;
     const pu=await sb.from("profiles").update({avatar_url:url}).eq("id",me.id);
-    if(pu.error)console.warn("Avatar saved to account metadata; profiles.avatar_url may not exist yet.",pu.error);
+    if(pu.error&&pu.code!="42703")throw pu.error;
     me=au.data.user||me;profile={...(profile||{}),avatar_url:url};refreshAccountUI();err.textContent="Profile picture updated.";openAccount();
   }catch(e){err.textContent=e.message||"Could not upload that profile picture."}
+}
+async function removeProfilePhoto(){
+  const err=$("accProfileErr");
+  if(!confirm("Remove your profile picture?"))return;
+  err.textContent="Removing profile picture…";
+  try{
+    const au=await sb.auth.updateUser({data:{...(me.user_metadata||{}),avatar_url:null}});
+    if(au.error)throw au.error;
+    const pu=await sb.from("profiles").update({avatar_url:null}).eq("id",me.id);
+    if(pu.error&&pu.code!="42703")console.warn("Profile avatar column could not be cleared.",pu.error);
+    me=au.data.user||me;profile={...(profile||{}),avatar_url:""};err.textContent="Profile picture removed.";openAccount();
+  }catch(e){err.textContent=e.message||"Could not remove the profile picture."}
+}
+async function deleteMyAccount(){
+  const phrase=prompt("This permanently deletes your account, profile, listings, bookings and uploaded car photos. Type DELETE to continue.");
+  if(phrase!=="DELETE")return;
+  const second=confirm("Final confirmation: permanently delete your 3 Pedals Auto KE account?");
+  if(!second)return;
+  const btn=$("accDeleteAccount"),err=$("accProfileErr");
+  btn.disabled=true;err.textContent="Deleting your account…";
+  try{
+    const {data:sessionData}=await sb.auth.getSession(),token=sessionData?.session?.access_token;
+    if(!token)throw new Error("Your login session has expired. Please log in again.");
+    const r=await fetch(`${CFG.url}/functions/v1/delete-account`,{method:"POST",headers:{Authorization:`Bearer ${token}`,"Content-Type":"application/json"},body:"{}"});
+    const body=await r.json().catch(()=>({}));
+    if(!r.ok)throw new Error(body.error||"We could not delete your account.");
+    await sb.auth.signOut();
+    $("accDlg").close();me=null;profile=null;refreshAccountUI();
+    alert("Your account has been permanently deleted.");
+  }catch(e){err.textContent=e.message||"We could not delete your account.";btn.disabled=false}
 }
 async function openAccount(){
   const d=$("accDlg"),box=$("accBody");
@@ -757,16 +818,33 @@ async function openAccount(){
   box.innerHTML=`<div class="profile-card">
     <div class="profile-avatar">${avatar?`<img src="${esc(avatar)}" alt="Profile picture">`:esc(initialsFor(name,me.email))}</div>
     <div><h3 style="margin:0 0 4px">Your profile</h3><p class="meta" style="margin:0">${esc(me.email)}</p>
-      <div class="profile-actions"><label class="btn ghost" style="display:inline-flex;align-items:center;cursor:pointer;margin:0">Change picture<input id="accPhoto" type="file" accept="image/*" hidden></label></div>
+      <div class="profile-actions"><label class="btn ghost" style="display:inline-flex;align-items:center;cursor:pointer;margin:0">Change picture<input id="accPhoto" type="file" accept="image/*" hidden></label><button type="button" class="btn ghost" id="accRemovePhoto">Remove picture</button></div>
     </div>
   </div>
-  <div class="profile-grid"><div><label for="accName">Full name</label><input id="accName" value="${esc(name)}" autocomplete="name"></div><div><label for="accPhone">Phone</label><input id="accPhone" value="${esc(phone)}" type="tel" autocomplete="tel"></div></div>
-  <p id="accProfileErr" class="meta" style="color:var(--err)"></p><div class="acts"><button class="btn" id="accSaveProfile">Save account details</button></div>
+  <div class="account-section"><h3>Account information</h3><p class="meta">Manage the details other parts of 3 Pedals Auto KE use to identify you.</p>
+    <div class="profile-grid">
+      <div><label for="accName">Full name</label><input id="accName" value="${esc(name)}" autocomplete="name"></div>
+      <div><label for="accPhone">Phone</label><input id="accPhone" value="${esc(phone)}" type="tel" autocomplete="tel"></div>
+    </div>
+    <label for="accEmail">Email address</label><input id="accEmail" value="${esc(me.email||"")}" type="email" autocomplete="email"><div class="account-field-note">Changing your email may require confirmation from the new email address.</div>
+    <div class="profile-grid">
+      <div><label for="accPassword">New password</label><input id="accPassword" type="password" autocomplete="new-password" placeholder="Leave blank to keep it"></div>
+      <div><label for="accPasswordConfirm">Confirm new password</label><input id="accPasswordConfirm" type="password" autocomplete="new-password" placeholder="Repeat new password"></div>
+    </div>
+    <label>Account type</label><div class="account-type-grid">
+      <label class="account-type-option"><input type="radio" name="accAccountType" value="private" ${type==="private"?"checked":""}><span><strong>Private seller</strong><br><small class="meta">For an individual selling their own vehicles.</small></span></label>
+      <label class="account-type-option"><input type="radio" name="accAccountType" value="yard" ${type==="yard"?"checked":""}><span><strong>Car yard / dealer</strong><br><small class="meta">For a business or dealership selling vehicles.</small></span></label>
+    </div>
+    <p id="accProfileErr" class="meta" style="color:var(--err)"></p><div class="acts"><button class="btn" id="accSaveProfile">Save account changes</button></div>
+  </div>
   <h3 style="margin-top:22px">My listings</h3>${L.map(x=>`<div class="svc"><div><b>${esc(x.year+" "+x.make+" "+x.model)}</b><span class="meta">KES ${fmt(x.price)} · <span class="st">${label[x.status]||esc(x.status)}</span></span></div><div class="acts">${x.status==="approved"?`<button class="btn ghost" data-sold="${x.id}">Mark as sold</button><button class="btn ghost" data-view="${x.id}">View listing</button>`:""}<button class="btn ghost" data-del="${x.id}">Delete</button></div></div>`).join("")||'<p class="meta">You have no listings yet.</p>'}
   <h3 style="margin-top:18px">My garage bookings</h3>${B.map(x=>`<div class="svc"><div><b>${esc(x.service)}</b><span class="meta">${esc(x.date)} · ${esc(x.car||"")} · ${esc(x.ref)}</span></div><span class="st">${esc(x.status)}</span></div>`).join("")||'<p class="meta">No bookings yet.</p>'}
+  <div class="account-section account-danger"><h3>Delete account</h3><p class="meta">Permanently removes your account, profile, listings, bookings and uploaded vehicle/profile photos. This cannot be undone.</p><button class="btn" id="accDeleteAccount">Permanently delete my account</button></div>
   <div class="acts" style="margin-top:18px">${profile&&profile.is_admin?'<button class="btn" id="accAdmin">Open admin panel</button>':""}<button class="btn ghost" id="accOut">Log out</button><button class="btn ghost" id="accClose">Close</button></div>`;
   $("accPhoto").onchange=e=>changeProfilePhoto(e.target.files[0]);
+  $("accRemovePhoto").onclick=removeProfilePhoto;
   $("accSaveProfile").onclick=saveAccountProfile;
+  $("accDeleteAccount").onclick=deleteMyAccount;
   box.querySelectorAll("[data-sold]").forEach(bt=>bt.onclick=async()=>{
     if(!confirm("Mark this vehicle as SOLD? It will immediately be removed from the public Buy inventory."))return;
     bt.disabled=true;bt.textContent="Updating…";
