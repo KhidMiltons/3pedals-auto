@@ -361,6 +361,14 @@ dialog{background:var(--surface)!important;color:var(--ink)!important}
 footer{color:var(--mute)!important}
 @media(max-width:800px){header .wrap{grid-template-columns:1fr auto;grid-template-areas:"brand account" "nav nav";gap:10px}.account-pill{justify-self:end}.logo{font-size:27px!important}nav{width:100%;overflow-x:auto;justify-content:flex-start}nav button,nav a.navlink{flex:0 0 auto}}
 @media(max-width:520px){.logo{font-size:24px!important}.account-pill{padding:3px!important}.account-pill button{width:40px!important;height:40px!important}.hero{padding-top:42px!important}.hero h1{font-size:clamp(38px,11vw,56px)!important}}
+
+/* Dealer profile / premium inventory cards */
+.yard-link{appearance:none;border:0;background:none;padding:0;color:inherit;font:inherit;font-weight:800;text-decoration:underline;text-decoration-color:rgba(212,160,23,.55);text-underline-offset:3px;cursor:pointer}
+.yard-link:hover{color:var(--gold)}
+.card-reveal{margin-top:8px;font-size:11px;font-weight:800;letter-spacing:.03em;color:var(--gold);opacity:.78;transition:transform .25s ease,opacity .25s ease}
+.card:hover .card-reveal{opacity:1;transform:translateX(3px)}
+.yard-badge{z-index:3;box-shadow:0 6px 18px rgba(0,0,0,.18)}
+@media(min-width:1400px){#grid{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:14px!important}.card .body{padding:13px}.card h3{font-size:17px}.card .price{font-size:18px}.card .tag{font-size:10px;padding:4px 7px}}
 </style>
 
 <style id="auto-quote-rail">
@@ -953,7 +961,7 @@ $("adminPanel").onclick=async e=>{
 $("adminPanel").onchange=async e=>{const s=e.target.closest("[data-bk]");if(s)await sb.from("bookings").update({status:s.value}).eq("id",s.dataset.bk)};
 
 const rowToCar=(r,i)=>({id:r.id,make:String(r.make||"").trim(),model:String(r.model||"").trim(),year:r.year,price:r.price,km:r.km||0,fuel:r.fuel||"",desc:r.description||"",photos:r.photos||[],color:colors[i%colors.length],
-  seller:{type:r.seller_type||((r.yard_name||r.yard_location)?"yard":"private"),name:r.yard_name||r.seller_name,contact:r.contact,location:r.yard_location||r.location,phone:r.seller_phone||r.phone,email:r.seller_email||r.email,web:r.web,whatsapp:r.whatsapp}});
+  seller:{type:r.seller_type||((r.yard_name||r.yard_location)?"yard":"private"),name:r.yard_name||r.seller_name,contact:r.contact||r.yard_contact,location:r.yard_location||r.location,phone:r.seller_phone||r.phone,email:r.seller_email||r.email,web:r.web||r.yard_web,whatsapp:r.whatsapp}});
 async function loadListings(){
   if(!sb)return;
   const {data,error}=await sb.from("listings").select("*").eq("status","approved").order("created_at",{ascending:false});
@@ -998,13 +1006,13 @@ function render(){
   $("count").textContent=r.length+(r.length===1?" car":" cars")+" found";
   $("grid").innerHTML=r.length?r.map(c=>{
     const isYard=c.seller&&c.seller.type==="yard",yardName=c.seller?.name||"Car yard",loc=c.seller?.location||"";
-    return `<button class="card" data-id="${c.id}">
-      ${isYard?`<span class="yard-badge">🏢 Car Yard</span>`:""}
+    return `<button class="card" data-id="${c.id}" data-yard="${isYard?esc(yardName):""}">
+      ${isYard?`<span class="yard-badge">🏢 CAR YARD</span>`:""}
       <div class="swatch${hasPh(c)}" style="background:${bgOf(c)}">${c.year}</div>
       <div class="body"><h3>${esc(c.make)} ${esc(c.model)}</h3>
       <div class="price">KES ${fmt(c.price)}</div>
-      <span class="tag">${fmt(c.km)} km</span><span class="tag">${esc(c.fuel||"N/A")}</span><span class="tag">${isYard?"Yard listing":"Private"}</span>
-      ${isYard?`<div class="yard-line">🏢 <strong>${esc(yardName)}</strong></div><div class="card-reveal">${loc?`<div class="yard-line">📍 ${esc(loc)}</div><div class="meta" style="margin-top:7px">Open vehicle for contacts & directions ↗</div>`:""}</div>`:""}
+      <span class="tag">${fmt(c.km)} km</span><span class="tag">${esc(c.fuel||"N/A")}</span><span class="tag">${isYard?"Dealer":"Private"}</span>
+      ${isYard?`<div class="yard-line">🏢 <button type="button" class="yard-link" data-yard-name="${esc(yardName)}">${esc(yardName)}</button></div>${loc?`<div class="yard-line">📍 ${esc(loc)}</div>`:""}<div class="card-reveal"><span>View dealer profile →</span></div>`:""}
       </div></button>`;
   }).join("") :'<p class="meta">No cars match these filters. Clear the search or raise the price limit.</p>';
 }
@@ -1013,7 +1021,11 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",
 $("make").addEventListener("change",()=>{updateBuyFilters();render()});
 $("model").addEventListener("change",()=>{updateBuyFilters();render()});
 $("variant").addEventListener("change",render);
-$("grid").onclick=e=>{const b=e.target.closest(".card");if(b)window.location.href=`vehicle.html?id=${encodeURIComponent(b.dataset.id)}`;};
+$("grid").onclick=e=>{
+  const y=e.target.closest("[data-yard-name]");
+  if(y){e.stopPropagation();window.location.href=`yard.html?name=${encodeURIComponent(y.dataset.yardName)}`;return}
+  const b=e.target.closest(".card");if(b)window.location.href=`vehicle.html?id=${encodeURIComponent(b.dataset.id)}`;
+};
 
 function detail(id){
   const c=cars.find(x=>x.id===id),d=$("dlg"),s=c.seller||{},ph=c.photos||[];
