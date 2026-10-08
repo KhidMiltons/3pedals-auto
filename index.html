@@ -173,6 +173,7 @@ footer .wrap{font-size:13px}
 .profile-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .profile-actions .btn{margin-top:0}
 .profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+.account-tools{margin-top:22px;padding-top:16px;border-top:1px solid var(--line)}.account-tools h3{margin:0 0 10px}.account-tools .field-row{display:grid;grid-template-columns:1fr auto;gap:9px;align-items:end;margin:10px 0}.account-tools input,.profile-grid input,.profile-grid select{min-width:0}.danger-zone{margin-top:22px;padding:14px;border:1px solid rgba(190,50,50,.35);border-radius:12px;background:rgba(190,50,50,.06)}.danger-zone h3{margin:0 0 6px;color:var(--err)}
 .photo-item{position:relative;width:88px;height:66px}
 .photo-item img{width:88px;height:66px;object-fit:cover;border-radius:6px;border:1px solid var(--line);display:block}
 .photo-remove{position:absolute;right:-6px;top:-6px;width:23px;height:23px;border:1px solid rgba(255,255,255,.8);border-radius:50%;background:#111;color:#fff;display:grid;place-items:center;font-size:14px;line-height:1;cursor:pointer;box-shadow:0 3px 8px rgba(0,0,0,.22)}
@@ -180,7 +181,7 @@ footer .wrap{font-size:13px}
 .sell-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
 .sell-actions .btn{margin-top:0}
 .account-listing-photo{width:72px;height:52px;object-fit:cover;border-radius:7px;border:1px solid var(--line);margin-right:8px;vertical-align:middle}
-@media(max-width:600px){.profile-card{grid-template-columns:1fr}.profile-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.profile-card{grid-template-columns:1fr}.profile-grid,.account-tools .field-row{grid-template-columns:1fr}}
 
 /* Give form action areas a consistent alignment */
 form .btn{margin-top:10px}#sellForm>.btn,#bBtn{min-width:160px}
@@ -716,20 +717,53 @@ function profileAvatarUrl(){return (profile&&profile.avatar_url)||me?.user_metad
 function profileName(){return (profile&&profile.name)||me?.user_metadata?.name||""}
 function profilePhone(){return (profile&&profile.phone)||me?.user_metadata?.phone||""}
 async function saveAccountProfile(){
-  const name=$("accName").value.trim(),phone=$("accPhone").value.trim(),err=$("accProfileErr"),btn=$("accSaveProfile");
+  const name=$("accName").value.trim(),phone=$("accPhone").value.trim(),type=normalizeAccountType($("accType").value),err=$("accProfileErr"),btn=$("accSaveProfile");
   if(!name){err.textContent="Please enter your name.";return}
   btn.disabled=true;err.textContent="Saving…";
   try{
-    const meta={...(me.user_metadata||{}),name,phone};
+    const meta={...(me.user_metadata||{}),name,phone,account_type:type};
     const au=await sb.auth.updateUser({data:meta});
     if(au.error)throw au.error;
-    const pu=await sb.from("profiles").update({name,phone}).eq("id",me.id);
+    const pu=await sb.from("profiles").update({name,phone,account_type:type}).eq("id",me.id);
     if(pu.error)console.warn("Profile table update failed; account metadata was saved.",pu.error);
-    me=au.data.user||me;profile={...(profile||{}),name,phone};
-    refreshAccountUI();err.textContent="Account details saved.";
+    const lu=await sb.from("listings").update({seller_type:type}).eq("owner",me.id);
+    if(lu.error)console.warn("Listing seller type update failed; account type was saved.",lu.error);
+    me=au.data.user||me;profile={...(profile||{}),name,phone,account_type:type};
+    refreshAccountUI();err.textContent="Account details and seller type saved.";
     setTimeout(()=>openAccount(),350);
   }catch(e){err.textContent=e.message||"Could not save your details."}
   btn.disabled=false;
+}
+async function removeProfilePhoto(){
+  const err=$("accProfileErr"),btn=$("accRemovePhoto");if(!profileAvatarUrl())return;
+  btn.disabled=true;err.textContent="Removing profile picture…";
+  try{
+    const au=await sb.auth.updateUser({data:{...(me.user_metadata||{}),avatar_url:null}});if(au.error)throw au.error;
+    const pu=await sb.from("profiles").update({avatar_url:null}).eq("id",me.id);
+    if(pu.error)console.warn("Profile picture was removed from account metadata; profiles.avatar_url may not be writable.",pu.error);
+    me=au.data.user||me;profile={...(profile||{}),avatar_url:null};refreshAccountUI();openAccount();
+  }catch(e){err.textContent=e.message||"Could not remove the profile picture.";btn.disabled=false}
+}
+async function updateAccountEmail(){
+  const email=$("accEmail").value.trim().toLowerCase(),err=$("accProfileErr"),btn=$("accUpdateEmail");
+  if(!email||email===String(me.email||"").toLowerCase()){err.textContent="Enter a different email address.";return}
+  btn.disabled=true;err.textContent="Updating email…";
+  try{const {data,error}=await sb.auth.updateUser({email});if(error)throw error;me=data.user||me;err.textContent="Email update requested. Check your inbox to confirm the new address.";refreshAccountUI()}
+  catch(e){err.textContent=e.message||"Could not update your email."}finally{btn.disabled=false}
+}
+async function updateAccountPassword(){
+  const password=$("accPassword").value,err=$("accProfileErr"),btn=$("accUpdatePassword");
+  if(password.length<8){err.textContent="Use a password of at least 8 characters.";return}
+  btn.disabled=true;err.textContent="Updating password…";
+  try{const {error}=await sb.auth.updateUser({password});if(error)throw error;$("accPassword").value="";err.textContent="Password updated."}
+  catch(e){err.textContent=e.message||"Could not update your password."}finally{btn.disabled=false}
+}
+async function permanentlyDeleteAccount(){
+  if(!confirm("Permanently delete your account and your listings and bookings? This cannot be undone."))return;
+  if(prompt('Type DELETE to permanently remove your account.')!=="DELETE")return;
+  const btn=$("accDeleteAccount"),err=$("accProfileErr");btn.disabled=true;err.textContent="Deleting account…";
+  try{const {error}=await sb.rpc("delete_my_account");if(error)throw error;await sb.auth.signOut();me=null;profile=null;refreshAccountUI();$("accDlg").close();alert("Your account has been permanently deleted.")}
+  catch(e){err.textContent=e.message||"Could not delete the account. Confirm the account deletion SQL has been installed.";btn.disabled=false}
 }
 async function changeProfilePhoto(file){
   const err=$("accProfileErr");if(!file)return;
@@ -758,16 +792,22 @@ async function openAccount(){
   box.innerHTML=`<div class="profile-card">
     <div class="profile-avatar">${avatar?`<img src="${esc(avatar)}" alt="Profile picture">`:esc(initialsFor(name,me.email))}</div>
     <div><h3 style="margin:0 0 4px">Your profile</h3><p class="meta" style="margin:0">${esc(me.email)}</p>
-      <div class="profile-actions"><label class="btn ghost" style="display:inline-flex;align-items:center;cursor:pointer;margin:0">Change picture<input id="accPhoto" type="file" accept="image/*" hidden></label></div>
+      <div class="profile-actions"><label class="btn ghost" style="display:inline-flex;align-items:center;cursor:pointer;margin:0">Upload / change picture<input id="accPhoto" type="file" accept="image/*" hidden></label>${avatar?'<button class="btn ghost" type="button" id="accRemovePhoto">Remove picture</button>':""}</div>
     </div>
   </div>
-  <div class="profile-grid"><div><label for="accName">Full name</label><input id="accName" value="${esc(name)}" autocomplete="name"></div><div><label for="accPhone">Phone</label><input id="accPhone" value="${esc(phone)}" type="tel" autocomplete="tel"></div></div>
-  <p id="accProfileErr" class="meta" style="color:var(--err)"></p><div class="acts"><button class="btn" id="accSaveProfile">Save account details</button></div>
+  <div class="profile-grid"><div><label for="accName">Full name</label><input id="accName" value="${esc(name)}" autocomplete="name"></div><div><label for="accPhone">Phone number</label><input id="accPhone" value="${esc(phone)}" type="tel" autocomplete="tel"></div><div><label for="accType">Account type</label><select id="accType"><option value="private" ${accountType()==="private"?"selected":""}>Private seller</option><option value="yard" ${accountType()==="yard"?"selected":""}>Car yard / dealer</option></select></div></div>
+  <p id="accProfileErr" class="meta" style="color:var(--err)"></p><div class="acts"><button class="btn" id="accSaveProfile">Save profile changes</button></div>
+  <section class="account-tools"><h3>Login details</h3><div class="field-row"><div><label for="accEmail">Email address</label><input id="accEmail" type="email" value="${esc(me.email||"")}" autocomplete="email"></div><button class="btn ghost" id="accUpdateEmail" type="button">Change email</button></div><div class="field-row"><div><label for="accPassword">New password</label><input id="accPassword" type="password" minlength="8" autocomplete="new-password" placeholder="At least 8 characters"></div><button class="btn ghost" id="accUpdatePassword" type="button">Change password</button></div><p class="meta">Email changes require confirmation from your inbox.</p></section>
    <h3 style="margin-top:22px">My listings</h3>${L.map(x=>`<div class="svc"><div><b>${esc(x.year+" "+x.make+" "+x.model)}</b><span class="meta">${sellerTypeForListing(x)==="yard"?"Car yard / dealer":"Private seller"} · KES ${fmt(x.price)} · <span class="st">${label[x.status]||esc(x.status)}</span></span></div><div class="acts">${x.status==="approved"?`<button class="btn ghost" data-sold="${x.id}">Mark as sold</button><button class="btn ghost" data-view="${x.id}">View listing</button>`:""}<button class="btn ghost" data-del="${x.id}">Delete</button></div></div>`).join("")||'<p class="meta">You have no listings yet.</p>'}
   <h3 style="margin-top:18px">My garage bookings</h3>${B.map(x=>`<div class="svc"><div><b>${esc(x.service)}</b><span class="meta">${esc(x.date)} · ${esc(x.car||"")} · ${esc(x.ref)}</span></div><span class="st">${esc(x.status)}</span></div>`).join("")||'<p class="meta">No bookings yet.</p>'}
-  <div class="acts" style="margin-top:18px">${profile&&profile.is_admin?'<button class="btn" id="accAdmin">Open admin panel</button>':""}<button class="btn ghost" id="accOut">Log out</button><button class="btn ghost" id="accClose">Close</button></div>`;
+  <section class="danger-zone"><h3>Delete account</h3><p class="meta">Permanently remove your account, listings, and bookings. This cannot be undone.</p><button class="btn ghost" id="accDeleteAccount" type="button">Permanently delete account</button></section>
+  <div class="acts" style="margin-top:18px">${profile&&profile.is_admin?'<button class="btn" id="accAdmin">Open admin panel</button>':""}<button class="btn ghost" id="accOut">Sign out</button><button class="btn ghost" id="accClose">Close</button></div>`;
   $("accPhoto").onchange=e=>changeProfilePhoto(e.target.files[0]);
+  if($("accRemovePhoto"))$("accRemovePhoto").onclick=removeProfilePhoto;
   $("accSaveProfile").onclick=saveAccountProfile;
+  $("accUpdateEmail").onclick=updateAccountEmail;
+  $("accUpdatePassword").onclick=updateAccountPassword;
+  $("accDeleteAccount").onclick=permanentlyDeleteAccount;
   box.querySelectorAll("[data-sold]").forEach(bt=>bt.onclick=async()=>{
     if(!confirm("Mark this vehicle as SOLD? It will immediately be removed from the public Buy inventory."))return;
     bt.disabled=true;bt.textContent="Updating…";
