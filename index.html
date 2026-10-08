@@ -1162,7 +1162,6 @@ $("sBtn").onclick=async()=>{
       description:v("sDesc"),
       photos:urls,
       whatsapp:wa,
-      seller_type:yard?"yard":"private",
       seller_name:yard?v("yName"):(v("sName")||(profile&&profile.name)||userData.user.email||""),
       seller_phone:yard?v("yPhone"):((profile&&profile.phone)||""),
       seller_email:yard?v("yEmail"):(userData.user.email||""),
