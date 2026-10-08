@@ -147,7 +147,7 @@ nav.dock-active button,nav.dock-active a.navlink{transition-duration:.5s}
 .btn.ghost{background:var(--surface);border-color:var(--line);color:var(--ink)}.btn.ghost:hover{border-color:#b8c2ce;background:var(--surface-2)}
 .btn.alt{background:#111827;color:#fff}.btn.alt:hover{background:#1f2937}.btn.wa{background:var(--gold);color:#111827}
 .tiles{gap:16px;margin:10px 0 28px}.tile{min-height:128px;padding:20px 20px 18px;border-radius:var(--radius);border:1px solid var(--line);box-shadow:var(--shadow-sm);position:relative;transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease;background:var(--surface)}
-.tile:hover{transform:translateY(-2px);border-color:#c4ccd6;box-shadow:var(--shadow)}.tile h3{font-size:28px}.tile:after{content:"↗";position:absolute;right:18px;top:18px;font-size:18px;color:var(--blue);font-weight:700}.tile .meta{margin-top:5px;max-width:26em}
+.tile:hover{transform:translateY(-2px);border-color:#c4ccd6;box-shadow:var(--shadow)}.tile h3{font-size:28px}.tile:after{content:none;display:none}.tile .meta{margin-top:5px;max-width:26em}
 .panel{padding:24px;border-radius:var(--radius);border-color:var(--line);box-shadow:var(--shadow-sm);margin-bottom:40px}.panel h2{font-size:30px;margin-bottom:8px}
 .contact .svc{padding:15px 0;align-items:center}.svc b{font-size:15px}.contact a{color:var(--blue);text-decoration:none}.contact a:hover{text-decoration:underline}
 input,select,textarea{min-height:44px;padding:10px 13px;border-radius:9px;border-color:var(--line);background:var(--surface);transition:border-color .15s,box-shadow .15s}
@@ -478,13 +478,13 @@ main>section{contain:layout style}
   <nav role="tablist" aria-label="Sections">
     <button role="tab" data-tab="home" aria-selected="true">Home</button>
     <button role="tab" data-tab="buy" aria-selected="false">Buy a car</button>
-    <a class="navlink" href="inventory.html">Inventory ↗</a>
+    <a class="navlink" href="inventory.html">Inventory </a>
     <button role="tab" data-tab="sell" aria-selected="false">Sell your car</button>
     <button role="tab" data-tab="projects" aria-selected="false">Our projects</button>
     <button role="tab" data-tab="journal" aria-selected="false">3 Pedals Journal</button>
     <button role="tab" data-tab="about" aria-selected="false">About us</button>
     <button role="tab" data-tab="contact" aria-selected="false">Contact us</button>
-    <a class="navlink" id="gLink" href="garage.html">3 Pedals Garage ↗</a>
+    <a class="navlink" id="gLink" href="garage.html">3 Pedals Garage </a>
   </nav>
 </div></header>
 <div class="demo" id="demoBar" hidden>Demo mode: these are sample cars. Accounts, listings and bookings switch on once the site is connected to its database (see SETUP.md).</div>
@@ -507,7 +507,7 @@ main>section{contain:layout style}
   <p>Automotive Excellence Reimagined, For Those Who Appreciate the Drive.</p>
   <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
     <a class="btn wa" id="publicWhatsappHero" href="https://wa.me/254750495841?text=Hello%203%20Pedals%20Auto%20KE%2C%20I%27d%20like%20to%20enquire." target="_blank" rel="noopener">Chat on WhatsApp</a>
-    <a class="btn alt" href="garage.html">Visit 3 Pedals Garage ↗</a>
+    <a class="btn alt" href="garage.html">Visit 3 Pedals Garage </a>
   </div></div>
   <div class="tiles">
     <a class="tile" href="inventory.html"><h3>Browse inventory</h3><span class="meta">View cars currently listed for sale</span></a>
@@ -515,8 +515,8 @@ main>section{contain:layout style}
     <a class="tile" id="gTile" href="garage.html"><h3>3 Pedals Garage</h3><span class="meta">Service, repairs and inspections</span></a>
     <button class="tile" id="accountTile"><h3>My account</h3><span class="meta">Manage your vehicles and bookings</span></button>
   </div>
-  <div class="journal-intro"><div><span class="eyebrow">3 PEDALS JOURNAL</span><h2>Stories for people who genuinely love cars.</h2><p class="meta">Read buying guides, ownership stories, workshop knowledge, classic-car features, market insights and practical advice from the 3 Pedals team.</p></div><button class="btn alt" data-go="journal">Read the Journal ↗</button></div>
-  <div class="project-intro"><div><span class="eyebrow">3 PEDALS AUTO KE</span><h2>Built around cars, people and real work.</h2><p class="meta">Explore our latest vehicle work, inspections, restorations, servicing stories and automotive updates.</p></div><button class="btn alt" data-go="projects">Explore our projects ↗</button></div>
+  <div class="journal-intro"><div><span class="eyebrow">3 PEDALS JOURNAL</span><h2>Stories for people who genuinely love cars.</h2><p class="meta">Read buying guides, ownership stories, workshop knowledge, classic-car features, market insights and practical advice from the 3 Pedals team.</p></div><button class="btn alt" data-go="journal">Read the Journal </button></div>
+  <div class="project-intro"><div><span class="eyebrow">3 PEDALS AUTO KE</span><h2>Built around cars, people and real work.</h2><p class="meta">Explore our latest vehicle work, inspections, restorations, servicing stories and automotive updates.</p></div><button class="btn alt" data-go="projects">Explore our projects </button></div>
     </div>
   </div>
 </section>
@@ -874,7 +874,7 @@ function renderJournal(list){
   if(!articles.length){box.innerHTML='<div class="project-public-empty" style="grid-column:1/-1"><h3>The Journal is coming soon.</h3><p class="meta">Our first automotive stories will appear here once published by the 3 Pedals team.</p></div>';return}
   box.innerHTML=articles.map((p,i)=>`<button class="journal-card" data-journal-id="${esc(p.id)}">
     <div class="journal-card-top"><span class="journal-number">${String(i+1).padStart(2,"0")}</span><span class="project-kicker">${esc(p.category||"Automotive Journal")}</span><h2>${esc(p.title)}</h2></div>
-    <div class="journal-card-body"><div class="journal-meta"><span>3 PEDALS JOURNAL</span>${p.created_at?`<span>·</span><span>${esc(new Date(p.created_at).toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"}))}</span>`:""}</div><p>${esc(p.description||"A story for people who love cars.")}</p><span class="journal-read">Read story ↗</span></div>
+    <div class="journal-card-body"><div class="journal-meta"><span>3 PEDALS JOURNAL</span>${p.created_at?`<span>·</span><span>${esc(new Date(p.created_at).toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"}))}</span>`:""}</div><p>${esc(p.description||"A story for people who love cars.")}</p><span class="journal-read">Read story </span></div>
   </button>`).join("");
   box.querySelectorAll("[data-journal-id]").forEach(b=>b.onclick=()=>openJournalArticle(articles.find(p=>String(p.id)===b.dataset.journalId)));
 }
@@ -1091,7 +1091,7 @@ function render(){
       <div class="body"><h3>${esc(c.make)} ${esc(c.model)}</h3>
       <div class="price">KES ${fmt(c.price)}</div>
       <span class="tag">${fmt(c.km)} km</span><span class="tag">${esc(c.fuel||"N/A")}</span><span class="tag">${isYard?"Car yard / dealer":"Private seller"}</span>
-      ${isYard?`<div class="yard-line">🏢 <button type="button" class="yard-link" data-yard-name="${esc(yardName)}">${esc(yardName)}</button></div>${loc?`<div class="yard-line">📍 ${esc(loc)}</div>`:""}<div class="card-reveal"><span>View dealer profile →</span></div>`:""}
+      ${isYard?`<div class="yard-line">🏢 <button type="button" class="yard-link" data-yard-name="${esc(yardName)}">${esc(yardName)}</button></div>${loc?`<div class="yard-line">📍 ${esc(loc)}</div>`:""}<div class="card-reveal"><span>View dealer profile </span></div>`:""}
       </div></button>`;
   }).join("") :'<p class="meta">No cars match these filters. Clear the search or raise the price limit.</p>';
 }
