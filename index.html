@@ -542,9 +542,8 @@ main>section{contain:layout style}
 <section id="sell" hidden>
   <div class="hero"><h1>List your car in two minutes.</h1><p>Add photos and your WhatsApp number so buyers can chat with you directly. Car yards add their full business details.</p></div>
   <div class="panel"><form id="sellForm" onsubmit="return false">
-    <fieldset class="seg"><legend>I am a</legend>
-      <label><input type="radio" name="stype" value="private" checked> Private seller</label>
-      <label><input type="radio" name="stype" value="yard"> Car yard / dealer</label>
+    <fieldset class="seg" id="sellTypeDisplay"><legend>Listing as</legend>
+      <strong id="sellTypeLabel">Private seller</strong>
     </fieldset>
     <div id="privFields"><label for="sName">Your name (optional)</label><input id="sName" autocomplete="name"></div>
     <div id="yardFields" hidden>
@@ -601,7 +600,7 @@ main>section{contain:layout style}
 <a class="fab" href="https://wa.me/254750495841?text=Hello%203%20Pedals%20Auto%20KE" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">WhatsApp us</a>
 
 <dialog id="dlg" aria-label="Car details"></dialog>
-<dialog id="authDlg" class="authbox"><div class="in"><h2 id="authTitle">Create your account</h2><p class="meta">Create an account to list vehicles and book garage appointments.</p><label id="authNameLabel">Full name</label><input id="authName"><label>Email</label><input id="authEmail" type="email"><label>Phone</label><input id="authPhone" type="tel"><label>Password</label><input id="authPassword" type="password"><p id="authErr" class="meta" style="color:var(--err)"></p><button class="btn" id="authSubmit">Create account</button> <button class="btn ghost" id="authClose">Close</button><p class="switch"><span id="authSwitchText">Already have an account?</span> <button id="authSwitch">Log in</button></p></div></dialog>
+<dialog id="authDlg" class="authbox"><div class="in"><h2 id="authTitle">Create your account</h2><p class="meta">Create an account to list vehicles and book garage appointments.</p><label id="authNameLabel">Full name</label><input id="authName"><label>Email</label><input id="authEmail" type="email"><label>Phone</label><input id="authPhone" type="tel"><fieldset id="authAccountType" class="seg" style="margin-top:10px"><legend>Account type</legend><label><input type="radio" name="accountType" value="private" checked> Private seller</label><label><input type="radio" name="accountType" value="yard"> Car yard / dealer</label></fieldset><p id="authTypeHint" class="meta" style="margin-top:8px">Private seller accounts are for individuals selling their own vehicles.</p><label>Password</label><input id="authPassword" type="password"><p id="authErr" class="meta" style="color:var(--err)"></p><button class="btn" id="authSubmit">Create account</button> <button class="btn ghost" id="authClose">Close</button><p class="switch"><span id="authSwitchText">Already have an account?</span> <button id="authSwitch">Log in</button></p></div></dialog>
 <dialog id="adminDlg" class="authbox wide"><div class="in"><h2>Admin panel</h2><div id="adminPanel"></div><div class="acts" style="margin-top:16px"><button class="btn ghost" id="adminClose">Close</button></div></div></dialog>
 <dialog id="accDlg" class="authbox wide"><div class="in"><h2>My account</h2><div id="accBody"></div></div></dialog>
 
@@ -651,17 +650,34 @@ function show(t){
 try{const h=location.hash.replace("#","");if(["buy","sell","projects","journal","about","contact"].includes(h))show(h)}catch(_){}
 
 let authMode="register";
+function accountType(){
+  return String((profile&&profile.account_type)||me?.user_metadata?.account_type||"private").toLowerCase()==="yard"?"yard":"private";
+}
+async function syncAccountType(){
+  if(!me||!sb)return;
+  const type=accountType();
+  if(!profile||profile.account_type!==type){
+    const {data,error}=await sb.from("profiles").update({account_type:type}).eq("id",me.id).select("*").maybeSingle();
+    if(!error&&data)profile=data;
+  }
+}
 async function loadSession(){
   if(!sb)return;
   const {data:{session}}=await sb.auth.getSession();
   me=session?session.user:null;profile=null;
-  if(me){const {data}=await sb.from("profiles").select("*").eq("id",me.id).maybeSingle();profile=data}
+  if(me){const {data}=await sb.from("profiles").select("*").eq("id",me.id).maybeSingle();profile=data;await syncAccountType()}
   refreshAccountUI();
+  if(document.getElementById("sellTypeLabel"))sellMode();
 }
 function refreshAccountUI(){
+  const type=accountType();
   $("accountText").textContent=me?`Signed in as ${(profile&&profile.name)||me?.user_metadata?.name||me.email}`:"Not signed in";
   $("accountOpen").textContent="";
   $("adminWrap").hidden=!(profile&&profile.is_admin);
+}
+function updateAuthTypeHint(){
+  const type=document.querySelector('input[name="accountType"]:checked')?.value||"private";
+  $("authTypeHint").textContent=type==="yard"?"Car yard / dealer accounts are for businesses listing vehicles from a yard or dealership.":"Private seller accounts are for individuals selling their own vehicles.";
 }
 function openAuth(mode="register",msg=""){
   if(!sb){alert("Accounts are not switched on yet. Please contact us on WhatsApp.");return}
@@ -669,26 +685,29 @@ function openAuth(mode="register",msg=""){
   $("authTitle").textContent=login?"Log in":"Create your account";
   $("authSubmit").textContent=login?"Log in":"Create account";
   $("authNameLabel").hidden=login;$("authName").hidden=login;
+  $("authAccountType").hidden=login;$("authTypeHint").hidden=login;
   $("authSwitchText").textContent=login?"Need an account?":"Already have an account?";
   $("authSwitch").textContent=login?"Create one":"Log in";
-  $("authErr").textContent=msg;$("authDlg").showModal();
+  $("authErr").textContent=msg;updateAuthTypeHint();$("authDlg").showModal();
 }
 $("accountOpen").onclick=()=>me?openAccount():openAuth("login");
 $("accountTile").onclick=()=>me?openAccount():openAuth("register");
 $("authClose").onclick=()=>$("authDlg").close();
 $("authSwitch").onclick=()=>openAuth(authMode==="login"?"register":"login");
+document.querySelectorAll('input[name="accountType"]').forEach(r=>r.onchange=updateAuthTypeHint);
 $("authSubmit").onclick=async()=>{
-  const email=$("authEmail").value.trim().toLowerCase(),pass=$("authPassword").value,name=$("authName").value.trim(),phone=$("authPhone").value.trim(),err=$("authErr"),b=$("authSubmit");
+  const email=$("authEmail").value.trim().toLowerCase(),pass=$("authPassword").value,name=$("authName").value.trim(),phone=$("authPhone").value.trim(),type=document.querySelector('input[name="accountType"]:checked')?.value||"private",err=$("authErr"),b=$("authSubmit");
   if(!email||!pass){err.textContent="Email and password are required.";return}
   if(authMode==="register"){
     if(!name){err.textContent="Enter your name.";return}
     if(pass.length<8){err.textContent="Use a password of at least 8 characters.";return}
   }
   b.disabled=true;err.textContent="";
-  const res=authMode==="register"?await sb.auth.signUp({email,password:pass,options:{data:{name,phone}}}):await sb.auth.signInWithPassword({email,password:pass});
+  const res=authMode==="register"?await sb.auth.signUp({email,password:pass,options:{data:{name,phone,account_type:type}}}):await sb.auth.signInWithPassword({email,password:pass});
   b.disabled=false;
   if(res.error){err.textContent=res.error.message;return}
-  if(authMode==="register"&&!res.data.session){err.textContent="Account created. Check your email for a confirmation link, then log in.";return}
+  if(authMode==="register"&&!res.data.session){err.textContent="Account created. Check your email for a confirmation link, then log in. Your account type has been saved.";return}
+  if(authMode==="register"&&res.data.session){me=res.data.user;await loadSession()}
   $("authPassword").value="";$("authDlg").close();
 };
 function initialsFor(name,email){const x=String(name||email||"?").trim().split(/\s+/).filter(Boolean);return ((x[0]||"?")[0]+(x[1]||"")[0]).toUpperCase()}
@@ -734,7 +753,7 @@ async function openAccount(){
   const [l,b]=await Promise.all([
     sb.from("listings").select("*").eq("owner",me.id).order("created_at",{ascending:false}),
     sb.from("bookings").select("*").eq("user_id",me.id).order("created_at",{ascending:false})]);
-  const L=l.data||[],B=b.data||[],label={pending:"Waiting for approval",approved:"Live",rejected:"Not approved",sold:"Sold"},avatar=profileAvatarUrl(),name=profileName(),phone=profilePhone();
+  const L=l.data||[],B=b.data||[],label={pending:"Waiting for approval",approved:"Live",rejected:"Not approved",sold:"Sold"},avatar=profileAvatarUrl(),name=profileName(),phone=profilePhone(),type=accountType();
   box.innerHTML=`<div class="profile-card">
     <div class="profile-avatar">${avatar?`<img src="${esc(avatar)}" alt="Profile picture">`:esc(initialsFor(name,me.email))}</div>
     <div><h3 style="margin:0 0 4px">Your profile</h3><p class="meta" style="margin:0">${esc(me.email)}</p>
@@ -1067,9 +1086,14 @@ async function sendForm(type,data,hp){
 }
 // Sell
 let photos=[];
-const modeYard=()=>document.querySelector('input[name="stype"]:checked').value==="yard";
-function sellMode(){$("yardFields").hidden=!modeYard();$("privFields").hidden=modeYard()}
-document.querySelectorAll('input[name="stype"]').forEach(r=>r.onchange=sellMode);
+const modeYard=()=>accountType()==="yard";
+function sellMode(){
+  const yard=modeYard();
+  $("yardFields").hidden=!yard;
+  $("privFields").hidden=yard;
+  $("sellTypeLabel").textContent=yard?"Car yard / dealer":"Private seller";
+}
+
 function normWa(raw){
   let d=String(raw).replace(/\D/g,"");if(d.startsWith("00"))d=d.slice(2);
   if(/^0[17]\d{8}$/.test(d))return"254"+d.slice(1);
@@ -1130,6 +1154,8 @@ $("sCancel").onclick=()=>{
 };
 $("sBtn").onclick=async()=>{
   const v=i=>$(i).value.trim(),err=$("sErr"),yard=modeYard(),ok=$("sOk"),btn=$("sBtn");
+  if(me&&!profile)await loadSession();
+  sellMode();
   ok.hidden=true;
   if(!sb){err.textContent="Online listing is not switched on yet. Please WhatsApp us your car details.";return}
   if(!me){openAuth("login","Please sign in or create an account before listing a vehicle.");return}
