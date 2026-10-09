@@ -232,6 +232,7 @@ dialog.wide .in{max-height:80vh;overflow:auto}
 .project-admin-grid{display:grid;grid-template-columns:minmax(280px,360px) 1fr;gap:18px;align-items:start}
 .project-admin-form{position:sticky;top:18px}
 .project-admin-list{display:grid;gap:10px}
+.project-admin-lists{display:grid;gap:24px;min-width:0}
 .project-admin-item{border:1px solid var(--line);background:var(--surface-2);border-radius:12px;padding:14px;display:flex;gap:14px;justify-content:space-between;align-items:flex-start}
 .project-admin-item .thumb{width:110px;height:76px;border-radius:9px;overflow:hidden;background:#111;flex:0 0 110px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
 .project-admin-item .thumb img,.project-admin-item .thumb video{width:100%;height:100%;object-fit:cover}
@@ -271,7 +272,7 @@ dialog.wide .in{max-height:80vh;overflow:auto}
 .journal-card{display:flex;flex-direction:column;min-height:320px;padding:0;overflow:hidden;text-align:left;background:var(--surface);color:inherit;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow-sm);cursor:pointer;transition:transform .42s var(--premium-ease),box-shadow .42s var(--premium-ease),border-color .28s ease}
 .journal-card:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:rgba(183,160,106,.42)}
 .journal-card-top{min-height:145px;padding:22px;background:linear-gradient(145deg,var(--surface-2),var(--surface));display:flex;flex-direction:column;justify-content:flex-end;position:relative}
-.journal-card-top:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 15%,rgba(183,160,106,.13),transparent 36%);pointer-events:none}
+.journal-card-top:before{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(circle at 85% 15%,rgba(183,160,106,.13),transparent 36%);pointer-events:none}
 .journal-number{position:absolute;right:18px;top:16px;font:700 44px/1 "Barlow Condensed",sans-serif;color:rgba(183,160,106,.17)}
 .journal-card-body{padding:20px 22px 23px;display:flex;flex-direction:column;flex:1}
 .journal-card-body h2{font-size:25px;line-height:1.05;margin:8px 0 10px}
@@ -282,8 +283,18 @@ dialog.wide .in{max-height:80vh;overflow:auto}
 .journal-modal .article-head h2{font-size:clamp(32px,5vw,52px);line-height:.98;margin:8px 0 12px}
 .journal-modal .article-body{font-size:17px;line-height:1.85;white-space:pre-wrap;color:var(--ink)}
 .journal-modal .article-body p{margin:0 0 1.2em}
+.journal-card-top.has-cover{background:#111;isolation:isolate;color:#fff}
+.journal-cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.76}
+.journal-card-top.has-cover:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,9,10,.94),rgba(8,9,10,.06) 85%);z-index:2;pointer-events:none}
+.journal-card-top .journal-number,.journal-card-top .project-kicker,.journal-card-top h2{position:relative;z-index:3}
+.journal-card-top.has-cover .project-kicker,.journal-card-top.has-cover h2{color:#fff}
+.journal-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0 0 24px}
+.journal-gallery figure{margin:0;overflow:hidden;border:1px solid var(--line);border-radius:12px;background:var(--surface-2)}
+.journal-gallery figure:first-child:nth-last-child(odd){grid-column:1/-1}
+.journal-gallery img{width:100%;height:clamp(150px,28vw,300px);display:block;object-fit:cover}
+.journal-gallery figcaption{padding:7px 10px;font-size:11px;color:var(--mute)}
 @media(max-width:900px){.journal-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:600px){.journal-intro{padding:22px;align-items:flex-start;flex-direction:column}.journal-intro h2{font-size:28px}.journal-grid{grid-template-columns:1fr}.journal-card{min-height:290px}}
+@media(max-width:600px){.journal-intro{padding:22px;align-items:flex-start;flex-direction:column}.journal-intro h2{font-size:28px}.journal-grid{grid-template-columns:1fr}.journal-card{min-height:290px}.journal-gallery{grid-template-columns:1fr}.journal-gallery figure:first-child:nth-last-child(odd){grid-column:auto}.journal-gallery img{height:230px}}
 
 /* ===== Premium Automotive / Apple-inspired polish ===== */
 :root{--premium-ease:cubic-bezier(.22,1,.36,1);--premium-shadow:0 18px 55px rgba(0,0,0,.14);--premium-glass:rgba(255,255,255,.075)}
@@ -883,24 +894,27 @@ function projectMedia(p,admin=false){
 }
 function renderPublicProjects(list){
   const box=$("publicProjects");
+  list=(list||[]).filter(p=>p.type==="video");
   if(!list.length){box.innerHTML='<div class="project-public-empty"><h3>No published projects yet</h3><p class="meta">Our latest work will appear here once it is published by the 3 Pedals team.</p></div>';return}
-  box.innerHTML=list.map((p,i)=>`<article class="project-card${i===0?" project-featured":""}">${p.type==="article"?`<div class="project-article"><span class="project-type">ARTICLE</span><span class="project-kicker">${esc(p.category||"3 Pedals KE")}</span><h2>${esc(p.title)}</h2></div>`:projectMedia(p)}<div class="project-body"><span class="project-kicker">${esc(p.category||"3 Pedals KE")}</span><h2>${esc(p.title)}</h2><p>${esc(p.description||"")}</p>${p.type==="article"&&p.body?`<details style="margin-top:12px"><summary style="cursor:pointer;font-weight:700">Read article</summary><div class="meta" style="white-space:pre-wrap;margin-top:10px">${esc(p.body)}</div></details>`:""}</div></article>`).join("");
+  box.innerHTML=list.map((p,i)=>`<article class="project-card${i===0?" project-featured":""}">${projectMedia(p)}<div class="project-body"><span class="project-kicker">${esc(p.category||"Garage project")}</span><h2>${esc(p.title)}</h2><p>${esc(p.description||"")}</p></div></article>`).join("");
 }
 function renderJournal(list){
   const box=$("journalGrid");
   const articles=list.filter(p=>p.type==="article"&&p.body);
   if(!articles.length){box.innerHTML='<div class="project-public-empty" style="grid-column:1/-1"><h3>The Journal is coming soon.</h3><p class="meta">Our first automotive stories will appear here once published by the 3 Pedals team.</p></div>';return}
-  box.innerHTML=articles.map((p,i)=>`<button class="journal-card" data-journal-id="${esc(p.id)}">
-    <div class="journal-card-top"><span class="journal-number">${String(i+1).padStart(2,"0")}</span><span class="project-kicker">${esc(p.category||"Automotive Journal")}</span><h2>${esc(p.title)}</h2></div>
+  box.innerHTML=articles.map((p,i)=>{const cover=mediaItemsForProject(p).find(m=>m.type!=="video"&&!String(m.mime||"").startsWith("video/"));return `<button class="journal-card" data-journal-id="${esc(p.id)}">
+    <div class="journal-card-top${cover?" has-cover":""}">${cover?`<img class="journal-cover" src="${esc(cover.url)}" alt="" loading="lazy">`:""}<span class="journal-number">${String(i+1).padStart(2,"0")}</span><span class="project-kicker">${esc(p.category||"Automotive Journal")}</span><h2>${esc(p.title)}</h2></div>
     <div class="journal-card-body"><div class="journal-meta"><span>3 PEDALS JOURNAL</span>${p.created_at?`<span>·</span><span>${esc(new Date(p.created_at).toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"}))}</span>`:""}</div><p>${esc(p.description||"A story for people who love cars.")}</p><span class="journal-read">Read story </span></div>
-  </button>`).join("");
+  </button>`}).join("");
   box.querySelectorAll("[data-journal-id]").forEach(b=>b.onclick=()=>openJournalArticle(articles.find(p=>String(p.id)===b.dataset.journalId)));
 }
 function openJournalArticle(p){
   if(!p)return;
   const d=$("dlg");
   const journalDigits=String(siteSettings.whatsapp_number||"254750495841").replace(/\D/g,"");
-  d.innerHTML=`<div class="in journal-modal"><div class="article-head"><span class="project-kicker">${esc(p.category||"Automotive Journal")}</span><h2>${esc(p.title)}</h2><p class="meta">3 Pedals Journal${p.created_at?` · ${esc(new Date(p.created_at).toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"}))}`:""}</p></div><div class="article-body">${esc(p.body)}</div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:24px"><a class="btn wa" href="https://wa.me/${journalDigits}?text=${encodeURIComponent("Hello, I just read the 3 Pedals Journal article: "+p.title)}" target="_blank" rel="noopener">Discuss this story on WhatsApp</a><button class="btn ghost" id="journalClose">Close</button></div></div>`;
+  const photos=mediaItemsForProject(p).filter(m=>m.type!=="video"&&!String(m.mime||"").startsWith("video/")).slice(0,6);
+  const gallery=photos.length?`<div class="journal-gallery" aria-label="Article photo gallery">${photos.map((m,i)=>`<figure><img src="${esc(m.url)}" alt="${esc(p.title)} — photo ${i+1} of ${photos.length}" loading="lazy"><figcaption>Photo ${i+1} of ${photos.length}</figcaption></figure>`).join("")}</div>`:"";
+  d.innerHTML=`<div class="in journal-modal"><div class="article-head"><span class="project-kicker">${esc(p.category||"Automotive Journal")}</span><h2>${esc(p.title)}</h2><p class="meta">3 Pedals Journal${p.created_at?` · ${esc(new Date(p.created_at).toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"}))}`:""}</p></div>${gallery}<div class="article-body">${esc(p.body)}</div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:24px"><a class="btn wa" href="https://wa.me/${journalDigits}?text=${encodeURIComponent("Hello, I just read the 3 Pedals Journal article: "+p.title)}" target="_blank" rel="noopener">Discuss this story on WhatsApp</a><button class="btn ghost" id="journalClose">Close</button></div></div>`;
   d.showModal();$("journalClose").onclick=()=>d.close();
 }
 async function loadJournal(){
@@ -916,26 +930,27 @@ async function loadProjects(){
   }
   renderPublicProjects(await getPublishedProjects());
 }
-function projectFormHtml(p={}){
+function projectFormHtml(p={},kind=p.type==="article"?"article":"video"){
   const items=mediaItemsForProject(p);
   const count=items.length;
-  return `<div class="panel project-admin-form" style="margin:0"><h3>${p.id?"Edit project":"Add a project"}</h3>
-    <form id="projectForm" onsubmit="return false" data-id="${esc(p.id||"")}">
+  const isArticle=kind==="article";
+  return `<div class="panel project-admin-form" style="margin:0"><h3>${p.id?"Edit ":"New "}${isArticle?"journal article":"video project"}</h3>
+    <form id="projectForm" onsubmit="return false" data-id="${esc(p.id||"")}" data-kind="${isArticle?"article":"video"}">
       <label for="pTitle">Title</label><input id="pTitle" required maxlength="140" value="${esc(p.title||"")}" placeholder="e.g. Restoring a classic Charger">
-      <label for="pType">Project type</label><select id="pType"><option value="photo"${p.type==="photo"||!p.id?" selected":""}>Photo gallery</option><option value="video"${p.type==="video"?" selected":""}>Video gallery</option><option value="article"${p.type==="article"?" selected":""}>Article</option></select>
+      <p class="project-form-note">Publishing area: <b>${isArticle?"3 Pedals Journal":"Our Projects"}</b>${isArticle?" · Articles are only shown in the Journal.":" · Video stories are only shown in Our Projects."}</p>
       <label for="pCategory">Category</label><input id="pCategory" maxlength="80" value="${esc(p.category||"")}" placeholder="Garage / Restoration / Advice">
       <label for="pDescription">Short description</label><textarea id="pDescription" maxlength="500" rows="3" placeholder="What should visitors know about this project?">${esc(p.description||"")}</textarea>
-      <div id="articleBodyWrap" ${p.type!=="article"?"hidden":""}><label for="pBody">Article content</label><textarea id="pBody" rows="8" placeholder="Write the full story or article here…">${esc(p.body||"")}</textarea></div>
-      <div id="mediaWrap" ${p.type==="article"?"hidden":""}>
-        <label for="pMedia">${p.id?"Add / replace media (optional)":"Upload media"}</label>
-        <input id="pMedia" type="file" ${p.type==="video"?`accept="video/mp4,video/webm,video/quicktime,video/*"`:`accept="image/jpeg,image/png,image/webp,image/*" multiple`} ${p.id?"":"required"}>
-        <p class="project-form-note">${p.type==="video"?"Choose one or more videos. MP4 (H.264) is recommended for widest browser support. Up to 6 videos, 100 MB each.":"Choose multiple photos at once. JPG, PNG and WebP work best. You can upload up to 12 images per project; keep each under 12 MB."}</p>
+      ${isArticle?`<label for="pBody">Article content</label><textarea id="pBody" rows="10" required placeholder="Write the full story here…">${esc(p.body||"")}</textarea>`:""}
+      <div id="mediaWrap">
+        <label for="pMedia">${isArticle?"Article photos (2–6)":"Project videos"}${p.id?" — add or replace":" — upload"}</label>
+        <input id="pMedia" type="file" ${isArticle?`accept="image/jpeg,image/png,image/webp,image/*"`:`accept="video/mp4,video/webm,video/quicktime,video/*"`} multiple ${p.id?"":"required"}>
+        <p class="project-form-note">${isArticle?"Upload 2 to 6 photos to illustrate this journal story. JPG, PNG or WebP; up to 12 MB per photo.":"Upload up to 6 project videos. MP4 (H.264) is recommended; up to 100 MB per video."}</p>
         ${count?`<div class="project-admin-media-note"><span>${count} existing media item${count===1?"":"s"}</span><span>New files replace the existing gallery</span></div>`:""}
         <progress id="pProgress" class="project-upload-progress" value="0" max="100" hidden></progress>
       </div>
       ${p.media_url?`<p class="project-form-note">Current media is already attached. Leave the upload empty to keep it.</p>`:""}
       <label style="display:flex;gap:8px;align-items:center;margin-top:12px"><input id="pPublished" type="checkbox" style="width:auto" ${p.published!==false?"checked":""}> Publish this project publicly</label>
-      <div class="acts" style="margin-top:14px"><button class="btn" id="projectSave">${p.id?"Save changes":"Create project"}</button>${p.id?'<button class="btn ghost" type="button" id="projectCancel">Cancel</button>':""}</div>
+      <div class="acts" style="margin-top:14px"><button class="btn" id="projectSave">${p.id?"Save changes":(isArticle?"Create article":"Create video project")}</button>${p.id?'<button class="btn ghost" type="button" id="projectCancel">Cancel</button>':""}</div>
       <p id="projectFormErr" class="meta" style="color:var(--err);margin-top:8px" role="alert"></p>
     </form></div>`;
 }
@@ -954,22 +969,23 @@ async function removeProjectMedia(items){
 }
 async function saveProject(existing=null){
   const err=$("projectFormErr");err.textContent="";
-  const type=$("pType").value,title=$("pTitle").value.trim(),category=$("pCategory").value.trim(),description=$("pDescription").value.trim(),body=$("pBody")?.value.trim()||"",published=$("pPublished").checked,files=[...($("pMedia")?.files||[])];
+  const isArticle=$("projectForm").dataset.kind==="article",type=isArticle?"article":"video",title=$("pTitle").value.trim(),category=$("pCategory").value.trim(),description=$("pDescription").value.trim(),body=$("pBody")?.value.trim()||"",published=$("pPublished").checked,files=[...($("pMedia")?.files||[])];
   if(!title){err.textContent="Please add a project title.";return}
-  if(type!=="article"&&!existing&&!files.length){err.textContent="Please choose your media file(s).";return}
-  if(type==="photo"&&files.length>12){err.textContent="Please choose no more than 12 images per project.";return}
-  if(type==="video"&&files.length>6){err.textContent="Please choose no more than 6 videos per project.";return}
+  if(isArticle&&!body){err.textContent="Please add the article content.";return}
+  const oldItems=mediaItemsForProject(existing||{});
+  if(!existing&&!files.length){err.textContent=isArticle?"Please upload 2 to 6 article photos.":"Please upload at least one project video.";return}
+  if(isArticle&&((files.length&&files.length<2)||files.length>6||(!files.length&&oldItems.length<2))){err.textContent="Journal articles need between 2 and 6 photos.";return}
+  if(!isArticle&&files.length>6){err.textContent="Please choose no more than 6 videos per project.";return}
   for(const f of files){
-    const limit=type==="video"?100:12;
-    if(type==="video"&&!f.type.startsWith("video/")){err.textContent="Please choose a video file.";return}
-    if(type==="photo"&&!f.type.startsWith("image/")){err.textContent="Photo galleries can only contain image files.";return}
+    const limit=isArticle?12:100;
+    if(isArticle&&!f.type.startsWith("image/")){err.textContent="Journal articles can only use image files.";return}
+    if(!isArticle&&!f.type.startsWith("video/")){err.textContent="Our Projects accepts video files only.";return}
     if(f.size>limit*1024*1024){err.textContent=`${f.name} is too large. Maximum is ${limit} MB per file.`;return}
   }
   const btn=$("projectSave"),progress=$("pProgress");btn.disabled=true;btn.textContent="Preparing…";if(progress){progress.hidden=!files.length;progress.value=0}
   try{
-    const oldItems=mediaItemsForProject(existing||{});
     let media_gallery=oldItems.slice();
-    if(type!=="article"&&files.length){
+    if(files.length){
       media_gallery=[];
       for(let i=0;i<files.length;i++){
         btn.textContent=`Uploading ${i+1} of ${files.length}…`;
@@ -978,12 +994,9 @@ async function saveProject(existing=null){
         if(progress)progress.value=Math.round(((i+1)/files.length)*100);
       }
       await removeProjectMedia(oldItems);
-    }else if(type==="article"){
-      media_gallery=[];
-      await removeProjectMedia(oldItems);
     }
     const primary=media_gallery[0]||null;
-    const payload={title,type,category,description,body:type==="article"?body:null,media_url:primary?.url||null,media_path:primary?.path||null,media_mime:primary?.mime||null,media_gallery,published};
+    const payload={title,type,category,description,body:isArticle?body:null,media_url:primary?.url||null,media_path:primary?.path||null,media_mime:primary?.mime||null,media_gallery,published};
     let q;
     if(existing?.id)q=await sb.from("projects").update(payload).eq("id",existing.id);
     else q=await sb.from("projects").insert({...payload,author_id:me.id});
@@ -991,7 +1004,7 @@ async function saveProject(existing=null){
     await loadProjects();
 loadJournal();
     await openAdmin();
-  }catch(e){console.error(e);err.textContent=e.message||"Could not save the project. Check the Supabase setup and storage policies.";btn.disabled=false;btn.textContent=existing?"Save changes":"Create project";if(progress)progress.hidden=true}
+  }catch(e){console.error(e);err.textContent=e.message||"Could not save the entry. Check the Supabase setup and storage policies.";btn.disabled=false;btn.textContent=existing?"Save changes":(isArticle?"Create article":"Create video project");if(progress)progress.hidden=true}
 }
 async function deleteProject(p){
   if(!confirm(`Delete “${p.title}” permanently?`))return;
@@ -1002,7 +1015,9 @@ async function deleteProject(p){
   await loadProjects();await openAdmin();
 }
 function adminProjectsHtml(P){
-  return `<div class="project-admin-grid"><div id="projectEditor">${projectFormHtml()}</div><div><div class="acts" style="justify-content:space-between;margin-bottom:10px"><div><h3 style="margin:0">Portfolio</h3><span class="meta">${P.length} project${P.length===1?"":"s"}</span></div><button class="btn ghost" id="projectNew">+ New project</button></div><div class="project-admin-list">${P.map(p=>{const items=mediaItemsForProject(p),m=items[0];return `<div class="project-admin-item"><div class="thumb">${m?(m.type==="video"||String(m.mime||"").startsWith("video/")?`<video muted preload="none"><source src="${esc(m.url)}" type="${esc(m.mime||"video/mp4")}"></video>`:`<img src="${esc(m.url)}" alt="">`):`<span>${esc(p.type||"article")}</span>`}</div><div style="flex:1;min-width:0"><b>${esc(p.title)}</b><div class="meta-row"><span class="badge">${esc(p.type)}</span>${items.length>1?`<span class="badge">${items.length} media</span>`:""}<span class="badge ${p.published?"live":"draft"}">${p.published?"Published":"Draft"}</span>${p.category?`<span class="badge">${esc(p.category)}</span>`:""}</div><p class="meta" style="margin-top:7px">${esc(p.description||"")}</p><div class="project-admin-actions"><button class="btn ghost" data-project-edit="${esc(p.id)}">Edit</button><button class="btn ghost" data-project-delete="${esc(p.id)}">Delete</button></div></div></div>`}).join("")||'<p class="meta">No projects yet. Add your first video, photo gallery or article.</p>'}</div></div></div>`;
+  const videos=P.filter(p=>p.type==="video"),articles=P.filter(p=>p.type==="article");
+  const rows=(items,kind)=>items.map(p=>{const media=mediaItemsForProject(p),m=media[0];return `<div class="project-admin-item"><div class="thumb">${m?(m.type==="video"||String(m.mime||"").startsWith("video/")?`<video muted preload="none"><source src="${esc(m.url)}" type="${esc(m.mime||"video/mp4")}"></video>`:`<img src="${esc(m.url)}" alt="">`):`<span>${kind==="article"?"article":"video"}</span>`}</div><div style="flex:1;min-width:0"><b>${esc(p.title)}</b><div class="meta-row"><span class="badge">${kind==="article"?"Journal article":"Video project"}</span>${media.length?`<span class="badge">${media.length} ${kind==="article"?"photos":"videos"}</span>`:""}<span class="badge ${p.published?"live":"draft"}">${p.published?"Published":"Draft"}</span>${p.category?`<span class="badge">${esc(p.category)}</span>`:""}</div><p class="meta" style="margin-top:7px">${esc(p.description||"")}</p><div class="project-admin-actions"><button class="btn ghost" data-project-edit="${esc(p.id)}" data-project-kind="${kind}">Edit</button><button class="btn ghost" data-project-delete="${esc(p.id)}">Delete</button></div></div></div>`}).join("")||`<p class="meta">No ${kind==="article"?"journal articles":"video projects"} yet.</p>`;
+  return `<div class="project-admin-grid"><div id="projectEditor">${projectFormHtml({},"video")}</div><div class="project-admin-lists"><section><div class="acts" style="justify-content:space-between;margin-bottom:10px"><div><h3 style="margin:0">Our Projects · videos</h3><span class="meta">${videos.length} video project${videos.length===1?"":"s"}</span></div><button class="btn ghost" id="projectNew">+ New video</button></div><div class="project-admin-list">${rows(videos,"video")}</div></section><section><div class="acts" style="justify-content:space-between;margin-bottom:10px"><div><h3 style="margin:0">3 Pedals Journal · articles</h3><span class="meta">${articles.length} article${articles.length===1?"":"s"}</span></div><button class="btn ghost" id="journalNew">+ New article</button></div><div class="project-admin-list">${rows(articles,"article")}</div></section></div></div>`;
 }
 async function openAdmin(){
   if(!sb||!profile||!profile.is_admin)return;
@@ -1016,32 +1031,27 @@ async function openAdmin(){
   ]);
   const L=l.data||[],B=b.data||[],P=p.data||[],PR=pr.data||[];
   if(pr.error)console.error("Projects manager unavailable:",pr.error);
-  const projectCount=pr.error?"projects unavailable":`${PR.length} projects`;
+  const projectCount=pr.error?"projects unavailable":`${PR.filter(x=>x.type==="video").length} videos · ${PR.filter(x=>x.type==="article").length} journal articles`;
   const projectPanel=pr.error
     ?`<p class="meta" style="color:var(--err)">The Projects manager could not load: ${esc(pr.error.message||"Supabase returned an error.")} Run the repository's PROJECTS_SETUP.sql in Supabase. Other admin tools remain available.</p>`
     :adminProjectsHtml(PR);
   $("adminPanel").innerHTML=`<p class="meta">${P.length} users · ${L.length} listings · ${B.length} bookings · ${projectCount}</p>
-  <div class="panel" style="margin:16px 0"><h3>Our Projects</h3><p class="meta">Create portfolio entries, upload media, save articles, and control what is visible publicly.</p>${projectPanel}</div>
+  <div class="panel" style="margin:16px 0"><h3>Content publishing</h3><p class="meta">Manage video stories for Our Projects and publish photo-illustrated articles separately in 3 Pedals Journal.</p>${projectPanel}</div>
    <h3>Listings</h3>${L.map(x=>`<div class="svc"><div><b>${esc(x.year+" "+x.make+" "+x.model)}</b><span class="meta">${sellerTypeForListing(x)==="yard"?"Car yard / dealer":"Private seller"} · KES ${fmt(x.price)} · ${esc(x.seller_name||"")} · +${esc(x.whatsapp||"")} · <span class="st">${esc(x.status)}</span></span></div><div class="acts">${x.status!=="approved"?`<button class="btn" data-a="approve" data-id="${x.id}">Approve</button>`:""}${x.status!=="rejected"?`<button class="btn ghost" data-a="reject" data-id="${x.id}">Reject</button>`:""}<button class="btn ghost" data-a="del" data-id="${x.id}">Delete</button></div></div>`).join("")||'<p class="meta">No listings yet.</p>'}
   <h3 style="margin-top:18px">Garage bookings</h3>${B.map(x=>`<div class="svc"><div><b>${esc(x.service)}</b><span class="meta">${esc(x.date)} · ${esc(x.name)} · ${esc(x.phone)} · ${esc(x.car||"")} · ${esc(x.ref)}</span></div><select data-bk="${x.id}" aria-label="Booking status">${["new","confirmed","done","cancelled"].map(s=>`<option${s===x.status?" selected":""}>${s}</option>`).join("")}</select></div>`).join("")||'<p class="meta">No bookings yet.</p>'}
   <h3 style="margin-top:18px">Users</h3>${P.map(u=>`<p class="meta">${esc(u.name||"")} · ${esc(u.email||"")} · ${esc(u.phone||"")}${u.is_admin?" · admin":""}</p>`).join("")}`;
   bindProjectAdmin(PR);
 }
 function bindProjectAdmin(PR){
-  $("projectNew")?.addEventListener("click",()=>{$("projectEditor").innerHTML=projectFormHtml();bindProjectForm(null);});
+  $("projectNew")?.addEventListener("click",()=>{$("projectEditor").innerHTML=projectFormHtml({},"video");bindProjectForm(null);});
+  $("journalNew")?.addEventListener("click",()=>{$("projectEditor").innerHTML=projectFormHtml({},"article");bindProjectForm(null);});
   $("projectForm")&&bindProjectForm(null);
-  $("adminPanel").querySelectorAll("[data-project-edit]").forEach(b=>b.onclick=()=>{const p=PR.find(x=>String(x.id)===b.dataset.projectEdit);if(p){$("projectEditor").innerHTML=projectFormHtml(p);bindProjectForm(p);scrollTo(0,$("projectEditor").getBoundingClientRect().top+scrollY-80)}});
+  $("adminPanel").querySelectorAll("[data-project-edit]").forEach(b=>b.onclick=()=>{const p=PR.find(x=>String(x.id)===b.dataset.projectEdit);if(p){$("projectEditor").innerHTML=projectFormHtml(p,b.dataset.projectKind);bindProjectForm(p);scrollTo(0,$("projectEditor").getBoundingClientRect().top+scrollY-80)}});
   $("adminPanel").querySelectorAll("[data-project-delete]").forEach(b=>b.onclick=()=>{const p=PR.find(x=>String(x.id)===b.dataset.projectDelete);if(p)deleteProject(p)});
 }
 function bindProjectForm(existing){
-  const sync=()=>{
-    const a=$("pType").value==="article",v=$("pType").value==="video";
-    $("articleBodyWrap").hidden=!a;$("mediaWrap").hidden=a;
-    const input=$("pMedia");
-    if(input){input.multiple=true;input.accept=v?"video/mp4,video/webm,video/quicktime,video/*":"image/jpeg,image/png,image/webp,image/*";input.required=!a&&!existing}
-  };
-  $("pType")?.addEventListener("change",sync);
-  sync();
+  const input=$("pMedia"),isArticle=$("projectForm").dataset.kind==="article";
+  if(input){input.multiple=true;input.accept=isArticle?"image/jpeg,image/png,image/webp,image/*":"video/mp4,video/webm,video/quicktime,video/*";input.required=!existing||!mediaItemsForProject(existing).length}
   $("projectForm")?.addEventListener("submit",()=>saveProject(existing));
   $("projectCancel")?.addEventListener("click",()=>openAdmin());
 }
