@@ -551,10 +551,11 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 </style>
 <style id="mobile-inventory-cards">
 @media(max-width:560px){
+  #buy{padding-bottom:100px}
   #buy .grid{grid-template-columns:1fr;gap:12px}
   #buy .card{display:flex;flex-direction:column;border-radius:14px}
-  #buy .card-main{flex-direction:row;align-items:stretch;min-height:148px}
-  #buy .card .swatch{width:36%;flex:0 0 36%;height:auto!important;min-height:148px;align-self:stretch;padding:8px;font-size:24px;background-size:cover!important;background-color:#17191c}
+  #buy .card-main{flex:0 0 190px;height:190px;min-height:190px;flex-direction:row;align-items:stretch}
+  #buy .card .swatch{width:36%;flex:0 0 36%;height:100%!important;min-height:0;align-self:stretch;padding:8px;font-size:20px;background-size:cover!important;background-color:#17191c}
   #buy .card .body{flex:1;min-width:0;padding:13px 12px}
   #buy .card h3{white-space:normal;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden;font-size:17px;line-height:1.2}
   #buy .card .price{font-size:18px;line-height:1.25;margin:6px 0 2px}
@@ -562,6 +563,9 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
   #buy .card-extra{padding:0 12px 11px 38%;margin-top:-4px}
   #buy .card-extra .yard-line{margin-top:6px;padding-top:6px;font-size:11px}
   #buy .yard-logo{width:24px;height:24px;flex-basis:24px}
+  .fab{right:12px;bottom:12px;padding:9px 12px;font-size:12px}
+  .auth-left{left:12px;bottom:12px}
+  .auth-left button{min-height:36px;padding:7px 9px;font-size:11px}
 }
 </style>
 <style id="vehicle-photo-controls">
