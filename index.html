@@ -1,79 +1,543 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<base target="_top">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d0d0d">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<title>Inventory — 3 Pedals Auto KE</title>
-<meta name="description" content="Browse vehicles currently listed for sale by 3 Pedals Auto KE.">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../config.js"></script>
+<meta name="color-scheme" content="light dark">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<title>3 Pedals Auto KE – Cars for sale</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0b0c0e;--panel:#141619;--text:#f4f2ec;--muted:#a9a9a6;--gold:#c6b27f;--line:rgba(255,255,255,.10);--err:#ff7b7b}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#1a1b1e 0,#0b0c0e 48%);color:var(--text);font:15px/1.55 Arial,Helvetica,sans-serif}a{color:inherit}.wrap{width:min(1180px,calc(100% - 36px));margin:auto}
-header{position:sticky;top:0;z-index:20;background:rgba(13,13,13,.86);border-bottom:1px solid rgba(227,179,65,.22);backdrop-filter:blur(18px)}header .wrap{min-height:74px;display:flex;align-items:center;justify-content:space-between;gap:18px}.logo{font-size:24px;font-weight:800;letter-spacing:-.03em}.back{padding:10px 14px;border:1px solid var(--line);border-radius:10px;text-decoration:none;background:rgba(255,255,255,.04)}
-main{padding:48px 0 70px}.hero{padding:28px 0 24px}.eyebrow{font-size:11px;letter-spacing:.16em;color:var(--gold);font-weight:800}.hero h1{font-size:clamp(38px,6vw,66px);line-height:1.02;margin:8px 0 12px;letter-spacing:-.045em}.hero p{max-width:720px;color:var(--muted);font-size:17px}
-.filters{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:10px;margin:20px 0}.filters input,.filters select{width:100%;min-height:46px;background:#111316;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px 12px;outline:none}.count{color:var(--muted);margin:10px 0 16px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.card{padding:0;text-align:left;border:1px solid var(--line);background:linear-gradient(180deg,#17191c,#111214);color:inherit;border-radius:16px;overflow:hidden;cursor:pointer;box-shadow:0 12px 32px rgba(0,0,0,.18)}.photo{height:230px;background:#232529 center/contain no-repeat;position:relative}.photo .year{position:absolute;left:12px;top:12px;background:rgba(0,0,0,.72);padding:6px 9px;border-radius:8px;font-weight:800}.dealer-cardline{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}.dealer-cardline img{width:25px;height:25px;object-fit:cover;border-radius:50%;border:1px solid var(--line)}.body{padding:16px}.body h3{margin:0 0 6px;font-size:21px}.price{font-size:20px;font-weight:800;color:#e4cf98;margin-bottom:9px}.tags{display:flex;gap:7px;flex-wrap:wrap}.tag{border:1px solid var(--line);border-radius:999px;padding:4px 8px;color:var(--muted);font-size:12px}.empty,.error{padding:28px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.03);color:var(--muted)}
-dialog{width:min(960px,calc(100% - 28px));border:1px solid var(--line);border-radius:18px;background:#111315;color:var(--text);padding:0;box-shadow:0 30px 100px rgba(0,0,0,.6)}dialog::backdrop{background:rgba(0,0,0,.72)}.detail{display:grid;grid-template-columns:1.1fr .9fr}.gallery{padding:18px}.mainimg{width:100%;aspect-ratio:4/3;object-fit:contain;border-radius:12px;background:#17191c}.thumbs{display:flex;gap:8px;margin-top:8px;overflow:auto}.thumbs button{padding:0;border:2px solid transparent;background:none;border-radius:8px;overflow:hidden;min-width:74px}.thumbs button[aria-current=true]{border-color:var(--gold)}.thumbs img{width:74px;height:56px;object-fit:cover;display:block}.info{padding:28px 24px}.info h2{font-size:32px;line-height:1.05;margin:0 0 8px}.specs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:20px 0}.specs span,.specs b{padding:10px;border-bottom:1px solid var(--line)}.specs span{color:var(--muted)}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 15px;border-radius:10px;border:1px solid var(--gold);background:var(--gold);color:#111;text-decoration:none;font-weight:800}.ghost{background:transparent;color:var(--text);border-color:var(--line)}
-@media(max-width:850px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.filters{grid-template-columns:1fr 1fr}.detail{grid-template-columns:1fr}}@media(max-width:560px){.wrap{width:min(100% - 24px,1180px)}.grid{grid-template-columns:1fr}.filters{grid-template-columns:1fr}.hero h1{font-size:42px}.photo{height:220px}}
-/* Match the 3 Pedals site and yard profile: champagne-gold accents with translucent glass surfaces. */
-:root{--bg:#f3f1ec;--panel:rgba(251,250,247,.82);--text:#1a1b1d;--muted:#77746d;--gold:#b7a06a;--line:#dedbd3;--err:#b42318;--ease:cubic-bezier(.22,1,.36,1);--shadow:0 18px 50px rgba(24,25,27,.10);--dialog-line:rgba(26,27,29,.12);--glass-button:rgba(255,255,255,.42)}
-@media(prefers-color-scheme:dark){:root{--bg:#111315;--panel:rgba(24,26,29,.82);--text:#f0eee8;--muted:#9a9891;--gold:#b8a67d;--line:#2d3034;--err:#ff8a7a;--shadow:0 18px 55px rgba(0,0,0,.28);--dialog-line:rgba(255,255,255,.10);--glass-button:rgba(255,255,255,.045)}}
-html{scroll-behavior:smooth;scroll-padding-top:90px}
-body{min-height:100vh;background:radial-gradient(circle at 12% -8%,rgba(183,160,106,.14),transparent 32%),radial-gradient(circle at 88% 8%,rgba(255,255,255,.55),transparent 28%),var(--bg);color:var(--text);font-family:Manrope,Arial,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-@media(prefers-color-scheme:dark){body{background:radial-gradient(circle at 12% -8%,rgba(183,160,106,.10),transparent 32%),radial-gradient(circle at 88% 8%,rgba(255,255,255,.035),transparent 28%),var(--bg)}}
-body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(120deg,transparent,rgba(255,255,255,.035),transparent 70%)}
-.wrap{width:min(1180px,calc(100% - 48px))}
-header{background:rgba(20,21,22,.86);border-bottom:1px solid rgba(183,160,106,.22);box-shadow:0 10px 32px rgba(0,0,0,.17);backdrop-filter:blur(22px) saturate(125%);-webkit-backdrop-filter:blur(22px) saturate(125%)}
-.logo{color:#c9b784;letter-spacing:.055em;text-transform:uppercase;font-family:'Playfair Display',Georgia,serif}
-.back{color:#e6e2d8;background:rgba(255,255,255,.055);border-color:rgba(255,255,255,.13);backdrop-filter:blur(14px);transition:transform .35s var(--ease),background .25s,border-color .25s,box-shadow .25s}
-.back:hover{transform:translateY(-2px);background:rgba(183,160,106,.12);border-color:rgba(183,160,106,.42);box-shadow:0 8px 24px rgba(0,0,0,.18)}
-main{padding-top:42px}
-.hero{padding:28px 0 24px;animation:riseIn .62s var(--ease) both}
-.eyebrow{color:var(--gold);letter-spacing:.19em}
-.hero h1{font-family:'Playfair Display',Georgia,serif;position:relative;letter-spacing:-.025em;text-wrap:balance}
-.hero h1:after{content:"";display:block;width:72px;height:3px;margin-top:17px;border-radius:99px;background:linear-gradient(90deg,var(--gold),rgba(183,160,106,.15));box-shadow:0 0 18px rgba(183,160,106,.20);transition:width .55s var(--ease)}
-.hero:hover h1:after{width:108px}
-.hero p,.count{color:var(--muted)}
-.filters{gap:12px;margin:22px 0 18px;animation:riseIn .66s .05s var(--ease) both}
-.filters input,.filters select{background:rgba(255,255,255,.5);color:var(--text);border-color:var(--line);backdrop-filter:blur(14px);transition:border-color .2s,box-shadow .2s,background .2s}
-.filters select{color-scheme:dark}
-.filters select option{background:#17191c;color:#f0eee8}
-@media(prefers-color-scheme:dark){.filters input,.filters select{background:rgba(255,255,255,.045)}}
-.filters input:focus,.filters select:focus{border-color:rgba(183,160,106,.7);box-shadow:0 0 0 3px rgba(183,160,106,.15)}
-.count{font-weight:600}
-.grid{gap:16px;align-items:stretch}
-.card{position:relative;z-index:0;transform-origin:center;background:var(--panel);border-color:var(--line);box-shadow:0 8px 28px rgba(24,25,27,.08);backdrop-filter:blur(18px) saturate(125%);-webkit-backdrop-filter:blur(18px) saturate(125%);transition:transform .42s var(--ease),box-shadow .42s var(--ease),border-color .28s;animation:riseIn .55s var(--ease) both;animation-delay:calc(var(--card-index,0)*45ms)}
-.card:hover,.card:focus-visible{z-index:5;transform:translateY(-5px) scale(1.035);box-shadow:0 22px 52px rgba(24,25,27,.2);border-color:rgba(183,160,106,.62);outline:none}
-.card:focus-visible{box-shadow:0 0 0 3px rgba(183,160,106,.32),0 18px 42px rgba(24,25,27,.15)}
-.photo{background-color:rgba(183,160,106,.12);overflow:hidden;isolation:isolate}
-.photo:before{content:"";position:absolute;z-index:1;inset:0;pointer-events:none;opacity:0;background-image:inherit;background-size:170% 170%;background-position:var(--lens-x,50%) var(--lens-y,50%);clip-path:circle(0 at var(--lens-x,50%) var(--lens-y,50%));transition:opacity .22s ease,clip-path .2s ease;filter:saturate(1.08)}
-.photo:after{content:"";position:absolute;z-index:2;inset:0;pointer-events:none;background:linear-gradient(180deg,transparent 50%,rgba(10,11,12,.18)),radial-gradient(circle 78px at var(--lens-x,50%) var(--lens-y,50%),rgba(255,255,255,.34),rgba(255,255,255,.1) 55%,transparent 72%);opacity:.45;transition:opacity .2s ease}
-.card:hover .photo:before,.card:focus-visible .photo:before{opacity:1;clip-path:circle(76px at var(--lens-x,50%) var(--lens-y,50%))}
-.card:hover .photo:after,.card:focus-visible .photo:after{opacity:.85}
-.photo .year{z-index:3;background:rgba(20,21,22,.72);border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(12px);color:#f0eee8}
-.body{padding:16px 17px 18px}
-.body h3{font-family:'Playfair Display',Georgia,serif;font-size:21px;line-height:1.2}
-.price{color:var(--gold);font-family:'Playfair Display',Georgia,serif}
-.tag{background:rgba(183,160,106,.075);border-color:rgba(183,160,106,.18);color:var(--muted)}
-.empty,.error{background:var(--panel);border-color:var(--line);box-shadow:var(--shadow);backdrop-filter:blur(18px);animation:riseIn .45s var(--ease) both}
-dialog{background:var(--panel);color:var(--text);border-color:rgba(183,160,106,.28);backdrop-filter:blur(24px) saturate(130%);-webkit-backdrop-filter:blur(24px) saturate(130%);box-shadow:0 30px 100px rgba(0,0,0,.38);animation:dialogIn .32s var(--ease) both}
-dialog::backdrop{background:rgba(12,13,14,.58);backdrop-filter:blur(5px)}
-.gallery{background:rgba(183,160,106,.045)}
-.mainimg{background:var(--glass-button);box-shadow:0 10px 28px rgba(0,0,0,.14)}
-.thumbs button{cursor:pointer;transition:transform .25s var(--ease),border-color .2s,opacity .2s}
-.thumbs button:hover{transform:translateY(-2px);opacity:.9}
-.info h2{font-family:'Playfair Display',Georgia,serif;letter-spacing:-.02em}
-.specs span,.specs b{border-color:var(--dialog-line)}
-.specs span{color:var(--muted)}
-.btn{background:linear-gradient(135deg,#c5b17c,#b7a06a);border-color:rgba(183,160,106,.68);transition:transform .25s var(--ease),box-shadow .25s,border-color .25s,background .25s}
-.btn:hover{transform:translateY(-2px);box-shadow:0 9px 22px rgba(0,0,0,.22)}
-.ghost{background:var(--glass-button);color:var(--text);border-color:var(--line)}
-@keyframes riseIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-@keyframes dialogIn{from{opacity:0;transform:translateY(10px) scale(.99)}to{opacity:1;transform:translateY(0) scale(1)}}
-@media(max-width:700px){.wrap{width:calc(100% - 32px)}.hero{padding-top:22px}.filters{gap:9px}.grid{gap:12px}}
-@media(max-width:560px){.wrap{width:calc(100% - 24px)}header .wrap{min-height:66px}.logo{font-size:18px}.back{padding:9px 10px;font-size:12px}.hero h1{font-size:clamp(36px,11vw,48px)}.grid{grid-template-columns:1fr}.photo{height:230px}.info{padding:22px 18px}.info h2{font-size:28px}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.hero,.filters,.card,.empty,.error{animation:none!important}*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}.hero h1:after{width:72px}}
+:root{--bg:#f7f5ef;--surface:#fff;--ink:#0d0d0d;--mute:#5e5848;--line:#e3dcc8;--blue:#946c00;--gold:#d4a017;--gold-ink:#0d0d0d;--alt:#0d0d0d;--alt-ink:#e3b341;--err:#b42318;--ok:#2b7a3d;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d0d0d;--surface:#1a1a1a;--ink:#f5f1e6;--mute:#a8a08a;--line:#333026;--blue:#e3b341;--gold:#e3b341;--gold-ink:#0d0d0d;--alt:#f5f1e6;--alt-ink:#0d0d0d;--err:#ff8a7a;--ok:#69db7c}}
+:root[data-theme="dark"]{--bg:#0d0d0d;--surface:#1a1a1a;--ink:#f5f1e6;--mute:#a8a08a;--line:#333026;--blue:#e3b341;--gold:#e3b341;--gold-ink:#0d0d0d;--alt:#f5f1e6;--alt-ink:#0d0d0d;--err:#ff8a7a;--ok:#69db7c}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Manrope,system-ui,sans-serif}
+h1,h2,h3{font-family:"Playfair Display",Georgia,serif;line-height:1.05;margin:0;letter-spacing:.01em}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 18px}
+header{background:#0d0d0d;color:#fff;border-bottom:3px solid #d4a017}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:14px;padding-bottom:14px}
+.logo{font:700 27px "Playfair Display",Georgia,serif;color:#e3b341;letter-spacing:.03em;text-transform:uppercase}
+nav{display:flex;gap:4px}
+nav button{background:none;border:0;color:inherit;padding:8px 14px;border-radius:6px;cursor:pointer;font-weight:600;opacity:.8}
+nav button[aria-selected="true"]{background:#d4a017;color:#0d0d0d;opacity:1}
+.hero{padding:34px 0 22px}
+.hero h1{font-size:clamp(38px,7vw,68px);max-width:12em}
+.hero h1::after{content:"";display:block;width:64px;height:5px;background:var(--gold);margin-top:12px}
+.hero p{color:var(--mute);max-width:34em;margin:10px 0 0}
+.filters{display:grid;grid-template-columns:2fr repeat(3,1fr);gap:10px;margin:18px 0 8px}
+@media(max-width:700px){.filters{grid-template-columns:1fr 1fr}.filters input{grid-column:1/-1}}
+input,select,textarea{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 12px}
+label{display:block;font-weight:600;font-size:14px;margin:12px 0 4px}
+.count{color:var(--mute);margin:8px 0 14px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;padding-bottom:40px}
+.card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;text-align:left;cursor:pointer;padding:0;min-width:0;box-shadow:0 8px 24px rgba(0,0,0,.07);transition:transform .28s cubic-bezier(.22,1,.36,1),box-shadow .28s ease,border-color .28s ease}
+.card:hover{transform:translateY(-7px);border-color:rgba(227,179,65,.65);box-shadow:0 18px 42px rgba(0,0,0,.15)}
+.card:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.card-main{display:flex;flex:1;min-width:0;flex-direction:column;color:inherit;text-decoration:none}
+.card-main:focus-visible,.yard-link:focus-visible{outline:2px solid var(--gold);outline-offset:-3px;border-radius:10px}
+.card-extra{padding:0 13px 13px}
+.card-extra .yard-line:first-child{margin-top:0}
+.card-extra .yard-link{color:var(--ink);font-size:12px}
+.swatch{height:148px;display:flex;align-items:flex-end;padding:10px 12px;font:700 34px "Playfair Display",Georgia,serif;color:rgba(255,255,255,.94);background-position:center;background-repeat:no-repeat;background-size:contain!important;transition:transform .5s cubic-bezier(.22,1,.36,1),filter .35s ease}
+.card:hover .swatch{transform:scale(1.035);filter:saturate(1.08)}
+.card .body{padding:12px 13px 14px}
+.card h3{font-size:18px;line-height:1.15;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.price{font:700 21px "Playfair Display",Georgia,serif;color:var(--blue);margin-top:5px}
+.meta{color:var(--mute);font-size:13px}
+.tag{display:inline-block;font-size:11px;font-weight:700;border:1px solid var(--line);border-radius:99px;padding:2px 8px;margin:7px 3px 0 0}
+.yard-badge{position:absolute;left:10px;top:10px;z-index:2;padding:6px 9px;border-radius:999px;background:rgba(15,15,15,.82);color:#fff;font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;backdrop-filter:blur(8px)}
+.yard-line{display:flex;gap:6px;align-items:center;margin-top:9px;padding-top:9px;border-top:1px solid var(--line);font-size:12px;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.yard-line strong{color:var(--ink);overflow:hidden;text-overflow:ellipsis}
+.yard-logo{width:27px;height:27px;flex:0 0 27px;object-fit:cover;border-radius:50%;border:1px solid var(--line);background:var(--surface-2)}
+.card-reveal{max-height:0;opacity:0;overflow:hidden;transition:max-height .3s ease,opacity .25s ease}
+.card:hover .card-reveal,.card:focus-visible .card-reveal{max-height:70px;opacity:1}
+@media(max-width:1300px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:1050px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.swatch{height:125px}.card h3{font-size:16px}}
+@media(max-width:480px){.grid{grid-template-columns:1fr}.swatch{height:180px}.card .body{padding:12px}.price{font-size:19px}}
+.btn{background:var(--gold);color:var(--gold-ink);border:0;border-radius:6px;padding:11px 18px;font-weight:600;cursor:pointer}
+.btn.alt{background:var(--alt);color:var(--alt-ink)}
+.btn.ghost{background:none;border:1px solid var(--line);color:var(--ink)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:20px;margin-bottom:40px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:600px){.two{grid-template-columns:1fr}}
+.cols{display:grid;grid-template-columns:1.2fr 1fr;gap:20px;padding-bottom:20px}
+@media(max-width:800px){.cols{grid-template-columns:1fr}}
+.svc{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.svc:last-child{border:0}
+.svc b{display:block}
+.garage-hero{border-left:6px solid var(--gold);padding-left:16px}
+.note{padding:12px 14px;border-radius:6px;border:1px solid var(--ok);color:var(--ok);margin-top:14px;font-weight:600}
+dialog{border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);max-width:520px;width:calc(100% - 28px);padding:0}
+dialog::backdrop{background:rgba(0,0,0,.55)}
+dialog .swatch{height:120px}
+dialog .in{padding:18px}
+.specs{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;margin:12px 0}
+.specs span{color:var(--mute);font-size:14px}
+footer{border-top:1px solid var(--line);padding:22px 0 30px;color:var(--mute);font-size:14px}
+[hidden]{display:none!important}
+@media(prefers-reduced-motion:no-preference){.note{animation:pop .25s ease-out}@keyframes pop{from{transform:translateY(4px);opacity:0}}}
+.btn{display:inline-block;text-decoration:none}
+.btn.wa{background:var(--gold);color:var(--gold-ink)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:6px 0 22px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:18px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:4px}
+.tile:hover{border-color:var(--blue)}
+.tile h3{font-size:26px}
+.contact a{color:var(--blue);font-weight:600}
+.fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));background:#0d0d0d;color:#e3b341;border:2px solid #d4a017;text-decoration:none;font-weight:600;padding:12px 18px;border-radius:99px;box-shadow:0 4px 14px rgba(0,0,0,.3);z-index:5}
+footer{padding-bottom:80px}
+.seg{border:1px solid var(--line);border-radius:6px;padding:8px 14px 12px;display:flex;gap:20px;flex-wrap:wrap;margin:0}
+.seg legend{font-weight:600;font-size:14px;padding:0 6px}
+.seg label{display:flex;gap:8px;align-items:center;margin:0;font-weight:500}
+.seg input{width:auto}
+.prev{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.prev img{width:88px;height:66px;object-fit:cover;border-radius:6px;border:1px solid var(--line)}
+.swatch.has{height:150px;text-shadow:0 1px 5px rgba(0,0,0,.7);background-size:contain!important;background-color:#17191c}
+.gal .main{width:100%;height:230px;object-fit:cover;display:block}
+.thumbs{display:flex;gap:6px;padding:8px 18px 0;flex-wrap:wrap}
+.thumbs button{padding:0;border:2px solid transparent;border-radius:6px;background:none;cursor:pointer}
+.thumbs button[aria-current="true"]{border-color:var(--gold)}
+.thumbs img{width:60px;height:46px;object-fit:cover;display:block;border-radius:4px}
+.specs a{color:var(--blue);font-weight:600;word-break:break-word}
+.specs b{word-break:break-word}
+nav a.navlink{color:inherit;text-decoration:none;padding:7px 13px;border-radius:6px;font-weight:600;border:1px solid #d4a017;white-space:nowrap}
+a.tile{text-decoration:none;color:inherit}
+.auth-left{position:fixed;left:14px;top:50%;transform:translateY(-50%);z-index:20}.auth-left button{border:1px solid #d4a017;background:#0d0d0d;color:#e3b341;padding:9px 12px;border-radius:6px;font-weight:600;cursor:pointer}.account-pill{display:inline-flex;align-items:center;gap:8px;margin-left:auto;font-size:13px;color:#e3b341}.account-pill button{border:0;background:none;color:#e3b341;cursor:pointer;font-weight:600}.authbox{max-width:520px}.authbox .switch{margin-top:12px;color:var(--mute);font-size:14px}.authbox .switch button{border:0;background:none;color:var(--blue);font-weight:600;cursor:pointer;padding:0}.admin-table{width:100%;border-collapse:collapse;font-size:14px}.admin-table th,.admin-table td{border-bottom:1px solid var(--line);padding:8px;text-align:left}
+
+/* 3 Pedals professional UI refresh */
+:root{
+  --bg:#f3f4f6;--surface:#ffffff;--surface-2:#f8fafc;--ink:#111827;--mute:#64748b;
+  --line:#dbe1e8;--blue:#9a7000;--gold:#d7a928;--gold-ink:#111827;--alt:#111827;--alt-ink:#f8fafc;
+  --shadow-sm:0 2px 8px rgba(15,23,42,.06);--shadow:0 10px 28px rgba(15,23,42,.09);--radius:12px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0b0f14;--surface:#121820;--surface-2:#171f29;--ink:#f3f4f6;--mute:#9aa6b2;--line:#27313d;
+  --blue:#e3b341;--gold:#e3b341;--gold-ink:#111827;--alt:#f3f4f6;--alt-ink:#111827;
+  --shadow-sm:0 2px 8px rgba(0,0,0,.18);--shadow:0 14px 34px rgba(0,0,0,.25);
+}}
+body{background:var(--bg);color:var(--ink);font-size:16px}
+.wrap{max-width:1180px;padding-left:24px;padding-right:24px}
+header{position:sticky;top:0;z-index:1000;background:rgba(8,10,13,.78);border-bottom:1px solid rgba(227,179,65,.18);box-shadow:0 8px 30px rgba(0,0,0,.22);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%)}
+header .wrap{min-height:76px;display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"brand account nav";align-items:center;gap:18px;padding-top:10px;padding-bottom:10px}
+.logo{grid-area:brand;font-size:30px;letter-spacing:.055em;white-space:nowrap}
+.account-pill{grid-area:account;justify-self:end;display:flex;align-items:center;margin-left:auto;padding:4px;border:1px solid rgba(255,255,255,.13);border-radius:15px;background:linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.035));box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 8px 24px rgba(0,0,0,.18);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.account-pill span{display:none}
+.account-pill button{width:42px;height:42px;display:grid;place-items:center;padding:0;border:1px solid rgba(227,179,65,.28);border-radius:11px;background:rgba(255,255,255,.045);color:#e3b341;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 4px 12px rgba(0,0,0,.12);transition:transform .22s cubic-bezier(.2,.8,.2,1),box-shadow .22s ease,background .22s ease}
+.account-pill button:hover{background:rgba(227,179,65,.13);transform:translateY(-5px) scale(1.08);box-shadow:0 10px 22px rgba(227,179,65,.18),inset 0 1px 0 rgba(255,255,255,.18)}
+.account-pill button:active{transform:translateY(-1px) scale(.96)}
+.account-pill button::before{content:"";width:18px;height:18px;display:block;background:currentColor;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='8' r='4' fill='none' stroke='black' stroke-width='2'/%3E%3Cpath d='M4 21c.8-4.1 3.4-6 8-6s7.2 1.9 8 6' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='8' r='4' fill='none' stroke='black' stroke-width='2'/%3E%3Cpath d='M4 21c.8-4.1 3.4-6 8-6s7.2 1.9 8 6' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat}
+nav{grid-area:nav;display:flex;align-items:center;gap:3px;padding:4px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.11);border-radius:14px;box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 8px 24px rgba(0,0,0,.16);backdrop-filter:blur(12px)}
+nav button,nav a.navlink{--dock-scale:1;min-height:42px;display:inline-flex;align-items:center;justify-content:center;padding:9px 15px;border-radius:12px;border:1px solid transparent;background:transparent;color:#d7d9de;font-size:14px;font-weight:600;letter-spacing:.01em;line-height:1;white-space:nowrap;cursor:pointer;transform:translateY(calc((1 - var(--dock-scale))*2px)) scale(var(--dock-scale));transform-origin:center bottom;will-change:transform;transition:transform .46s cubic-bezier(.22,1,.36,1),background .32s ease,box-shadow .32s ease,border-color .32s ease,color .32s ease}
+nav button:hover,nav a.navlink:hover{background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.10);color:#fff;opacity:1;z-index:2;box-shadow:0 8px 18px rgba(0,0,0,.16)}
+nav button[aria-selected="true"]{background:linear-gradient(180deg,#e7bd57,#d4a017);color:#111;box-shadow:0 5px 16px rgba(215,169,40,.24)}
+nav a.navlink{color:#fff}
+nav.dock-active button,nav.dock-active a.navlink{transition-duration:.5s}
+@media (hover:hover) and (pointer:fine){nav button:hover,nav a.navlink:hover{--dock-scale:1.16}nav:has(button:hover) button:not(:hover),nav:has(a.navlink:hover) button:not(:hover),nav:has(button:hover) a.navlink:not(:hover),nav:has(a.navlink:hover) a.navlink:not(:hover){--dock-scale:1.04}}
+@media (prefers-reduced-motion:reduce){nav button,nav a.navlink,.account-pill,.account-icon,.account-icon span{transition:none!important;transform:none!important}}
+.nav-toggle{display:none;grid-area:nav-toggle;width:44px;height:44px;border:1px solid rgba(227,179,65,.3);border-radius:12px;background:rgba(255,255,255,.055);color:#fff;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,.16)}
+.nav-toggle svg{width:20px;height:20px}
+@media(max-width:980px){main{transition:filter .22s ease}body.nav-open main{filter:blur(8px)}}
+.hero{padding:54px 0 28px}.hero h1{font-size:clamp(42px,6vw,72px);max-width:13em;letter-spacing:-.015em}.hero h1::after{width:72px;height:4px;margin-top:18px;border-radius:99px}.hero p{font-size:17px;line-height:1.65;max-width:46em;margin-top:15px}
+.hero>div[style*="display:flex"]{gap:10px!important;margin-top:24px!important;align-items:center}
+.btn{min-height:44px;padding:11px 18px;border-radius:9px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;box-shadow:var(--shadow-sm);font-size:14px;font-weight:700;letter-spacing:.01em;transition:transform .16s ease,box-shadow .16s ease,background .16s ease,border-color .16s ease}
+.btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(15,23,42,.12)}
+.btn.ghost{background:var(--surface);border-color:var(--line);color:var(--ink)}.btn.ghost:hover{border-color:#b8c2ce;background:var(--surface-2)}
+.btn.alt{background:#111827;color:#fff}.btn.alt:hover{background:#1f2937}.btn.wa{background:var(--gold);color:#111827}
+.tiles{gap:16px;margin:10px 0 28px}.tile{min-height:128px;padding:20px 20px 18px;border-radius:var(--radius);border:1px solid var(--line);box-shadow:var(--shadow-sm);position:relative;transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease;background:var(--surface)}
+.tile:hover{transform:translateY(-2px);border-color:#c4ccd6;box-shadow:var(--shadow)}.tile h3{font-size:28px}.tile:after{content:none;display:none}.tile .meta{margin-top:5px;max-width:26em}
+.panel{padding:24px;border-radius:var(--radius);border-color:var(--line);box-shadow:var(--shadow-sm);margin-bottom:40px}.panel h2{font-size:30px;margin-bottom:8px}
+.contact .svc{padding:15px 0;align-items:center}.svc b{font-size:15px}.contact a{color:var(--blue);text-decoration:none}.contact a:hover{text-decoration:underline}
+input,select,textarea{min-height:44px;padding:10px 13px;border-radius:9px;border-color:var(--line);background:var(--surface);transition:border-color .15s,box-shadow .15s}
+textarea{min-height:92px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(154,112,0,.12);outline:none}
+label{font-size:13px;letter-spacing:.02em;margin:15px 0 6px}.filters{gap:10px;margin:20px 0 12px}.filters input,.filters select{box-shadow:var(--shadow-sm)}
+.card{border-radius:var(--radius);border-color:var(--line);box-shadow:var(--shadow-sm);transition:transform .16s,box-shadow .16s,border-color .16s}.card:hover{border-color:#c1cad5;box-shadow:var(--shadow);transform:translateY(-2px)}
+.card .body{padding:16px 16px 17px}.card h3{font-size:24px}.price{font-size:26px;color:var(--blue)}
+.tag{padding:3px 9px;border-radius:999px;background:var(--surface-2)}
+.garage-hero{border-left:0;border-top:4px solid var(--gold);padding-left:0;padding-top:24px}.garage-hero h1{max-width:14em}
+.cols{gap:24px}.cols .panel{height:100%}.svc{padding:14px 0}
+.fab{right:24px;bottom:24px;padding:12px 17px;border-radius:999px;background:#111827;color:#f3c65d;border:1px solid #d4a017;box-shadow:0 10px 24px rgba(0,0,0,.2);font-size:14px}
+.auth-left{left:18px;top:auto;bottom:24px;transform:none;z-index:40}.auth-left button{min-height:40px;padding:8px 13px;border-radius:9px;background:#111827;color:#f3c65d;border:1px solid rgba(227,179,65,.55);box-shadow:0 8px 20px rgba(0,0,0,.18);font-size:13px;font-weight:700}.auth-left button:hover{background:#1f2937;transform:translateY(-1px)}
+dialog{border-radius:16px;border-color:var(--line);box-shadow:0 24px 70px rgba(0,0,0,.28)}dialog .in{padding:26px}.authbox .in>h2{font-size:32px;margin-bottom:6px}.authbox .in>.btn{margin-top:8px;margin-right:6px}.authbox .switch{padding-top:14px;border-top:1px solid var(--line)}
+.seg{border-radius:10px;border-color:var(--line);padding:10px 14px 12px;background:var(--surface-2)}
+.note{border-radius:10px;padding:14px 16px}.admin-table th,.admin-table td{padding:11px 9px}
+footer{padding:28px 0 36px;border-top:1px solid var(--line)}
+footer .wrap{font-size:13px;text-align:center}
+
+/* Account profile + listing photo controls */
+.profile-card{display:grid;grid-template-columns:92px 1fr;gap:18px;align-items:center;padding:16px;border:1px solid var(--line);border-radius:14px;background:var(--surface-2);margin:12px 0 20px}
+.profile-avatar{width:88px;height:88px;border-radius:50%;object-fit:cover;border:1px solid rgba(227,179,65,.4);background:var(--surface);display:grid;place-items:center;color:var(--gold);font-size:28px;font-weight:700;overflow:hidden}
+.profile-avatar img{width:100%;height:100%;object-fit:cover}
+.profile-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.profile-actions .btn{margin-top:0}
+.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+.account-tools{margin-top:22px;padding-top:16px;border-top:1px solid var(--line)}.account-tools h3{margin:0 0 10px}.account-tools .field-row{display:grid;grid-template-columns:1fr auto;gap:9px;align-items:end;margin:10px 0}.account-tools input,.profile-grid input,.profile-grid select{min-width:0}.danger-zone{margin-top:22px;padding:14px;border:1px solid rgba(190,50,50,.35);border-radius:12px;background:rgba(190,50,50,.06)}.danger-zone h3{margin:0 0 6px;color:var(--err)}
+.photo-item{position:relative;width:88px;height:66px}
+.photo-item img{width:88px;height:66px;object-fit:cover;border-radius:6px;border:1px solid var(--line);display:block}
+.photo-remove{position:absolute;right:-6px;top:-6px;width:23px;height:23px;border:1px solid rgba(255,255,255,.8);border-radius:50%;background:#111;color:#fff;display:grid;place-items:center;font-size:14px;line-height:1;cursor:pointer;box-shadow:0 3px 8px rgba(0,0,0,.22)}
+.photo-remove:hover{background:#8b1e1e}
+.sell-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.sell-actions .btn{margin-top:0}
+.account-listing-photo{width:72px;height:52px;object-fit:cover;border-radius:7px;border:1px solid var(--line);margin-right:8px;vertical-align:middle}
+@media(max-width:600px){.profile-card{grid-template-columns:1fr}.profile-grid,.account-tools .field-row{grid-template-columns:1fr}}
+
+/* Give form action areas a consistent alignment */
+form .btn{margin-top:10px}#sellForm>.btn,#bBtn{min-width:160px}
+
+@media(max-width:900px){
+  header .wrap{grid-template-columns:1fr auto;grid-template-areas:"brand account" "nav nav";gap:9px 12px;padding-top:10px;padding-bottom:10px}
+  nav{justify-content:flex-start;overflow-x:auto;scrollbar-width:none}nav::-webkit-scrollbar{display:none}
+  .account-pill{justify-self:end}
+}
+@media(max-width:600px){
+  .wrap{padding-left:16px;padding-right:16px}.logo{font-size:25px}.account-pill{font-size:12px}
+  nav{width:100%}nav button,nav a.navlink{flex:1;min-width:max-content;padding-left:12px;padding-right:12px}
+  .hero{padding-top:38px}.hero h1{font-size:42px}.hero>div[style*="display:flex"]{align-items:stretch}.hero>div[style*="display:flex"] .btn{flex:1}
+  .tiles{grid-template-columns:1fr 1fr}.tile{min-height:120px;padding:17px}.tile h3{font-size:24px}.tile:after{right:14px;top:14px}
+  .panel{padding:18px}.fab{right:16px;bottom:16px}.auth-left{left:16px;bottom:16px}.auth-left button{padding:8px 11px}
+}
+@media(max-width:980px){
+  header .wrap{grid-template-columns:auto 1fr auto;grid-template-areas:"brand account nav-toggle"}
+  .nav-toggle{display:inline-flex;justify-self:end}
+  nav{position:absolute;z-index:1001;isolation:isolate;top:calc(100% + 10px);right:24px;display:flex;flex-direction:column;align-items:stretch;gap:4px;width:min(300px,calc(100vw - 48px));padding:8px;background:rgba(18,19,21,.93);border-color:rgba(227,179,65,.42);box-shadow:0 18px 44px rgba(0,0,0,.72),inset 0 1px 0 rgba(255,255,255,.1);backdrop-filter:blur(30px) saturate(135%);-webkit-backdrop-filter:blur(30px) saturate(135%);opacity:0;visibility:hidden;transform:translateY(-8px) scale(.98);transform-origin:top right;transition:opacity .2s ease,transform .2s ease,visibility .2s ease}
+  nav button,nav a.navlink{color:#f3f0e8;text-shadow:0 1px 2px rgba(0,0,0,.45)}
+  nav.is-open{opacity:1;visibility:visible;transform:translateY(0) scale(1)}
+  nav button,nav a.navlink{width:100%;justify-content:flex-start;padding:12px 14px;min-height:44px}
+  nav button::after,nav a.navlink::after{left:auto;right:12px;bottom:50%;width:3px;height:20px;transform:translateY(50%) scaleY(0);transform-origin:center}
+  nav button:hover::after,nav a.navlink:hover::after{transform:translateY(50%) scaleY(1)}
+  nav button[aria-selected="true"]::after{display:none}
+}
+@media(max-width:430px){.tiles{grid-template-columns:1fr}.hero>div[style*="display:flex"]{flex-direction:column}.hero>div[style*="display:flex"] .btn{width:100%}.account-pill span{display:none}.wrap{padding-left:16px;padding-right:16px}nav{right:16px;width:calc(100vw - 32px)}}
+
+.demo{background:#fff4cf;color:#4a3a00;text-align:center;padding:9px 16px;font-size:14px;font-weight:600}
+.acts{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.acts .btn{margin:0;padding:7px 13px;min-height:0}
+dialog.wide{max-width:720px}
+dialog.wide .in{max-height:80vh;overflow:auto}
+.st{font-size:12px;font-weight:600;border:1px solid var(--line);border-radius:99px;padding:1px 9px;white-space:nowrap}
+.eyebrow{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.14em;color:var(--blue);margin-bottom:10px}.project-intro{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:26px 28px;margin:6px 0 34px;background:linear-gradient(135deg,var(--surface),var(--surface-2));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm)}.project-intro h2{font-size:32px;margin-bottom:6px}.project-intro p{margin:0;max-width:680px}.project-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;padding-bottom:50px}.project-card{overflow:hidden;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);transition:transform .18s,box-shadow .18s}.project-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}.project-featured{grid-column:1/-1;display:grid;grid-template-columns:1.25fr 1fr}.project-media{position:relative;min-height:300px;background:#111827;overflow:hidden}.project-media video{width:100%;height:100%;min-height:300px;display:block;object-fit:cover}.project-type{position:absolute;left:16px;top:16px;padding:6px 10px;border-radius:999px;background:#111827;color:#fff;font-size:11px;font-weight:800;letter-spacing:.1em}.project-body{padding:24px}.project-kicker{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);font-weight:800}.project-body h2{font-size:30px;margin:8px 0 10px}.project-body p{color:var(--mute);margin:0;line-height:1.65}.project-placeholder{min-height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:linear-gradient(135deg,#111827,#263342);color:#fff;text-align:center}.project-placeholder span{font-size:11px;letter-spacing:.15em;color:#e3b341;font-weight:800}.project-placeholder strong{font:700 34px "Barlow Condensed",sans-serif}.contact-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;padding-bottom:60px}.contact-card{min-height:145px;padding:22px;text-decoration:none;color:inherit;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);display:flex;flex-direction:column;justify-content:center;gap:5px;transition:.18s}.contact-card:hover{transform:translateY(-2px);border-color:#c4ccd6;box-shadow:var(--shadow)}.contact-card span{font-size:11px;letter-spacing:.13em;font-weight:800;color:var(--blue)}.contact-card strong{font:700 27px "Barlow Condensed",sans-serif}.contact-card small{color:var(--mute)}@media(max-width:1150px){.auto-quote-rail{left:12px;width:220px}.auto-quote-text{font-size:18px}}
+@media(max-width:900px){.auto-quote-rail{position:relative;left:auto;top:auto;bottom:auto;transform:none;width:205px;margin-bottom:22px}.auto-quote-body{min-height:170px;padding:16px}.auto-quote-top{padding:12px 14px 8px}.auto-quote-footer{padding:8px 14px 10px}}
+@media(max-width:600px){.auto-quote-rail{left:auto;top:auto;bottom:auto;width:min(190px,100%);margin-bottom:18px;border-radius:15px}.auto-quote-text{font-size:16px;line-height:1.35;margin-bottom:10px}.auto-quote-body{min-height:145px}.auto-quote-source{max-width:145px}}
+@media(max-width:760px){.project-intro{align-items:flex-start;flex-direction:column}.project-grid{grid-template-columns:1fr}.project-featured{grid-column:auto;display:block}.contact-grid{grid-template-columns:1fr}}@media(max-width:600px){.project-intro{padding:20px}.project-intro h2{font-size:28px}.project-body{padding:20px}.project-media,.project-media video{min-height:220px}.contact-card strong{font-size:24px}}
+/* Admin-managed projects */
+.project-admin-grid{display:grid;grid-template-columns:minmax(280px,360px) 1fr;gap:18px;align-items:start}
+.project-admin-form{position:sticky;top:18px}
+.project-admin-list{display:grid;gap:10px}
+.project-admin-lists{display:grid;gap:24px;min-width:0}
+.project-admin-item{border:1px solid var(--line);background:var(--surface-2);border-radius:12px;padding:14px;display:flex;gap:14px;justify-content:space-between;align-items:flex-start}
+.project-admin-item .thumb{width:110px;height:76px;border-radius:9px;overflow:hidden;background:#111;flex:0 0 110px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.project-admin-item .thumb img,.project-admin-item .thumb video{width:100%;height:100%;object-fit:cover}
+.project-admin-media-note{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:8px;padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2);font-size:12px;color:var(--mute)}
+.project-media-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:8px;background:#111;min-height:300px}
+.project-media-grid .project-media-item{position:relative;overflow:hidden;border-radius:8px;background:#151515;min-height:140px}
+.project-media-grid img,.project-media-grid video{width:100%;height:100%;min-height:140px;display:block;object-fit:cover}
+.project-media-grid .project-media-item:first-child{grid-column:1/-1;min-height:300px}
+.project-media-grid .project-media-item:first-child img,.project-media-grid .project-media-item:first-child video{min-height:300px}
+.project-media-count{position:absolute;right:12px;top:12px;padding:6px 9px;border-radius:999px;background:rgba(17,17,17,.78);color:#fff;font-size:11px;font-weight:800;letter-spacing:.06em;backdrop-filter:blur(8px)}
+.project-upload-progress{width:100%;height:6px;border:0;border-radius:99px;overflow:hidden;background:var(--line);margin-top:10px}
+.project-upload-progress::-webkit-progress-bar{background:var(--line)}
+.project-upload-progress::-webkit-progress-value{background:var(--gold)}
+.project-upload-progress::-moz-progress-bar{background:var(--gold)}
+@media(max-width:600px){.project-media-grid{grid-template-columns:1fr}.project-media-grid .project-media-item:first-child{grid-column:auto}.project-media-grid .project-media-item:first-child,.project-media-grid .project-media-item:first-child img,.project-media-grid .project-media-item:first-child video{min-height:220px}}
+.project-admin-item .meta-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:7px}
+.project-admin-item .badge{display:inline-flex;padding:4px 8px;border-radius:99px;background:var(--surface);border:1px solid var(--line);font-size:11px;font-weight:700}
+.project-admin-item .badge.live{border-color:#86efac;background:#f0fdf4;color:#166534}
+.project-admin-item .badge.draft{color:#92400e;background:#fffbeb;border-color:#fde68a}
+.project-admin-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.project-form-note{font-size:12px;color:var(--mute);line-height:1.5;margin-top:7px}
+.project-public-empty{padding:28px;text-align:center;border:1px dashed var(--line);border-radius:12px;background:var(--surface-2)}
+.project-public-empty h3{margin-bottom:6px}
+.project-card .project-image{width:100%;height:100%;object-fit:cover;display:block}
+.project-card .project-article{min-height:230px;padding:24px;display:flex;flex-direction:column;justify-content:flex-end;background:linear-gradient(135deg,var(--surface-2),var(--surface))}
+@media(max-width:900px){.project-admin-grid{grid-template-columns:1fr}.project-admin-form{position:static}}
+@media(max-width:600px){.project-admin-item{flex-direction:column}.project-admin-item .thumb{width:100%;height:170px;flex-basis:auto}.project-admin-item>div:last-child{width:100%}}
+
+
+/* ===== 3 Pedals Journal ===== */
+.journal-intro{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:30px 32px;margin:6px 0 34px;background:linear-gradient(135deg,var(--surface),var(--surface-2));border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-sm);position:relative;overflow:hidden}
+.journal-intro:after{content:"";position:absolute;right:-90px;top:-110px;width:260px;height:260px;border-radius:50%;border:1px solid rgba(183,160,106,.18);box-shadow:0 0 0 24px rgba(183,160,106,.035),0 0 0 48px rgba(183,160,106,.02);pointer-events:none}
+.journal-intro h2{font-size:32px;margin-bottom:7px}
+.journal-intro p{margin:0;max-width:760px}
+.journal-hero{padding-bottom:20px}
+.journal-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;padding-bottom:60px}
+.journal-card{display:flex;flex-direction:column;min-height:320px;padding:0;overflow:hidden;text-align:left;background:var(--surface);color:inherit;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow-sm);cursor:pointer;transition:transform .42s var(--premium-ease),box-shadow .42s var(--premium-ease),border-color .28s ease}
+.journal-card:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:rgba(183,160,106,.42)}
+.journal-card-top{min-height:145px;padding:22px;background:linear-gradient(145deg,var(--surface-2),var(--surface));display:flex;flex-direction:column;justify-content:flex-end;position:relative}
+.journal-card-top:before{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(circle at 85% 15%,rgba(183,160,106,.13),transparent 36%);pointer-events:none}
+.journal-number{position:absolute;right:18px;top:16px;font:700 44px/1 "Barlow Condensed",sans-serif;color:rgba(183,160,106,.17)}
+.journal-card-body{padding:20px 22px 23px;display:flex;flex-direction:column;flex:1}
+.journal-card-body h2{font-size:25px;line-height:1.05;margin:8px 0 10px}
+.journal-card-body p{color:var(--mute);line-height:1.65;margin:0}
+.journal-read{margin-top:auto;padding-top:18px;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--blue)}
+.journal-meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:11px;color:var(--mute)}
+.journal-modal .article-head{padding-bottom:18px;border-bottom:1px solid var(--line);margin-bottom:20px}
+.journal-modal .article-head h2{font-size:clamp(32px,5vw,52px);line-height:.98;margin:8px 0 12px}
+.journal-modal .article-body{font-size:17px;line-height:1.85;white-space:pre-wrap;color:var(--ink)}
+.journal-modal .article-body p{margin:0 0 1.2em}
+.journal-card-top.has-cover{background:#111;isolation:isolate;color:#fff}
+.journal-cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.76}
+.journal-card-top.has-cover:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,9,10,.94),rgba(8,9,10,.06) 85%);z-index:2;pointer-events:none}
+.journal-card-top .journal-number,.journal-card-top .project-kicker,.journal-card-top h2{position:relative;z-index:3}
+.journal-card-top.has-cover .project-kicker,.journal-card-top.has-cover h2{color:#fff}
+.journal-grid{grid-template-columns:minmax(0,1fr)}
+.journal-entry{margin-bottom:4px}
+.journal-entry-media{position:relative;display:block;width:100%;height:100%;min-height:320px;padding:0;border:0;background:linear-gradient(145deg,#191b1e,#282a2d);cursor:pointer;overflow:hidden}
+.journal-entry-media img{width:100%;height:100%;min-height:320px;display:block;object-fit:cover;transition:transform .55s cubic-bezier(.22,1,.36,1)}
+.journal-entry-media:hover img{transform:scale(1.035)}
+.journal-entry-empty{min-height:320px;display:grid;place-items:center;background:radial-gradient(circle at 70% 25%,rgba(183,160,106,.16),transparent 32%),linear-gradient(145deg,#191b1e,#282a2d);color:#d6c28b;font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+.journal-entry .project-body{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:clamp(24px,4vw,42px)}
+.journal-entry .project-body h2{font-size:clamp(28px,3vw,40px);line-height:1.03;margin:10px 0 13px}
+.journal-entry .project-body p{line-height:1.75}
+.journal-entry .journal-read{margin-top:22px;padding:11px 17px;border:1px solid rgba(183,160,106,.34);border-radius:10px;color:#f2d995;background:rgba(255,255,255,.045);font-size:14px;font-weight:700;letter-spacing:0;text-transform:none;cursor:pointer}
+.journal-entry .journal-read:hover{background:rgba(183,160,106,.16);border-color:rgba(183,160,106,.55)}
+.journal-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0 0 24px}
+.journal-gallery figure{margin:0;overflow:hidden;border:1px solid var(--line);border-radius:12px;background:var(--surface-2)}
+.journal-gallery figure:first-child:nth-last-child(odd){grid-column:1/-1}
+.journal-gallery img{width:100%;height:clamp(150px,28vw,300px);display:block;object-fit:cover}
+.journal-gallery figcaption{padding:7px 10px;font-size:11px;color:var(--mute)}
+.journal-upload-box{padding:14px;border:1px solid rgba(183,160,106,.35);border-radius:12px;background:linear-gradient(145deg,rgba(183,160,106,.09),rgba(255,255,255,.025));margin:8px 0 12px}
+.journal-upload-box strong{display:block;margin-bottom:5px;color:var(--ink)}
+.journal-upload-box .meta{margin:0 0 10px}
+.journal-upload-preview{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:10px}
+.journal-upload-preview:empty{display:none}
+.journal-upload-preview img{width:100%;height:76px;object-fit:cover;border:1px solid var(--line);border-radius:8px;background:var(--surface-2)}
+@media(max-width:900px){.journal-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.journal-intro{padding:22px;align-items:flex-start;flex-direction:column}.journal-intro h2{font-size:28px}.journal-grid{grid-template-columns:1fr}.journal-card{min-height:290px}.journal-entry-media,.journal-entry-media img,.journal-entry-empty{min-height:230px}.journal-gallery{grid-template-columns:1fr}.journal-gallery figure:first-child:nth-last-child(odd){grid-column:auto}.journal-gallery img{height:230px}.journal-upload-preview{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* ===== Premium Automotive / Apple-inspired polish ===== */
+:root{--premium-ease:cubic-bezier(.22,1,.36,1);--premium-shadow:0 18px 55px rgba(0,0,0,.14);--premium-glass:rgba(255,255,255,.075)}
+html{scroll-behavior:smooth}
+body{position:relative;overflow-x:hidden;background:radial-gradient(circle at 12% -8%,rgba(212,160,23,.10),transparent 30%),radial-gradient(circle at 88% 8%,rgba(255,255,255,.06),transparent 28%),var(--bg);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background:linear-gradient(120deg,transparent 0%,rgba(255,255,255,.025) 45%,transparent 70%);opacity:.8}
+header{position:sticky;top:0;z-index:50;background:rgba(13,13,13,.84);border-bottom:1px solid rgba(227,179,65,.34);box-shadow:0 10px 35px rgba(0,0,0,.20);backdrop-filter:blur(22px) saturate(145%);-webkit-backdrop-filter:blur(22px) saturate(145%)}
+header .wrap{min-height:76px}
+.logo{position:relative;transition:transform .45s var(--premium-ease),text-shadow .35s ease;user-select:none}
+.logo:after{content:"";position:absolute;left:0;right:25%;bottom:-5px;height:1px;background:linear-gradient(90deg,var(--gold),transparent);transform:scaleX(.45);transform-origin:left;opacity:.65;transition:transform .45s var(--premium-ease)}
+.logo:hover{transform:translateY(-1px) scale(1.025);text-shadow:0 0 22px rgba(227,179,65,.22)}
+.logo:hover:after{transform:scaleX(1)}
+nav{isolation:isolate}
+.hero{position:relative;padding:54px 0 30px}
+.hero:before{content:"";position:absolute;left:-90px;top:10px;width:300px;height:190px;background:radial-gradient(circle,rgba(212,160,23,.13),transparent 68%);filter:blur(8px);pointer-events:none}
+.hero h1{position:relative;letter-spacing:-.018em;text-wrap:balance}
+.hero h1::after{height:4px;width:72px;border-radius:99px;box-shadow:0 0 18px rgba(212,160,23,.22);transition:width .6s var(--premium-ease)}
+.hero:hover h1::after{width:104px}
+.hero p{font-size:16px;line-height:1.7}
+.btn{position:relative;overflow:hidden;border-radius:12px;box-shadow:0 7px 20px rgba(0,0,0,.10);transition:transform .35s var(--premium-ease),box-shadow .35s var(--premium-ease),background .35s ease,border-color .35s ease;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.btn:before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 25%,rgba(255,255,255,.22),transparent 70%);transform:translateX(-120%);transition:transform .65s var(--premium-ease);pointer-events:none}
+.btn:hover{transform:translateY(-3px);box-shadow:0 13px 30px rgba(0,0,0,.17)}
+.btn:hover:before{transform:translateX(120%)}
+.btn:active{transform:translateY(0) scale(.965);transition-duration:.1s}
+.panel,.tile,.card,.contact-card,.project-card,.filters{box-shadow:0 10px 35px rgba(0,0,0,.06)}
+.panel,.tile,.contact-card{border-color:color-mix(in srgb,var(--line) 82%,white 18%);transition:transform .45s var(--premium-ease),box-shadow .45s var(--premium-ease),border-color .35s ease,background .35s ease}
+.panel:hover,.tile:hover,.contact-card:hover{transform:translateY(-4px);box-shadow:var(--premium-shadow);border-color:rgba(212,160,23,.35)}
+.tile{position:relative;overflow:hidden;background:linear-gradient(145deg,color-mix(in srgb,var(--surface) 92%,white 8%),var(--surface));border-radius:16px}
+.tile:before{content:"";position:absolute;inset:-40%;background:radial-gradient(circle at 30% 20%,rgba(212,160,23,.12),transparent 36%);opacity:0;transition:opacity .45s ease;pointer-events:none}
+.tile:hover:before{opacity:1}
+.card{border-radius:15px;transition:transform .5s var(--premium-ease),box-shadow .5s var(--premium-ease),border-color .35s ease}
+.card:hover{transform:translateY(-7px) scale(1.012);box-shadow:0 22px 48px rgba(0,0,0,.16);border-color:rgba(212,160,23,.5)}
+.card img,.card .swatch{transition:transform .7s var(--premium-ease),filter .5s ease}
+.card:hover img,.card:hover .swatch{transform:scale(1.035);filter:saturate(1.05) contrast(1.02)}
+input,select,textarea{border-radius:12px;transition:border-color .25s ease,box-shadow .3s ease,background .3s ease,transform .25s ease}
+input:hover,select:hover,textarea:hover{border-color:rgba(212,160,23,.45)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 4px rgba(212,160,23,.12),0 8px 22px rgba(0,0,0,.06);transform:translateY(-1px)}
+.tag{border-radius:999px;background:rgba(212,160,23,.06);transition:transform .3s var(--premium-ease),background .3s ease,border-color .3s ease}
+.tag:hover{transform:translateY(-1px);background:rgba(212,160,23,.12);border-color:rgba(212,160,23,.4)}
+dialog{border-radius:22px;box-shadow:0 35px 100px rgba(0,0,0,.35);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);overflow:hidden}
+dialog::backdrop{backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);background:rgba(0,0,0,.58)}
+footer{background:linear-gradient(180deg,transparent,rgba(0,0,0,.035));margin-top:20px}
+@media(max-width:700px){header .wrap{padding-top:10px;padding-bottom:10px}.logo{font-size:24px}.hero{padding-top:38px}.hero h1{font-size:clamp(36px,12vw,54px)}.btn{min-height:44px}.panel,.tile,.contact-card{border-radius:14px}.card{border-radius:14px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.logo,.hero h1::after,.btn,.btn:before,.panel,.tile,.contact-card,.card,.card img,.card .swatch,input,select,textarea,.tag{transition:none!important;transform:none!important}.hero:hover h1::after{width:72px}}
+/* Make the account control feel like a compact Apple-style glass accessory. */
+.account-pill{border-radius:16px!important;backdrop-filter:blur(16px) saturate(145%);-webkit-backdrop-filter:blur(16px) saturate(145%);box-shadow:0 10px 30px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.10)!important}
+
+
+/* Quiet-luxury automotive theme */
+:root{
+  --bg:#f3f1ec;--surface:#fbfaf7;--surface-2:#f6f4ef;--ink:#1a1b1d;--mute:#77746d;--line:#dedbd3;
+  --blue:#9a8661;--gold:#b7a06a;--gold-ink:#171717;--alt:#1b1c1e;--alt-ink:#f5f2ea;
+  --shadow-sm:0 2px 10px rgba(24,25,27,.055);--shadow:0 16px 38px rgba(24,25,27,.10);--radius:14px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#111315;--surface:#181a1d;--surface-2:#1d2024;--ink:#f0eee8;--mute:#9a9891;--line:#2d3034;
+  --blue:#b8a67d;--gold:#b8a67d;--gold-ink:#171717;--alt:#eeeae1;--alt-ink:#171717;
+  --shadow-sm:0 2px 12px rgba(0,0,0,.18);--shadow:0 18px 42px rgba(0,0,0,.28);
+}}
+body{background:radial-gradient(circle at 50% -10%,rgba(183,160,106,.055),transparent 34%),var(--bg)}
+header{background:rgba(20,21,22,.88)!important;border-bottom:1px solid rgba(183,160,106,.16)!important;box-shadow:0 10px 32px rgba(0,0,0,.16)!important;backdrop-filter:blur(22px) saturate(125%);-webkit-backdrop-filter:blur(22px) saturate(125%)}
+.logo{color:#d0bc8d!important;font-weight:700}
+nav{background:rgba(255,255,255,.045)!important;border-color:rgba(255,255,255,.085)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.055),0 10px 28px rgba(0,0,0,.14)!important}
+nav button,nav a.navlink{color:#c9c8c4!important}
+nav button:hover,nav a.navlink:hover{background:rgba(255,255,255,.075)!important;color:#f4f2ec!important;border-color:rgba(255,255,255,.08)!important}
+nav button[aria-selected="true"]{background:linear-gradient(180deg,#c6b27f,#a9925f)!important;color:#171717!important;box-shadow:0 5px 18px rgba(183,160,106,.18)!important}
+.hero h1::after{background:linear-gradient(90deg,var(--gold),rgba(183,160,106,.18))!important;height:3px!important}
+.hero p{color:var(--mute)!important}
+.btn{box-shadow:0 4px 14px rgba(24,25,27,.07)!important}
+.btn.wa{background:#b7a06a!important;color:#181818!important}
+.btn.alt{background:#1b1c1e!important;color:#f0eee8!important}
+.btn.ghost{background:rgba(255,255,255,.55)!important;border-color:var(--line)!important}
+.tile,.panel,.card,.contact-card,.project-card{box-shadow:var(--shadow-sm)!important;border-color:var(--line)!important}
+.tile:hover,.card:hover,.contact-card:hover,.project-card:hover{border-color:rgba(183,160,106,.42)!important;box-shadow:var(--shadow)!important}
+.price,.specs a,.contact a,.tile:after{color:var(--blue)!important}
+.tag{background:var(--surface-2)!important;border-color:var(--line)!important}
+input,select,textarea{background:var(--surface)!important;border-color:var(--line)!important}
+input:focus,select:focus,textarea:focus{border-color:var(--blue)!important;box-shadow:0 0 0 3px rgba(183,160,106,.12)!important}
+.account-pill{background:rgba(255,255,255,.045)!important;border-color:rgba(255,255,255,.11)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 8px 22px rgba(0,0,0,.13)!important}
+.account-pill button{color:#c9b784!important;border-color:rgba(183,160,106,.25)!important}
+.account-pill button:hover{background:rgba(183,160,106,.09)!important;box-shadow:0 10px 24px rgba(183,160,106,.11)!important}
+.garage-hero{border-top-color:rgba(183,160,106,.62)!important}
+dialog{background:var(--surface)!important;color:var(--ink)!important}
+footer{color:var(--mute)!important}
+@media(max-width:800px){header .wrap{grid-template-columns:1fr auto;grid-template-areas:"brand account" "nav nav";gap:10px}.account-pill{justify-self:end}.logo{font-size:27px!important}nav{width:100%;overflow-x:auto;justify-content:flex-start}nav button,nav a.navlink{flex:0 0 auto}}
+@media(max-width:520px){.logo{font-size:24px!important}.account-pill{padding:3px!important}.account-pill button{width:40px!important;height:40px!important}.hero{padding-top:42px!important}.hero h1{font-size:clamp(38px,11vw,56px)!important}}
+
+/* Dealer profile / premium inventory cards */
+.yard-link{appearance:none;border:0;background:none;padding:0;color:inherit;font:inherit;font-weight:800;text-decoration:underline;text-decoration-color:rgba(212,160,23,.55);text-underline-offset:3px;cursor:pointer}
+.yard-link:hover{color:var(--gold)}
+.card-reveal{margin-top:8px;font-size:11px;font-weight:800;letter-spacing:.03em;color:var(--gold);opacity:.78;transition:transform .25s ease,opacity .25s ease}
+.card:hover .card-reveal{opacity:1;transform:translateX(3px)}
+.yard-badge{z-index:3;box-shadow:0 6px 18px rgba(0,0,0,.18)}
+@media(min-width:1400px){#grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:16px!important}.card .body{padding:14px}.card h3{font-size:18px}.card .price{font-size:20px}.card .tag{font-size:11px;padding:4px 8px}}
+</style>
+
+<style id="auto-quote-rail">
+/*  automotive quote rail */
+.home-with-quote{display:block;margin-top:8px}.home-with-quote>div:last-child{width:100%}.auto-quote-rail{position:relative;left:auto;top:auto;bottom:auto;transform:none;width:248px;max-width:100%;margin:0 0 26px 0;z-index:auto}
+.auto-quote-rail{border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,rgba(255,255,255,.72),rgba(246,244,239,.92));box-shadow:0 18px 45px rgba(24,25,27,.08);overflow:hidden}
+.auto-quote-top{padding:16px 18px 10px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:10px}
+.auto-quote-label{font-size:10px;letter-spacing:.16em;font-weight:800;color:var(--gold);text-transform:uppercase}
+.auto-quote-live{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);display:flex;align-items:center;gap:6px}
+.auto-quote-live:before{content:"";width:6px;height:6px;border-radius:50%;background:#78a77d;box-shadow:0 0 0 3px rgba(120,167,125,.12)}
+.auto-quote-body{padding:20px 18px 18px;min-height:210px;display:flex;flex-direction:column;justify-content:center}
+.auto-quote-mark{font-family:Georgia,serif;font-size:50px;line-height:.6;color:rgba(183,160,106,.55);height:25px}
+.auto-quote-text{font-family:Georgia,'Times New Roman',serif;font-size:20px;line-height:1.42;letter-spacing:-.01em;color:var(--ink);margin:5px 0 16px}
+.auto-quote-author{font-size:12px;font-weight:800;color:var(--ink)}
+.auto-quote-source{font-size:10px;color:var(--mute);margin-top:4px}
+.auto-quote-footer{padding:10px 18px 14px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:8px}
+.auto-quote-next{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 11px;font:inherit;font-size:11px;font-weight:700;color:var(--ink);cursor:pointer;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+.auto-quote-next:hover{transform:translateY(-1px);border-color:rgba(183,160,106,.5);box-shadow:0 8px 18px rgba(24,25,27,.08)}
+.auto-quote-updated{font-size:9px;color:var(--mute)}
+.auto-quote-loading .auto-quote-text{opacity:.45}
+@media(max-width:980px){.home-with-quote{grid-template-columns:1fr}.auto-quote-rail{position:fixed;left:0;top:96px;bottom:auto;transform:none;max-width:calc(100vw - 36px);margin:0;width:205px}.auto-quote-body{min-height:160px}}
+@media(max-width:520px){.auto-quote-text{font-size:18px}.auto-quote-body{min-height:145px}}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .auto-quote-rail{background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.02))}}
+</style>
+
+<style id="3pedals-performance-responsive">
+/* 3 Pedals unified responsive/performance layer */
+html{overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth}
+body{min-width:320px;overflow-x:hidden;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+img,video{max-width:100%;height:auto}
+img{content-visibility:auto}
+video{background:#111;display:block;max-width:100%}
+button,a,input,select,textarea{touch-action:manipulation}
+button,a{ -webkit-tap-highlight-color:transparent}
+input,select,textarea{min-height:44px}
+textarea{resize:vertical}
+main>section[hidden]{display:none!important}
+main>section{contain:layout style}
+.card,.tile,.panel,.project-card,.contact-card,.journal-card,.auto-quote-rail{contain:layout paint}
+@media(max-width:980px){
+  .wrap{width:100%;max-width:100%;padding-left:16px!important;padding-right:16px!important}
+  header .wrap{padding-top:max(10px,env(safe-area-inset-top));padding-bottom:10px}
+  nav{max-width:100%;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;white-space:nowrap}
+  nav::-webkit-scrollbar{display:none}
+  nav button,nav a.navlink{flex:0 0 auto;min-height:42px}
+  .hero{padding-top:30px}
+}
+@media(max-width:720px){
+  .home-with-quote{grid-template-columns:1fr!important}
+  .auto-quote-rail{position:fixed!important;left:0!important;top:88px!important;bottom:auto!important;transform:none!important;width:min(190px,calc(100vw - 20px))!important;max-width:calc(100vw - 20px)!important;order:initial}
+  .hero h1{font-size:clamp(40px,11vw,58px)!important;max-width:100%!important}
+  .cols{grid-template-columns:1fr!important}
+  .tiles{grid-template-columns:1fr!important}
+  .contact-grid{grid-template-columns:1fr!important}
+  .project-grid,.journal-grid{grid-template-columns:1fr!important}
+  .project-featured{grid-column:auto!important}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+}
+@media(max-width:520px){
+  body{font-size:15px}
+  .wrap{padding-left:12px!important;padding-right:12px!important}
+  header .wrap{grid-template-columns:1fr auto!important}
+  .logo{font-size:24px!important;max-width:calc(100vw - 90px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  nav{gap:2px!important;margin-top:2px}
+  nav button,nav a.navlink{font-size:12px!important;padding:9px 11px!important}
+  .hero{padding:28px 0 18px}
+  .hero h1{font-size:clamp(36px,12vw,52px)!important}
+  .btn{min-height:44px}
+  .grid{grid-template-columns:1fr!important}
+  #buy .hero h1{font-size:clamp(34px,9.5vw,46px)!important;line-height:1.08!important}
+  #buy .filters{gap:8px!important}
+  #buy #grid{grid-template-columns:1fr!important;gap:14px!important}
+  #buy .card .swatch{height:clamp(190px,58vw,250px)!important}
+  #buy .card .body{padding:14px!important}
+  .filters{grid-template-columns:1fr!important}
+  .filters input{grid-column:auto!important}
+  .specs{grid-template-columns:1fr 1fr!important}
+  dialog{max-width:calc(100vw - 20px)!important;width:calc(100vw - 20px)!important;max-height:90dvh!important}
+  .thumbs{overflow-x:auto!important;display:flex!important;flex-wrap:nowrap!important}
+  .thumbs button{flex:0 0 64px!important}
+}
+@media(hover:none){
+  .tile:hover,.card:hover,.contact-card:hover,.project-card:hover{transform:none!important}
+  #buy .card-reveal{max-height:70px;opacity:1}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+}
+@media(prefers-contrast:more){
+  :focus-visible{outline-width:3px}
+  .meta{color:var(--ink)!important}
+}
+@supports(content-visibility:auto){
+  main>section:not(:first-child){content-visibility:auto;contain-intrinsic-size:1px 700px}
+}
+</style>
+
+
+<style id="restoreQuoteOriginal">
+.home-with-quote{display:grid!important;grid-template-columns:minmax(230px,300px) minmax(0,1fr)!important;gap:28px!important;align-items:start!important;margin-top:8px!important}
+.home-with-quote>div:last-child{width:auto!important}
+.auto-quote-rail{position:sticky!important;top:106px!important;left:auto!important;right:auto!important;bottom:auto!important;transform:none!important;width:auto!important;max-width:none!important;margin:0!important;z-index:auto!important}
+@media(max-width:980px){.home-with-quote{grid-template-columns:1fr!important}.auto-quote-rail{position:static!important;width:auto!important;max-width:none!important;margin:0 0 26px 0!important}}
+</style>
+<style id="journal-responsive-final">
+/* Final responsive rules for the article feed, reader and publishing controls. */
+#journalGrid{grid-template-columns:minmax(0,1fr)!important;min-width:0}
+.journal-entry{grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);align-items:stretch;min-width:0}
+.journal-entry-media,.journal-entry .project-body{min-width:0}
+.journal-entry .project-body h2,.journal-entry .project-body p{max-width:100%;overflow-wrap:anywhere}
+.journal-upload-box input[type="file"]{display:block;width:100%;min-height:44px;padding:9px;background:var(--surface-2);border:1px dashed rgba(183,160,106,.55);border-radius:10px}
+dialog:has(.journal-modal){width:min(920px,calc(100vw - 32px));max-width:920px;max-height:calc(100dvh - 32px);overflow-y:auto;overscroll-behavior:contain}
+@media(max-width:760px){.journal-entry{display:block}.journal-entry-media,.journal-entry-media img,.journal-entry-empty{height:auto;min-height:clamp(210px,55vw,360px)}.journal-entry-media img{height:clamp(210px,55vw,360px)}.journal-entry .project-body{padding:clamp(20px,5vw,30px)}}
+@media(max-width:520px){.journal-intro{margin-bottom:22px}.journal-grid{gap:14px;padding-bottom:36px}.journal-entry{border-radius:14px}.journal-entry .project-body h2{font-size:clamp(26px,8vw,34px)}.journal-entry .project-body p{font-size:15px;line-height:1.65}.journal-entry .journal-read{min-height:44px;margin-top:18px}.journal-gallery{grid-template-columns:1fr;gap:8px}.journal-gallery img{height:clamp(190px,65vw,270px)}.journal-upload-box{padding:12px}.journal-upload-preview{grid-template-columns:repeat(2,minmax(0,1fr))}dialog:has(.journal-modal){width:calc(100vw - 20px)!important;max-width:calc(100vw - 20px)!important;max-height:calc(100dvh - 24px)!important}dialog:has(.journal-modal) .in{padding:16px!important}.journal-modal .article-head h2{font-size:clamp(28px,8vw,40px);line-height:1.02}.journal-modal .article-body{font-size:16px;line-height:1.72}}
+@media(prefers-reduced-motion:reduce){.journal-entry-media img{transition:none}}
+.journal-gallery{position:relative;display:block;margin:0 0 24px;overflow:hidden;border:1px solid var(--line);border-radius:12px;background:#08090b}.journal-gallery figure{position:relative;margin:0}.journal-gallery img{width:100%;height:auto;aspect-ratio:16/9;max-height:min(62vh,680px);display:block;object-fit:cover;background:#08090b}.journal-gallery figcaption{position:absolute;left:0;right:0;bottom:0;padding:12px 16px;background:linear-gradient(transparent,rgba(0,0,0,.8));color:#fff;font-size:13px}.journal-gallery .gallery-step{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:58px;padding:0;border:0;border-radius:8px;background:rgba(0,0,0,.58);color:#fff;font-size:32px;line-height:1;display:grid;place-items:center;cursor:pointer}.journal-gallery .gallery-step:hover{background:rgba(0,0,0,.82)}.journal-gallery .gallery-prev{left:12px}.journal-gallery .gallery-next{right:12px}.journal-gallery .gallery-count{position:absolute;right:12px;top:12px;padding:6px 9px;border-radius:6px;background:rgba(0,0,0,.65);color:#fff;font-size:13px;font-weight:700}.journal-gallery button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}@media(max-width:600px){.journal-gallery img{height:auto;aspect-ratio:16/9;max-height:none}.journal-gallery .gallery-step{width:40px;height:50px;font-size:28px}.journal-gallery .gallery-prev{left:8px}.journal-gallery .gallery-next{right:8px}}
+</style>
+<style>
+/* Wide journal reader on desktop; a single-column flow on compact screens. */
+dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px;max-height:calc(100dvh - 36px)}
+.journal-modal,.journal-modal button,.journal-modal a{font-family:Manrope,system-ui,-apple-system,"Segoe UI",sans-serif}
+.journal-modal .article-head h2{font-family:"Playfair Display",Georgia,serif}
+.journal-modal .article-body{font-family:Manrope,system-ui,-apple-system,"Segoe UI",sans-serif;font-size:clamp(15px,1.1vw,17px);line-height:1.78;letter-spacing:-.012em}
+.journal-modal .journal-reading-layout{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:clamp(20px,3vw,42px);align-items:start}
+.journal-modal .journal-gallery{position:sticky;top:12px;margin:0}
+.journal-modal .article-body{min-width:0;overflow-wrap:anywhere}
+@media(max-width:860px){dialog:has(.journal-modal){width:min(760px,calc(100vw - 28px));max-width:760px;max-height:calc(100dvh - 28px)}.journal-modal .journal-reading-layout{grid-template-columns:minmax(0,1fr);gap:22px}.journal-modal .journal-gallery{position:relative;top:auto}.journal-modal .journal-gallery img{aspect-ratio:16/9;height:auto;max-height:none}}
+@media(max-width:520px){dialog:has(.journal-modal){width:calc(100vw - 16px);max-width:none;max-height:calc(100dvh - 18px)}.journal-modal .journal-reading-layout{gap:18px}}
+.journal-photo-viewer{position:fixed;inset:0;margin:0;width:100vw;height:100dvh;max-width:none;max-height:none;padding:50px 72px 32px;border:0;border-radius:0;background:rgba(8,9,10,.98);color:#f5f1e6;overflow:hidden}.journal-photo-viewer::backdrop{background:rgba(0,0,0,.92)}.journal-photo-viewer figure{height:100%;margin:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}.journal-photo-viewer img{display:block;max-width:100%;max-height:calc(100dvh - 110px);object-fit:contain;border-radius:8px}.journal-photo-viewer figcaption{font:600 14px/1.4 Manrope,system-ui,sans-serif;color:#f5f1e6;text-align:center}.journal-photo-viewer button{position:absolute;display:grid;place-items:center;border:1px solid rgba(255,255,255,.16);border-radius:8px;background:rgba(25,26,28,.86);color:#f5f1e6;cursor:pointer}.journal-photo-viewer button:hover{background:rgba(183,160,106,.35)}.journal-photo-close{right:18px;top:18px;width:44px;height:44px;font-size:28px}.journal-photo-step{top:50%;width:52px;height:64px;transform:translateY(-50%);font-size:34px}.journal-photo-prev{left:16px}.journal-photo-next{right:16px}.journal-photo-count{position:absolute;top:24px;left:50%;transform:translateX(-50%);padding:7px 12px;border:1px solid rgba(255,255,255,.14);border-radius:8px;background:rgba(25,26,28,.86);font:700 14px Manrope,system-ui,sans-serif;color:#f5f1e6}
+@media(max-width:600px){.journal-photo-viewer{padding:52px 46px 26px}.journal-photo-viewer img{max-width:100%;max-height:calc(100dvh - 120px)}.journal-photo-close{right:10px;top:10px;width:40px;height:40px}.journal-photo-step{width:38px;height:50px;font-size:28px}.journal-photo-prev{left:6px}.journal-photo-next{right:6px}.journal-photo-count{top:19px}}
 </style>
 <style id="touch-no-zoom">
 @media (max-width: 820px), (hover: none), (pointer: coarse) {
@@ -86,24 +550,934 @@ dialog::backdrop{background:rgba(12,13,14,.58);backdrop-filter:blur(5px)}
 </style>
 </head>
 <body>
-<header><div class="wrap"><div class="logo">3 Pedals Auto KE</div><a class="back" href="/">← Back to website</a></div></header>
+<div class="auth-left" id="adminWrap" hidden><button id="adminOpen">Admin panel</button></div>
+<header><div class="wrap">
+  <div class="logo" style="cursor:pointer" onclick="window.location.reload()" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){window.location.reload()}">3 Pedals Auto KE</div>
+  <div class="account-pill" aria-label="Account"><span id="accountText">Not signed in</span><button id="accountOpen" aria-label="Open account" title="Account"></button></div>
+  <button class="nav-toggle" id="navToggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="nav"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+  <nav id="nav" role="tablist" aria-label="Sections">
+    <button role="tab" data-tab="home" aria-selected="true">Home</button>
+    <button role="tab" data-tab="buy" aria-selected="false">Buy a car</button>
+    <a class="navlink" href="/inventory">Inventory </a>
+    <button role="tab" data-tab="sell" aria-selected="false">Sell your car</button>
+    <button role="tab" data-tab="projects" aria-selected="false">Our projects</button>
+    <button role="tab" data-tab="journal" aria-selected="false">3 Pedals Journal</button>
+    <button role="tab" data-tab="about" aria-selected="false">About us</button>
+    <button role="tab" data-tab="contact" aria-selected="false">Contact us</button>
+    <a class="navlink" id="gLink" href="/garage">3 Pedals Garage </a>
+  </nav>
+</div></header>
+<div class="demo" id="demoBar" hidden>Demo mode: these are sample cars. Accounts, listings and bookings switch on once the site is connected to its database (see SETUP.md).</div>
+
 <main class="wrap">
-<section class="hero"><span class="eyebrow">3 PEDALS AUTO KE</span><h1>Current inventory.</h1><p>Browse vehicles currently approved and listed for sale. Open any car to see its photos, specifications, seller details and WhatsApp contact.</p></section>
-<section>
-<div class="filters"><input id="q" type="search" placeholder="Search make or model"><select id="make"><option value="">All makes</option></select><select id="max"><option value="0">Any price</option><option value="1000000">Up to KES 1,000,000</option><option value="2000000">Up to KES 2,000,000</option><option value="3500000">Up to KES 3,500,000</option><option value="5000000">Up to KES 5,000,000</option></select><select id="sort"><option value="new">Newest first</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option><option value="km">Lowest mileage</option></select></div>
-<div id="count" class="count">Loading inventory…</div><div id="grid" class="grid"></div>
-</section></main>
-<dialog id="dlg"></dialog>
+<section id="home">
+  <div class="home-with-quote">
+    <aside class="auto-quote-rail" id="autoQuoteRail" aria-label="Automotive quote of the day">
+      <div class="auto-quote-top"><span class="auto-quote-label">Motoring wisdom</span><span class="auto-quote-live"></span></div>
+      <div class="auto-quote-body auto-quote-loading" id="autoQuoteBody">
+        <div class="auto-quote-mark">“</div>
+        <div class="auto-quote-text" id="autoQuoteText">Loading a thought from automotive history…</div>
+        <div class="auto-quote-author" id="autoQuoteAuthor">3 Pedals Journal</div>
+        <div class="auto-quote-source" id="autoQuoteSource">Checking the web for today's quote</div>
+      </div>
+      <div class="auto-quote-footer"><span class="auto-quote-updated" id="autoQuoteUpdated">Updating automatically</span><button class="auto-quote-next" id="autoQuoteNext" type="button">Next quote</button></div>
+    </aside>
+    <div>
+  <div class="hero"><h1>Buy and sell cars with 3 Pedals Auto KE.</h1>
+  <p>Automotive Excellence Reimagined, For Those Who Appreciate the Drive.</p>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
+    <a class="btn wa" id="publicWhatsappHero" href="https://wa.me/254750495841?text=Hello%203%20Pedals%20Auto%20KE%2C%20I%27d%20like%20to%20enquire." target="_blank" rel="noopener">Chat on WhatsApp</a>
+    <a class="btn alt" href="/garage">Visit 3 Pedals Garage </a>
+  </div></div>
+  <div class="tiles">
+    <a class="tile" href="/inventory"><h3>Browse inventory</h3><span class="meta">View cars currently listed for sale</span></a>
+    <button class="tile" data-go="sell"><h3>Sell your car</h3><span class="meta">List it in two minutes</span></button>
+    <a class="tile" id="gTile" href="/garage"><h3>3 Pedals Garage</h3><span class="meta">Service, repairs and inspections</span></a>
+    <button class="tile" id="accountTile"><h3>My account</h3><span class="meta">Manage your vehicles and bookings</span></button>
+  </div>
+  <div class="journal-intro"><div><span class="eyebrow">3 PEDALS JOURNAL</span><h2>Stories for people who genuinely love cars.</h2><p class="meta">Read buying guides, ownership stories, workshop knowledge, classic-car features, market insights and practical advice from the 3 Pedals team.</p></div><button class="btn alt" data-go="journal">Read the Journal </button></div>
+  <div class="project-intro"><div><span class="eyebrow">3 PEDALS AUTO KE</span><h2>Built around cars, people and real work.</h2><p class="meta">Explore our latest vehicle work, inspections, restorations, servicing stories and automotive updates.</p></div><button class="btn alt" data-go="projects">Explore our projects </button></div>
+    </div>
+  </div>
+</section>
+
+<section id="buy" hidden>
+  <div class="hero"><h1>Find a car that's been checked, not just cleaned.</h1>
+  <p>Book any car for a pre-purchase inspection at 3 Pedals Garage before you pay.</p></div>
+  <div class="filters">
+    <input id="q" type="search" placeholder="Search make, model or variant" aria-label="Search make, model or variant">
+    <select id="make" aria-label="Make"></select>
+    <select id="model" aria-label="Model"><option value="">All models</option></select>
+    <select id="variant" aria-label="Variant"><option value="">All variants</option></select>
+    <select id="max" aria-label="Maximum price">
+      <option value="0">Any price</option><option value="1000000">Up to 1,000,000</option><option value="2000000">Up to 2,000,000</option><option value="3500000">Up to 3,500,000</option>
+    </select>
+    <select id="sort" aria-label="Sort">
+      <option value="new">Newest first</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option><option value="km">Lowest mileage</option>
+    </select>
+  </div>
+  <div class="count" id="count"></div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<section id="sell" hidden>
+  <div class="hero"><h1>List your car in two minutes.</h1><p>Add photos and your WhatsApp number so buyers can chat with you directly. Car yards add their full business details.</p></div>
+  <div class="panel" style="margin-bottom:16px"><h2>Need sale or inspection paperwork?</h2><p class="meta">Prepare a printable sale agreement draft, logbook due-diligence checklist, or vehicle inspection report.</p><a class="btn ghost" id="vehicleDocsLink" href="vehicle_documents.html">Open vehicle document templates</a></div>
+  <div class="panel"><form id="sellForm" onsubmit="return false">
+    <fieldset class="seg" id="sellTypeDisplay"><legend>Listing as</legend><strong id="sellTypeLabel">Private seller</strong></fieldset>
+    <div id="privFields"><label for="sName">Your name (optional)</label><input id="sName" autocomplete="name"></div>
+    <div id="yardFields" hidden>
+      <div class="two">
+        <div><label for="yName">Car yard name</label><input id="yName"></div>
+        <div><label for="yContact">Contact person</label><input id="yContact"></div>
+        <div><label for="yLoc">Location / address</label><input id="yLoc" placeholder="Street, area, town"></div>
+        <div><label for="yPhone">Phone number</label><input id="yPhone" type="tel"></div>
+        <div><label for="yEmail">Email (optional)</label><input id="yEmail" type="email"></div>
+        <div><label for="yWeb">Website or social link (optional)</label><input id="yWeb" type="url" placeholder="https://example.com"></div>
+      </div>
+    </div>
+    <div class="two">
+      <div><label for="sMake">Make</label><select id="sMake"><option value="">Select make</option></select></div>
+      <div><label for="sModel">Model</label><select id="sModel" disabled><option value="">Select make first</option></select></div>
+      <div><label for="sVariant">Variant</label><select id="sVariant" disabled><option value="">Select model first</option></select></div>
+      <div><label for="sYear">Year</label><input id="sYear" type="number" min="1990" max="2026" placeholder="2018"></div>
+      <div><label for="sPrice">Asking price (KES)</label><input id="sPrice" type="number" min="0" placeholder="2400000"></div>
+      <div><label for="sKm">Mileage (km)</label><input id="sKm" type="number" min="0" placeholder="64000"></div>
+      <div><label for="sFuel">Fuel</label><select id="sFuel"><option>Petrol</option><option>Diesel</option><option>Hybrid</option><option>Electric</option></select></div>
+    </div>
+    <label for="sDesc">Description</label><textarea id="sDesc" rows="3" placeholder="Service history, condition, reason for selling"></textarea>
+    <label for="sPhotos">Car photos (1 to 6)</label><input id="sPhotos" type="file" accept="image/*" multiple>
+    <div id="prev" class="prev" aria-live="polite"></div>
+    <label for="sWa">WhatsApp number</label><input id="sWa" type="tel" placeholder="0712 345 678 or +254712345678">
+    <p class="meta">Buyers tap a button to chat with you on this number.</p>
+    <input id="hp1" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
+    <p id="sErr" class="meta" style="color:var(--err)" role="alert"></p>
+    <div class="sell-actions"><button class="btn" id="sBtn">Proceed with listing</button><button class="btn ghost" type="button" id="sCancel">Cancel listing</button></div>
+    <div class="note" id="sOk" hidden></div>
+  </form></div>
+</section>
+
+
+<section id="projects" hidden>
+  <div class="hero"><span class="eyebrow">OUR PROJECTS</span><h1>Real work. Real cars. Real stories.</h1><p>Watch the 3 Pedals team at work — workshop projects, vehicle builds, restorations and life around the garage.</p></div>
+  <div id="publicProjects" class="project-grid"><div class="project-public-empty"><h3>Loading our latest work…</h3><p class="meta">Published projects will appear here.</p></div></div>
+</section>
+
+<section id="journal" hidden>
+  <div class="hero journal-hero"><span class="eyebrow">3 PEDALS JOURNAL</span><h1>For the people who love the drive.</h1><p>Automotive features, buying advice, workshop knowledge and classic-car stories — told with the photos and details behind every drive.</p></div>
+  <div id="journalGrid" class="journal-grid"><div class="project-public-empty"><h3>Loading the latest stories…</h3><p class="meta">Published articles will appear here.</p></div></div>
+</section>
+
+<section id="about" hidden><div class="hero"><span class="eyebrow">ABOUT US</span><h1>3 Pedals Auto KE</h1><p>We bring vehicle sales, honest advice and professional garage services together under one automotive brand.</p></div><div class="cols"><div class="panel"><h2>What we do</h2><p>We help clients buy and sell vehicles while giving them access to servicing, repairs and pre-purchase inspections through 3 Pedals Garage.</p><p class="meta">Our focus is straightforward communication, careful vehicle checks and a professional experience from enquiry to ownership.</p></div><div class="panel"><h2>Our approach</h2><div class="svc"><div><b>Transparent</b><span class="meta">Clear information before you decide.</span></div></div><div class="svc"><div><b>Practical</b><span class="meta">Advice based on the actual vehicle and your needs.</span></div></div><div class="svc"><div><b>Connected</b><span class="meta">Sales and garage support in one place.</span></div></div></div></div></section>
+
+<section id="contact" hidden><div class="hero"><span class="eyebrow">CONTACT US</span><h1>Let’s talk about your car.</h1><p>Choose the channel that works best for you. For the fastest response, message us on WhatsApp.</p></div><div class="contact-grid"><a class="contact-card" id="publicWhatsapp" href="https://wa.me/254750495841" target="_blank" rel="noopener"><span>💬 WHATSAPP</span><strong>Message us</strong><small>Fastest way to reach us</small></a><a class="contact-card" id="publicEmailLink" href="mailto:miltonangwenyi@gmail.com"><span>✉️ EMAIL</span><strong id="publicEmail">miltonangwenyi@gmail.com</strong><small>Appointments and enquiries</small></a><div class="contact-card"><span>📍 ADDRESS</span><strong id="publicAddress">P.O. Box 462-00516</strong><small>3 Pedals Auto KE</small></div><a class="contact-card social-card" id="publicInstagram" href="https://instagram.com/3pedalsauto" target="_blank" rel="noopener"><span>📸 INSTAGRAM</span><strong>Instagram</strong><small>Open Instagram</small></a><a class="contact-card social-card" id="publicFacebook" href="https://facebook.com/3pedalsauto" target="_blank" rel="noopener"><span>📘 FACEBOOK</span><strong>Facebook</strong><small>Open Facebook</small></a><a class="contact-card social-card" id="publicTwitter" href="https://twitter.com/3pedalsauto" target="_blank" rel="noopener"><span>🐦 X / TWITTER</span><strong>X / Twitter</strong><small>Open X / Twitter</small></a><a class="contact-card social-card" id="publicTiktok" href="https://tiktok.com/@3pedalsauto" target="_blank" rel="noopener"><span>🎵 TIKTOK</span><strong>@3pedalsauto</strong><small>Open TikTok</small></a></div></section>
+
+</main>
+
+<footer><div class="wrap"><span id="footerBrand">3 Pedals Auto KE</span> · <span id="footerNote">Prices in KES.</span></div></footer>
+
+<a class="fab" id="publicWhatsappFab" href="https://wa.me/254750495841?text=Hello%203%20Pedals%20Auto%20KE" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">WhatsApp us</a>
+
+<dialog id="dlg" aria-label="Car details"></dialog>
+<dialog id="journalPhotoViewer" class="journal-photo-viewer" aria-label="Journal photo viewer"><button type="button" class="journal-photo-close" id="journalPhotoClose" aria-label="Close photo viewer">×</button><span class="journal-photo-count" id="journalViewerCount"></span><button type="button" class="journal-photo-step journal-photo-prev" id="journalViewerPrev" aria-label="Previous photo">‹</button><figure><img id="journalViewerImage" alt=""><figcaption id="journalViewerCaption"></figcaption></figure><button type="button" class="journal-photo-step journal-photo-next" id="journalViewerNext" aria-label="Next photo">›</button></dialog>
+<dialog id="authDlg" class="authbox"><div class="in"><h2 id="authTitle">Create your account</h2><p class="meta">Create an account to list vehicles and book garage appointments.</p><label id="authNameLabel">Full name</label><input id="authName"><label>Email</label><input id="authEmail" type="email"><label>Phone</label><input id="authPhone" type="tel"><fieldset class="seg" id="authTypeWrap"><legend>Account type</legend><label><input type="radio" name="accountType" value="private" checked> Private seller</label><label><input type="radio" name="accountType" value="yard"> Car yard / dealer</label></fieldset><p id="authTypeHint" class="meta">Private seller accounts are for individuals selling their own vehicles.</p><label>Password</label><input id="authPassword" type="password"><p id="authErr" class="meta" style="color:var(--err)"></p><button class="btn" id="authSubmit">Create account</button> <button class="btn ghost" id="authClose">Close</button><p class="switch"><span id="authSwitchText">Already have an account?</span> <button id="authSwitch">Log in</button></p></div></dialog>
+<dialog id="adminDlg" class="authbox wide"><div class="in"><h2>Admin panel</h2><div id="adminPanel"></div><div class="acts" style="margin-top:16px"><button class="btn ghost" id="adminClose">Close</button></div></div></dialog>
+<dialog id="accDlg" class="authbox wide"><div class="in"><h2>My account</h2><div id="accBody"></div></div></dialog>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
 <script>
-const $=id=>document.getElementById(id),CFG=window.SB_CONFIG||{};const sb=CFG.url&&window.supabase?window.supabase.createClient(CFG.url,CFG.key):null;let cars=[];
-const esc=s=>String(s??"").replace(/[&<>\"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));const fmt=n=>Number(n||0).toLocaleString("en-KE");const normWa=x=>{let d=String(x||"").replace(/\D/g,"");if(d.startsWith("00"))d=d.slice(2);if(/^0[17]\d{8}$/.test(d))return"254"+d.slice(1);if(/^[17]\d{8}$/.test(d))return"254"+d;if(/^254[17]\d{8}$/.test(d))return d;return d};
-function sellerType(r){const raw=String(r?.seller_type||r?.account_type||"").trim().toLowerCase().replace(/[\s_-]+/g," ");if(["yard","dealer","car yard","car dealer","business"].includes(raw))return"yard";if(["private","private seller","individual"].includes(raw))return"private";return [r?.yard_name,r?.yard_location,r?.yard_contact].some(v=>String(v||"").trim())?"yard":"private"}
-function rowToCar(r){return {id:r.id,make:r.make||"",model:r.model||"",year:r.year||"",price:r.price||0,km:r.km||0,fuel:r.fuel||"",desc:r.description||"",photos:Array.isArray(r.photos)?r.photos:[],seller:{type:sellerType(r),name:r.yard_name||r.seller_name||"",contact:r.contact||r.yard_contact||"",phone:r.seller_phone||r.phone||"",email:r.seller_email||r.email||"",web:r.web||r.yard_web||"",whatsapp:r.whatsapp||"",yard:r.yard_name||"",location:r.yard_location||r.location||"",logo:r.yard_logo_url||r.seller_logo_url||""}}}
-function render(){const q=$("q").value.trim().toLowerCase(),mk=$("make").value,mx=+$('max').value,s=$("sort").value;let r=cars.filter(c=>(!q||(c.make+" "+c.model).toLowerCase().includes(q))&&(!mk||c.make===mk)&&(!mx||c.price<=mx));r.sort((a,b)=>s==="low"?a.price-b.price:s==="high"?b.price-a.price:s==="km"?a.km-b.km:b.year-a.year);$("count").textContent=r.length+(r.length===1?" car":" cars")+" found";$("grid").innerHTML=r.length?r.map((c,i)=>{const p=c.photos[0];return `<button class="card" style="--card-index:${i}" data-id="${esc(c.id)}"><div class="photo" style="background-image:${p?`url('${esc(p)}')`:"none"}"><span class="year">${esc(c.year)}</span></div><div class="body"><h3>${esc(c.make)} ${esc(c.model)}</h3><div class="price">KES ${fmt(c.price)}</div><div class="tags"><span class="tag">${fmt(c.km)} km</span><span class="tag">${esc(c.fuel)}</span><span class="tag">${c.seller.type==="yard"?"Car yard / dealer":"Private seller"}</span></div>${c.seller.type==="yard"?`<div class="dealer-cardline">${c.seller.logo?`<img src="${esc(c.seller.logo)}" alt="" loading="lazy">`:"🏢"}<span>${esc(c.seller.yard||c.seller.name||"Car yard")}</span></div>`:""}</div></button>`}).join(""):`<div class="empty">No approved cars match your search right now.</div>`}
-function detail(id){const c=cars.find(x=>x.id===id);if(!c)return;const d=$("dlg"),s=c.seller,ph=c.photos;const msg=encodeURIComponent(`Hello, I'm interested in the ${c.year} ${c.make} ${c.model} (KES ${fmt(c.price)}) listed on 3 Pedals Auto KE.`);const wa=s.whatsapp?`<a class="btn" href="https://wa.me/${normWa(s.whatsapp)}?text=${msg}" target="_blank" rel="noopener">Chat on WhatsApp</a>`:"";const seller=s.type==="yard"?`<div class="specs"><span>Car yard / dealer</span><b>${esc(s.yard||s.name)}</b>${s.contact?`<span>Contact</span><b>${esc(s.contact)}</b>`:""}${s.location?`<span>Location</span><b>${esc(s.location)}</b>`:""}${s.phone?`<span>Phone</span><b><a href="tel:${esc(s.phone)}">${esc(s.phone)}</a></b>`:""}${s.email?`<span>Email</span><b><a href="mailto:${esc(s.email)}">${esc(s.email)}</a></b>`:""}${s.web?`<span>Website</span><b><a href="${esc(/^https?:\/\//i.test(s.web)?s.web:'https://'+s.web)}" target="_blank" rel="noopener">${esc(s.web)}</a></b>`:""}</div>`:`<div class="specs"><span>Seller</span><b>Private seller${s.name?" — "+esc(s.name):""}</b></div>`;d.innerHTML=`<div class="detail"><div class="gallery">${ph.length?`<img id="mainimg" class="mainimg" src="${esc(ph[0])}" alt="${esc(c.make+" "+c.model)}">${ph.length>1?`<div class="thumbs">${ph.map((p,i)=>`<button data-i="${i}" aria-current="${i===0}"><img src="${esc(p)}" alt=""></button>`).join("")}</div>`:""}`:`<div class="mainimg"></div>`}</div><div class="info"><h2>${esc(c.year)} ${esc(c.make)} ${esc(c.model)}</h2><div class="price">KES ${fmt(c.price)}</div><div class="specs"><span>Mileage</span><b>${fmt(c.km)} km</b><span>Fuel</span><b>${esc(c.fuel)}</b></div>${seller}<p>${esc(c.desc||"No description provided.")}</p><p style="color:var(--muted)">View the car in person, check the logbook and inspect it before making payment.</p><div class="actions">${wa}<button class="btn ghost" id="close">Close</button></div></div></div>`;d.showModal();d.querySelectorAll(".thumbs button").forEach(b=>b.onclick=()=>{$("mainimg").src=ph[+b.dataset.i];d.querySelectorAll(".thumbs button").forEach(x=>x.setAttribute("aria-current",x===b))});$("close").onclick=()=>d.close()}
-$("grid").onclick=e=>{const b=e.target.closest(".card");if(b)detail(b.dataset.id)};
-$("grid").addEventListener("pointermove",e=>{if(e.pointerType!=="mouse")return;const photo=e.target.closest(".photo");if(!photo)return;const r=photo.getBoundingClientRect();photo.style.setProperty("--lens-x",`${((e.clientX-r.left)/r.width)*100}%`);photo.style.setProperty("--lens-y",`${((e.clientY-r.top)/r.height)*100}%`)});
-["q","make","max","sort"].forEach(id=>$(id).addEventListener("input",render));
-async function load(){if(!sb||!CFG.key||/^PASTE/.test(CFG.key)){$("count").textContent="Inventory unavailable";$("grid").innerHTML='<div class="error">The inventory database is not connected. Check config.js.</div>';return}const {data,error}=await sb.from("listings").select("*").eq("status","approved").order("created_at",{ascending:false});if(error){$("count").textContent="Inventory unavailable";$("grid").innerHTML='<div class="error">We could not load the inventory right now. Please refresh in a moment.</div>';console.error(error);return}cars=(data||[]).map(rowToCar);const makes=[...new Set(cars.map(c=>c.make).filter(Boolean))].sort();$("make").innerHTML='<option value="">All makes</option>'+makes.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");render()}load().catch(error=>{console.error("Could not load inventory:",error);$("count").textContent="Inventory unavailable";$("grid").innerHTML='<div class="error">We could not load the inventory right now. Please refresh and try again.</div>'});
+const fmt=n=>Number(n).toLocaleString("en-US");
+// Database connection. Fill in config.js (see SETUP.md). Without it the site runs in demo mode with sample cars.
+const CFG=window.SB_CONFIG||{};
+const sb=(CFG.url&&!/^PASTE/.test(CFG.url)&&window.supabase)?window.supabase.createClient(CFG.url,CFG.key):null;
+let me=null,profile=null;
+const colors=["#111111","#8a6508","#2a2a2a","#a67c00","#1c1c1c","#6b5206","#3b3b3b","#7d5a00"];
+const HOUSE={type:"yard",name:"3 Pedals Auto KE",contact:"",location:"P.O. Box 462-00516",phone:"+254750495841",email:"miltonangwenyi@gmail.com",web:"",whatsapp:"254750495841"};
+let siteSettings={contact_email:"miltonangwenyi@gmail.com",whatsapp_number:"254750495841",postal_address:"P.O. Box 462-00516",instagram_url:"https://instagram.com/3pedalsauto",facebook_url:"https://facebook.com/3pedalsauto",twitter_url:"https://twitter.com/3pedalsauto",tiktok_url:"https://tiktok.com/@3pedalsauto",footer_note:"Prices in KES.",footer_brand:"3 Pedals Auto KE"};
+async function loadSiteSettings(){
+  if(!sb)return;
+  const {data,error}=await sb.from("site_settings").select("*").eq("id",1).maybeSingle();if(error||!data){if(error)console.warn("Public site settings unavailable; using built-in contact details.",error);return}
+  siteSettings={...siteSettings,...data};const digits=String(siteSettings.whatsapp_number||"").replace(/\D/g,"");
+  const wa=`https://wa.me/${digits}`;const setHref=(id,url)=>{const a=$(id);if(a&&url)a.href=url};
+  setHref("publicWhatsapp",wa);setHref("publicWhatsappFab",`${wa}?text=${encodeURIComponent("Hello 3 Pedals Auto KE")}`);setHref("publicWhatsappHero",`${wa}?text=${encodeURIComponent("Hello 3 Pedals Auto KE, I'd like to enquire.")}`);
+  setHref("publicEmailLink",`mailto:${siteSettings.contact_email||""}`);$("publicEmail").textContent=siteSettings.contact_email||"Email us";
+  $("publicAddress").textContent=siteSettings.postal_address||"Contact us for our address";
+  $("footerBrand").textContent=siteSettings.footer_brand||"";$("footerNote").textContent=siteSettings.footer_note||"";
+  [["publicInstagram","instagram_url"],["publicFacebook","facebook_url"],["publicTwitter","twitter_url"],["publicTiktok","tiktok_url"]].forEach(([id,key])=>{const a=$(id),url=String(siteSettings[key]||"").trim();if(a){a.hidden=!url;if(url)a.href=url}});
+}
+let cars=[
+ {make:"Toyota",model:"Harrier",year:2018,price:3200000,km:48000,fuel:"Petrol",desc:"One owner, full dealer service history, sunroof."},
+ {make:"Mazda",model:"CX-5",year:2017,price:2650000,km:71000,fuel:"Diesel",desc:"Clean interior, new tyres, no accident history."},
+ {make:"Subaru",model:"Forester",year:2016,price:1950000,km:92000,fuel:"Petrol",desc:"AWD, recently serviced, minor paint touch-ups."},
+ {make:"Honda",model:"Fit",year:2015,price:850000,km:104000,fuel:"Petrol",desc:"Economical city car, reliable and easy to park."},
+ {make:"Nissan",model:"X-Trail",year:2019,price:3450000,km:39000,fuel:"Petrol",desc:"Seven seats, reverse camera, low mileage."},
+ {make:"Toyota",model:"Vitz",year:2014,price:720000,km:118000,fuel:"Petrol",desc:"First-time buyer favourite, cheap to run."},
+ {make:"Mercedes-Benz",model:"C200",year:2016,price:3300000,km:66000,fuel:"Petrol",desc:"Leather seats, service book up to date."},
+ {make:"Toyota",model:"Prius",year:2017,price:1500000,km:83000,fuel:"Hybrid",desc:"Battery health report available on request."}
+].map((c,i)=>({...c,id:String(i),color:colors[i%colors.length],seller:HOUSE,photos:[]}));
+// Where the separate garage site lives. Change this if the garage is on another address.
+const GARAGE_URL="__TPA_GARAGE_URL__".indexOf("__")===0?"/garage":"__TPA_GARAGE_URL__";
+const $=id=>document.getElementById(id);
+$("gLink").href=GARAGE_URL;$("gTile").href=GARAGE_URL;
+
+// Tabs
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{show(b.dataset.tab);closeNav()});
+
+// macOS Dock-style navigation: add a touch-friendly active state without relying on hover.
+const navDock=document.querySelector("nav");
+if(navDock){
+  navDock.addEventListener("pointerenter",()=>navDock.classList.add("dock-active"));
+  navDock.addEventListener("pointerleave",()=>navDock.classList.remove("dock-active"));
+}
+const navToggle=$("navToggle");
+function closeNav(){if(navToggle){navToggle.setAttribute("aria-expanded","false");navToggle.setAttribute("aria-label","Open navigation");$("nav").classList.remove("is-open");document.body.classList.remove("nav-open")}}
+if(navToggle){navToggle.onclick=()=>{const open=navToggle.getAttribute("aria-expanded")==="true";navToggle.setAttribute("aria-expanded",String(!open));navToggle.setAttribute("aria-label",open?"Open navigation":"Close navigation");$("nav").classList.toggle("is-open",!open);document.body.classList.toggle("nav-open",!open&&innerWidth<=980)}}
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeNav()});
+document.addEventListener("click",e=>{if(navToggle&&innerWidth<=980&&!$("nav").contains(e.target)&&!navToggle.contains(e.target))closeNav()});
+window.addEventListener("resize",()=>{if(innerWidth>980)closeNav()});
+function show(t){
+  ["home","buy","sell","projects","journal","about","contact"].forEach(s=>$(s).hidden=s!==t);
+  document.querySelectorAll("nav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===t));
+  scrollTo(0,0);
+}
+try{const h=location.hash.replace("#","");if(["buy","sell","projects","journal","about","contact"].includes(h))show(h)}catch(_){}
+
+let authMode="register";
+function normalizeAccountType(value){return String(value||"").trim().toLowerCase()==="yard"?"yard":"private"}
+function accountType(){
+  const metadataType=me?.user_metadata?.account_type;
+  if(metadataType==="yard"||metadataType==="private")return metadataType;
+  return normalizeAccountType(profile?.account_type);
+}
+async function syncAccountType(){
+  if(!me||!sb)return;
+  const metadataType=me.user_metadata?.account_type;
+  if(metadataType!=="yard"&&metadataType!=="private")return;
+  if(profile?.account_type===metadataType)return;
+  const {data,error}=await sb.from("profiles").update({account_type:metadataType}).eq("id",me.id).select("*").maybeSingle();
+  if(error)console.warn("Account type profile sync failed; the selected type remains in account metadata.",error);
+  if(data)profile=data;
+  else if(profile)profile={...profile,account_type:metadataType};
+}
+function updateAuthTypeHint(){
+  const type=document.querySelector('input[name="accountType"]:checked')?.value||"private";
+  $("authTypeHint").textContent=type==="yard"?"Car yard / dealer accounts are for businesses listing vehicles from a yard or dealership.":"Private seller accounts are for individuals selling their own vehicles.";
+}
+async function loadSession(){
+  if(!sb)return;
+  const {data:{session}}=await sb.auth.getSession();
+  me=session?session.user:null;profile=null;
+  if(me){const {data}=await sb.from("profiles").select("*").eq("id",me.id).maybeSingle();profile=data;await syncAccountType()}
+  refreshAccountUI();
+  if($("sellTypeLabel"))sellMode();
+}
+function refreshAccountUI(){
+  $("accountText").textContent=me?`Signed in as ${(profile&&profile.name)||me?.user_metadata?.name||me.email}`:"Not signed in";
+  $("accountOpen").textContent="";
+  $("adminWrap").hidden=!(profile&&profile.is_admin);
+}
+function openAuth(mode="register",msg=""){
+  if(!sb){alert("Accounts are not switched on yet. Please contact us on WhatsApp.");return}
+  authMode=mode;const login=mode==="login";
+  $("authTitle").textContent=login?"Log in":"Create your account";
+  $("authSubmit").textContent=login?"Log in":"Create account";
+  $("authNameLabel").hidden=login;$("authName").hidden=login;
+  $("authTypeWrap").hidden=login;$("authTypeHint").hidden=login;updateAuthTypeHint();
+  $("authSwitchText").textContent=login?"Need an account?":"Already have an account?";
+  $("authSwitch").textContent=login?"Create one":"Log in";
+  $("authErr").textContent=msg;$("authDlg").showModal();
+}
+$("accountOpen").onclick=()=>me?openAccount():openAuth("login");
+$("accountTile").onclick=()=>me?openAccount():openAuth("register");
+$("authClose").onclick=()=>$("authDlg").close();
+$("authSwitch").onclick=()=>openAuth(authMode==="login"?"register":"login");
+document.querySelectorAll('input[name="accountType"]').forEach(r=>r.onchange=updateAuthTypeHint);
+$("authSubmit").onclick=async()=>{
+  const email=$("authEmail").value.trim().toLowerCase(),pass=$("authPassword").value,name=$("authName").value.trim(),phone=$("authPhone").value.trim(),type=document.querySelector('input[name="accountType"]:checked')?.value||"private",err=$("authErr"),b=$("authSubmit");
+  if(!email||!pass){err.textContent="Email and password are required.";return}
+  if(authMode==="register"){
+    if(!name){err.textContent="Enter your name.";return}
+    if(pass.length<8){err.textContent="Use a password of at least 8 characters.";return}
+  }
+  b.disabled=true;err.textContent="";
+  const res=authMode==="register"?await sb.auth.signUp({email,password:pass,options:{data:{name,phone,account_type:type}}}):await sb.auth.signInWithPassword({email,password:pass});
+  b.disabled=false;
+  if(res.error){err.textContent=res.error.message;return}
+  if(authMode==="register"&&!res.data.session){err.textContent="Account created. Check your email for a confirmation link, then log in. Your account type has been saved.";return}
+  if(authMode==="register"&&res.data.session){me=res.data.user;await loadSession()}
+  $("authPassword").value="";$("authDlg").close();
+};
+function initialsFor(name,email){const x=String(name||email||"?").trim().split(/\s+/).filter(Boolean);return ((x[0]||"?")[0]+(x[1]||"")[0]).toUpperCase()}
+function profileAvatarUrl(){return (profile&&profile.avatar_url)||me?.user_metadata?.avatar_url||""}
+function profileName(){return (profile&&profile.name)||me?.user_metadata?.name||""}
+function profilePhone(){return (profile&&profile.phone)||me?.user_metadata?.phone||""}
+async function saveAccountProfile(){
+  const name=$("accName").value.trim(),phone=$("accPhone").value.trim(),type=normalizeAccountType($("accType").value),err=$("accProfileErr"),btn=$("accSaveProfile");
+  if(!name){err.textContent="Please enter your name.";return}
+  btn.disabled=true;err.textContent="Saving…";
+  try{
+    const meta={...(me.user_metadata||{}),name,phone,account_type:type};
+    const au=await sb.auth.updateUser({data:meta});
+    if(au.error)throw au.error;
+    const pu=await sb.from("profiles").update({name,phone,account_type:type}).eq("id",me.id);
+    if(pu.error)console.warn("Profile table update failed; account metadata was saved.",pu.error);
+    const lu=await sb.from("listings").update({seller_type:type,...(type==="yard"?{yard_logo_url:profileAvatarUrl()||null}:{})}).eq("owner",me.id);
+    if(lu.error)console.warn("Listing seller type update failed; account type was saved.",lu.error);
+    me=au.data.user||me;profile={...(profile||{}),name,phone,account_type:type};
+    refreshAccountUI();err.textContent="Account details and seller type saved.";
+    setTimeout(()=>openAccount(),350);
+  }catch(e){err.textContent=e.message||"Could not save your details."}
+  btn.disabled=false;
+}
+async function removeProfilePhoto(){
+  const err=$("accProfileErr"),btn=$("accRemovePhoto");if(!profileAvatarUrl())return;
+  btn.disabled=true;err.textContent="Removing profile picture…";
+  try{
+    const au=await sb.auth.updateUser({data:{...(me.user_metadata||{}),avatar_url:null}});if(au.error)throw au.error;
+    const pu=await sb.from("profiles").update({avatar_url:null}).eq("id",me.id);
+    if(pu.error)console.warn("Profile picture was removed from account metadata; profiles.avatar_url may not be writable.",pu.error);
+    await sb.from("listings").update({yard_logo_url:null}).eq("owner",me.id);
+    me=au.data.user||me;profile={...(profile||{}),avatar_url:null};refreshAccountUI();openAccount();
+  }catch(e){err.textContent=e.message||"Could not remove the profile picture.";btn.disabled=false}
+}
+async function updateAccountEmail(){
+  const email=$("accEmail").value.trim().toLowerCase(),err=$("accProfileErr"),btn=$("accUpdateEmail");
+  if(!email||email===String(me.email||"").toLowerCase()){err.textContent="Enter a different email address.";return}
+  btn.disabled=true;err.textContent="Updating email…";
+  try{const {data,error}=await sb.auth.updateUser({email});if(error)throw error;me=data.user||me;err.textContent="Email update requested. Check your inbox to confirm the new address.";refreshAccountUI()}
+  catch(e){err.textContent=e.message||"Could not update your email."}finally{btn.disabled=false}
+}
+async function updateAccountPassword(){
+  const password=$("accPassword").value,err=$("accProfileErr"),btn=$("accUpdatePassword");
+  if(password.length<8){err.textContent="Use a password of at least 8 characters.";return}
+  btn.disabled=true;err.textContent="Updating password…";
+  try{const {error}=await sb.auth.updateUser({password});if(error)throw error;$("accPassword").value="";err.textContent="Password updated."}
+  catch(e){err.textContent=e.message||"Could not update your password."}finally{btn.disabled=false}
+}
+async function permanentlyDeleteAccount(){
+  if(!confirm("Permanently delete your account and your listings and bookings? This cannot be undone."))return;
+  if(prompt('Type DELETE to permanently remove your account.')!=="DELETE")return;
+  const btn=$("accDeleteAccount"),err=$("accProfileErr");btn.disabled=true;err.textContent="Deleting account…";
+  try{const {error}=await sb.rpc("delete_my_account");if(error)throw error;await sb.auth.signOut();me=null;profile=null;refreshAccountUI();$("accDlg").close();alert("Your account has been permanently deleted.")}
+  catch(e){err.textContent=e.message||"Could not delete the account. Confirm the account deletion SQL has been installed.";btn.disabled=false}
+}
+async function changeProfilePhoto(file){
+  const err=$("accProfileErr");if(!file)return;
+  if(!file.type.startsWith("image/")||file.size>10*1024*1024){err.textContent="Choose an image under 10 MB.";return}
+  err.textContent="Uploading profile picture…";
+  try{
+    const x=await shrink(file),blob=await (await fetch(x)).blob(),path=`${me.id}/profile-${Date.now()}.jpg`;
+    const up=await sb.storage.from("car-photos").upload(path,blob,{contentType:"image/jpeg"});
+    if(up.error)throw up.error;
+    const url=sb.storage.from("car-photos").getPublicUrl(path).data.publicUrl;
+    const au=await sb.auth.updateUser({data:{...(me.user_metadata||{}),avatar_url:url}});
+    if(au.error)throw au.error;
+    const pu=await sb.from("profiles").update({avatar_url:url}).eq("id",me.id);
+    if(pu.error)console.warn("Avatar saved to account metadata; profiles.avatar_url may not exist yet.",pu.error);
+    await sb.from("listings").update({yard_logo_url:url}).eq("owner",me.id);
+    me=au.data.user||me;profile={...(profile||{}),avatar_url:url};refreshAccountUI();err.textContent="Profile picture updated. Dealer listings now use this image as the yard logo.";openAccount();
+  }catch(e){err.textContent=e.message||"Could not upload that profile picture."}
+}
+async function openAccount(){
+  const d=$("accDlg"),box=$("accBody");
+  if(!d.open)d.showModal();
+  box.innerHTML='<p class="meta">Loading…</p>';
+  const [l,b]=await Promise.all([
+    sb.from("listings").select("*").eq("owner",me.id).order("created_at",{ascending:false}),
+    sb.from("bookings").select("*").eq("user_id",me.id).order("created_at",{ascending:false})]);
+  const L=l.data||[],B=b.data||[],label={pending:"Waiting for approval",approved:"Live",rejected:"Not approved",sold:"Sold"},avatar=profileAvatarUrl(),name=profileName(),phone=profilePhone(),isYard=accountType()==="yard";
+  box.innerHTML=`<div class="profile-card">
+    <div class="profile-avatar">${avatar?`<img src="${esc(avatar)}" alt="Profile picture">`:esc(initialsFor(name,me.email))}</div>
+    <div><h3 style="margin:0 0 4px">Your profile</h3><p class="meta" style="margin:0">${esc(me.email)}</p>
+      <div class="profile-actions"><label class="btn ghost" style="display:inline-flex;align-items:center;cursor:pointer;margin:0">Upload / change ${isYard?"dealer logo":"picture"}<input id="accPhoto" type="file" accept="image/*" hidden></label>${avatar?'<button class="btn ghost" type="button" id="accRemovePhoto">Remove picture</button>':""}</div>${isYard?'<p class="meta">This image appears beside your dealer name and on your yard profile.</p>':""}
+    </div>
+  </div>
+  <div class="profile-grid"><div><label for="accName">Full name</label><input id="accName" value="${esc(name)}" autocomplete="name"></div><div><label for="accPhone">Phone number</label><input id="accPhone" value="${esc(phone)}" type="tel" autocomplete="tel"></div><div><label for="accType">Account type</label><select id="accType"><option value="private" ${accountType()==="private"?"selected":""}>Private seller</option><option value="yard" ${accountType()==="yard"?"selected":""}>Car yard / dealer</option></select></div></div>
+  <p id="accProfileErr" class="meta" style="color:var(--err)"></p><div class="acts"><button class="btn" id="accSaveProfile">Save profile changes</button></div>
+  <section class="account-tools"><h3>Login details</h3><div class="field-row"><div><label for="accEmail">Email address</label><input id="accEmail" type="email" value="${esc(me.email||"")}" autocomplete="email"></div><button class="btn ghost" id="accUpdateEmail" type="button">Change email</button></div><div class="field-row"><div><label for="accPassword">New password</label><input id="accPassword" type="password" minlength="8" autocomplete="new-password" placeholder="At least 8 characters"></div><button class="btn ghost" id="accUpdatePassword" type="button">Change password</button></div><p class="meta">Email changes require confirmation from your inbox.</p></section>
+   ${isYard?`<section class="account-tools"><h3>Dealer fleet dashboard</h3><p class="meta">Manage vehicles listed by your yard or dealership.</p><div class="stats"><div><b>${L.length}</b><span>Total vehicles</span></div><div><b>${L.filter(x=>x.status==="approved").length}</b><span>Live listings</span></div><div><b>${L.filter(x=>x.status==="pending").length}</b><span>Awaiting review</span></div><div><b>${L.filter(x=>x.status==="sold").length}</b><span>Sold</span></div></div></section>`:""}<h3 style="margin-top:22px">${isYard?"Manage your vehicle fleet":"My listings"}</h3>${L.map(x=>`<div class="svc"><div><b>${esc(x.year+" "+x.make+" "+x.model)}</b><span class="meta">${sellerTypeForListing(x)==="yard"?"Car yard / dealer":"Private seller"} · KES ${fmt(x.price)} · <span class="st">${label[x.status]||esc(x.status)}</span></span></div><div class="acts">${x.status==="approved"?`<button class="btn ghost" data-sold="${x.id}">Mark as sold</button><button class="btn ghost" data-view="${x.id}">View listing</button>`:""}<button class="btn ghost" data-del="${x.id}">Delete</button></div></div>`).join("")||'<p class="meta">You have no listings yet.</p>'}
+  <div class="acts" style="margin-top:16px"><a class="btn alt" href="/garage?section=book">Book a garage service</a></div><h3 style="margin-top:18px">My garage bookings and service tickets</h3>${B.map(x=>`<div class="svc"><div><b>${esc(x.service)}</b><span class="meta">Ticket ${esc(x.ref)} · ${esc(x.date)}${x.time_slot?" · "+esc(x.time_slot):""} · ${esc(x.car||"")}</span><span class="meta">Progress: ${esc(String(x.service_status||x.status).replaceAll("_"," "))}</span></div><span class="st">${esc(x.status)}</span></div>`).join("")||'<p class="meta">No bookings yet.</p>'}
+  <section class="danger-zone"><h3>Delete account</h3><p class="meta">Permanently remove your account, listings, and bookings. This cannot be undone.</p><button class="btn ghost" id="accDeleteAccount" type="button">Permanently delete account</button></section>
+  <div class="acts" style="margin-top:18px">${profile&&profile.is_admin?'<button class="btn" id="accAdmin">Open admin panel</button>':""}<button class="btn ghost" id="accOut">Sign out</button><button class="btn ghost" id="accClose">Close</button></div>`;
+  $("accPhoto").onchange=e=>changeProfilePhoto(e.target.files[0]);
+  if($("accRemovePhoto"))$("accRemovePhoto").onclick=removeProfilePhoto;
+  $("accSaveProfile").onclick=saveAccountProfile;
+  $("accUpdateEmail").onclick=updateAccountEmail;
+  $("accUpdatePassword").onclick=updateAccountPassword;
+  $("accDeleteAccount").onclick=permanentlyDeleteAccount;
+  box.querySelectorAll("[data-sold]").forEach(bt=>bt.onclick=async()=>{
+    if(!confirm("Mark this vehicle as SOLD? It will immediately be removed from the public Buy inventory."))return;
+    bt.disabled=true;bt.textContent="Updating…";
+    const {data,error}=await sb.rpc("mark_listing_sold",{listing_id:bt.dataset.sold});
+    if(error){alert(error.message||"Could not mark this vehicle as sold.");bt.disabled=false;bt.textContent="Mark as sold";return}
+    if(data!==true){alert("We could not mark this vehicle as sold. Please try again.");bt.disabled=false;bt.textContent="Mark as sold";return}
+    openAccount();loadListings();
+  });
+  box.querySelectorAll("[data-view]").forEach(bt=>bt.onclick=()=>{window.location.href=`vehicle.html?id=${encodeURIComponent(bt.dataset.view)}`});
+  box.querySelectorAll("[data-del]").forEach(bt=>bt.onclick=async()=>{
+    if(!confirm("Delete this listing? This will remove the listing from your account."))return;
+    const {error}=await sb.from("listings").delete().eq("id",bt.dataset.del);if(error){alert(error.message);return}openAccount();loadListings();
+  });
+  $("accOut").onclick=async()=>{await sb.auth.signOut();d.close()};
+  $("accClose").onclick=()=>d.close();
+  if($("accAdmin"))$("accAdmin").onclick=()=>{d.close();openAdmin()};
+}
+async function getProjectsAdmin(){
+  const {data,error}=await sb.from("projects").select("*").order("created_at",{ascending:false});
+  if(error){console.error(error);return []}
+  return data||[];
+}
+async function getPublishedProjects(){
+  if(!sb)return [];
+  const {data,error}=await sb.from("projects").select("*").eq("published",true).order("created_at",{ascending:false});
+  if(error){console.error(error);return []}
+  return data||[];
+}
+function mediaItemsForProject(p){
+  if(Array.isArray(p.media_gallery)&&p.media_gallery.length)return p.media_gallery;
+  if(p.media_url)return [{url:p.media_url,path:p.media_path||null,mime:p.media_mime||null,type:p.type==="video"?"video":"image"}];
+  return [];
+}
+function projectMedia(p,admin=false){
+  const items=mediaItemsForProject(p);
+  if(!items.length)return `<div class="project-placeholder"><span>${esc(p.type||"ARTICLE")}</span><strong>${esc(p.category||"3 Pedals KE")}</strong></div>`;
+  if(items.length===1){
+    const m=items[0];
+    if(m.type==="video"||String(m.mime||"").startsWith("video/"))return `<div class="project-media"><video controls playsinline preload="none"><source src="${esc(m.url)}" type="${esc(m.mime||"video/mp4")}">Your browser does not support video playback.</video><span class="project-type">VIDEO</span></div>`;
+    return `<div class="project-media"><img class="project-image" src="${esc(m.url)}" alt="${esc(p.title)}" loading="lazy"><span class="project-type">PHOTO</span></div>`;
+  }
+  return `<div class="project-media-grid">${items.map((m,i)=>{const video=m.type==="video"||String(m.mime||"").startsWith("video/");return `<div class="project-media-item">${video?`<video controls playsinline preload="none"><source src="${esc(m.url)}" type="${esc(m.mime||"video/mp4")}"></video>`:`<img src="${esc(m.url)}" alt="${esc(p.title)} — image ${i+1}" loading="lazy">`}${i===0?`<span class="project-type">${video?"VIDEO":"PHOTO"}</span>`:""}</div>`}).join("")}<span class="project-media-count">${items.length} MEDIA</span></div>`;
+}
+function renderPublicProjects(list){
+  const box=$("publicProjects");
+  list=(list||[]).filter(p=>p.type==="video"||p.type==="photo");
+  if(!list.length){box.innerHTML='<div class="project-public-empty"><h3>No published projects yet</h3><p class="meta">Our latest work will appear here once it is published by the 3 Pedals team.</p></div>';return}
+  box.innerHTML=list.map((p,i)=>`<article class="project-card${i===0?" project-featured":""}">${projectMedia(p)}<div class="project-body"><span class="project-kicker">${esc(p.category||"Garage project")}</span><h2>${esc(p.title)}</h2><p>${esc(p.description||"")}</p></div></article>`).join("");
+}
+function renderJournal(list){
+  const box=$("journalGrid");
+  const articles=list.filter(p=>p.type==="article"&&p.body);
+  if(!articles.length){box.innerHTML='<div class="project-public-empty" style="grid-column:1/-1"><h3>The Journal is coming soon.</h3><p class="meta">Our first automotive stories will appear here once published by the 3 Pedals team.</p></div>';return}
+  box.innerHTML=articles.map(p=>{const photos=mediaItemsForProject(p).filter(m=>m.type!=="video"&&!String(m.mime||"").startsWith("video/"));const cover=photos.find(m=>m.is_cover===true||m.cover===true)||photos[0];return `<article class="project-card project-featured journal-entry">
+    <button class="journal-entry-media" type="button" data-journal-id="${esc(p.id)}" aria-label="Read ${esc(p.title)}">${cover?`<img src="${esc(cover.url)}" alt="${esc(p.title)}" loading="lazy">`:`<span class="journal-entry-empty">3 Pedals Journal</span>`}</button>
+    <div class="project-body"><span class="project-kicker">${esc(p.category||"Automotive Journal")}</span><h2>${esc(p.title)}</h2><div class="journal-meta"><span>3 PEDALS JOURNAL</span>${p.created_at?`<span>·</span><span>${esc(new Date(p.created_at).toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"}))}</span>`:""}${photos.length?`<span>·</span><span>${photos.length} photos</span>`:""}</div><p>${esc(p.description||"A story for people who love cars.")}</p><button class="journal-read" type="button" data-journal-id="${esc(p.id)}">Read more</button></div>
+  </article>`}).join("");
+  box.querySelectorAll("[data-journal-id]").forEach(b=>b.onclick=()=>openJournalArticle(articles.find(p=>String(p.id)===b.dataset.journalId)));
+}
+function openJournalArticle(p){
+  if(!p)return;
+  const d=$("dlg");
+  const journalDigits=String(siteSettings.whatsapp_number||"254750495841").replace(/\D/g,"");
+  const photos=mediaItemsForProject(p).filter(m=>m.type!=="video"&&!String(m.mime||"").startsWith("video/"));const selectedCover=photos.find(m=>m.is_cover===true||m.cover===true);if(selectedCover)photos.splice(photos.indexOf(selectedCover),1),photos.unshift(selectedCover);photos.splice(15);
+  const gallery=photos.length?`<div class="journal-gallery" id="journalGallery" aria-label="Article photo gallery"><figure><img id="journalCurrentPhoto" src="${esc(photos[0].url)}" alt="${esc(p.title)} — photo 1 of ${photos.length}" loading="eager"><figcaption id="journalPhotoCaption">Photo 1 of ${photos.length}</figcaption></figure>${photos.length>1?`<span class="gallery-count" id="journalPhotoCount">1 / ${photos.length}</span><button class="gallery-step gallery-prev" type="button" data-journal-step="-1" aria-label="Previous photo">‹</button><button class="gallery-step gallery-next" type="button" data-journal-step="1" aria-label="Next photo">›</button>`:""}</div>`:"";
+  d.innerHTML=`<div class="in journal-modal"><div class="article-head"><span class="project-kicker">${esc(p.category||"Automotive Journal")}</span><h2>${esc(p.title)}</h2><p class="meta">3 Pedals Journal${p.created_at?` · ${esc(new Date(p.created_at).toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"}))}`:""}</p></div><div class="journal-reading-layout">${gallery}<div class="article-body">${esc(p.body)}</div></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:24px"><a class="btn wa" href="https://wa.me/${journalDigits}?text=${encodeURIComponent("Hello, I just read the 3 Pedals Journal article: "+p.title)}" target="_blank" rel="noopener">Discuss this story on WhatsApp</a><button class="btn ghost" id="journalClose">Close</button></div></div>`;
+  d.showModal();$("journalClose").onclick=()=>d.close();
+  if(photos.length){let activePhoto=0,viewerIndex=0;const galleryEl=$("journalGallery"),image=$("journalCurrentPhoto"),caption=$("journalPhotoCaption"),count=$("journalPhotoCount"),viewer=$("journalPhotoViewer"),viewerImage=$("journalViewerImage"),viewerCaption=$("journalViewerCaption"),viewerCount=$("journalViewerCount");const showPhoto=index=>{activePhoto=(index+photos.length)%photos.length;image.src=photos[activePhoto].url;image.alt=`${p.title} — photo ${activePhoto+1} of ${photos.length}`;image.setAttribute("aria-label",`Open photo ${activePhoto+1} of ${photos.length}`);if(caption)caption.textContent=`Photo ${activePhoto+1} of ${photos.length}`;if(count)count.textContent=`${activePhoto+1} / ${photos.length}`};const showViewerPhoto=index=>{viewerIndex=(index+photos.length)%photos.length;viewerImage.src=photos[viewerIndex].url;viewerImage.alt=`${p.title} — photo ${viewerIndex+1} of ${photos.length}`;viewerCaption.textContent=`${p.title} · Photo ${viewerIndex+1} of ${photos.length}`;viewerCount.textContent=`${viewerIndex+1} / ${photos.length}`};const openViewer=()=>{showViewerPhoto(activePhoto);if(!viewer.open)viewer.showModal()};image.style.cursor="zoom-in";image.tabIndex=0;image.setAttribute("role","button");image.setAttribute("aria-label",`Open photo 1 of ${photos.length}`);image.onclick=openViewer;image.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openViewer()}};$("journalPhotoClose").onclick=()=>viewer.close();$("journalViewerPrev").onclick=()=>showViewerPhoto(viewerIndex-1);$("journalViewerNext").onclick=()=>showViewerPhoto(viewerIndex+1);viewer.onclick=e=>{if(e.target===viewer)viewer.close()};viewer.onkeydown=e=>{if(e.key==="ArrowLeft"){e.preventDefault();showViewerPhoto(viewerIndex-1)}else if(e.key==="ArrowRight"){e.preventDefault();showViewerPhoto(viewerIndex+1)}};let viewerTouchX=0;viewer.ontouchstart=e=>{viewerTouchX=e.changedTouches[0].clientX};viewer.ontouchend=e=>{const delta=e.changedTouches[0].clientX-viewerTouchX;if(Math.abs(delta)>45)showViewerPhoto(viewerIndex+(delta<0?1:-1))};if(photos.length>1){galleryEl.querySelectorAll("[data-journal-step]").forEach(button=>button.onclick=()=>showPhoto(activePhoto+Number(button.dataset.journalStep)));let touchX=0;galleryEl.addEventListener("touchstart",e=>{touchX=e.changedTouches[0].clientX},{passive:true});galleryEl.addEventListener("touchend",e=>{const delta=e.changedTouches[0].clientX-touchX;if(Math.abs(delta)>45)showPhoto(activePhoto+(delta<0?1:-1))},{passive:true})}}
+}
+async function loadJournal(){
+  if(!sb){renderJournal([]);return}
+  const {data,error}=await sb.from("projects").select("*").eq("published",true).eq("type","article").order("created_at",{ascending:false});
+  if(error){console.error(error);$("journalGrid").innerHTML='<div class="project-public-empty" style="grid-column:1/-1"><h3>Journal unavailable</h3><p class="meta">Please refresh in a moment.</p></div>';return}
+  renderJournal(data||[]);
+}
+async function loadProjects(){
+  if(!sb){
+    $("publicProjects").innerHTML='<article class="project-card project-featured"><div class="project-media"><video controls playsinline preload="none"><source src="project-video-01.mp4" type="video/mp4">Your browser does not support video playback.</video><span class="project-type">VIDEO</span></div><div class="project-body"><span class="project-kicker">Garage / Behind the scenes</span><h2>Inside the 3 Pedals Garage</h2><p>Connect the site to Supabase to manage this project from the admin panel.</p></div></article>';
+    return;
+  }
+  renderPublicProjects(await getPublishedProjects());
+}
+function projectFormHtml(p={},kind=p.type==="article"?"article":"video"){
+  const items=mediaItemsForProject(p);
+  const count=items.length;
+  const isArticle=kind==="article";
+  return `<div class="panel project-admin-form" style="margin:0"><h3>${p.id?"Edit ":"New "}${isArticle?"journal article":"video project"}</h3>
+    <form id="projectForm" onsubmit="return false" data-id="${esc(p.id||"")}" data-kind="${isArticle?"article":"video"}">
+      <label for="pTitle">Title</label><input id="pTitle" required maxlength="140" value="${esc(p.title||"")}" placeholder="e.g. Restoring a classic Charger">
+      <p class="project-form-note">Publishing area: <b>${isArticle?"3 Pedals Journal":"Our Projects"}</b>${isArticle?" · Articles are only shown in the Journal.":" · Video stories are only shown in Our Projects."}</p>
+      <label for="pCategory">Category</label><input id="pCategory" maxlength="80" value="${esc(p.category||"")}" placeholder="Garage / Restoration / Advice">
+      <label for="pDescription">Short description</label><textarea id="pDescription" maxlength="500" rows="3" placeholder="What should visitors know about this project?">${esc(p.description||"")}</textarea>
+      ${isArticle?`<label for="pBody">Article content</label><textarea id="pBody" rows="10" required placeholder="Write the full story here…">${esc(p.body||"")}</textarea>`:""}
+      <div id="mediaWrap">
+        ${isArticle?`<div class="journal-upload-box"><strong>🖼 Add photos to this article</strong><p class="meta">Select 2–15 photos (JPG, PNG or WebP; up to 12 MB each). They’ll appear in the article gallery.</p><label for="pMedia">Choose article photos</label><input id="pMedia" type="file" accept="image/jpeg,image/png,image/webp,image/*" multiple ${p.id?"":"required"}>${count?`<div class="project-admin-media-note"><span>${count} current photo${count===1?"":"s"}</span><span>Choosing new photos replaces them</span></div><div class="journal-upload-preview">${items.filter(m=>m.type!=="video"&&!String(m.mime||"").startsWith("video/")).slice(0,15).map(m=>`<img src="${esc(m.url)}" alt="Current article photo" loading="lazy">`).join("")}</div>`:""}<p class="project-form-note" id="journalPhotoStatus" aria-live="polite">${p.id&&count?"Current article photos are shown above. Choose 2–15 new photos only if replacing the gallery.":"No article photos selected yet."}</p><div class="journal-upload-preview" id="journalPhotoPreview"></div></div>`:`<label for="pMedia">Project photos and videos${p.id?" — add or replace":" — upload"}</label><input id="pMedia" type="file" accept="image/*,video/mp4,video/webm,video/quicktime,video/*" multiple ${p.id?"":"required"}><p class="project-form-note">Upload up to 15 photos and videos. Photos up to 12 MB; videos up to 100 MB.</p>${count?`<div class="project-admin-media-note"><span>${count} current project media items</span><span>New media replaces the gallery</span></div>`:""}`}
+        <progress id="pProgress" class="project-upload-progress" value="0" max="100" hidden></progress>
+      </div>
+      ${p.media_url?`<p class="project-form-note">Current media is already attached. Leave the upload empty to keep it.</p>`:""}
+      <label style="display:flex;gap:8px;align-items:center;margin-top:12px"><input id="pPublished" type="checkbox" style="width:auto" ${p.published!==false?"checked":""}> Publish this project publicly</label>
+      <div class="acts" style="margin-top:14px"><button class="btn" id="projectSave">${p.id?"Save changes":(isArticle?"Create article":"Create video project")}</button>${p.id?'<button class="btn ghost" type="button" id="projectCancel">Cancel</button>':""}</div>
+      <p id="projectFormErr" class="meta" style="color:var(--err);margin-top:8px" role="alert"></p>
+    </form></div>`;
+}
+async function uploadProjectMedia(file,index,total){
+  const ext=(file.name.split(".").pop()||"bin").toLowerCase().replace(/[^a-z0-9]/g,"");
+  const id=(crypto.randomUUID?crypto.randomUUID():Date.now()+"-"+Math.random().toString(36).slice(2));
+  const path=`${me.id}/${id}.${ext}`;
+  const {error}=await sb.storage.from("projects").upload(path,file,{upsert:false,contentType:file.type||undefined,cacheControl:"3600"});
+  if(error)throw error;
+  const {data}=sb.storage.from("projects").getPublicUrl(path);
+  return {url:data.publicUrl,path,mime:file.type||null,type:file.type&&file.type.startsWith("video/")?"video":"image",name:file.name};
+}
+async function removeProjectMedia(items){
+  const paths=[...new Set((items||[]).map(x=>x&&x.path).filter(Boolean))];
+  if(paths.length)await sb.storage.from("projects").remove(paths);
+}
+async function saveProject(existing=null){
+  const err=$("projectFormErr");err.textContent="";
+  const isArticle=$("projectForm").dataset.kind==="article",type=isArticle?"article":"video",title=$("pTitle").value.trim(),category=$("pCategory").value.trim(),description=$("pDescription").value.trim(),body=$("pBody")?.value.trim()||"",published=$("pPublished").checked,files=[...($("pMedia")?.files||[])];
+  if(!title){err.textContent="Please add a project title.";return}
+  if(isArticle&&!body){err.textContent="Please add the article content.";return}
+  const oldItems=mediaItemsForProject(existing||{});
+  if(!existing&&!files.length){err.textContent=isArticle?"Please upload 2 to 15 article photos.":"Please upload at least one project photo or video.";return}
+  if(isArticle&&((files.length&&files.length<2)||files.length>15||(!files.length&&oldItems.length<2))){err.textContent="Journal articles need between 2 and 15 photos.";return}
+  if(!isArticle&&files.length>15){err.textContent="Please choose no more than 15 project photos and videos.";return}
+  for(const f of files){
+    const limit=isArticle?12:100;
+    if(isArticle&&!f.type.startsWith("image/")){err.textContent="Journal articles can only use image files.";return}
+    if(!isArticle&&!f.type.startsWith("image/")&&!f.type.startsWith("video/")){err.textContent="Our Projects accepts image and video files only.";return}
+    const mediaLimit=f.type.startsWith("video/")?100:12;if(f.size>mediaLimit*1024*1024){err.textContent=`${f.name} is too large. Maximum is ${mediaLimit} MB per file.`;return}
+  }
+  const btn=$("projectSave"),progress=$("pProgress");btn.disabled=true;btn.textContent="Preparing…";if(progress){progress.hidden=!files.length;progress.value=0}
+  try{
+    let media_gallery=oldItems.slice();
+    if(files.length){
+      media_gallery=[];
+      for(let i=0;i<files.length;i++){
+        btn.textContent=`Uploading ${i+1} of ${files.length}…`;
+        const uploaded=await uploadProjectMedia(files[i],i,files.length);
+        media_gallery.push(uploaded);
+        if(progress)progress.value=Math.round(((i+1)/files.length)*100);
+      }
+      await removeProjectMedia(oldItems);
+    }
+    const primary=media_gallery[0]||null;
+    const payload={title,type,category,description,body:isArticle?body:null,media_url:primary?.url||null,media_path:primary?.path||null,media_mime:primary?.mime||null,media_gallery,published};
+    let q;
+    if(existing?.id)q=await sb.from("projects").update(payload).eq("id",existing.id);
+    else q=await sb.from("projects").insert({...payload,author_id:me.id});
+    if(q.error)throw q.error;
+    await loadProjects();
+loadJournal();
+    await openAdmin();
+  }catch(e){console.error(e);err.textContent=e.message||"Could not save the entry. Check the Supabase setup and storage policies.";btn.disabled=false;btn.textContent=existing?"Save changes":(isArticle?"Create article":"Create video project");if(progress)progress.hidden=true}
+}
+async function deleteProject(p){
+  if(!confirm(`Delete “${p.title}” permanently?`))return;
+  const {error}=await sb.from("projects").delete().eq("id",p.id);
+  if(error){alert(error.message);return}
+  const items=mediaItemsForProject(p);
+  await removeProjectMedia(items);
+  await loadProjects();await openAdmin();
+}
+function adminProjectsHtml(P){
+  const videos=P.filter(p=>p.type==="video"),articles=P.filter(p=>p.type==="article");
+  const rows=(items,kind)=>items.map(p=>{const media=mediaItemsForProject(p),m=media[0];return `<div class="project-admin-item"><div class="thumb">${m?(m.type==="video"||String(m.mime||"").startsWith("video/")?`<video muted preload="none"><source src="${esc(m.url)}" type="${esc(m.mime||"video/mp4")}"></video>`:`<img src="${esc(m.url)}" alt="">`):`<span>${kind==="article"?"article":"video"}</span>`}</div><div style="flex:1;min-width:0"><b>${esc(p.title)}</b><div class="meta-row"><span class="badge">${kind==="article"?"Journal article":"Video project"}</span>${media.length?`<span class="badge">${media.length} ${kind==="article"?"photos":"videos"}</span>`:""}<span class="badge ${p.published?"live":"draft"}">${p.published?"Published":"Draft"}</span>${p.category?`<span class="badge">${esc(p.category)}</span>`:""}</div><p class="meta" style="margin-top:7px">${esc(p.description||"")}</p><div class="project-admin-actions"><button class="btn ghost" data-project-edit="${esc(p.id)}" data-project-kind="${kind}">Edit</button><button class="btn ghost" data-project-delete="${esc(p.id)}">Delete</button></div></div></div>`}).join("")||`<p class="meta">No ${kind==="article"?"journal articles":"video projects"} yet.</p>`;
+  return `<div class="project-admin-grid"><div id="projectEditor">${projectFormHtml({},"video")}</div><div class="project-admin-lists"><section><div class="acts" style="justify-content:space-between;margin-bottom:10px"><div><h3 style="margin:0">Our Projects · videos</h3><span class="meta">${videos.length} video project${videos.length===1?"":"s"}</span></div><button class="btn ghost" id="projectNew">+ New video</button></div><div class="project-admin-list">${rows(videos,"video")}</div></section><section><div class="acts" style="justify-content:space-between;margin-bottom:10px"><div><h3 style="margin:0">3 Pedals Journal · articles</h3><span class="meta">${articles.length} article${articles.length===1?"":"s"}</span></div><button class="btn ghost" id="journalNew">+ New article</button></div><div class="project-admin-list">${rows(articles,"article")}</div></section></div></div>`;
+}
+async function openAdmin(){
+  if(!sb||!profile||!profile.is_admin)return;
+  if(!$("adminDlg").open)$("adminDlg").showModal();
+  $("adminPanel").innerHTML='<p class="meta">Loading dashboard…</p>';
+  const [l,b,p,pr]=await Promise.all([
+    sb.from("listings").select("*").order("created_at",{ascending:false}),
+    sb.from("bookings").select("*").order("created_at",{ascending:false}),
+    sb.from("profiles").select("*"),
+    sb.from("projects").select("*").order("created_at",{ascending:false})
+  ]);
+  const L=l.data||[],B=b.data||[],P=p.data||[],PR=pr.data||[];
+  if(pr.error)console.error("Projects manager unavailable:",pr.error);
+  const projectCount=pr.error?"projects unavailable":`${PR.filter(x=>x.type==="video").length} videos · ${PR.filter(x=>x.type==="article").length} journal articles`;
+  const projectPanel=pr.error
+    ?`<p class="meta" style="color:var(--err)">The Projects manager could not load: ${esc(pr.error.message||"Supabase returned an error.")} Run the repository's PROJECTS_SETUP.sql in Supabase. Other admin tools remain available.</p>`
+    :adminProjectsHtml(PR);
+  $("adminPanel").innerHTML=`<p class="meta">${P.length} users · ${L.length} listings · ${B.length} bookings · ${projectCount}</p>
+  <div class="panel" style="margin:16px 0"><h3>Content publishing</h3><p class="meta">Manage video stories for Our Projects and publish photo-illustrated articles separately in 3 Pedals Journal.</p>${projectPanel}</div>
+   <h3>Listings</h3>${L.map(x=>`<div class="svc"><div><b>${esc(x.year+" "+x.make+" "+x.model)}</b><span class="meta">${sellerTypeForListing(x)==="yard"?"Car yard / dealer":"Private seller"} · KES ${fmt(x.price)} · ${esc(x.seller_name||"")} · +${esc(x.whatsapp||"")} · <span class="st">${esc(x.status)}</span></span></div><div class="acts">${x.status!=="approved"?`<button class="btn" data-a="approve" data-id="${x.id}">Approve</button>`:""}${x.status!=="rejected"?`<button class="btn ghost" data-a="reject" data-id="${x.id}">Reject</button>`:""}<button class="btn ghost" data-a="del" data-id="${x.id}">Delete</button></div></div>`).join("")||'<p class="meta">No listings yet.</p>'}
+  <h3 style="margin-top:18px">Garage bookings</h3>${B.map(x=>`<div class="svc"><div><b>${esc(x.service)}</b><span class="meta">${esc(x.date)} · ${esc(x.name)} · ${esc(x.phone)} · ${esc(x.car||"")} · ${esc(x.ref)}</span></div><select data-bk="${x.id}" aria-label="Booking status">${["new","confirmed","done","cancelled"].map(s=>`<option${s===x.status?" selected":""}>${s}</option>`).join("")}</select></div>`).join("")||'<p class="meta">No bookings yet.</p>'}
+  <h3 style="margin-top:18px">Users</h3>${P.map(u=>`<p class="meta">${esc(u.name||"")} · ${esc(u.email||"")} · ${esc(u.phone||"")}${u.is_admin?" · admin":""}</p>`).join("")}`;
+  bindProjectAdmin(PR);
+}
+function bindProjectAdmin(PR){
+  $("projectNew")?.addEventListener("click",()=>{$("projectEditor").innerHTML=projectFormHtml({},"video");bindProjectForm(null);});
+  $("journalNew")?.addEventListener("click",()=>{$("projectEditor").innerHTML=projectFormHtml({},"article");bindProjectForm(null);});
+  $("projectForm")&&bindProjectForm(null);
+  $("adminPanel").querySelectorAll("[data-project-edit]").forEach(b=>b.onclick=()=>{const p=PR.find(x=>String(x.id)===b.dataset.projectEdit);if(p){$("projectEditor").innerHTML=projectFormHtml(p,b.dataset.projectKind);bindProjectForm(p);scrollTo(0,$("projectEditor").getBoundingClientRect().top+scrollY-80)}});
+  $("adminPanel").querySelectorAll("[data-project-delete]").forEach(b=>b.onclick=()=>{const p=PR.find(x=>String(x.id)===b.dataset.projectDelete);if(p)deleteProject(p)});
+}
+function bindProjectForm(existing){
+  const input=$("pMedia"),isArticle=$("projectForm").dataset.kind==="article";
+  if(input){input.multiple=true;input.accept=isArticle?"image/jpeg,image/png,image/webp,image/*":"image/*,video/mp4,video/webm,video/quicktime,video/*";input.required=!existing||!mediaItemsForProject(existing).length}
+  if(input&&isArticle){
+    let previewUrls=[];
+    input.addEventListener("change",()=>{
+      previewUrls.forEach(url=>URL.revokeObjectURL(url));previewUrls=[];
+      const files=[...input.files],preview=$("journalPhotoPreview"),status=$("journalPhotoStatus");preview.replaceChildren();
+      if(!files.length){status.textContent=existing&&mediaItemsForProject(existing).length?"Current article photos are shown above. Choose 2–15 new photos only if replacing the gallery.":"No article photos selected yet.";return}
+      status.textContent=files.length<2||files.length>15?`Selected ${files.length} photo${files.length===1?"":"s"} — choose between 2 and 15.`:`${files.length} photos selected. These will be added to the article gallery when you save.`;
+      files.slice(0,15).forEach(file=>{const url=URL.createObjectURL(file),img=document.createElement("img");previewUrls.push(url);img.src=url;img.alt="Selected article photo preview";preview.appendChild(img)});
+    });
+  }
+  $("projectForm")?.addEventListener("submit",()=>saveProject(existing));
+  $("projectCancel")?.addEventListener("click",()=>openAdmin());
+}
+$("adminOpen").onclick=openAdmin;$('adminClose').onclick=()=>$("adminDlg").close();
+$("adminPanel").onclick=async e=>{
+  const b=e.target.closest("[data-a]");if(!b)return;
+  const id=b.dataset.id,a=b.dataset.a;
+  if(a==="del"){if(!confirm("Delete this listing permanently?"))return;await sb.from("listings").delete().eq("id",id)}
+  else await sb.from("listings").update({status:a==="approve"?"approved":"rejected"}).eq("id",id);
+  openAdmin();loadListings();
+};
+$("adminPanel").onchange=async e=>{const s=e.target.closest("[data-bk]");if(s)await sb.from("bookings").update({status:s.value}).eq("id",s.dataset.bk)};
+
+function sellerTypeForListing(r){
+  const type=String(r?.seller_type||r?.account_type||"").trim().toLowerCase().replace(/[\s_-]+/g," ");
+  if(["yard","dealer","car yard","car dealer","business"].includes(type))return "yard";
+  if(["private","private seller","individual"].includes(type))return "private";
+  return [r?.yard_name,r?.yard_location,r?.yard_contact].some(v=>String(v||"").trim())?"yard":"private";
+}
+const rowToCar=(r,i)=>({id:r.id,make:String(r.make||"").trim(),model:String(r.model||"").trim(),year:r.year,price:r.price,km:r.km||0,fuel:r.fuel||"",desc:r.description||"",photos:r.photos||[],color:colors[i%colors.length],
+  seller:{type:sellerTypeForListing(r),name:r.yard_name||r.seller_name,contact:r.contact||r.yard_contact,location:r.yard_location||r.location,phone:r.seller_phone||r.phone,email:r.seller_email||r.email,web:r.web||r.yard_web,whatsapp:r.whatsapp,logo:r.yard_logo_url||r.seller_logo_url||""}});
+async function loadListings(){
+  if(!sb)return;
+  const {data,error}=await sb.from("listings").select("*").eq("status","approved").order("created_at",{ascending:false});
+  if(error){$("grid").innerHTML='<p class="meta">We could not load the cars right now. Please refresh in a moment.</p>';return}
+  cars=data.map(rowToCar);makes();render();
+}
+// Listings: cascading Make -> Model -> available Variant filters.
+const MODEL_FAMILIES={
+"Mercedes-Benz":{"A-Class":["A180","A200","A250"],"C-Class":["C180","C200","C220","C250","C300","C350","C400"],"E-Class":["E200","E220","E250","E300","E350","E400","E450"],"S-Class":["S350","S400","S450","S500","S560","S580"],"GLA":["GLA180","GLA200","GLA250"],"GLC":["GLC200","GLC220","GLC250","GLC300"],"GLE":["GLE300","GLE350","GLE400","GLE450","GLE500"],"GLS":["GLS450","GLS500","GLS580"]},
+"Toyota":{"Corolla":["Corolla","Axio","Fielder"],"Camry":["Camry"],"Crown":["Crown","Athlete","Majesta"],"Harrier":["Harrier","240G","300G","350G","Hybrid"],"Land Cruiser":["Prado","V8","ZX","70 Series","80 Series","100 Series","200 Series","300 Series"],"RAV4":["RAV4"],"Fortuner":["Fortuner"],"Hilux":["Hilux","Revo"],"Vitz":["Vitz","RS"],"Yaris":["Yaris"],"Aqua":["Aqua"],"Prius":["Prius","Alpha","PHV"],"Noah":["Noah"],"Voxy":["Voxy"],"Alphard":["Alphard"],"Hiace":["Hiace"]},
+"Nissan":{"X-Trail":["X-Trail"],"Qashqai":["Qashqai"],"Juke":["Juke"],"Patrol":["Patrol","Y61","Y62"],"Navara":["Navara"],"Note":["Note"],"Dualis":["Dualis"],"Serena":["Serena"],"Tiida":["Tiida"],"March":["March"]},
+"Subaru":{"Forester":["Forester","XT"],"Outback":["Outback"],"Impreza":["Impreza","WRX","WRX STI"],"Legacy":["Legacy"],"XV":["XV","Crosstrek"],"Levorg":["Levorg"],"BRZ":["BRZ"]},
+"Mazda":{"CX-3":["CX-3"],"CX-5":["CX-5"],"CX-7":["CX-7"],"CX-9":["CX-9"],"Mazda2":["Mazda2"],"Mazda3":["Mazda3"],"Mazda6":["Mazda6"],"Demio":["Demio"],"Axela":["Axela"],"Atenza":["Atenza"]},
+"Honda":{"Fit":["Fit","RS","Hybrid"],"Civic":["Civic","Type R"],"Accord":["Accord"],"CR-V":["CR-V"],"Vezel":["Vezel","Hybrid"],"HR-V":["HR-V"],"Freed":["Freed"],"Shuttle":["Shuttle"],"Stepwgn":["Stepwgn"]},
+"BMW":{"1 Series":["116i","118i","120i"],"2 Series":["218i","220i"],"3 Series":["318i","320i","325i","328i","330i","335i","340i"],"4 Series":["420i","430i","435i","440i"],"5 Series":["520i","523i","525i","528i","530i","535i","540i"],"7 Series":["730i","740i","750i"],"X1":["X1"],"X3":["X3"],"X5":["X5"],"X6":["X6"],"X7":["X7"]},
+"Audi":{"A1":["A1"],"A3":["A3","S3"],"A4":["A4","S4"],"A5":["A5","S5"],"A6":["A6","S6"],"A7":["A7","S7"],"A8":["A8"],"Q3":["Q3"],"Q5":["Q5"],"Q7":["Q7"],"Q8":["Q8"]},
+"Volkswagen":{"Golf":["Golf","GTI","R"],"Polo":["Polo","GTI"],"Passat":["Passat"],"Tiguan":["Tiguan"],"Touareg":["Touareg"],"Amarok":["Amarok"],"Transporter":["Transporter"]},
+"Lexus":{"IS":["IS200","IS250","IS300","IS350"],"ES":["ES250","ES300h","ES350"],"GS":["GS250","GS300","GS350","GS450h"],"LS":["LS460","LS500","LS500h"],"NX":["NX200","NX300","NX300h"],"RX":["RX270","RX350","RX450h"],"LX":["LX450","LX470","LX570","LX600"]},
+"Mitsubishi":{"Outlander":["Outlander"],"Pajero":["Pajero","Pajero Sport"],"Lancer":["Lancer","Evolution"],"ASX":["ASX"],"Eclipse Cross":["Eclipse Cross"],"Canter":["Canter"]},
+"Ford":{"Ranger":["Ranger"],"Everest":["Everest"],"Mustang":["Mustang","GT"],"Explorer":["Explorer"],"Escape":["Escape"],"F-150":["F-150"],"Transit":["Transit"]},
+"Land Rover":{"Range Rover":["Range Rover","Autobiography"],"Range Rover Sport":["Range Rover Sport"],"Range Rover Evoque":["Evoque"],"Discovery":["Discovery"],"Defender":["Defender"],"Freelander":["Freelander"]},
+"Porsche":{"911":["Carrera","Turbo","GT3"],"Cayenne":["Cayenne","GTS","Turbo"],"Macan":["Macan","S","GTS","Turbo"],"Panamera":["Panamera"],"Taycan":["Taycan"]},
+"Volvo":{"XC40":["XC40"],"XC60":["XC60"],"XC90":["XC90"],"S60":["S60"],"S90":["S90"]},
+"Peugeot":{"208":["208"],"308":["308"],"3008":["3008"],"5008":["5008"],"508":["508"],"Partner":["Partner"]},
+"Isuzu":{"D-Max":["D-Max"],"MU-X":["MU-X"],"N-Series":["N-Series"]},
+"Suzuki":{"Swift":["Swift"],"Jimny":["Jimny"],"Vitara":["Vitara"],"Baleno":["Baleno"],"Alto":["Alto"]},
+"Hyundai":{"Tucson":["Tucson"],"Santa Fe":["Santa Fe"],"Elantra":["Elantra"],"Kona":["Kona"],"Palisade":["Palisade"],"i10":["i10"],"i20":["i20"]},
+"Kia":{"Sportage":["Sportage"],"Sorento":["Sorento"],"Picanto":["Picanto"],"Rio":["Rio"],"Seltos":["Seltos"],"Carnival":["Carnival"]},
+"Jeep":{"Wrangler":["Wrangler"],"Grand Cherokee":["Grand Cherokee"],"Cherokee":["Cherokee"],"Compass":["Compass"],"Renegade":["Renegade"]}
+};
+function canonicalMake(make){const raw=String(make||"").trim();const key=raw.toLowerCase().replace(/[\s_-]+/g,"");const known=Object.keys(MODEL_FAMILIES).find(x=>x.toLowerCase().replace(/[\s_-]+/g,"")===key);return known||raw}
+function familyFor(make,model){const mk=canonicalMake(make),mm=String(model||"").trim().toLowerCase(),cat=MODEL_FAMILIES[mk]||{};for(const [f,vs] of Object.entries(cat)){if(mm===f.toLowerCase()||vs.some(v=>mm===v.toLowerCase())||mm.includes(f.toLowerCase())||vs.some(v=>mm.includes(v.toLowerCase())))return f}return String(model||"").trim()||"Other"}
+function variantFor(make,model){const mk=canonicalMake(make),f=familyFor(mk,model),vs=(MODEL_FAMILIES[mk]||{})[f]||[],mm=String(model||"").trim().toLowerCase();return vs.find(v=>mm===v.toLowerCase()||mm.includes(v.toLowerCase()))||String(model||"").trim()||""}
+function updateBuyFilters(){const mk=$("make").value,mf=$("model").value,cv=$("variant").value;const models=[...new Set(cars.filter(c=>!mk||canonicalMake(c.make)===mk).map(c=>familyFor(c.make,c.model)).filter(Boolean))].sort();$("model").innerHTML='<option value="">All models</option>'+models.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");if(models.includes(mf))$("model").value=mf;const activeModel=$("model").value;const variants=[...new Set(cars.filter(c=>(!mk||canonicalMake(c.make)===mk)&&(!activeModel||familyFor(c.make,c.model)===activeModel)).map(c=>variantFor(c.make,c.model)).filter(Boolean))].sort();$("variant").innerHTML='<option value="">All variants</option>'+variants.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");if(variants.includes(cv))$("variant").value=cv}
+function makes(){const m=[...new Set(cars.map(c=>canonicalMake(c.make)).filter(Boolean))].sort(),cur=$("make").value;$("make").innerHTML='<option value="">All makes</option>'+m.map(x=>`<option value="${esc(x)}">${esc(x==="Mercedes-Benz"?"Mercedes":x)}</option>`).join("");if(m.includes(cur))$("make").value=cur;else $("make").value="";updateBuyFilters()}
+const hasPh=c=>c.photos&&c.photos[0]?" has":"";
+const bgOf=c=>c.photos&&c.photos[0]?`${c.color} url('${c.photos[0]}') center/contain no-repeat`:c.color;
+function render(){
+  const q=$("q").value.trim().toLowerCase(),mk=$("make").value,mf=$("model").value,vr=$("variant").value,mx=+$("max").value,s=$("sort").value;
+  let r=cars.filter(c=>(!q||(c.make+" "+c.model).toLowerCase().includes(q))&&(!mk||canonicalMake(c.make)===mk)&&(!mf||familyFor(c.make,c.model)===mf)&&(!vr||variantFor(c.make,c.model)===vr)&&(!mx||c.price<=mx));
+  r.sort((a,b)=>s==="low"?a.price-b.price:s==="high"?b.price-a.price:s==="km"?a.km-b.km:b.year-a.year);
+  $("count").textContent=r.length+(r.length===1?" car":" cars")+" found";
+  $("grid").innerHTML=r.length?r.map(c=>{
+    const isYard=c.seller&&c.seller.type==="yard",yardName=c.seller?.name||"Car yard",loc=c.seller?.location||"";
+    const vehicleUrl=`vehicle.html?id=${encodeURIComponent(c.id)}`;
+    const yardUrl=`yard.html?name=${encodeURIComponent(yardName)}`;
+    return `<article class="card">
+      ${isYard?`<span class="yard-badge">🏢 CAR YARD</span>`:""}
+      <a class="card-main" href="${vehicleUrl}">
+        <div class="swatch${hasPh(c)}" style="background:${bgOf(c)}">${esc(c.year)}</div>
+        <div class="body"><h3>${esc(c.make)} ${esc(c.model)}</h3>
+        <div class="price">KES ${fmt(c.price)}</div>
+        <span class="tag">${fmt(c.km)} km</span><span class="tag">${esc(c.fuel||"N/A")}</span><span class="tag">${isYard?"Car yard / dealer":"Private seller"}</span>
+        </div>
+      </a>
+      ${isYard?`<div class="card-extra"><div class="yard-line">${c.seller.logo?`<img class="yard-logo" src="${esc(c.seller.logo)}" alt="${esc(yardName)} logo" loading="lazy">`:`<span aria-hidden="true">🏢</span>`}<a class="yard-link" href="${yardUrl}">${esc(yardName)}</a></div>${loc?`<div class="yard-line">📍 ${esc(loc)}</div>`:""}<div class="card-reveal">View dealer profile</div></div>`:""}
+    </article>`;
+  }).join("") :'<p class="meta">No cars match these filters. Clear the search or raise the price limit.</p>';
+}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+["q","max","sort"].forEach(i=>$(i).addEventListener("input",render));
+$("make").addEventListener("change",()=>{updateBuyFilters();render()});
+$("model").addEventListener("change",()=>{updateBuyFilters();render()});
+$("variant").addEventListener("change",render);
+
+function detail(id){
+  const c=cars.find(x=>x.id===id),d=$("dlg"),s=c.seller||{},ph=c.photos||[];
+  const tel=x=>`<a href="tel:${esc(String(x).replace(/[^\d+]/g,""))}">${esc(x)}</a>`;
+  const rows=[["Mileage",esc(fmt(c.km))+" km"],["Fuel",esc(c.fuel)]];
+  if(s.type==="yard"){
+    rows.push(["Seller","Car yard"+(s.name?" — "+esc(s.name):"")]);
+    if(s.contact)rows.push(["Contact",esc(s.contact)]);
+    if(s.location)rows.push(["Location",esc(s.location)]);
+    if(s.phone)rows.push(["Phone",tel(s.phone)]);
+    if(s.email)rows.push(["Email",`<a href="mailto:${esc(s.email)}">${esc(s.email)}</a>`]);
+    if(s.web){const u=/^https?:\/\//i.test(s.web)?s.web:"https://"+s.web;rows.push(["Website",`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(s.web)}</a>`])}
+  }else rows.push(["Seller","Private seller"+(s.name?", "+esc(s.name):"")]);
+  const msg=`Hello, I'm interested in the ${c.year} ${c.make} ${c.model} (KES ${fmt(c.price)}) listed on 3 Pedals Auto KE.`;
+  const wa=s.whatsapp?`<a class="btn wa" href="https://wa.me/${esc(s.whatsapp)}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">Chat on WhatsApp</a>`:"";
+  const gal=ph.length?`<div class="gal"><img class="main" id="mainImg" src="${ph[0]}" alt="${esc(c.make+" "+c.model)} photo 1" fetchpriority="high" decoding="async">${ph.length>1?`<div class="thumbs">${ph.map((p,i)=>`<button data-i="${i}" aria-label="Photo ${i+1}" aria-current="${i===0}"><img src="${p}" alt="" loading="lazy" decoding="async"></button>`).join("")}</div>`:""}</div>`
+    :`<div class="swatch" style="background:${c.color}">${c.year}</div>`;
+  d.innerHTML=`${gal}<div class="in">
+  <h2>${esc(c.make)} ${esc(c.model)} <span class="meta">${c.year}</span></h2><div class="price">KES ${fmt(c.price)}</div>
+  <div class="specs">${rows.map(r=>`<span>${r[0]}</span><b>${r[1]}</b>`).join("")}</div>
+  <p>${esc(c.desc||"")}</p>
+  <p class="meta">Stay safe: view the car in person, check the logbook, and never pay before you have inspected it.</p>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">${wa}<button class="btn alt" id="insp">Book inspection at the garage</button><button class="btn ghost" id="cls">Close</button></div></div>`;
+  d.showModal();
+  d.querySelectorAll(".thumbs button").forEach(t=>t.onclick=()=>{
+    $("mainImg").src=ph[+t.dataset.i];
+    d.querySelectorAll(".thumbs button").forEach(x=>x.setAttribute("aria-current",x===t));
+  });
+  $("cls").onclick=()=>d.close();
+  $("insp").onclick=()=>{const q="service="+encodeURIComponent("Pre-purchase inspection")+"&car="+encodeURIComponent(`${c.year} ${c.make} ${c.model}`);(window.top||window).location.href=GARAGE_URL+(GARAGE_URL.includes("?")?"&":"?")+q};
+}
+$("dlg").addEventListener("click",e=>{if(e.target===$("dlg"))$("dlg").close()});
+
+// Email delivery: the WordPress plugin fills in the endpoint. Standalone, it stays empty and the mailto fallback is used.
+const ENDPOINT="__TPA_ENDPOINT__".indexOf("__")===0?"":"__TPA_ENDPOINT__";
+async function sendForm(type,data,hp){
+  if(!ENDPOINT)return false;
+  try{const r=await fetch(ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({type,data,website:hp||""})});return r.ok}catch(e){return false}
+}
+// Sell
+let photos=[];
+const modeYard=()=>accountType()==="yard";
+function sellMode(){const yard=modeYard();$("yardFields").hidden=!yard;$("privFields").hidden=yard;if($("sellTypeLabel"))$("sellTypeLabel").textContent=yard?"Car yard / dealer":"Private seller"}
+function normWa(raw){
+  let d=String(raw).replace(/\D/g,"");if(d.startsWith("00"))d=d.slice(2);
+  if(/^0[17]\d{8}$/.test(d))return"254"+d.slice(1);
+  if(/^[17]\d{8}$/.test(d))return"254"+d;
+  if(/^254[17]\d{8}$/.test(d))return d;
+  if(String(raw).trim().startsWith("+")&&d.length>=10&&d.length<=15)return d;
+  return"";
+}
+function shrink(f){return new Promise((res,rej)=>{
+  const u=URL.createObjectURL(f),i=new Image();
+  i.onload=()=>{const m=900,k=Math.min(1,m/Math.max(i.width,i.height)),c=document.createElement("canvas");
+    c.width=Math.round(i.width*k);c.height=Math.round(i.height*k);c.getContext("2d").drawImage(i,0,0,c.width,c.height);
+    URL.revokeObjectURL(u);res(c.toDataURL("image/jpeg",.78))};
+  i.onerror=()=>{URL.revokeObjectURL(u);rej()};i.src=u})}
+function populateSellVehicleFilters(){
+  const mk=$("sMake"),mf=$("sModel"),vr=$("sVariant");
+  const makeNames=Object.keys(MODEL_FAMILIES).sort((a,b)=>a.localeCompare(b));
+  mk.innerHTML='<option value="">Select make</option>'+makeNames.map(x=>`<option value="${esc(x)}">${esc(x==="Mercedes-Benz"?"Mercedes":x)}</option>`).join("");
+  mf.innerHTML='<option value="">Select make first</option>';mf.disabled=true;
+  vr.innerHTML='<option value="">Select model first</option>';vr.disabled=true;
+  mk.onchange=()=>{
+    const make=mk.value, models=make?Object.keys(MODEL_FAMILIES[make]||{}).sort((a,b)=>a.localeCompare(b)):[];
+    mf.innerHTML='<option value="">Select model</option>'+models.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
+    mf.disabled=!make;mf.value="";vr.innerHTML='<option value="">Select model first</option>';vr.disabled=true;
+  };
+  mf.onchange=()=>{
+    const make=mk.value, model=mf.value, variants=(MODEL_FAMILIES[make]||{})[model]||[];
+    vr.innerHTML='<option value="">Select variant</option>'+variants.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
+    vr.disabled=!model;vr.value="";
+  };
+}
+populateSellVehicleFilters();
+
+function renderPhotoPreviews(){
+  const box=$("prev");box.innerHTML="";
+  photos.forEach((x,index)=>{
+    const wrap=document.createElement("div");wrap.className="photo-item";
+    const im=new Image();im.src=x;im.alt="Selected photo "+(index+1);
+    const rm=document.createElement("button");rm.type="button";rm.className="photo-remove";rm.setAttribute("aria-label","Remove photo "+(index+1));rm.title="Remove photo";rm.textContent="×";
+    rm.onclick=()=>{photos.splice(index,1);renderPhotoPreviews()};
+    wrap.append(im,rm);box.appendChild(wrap);
+  });
+}
+$("sPhotos").onchange=async e=>{
+  const err=$("sErr"),all=[...e.target.files];err.textContent="";
+  if(all.length>6)err.textContent="Only the first 6 photos are used.";
+  for(const f of all.slice(0,6)){
+    if(photos.length>=6)break;
+    if(!f.type.startsWith("image/")||f.size>15*1024*1024){err.textContent="A file was skipped because it isn't an image or is over 15 MB.";continue}
+    try{const x=await shrink(f);photos.push(x);renderPhotoPreviews()}
+    catch(_){err.textContent="One photo couldn't be read. Try a JPG or PNG."}
+  }
+  e.target.value="";
+};
+$("sCancel").onclick=()=>{
+  if(!confirm("Cancel this listing? Your entered details and selected photos will be cleared."))return;
+  $("sellForm").reset();photos=[];renderPhotoPreviews();sellMode();$("sErr").textContent="";$("sOk").hidden=true;show("buy");
+};
+$("vehicleDocsLink").onclick=e=>{const q=new URLSearchParams();if($("sMake").value)q.set("make",$("sMake").value);if($("sVariant").value)q.set("model",$("sVariant").value);if($("sYear").value)q.set("year",$("sYear").value);if($("sPrice").value)q.set("price",$("sPrice").value);if(q.toString())e.currentTarget.href="vehicle_documents.html?"+q.toString()};
+$("sBtn").onclick=async()=>{
+  const v=i=>$(i).value.trim(),err=$("sErr"),yard=modeYard(),ok=$("sOk"),btn=$("sBtn");
+  ok.hidden=true;
+  if(!sb){err.textContent="Online listing is not switched on yet. Please WhatsApp us your car details.";return}
+  if(!me){openAuth("login","Please sign in or create an account before listing a vehicle.");return}
+  if(!v("sMake")||!v("sModel")||!v("sVariant")||!v("sYear")||!v("sPrice")){err.textContent="Select make, model, variant, year and asking price to submit.";return}
+  if(!photos.length){err.textContent="Add at least one photo of the car.";return}
+  const wa=normWa($("sWa").value);
+  if(!wa){err.textContent="Enter a valid WhatsApp number, for example 0712 345 678.";return}
+  if(yard&&(!v("yName")||!v("yLoc")||!v("yPhone"))){err.textContent="Car yards need a yard name, location and phone number.";return}
+  btn.disabled=true;btn.textContent="Uploading photos…";err.textContent="";
+  try{
+    const urls=[];
+    for(let i=0;i<photos.length;i++){
+      const blob=await (await fetch(photos[i])).blob();
+      const path=`${me.id}/${Date.now()}-${i}.jpg`;
+      const up=await sb.storage.from("car-photos").upload(path,blob,{contentType:"image/jpeg"});
+      if(up.error)throw up.error;
+      urls.push(sb.storage.from("car-photos").getPublicUrl(path).data.publicUrl);
+    }
+    const {data:userData,error:userError}=await sb.auth.getUser();
+    if(userError||!userData?.user?.id)throw new Error("Your login session has expired. Please log in again.");
+    const ownerId=userData.user.id;
+    const row={
+      owner:ownerId,
+      make:v("sMake"),
+      model:v("sVariant"),
+      year:+v("sYear"),
+      price:+v("sPrice"),
+      km:+v("sKm")||0,
+      fuel:$("sFuel").value,
+      description:v("sDesc"),
+      photos:urls,
+      whatsapp:wa,
+      seller_type:accountType(),
+      yard_logo_url:yard?profileAvatarUrl()||null:null,
+      seller_name:yard?v("yName"):(v("sName")||(profile&&profile.name)||userData.user.email||""),
+      seller_phone:yard?v("yPhone"):((profile&&profile.phone)||""),
+      seller_email:yard?v("yEmail"):(userData.user.email||""),
+      contact:yard?v("yContact"):"",
+      yard_name:yard?v("yName"):"",
+      yard_location:yard?v("yLoc"):"",
+      yard_web:yard?v("yWeb"):""
+    };
+    let ins=await sb.from("listings").insert(row).select("id").single();
+    if(ins.error&&/yard_logo_url/i.test(ins.error.message||"")&&/column|schema cache|does not exist/i.test(ins.error.message||"")){
+      const legacyRow={...row};delete legacyRow.yard_logo_url;
+      ins=await sb.from("listings").insert(legacyRow).select("id").single();
+    }
+    if(ins.error)throw ins.error;
+
+    // Notify the 3 Pedals Auto KE admin through the secure Supabase Edge Function.
+    // The Resend API key is never exposed in this public website.
+    try{
+      const {data:sessionData}=await sb.auth.getSession();
+      const accessToken=sessionData?.session?.access_token;
+      if(accessToken&&CFG.url&&ins?.data?.id){
+        const notify=await fetch(`${CFG.url}/functions/v1/notify-new-listing`,{
+          method:"POST",
+          headers:{"Content-Type":"application/json","Authorization":`Bearer ${accessToken}`},
+          body:JSON.stringify({listing_id:ins.data.id})
+        });
+        if(!notify.ok){
+          console.warn("Listing email notification failed:",await notify.text());
+        }
+      }
+    }catch(notificationError){
+      console.warn("Listing email notification failed:",notificationError);
+    }
+
+    $("sellForm").reset();photos=[];$("prev").innerHTML="";sellMode();
+    ok.textContent="Thank you! Your listing was received. We review every listing before it goes live, and you can follow its status under My account.";ok.hidden=false;
+  }catch(e){err.textContent="We couldn't submit that listing: "+(e.message||"please try again.")}
+  btn.disabled=false;btn.textContent="Submit listing";
+};
+
+document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>show(b.dataset.go));
+if(!sb){$("demoBar").hidden=false;makes();render()}
+else{cars=[];$("grid").innerHTML='<p class="meta">Loading cars…</p>';sb.auth.onAuthStateChange(()=>setTimeout(loadSession,0));loadListings();loadSession()}
+// Lets the garage site send visitors here to log in or create an account
+if(location.hash==="#login")openAuth("login");if(location.hash==="#register")openAuth("register");
+loadProjects();
+loadJournal();
+loadSiteSettings();
+
+//  automotive quote rail. It refreshes from public quote pages, with a local fallback.
+(()=>{
+  const textEl=document.getElementById('autoQuoteText'),authorEl=document.getElementById('autoQuoteAuthor'),sourceEl=document.getElementById('autoQuoteSource'),updatedEl=document.getElementById('autoQuoteUpdated'),bodyEl=document.getElementById('autoQuoteBody'),nextBtn=document.getElementById('autoQuoteNext');
+  if(!textEl)return;
+  const fallback=[
+    {q:'The quality is remembered long after the price is forgotten.',a:'Sir Henry Royce',s:'Hagerty automotive quotes'},
+    {q:'I make my cars to go, not to stop.',a:'Ettore Bugatti',s:'Hagerty automotive quotes'},
+    {q:'Second place is just the first-place loser.',a:'Dale Earnhardt',s:'Hagerty automotive quotes'},
+    {q:'It doesn’t cost any more to make something pretty.',a:'Sir William Lyons',s:'Hagerty automotive quotes'},
+    {q:'The Cobra is my personal favorite car.',a:'Carroll Shelby',s:'Road & Track interview'},
+    {q:'My proudest moments are beating Ferrari for the World Championship in 1965.',a:'Carroll Shelby',s:'Road & Track interview'},
+    {q:'I love horsepower.',a:'Carroll Shelby',s:'Carroll Shelby quotes'},
+    {q:'I’ve always been asked, “What is my favorite car?” and I’ve always said “The next one.”',a:'Carroll Shelby',s:'Carroll Shelby quotes'}
+  ];
+  const sources=[
+    {name:'Hagerty',url:'https://r.jina.ai/https://www.hagerty.co.uk/articles/top-10-automotive-quotes/',page:'https://www.hagerty.co.uk/articles/top-10-automotive-quotes/'},
+    {name:'Road & Track',url:'https://r.jina.ai/https://www.roadandtrack.com/car-culture/interviews/a18116/words-of-wisdom-from-carroll-shelby/',page:'https://www.roadandtrack.com/car-culture/interviews/a18116/words-of-wisdom-from-carroll-shelby/'}
+  ];
+  let quotes=[...fallback],index=Math.floor(Date.now()/86400000)%quotes.length;
+  const clean=x=>String(x||'').replace(/\s+/g,' ').trim();
+  function render(item){
+    textEl.textContent='“'+item.q.replace(/^“|”$/g,'')+'”'; authorEl.textContent='— '+item.a; sourceEl.textContent=item.s||'Web source'; updatedEl.textContent='Updated '+new Intl.DateTimeFormat(undefined,{hour:'2-digit',minute:'2-digit'}).format(new Date()); bodyEl.classList.remove('auto-quote-loading');
+  }
+  function next(){index=(index+1)%quotes.length;render(quotes[index]);}
+  nextBtn?.addEventListener('click',next);
+  function extract(raw,sourceName){
+    const out=[]; const seen=new Set();
+    const patterns=[/“([^”]{25,190})”\s*[—-]\s*([A-Z][A-Za-z .'-]{2,60})/g,/"([^"\n]{25,190})"\s*[—-]\s*([A-Z][A-Za-z .'-]{2,60})/g];
+    for(const re of patterns){let m;while((m=re.exec(raw))&&out.length<18){const q=clean(m[1]),a=clean(m[2]);if(!q||!a||q.length>190||seen.has(q))continue;seen.add(q);out.push({q,a,s:sourceName+' · web'});}}
+    return out;
+  }
+  const CACHE_KEY='3pedals:auto-quotes:v2', CACHE_TTL=12*60*60*1000;
+  function useCached(){
+    try{const c=JSON.parse(localStorage.getItem(CACHE_KEY)||'null');if(c&&Date.now()-c.time<CACHE_TTL&&Array.isArray(c.quotes)&&c.quotes.length){quotes=[...c.quotes,...fallback];index=Math.floor(Date.now()/43200000)%quotes.length;render(quotes[index]);return true;}}catch(e){} return false;
+  }
+  async function fetchWebQuotes(){
+    const found=[];
+    for(const src of sources){
+      try{const ctl=new AbortController();const timer=setTimeout(()=>ctl.abort(),5000);const r=await fetch(src.url,{cache:'no-store',signal:ctl.signal});clearTimeout(timer);if(!r.ok)continue;const raw=await r.text();found.push(...extract(raw,src.name));}catch(e){}
+    }
+    if(found.length){quotes=[...found,...fallback];index=Math.floor(Date.now()/43200000)%quotes.length;render(quotes[index]);try{localStorage.setItem(CACHE_KEY,JSON.stringify({time:Date.now(),quotes:found.slice(0,30)}))}catch(e){}}
+    else if(!useCached())render(fallback[index%fallback.length]);
+  }
+  render(quotes[index]);
+  const hadCache=useCached();
+  const startWebRefresh=()=>fetchWebQuotes();
+  if(!hadCache)startWebRefresh();
+  else if('requestIdleCallback' in window)requestIdleCallback(startWebRefresh,{timeout:2500});else setTimeout(startWebRefresh,1200);
+  // Refresh twice daily while the page remains open, without blocking first paint.
+  setInterval(fetchWebQuotes,12*60*60*1000);
+})();
 </script>
-</body></html>
+
+<script>
+// Premium micro-interactions: reveal sections without changing existing navigation logic.
+(()=>{
+  const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduced)return;
+  const apply=()=>{
+    document.querySelectorAll('main > section:not([hidden])').forEach(s=>{
+      s.animate([{opacity:.001,transform:'translateY(10px)'},{opacity:1,transform:'translateY(0)'}],{duration:420,easing:'cubic-bezier(.22,1,.36,1)',fill:'both'});
+    });
+  };
+  window.addEventListener('load',()=>setTimeout(apply,40),{once:true});
+  document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>setTimeout(apply,20)));
+})();
+</script>
+
+
+<script id="3pedals-performance-runtime">
+(()=>{
+  const applyMedia=()=>{
+    document.querySelectorAll('img').forEach((img,i)=>{
+      if(!img.hasAttribute('decoding'))img.decoding='async';
+      if(!img.hasAttribute('loading'))img.loading=i<2?'eager':'lazy';
+      if(!img.hasAttribute('referrerpolicy'))img.referrerPolicy='no-referrer-when-downgrade';
+    });
+    document.querySelectorAll('video').forEach(v=>{
+      if(!v.hasAttribute('preload'))v.preload='none';
+      else if(v.preload==='metadata' && !v.closest('dialog'))v.preload='none';
+      v.setAttribute('playsinline','');
+      if(!v.hasAttribute('loading'))v.setAttribute('loading','lazy');
+    });
+  };
+  const run=()=>{try{applyMedia()}catch(e){}};
+  if('requestIdleCallback' in window)requestIdleCallback(run,{timeout:1200});else setTimeout(run,300);
+  new MutationObserver(()=>{clearTimeout(window.__3pMediaTimer);window.__3pMediaTimer=setTimeout(run,80)}).observe(document.body,{childList:true,subtree:true});
+})();
+</script>
+
+</body>
+</html>
