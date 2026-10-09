@@ -146,6 +146,7 @@ nav.dock-active button,nav.dock-active a.navlink{transition-duration:.5s}
 @media (prefers-reduced-motion:reduce){nav button,nav a.navlink,.account-pill,.account-icon,.account-icon span{transition:none!important;transform:none!important}}
 .nav-toggle{display:none;grid-area:nav-toggle;width:44px;height:44px;border:1px solid rgba(227,179,65,.3);border-radius:12px;background:rgba(255,255,255,.055);color:#fff;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,.16)}
 .nav-toggle svg{width:20px;height:20px}
+@media(max-width:980px){main{transition:filter .22s ease}body.nav-open main{filter:blur(8px)}}
 .hero{padding:54px 0 28px}.hero h1{font-size:clamp(42px,6vw,72px);max-width:13em;letter-spacing:-.015em}.hero h1::after{width:72px;height:4px;margin-top:18px;border-radius:99px}.hero p{font-size:17px;line-height:1.65;max-width:46em;margin-top:15px}
 .hero>div[style*="display:flex"]{gap:10px!important;margin-top:24px!important;align-items:center}
 .btn{min-height:44px;padding:11px 18px;border-radius:9px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;box-shadow:var(--shadow-sm);font-size:14px;font-weight:700;letter-spacing:.01em;transition:transform .16s ease,box-shadow .16s ease,background .16s ease,border-color .16s ease}
@@ -664,8 +665,8 @@ if(navDock){
   navDock.addEventListener("pointerleave",()=>navDock.classList.remove("dock-active"));
 }
 const navToggle=$("navToggle");
-function closeNav(){if(navToggle){navToggle.setAttribute("aria-expanded","false");navToggle.setAttribute("aria-label","Open navigation");$("nav").classList.remove("is-open")}}
-if(navToggle){navToggle.onclick=()=>{const open=navToggle.getAttribute("aria-expanded")==="true";navToggle.setAttribute("aria-expanded",String(!open));navToggle.setAttribute("aria-label",open?"Open navigation":"Close navigation");$("nav").classList.toggle("is-open",!open)}}
+function closeNav(){if(navToggle){navToggle.setAttribute("aria-expanded","false");navToggle.setAttribute("aria-label","Open navigation");$("nav").classList.remove("is-open");document.body.classList.remove("nav-open")}}
+if(navToggle){navToggle.onclick=()=>{const open=navToggle.getAttribute("aria-expanded")==="true";navToggle.setAttribute("aria-expanded",String(!open));navToggle.setAttribute("aria-label",open?"Open navigation":"Close navigation");$("nav").classList.toggle("is-open",!open);document.body.classList.toggle("nav-open",!open&&innerWidth<=980)}}
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeNav()});
 document.addEventListener("click",e=>{if(navToggle&&innerWidth<=980&&!$("nav").contains(e.target)&&!navToggle.contains(e.target))closeNav()});
 window.addEventListener("resize",()=>{if(innerWidth>980)closeNav()});
