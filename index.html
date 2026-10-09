@@ -49,7 +49,7 @@ label{display:block;font-weight:600;font-size:14px;margin:12px 0 4px}
 .card-extra{padding:0 13px 13px}
 .card-extra .yard-line:first-child{margin-top:0}
 .card-extra .yard-link{color:var(--ink);font-size:12px}
-.swatch{height:148px;display:flex;align-items:flex-end;padding:10px 12px;font:700 34px "Playfair Display",Georgia,serif;color:rgba(255,255,255,.94);background-position:center;transition:transform .5s cubic-bezier(.22,1,.36,1),filter .35s ease}
+.swatch{height:148px;display:flex;align-items:flex-end;padding:10px 12px;font:700 34px "Playfair Display",Georgia,serif;color:rgba(255,255,255,.94);background-position:center;background-repeat:no-repeat;background-size:contain!important;transition:transform .5s cubic-bezier(.22,1,.36,1),filter .35s ease}
 .card:hover .swatch{transform:scale(1.035);filter:saturate(1.08)}
 .card .body{padding:12px 13px 14px}
 .card h3{font-size:18px;line-height:1.15;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -59,6 +59,7 @@ label{display:block;font-weight:600;font-size:14px;margin:12px 0 4px}
 .yard-badge{position:absolute;left:10px;top:10px;z-index:2;padding:6px 9px;border-radius:999px;background:rgba(15,15,15,.82);color:#fff;font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;backdrop-filter:blur(8px)}
 .yard-line{display:flex;gap:6px;align-items:center;margin-top:9px;padding-top:9px;border-top:1px solid var(--line);font-size:12px;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .yard-line strong{color:var(--ink);overflow:hidden;text-overflow:ellipsis}
+.yard-logo{width:27px;height:27px;flex:0 0 27px;object-fit:cover;border-radius:50%;border:1px solid var(--line);background:var(--surface-2)}
 .card-reveal{max-height:0;opacity:0;overflow:hidden;transition:max-height .3s ease,opacity .25s ease}
 .card:hover .card-reveal,.card:focus-visible .card-reveal{max-height:70px;opacity:1}
 @media(max-width:1300px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
@@ -102,7 +103,7 @@ footer{padding-bottom:80px}
 .seg input{width:auto}
 .prev{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
 .prev img{width:88px;height:66px;object-fit:cover;border-radius:6px;border:1px solid var(--line)}
-.swatch.has{height:150px;text-shadow:0 1px 5px rgba(0,0,0,.7)}
+.swatch.has{height:150px;text-shadow:0 1px 5px rgba(0,0,0,.7);background-size:contain!important;background-color:#17191c}
 .gal .main{width:100%;height:230px;object-fit:cover;display:block}
 .thumbs{display:flex;gap:6px;padding:8px 18px 0;flex-wrap:wrap}
 .thumbs button{padding:0;border:2px solid transparent;border-radius:6px;background:none;cursor:pointer}
@@ -538,6 +539,15 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 .journal-photo-viewer{position:fixed;inset:0;margin:0;width:100vw;height:100dvh;max-width:none;max-height:none;padding:50px 72px 32px;border:0;border-radius:0;background:rgba(8,9,10,.98);color:#f5f1e6;overflow:hidden}.journal-photo-viewer::backdrop{background:rgba(0,0,0,.92)}.journal-photo-viewer figure{height:100%;margin:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}.journal-photo-viewer img{display:block;max-width:100%;max-height:calc(100dvh - 110px);object-fit:contain;border-radius:8px}.journal-photo-viewer figcaption{font:600 14px/1.4 Manrope,system-ui,sans-serif;color:#f5f1e6;text-align:center}.journal-photo-viewer button{position:absolute;display:grid;place-items:center;border:1px solid rgba(255,255,255,.16);border-radius:8px;background:rgba(25,26,28,.86);color:#f5f1e6;cursor:pointer}.journal-photo-viewer button:hover{background:rgba(183,160,106,.35)}.journal-photo-close{right:18px;top:18px;width:44px;height:44px;font-size:28px}.journal-photo-step{top:50%;width:52px;height:64px;transform:translateY(-50%);font-size:34px}.journal-photo-prev{left:16px}.journal-photo-next{right:16px}.journal-photo-count{position:absolute;top:24px;left:50%;transform:translateX(-50%);padding:7px 12px;border:1px solid rgba(255,255,255,.14);border-radius:8px;background:rgba(25,26,28,.86);font:700 14px Manrope,system-ui,sans-serif;color:#f5f1e6}
 @media(max-width:600px){.journal-photo-viewer{padding:52px 46px 26px}.journal-photo-viewer img{max-width:100%;max-height:calc(100dvh - 120px)}.journal-photo-close{right:10px;top:10px;width:40px;height:40px}.journal-photo-step{width:38px;height:50px;font-size:28px}.journal-photo-prev{left:6px}.journal-photo-next{right:6px}.journal-photo-count{top:19px}}
 </style>
+<style id="touch-no-zoom">
+@media (max-width: 820px), (hover: none), (pointer: coarse) {
+  .card:hover,.card:focus-visible,.tile:hover,.tile:focus-visible,.project-card:hover,.project-card:focus-visible,.contact-card:hover,.panel:hover,.mechanic-card:hover,.btn:hover,.back:hover,.logo:hover,.account-pill:hover,.account-icon:hover,nav button:hover,nav a.navlink:hover,.thumb:hover,.thumbs button:hover,.card:active,.tile:active,.btn:active { transform: none !important; }
+  .card:hover img,.card:focus-visible img,.card:hover .swatch,.card:focus-visible .swatch,.project-card:hover img,.project-card:hover video,.account-icon:hover svg { transform: none !important; filter: none !important; }
+  .card:hover .photo:before,.card:focus-visible .photo:before { opacity: 0 !important; clip-path: circle(0 at var(--lens-x,50%) var(--lens-y,50%)) !important; }
+  .card:hover .photo:after,.card:focus-visible .photo:after { opacity: .45 !important; }
+  nav button,nav a.navlink { --dock-scale: 1 !important; }
+}
+</style>
 </head>
 <body>
 <div class="auth-left" id="adminWrap" hidden><button id="adminOpen">Admin panel</button></div>
@@ -812,7 +822,7 @@ async function saveAccountProfile(){
     if(au.error)throw au.error;
     const pu=await sb.from("profiles").update({name,phone,account_type:type}).eq("id",me.id);
     if(pu.error)console.warn("Profile table update failed; account metadata was saved.",pu.error);
-    const lu=await sb.from("listings").update({seller_type:type}).eq("owner",me.id);
+    const lu=await sb.from("listings").update({seller_type:type,...(type==="yard"?{yard_logo_url:profileAvatarUrl()||null}:{})}).eq("owner",me.id);
     if(lu.error)console.warn("Listing seller type update failed; account type was saved.",lu.error);
     me=au.data.user||me;profile={...(profile||{}),name,phone,account_type:type};
     refreshAccountUI();err.textContent="Account details and seller type saved.";
@@ -827,6 +837,7 @@ async function removeProfilePhoto(){
     const au=await sb.auth.updateUser({data:{...(me.user_metadata||{}),avatar_url:null}});if(au.error)throw au.error;
     const pu=await sb.from("profiles").update({avatar_url:null}).eq("id",me.id);
     if(pu.error)console.warn("Profile picture was removed from account metadata; profiles.avatar_url may not be writable.",pu.error);
+    await sb.from("listings").update({yard_logo_url:null}).eq("owner",me.id);
     me=au.data.user||me;profile={...(profile||{}),avatar_url:null};refreshAccountUI();openAccount();
   }catch(e){err.textContent=e.message||"Could not remove the profile picture.";btn.disabled=false}
 }
@@ -864,7 +875,8 @@ async function changeProfilePhoto(file){
     if(au.error)throw au.error;
     const pu=await sb.from("profiles").update({avatar_url:url}).eq("id",me.id);
     if(pu.error)console.warn("Avatar saved to account metadata; profiles.avatar_url may not exist yet.",pu.error);
-    me=au.data.user||me;profile={...(profile||{}),avatar_url:url};refreshAccountUI();err.textContent="Profile picture updated.";openAccount();
+    await sb.from("listings").update({yard_logo_url:url}).eq("owner",me.id);
+    me=au.data.user||me;profile={...(profile||{}),avatar_url:url};refreshAccountUI();err.textContent="Profile picture updated. Dealer listings now use this image as the yard logo.";openAccount();
   }catch(e){err.textContent=e.message||"Could not upload that profile picture."}
 }
 async function openAccount(){
@@ -878,7 +890,7 @@ async function openAccount(){
   box.innerHTML=`<div class="profile-card">
     <div class="profile-avatar">${avatar?`<img src="${esc(avatar)}" alt="Profile picture">`:esc(initialsFor(name,me.email))}</div>
     <div><h3 style="margin:0 0 4px">Your profile</h3><p class="meta" style="margin:0">${esc(me.email)}</p>
-      <div class="profile-actions"><label class="btn ghost" style="display:inline-flex;align-items:center;cursor:pointer;margin:0">Upload / change picture<input id="accPhoto" type="file" accept="image/*" hidden></label>${avatar?'<button class="btn ghost" type="button" id="accRemovePhoto">Remove picture</button>':""}</div>
+      <div class="profile-actions"><label class="btn ghost" style="display:inline-flex;align-items:center;cursor:pointer;margin:0">Upload / change ${isYard?"dealer logo":"picture"}<input id="accPhoto" type="file" accept="image/*" hidden></label>${avatar?'<button class="btn ghost" type="button" id="accRemovePhoto">Remove picture</button>':""}</div>${isYard?'<p class="meta">This image appears beside your dealer name and on your yard profile.</p>':""}
     </div>
   </div>
   <div class="profile-grid"><div><label for="accName">Full name</label><input id="accName" value="${esc(name)}" autocomplete="name"></div><div><label for="accPhone">Phone number</label><input id="accPhone" value="${esc(phone)}" type="tel" autocomplete="tel"></div><div><label for="accType">Account type</label><select id="accType"><option value="private" ${accountType()==="private"?"selected":""}>Private seller</option><option value="yard" ${accountType()==="yard"?"selected":""}>Car yard / dealer</option></select></div></div>
@@ -957,7 +969,7 @@ function openJournalArticle(p){
   if(!p)return;
   const d=$("dlg");
   const journalDigits=String(siteSettings.whatsapp_number||"254750495841").replace(/\D/g,"");
-  const photos=mediaItemsForProject(p).filter(m=>m.type!=="video"&&!String(m.mime||"").startsWith("video/"));const selectedCover=photos.find(m=>m.is_cover===true||m.cover===true);if(selectedCover)photos.splice(photos.indexOf(selectedCover),1),photos.unshift(selectedCover);photos.splice(6);
+  const photos=mediaItemsForProject(p).filter(m=>m.type!=="video"&&!String(m.mime||"").startsWith("video/"));const selectedCover=photos.find(m=>m.is_cover===true||m.cover===true);if(selectedCover)photos.splice(photos.indexOf(selectedCover),1),photos.unshift(selectedCover);photos.splice(15);
   const gallery=photos.length?`<div class="journal-gallery" id="journalGallery" aria-label="Article photo gallery"><figure><img id="journalCurrentPhoto" src="${esc(photos[0].url)}" alt="${esc(p.title)} — photo 1 of ${photos.length}" loading="eager"><figcaption id="journalPhotoCaption">Photo 1 of ${photos.length}</figcaption></figure>${photos.length>1?`<span class="gallery-count" id="journalPhotoCount">1 / ${photos.length}</span><button class="gallery-step gallery-prev" type="button" data-journal-step="-1" aria-label="Previous photo">‹</button><button class="gallery-step gallery-next" type="button" data-journal-step="1" aria-label="Next photo">›</button>`:""}</div>`:"";
   d.innerHTML=`<div class="in journal-modal"><div class="article-head"><span class="project-kicker">${esc(p.category||"Automotive Journal")}</span><h2>${esc(p.title)}</h2><p class="meta">3 Pedals Journal${p.created_at?` · ${esc(new Date(p.created_at).toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"}))}`:""}</p></div><div class="journal-reading-layout">${gallery}<div class="article-body">${esc(p.body)}</div></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:24px"><a class="btn wa" href="https://wa.me/${journalDigits}?text=${encodeURIComponent("Hello, I just read the 3 Pedals Journal article: "+p.title)}" target="_blank" rel="noopener">Discuss this story on WhatsApp</a><button class="btn ghost" id="journalClose">Close</button></div></div>`;
   d.showModal();$("journalClose").onclick=()=>d.close();
@@ -988,7 +1000,7 @@ function projectFormHtml(p={},kind=p.type==="article"?"article":"video"){
       <label for="pDescription">Short description</label><textarea id="pDescription" maxlength="500" rows="3" placeholder="What should visitors know about this project?">${esc(p.description||"")}</textarea>
       ${isArticle?`<label for="pBody">Article content</label><textarea id="pBody" rows="10" required placeholder="Write the full story here…">${esc(p.body||"")}</textarea>`:""}
       <div id="mediaWrap">
-        ${isArticle?`<div class="journal-upload-box"><strong>🖼 Add photos to this article</strong><p class="meta">Select 2–6 photos (JPG, PNG or WebP; up to 12 MB each). They’ll appear in the article gallery.</p><label for="pMedia">Choose article photos</label><input id="pMedia" type="file" accept="image/jpeg,image/png,image/webp,image/*" multiple ${p.id?"":"required"}>${count?`<div class="project-admin-media-note"><span>${count} current photo${count===1?"":"s"}</span><span>Choosing new photos replaces them</span></div><div class="journal-upload-preview">${items.filter(m=>m.type!=="video"&&!String(m.mime||"").startsWith("video/")).slice(0,6).map(m=>`<img src="${esc(m.url)}" alt="Current article photo" loading="lazy">`).join("")}</div>`:""}<p class="project-form-note" id="journalPhotoStatus" aria-live="polite">${p.id&&count?"Current article photos are shown above. Choose 2–6 new photos only if replacing the gallery.":"No article photos selected yet."}</p><div class="journal-upload-preview" id="journalPhotoPreview"></div></div>`:`<label for="pMedia">Project videos${p.id?" — add or replace":" — upload"}</label><input id="pMedia" type="file" accept="video/mp4,video/webm,video/quicktime,video/*" multiple ${p.id?"":"required"}><p class="project-form-note">Upload up to 6 project videos. MP4 (H.264) is recommended; up to 100 MB per video.</p>${count?`<div class="project-admin-media-note"><span>${count} current video${count===1?"":"s"}</span><span>New videos replace the gallery</span></div>`:""}`}
+        ${isArticle?`<div class="journal-upload-box"><strong>🖼 Add photos to this article</strong><p class="meta">Select 2–15 photos (JPG, PNG or WebP; up to 12 MB each). They’ll appear in the article gallery.</p><label for="pMedia">Choose article photos</label><input id="pMedia" type="file" accept="image/jpeg,image/png,image/webp,image/*" multiple ${p.id?"":"required"}>${count?`<div class="project-admin-media-note"><span>${count} current photo${count===1?"":"s"}</span><span>Choosing new photos replaces them</span></div><div class="journal-upload-preview">${items.filter(m=>m.type!=="video"&&!String(m.mime||"").startsWith("video/")).slice(0,15).map(m=>`<img src="${esc(m.url)}" alt="Current article photo" loading="lazy">`).join("")}</div>`:""}<p class="project-form-note" id="journalPhotoStatus" aria-live="polite">${p.id&&count?"Current article photos are shown above. Choose 2–15 new photos only if replacing the gallery.":"No article photos selected yet."}</p><div class="journal-upload-preview" id="journalPhotoPreview"></div></div>`:`<label for="pMedia">Project photos and videos${p.id?" — add or replace":" — upload"}</label><input id="pMedia" type="file" accept="image/*,video/mp4,video/webm,video/quicktime,video/*" multiple ${p.id?"":"required"}><p class="project-form-note">Upload up to 15 photos and videos. Photos up to 12 MB; videos up to 100 MB.</p>${count?`<div class="project-admin-media-note"><span>${count} current project media items</span><span>New media replaces the gallery</span></div>`:""}`}
         <progress id="pProgress" class="project-upload-progress" value="0" max="100" hidden></progress>
       </div>
       ${p.media_url?`<p class="project-form-note">Current media is already attached. Leave the upload empty to keep it.</p>`:""}
@@ -1016,14 +1028,14 @@ async function saveProject(existing=null){
   if(!title){err.textContent="Please add a project title.";return}
   if(isArticle&&!body){err.textContent="Please add the article content.";return}
   const oldItems=mediaItemsForProject(existing||{});
-  if(!existing&&!files.length){err.textContent=isArticle?"Please upload 2 to 6 article photos.":"Please upload at least one project video.";return}
-  if(isArticle&&((files.length&&files.length<2)||files.length>6||(!files.length&&oldItems.length<2))){err.textContent="Journal articles need between 2 and 6 photos.";return}
-  if(!isArticle&&files.length>6){err.textContent="Please choose no more than 6 videos per project.";return}
+  if(!existing&&!files.length){err.textContent=isArticle?"Please upload 2 to 15 article photos.":"Please upload at least one project photo or video.";return}
+  if(isArticle&&((files.length&&files.length<2)||files.length>15||(!files.length&&oldItems.length<2))){err.textContent="Journal articles need between 2 and 15 photos.";return}
+  if(!isArticle&&files.length>15){err.textContent="Please choose no more than 15 project photos and videos.";return}
   for(const f of files){
     const limit=isArticle?12:100;
     if(isArticle&&!f.type.startsWith("image/")){err.textContent="Journal articles can only use image files.";return}
-    if(!isArticle&&!f.type.startsWith("video/")){err.textContent="Our Projects accepts video files only.";return}
-    if(f.size>limit*1024*1024){err.textContent=`${f.name} is too large. Maximum is ${limit} MB per file.`;return}
+    if(!isArticle&&!f.type.startsWith("image/")&&!f.type.startsWith("video/")){err.textContent="Our Projects accepts image and video files only.";return}
+    const mediaLimit=f.type.startsWith("video/")?100:12;if(f.size>mediaLimit*1024*1024){err.textContent=`${f.name} is too large. Maximum is ${mediaLimit} MB per file.`;return}
   }
   const btn=$("projectSave"),progress=$("pProgress");btn.disabled=true;btn.textContent="Preparing…";if(progress){progress.hidden=!files.length;progress.value=0}
   try{
@@ -1094,15 +1106,15 @@ function bindProjectAdmin(PR){
 }
 function bindProjectForm(existing){
   const input=$("pMedia"),isArticle=$("projectForm").dataset.kind==="article";
-  if(input){input.multiple=true;input.accept=isArticle?"image/jpeg,image/png,image/webp,image/*":"video/mp4,video/webm,video/quicktime,video/*";input.required=!existing||!mediaItemsForProject(existing).length}
+  if(input){input.multiple=true;input.accept=isArticle?"image/jpeg,image/png,image/webp,image/*":"image/*,video/mp4,video/webm,video/quicktime,video/*";input.required=!existing||!mediaItemsForProject(existing).length}
   if(input&&isArticle){
     let previewUrls=[];
     input.addEventListener("change",()=>{
       previewUrls.forEach(url=>URL.revokeObjectURL(url));previewUrls=[];
       const files=[...input.files],preview=$("journalPhotoPreview"),status=$("journalPhotoStatus");preview.replaceChildren();
-      if(!files.length){status.textContent=existing&&mediaItemsForProject(existing).length?"Current article photos are shown above. Choose 2–6 new photos only if replacing the gallery.":"No article photos selected yet.";return}
-      status.textContent=files.length<2||files.length>6?`Selected ${files.length} photo${files.length===1?"":"s"} — choose between 2 and 6.`:`${files.length} photos selected. These will be added to the article gallery when you save.`;
-      files.slice(0,6).forEach(file=>{const url=URL.createObjectURL(file),img=document.createElement("img");previewUrls.push(url);img.src=url;img.alt="Selected article photo preview";preview.appendChild(img)});
+      if(!files.length){status.textContent=existing&&mediaItemsForProject(existing).length?"Current article photos are shown above. Choose 2–15 new photos only if replacing the gallery.":"No article photos selected yet.";return}
+      status.textContent=files.length<2||files.length>15?`Selected ${files.length} photo${files.length===1?"":"s"} — choose between 2 and 15.`:`${files.length} photos selected. These will be added to the article gallery when you save.`;
+      files.slice(0,15).forEach(file=>{const url=URL.createObjectURL(file),img=document.createElement("img");previewUrls.push(url);img.src=url;img.alt="Selected article photo preview";preview.appendChild(img)});
     });
   }
   $("projectForm")?.addEventListener("submit",()=>saveProject(existing));
@@ -1125,7 +1137,7 @@ function sellerTypeForListing(r){
   return [r?.yard_name,r?.yard_location,r?.yard_contact].some(v=>String(v||"").trim())?"yard":"private";
 }
 const rowToCar=(r,i)=>({id:r.id,make:String(r.make||"").trim(),model:String(r.model||"").trim(),year:r.year,price:r.price,km:r.km||0,fuel:r.fuel||"",desc:r.description||"",photos:r.photos||[],color:colors[i%colors.length],
-  seller:{type:sellerTypeForListing(r),name:r.yard_name||r.seller_name,contact:r.contact||r.yard_contact,location:r.yard_location||r.location,phone:r.seller_phone||r.phone,email:r.seller_email||r.email,web:r.web||r.yard_web,whatsapp:r.whatsapp}});
+  seller:{type:sellerTypeForListing(r),name:r.yard_name||r.seller_name,contact:r.contact||r.yard_contact,location:r.yard_location||r.location,phone:r.seller_phone||r.phone,email:r.seller_email||r.email,web:r.web||r.yard_web,whatsapp:r.whatsapp,logo:r.yard_logo_url||r.seller_logo_url||""}});
 async function loadListings(){
   if(!sb)return;
   const {data,error}=await sb.from("listings").select("*").eq("status","approved").order("created_at",{ascending:false});
@@ -1162,7 +1174,7 @@ function variantFor(make,model){const mk=canonicalMake(make),f=familyFor(mk,mode
 function updateBuyFilters(){const mk=$("make").value,mf=$("model").value,cv=$("variant").value;const models=[...new Set(cars.filter(c=>!mk||canonicalMake(c.make)===mk).map(c=>familyFor(c.make,c.model)).filter(Boolean))].sort();$("model").innerHTML='<option value="">All models</option>'+models.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");if(models.includes(mf))$("model").value=mf;const activeModel=$("model").value;const variants=[...new Set(cars.filter(c=>(!mk||canonicalMake(c.make)===mk)&&(!activeModel||familyFor(c.make,c.model)===activeModel)).map(c=>variantFor(c.make,c.model)).filter(Boolean))].sort();$("variant").innerHTML='<option value="">All variants</option>'+variants.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");if(variants.includes(cv))$("variant").value=cv}
 function makes(){const m=[...new Set(cars.map(c=>canonicalMake(c.make)).filter(Boolean))].sort(),cur=$("make").value;$("make").innerHTML='<option value="">All makes</option>'+m.map(x=>`<option value="${esc(x)}">${esc(x==="Mercedes-Benz"?"Mercedes":x)}</option>`).join("");if(m.includes(cur))$("make").value=cur;else $("make").value="";updateBuyFilters()}
 const hasPh=c=>c.photos&&c.photos[0]?" has":"";
-const bgOf=c=>c.photos&&c.photos[0]?`${c.color} url('${c.photos[0]}') center/cover`:c.color;
+const bgOf=c=>c.photos&&c.photos[0]?`${c.color} url('${c.photos[0]}') center/contain no-repeat`:c.color;
 function render(){
   const q=$("q").value.trim().toLowerCase(),mk=$("make").value,mf=$("model").value,vr=$("variant").value,mx=+$("max").value,s=$("sort").value;
   let r=cars.filter(c=>(!q||(c.make+" "+c.model).toLowerCase().includes(q))&&(!mk||canonicalMake(c.make)===mk)&&(!mf||familyFor(c.make,c.model)===mf)&&(!vr||variantFor(c.make,c.model)===vr)&&(!mx||c.price<=mx));
@@ -1181,7 +1193,7 @@ function render(){
         <span class="tag">${fmt(c.km)} km</span><span class="tag">${esc(c.fuel||"N/A")}</span><span class="tag">${isYard?"Car yard / dealer":"Private seller"}</span>
         </div>
       </a>
-      ${isYard?`<div class="card-extra"><div class="yard-line">🏢 <a class="yard-link" href="${yardUrl}">${esc(yardName)}</a></div>${loc?`<div class="yard-line">📍 ${esc(loc)}</div>`:""}<div class="card-reveal">View dealer profile</div></div>`:""}
+      ${isYard?`<div class="card-extra"><div class="yard-line">${c.seller.logo?`<img class="yard-logo" src="${esc(c.seller.logo)}" alt="${esc(yardName)} logo" loading="lazy">`:`<span aria-hidden="true">🏢</span>`}<a class="yard-link" href="${yardUrl}">${esc(yardName)}</a></div>${loc?`<div class="yard-line">📍 ${esc(loc)}</div>`:""}<div class="card-reveal">View dealer profile</div></div>`:""}
     </article>`;
   }).join("") :'<p class="meta">No cars match these filters. Clear the search or raise the price limit.</p>';
 }
@@ -1327,6 +1339,7 @@ $("sBtn").onclick=async()=>{
       photos:urls,
       whatsapp:wa,
       seller_type:accountType(),
+      yard_logo_url:yard?profileAvatarUrl()||null:null,
       seller_name:yard?v("yName"):(v("sName")||(profile&&profile.name)||userData.user.email||""),
       seller_phone:yard?v("yPhone"):((profile&&profile.phone)||""),
       seller_email:yard?v("yEmail"):(userData.user.email||""),
