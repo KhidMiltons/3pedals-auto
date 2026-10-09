@@ -548,6 +548,21 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
   nav button,nav a.navlink { --dock-scale: 1 !important; }
 }
 </style>
+<style id="mobile-inventory-cards">
+@media(max-width:560px){
+  #buy .grid{grid-template-columns:1fr;gap:12px}
+  #buy .card{display:flex;flex-direction:column;border-radius:14px}
+  #buy .card-main{flex-direction:row;align-items:stretch;min-height:148px}
+  #buy .card .swatch{width:36%;flex:0 0 36%;height:auto!important;min-height:148px;align-self:stretch;padding:8px;font-size:24px;background-size:contain!important;background-color:#17191c}
+  #buy .card .body{flex:1;min-width:0;padding:13px 12px}
+  #buy .card h3{white-space:normal;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden;font-size:17px;line-height:1.2}
+  #buy .card .price{font-size:18px;line-height:1.25;margin:6px 0 2px}
+  #buy .card .tag{font-size:10px;padding:2px 6px;margin:5px 3px 0 0}
+  #buy .card-extra{padding:0 12px 11px 38%;margin-top:-4px}
+  #buy .card-extra .yard-line{margin-top:6px;padding-top:6px;font-size:11px}
+  #buy .yard-logo{width:24px;height:24px;flex-basis:24px}
+}
+</style>
 </head>
 <body>
 <div class="auth-left" id="adminWrap" hidden><button id="adminOpen">Admin panel</button></div>
