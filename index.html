@@ -923,7 +923,7 @@ function projectMedia(p,admin=false){
 }
 function renderPublicProjects(list){
   const box=$("publicProjects");
-  list=(list||[]).filter(p=>p.type==="video");
+  list=(list||[]).filter(p=>p.type==="video"||p.type==="photo");
   if(!list.length){box.innerHTML='<div class="project-public-empty"><h3>No published projects yet</h3><p class="meta">Our latest work will appear here once it is published by the 3 Pedals team.</p></div>';return}
   box.innerHTML=list.map((p,i)=>`<article class="project-card${i===0?" project-featured":""}">${projectMedia(p)}<div class="project-body"><span class="project-kicker">${esc(p.category||"Garage project")}</span><h2>${esc(p.title)}</h2><p>${esc(p.description||"")}</p></div></article>`).join("");
 }
@@ -931,7 +931,7 @@ function renderJournal(list){
   const box=$("journalGrid");
   const articles=list.filter(p=>p.type==="article"&&p.body);
   if(!articles.length){box.innerHTML='<div class="project-public-empty" style="grid-column:1/-1"><h3>The Journal is coming soon.</h3><p class="meta">Our first automotive stories will appear here once published by the 3 Pedals team.</p></div>';return}
-  box.innerHTML=articles.map(p=>{const photos=mediaItemsForProject(p).filter(m=>m.type!=="video"&&!String(m.mime||"").startsWith("video/"));const cover=photos[0];return `<article class="project-card project-featured journal-entry">
+  box.innerHTML=articles.map(p=>{const photos=mediaItemsForProject(p).filter(m=>m.type!=="video"&&!String(m.mime||"").startsWith("video/"));const cover=photos.find(m=>m.is_cover===true||m.cover===true)||photos[0];return `<article class="project-card project-featured journal-entry">
     <button class="journal-entry-media" type="button" data-journal-id="${esc(p.id)}" aria-label="Read ${esc(p.title)}">${cover?`<img src="${esc(cover.url)}" alt="${esc(p.title)}" loading="lazy">`:`<span class="journal-entry-empty">3 Pedals Journal</span>`}</button>
     <div class="project-body"><span class="project-kicker">${esc(p.category||"Automotive Journal")}</span><h2>${esc(p.title)}</h2><div class="journal-meta"><span>3 PEDALS JOURNAL</span>${p.created_at?`<span>·</span><span>${esc(new Date(p.created_at).toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"}))}</span>`:""}${photos.length?`<span>·</span><span>${photos.length} photos</span>`:""}</div><p>${esc(p.description||"A story for people who love cars.")}</p><button class="journal-read" type="button" data-journal-id="${esc(p.id)}">Read more</button></div>
   </article>`}).join("");
@@ -941,7 +941,7 @@ function openJournalArticle(p){
   if(!p)return;
   const d=$("dlg");
   const journalDigits=String(siteSettings.whatsapp_number||"254750495841").replace(/\D/g,"");
-  const photos=mediaItemsForProject(p).filter(m=>m.type!=="video"&&!String(m.mime||"").startsWith("video/")).slice(0,6);
+  const photos=mediaItemsForProject(p).filter(m=>m.type!=="video"&&!String(m.mime||"").startsWith("video/"));const selectedCover=photos.find(m=>m.is_cover===true||m.cover===true);if(selectedCover)photos.splice(photos.indexOf(selectedCover),1),photos.unshift(selectedCover);photos.splice(6);
   const gallery=photos.length?`<div class="journal-gallery" aria-label="Article photo gallery">${photos.map((m,i)=>`<figure><img src="${esc(m.url)}" alt="${esc(p.title)} — photo ${i+1} of ${photos.length}" loading="lazy"><figcaption>Photo ${i+1} of ${photos.length}</figcaption></figure>`).join("")}</div>`:"";
   d.innerHTML=`<div class="in journal-modal"><div class="article-head"><span class="project-kicker">${esc(p.category||"Automotive Journal")}</span><h2>${esc(p.title)}</h2><p class="meta">3 Pedals Journal${p.created_at?` · ${esc(new Date(p.created_at).toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"}))}`:""}</p></div>${gallery}<div class="article-body">${esc(p.body)}</div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:24px"><a class="btn wa" href="https://wa.me/${journalDigits}?text=${encodeURIComponent("Hello, I just read the 3 Pedals Journal article: "+p.title)}" target="_blank" rel="noopener">Discuss this story on WhatsApp</a><button class="btn ghost" id="journalClose">Close</button></div></div>`;
   d.showModal();$("journalClose").onclick=()=>d.close();
