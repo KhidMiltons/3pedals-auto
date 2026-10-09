@@ -999,9 +999,13 @@ async function openAdmin(){
     sb.from("projects").select("*").order("created_at",{ascending:false})
   ]);
   const L=l.data||[],B=b.data||[],P=p.data||[],PR=pr.data||[];
-  if(pr.error){console.error(pr.error);$("adminPanel").innerHTML='<p class="meta" style="color:var(--err)">The Projects table is not set up yet. Run the supplied Supabase project setup SQL, then reopen the admin panel.</p>';return}
-  $("adminPanel").innerHTML=`<p class="meta">${P.length} users · ${L.length} listings · ${B.length} bookings · ${PR.length} projects</p>
-  <div class="panel" style="margin:16px 0"><h3>Our Projects</h3><p class="meta">Create portfolio entries, upload media, save articles, and control what is visible publicly.</p>${adminProjectsHtml(PR)}</div>
+  if(pr.error)console.error("Projects manager unavailable:",pr.error);
+  const projectCount=pr.error?"projects unavailable":`${PR.length} projects`;
+  const projectPanel=pr.error
+    ?`<p class="meta" style="color:var(--err)">The Projects manager could not load: ${esc(pr.error.message||"Supabase returned an error.")} Run the repository's PROJECTS_SETUP.sql in Supabase. Other admin tools remain available.</p>`
+    :adminProjectsHtml(PR);
+  $("adminPanel").innerHTML=`<p class="meta">${P.length} users · ${L.length} listings · ${B.length} bookings · ${projectCount}</p>
+  <div class="panel" style="margin:16px 0"><h3>Our Projects</h3><p class="meta">Create portfolio entries, upload media, save articles, and control what is visible publicly.</p>${projectPanel}</div>
    <h3>Listings</h3>${L.map(x=>`<div class="svc"><div><b>${esc(x.year+" "+x.make+" "+x.model)}</b><span class="meta">${sellerTypeForListing(x)==="yard"?"Car yard / dealer":"Private seller"} · KES ${fmt(x.price)} · ${esc(x.seller_name||"")} · +${esc(x.whatsapp||"")} · <span class="st">${esc(x.status)}</span></span></div><div class="acts">${x.status!=="approved"?`<button class="btn" data-a="approve" data-id="${x.id}">Approve</button>`:""}${x.status!=="rejected"?`<button class="btn ghost" data-a="reject" data-id="${x.id}">Reject</button>`:""}<button class="btn ghost" data-a="del" data-id="${x.id}">Delete</button></div></div>`).join("")||'<p class="meta">No listings yet.</p>'}
   <h3 style="margin-top:18px">Garage bookings</h3>${B.map(x=>`<div class="svc"><div><b>${esc(x.service)}</b><span class="meta">${esc(x.date)} · ${esc(x.name)} · ${esc(x.phone)} · ${esc(x.car||"")} · ${esc(x.ref)}</span></div><select data-bk="${x.id}" aria-label="Booking status">${["new","confirmed","done","cancelled"].map(s=>`<option${s===x.status?" selected":""}>${s}</option>`).join("")}</select></div>`).join("")||'<p class="meta">No bookings yet.</p>'}
   <h3 style="margin-top:18px">Users</h3>${P.map(u=>`<p class="meta">${esc(u.name||"")} · ${esc(u.email||"")} · ${esc(u.phone||"")}${u.is_admin?" · admin":""}</p>`).join("")}`;
