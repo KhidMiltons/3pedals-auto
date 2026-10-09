@@ -40,10 +40,15 @@ nav button[aria-selected="true"]{background:#d4a017;color:#0d0d0d;opacity:1}
 input,select,textarea{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 12px}
 label{display:block;font-weight:600;font-size:14px;margin:12px 0 4px}
 .count{color:var(--mute);margin:8px 0 14px}
-.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;padding-bottom:40px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;padding-bottom:40px}
 .card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;text-align:left;cursor:pointer;padding:0;min-width:0;box-shadow:0 8px 24px rgba(0,0,0,.07);transition:transform .28s cubic-bezier(.22,1,.36,1),box-shadow .28s ease,border-color .28s ease}
 .card:hover{transform:translateY(-7px);border-color:rgba(227,179,65,.65);box-shadow:0 18px 42px rgba(0,0,0,.15)}
 .card:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.card-main{display:flex;flex:1;min-width:0;flex-direction:column;color:inherit;text-decoration:none}
+.card-main:focus-visible,.yard-link:focus-visible{outline:2px solid var(--gold);outline-offset:-3px;border-radius:10px}
+.card-extra{padding:0 13px 13px}
+.card-extra .yard-line:first-child{margin-top:0}
+.card-extra .yard-link{color:var(--ink);font-size:12px}
 .swatch{height:148px;display:flex;align-items:flex-end;padding:10px 12px;font:700 34px "Playfair Display",Georgia,serif;color:rgba(255,255,255,.94);background-position:center;transition:transform .5s cubic-bezier(.22,1,.36,1),filter .35s ease}
 .card:hover .swatch{transform:scale(1.035);filter:saturate(1.08)}
 .card .body{padding:12px 13px 14px}
@@ -56,10 +61,10 @@ label{display:block;font-weight:600;font-size:14px;margin:12px 0 4px}
 .yard-line strong{color:var(--ink);overflow:hidden;text-overflow:ellipsis}
 .card-reveal{max-height:0;opacity:0;overflow:hidden;transition:max-height .3s ease,opacity .25s ease}
 .card:hover .card-reveal,.card:focus-visible .card-reveal{max-height:70px;opacity:1}
-@media(max-width:1300px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
-@media(max-width:1050px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:1300px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:1050px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:760px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.swatch{height:125px}.card h3{font-size:16px}}
-@media(max-width:480px){.grid{grid-template-columns:1fr 1fr}.swatch{height:110px}.card .body{padding:10px}.price{font-size:18px}}
+@media(max-width:480px){.grid{grid-template-columns:1fr}.swatch{height:180px}.card .body{padding:12px}.price{font-size:19px}}
 .btn{background:var(--gold);color:var(--gold-ink);border:0;border-radius:6px;padding:11px 18px;font-weight:600;cursor:pointer}
 .btn.alt{background:var(--alt);color:var(--alt-ink)}
 .btn.ghost{background:none;border:1px solid var(--line);color:var(--ink)}
@@ -370,7 +375,7 @@ footer{color:var(--mute)!important}
 .card-reveal{margin-top:8px;font-size:11px;font-weight:800;letter-spacing:.03em;color:var(--gold);opacity:.78;transition:transform .25s ease,opacity .25s ease}
 .card:hover .card-reveal{opacity:1;transform:translateX(3px)}
 .yard-badge{z-index:3;box-shadow:0 6px 18px rgba(0,0,0,.18)}
-@media(min-width:1400px){#grid{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:14px!important}.card .body{padding:13px}.card h3{font-size:17px}.card .price{font-size:18px}.card .tag{font-size:10px;padding:4px 7px}}
+@media(min-width:1400px){#grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:16px!important}.card .body{padding:14px}.card h3{font-size:18px}.card .price{font-size:20px}.card .tag{font-size:11px;padding:4px 8px}}
 </style>
 
 <style id="auto-quote-rail">
@@ -440,6 +445,11 @@ main>section{contain:layout style}
   .hero h1{font-size:clamp(36px,12vw,52px)!important}
   .btn{min-height:44px}
   .grid{grid-template-columns:1fr!important}
+  #buy .hero h1{font-size:clamp(34px,9.5vw,46px)!important;line-height:1.08!important}
+  #buy .filters{gap:8px!important}
+  #buy #grid{grid-template-columns:1fr!important;gap:14px!important}
+  #buy .card .swatch{height:clamp(190px,58vw,250px)!important}
+  #buy .card .body{padding:14px!important}
   .filters{grid-template-columns:1fr!important}
   .filters input{grid-column:auto!important}
   .specs{grid-template-columns:1fr 1fr!important}
@@ -449,6 +459,7 @@ main>section{contain:layout style}
 }
 @media(hover:none){
   .tile:hover,.card:hover,.contact-card:hover,.project-card:hover{transform:none!important}
+  #buy .card-reveal{max-height:70px;opacity:1}
 }
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
@@ -1091,14 +1102,19 @@ function render(){
   $("count").textContent=r.length+(r.length===1?" car":" cars")+" found";
   $("grid").innerHTML=r.length?r.map(c=>{
     const isYard=c.seller&&c.seller.type==="yard",yardName=c.seller?.name||"Car yard",loc=c.seller?.location||"";
-    return `<button class="card" data-id="${c.id}" data-yard="${isYard?esc(yardName):""}">
+    const vehicleUrl=`vehicle.html?id=${encodeURIComponent(c.id)}`;
+    const yardUrl=`yard.html?name=${encodeURIComponent(yardName)}`;
+    return `<article class="card">
       ${isYard?`<span class="yard-badge">🏢 CAR YARD</span>`:""}
-      <div class="swatch${hasPh(c)}" style="background:${bgOf(c)}">${c.year}</div>
-      <div class="body"><h3>${esc(c.make)} ${esc(c.model)}</h3>
-      <div class="price">KES ${fmt(c.price)}</div>
-      <span class="tag">${fmt(c.km)} km</span><span class="tag">${esc(c.fuel||"N/A")}</span><span class="tag">${isYard?"Car yard / dealer":"Private seller"}</span>
-      ${isYard?`<div class="yard-line">🏢 <button type="button" class="yard-link" data-yard-name="${esc(yardName)}">${esc(yardName)}</button></div>${loc?`<div class="yard-line">📍 ${esc(loc)}</div>`:""}<div class="card-reveal"><span>View dealer profile </span></div>`:""}
-      </div></button>`;
+      <a class="card-main" href="${vehicleUrl}">
+        <div class="swatch${hasPh(c)}" style="background:${bgOf(c)}">${esc(c.year)}</div>
+        <div class="body"><h3>${esc(c.make)} ${esc(c.model)}</h3>
+        <div class="price">KES ${fmt(c.price)}</div>
+        <span class="tag">${fmt(c.km)} km</span><span class="tag">${esc(c.fuel||"N/A")}</span><span class="tag">${isYard?"Car yard / dealer":"Private seller"}</span>
+        </div>
+      </a>
+      ${isYard?`<div class="card-extra"><div class="yard-line">🏢 <a class="yard-link" href="${yardUrl}">${esc(yardName)}</a></div>${loc?`<div class="yard-line">📍 ${esc(loc)}</div>`:""}<div class="card-reveal">View dealer profile</div></div>`:""}
+    </article>`;
   }).join("") :'<p class="meta">No cars match these filters. Clear the search or raise the price limit.</p>';
 }
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -1106,11 +1122,6 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",
 $("make").addEventListener("change",()=>{updateBuyFilters();render()});
 $("model").addEventListener("change",()=>{updateBuyFilters();render()});
 $("variant").addEventListener("change",render);
-$("grid").onclick=e=>{
-  const y=e.target.closest("[data-yard-name]");
-  if(y){e.stopPropagation();window.location.href=`yard.html?name=${encodeURIComponent(y.dataset.yardName)}`;return}
-  const b=e.target.closest(".card");if(b)window.location.href=`vehicle.html?id=${encodeURIComponent(b.dataset.id)}`;
-};
 
 function detail(id){
   const c=cars.find(x=>x.id===id),d=$("dlg"),s=c.seller||{},ph=c.photos||[];
