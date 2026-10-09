@@ -377,7 +377,7 @@ footer{border-color:var(--line);background:linear-gradient(180deg,transparent,rg
     <button role="tab" data-tab="book" aria-selected="false">Services &amp; booking</button>
     <button role="tab" data-tab="roadside" aria-selected="false">Mobile mechanic</button>
     <button role="tab" data-tab="mechanics" aria-selected="false">Verified mechanics</button>
-    <a class="navlink" id="cLink" href="index.html">Cars for sale</a>
+    <a class="navlink" id="cLink" href="/">Cars for sale</a>
   </nav>
 </div></header>
 
@@ -393,7 +393,7 @@ footer{border-color:var(--line);background:linear-gradient(180deg,transparent,rg
     <button class="tile" data-go="roadside"><h3>Roadside assistance</h3><span class="meta">Request a mobile mechanic at your location</span></button>
     <button class="tile" data-go="mechanics"><h3>Verified mechanics</h3><span class="meta">Find a specialist for your car</span></button>
     <button class="tile" id="inspTile"><h3>Pre-purchase inspection</h3><span class="meta">Get a car checked before you buy</span></button>
-    <a class="tile" id="cTile" href="index.html"><h3>Cars for sale</h3><span class="meta">Browse 3 Pedals Auto KE listings</span></a>
+    <a class="tile" id="cTile" href="/"><h3>Cars for sale</h3><span class="meta">Browse 3 Pedals Auto KE listings</span></a>
   </div>
   <div class="panel contact"><h2>Visit or contact the garage</h2>
     <div class="svc"><div><b>WhatsApp</b><span class="meta">Fastest way to reach us</span></div><a id="garageWhatsappContact" href="https://wa.me/254791961807" target="_blank" rel="noopener">+254 791 961 807</a></div>
@@ -407,7 +407,7 @@ footer{border-color:var(--line);background:linear-gradient(180deg,transparent,rg
   <div class="cols">
     <div class="panel" style="margin:0"><h2 style="margin-bottom:6px">Services</h2><div id="svcList"></div></div>
     <div class="panel" style="margin:0"><h2>Book a slot</h2>
-      <p class="note" id="loginNote" hidden style="border-color:var(--gold);color:var(--ink);font-weight:500">You need an account to book. <a id="loginLink" href="index.html#login" style="color:var(--blue);font-weight:600">Log in or create one</a>, then come back here.</p>
+      <p class="note" id="loginNote" hidden style="border-color:var(--gold);color:var(--ink);font-weight:500">You need an account to book. <a id="loginLink" href="/#login" style="color:var(--blue);font-weight:600">Log in or create one</a>, then come back here.</p>
       <form onsubmit="return false">
         <label for="bSvc">Service</label><select id="bSvc"></select>
         <label for="bCar">Your car</label><input id="bCar" placeholder="e.g. 2015 Mazda Demio, or a car you want checked">
@@ -436,7 +436,7 @@ footer{border-color:var(--line);background:linear-gradient(180deg,transparent,rg
 <script src="config.js"></script>
 <script>
 // Where the separate cars-for-sale site lives. Change this if it is on another address.
-const CARS_URL="__TPA_CARS_URL__".indexOf("__")===0?"index.html":"__TPA_CARS_URL__";
+const CARS_URL="__TPA_CARS_URL__".indexOf("__")===0?"/":"__TPA_CARS_URL__";
 const fmt=n=>Number(n).toLocaleString("en-US");
 const $=id=>document.getElementById(id);
 $("cLink").href=CARS_URL;$("cTile").href=CARS_URL;
