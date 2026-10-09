@@ -29,6 +29,19 @@ main{padding:28px 0 60px}.crumb{color:var(--mute);font-size:14px;margin-bottom:1
   nav button,nav a.navlink { --dock-scale: 1 !important; }
 }
 </style>
+<style id="site-theme-and-hover">
+:root{--bg:#f3f4f6;--surface:rgba(255,255,255,.94);--ink:#111827;--mute:#64748b;--line:#dbe1e8;--blue:#9a7000;--gold:#b7a06a;--gold-ink:#111827;--alt:#17191c;--alt-ink:#f3f4f6}
+@media(prefers-color-scheme:dark){:root{--bg:#0b0f14;--surface:rgba(18,24,32,.94);--ink:#f3f4f6;--mute:#9aa6b2;--line:#27313d;--blue:#c9b784;--gold:#c9b784;--gold-ink:#111827;--alt:#f3f4f6;--alt-ink:#111827}}
+body{background:radial-gradient(ellipse at 12% -8%,rgba(183,160,106,.13),transparent 34%),radial-gradient(ellipse at 96% 20%,rgba(255,255,255,.035),transparent 30%),var(--bg);color:var(--ink)}
+header{position:sticky;top:0;z-index:10;background:rgba(8,10,13,.82);border-bottom:1px solid rgba(183,160,106,.2);box-shadow:0 8px 30px rgba(0,0,0,.22);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%)}
+.logo{color:#c9b784}.back{border-color:rgba(183,160,106,.26);border-radius:10px;background:rgba(255,255,255,.045);transition:transform .2s ease,border-color .2s ease,background .2s ease,color .2s ease,box-shadow .2s ease}
+.crumb{color:var(--mute)}.gallery{background:rgba(18,24,32,.84);border-color:rgba(183,160,106,.22);box-shadow:0 18px 48px rgba(0,0,0,.18)}.main-photo{background:#121820}.thumbs{background:rgba(18,24,32,.82)}.thumb{transition:transform .2s ease,border-color .2s ease,filter .2s ease}.thumb[aria-current="true"]{border-color:var(--gold)}
+.info{background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.015)),var(--surface);border-color:rgba(183,160,106,.22);box-shadow:0 18px 48px rgba(0,0,0,.2);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);transition:border-color .24s ease,box-shadow .24s ease}.eyebrow{color:var(--gold)}.price{color:var(--gold)}.status{box-shadow:0 5px 16px rgba(46,125,75,.12)}
+.spec{background:rgba(255,255,255,.025);border-color:rgba(183,160,106,.16)}.spec span{color:var(--mute)}.seller{border-color:rgba(183,160,106,.20)}.seller a,.info a:not(.btn){color:var(--gold);transition:color .2s ease}.note{border-color:rgba(183,160,106,.20);background:rgba(183,160,106,.06)}
+.btn{transition:transform .2s ease,box-shadow .2s ease,background .2s ease,border-color .2s ease,color .2s ease}.btn.gold{background:linear-gradient(135deg,#d5c18d,#b7a06a);color:#151515}.btn.dark{background:rgba(255,255,255,.08);color:var(--ink);border:1px solid var(--line)}.btn.ghost{background:rgba(255,255,255,.035);border-color:var(--line);color:var(--ink)}
+@media(hover:hover) and (pointer:fine){.back:hover{transform:translateY(-1px);border-color:rgba(183,160,106,.58);background:rgba(183,160,106,.10);color:#e5d6ad;box-shadow:0 8px 22px rgba(0,0,0,.18)}.logo:hover{color:#e5d6ad}.photo-step:hover{transform:translateY(-2px);background:rgba(183,160,106,.78);border-color:rgba(255,255,255,.4);box-shadow:0 8px 22px rgba(0,0,0,.25)}.thumb:hover{transform:translateY(-2px);filter:brightness(1.08)}.gallery:hover .main-photo{filter:saturate(1.04) brightness(1.025)}.info:hover{border-color:rgba(183,160,106,.4);box-shadow:0 22px 58px rgba(0,0,0,.26)}.btn:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(0,0,0,.24)}.info a:not(.btn):hover{color:#f0dfb0}}
+@media(prefers-reduced-motion:reduce){.back,.thumb,.photo-step,.btn,.info,.main-photo{transition:none!important}}
+</style>
 </head>
 <body>
 <header><div class="wrap head"><a class="logo" href="/">3 Pedals Auto KE</a><a class="back" href="index.html#buy">← Back to Buy</a></div></header>
