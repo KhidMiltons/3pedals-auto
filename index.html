@@ -563,6 +563,9 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
   #buy .yard-logo{width:24px;height:24px;flex-basis:24px}
 }
 </style>
+<style id="vehicle-photo-controls">
+.gal{position:relative;touch-action:pan-y;overscroll-behavior-x:contain}.gal .main{touch-action:pan-y;user-select:none;-webkit-user-drag:none}.gal .vehicle-step{position:absolute;top:calc(50% - 24px);z-index:3;width:44px;height:54px;padding:0;border:1px solid rgba(255,255,255,.24);border-radius:10px;background:rgba(12,13,14,.72);color:#fff;font-size:32px;line-height:1;display:grid;place-items:center;cursor:pointer;backdrop-filter:blur(10px)}.gal .vehicle-prev{left:10px}.gal .vehicle-next{right:10px}.gal .vehicle-count{position:absolute;right:10px;top:10px;z-index:3;padding:5px 8px;border-radius:6px;background:rgba(12,13,14,.72);color:#fff;font-size:12px;font-weight:700}dialog{overscroll-behavior:contain;touch-action:pan-y}body{overscroll-behavior-x:none}
+</style>
 </head>
 <body>
 <div class="auth-left" id="adminWrap" hidden><button id="adminOpen">Admin panel</button></div>
@@ -1240,11 +1243,7 @@ function detail(id){
   <p>${esc(c.desc||"")}</p>
   <p class="meta">Stay safe: view the car in person, check the logbook, and never pay before you have inspected it.</p>
   <div style="display:flex;gap:8px;flex-wrap:wrap">${wa}<button class="btn alt" id="insp">Book inspection at the garage</button><button class="btn ghost" id="cls">Close</button></div></div>`;
-  d.showModal();
-  d.querySelectorAll(".thumbs button").forEach(t=>t.onclick=()=>{
-    $("mainImg").src=ph[+t.dataset.i];
-    d.querySelectorAll(".thumbs button").forEach(x=>x.setAttribute("aria-current",x===t));
-  });
+  let photoIndex=0;const showPhoto=index=>{photoIndex=(index+ph.length)%ph.length;const image=$("mainImg"),counter=d.querySelector(".vehicle-count");if(image){image.src=ph[photoIndex];image.alt=`${c.make} ${c.model} — photo ${photoIndex+1} of ${ph.length}`}if(counter)counter.textContent=`${photoIndex+1} / ${ph.length}`;d.querySelectorAll(".thumbs button").forEach((button,i)=>button.setAttribute("aria-current",String(i===photoIndex)))};if(ph.length>1)d.querySelector(".gal").insertAdjacentHTML("beforeend",`<span class="vehicle-count">1 / ${ph.length}</span><button class="vehicle-step vehicle-prev" type="button" data-vehicle-step="-1" aria-label="Previous photo">‹</button><button class="vehicle-step vehicle-next" type="button" data-vehicle-step="1" aria-label="Next photo">›</button>`);d.showModal();d.querySelectorAll(".thumbs button").forEach(button=>button.onclick=()=>showPhoto(+button.dataset.i));d.querySelectorAll("[data-vehicle-step]").forEach(button=>button.onclick=()=>showPhoto(photoIndex+Number(button.dataset.vehicleStep)));
   $("cls").onclick=()=>d.close();
   $("insp").onclick=()=>{const q="service="+encodeURIComponent("Pre-purchase inspection")+"&car="+encodeURIComponent(`${c.year} ${c.make} ${c.model}`);(window.top||window).location.href=GARAGE_URL+(GARAGE_URL.includes("?")?"&":"?")+q};
 }
