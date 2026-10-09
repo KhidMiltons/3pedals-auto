@@ -679,7 +679,8 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
       <div><label for="sFuel">Fuel</label><select id="sFuel"><option>Petrol</option><option>Diesel</option><option>Hybrid</option><option>Electric</option></select></div>
     </div>
     <label for="sDesc">Description</label><textarea id="sDesc" rows="3" placeholder="Service history, condition, reason for selling"></textarea>
-    <label for="sPhotos">Car photos (1 to 6)</label><input id="sPhotos" type="file" accept="image/*" multiple>
+    <label for="sPhotos">Car photos (up to 15)</label><input id="sPhotos" type="file" accept="image/*" multiple>
+    <p id="sPhotoStatus" class="meta" aria-live="polite">0 of 15 photos selected. You can add up to 15 photos.</p>
     <div id="prev" class="prev" aria-live="polite"></div>
     <label for="sWa">WhatsApp number</label><input id="sWa" type="tel" placeholder="0712 345 678 or +254712345678">
     <p class="meta">Buyers tap a button to chat with you on this number.</p>
@@ -1275,6 +1276,7 @@ async function sendForm(type,data,hp){
 }
 // Sell
 let photos=[];
+const LISTING_PHOTO_LIMIT=15;
 const modeYard=()=>accountType()==="yard";
 function sellMode(){const yard=modeYard();$("yardFields").hidden=!yard;$("privFields").hidden=yard;if($("sellTypeLabel"))$("sellTypeLabel").textContent=yard?"Car yard / dealer":"Private seller"}
 function normWa(raw){
@@ -1312,6 +1314,7 @@ populateSellVehicleFilters();
 
 function renderPhotoPreviews(){
   const box=$("prev");box.innerHTML="";
+  $("sPhotoStatus").textContent=`${photos.length} of ${LISTING_PHOTO_LIMIT} photos selected.${photos.length<LISTING_PHOTO_LIMIT?` ${LISTING_PHOTO_LIMIT-photos.length} remaining.`:" Photo limit reached."}`;
   photos.forEach((x,index)=>{
     const wrap=document.createElement("div");wrap.className="photo-item";
     const im=new Image();im.src=x;im.alt="Selected photo "+(index+1);
@@ -1322,9 +1325,10 @@ function renderPhotoPreviews(){
 }
 $("sPhotos").onchange=async e=>{
   const err=$("sErr"),all=[...e.target.files];err.textContent="";
-  if(all.length>6)err.textContent="Only the first 6 photos are used.";
-  for(const f of all.slice(0,6)){
-    if(photos.length>=6)break;
+  const remaining=LISTING_PHOTO_LIMIT-photos.length;
+  if(all.length>remaining)err.textContent=`You can add ${remaining} more photo${remaining===1?"":"s"}. Extra files were not added.`;
+  for(const f of all.slice(0,remaining)){
+    if(photos.length>=LISTING_PHOTO_LIMIT)break;
     if(!f.type.startsWith("image/")||f.size>15*1024*1024){err.textContent="A file was skipped because it isn't an image or is over 15 MB.";continue}
     try{const x=await shrink(f);photos.push(x);renderPhotoPreviews()}
     catch(_){err.textContent="One photo couldn't be read. Try a JPG or PNG."}
