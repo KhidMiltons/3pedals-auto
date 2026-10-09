@@ -288,13 +288,30 @@ dialog.wide .in{max-height:80vh;overflow:auto}
 .journal-card-top.has-cover:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,9,10,.94),rgba(8,9,10,.06) 85%);z-index:2;pointer-events:none}
 .journal-card-top .journal-number,.journal-card-top .project-kicker,.journal-card-top h2{position:relative;z-index:3}
 .journal-card-top.has-cover .project-kicker,.journal-card-top.has-cover h2{color:#fff}
+.journal-grid{grid-template-columns:minmax(0,1fr)}
+.journal-entry{margin-bottom:4px}
+.journal-entry-media{position:relative;display:block;width:100%;height:100%;min-height:320px;padding:0;border:0;background:linear-gradient(145deg,#191b1e,#282a2d);cursor:pointer;overflow:hidden}
+.journal-entry-media img{width:100%;height:100%;min-height:320px;display:block;object-fit:cover;transition:transform .55s cubic-bezier(.22,1,.36,1)}
+.journal-entry-media:hover img{transform:scale(1.035)}
+.journal-entry-empty{min-height:320px;display:grid;place-items:center;background:radial-gradient(circle at 70% 25%,rgba(183,160,106,.16),transparent 32%),linear-gradient(145deg,#191b1e,#282a2d);color:#d6c28b;font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+.journal-entry .project-body{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:clamp(24px,4vw,42px)}
+.journal-entry .project-body h2{font-size:clamp(28px,3vw,40px);line-height:1.03;margin:10px 0 13px}
+.journal-entry .project-body p{line-height:1.75}
+.journal-entry .journal-read{margin-top:22px;padding:11px 17px;border:1px solid rgba(183,160,106,.34);border-radius:10px;color:#f2d995;background:rgba(255,255,255,.045);font-size:14px;font-weight:700;letter-spacing:0;text-transform:none;cursor:pointer}
+.journal-entry .journal-read:hover{background:rgba(183,160,106,.16);border-color:rgba(183,160,106,.55)}
 .journal-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0 0 24px}
 .journal-gallery figure{margin:0;overflow:hidden;border:1px solid var(--line);border-radius:12px;background:var(--surface-2)}
 .journal-gallery figure:first-child:nth-last-child(odd){grid-column:1/-1}
 .journal-gallery img{width:100%;height:clamp(150px,28vw,300px);display:block;object-fit:cover}
 .journal-gallery figcaption{padding:7px 10px;font-size:11px;color:var(--mute)}
-@media(max-width:900px){.journal-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:600px){.journal-intro{padding:22px;align-items:flex-start;flex-direction:column}.journal-intro h2{font-size:28px}.journal-grid{grid-template-columns:1fr}.journal-card{min-height:290px}.journal-gallery{grid-template-columns:1fr}.journal-gallery figure:first-child:nth-last-child(odd){grid-column:auto}.journal-gallery img{height:230px}}
+.journal-upload-box{padding:14px;border:1px solid rgba(183,160,106,.35);border-radius:12px;background:linear-gradient(145deg,rgba(183,160,106,.09),rgba(255,255,255,.025));margin:8px 0 12px}
+.journal-upload-box strong{display:block;margin-bottom:5px;color:var(--ink)}
+.journal-upload-box .meta{margin:0 0 10px}
+.journal-upload-preview{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:10px}
+.journal-upload-preview:empty{display:none}
+.journal-upload-preview img{width:100%;height:76px;object-fit:cover;border:1px solid var(--line);border-radius:8px;background:var(--surface-2)}
+@media(max-width:900px){.journal-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.journal-intro{padding:22px;align-items:flex-start;flex-direction:column}.journal-intro h2{font-size:28px}.journal-grid{grid-template-columns:1fr}.journal-card{min-height:290px}.journal-entry-media,.journal-entry-media img,.journal-entry-empty{min-height:230px}.journal-gallery{grid-template-columns:1fr}.journal-gallery figure:first-child:nth-last-child(odd){grid-column:auto}.journal-gallery img{height:230px}.journal-upload-preview{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
 /* ===== Premium Automotive / Apple-inspired polish ===== */
 :root{--premium-ease:cubic-bezier(.22,1,.36,1);--premium-shadow:0 18px 55px rgba(0,0,0,.14);--premium-glass:rgba(255,255,255,.075)}
@@ -494,6 +511,18 @@ main>section{contain:layout style}
 .auto-quote-rail{position:sticky!important;top:106px!important;left:auto!important;right:auto!important;bottom:auto!important;transform:none!important;width:auto!important;max-width:none!important;margin:0!important;z-index:auto!important}
 @media(max-width:980px){.home-with-quote{grid-template-columns:1fr!important}.auto-quote-rail{position:static!important;width:auto!important;max-width:none!important;margin:0 0 26px 0!important}}
 </style>
+<style id="journal-responsive-final">
+/* Final responsive rules for the article feed, reader and publishing controls. */
+#journalGrid{grid-template-columns:minmax(0,1fr)!important;min-width:0}
+.journal-entry{grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);align-items:stretch;min-width:0}
+.journal-entry-media,.journal-entry .project-body{min-width:0}
+.journal-entry .project-body h2,.journal-entry .project-body p{max-width:100%;overflow-wrap:anywhere}
+.journal-upload-box input[type="file"]{display:block;width:100%;min-height:44px;padding:9px;background:var(--surface-2);border:1px dashed rgba(183,160,106,.55);border-radius:10px}
+dialog:has(.journal-modal){width:min(920px,calc(100vw - 32px));max-width:920px;max-height:calc(100dvh - 32px);overflow-y:auto;overscroll-behavior:contain}
+@media(max-width:760px){.journal-entry{display:block}.journal-entry-media,.journal-entry-media img,.journal-entry-empty{height:auto;min-height:clamp(210px,55vw,360px)}.journal-entry-media img{height:clamp(210px,55vw,360px)}.journal-entry .project-body{padding:clamp(20px,5vw,30px)}}
+@media(max-width:520px){.journal-intro{margin-bottom:22px}.journal-grid{gap:14px;padding-bottom:36px}.journal-entry{border-radius:14px}.journal-entry .project-body h2{font-size:clamp(26px,8vw,34px)}.journal-entry .project-body p{font-size:15px;line-height:1.65}.journal-entry .journal-read{min-height:44px;margin-top:18px}.journal-gallery{grid-template-columns:1fr;gap:8px}.journal-gallery img{height:clamp(190px,65vw,270px)}.journal-upload-box{padding:12px}.journal-upload-preview{grid-template-columns:repeat(2,minmax(0,1fr))}dialog:has(.journal-modal){width:calc(100vw - 20px)!important;max-width:calc(100vw - 20px)!important;max-height:calc(100dvh - 24px)!important}dialog:has(.journal-modal) .in{padding:16px!important}.journal-modal .article-head h2{font-size:clamp(28px,8vw,40px);line-height:1.02}.journal-modal .article-body{font-size:16px;line-height:1.72}}
+@media(prefers-reduced-motion:reduce){.journal-entry-media img{transition:none}}
+</style>
 </head>
 <body>
 <div class="auth-left" id="adminWrap" hidden><button id="adminOpen">Admin panel</button></div>
@@ -605,12 +634,12 @@ main>section{contain:layout style}
 
 
 <section id="projects" hidden>
-  <div class="hero"><span class="eyebrow">OUR PROJECTS</span><h1>Real work. Real cars. Real stories.</h1><p>See what the 3 Pedals team has been working on — workshop work, vehicle builds, photography, videos and practical automotive stories.</p></div>
+  <div class="hero"><span class="eyebrow">OUR PROJECTS</span><h1>Real work. Real cars. Real stories.</h1><p>Watch the 3 Pedals team at work — workshop projects, vehicle builds, restorations and life around the garage.</p></div>
   <div id="publicProjects" class="project-grid"><div class="project-public-empty"><h3>Loading our latest work…</h3><p class="meta">Published projects will appear here.</p></div></div>
 </section>
 
 <section id="journal" hidden>
-  <div class="hero journal-hero"><span class="eyebrow">3 PEDALS JOURNAL</span><h1>For the people who love the drive.</h1><p>Automotive stories, buying advice, workshop knowledge, classics, ownership experiences and the details that make cars worth talking about.</p></div>
+  <div class="hero journal-hero"><span class="eyebrow">3 PEDALS JOURNAL</span><h1>For the people who love the drive.</h1><p>Automotive features, buying advice, workshop knowledge and classic-car stories — told with the photos and details behind every drive.</p></div>
   <div id="journalGrid" class="journal-grid"><div class="project-public-empty"><h3>Loading the latest stories…</h3><p class="meta">Published articles will appear here.</p></div></div>
 </section>
 
@@ -902,10 +931,10 @@ function renderJournal(list){
   const box=$("journalGrid");
   const articles=list.filter(p=>p.type==="article"&&p.body);
   if(!articles.length){box.innerHTML='<div class="project-public-empty" style="grid-column:1/-1"><h3>The Journal is coming soon.</h3><p class="meta">Our first automotive stories will appear here once published by the 3 Pedals team.</p></div>';return}
-  box.innerHTML=articles.map((p,i)=>{const cover=mediaItemsForProject(p).find(m=>m.type!=="video"&&!String(m.mime||"").startsWith("video/"));return `<button class="journal-card" data-journal-id="${esc(p.id)}">
-    <div class="journal-card-top${cover?" has-cover":""}">${cover?`<img class="journal-cover" src="${esc(cover.url)}" alt="" loading="lazy">`:""}<span class="journal-number">${String(i+1).padStart(2,"0")}</span><span class="project-kicker">${esc(p.category||"Automotive Journal")}</span><h2>${esc(p.title)}</h2></div>
-    <div class="journal-card-body"><div class="journal-meta"><span>3 PEDALS JOURNAL</span>${p.created_at?`<span>·</span><span>${esc(new Date(p.created_at).toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"}))}</span>`:""}</div><p>${esc(p.description||"A story for people who love cars.")}</p><span class="journal-read">Read story </span></div>
-  </button>`}).join("");
+  box.innerHTML=articles.map(p=>{const photos=mediaItemsForProject(p).filter(m=>m.type!=="video"&&!String(m.mime||"").startsWith("video/"));const cover=photos[0];return `<article class="project-card project-featured journal-entry">
+    <button class="journal-entry-media" type="button" data-journal-id="${esc(p.id)}" aria-label="Read ${esc(p.title)}">${cover?`<img src="${esc(cover.url)}" alt="${esc(p.title)}" loading="lazy">`:`<span class="journal-entry-empty">3 Pedals Journal</span>`}</button>
+    <div class="project-body"><span class="project-kicker">${esc(p.category||"Automotive Journal")}</span><h2>${esc(p.title)}</h2><div class="journal-meta"><span>3 PEDALS JOURNAL</span>${p.created_at?`<span>·</span><span>${esc(new Date(p.created_at).toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"}))}</span>`:""}${photos.length?`<span>·</span><span>${photos.length} photos</span>`:""}</div><p>${esc(p.description||"A story for people who love cars.")}</p><button class="journal-read" type="button" data-journal-id="${esc(p.id)}">Read more</button></div>
+  </article>`}).join("");
   box.querySelectorAll("[data-journal-id]").forEach(b=>b.onclick=()=>openJournalArticle(articles.find(p=>String(p.id)===b.dataset.journalId)));
 }
 function openJournalArticle(p){
@@ -942,10 +971,7 @@ function projectFormHtml(p={},kind=p.type==="article"?"article":"video"){
       <label for="pDescription">Short description</label><textarea id="pDescription" maxlength="500" rows="3" placeholder="What should visitors know about this project?">${esc(p.description||"")}</textarea>
       ${isArticle?`<label for="pBody">Article content</label><textarea id="pBody" rows="10" required placeholder="Write the full story here…">${esc(p.body||"")}</textarea>`:""}
       <div id="mediaWrap">
-        <label for="pMedia">${isArticle?"Article photos (2–6)":"Project videos"}${p.id?" — add or replace":" — upload"}</label>
-        <input id="pMedia" type="file" ${isArticle?`accept="image/jpeg,image/png,image/webp,image/*"`:`accept="video/mp4,video/webm,video/quicktime,video/*"`} multiple ${p.id?"":"required"}>
-        <p class="project-form-note">${isArticle?"Upload 2 to 6 photos to illustrate this journal story. JPG, PNG or WebP; up to 12 MB per photo.":"Upload up to 6 project videos. MP4 (H.264) is recommended; up to 100 MB per video."}</p>
-        ${count?`<div class="project-admin-media-note"><span>${count} existing media item${count===1?"":"s"}</span><span>New files replace the existing gallery</span></div>`:""}
+        ${isArticle?`<div class="journal-upload-box"><strong>🖼 Add photos to this article</strong><p class="meta">Select 2–6 photos (JPG, PNG or WebP; up to 12 MB each). They’ll appear in the article gallery.</p><label for="pMedia">Choose article photos</label><input id="pMedia" type="file" accept="image/jpeg,image/png,image/webp,image/*" multiple ${p.id?"":"required"}>${count?`<div class="project-admin-media-note"><span>${count} current photo${count===1?"":"s"}</span><span>Choosing new photos replaces them</span></div><div class="journal-upload-preview">${items.filter(m=>m.type!=="video"&&!String(m.mime||"").startsWith("video/")).slice(0,6).map(m=>`<img src="${esc(m.url)}" alt="Current article photo" loading="lazy">`).join("")}</div>`:""}<p class="project-form-note" id="journalPhotoStatus" aria-live="polite">${p.id&&count?"Current article photos are shown above. Choose 2–6 new photos only if replacing the gallery.":"No article photos selected yet."}</p><div class="journal-upload-preview" id="journalPhotoPreview"></div></div>`:`<label for="pMedia">Project videos${p.id?" — add or replace":" — upload"}</label><input id="pMedia" type="file" accept="video/mp4,video/webm,video/quicktime,video/*" multiple ${p.id?"":"required"}><p class="project-form-note">Upload up to 6 project videos. MP4 (H.264) is recommended; up to 100 MB per video.</p>${count?`<div class="project-admin-media-note"><span>${count} current video${count===1?"":"s"}</span><span>New videos replace the gallery</span></div>`:""}`}
         <progress id="pProgress" class="project-upload-progress" value="0" max="100" hidden></progress>
       </div>
       ${p.media_url?`<p class="project-form-note">Current media is already attached. Leave the upload empty to keep it.</p>`:""}
@@ -1052,6 +1078,16 @@ function bindProjectAdmin(PR){
 function bindProjectForm(existing){
   const input=$("pMedia"),isArticle=$("projectForm").dataset.kind==="article";
   if(input){input.multiple=true;input.accept=isArticle?"image/jpeg,image/png,image/webp,image/*":"video/mp4,video/webm,video/quicktime,video/*";input.required=!existing||!mediaItemsForProject(existing).length}
+  if(input&&isArticle){
+    let previewUrls=[];
+    input.addEventListener("change",()=>{
+      previewUrls.forEach(url=>URL.revokeObjectURL(url));previewUrls=[];
+      const files=[...input.files],preview=$("journalPhotoPreview"),status=$("journalPhotoStatus");preview.replaceChildren();
+      if(!files.length){status.textContent=existing&&mediaItemsForProject(existing).length?"Current article photos are shown above. Choose 2–6 new photos only if replacing the gallery.":"No article photos selected yet.";return}
+      status.textContent=files.length<2||files.length>6?`Selected ${files.length} photo${files.length===1?"":"s"} — choose between 2 and 6.`:`${files.length} photos selected. These will be added to the article gallery when you save.`;
+      files.slice(0,6).forEach(file=>{const url=URL.createObjectURL(file),img=document.createElement("img");previewUrls.push(url);img.src=url;img.alt="Selected article photo preview";preview.appendChild(img)});
+    });
+  }
   $("projectForm")?.addEventListener("submit",()=>saveProject(existing));
   $("projectCancel")?.addEventListener("click",()=>openAdmin());
 }
