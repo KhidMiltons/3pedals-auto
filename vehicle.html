@@ -38,10 +38,16 @@ const fmt=n=>Number(n||0).toLocaleString('en-KE');
 const qs=new URLSearchParams(location.search);const id=qs.get('id');
 function waNumber(v){return String(v||'').replace(/[^\d]/g,'').replace(/^0/,'254');}
 function vehicleTitle(r){return `${r.year||''} ${r.make||''} ${r.model||''}`.replace(/\s+/g,' ').trim()}
-function share(){
-  const title=vehicleTitle(window.__listing);
-  if(navigator.share){navigator.share({title, text:`${title} — KES ${fmt(window.__listing.price)} on 3 Pedals Auto KE`, url:location.href}).catch(()=>{});return}
-  navigator.clipboard?.writeText(location.href).then(()=>alert('Vehicle link copied.')).catch(()=>prompt('Copy this vehicle link:',location.href));
+async function copyText(text){
+  try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text);return true}}catch(_e){}
+  try{const field=document.createElement('textarea');field.value=text;field.setAttribute('readonly','');field.style.position='fixed';field.style.opacity='0';document.body.appendChild(field);field.select();const copied=document.execCommand('copy');field.remove();if(copied)return true}catch(_e){}
+  return false;
+}
+async function copyVehicleLink(){const url=new URL(location.href).href,feedback=$('shareFeedback');if(await copyText(url)){feedback.textContent='Vehicle link copied — ready to share.';return}prompt('Copy this vehicle link:',url)}
+async function share(){
+  const listing=window.__listing,title=vehicleTitle(listing),url=new URL(location.href).href,text=`${title} — KES ${fmt(listing.price)} on 3 Pedals Auto KE`;
+  if(navigator.share){try{await navigator.share({title,text,url});return}catch(error){if(error?.name==='AbortError')return}}
+  await copyVehicleLink();
 }
 function render(r){
   window.__listing=r;
@@ -65,10 +71,11 @@ function render(r){
     mapUrl?`<a class="btn ghost" href="${esc(mapUrl)}" target="_blank" rel="noopener">📍 Get directions to this yard</a>`:'',
     yardLink
   ].join('');
-  $('app').outerHTML=`<div class="vehicle"><div>${gallery}</div><article class="info"><span class="eyebrow">3 Pedals Auto KE · Approved listing</span><h1>${esc(r.make)} ${esc(r.model)} <span class="year">${esc(r.year||'')}</span></h1><div class="price">KES ${fmt(r.price)}</div><span class="status">Available to enquire</span><div class="ref">Vehicle reference: <strong>${ref}</strong></div><div class="specs"><div class="spec"><span>Mileage</span><strong>${fmt(r.km)} km</strong></div><div class="spec"><span>Fuel</span><strong>${esc(r.fuel||'Not specified')}</strong></div><div class="spec"><span>Make</span><strong>${esc(r.make||'')}</strong></div><div class="spec"><span>Model / Variant</span><strong>${esc(r.model||'')}</strong></div></div><p class="desc">${esc(r.description||'No description provided.')}</p><div class="seller"><h3>${isYard?"Car Yard":"Seller"}</h3><p><strong>${esc(sellerName)}</strong></p>${sellerBits}</div><div class="actions">${wa?`<a class="btn gold" href="https://wa.me/${esc(wa)}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">💬 WhatsApp Enquiry</a>`:''}${phone?`<a class="btn dark" href="tel:${esc(waNumber(phone))}">📞 Call Seller</a>`:''}<button class="btn ghost" type="button" id="shareBtn">↗ Share vehicle</button><button class="btn ghost" type="button" id="copyBtn">⧉ Copy details</button><a class="btn ghost" href="/inventory">← More cars</a></div><div class="note">For your safety, inspect the vehicle in person, verify ownership documents and complete payment only after you are satisfied with the car and paperwork.</div></article></div>`;
+  $('app').outerHTML=`<div class="vehicle"><div>${gallery}</div><article class="info"><span class="eyebrow">3 Pedals Auto KE · Approved listing</span><h1>${esc(r.make)} ${esc(r.model)} <span class="year">${esc(r.year||'')}</span></h1><div class="price">KES ${fmt(r.price)}</div><span class="status">Available to enquire</span><div class="ref">Vehicle reference: <strong>${ref}</strong></div><div class="specs"><div class="spec"><span>Mileage</span><strong>${fmt(r.km)} km</strong></div><div class="spec"><span>Fuel</span><strong>${esc(r.fuel||'Not specified')}</strong></div><div class="spec"><span>Make</span><strong>${esc(r.make||'')}</strong></div><div class="spec"><span>Model / Variant</span><strong>${esc(r.model||'')}</strong></div></div><p class="desc">${esc(r.description||'No description provided.')}</p><div class="seller"><h3>${isYard?"Car Yard":"Seller"}</h3><p><strong>${esc(sellerName)}</strong></p>${sellerBits}</div><div class="actions">${wa?`<a class="btn gold" href="https://wa.me/${esc(wa)}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">💬 WhatsApp Enquiry</a>`:''}${phone?`<a class="btn dark" href="tel:${esc(waNumber(phone))}">📞 Call Seller</a>`:''}<button class="btn ghost" type="button" id="shareBtn">↗ Share vehicle</button><button class="btn ghost" type="button" id="copyLinkBtn">⧉ Copy vehicle link</button><button class="btn ghost" type="button" id="copyBtn">Copy details</button><a class="btn ghost" href="/inventory">← More cars</a></div><span id="shareFeedback" class="meta" role="status" aria-live="polite"></span><div class="note">For your safety, inspect the vehicle in person, verify ownership documents and complete payment only after you are satisfied with the car and paperwork.</div></article></div>`;
   document.querySelectorAll('.thumb').forEach(b=>b.onclick=()=>{const i=+b.dataset.photo;$('mainPhoto').src=photos[i];document.querySelectorAll('.thumb').forEach(x=>x.setAttribute('aria-current',String(x===b))) });
   $('shareBtn').onclick=share;
-  $('copyBtn').onclick=()=>{const copy=`${title}\nKES ${fmt(r.price)}\nMileage: ${fmt(r.km)} km\nFuel: ${r.fuel||'Not specified'}\nVehicle reference: ${ref}\n${location.href}`;navigator.clipboard?.writeText(copy).then(()=>alert('Vehicle details copied.')).catch(()=>prompt('Copy vehicle details:',copy));};
+  $('copyLinkBtn').onclick=copyVehicleLink;
+  $('copyBtn').onclick=async()=>{const copy=`${title}\nKES ${fmt(r.price)}\nMileage: ${fmt(r.km)} km\nFuel: ${r.fuel||'Not specified'}\nVehicle reference: ${ref}\n${new URL(location.href).href}`;if(await copyText(copy))$('shareFeedback').textContent='Vehicle details copied.';else prompt('Copy vehicle details:',copy)};
   document.title=`${title} – 3 Pedals Auto KE`;
 }
 async function load(){
