@@ -5,6 +5,7 @@
 <base target="_top">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0d0d0d">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <meta name="color-scheme" content="light dark">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -478,13 +479,13 @@ main>section{contain:layout style}
   <nav role="tablist" aria-label="Sections">
     <button role="tab" data-tab="home" aria-selected="true">Home</button>
     <button role="tab" data-tab="buy" aria-selected="false">Buy a car</button>
-    <a class="navlink" href="inventory.html">Inventory </a>
+    <a class="navlink" href="/inventory">Inventory </a>
     <button role="tab" data-tab="sell" aria-selected="false">Sell your car</button>
     <button role="tab" data-tab="projects" aria-selected="false">Our projects</button>
     <button role="tab" data-tab="journal" aria-selected="false">3 Pedals Journal</button>
     <button role="tab" data-tab="about" aria-selected="false">About us</button>
     <button role="tab" data-tab="contact" aria-selected="false">Contact us</button>
-    <a class="navlink" id="gLink" href="garage.html">3 Pedals Garage </a>
+    <a class="navlink" id="gLink" href="/garage">3 Pedals Garage </a>
   </nav>
 </div></header>
 <div class="demo" id="demoBar" hidden>Demo mode: these are sample cars. Accounts, listings and bookings switch on once the site is connected to its database (see SETUP.md).</div>
@@ -507,12 +508,12 @@ main>section{contain:layout style}
   <p>Automotive Excellence Reimagined, For Those Who Appreciate the Drive.</p>
   <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
     <a class="btn wa" id="publicWhatsappHero" href="https://wa.me/254750495841?text=Hello%203%20Pedals%20Auto%20KE%2C%20I%27d%20like%20to%20enquire." target="_blank" rel="noopener">Chat on WhatsApp</a>
-    <a class="btn alt" href="garage.html">Visit 3 Pedals Garage </a>
+    <a class="btn alt" href="/garage">Visit 3 Pedals Garage </a>
   </div></div>
   <div class="tiles">
-    <a class="tile" href="inventory.html"><h3>Browse inventory</h3><span class="meta">View cars currently listed for sale</span></a>
+    <a class="tile" href="/inventory"><h3>Browse inventory</h3><span class="meta">View cars currently listed for sale</span></a>
     <button class="tile" data-go="sell"><h3>Sell your car</h3><span class="meta">List it in two minutes</span></button>
-    <a class="tile" id="gTile" href="garage.html"><h3>3 Pedals Garage</h3><span class="meta">Service, repairs and inspections</span></a>
+    <a class="tile" id="gTile" href="/garage"><h3>3 Pedals Garage</h3><span class="meta">Service, repairs and inspections</span></a>
     <button class="tile" id="accountTile"><h3>My account</h3><span class="meta">Manage your vehicles and bookings</span></button>
   </div>
   <div class="journal-intro"><div><span class="eyebrow">3 PEDALS JOURNAL</span><h2>Stories for people who genuinely love cars.</h2><p class="meta">Read buying guides, ownership stories, workshop knowledge, classic-car features, market insights and practical advice from the 3 Pedals team.</p></div><button class="btn alt" data-go="journal">Read the Journal </button></div>
@@ -636,7 +637,7 @@ let cars=[
  {make:"Toyota",model:"Prius",year:2017,price:1500000,km:83000,fuel:"Hybrid",desc:"Battery health report available on request."}
 ].map((c,i)=>({...c,id:String(i),color:colors[i%colors.length],seller:HOUSE,photos:[]}));
 // Where the separate garage site lives. Change this if the garage is on another address.
-const GARAGE_URL="__TPA_GARAGE_URL__".indexOf("__")===0?"garage.html":"__TPA_GARAGE_URL__";
+const GARAGE_URL="__TPA_GARAGE_URL__".indexOf("__")===0?"/garage":"__TPA_GARAGE_URL__";
 const $=id=>document.getElementById(id);
 $("gLink").href=GARAGE_URL;$("gTile").href=GARAGE_URL;
 
@@ -812,7 +813,7 @@ async function openAccount(){
   <p id="accProfileErr" class="meta" style="color:var(--err)"></p><div class="acts"><button class="btn" id="accSaveProfile">Save profile changes</button></div>
   <section class="account-tools"><h3>Login details</h3><div class="field-row"><div><label for="accEmail">Email address</label><input id="accEmail" type="email" value="${esc(me.email||"")}" autocomplete="email"></div><button class="btn ghost" id="accUpdateEmail" type="button">Change email</button></div><div class="field-row"><div><label for="accPassword">New password</label><input id="accPassword" type="password" minlength="8" autocomplete="new-password" placeholder="At least 8 characters"></div><button class="btn ghost" id="accUpdatePassword" type="button">Change password</button></div><p class="meta">Email changes require confirmation from your inbox.</p></section>
    ${isYard?`<section class="account-tools"><h3>Dealer fleet dashboard</h3><p class="meta">Manage vehicles listed by your yard or dealership.</p><div class="stats"><div><b>${L.length}</b><span>Total vehicles</span></div><div><b>${L.filter(x=>x.status==="approved").length}</b><span>Live listings</span></div><div><b>${L.filter(x=>x.status==="pending").length}</b><span>Awaiting review</span></div><div><b>${L.filter(x=>x.status==="sold").length}</b><span>Sold</span></div></div></section>`:""}<h3 style="margin-top:22px">${isYard?"Manage your vehicle fleet":"My listings"}</h3>${L.map(x=>`<div class="svc"><div><b>${esc(x.year+" "+x.make+" "+x.model)}</b><span class="meta">${sellerTypeForListing(x)==="yard"?"Car yard / dealer":"Private seller"} · KES ${fmt(x.price)} · <span class="st">${label[x.status]||esc(x.status)}</span></span></div><div class="acts">${x.status==="approved"?`<button class="btn ghost" data-sold="${x.id}">Mark as sold</button><button class="btn ghost" data-view="${x.id}">View listing</button>`:""}<button class="btn ghost" data-del="${x.id}">Delete</button></div></div>`).join("")||'<p class="meta">You have no listings yet.</p>'}
-  <div class="acts" style="margin-top:16px"><a class="btn alt" href="garage.html?section=book">Book a garage service</a></div><h3 style="margin-top:18px">My garage bookings and service tickets</h3>${B.map(x=>`<div class="svc"><div><b>${esc(x.service)}</b><span class="meta">Ticket ${esc(x.ref)} · ${esc(x.date)}${x.time_slot?" · "+esc(x.time_slot):""} · ${esc(x.car||"")}</span><span class="meta">Progress: ${esc(String(x.service_status||x.status).replaceAll("_"," "))}</span></div><span class="st">${esc(x.status)}</span></div>`).join("")||'<p class="meta">No bookings yet.</p>'}
+  <div class="acts" style="margin-top:16px"><a class="btn alt" href="/garage?section=book">Book a garage service</a></div><h3 style="margin-top:18px">My garage bookings and service tickets</h3>${B.map(x=>`<div class="svc"><div><b>${esc(x.service)}</b><span class="meta">Ticket ${esc(x.ref)} · ${esc(x.date)}${x.time_slot?" · "+esc(x.time_slot):""} · ${esc(x.car||"")}</span><span class="meta">Progress: ${esc(String(x.service_status||x.status).replaceAll("_"," "))}</span></div><span class="st">${esc(x.status)}</span></div>`).join("")||'<p class="meta">No bookings yet.</p>'}
   <section class="danger-zone"><h3>Delete account</h3><p class="meta">Permanently remove your account, listings, and bookings. This cannot be undone.</p><button class="btn ghost" id="accDeleteAccount" type="button">Permanently delete account</button></section>
   <div class="acts" style="margin-top:18px">${profile&&profile.is_admin?'<button class="btn" id="accAdmin">Open admin panel</button>':""}<button class="btn ghost" id="accOut">Sign out</button><button class="btn ghost" id="accClose">Close</button></div>`;
   $("accPhoto").onchange=e=>changeProfilePhoto(e.target.files[0]);
