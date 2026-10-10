@@ -49,7 +49,7 @@ label{display:block;font-weight:600;font-size:14px;margin:12px 0 4px}
 .card-extra{padding:0 13px 13px}
 .card-extra .yard-line:first-child{margin-top:0}
 .card-extra .yard-link{color:var(--ink);font-size:12px}
-.swatch{height:148px;display:flex;align-items:flex-end;padding:10px 12px;font:700 34px "Playfair Display",Georgia,serif;color:rgba(255,255,255,.94);background-position:center;background-repeat:no-repeat;background-size:contain!important;transition:transform .5s cubic-bezier(.22,1,.36,1),filter .35s ease}
+.swatch{height:148px;display:flex;align-items:flex-end;padding:10px 12px;position:relative;font:700 34px "Playfair Display",Georgia,serif;color:rgba(255,255,255,.94);background-position:center;background-repeat:no-repeat;background-size:contain!important;transition:transform .5s cubic-bezier(.22,1,.36,1),filter .35s ease}
 .card:hover .swatch{transform:scale(1.035);filter:saturate(1.08)}
 .card .body{padding:12px 13px 14px}
 .card h3{font-size:18px;line-height:1.15;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -192,6 +192,10 @@ footer .wrap{font-size:13px;text-align:center}
 .sell-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
 .sell-actions .btn{margin-top:0}
 .account-listing-photo{width:72px;height:52px;object-fit:cover;border-radius:7px;border:1px solid var(--line);margin-right:8px;vertical-align:middle}
+.seller-dashboard{display:grid;gap:18px;margin:18px 0}.seller-dashboard .account-tools{margin:0;padding:18px;border:1px solid var(--line);border-radius:14px;background:var(--surface-2)}.seller-listing{display:grid;grid-template-columns:76px minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}.seller-listing:last-child{border-bottom:0}.seller-listing-photo{width:76px;height:58px;object-fit:cover;border-radius:8px;background:#111}.seller-listing-main{min-width:0}.seller-listing-main strong{display:block}.seller-listing-actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}.seller-listing-actions .btn{margin:0}.promotion-package-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:12px 0}.promotion-package{padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);display:grid;gap:7px}.promotion-package strong{color:var(--gold)}.sale-summary-note{margin-top:8px}
+.seller-dashboard .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:9px;margin:12px 0}.seller-dashboard .stats>div{min-width:0;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}.seller-dashboard .stats b,.seller-dashboard .stats span{display:block}.seller-dashboard .stats b{font-size:20px;overflow-wrap:anywhere}.seller-dashboard .stats span{font-size:12px;color:var(--mute)}
+.promoted-tag{position:absolute;right:12px;top:12px;z-index:3;padding:5px 9px;border:1px solid rgba(227,179,65,.65);border-radius:999px;background:#171513;color:#e3c57b;font:800 11px/1.2 Manrope,system-ui,sans-serif;letter-spacing:.06em}
+@media(max-width:600px){.seller-listing{grid-template-columns:62px minmax(0,1fr)}.seller-listing-photo{width:62px;height:52px}.seller-listing-actions{grid-column:1/-1;justify-content:flex-start}.seller-listing-actions .btn{flex:1}}
 @media(max-width:600px){.profile-card{grid-template-columns:1fr}.profile-grid,.account-tools .field-row{grid-template-columns:1fr}}
 
 /* Give form action areas a consistent alignment */
@@ -918,11 +922,14 @@ async function openAccount(){
   const d=$("accDlg"),box=$("accBody");
   if(!d.open)d.showModal();
   box.innerHTML='<p class="meta">Loading…</p>';
-  const [l,b]=await Promise.all([
+  const [l,b,sales,promos,packages]=await Promise.all([
     sb.from("listings").select("*").eq("owner",me.id).order("created_at",{ascending:false}),
-    sb.from("bookings").select("*").eq("user_id",me.id).order("created_at",{ascending:false})]);
+    sb.from("bookings").select("*").eq("user_id",me.id).order("created_at",{ascending:false}),
+    sb.from("seller_sales").select("listing_id,reported_sale_price,currency,created_at").eq("seller_id",me.id).order("created_at",{ascending:false}),
+    sb.from("listing_promotions").select("id,listing_id,package_name,amount,status,payment_status,starts_at,expires_at,created_at").eq("seller_id",me.id).order("created_at",{ascending:false}),
+    sb.from("promotion_packages").select("id,name,description,amount,duration_days").eq("active",true).order("amount",{ascending:true})]);
   if(l.error){box.innerHTML=`<p class="meta" role="alert">We couldn't load your listings: ${esc(l.error.message)}. Please check the marketplace security SQL has been installed.</p><button class="btn ghost" id="accCloseLoadError" type="button">Close</button>`;$("accCloseLoadError").onclick=()=>d.close();return}
-  const L=l.data||[],B=b.data||[],label={pending:"Waiting for approval",approved:"Live",rejected:"Not approved",sold:"Sold"},avatar=profileAvatarUrl(),name=profileName(),phone=profilePhone(),isYard=accountType()==="yard";
+  const L=l.data||[],B=b.data||[],S=sales.data||[],PM=promos.data||[],PK=packages.data||[],label={pending:"Waiting for approval",approved:"Live",rejected:"Not approved",sold:"Sold"},avatar=profileAvatarUrl(),name=profileName(),phone=profilePhone(),isYard=accountType()==="yard",reportedSales=S.reduce((sum,x)=>sum+Number(x.reported_sale_price||0),0);
   box.innerHTML=`<div class="profile-card">
     <div class="profile-avatar">${avatar?`<img src="${esc(avatar)}" alt="Profile picture">`:esc(initialsFor(name,me.email))}</div>
     <div><h3 style="margin:0 0 4px">Your profile</h3><p class="meta" style="margin:0">${esc(me.email)}</p>
@@ -932,7 +939,11 @@ async function openAccount(){
   <div class="profile-grid"><div><label for="accName">Full name</label><input id="accName" value="${esc(name)}" autocomplete="name"></div><div><label for="accPhone">Phone number</label><input id="accPhone" value="${esc(phone)}" type="tel" autocomplete="tel"></div><div><label for="accType">Account type</label><select id="accType"><option value="private" ${accountType()==="private"?"selected":""}>Private seller</option><option value="yard" ${accountType()==="yard"?"selected":""}>Car yard / dealer</option></select></div></div>
   <p id="accProfileErr" class="meta" style="color:var(--err)"></p><div class="acts"><button class="btn" id="accSaveProfile">Save profile changes</button></div>
   <section class="account-tools"><h3>Login details</h3><div class="field-row"><div><label for="accEmail">Email address</label><input id="accEmail" type="email" value="${esc(me.email||"")}" autocomplete="email"></div><button class="btn ghost" id="accUpdateEmail" type="button">Change email</button></div><div class="field-row"><div><label for="accPassword">New password</label><input id="accPassword" type="password" minlength="8" autocomplete="new-password" placeholder="At least 8 characters"></div><button class="btn ghost" id="accUpdatePassword" type="button">Change password</button></div><p class="meta">Email changes require confirmation from your inbox.</p></section>
-   ${isYard?`<section class="account-tools"><h3>Dealer fleet dashboard</h3><p class="meta">Manage vehicles listed by your yard or dealership.</p><div class="stats"><div><b>${L.length}</b><span>Total vehicles</span></div><div><b>${L.filter(x=>x.status==="approved").length}</b><span>Live listings</span></div><div><b>${L.filter(x=>x.status==="pending").length}</b><span>Awaiting review</span></div><div><b>${L.filter(x=>x.status==="sold").length}</b><span>Sold</span></div></div></section>`:""}<h3 style="margin-top:22px">${isYard?"Manage your vehicle fleet":"My listings"}</h3>${L.map(x=>`<div class="svc"><div><b>${esc(x.year+" "+x.make+" "+x.model)}</b><span class="meta">${sellerTypeForListing(x)==="yard"?"Car yard / dealer":"Private seller"} · KES ${fmt(x.price)} · <span class="st">${label[x.status]||esc(x.status)}</span></span></div><div class="acts">${x.status==="approved"?`<button class="btn ghost" data-sold="${x.id}">Mark as sold</button><button class="btn ghost" data-view="${x.id}">View listing</button>`:""}<button class="btn ghost" data-del="${x.id}">Delete</button></div></div>`).join("")||'<p class="meta">You have no listings yet.</p>'}
+   <div class="seller-dashboard">
+    <section class="account-tools"><h3>Seller dashboard</h3><p class="meta">${isYard?"Your yard’s vehicles and activity":"Your vehicle listings and activity"}</p><div class="stats"><div><b>${L.length}</b><span>All listings</span></div><div><b>${L.filter(x=>x.status==="approved").length}</b><span>Live</span></div><div><b>${L.filter(x=>x.status==="pending").length}</b><span>Pending review</span></div><div><b>${L.filter(x=>x.status==="rejected").length}</b><span>Not approved</span></div><div><b>${L.filter(x=>x.status==="sold").length}</b><span>Sold</span></div><div><b>KES ${fmt(reportedSales)}</b><span>Seller-reported sales</span></div></div><p class="meta sale-summary-note">Sale amounts are reported by you and are not verified platform earnings or payouts.</p></section>
+    <section class="account-tools"><h3>Manage your listings</h3>${L.map(x=>`<div class="seller-listing"><img class="seller-listing-photo" src="${esc((Array.isArray(x.photos)&&x.photos[0])||"")}" alt="" loading="lazy"><div class="seller-listing-main"><strong>${esc(x.year+" "+x.make+" "+x.model)}</strong><span class="meta">KES ${fmt(x.price)} · ${Array.isArray(x.photos)?x.photos.length:0} photos · <span class="st">${label[x.status]||esc(x.status)}</span></span></div><div class="seller-listing-actions">${x.status==="approved"?`<button class="btn ghost" data-sold="${x.id}" data-title="${esc(x.year+" "+x.make+" "+x.model)}">Mark sold</button><button class="btn ghost" data-promote-listing="${x.id}">Promote</button>`:""}${x.status==="sold"?`<span class="meta">Sale: KES ${fmt(S.find(s=>String(s.listing_id)===String(x.id))?.reported_sale_price||0)}</span>`:""}${["approved","sold"].includes(x.status)?`<button class="btn ghost" data-view="${x.id}">View</button>`:""}<button class="btn ghost" data-del="${x.id}">Delete</button></div></div>`).join("")||'<p class="meta">You have no listings yet.</p>'}</section>
+    <section class="account-tools"><h3>Paid promotions</h3><p class="meta">Choose an active listing and package. M-Pesa STK Push payments stay pending until the secure payment callback is verified.</p>${PK.length?`<div class="promotion-package-grid">${PK.map(p=>`<div class="promotion-package"><strong>${esc(p.name)}</strong><span>${esc(p.description||`${p.duration_days} days featured`)}</span><b>KES ${fmt(p.amount)}</b><small class="meta">${Number(p.duration_days)} days</small></div>`).join("")}</div><label for="promoListing">Vehicle to promote</label><select id="promoListing"><option value="">Choose a live vehicle</option>${L.filter(x=>x.status==="approved").map(x=>`<option value="${esc(x.id)}">${esc(x.year+" "+x.make+" "+x.model)}</option>`).join("")}</select><label for="promoPackage">Promotion package</label><select id="promoPackage"><option value="">Choose a package</option>${PK.map(p=>`<option value="${esc(p.id)}">${esc(p.name)} · KES ${fmt(p.amount)} / ${Number(p.duration_days)} days</option>`).join("")}</select><label for="promoPhone">M-Pesa phone number</label><input id="promoPhone" type="tel" autocomplete="tel" value="${esc(phone)}" placeholder="07XX XXX XXX"><button class="btn" type="button" id="startPromotion">Pay with M-Pesa</button><p class="meta" id="promotionMessage" aria-live="polite"></p>`:'<p class="meta">Promotion packages are not configured yet. Please check back later.</p>'}${PM.length?`<h4>Promotion history</h4>${PM.map(p=>`<div class="svc"><div><b>${esc(p.package_name||"Vehicle promotion")}</b><span class="meta">${esc(L.find(x=>String(x.id)===String(p.listing_id))?.make||"")} · KES ${fmt(p.amount)} · ${esc(p.payment_status||p.status)}</span></div><span class="st">${esc(p.status)}</span></div>`).join("")}`:''}</section>
+   </div>
   <div class="acts" style="margin-top:16px"><a class="btn alt" href="/garage?section=book">Book a garage service</a></div><h3 style="margin-top:18px">My garage bookings and service tickets</h3>${B.map(x=>`<div class="svc"><div><b>${esc(x.service)}</b><span class="meta">Ticket ${esc(x.ref)} · ${esc(x.date)}${x.time_slot?" · "+esc(x.time_slot):""} · ${esc(x.car||"")}</span><span class="meta">Progress: ${esc(String(x.service_status||x.status).replaceAll("_"," "))}</span></div><span class="st">${esc(x.status)}</span></div>`).join("")||'<p class="meta">No bookings yet.</p>'}
   <section class="danger-zone"><h3>Delete account</h3><p class="meta">Permanently remove your account, listings, and bookings. This cannot be undone.</p><button class="btn ghost" id="accDeleteAccount" type="button">Permanently delete account</button></section>
   <div class="acts" style="margin-top:18px">${profile&&profile.is_admin?'<button class="btn" id="accAdmin">Open admin panel</button>':""}<button class="btn ghost" id="accOut">Sign out</button><button class="btn ghost" id="accClose">Close</button></div>`;
@@ -943,12 +954,21 @@ async function openAccount(){
   $("accUpdatePassword").onclick=updateAccountPassword;
   $("accDeleteAccount").onclick=permanentlyDeleteAccount;
   box.querySelectorAll("[data-sold]").forEach(bt=>bt.onclick=async()=>{
-    if(!confirm("Mark this vehicle as SOLD? It will immediately be removed from the public Buy inventory."))return;
+    const salePrice=Number(prompt(`Enter the seller-reported final sale price in KES for ${bt.dataset.title||"this vehicle"}:`));
+    if(!Number.isFinite(salePrice)||salePrice<=0){alert("Enter a valid sale price greater than zero.");return}
+    if(!confirm("Mark this vehicle as SOLD? It will immediately be removed from the public Buy inventory. The sale amount is seller-reported, not a verified payout."))return;
     bt.disabled=true;bt.textContent="Updating…";
-    const {data,error}=await sb.rpc("mark_listing_sold",{listing_id:bt.dataset.sold});
+    const {data,error}=await sb.rpc("mark_listing_sold",{listing_id:bt.dataset.sold,reported_price:salePrice});
     if(error){alert(error.message||"Could not mark this vehicle as sold.");bt.disabled=false;bt.textContent="Mark as sold";return}
     if(data!==true){alert("We could not mark this vehicle as sold. Please try again.");bt.disabled=false;bt.textContent="Mark as sold";return}
     openAccount();loadListings();
+  });
+  box.querySelectorAll("[data-promote-listing]").forEach(bt=>bt.onclick=()=>{const select=$("promoListing");if(select){select.value=bt.dataset.promoteListing;$("promoPackage")?.focus();scrollTo({top:select.getBoundingClientRect().top+scrollY-100,behavior:"smooth"})}});
+  $("startPromotion")?.addEventListener("click",async()=>{
+    const listing_id=$("promoListing").value,package_id=$("promoPackage").value,phone_number=$("promoPhone").value.trim(),msg=$("promotionMessage"),button=$("startPromotion");
+    if(!listing_id||!package_id||!phone_number){msg.textContent="Choose a live vehicle and package, then enter your M-Pesa number.";return}
+    button.disabled=true;msg.textContent="Requesting M-Pesa payment prompt…";
+    try{const {data,error}=await sb.functions.invoke("create-promotion-payment",{body:{listing_id,package_id,phone_number}});if(error)throw error;msg.textContent=data?.message||"Check your phone and approve the M-Pesa prompt. Waiting for secure confirmation…";if(data?.promotion_id){for(let i=0;i<12;i++){await new Promise(resolve=>setTimeout(resolve,5000));const {data:state}=await sb.from("listing_promotions").select("status,payment_status").eq("id",data.promotion_id).maybeSingle();if(state?.payment_status==="verified"||state?.payment_status==="failed"){openAccount();return}}msg.textContent="Payment is still awaiting confirmation. You can close this dashboard and check the promotion history again shortly."}}catch(e){msg.textContent=e.message||"Could not start M-Pesa payment. Please try again."}finally{button.disabled=false}
   });
   box.querySelectorAll("[data-view]").forEach(bt=>bt.onclick=()=>{window.location.href=`vehicle.html?id=${encodeURIComponent(bt.dataset.view)}`});
   box.querySelectorAll("[data-del]").forEach(bt=>bt.onclick=async()=>{
@@ -1184,13 +1204,15 @@ function sellerTypeForListing(r){
   if(["private","private seller","individual"].includes(type))return "private";
   return [r?.yard_name,r?.yard_location,r?.yard_contact].some(v=>String(v||"").trim())?"yard":"private";
 }
-const rowToCar=(r,i)=>({id:r.id,make:String(r.make||"").trim(),model:String(r.model||"").trim(),year:r.year,price:r.price,km:r.km||0,fuel:r.fuel||"",desc:r.description||"",photos:r.photos||[],color:colors[i%colors.length],
+const rowToCar=(r,i)=>({id:r.id,make:String(r.make||"").trim(),model:String(r.model||"").trim(),year:r.year,price:r.price,km:r.km||0,fuel:r.fuel||"",desc:r.description||"",photos:r.photos||[],color:colors[i%colors.length],isPromoted:false,
   seller:{type:sellerTypeForListing(r),name:r.yard_name||r.seller_name,contact:r.contact||r.yard_contact,location:r.yard_location||r.location,phone:r.seller_phone||r.phone,email:r.seller_email||r.email,web:r.web||r.yard_web,whatsapp:r.whatsapp,logo:r.yard_logo_url||r.seller_logo_url||""}});
 async function loadListings(){
   if(!sb)return;
   const {data,error}=await sb.from("listings").select("*").eq("status","approved").order("created_at",{ascending:false});
   if(error){$("grid").innerHTML='<p class="meta">We could not load the cars right now. Please refresh in a moment.</p>';return}
-  cars=data.map(rowToCar);makes();render();
+  const {data:promoRows}=await sb.from("active_listing_promotions").select("listing_id");
+  const promoted=new Set((promoRows||[]).map(x=>String(x.listing_id)));
+  cars=data.map((row,i)=>({...rowToCar(row,i),isPromoted:promoted.has(String(row.id))}));makes();render();
 }
 // Listings: cascading Make -> Model -> available Variant filters.
 const MODEL_FAMILIES={
@@ -1226,7 +1248,7 @@ const bgOf=c=>c.photos&&c.photos[0]?`${c.color} url('${c.photos[0]}') center/con
 function render(){
   const q=$("q").value.trim().toLowerCase(),mk=$("make").value,mf=$("model").value,vr=$("variant").value,mx=+$("max").value,s=$("sort").value;
   let r=cars.filter(c=>(!q||(c.make+" "+c.model).toLowerCase().includes(q))&&(!mk||canonicalMake(c.make)===mk)&&(!mf||familyFor(c.make,c.model)===mf)&&(!vr||variantFor(c.make,c.model)===vr)&&(!mx||c.price<=mx));
-  r.sort((a,b)=>s==="low"?a.price-b.price:s==="high"?b.price-a.price:s==="km"?a.km-b.km:b.year-a.year);
+  r.sort((a,b)=>(Number(b.isPromoted)-Number(a.isPromoted))||(s==="low"?a.price-b.price:s==="high"?b.price-a.price:s==="km"?a.km-b.km:b.year-a.year));
   $("count").textContent=r.length+(r.length===1?" car":" cars")+" found";
   $("grid").innerHTML=r.length?r.map(c=>{
     const isYard=c.seller&&c.seller.type==="yard",yardName=c.seller?.name||"Car yard",loc=c.seller?.location||"";
@@ -1235,7 +1257,7 @@ function render(){
     return `<article class="card">
       ${isYard?`<span class="yard-badge">🏢 CAR YARD</span>`:""}
       <div class="card-main" role="link" tabindex="0" data-href="${vehicleUrl}">
-        <div class="swatch${hasPh(c)}" style="background:${bgOf(c)}">${c.photos&&c.photos[0]?`<img class="swatch-photo" src="${esc(c.photos[0])}" alt="${esc(c.year+" "+c.make+" "+c.model)}" loading="lazy" decoding="async">`:""}<span class="swatch-year">${esc(c.year)}</span></div>
+        <div class="swatch${hasPh(c)}" style="background:${bgOf(c)}">${c.photos&&c.photos[0]?`<img class="swatch-photo" src="${esc(c.photos[0])}" alt="${esc(c.year+" "+c.make+" "+c.model)}" loading="lazy" decoding="async">`:""}<span class="swatch-year">${esc(c.year)}</span>${c.isPromoted?'<span class="promoted-tag">FEATURED</span>':""}</div>
         <div class="body"><h3>${esc(c.make)} ${esc(c.model)}</h3>
         <div class="price">KES ${fmt(c.price)}</div>
         <span class="tag">${fmt(c.km)} km</span><span class="tag">${esc(c.fuel||"N/A")}</span><span class="tag">${isYard?"Car yard / dealer":"Private seller"}</span>
