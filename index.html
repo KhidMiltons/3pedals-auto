@@ -197,6 +197,9 @@ footer .wrap{font-size:13px;text-align:center}
 .promoted-tag{position:absolute;right:12px;top:12px;z-index:3;padding:5px 9px;border:1px solid rgba(227,179,65,.65);border-radius:999px;background:#171513;color:#e3c57b;font:800 11px/1.2 Manrope,system-ui,sans-serif;letter-spacing:.06em}
 @media(max-width:600px){.seller-listing{grid-template-columns:62px minmax(0,1fr)}.seller-listing-photo{width:62px;height:52px}.seller-listing-actions{grid-column:1/-1;justify-content:flex-start}.seller-listing-actions .btn{flex:1}}
 @media(max-width:600px){.profile-card{grid-template-columns:1fr}.profile-grid,.account-tools .field-row{grid-template-columns:1fr}}
+.authbox:not(.wide){width:min(440px,calc(100vw - 28px));max-width:440px}.authbox:not(.wide) .in{padding:28px}.authbox:not(.wide) .in>h2{font-size:30px;margin:0 0 4px}.auth-intro{margin:0 0 20px;line-height:1.5}.auth-fields{display:grid;gap:2px}.auth-fields label{margin-top:10px}.auth-fields input{width:100%}.auth-actions{display:grid;gap:10px;margin-top:18px}.auth-actions .btn{width:100%;margin:0}.auth-divider{display:flex;align-items:center;gap:12px;margin:15px 0;color:var(--mute);font-size:13px}.auth-divider:before,.auth-divider:after{content:"";height:1px;flex:1;background:var(--line)}.google-btn{background:var(--surface);color:var(--ink);border:1px solid var(--line);box-shadow:none}.google-btn:hover{background:var(--surface-2)}.google-mark{font-weight:800;font-size:17px;color:#4285f4}.authbox .switch{border:0;padding:12px 0 0;text-align:center}.account-settings{margin:18px 0;border:1px solid var(--line);border-radius:13px;background:var(--surface-2)}.account-settings>summary{padding:15px 17px;cursor:pointer;font-weight:700}.account-settings-inner{padding:0 17px 17px}.account-settings-inner .profile-card{margin-top:0}.dashboard-shortcuts{position:sticky;top:0;z-index:5;display:flex;gap:8px;overflow:auto;padding:8px 0;background:var(--surface);scrollbar-width:thin}.dashboard-shortcuts button{flex:0 0 auto;border:1px solid var(--line);border-radius:999px;padding:8px 12px;background:var(--surface-2);color:var(--ink);font-weight:700;cursor:pointer}.dashboard-shortcuts button:hover{border-color:var(--gold)}.dashboard-welcome{padding:14px 16px;border-radius:13px;background:var(--surface-2);border:1px solid var(--line)}.dashboard-welcome h3{margin:0 0 4px}.seller-dashboard .account-tools>h3{scroll-margin-top:64px}
+.account-dialog-head{position:sticky;top:0;z-index:6;display:flex;justify-content:space-between;align-items:center;padding:2px 0 12px;background:var(--surface);border-bottom:1px solid var(--line)}.account-dialog-head h2{margin:0!important}.account-dialog-head button{width:38px;height:38px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2);color:var(--ink);font-size:24px;line-height:1;cursor:pointer}
+.auth-forgot{justify-self:start;border:0;background:none;color:var(--blue);padding:5px 0;font-weight:700;text-decoration:underline;cursor:pointer}.auth-forgot:hover{opacity:.8}
 
 /* Give form action areas a consistent alignment */
 form .btn{margin-top:10px}#sellForm>.btn,#bBtn{min-width:160px}
@@ -718,9 +721,9 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 
 <dialog id="dlg" aria-label="Car details"></dialog>
 <dialog id="journalPhotoViewer" class="journal-photo-viewer" aria-label="Journal photo viewer"><button type="button" class="journal-photo-close" id="journalPhotoClose" aria-label="Close photo viewer">×</button><span class="journal-photo-count" id="journalViewerCount"></span><button type="button" class="journal-photo-step journal-photo-prev" id="journalViewerPrev" aria-label="Previous photo">‹</button><figure><img id="journalViewerImage" alt=""><figcaption id="journalViewerCaption"></figcaption></figure><button type="button" class="journal-photo-step journal-photo-next" id="journalViewerNext" aria-label="Next photo">›</button></dialog>
-<dialog id="authDlg" class="authbox"><div class="in"><h2 id="authTitle">Create your account</h2><p class="meta">Create an account to list vehicles and book garage appointments.</p><label id="authNameLabel">Full name</label><input id="authName"><label>Email</label><input id="authEmail" type="email"><label>Phone</label><input id="authPhone" type="tel"><fieldset class="seg" id="authTypeWrap"><legend>Account type</legend><label><input type="radio" name="accountType" value="private" checked> Private seller</label><label><input type="radio" name="accountType" value="yard"> Car yard / dealer</label></fieldset><p id="authTypeHint" class="meta">Private seller accounts are for individuals selling their own vehicles.</p><label>Password</label><input id="authPassword" type="password"><p id="authErr" class="meta" style="color:var(--err)"></p><button class="btn" id="authSubmit">Create account</button> <button class="btn ghost" id="authClose">Close</button><p class="switch"><span id="authSwitchText">Already have an account?</span> <button id="authSwitch">Log in</button></p></div></dialog>
+<dialog id="authDlg" class="authbox"><div class="in"><h2 id="authTitle">Create your account</h2><p class="meta auth-intro" id="authIntro">One account for buying and selling with 3 Pedals Auto KE.</p><div class="auth-fields"><div id="authNameField"><label for="authName">Full name</label><input id="authName" autocomplete="name"></div><div id="authEmailField"><label for="authEmail">Email</label><input id="authEmail" type="email" autocomplete="email"></div><div id="authPhoneField"><label for="authPhone">Phone number</label><input id="authPhone" type="tel" autocomplete="tel"></div><fieldset class="seg" id="authTypeWrap"><legend>Account type</legend><label><input type="radio" name="accountType" value="private" checked> Private seller</label><label><input type="radio" name="accountType" value="yard"> Car yard / dealer</label></fieldset><p id="authTypeHint" class="meta">Private seller accounts are for individuals selling their own vehicles.</p><div id="authPasswordField"><label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="new-password"></div><div id="authConfirmField"><label for="authConfirmPassword">Confirm password</label><input id="authConfirmPassword" type="password" autocomplete="new-password"><small class="meta">Use at least 8 characters.</small></div><button class="auth-forgot" id="authForgot" type="button" hidden>Forgot password?</button></div><p id="authErr" class="meta" style="color:var(--err)" role="status" aria-live="polite"></p><div class="auth-actions"><button class="btn" id="authSubmit">Create account</button></div><div class="auth-divider" id="authDivider" aria-hidden="true">or</div><button class="btn google-btn" id="authGoogle" type="button"><span class="google-mark" aria-hidden="true">G</span> Continue with Google</button><p class="switch" id="authSwitchRow"><span id="authSwitchText">Already have an account?</span> <button id="authSwitch" type="button">Log in</button></p><button class="btn ghost" id="authClose" type="button" style="width:100%;margin-top:8px">Close</button></div></dialog>
 <dialog id="adminDlg" class="authbox wide"><div class="in"><h2>Admin panel</h2><div id="adminPanel"></div><div class="acts" style="margin-top:16px"><button class="btn ghost" id="adminClose">Close</button></div></div></dialog>
-<dialog id="accDlg" class="authbox wide"><div class="in"><h2>My account</h2><div id="accBody"></div></div></dialog>
+<dialog id="accDlg" class="authbox wide"><div class="in"><div class="account-dialog-head"><h2>My account</h2><button id="accCloseTop" type="button" aria-label="Close account">×</button></div><div id="accBody"></div></div></dialog>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
@@ -812,44 +815,70 @@ async function loadSession(){
   if($("sellTypeLabel"))sellMode();
 }
 function refreshAccountUI(){
-  $("accountText").textContent=me?`Signed in as ${(profile&&profile.name)||me?.user_metadata?.name||me.email}`:"Not signed in";
+  $("accountText").textContent=me?`Signed in as ${(profile&&profile.name)||me?.user_metadata?.name||me?.user_metadata?.full_name||me.email}`:"Not signed in";
   $("accountOpen").textContent="";
   $("adminWrap").hidden=!(profile&&profile.is_admin);
 }
 function openAuth(mode="register",msg=""){
   if(!sb){alert("Accounts are not switched on yet. Please contact us on WhatsApp.");return}
-  authMode=mode;const login=mode==="login";
-  $("authTitle").textContent=login?"Log in":"Create your account";
-  $("authSubmit").textContent=login?"Log in":"Create account";
-  $("authNameLabel").hidden=login;$("authName").hidden=login;
-  $("authTypeWrap").hidden=login;$("authTypeHint").hidden=login;updateAuthTypeHint();
+  authMode=mode;const login=mode==="login",recovery=mode==="recovery";
+  $("authTitle").textContent=recovery?"Choose a new password":login?"Welcome back":"Create your account";
+  $("authIntro").textContent=recovery?"Set a new password for your account.":login?"Sign in to manage your listings, promotions and bookings.":"One account for buying and selling with 3 Pedals Auto KE.";
+  $("authSubmit").textContent=recovery?"Save new password":login?"Log in":"Create account";
+  $("authPassword").autocomplete=login?"current-password":"new-password";
+  $("authNameField").hidden=login||recovery;$("authPhoneField").hidden=login||recovery;$("authEmailField").hidden=recovery;
+  $("authPasswordField").hidden=false;$("authConfirmField").hidden=login;$("authTypeWrap").hidden=login||recovery;$("authTypeHint").hidden=login||recovery;updateAuthTypeHint();
+  $("authForgot").hidden=!login;$("authGoogle").hidden=recovery;$("authDivider").hidden=recovery;$("authSwitchRow").hidden=recovery;
   $("authSwitchText").textContent=login?"Need an account?":"Already have an account?";
   $("authSwitch").textContent=login?"Create one":"Log in";
   $("authErr").textContent=msg;$("authDlg").showModal();
 }
-$("accountOpen").onclick=()=>me?openAccount():openAuth("login");
+$("accountOpen").onclick=()=>me?openAccount():openAuth("register");
 $("accountTile").onclick=()=>me?openAccount():openAuth("register");
 $("authClose").onclick=()=>$("authDlg").close();
 $("authSwitch").onclick=()=>openAuth(authMode==="login"?"register":"login");
 document.querySelectorAll('input[name="accountType"]').forEach(r=>r.onchange=updateAuthTypeHint);
+$("authForgot").onclick=async()=>{
+  const email=$("authEmail").value.trim().toLowerCase(),button=$("authForgot"),err=$("authErr");
+  if(!email){err.textContent="Enter your account email first, then choose Forgot password?";$("authEmail").focus();return}
+  button.disabled=true;err.textContent="Sending reset link…";
+  try{const redirectTo=`${location.origin}${location.pathname}`;const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo});if(error)throw error;err.textContent="If an account exists for that email, a password reset link is on its way. Check your inbox and spam folder."}
+  catch(e){err.textContent=e.message||"We couldn't send a reset link. Please try again."}
+  finally{button.disabled=false}
+};
+$("authGoogle").onclick=async()=>{
+  const button=$("authGoogle"),err=$("authErr");button.disabled=true;err.textContent="Opening Google sign-in…";
+  try{const {error}=await sb.auth.signInWithOAuth({provider:"google",options:{redirectTo:`${location.origin}${location.pathname}`}});if(error)throw error}
+  catch(e){err.textContent=e.message||"Google sign-in could not start. Please try email instead.";button.disabled=false}
+};
 $("authSubmit").onclick=async()=>{
-  const email=$("authEmail").value.trim().toLowerCase(),pass=$("authPassword").value,name=$("authName").value.trim(),phone=$("authPhone").value.trim(),type=document.querySelector('input[name="accountType"]:checked')?.value||"private",err=$("authErr"),b=$("authSubmit");
+  const email=$("authEmail").value.trim().toLowerCase(),pass=$("authPassword").value,name=$("authName").value.trim(),phone=$("authPhone").value.trim(),confirmPass=$("authConfirmPassword").value,type=document.querySelector('input[name="accountType"]:checked')?.value||"private",err=$("authErr"),b=$("authSubmit");
+  if(authMode==="recovery"){
+    if(pass.length<8){err.textContent="Use a password of at least 8 characters.";return}
+    if(pass!==confirmPass){err.textContent="The passwords do not match.";return}
+    b.disabled=true;err.textContent="Saving your new password…";
+    try{const {error}=await sb.auth.updateUser({password:pass});if(error)throw error;$("authPassword").value="";$("authConfirmPassword").value="";$("authDlg").close();history.replaceState(null,"",location.pathname+location.hash);await loadSession();if(me)openAccount()}
+    catch(e){err.textContent=e.message||"We couldn't update your password. Open the reset email again and try once more."}
+    finally{b.disabled=false}
+    return;
+  }
   if(!email||!pass){err.textContent="Email and password are required.";return}
   if(authMode==="register"){
     if(!name){err.textContent="Enter your name.";return}
     if(pass.length<8){err.textContent="Use a password of at least 8 characters.";return}
+    if(pass!==confirmPass){err.textContent="The passwords do not match.";return}
   }
   b.disabled=true;err.textContent="";
   const res=authMode==="register"?await sb.auth.signUp({email,password:pass,options:{data:{name,phone,account_type:type}}}):await sb.auth.signInWithPassword({email,password:pass});
   b.disabled=false;
   if(res.error){err.textContent=res.error.message;return}
   if(authMode==="register"&&!res.data.session){err.textContent="Account created. Check your email for a confirmation link, then log in. Your account type has been saved.";return}
-  if(authMode==="register"&&res.data.session){me=res.data.user;await loadSession()}
-  $("authPassword").value="";$("authDlg").close();
+  $("authPassword").value="";$("authConfirmPassword").value="";$("authDlg").close();
+  await loadSession();if(me)openAccount();
 };
 function initialsFor(name,email){const x=String(name||email||"?").trim().split(/\s+/).filter(Boolean);return ((x[0]||"?")[0]+(x[1]||"")[0]).toUpperCase()}
 function profileAvatarUrl(){return (profile&&profile.avatar_url)||me?.user_metadata?.avatar_url||""}
-function profileName(){return (profile&&profile.name)||me?.user_metadata?.name||""}
+function profileName(){return (profile&&profile.name)||me?.user_metadata?.name||me?.user_metadata?.full_name||""}
 function profilePhone(){return (profile&&profile.phone)||me?.user_metadata?.phone||""}
 async function saveAccountProfile(){
   const name=$("accName").value.trim(),phone=$("accPhone").value.trim(),type=normalizeAccountType($("accType").value),err=$("accProfileErr"),btn=$("accSaveProfile");
@@ -920,6 +949,7 @@ async function changeProfilePhoto(file){
 }
 async function openAccount(){
   const d=$("accDlg"),box=$("accBody");
+  $("accCloseTop").onclick=()=>d.close();
   if(!d.open)d.showModal();
   box.innerHTML='<p class="meta">Loading…</p>';
   const [l,b,sales,promos,packages]=await Promise.all([
@@ -947,6 +977,21 @@ async function openAccount(){
   <div class="acts" style="margin-top:16px"><a class="btn alt" href="/garage?section=book">Book a garage service</a></div><h3 style="margin-top:18px">My garage bookings and service tickets</h3>${B.map(x=>`<div class="svc"><div><b>${esc(x.service)}</b><span class="meta">Ticket ${esc(x.ref)} · ${esc(x.date)}${x.time_slot?" · "+esc(x.time_slot):""} · ${esc(x.car||"")}</span><span class="meta">Progress: ${esc(String(x.service_status||x.status).replaceAll("_"," "))}</span></div><span class="st">${esc(x.status)}</span></div>`).join("")||'<p class="meta">No bookings yet.</p>'}
   <section class="danger-zone"><h3>Delete account</h3><p class="meta">Permanently remove your account, listings, and bookings. This cannot be undone.</p><button class="btn ghost" id="accDeleteAccount" type="button">Permanently delete account</button></section>
   <div class="acts" style="margin-top:18px">${profile&&profile.is_admin?'<button class="btn" id="accAdmin">Open admin panel</button>':""}<button class="btn ghost" id="accOut">Sign out</button><button class="btn ghost" id="accClose">Close</button></div>`;
+  const dashboard=box.querySelector(".seller-dashboard"),profileCard=box.querySelector(".profile-card"),profileGrid=box.querySelector(".profile-grid"),profileError=$("accProfileErr"),profileActions=$("accSaveProfile")?.parentElement,loginDetails=Array.from(box.children).find(node=>node.classList.contains("account-tools"));
+  if(dashboard&&profileCard&&profileGrid&&profileError&&profileActions&&loginDetails){
+    const settings=document.createElement("details");settings.className="account-settings";
+    settings.innerHTML='<summary>Profile and sign-in settings</summary><div class="account-settings-inner"></div>';
+    const inner=settings.querySelector(".account-settings-inner");
+    [profileCard,profileGrid,profileError,profileActions,loginDetails].forEach(node=>inner.append(node));
+    const headings=dashboard.querySelectorAll(".account-tools h3");
+    if(headings[0])headings[0].id="sellerSummary";if(headings[1])headings[1].id="sellerListings";if(headings[2])headings[2].id="sellerPromotions";
+    const welcome=document.createElement("div");welcome.className="dashboard-welcome";welcome.innerHTML=`<h3>Welcome${name?`, ${esc(name.split(/\s+/)[0])}`:""}</h3><p class="meta" style="margin:0">Your listings, approvals, sales and promotions in one place.</p>`;
+    const shortcuts=document.createElement("div");shortcuts.className="dashboard-shortcuts";shortcuts.setAttribute("aria-label","Dashboard sections");
+    shortcuts.innerHTML='<button type="button" data-jump="sellerSummary">Overview</button><button type="button" data-jump="sellerListings">My listings</button><button type="button" data-jump="sellerPromotions">Promote a car</button><button type="button" data-jump="account-settings">Profile & account</button><button type="button" data-jump="garageBookings">Bookings</button>';
+    box.insertBefore(dashboard,box.firstChild);box.insertBefore(shortcuts,dashboard);box.insertBefore(welcome,shortcuts);dashboard.after(settings);
+    box.querySelectorAll("[data-jump]").forEach(button=>button.onclick=()=>{const target=button.dataset.jump==="account-settings"?settings:$(button.dataset.jump);if(target){if(target===settings)settings.open=true;target.scrollIntoView({behavior:"smooth",block:"start"})}});
+    const bookingHeading=[...box.querySelectorAll("h3")].find(h=>h.textContent==="My garage bookings and service tickets");if(bookingHeading)bookingHeading.id="garageBookings";
+  }
   $("accPhoto").onchange=e=>changeProfilePhoto(e.target.files[0]);
   if($("accRemovePhoto"))$("accRemovePhoto").onclick=removeProfilePhoto;
   $("accSaveProfile").onclick=saveAccountProfile;
@@ -1461,7 +1506,7 @@ $("sBtn").onclick=async()=>{
 
 document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>show(b.dataset.go));
 if(!sb){$("demoBar").hidden=false;makes();render()}
-else{cars=[];$("grid").innerHTML='<p class="meta">Loading cars…</p>';sb.auth.onAuthStateChange(()=>setTimeout(loadSession,0));loadListings();loadSession()}
+else{cars=[];$("grid").innerHTML='<p class="meta">Loading cars…</p>';sb.auth.onAuthStateChange((event,session)=>setTimeout(async()=>{await loadSession();if(event==="PASSWORD_RECOVERY")openAuth("recovery");else if(event==="SIGNED_IN"&&session?.user){$("authDlg").close();openAccount()}},0));loadListings();loadSession()}
 // Lets the garage site send visitors here to log in or create an account
 if(location.hash==="#login")openAuth("login");if(location.hash==="#register")openAuth("register");
 loadProjects();
