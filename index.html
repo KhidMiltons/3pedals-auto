@@ -1623,7 +1623,7 @@ $("sBtn").onclick=async()=>{
 
 document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>show(b.dataset.go));
 if(!sb){$("demoBar").hidden=false;makes();render()}
-else{cars=[];$("grid").innerHTML='<p class="meta">Loading cars…</p>';sb.auth.onAuthStateChange((event,session)=>setTimeout(async()=>{await loadSession();if(event==="PASSWORD_RECOVERY")openAuth("recovery");else if(event==="SIGNED_IN"&&session?.user){$("authDlg").close();openAccount()}},0));loadListings();loadSession()}
+else{cars=[];$("grid").innerHTML='<p class="meta">Loading cars…</p>';sb.auth.onAuthStateChange((event,session)=>setTimeout(async()=>{await loadSession();if(event==="PASSWORD_RECOVERY")openAuth("recovery");else if(event==="SIGNED_IN"&&session?.user){$("authDlg").close()}},0));loadListings();loadSession()}
 // Lets the garage site send visitors here to log in or create an account
 if(location.hash==="#login")openAuth("login");if(location.hash==="#register")openAuth("register");
 loadProjects();
