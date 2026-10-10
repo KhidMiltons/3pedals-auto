@@ -921,6 +921,7 @@ async function openAccount(){
   const [l,b]=await Promise.all([
     sb.from("listings").select("*").eq("owner",me.id).order("created_at",{ascending:false}),
     sb.from("bookings").select("*").eq("user_id",me.id).order("created_at",{ascending:false})]);
+  if(l.error){box.innerHTML=`<p class="meta" role="alert">We couldn't load your listings: ${esc(l.error.message)}. Please check the marketplace security SQL has been installed.</p><button class="btn ghost" id="accCloseLoadError" type="button">Close</button>`;$("accCloseLoadError").onclick=()=>d.close();return}
   const L=l.data||[],B=b.data||[],label={pending:"Waiting for approval",approved:"Live",rejected:"Not approved",sold:"Sold"},avatar=profileAvatarUrl(),name=profileName(),phone=profilePhone(),isYard=accountType()==="yard";
   box.innerHTML=`<div class="profile-card">
     <div class="profile-avatar">${avatar?`<img src="${esc(avatar)}" alt="Profile picture">`:esc(initialsFor(name,me.email))}</div>
@@ -952,11 +953,23 @@ async function openAccount(){
   box.querySelectorAll("[data-view]").forEach(bt=>bt.onclick=()=>{window.location.href=`vehicle.html?id=${encodeURIComponent(bt.dataset.view)}`});
   box.querySelectorAll("[data-del]").forEach(bt=>bt.onclick=async()=>{
     if(!confirm("Delete this listing? This will remove the listing from your account."))return;
-    const {error}=await sb.from("listings").delete().eq("id",bt.dataset.del);if(error){alert(error.message);return}openAccount();loadListings();
+    bt.disabled=true;bt.textContent="Deleting…";
+    const {data:deleted,error}=await sb.from("listings").delete().eq("id",bt.dataset.del).eq("owner",me.id).select("photos").maybeSingle();
+    if(error){alert(error.message);bt.disabled=false;bt.textContent="Delete";return}
+    if(!deleted){alert("This listing could not be found in your account. Refresh and try again.");openAccount();return}
+    const paths=photoStoragePaths(deleted.photos||[]);
+    if(paths.length){const removed=await sb.storage.from("car-photos").remove(paths);if(removed.error)console.warn("Listing deleted, but its photo files could not be removed:",removed.error)}
+    openAccount();loadListings();
   });
   $("accOut").onclick=async()=>{await sb.auth.signOut();d.close()};
   $("accClose").onclick=()=>d.close();
   if($("accAdmin"))$("accAdmin").onclick=()=>{d.close();openAdmin()};
+}
+function photoStoragePaths(photos){
+  const prefix="/storage/v1/object/public/car-photos/";
+  return [...new Set((Array.isArray(photos)?photos:[]).flatMap(value=>{
+    try{const path=new URL(String(value),location.href).pathname,at=path.indexOf(prefix);return at<0?[]:[decodeURIComponent(path.slice(at+prefix.length))]}catch(_){return []}
+  }).filter(path=>path&&path.split("/")[0]===me?.id))];
 }
 async function getProjectsAdmin(){
   const {data,error}=await sb.from("projects").select("*").order("created_at",{ascending:false});
@@ -1351,13 +1364,16 @@ $("sBtn").onclick=async()=>{
   if(!wa){err.textContent="Enter a valid WhatsApp number, for example 0712 345 678.";return}
   if(yard&&(!v("yName")||!v("yLoc")||!v("yPhone"))){err.textContent="Car yards need a yard name, location and phone number.";return}
   btn.disabled=true;btn.textContent="Uploading photos…";err.textContent="";
+  const uploadedPaths=[];
   try{
     const urls=[];
     for(let i=0;i<photos.length;i++){
       const blob=await (await fetch(photos[i])).blob();
-      const path=`${me.id}/${Date.now()}-${i}.jpg`;
+      const photoId=crypto.randomUUID?crypto.randomUUID():`${Date.now()}-${Math.random().toString(36).slice(2)}`;
+      const path=`${me.id}/${photoId}-${i}.jpg`;
       const up=await sb.storage.from("car-photos").upload(path,blob,{contentType:"image/jpeg"});
       if(up.error)throw up.error;
+      uploadedPaths.push(path);
       urls.push(sb.storage.from("car-photos").getPublicUrl(path).data.publicUrl);
     }
     const {data:userData,error:userError}=await sb.auth.getUser();
@@ -1365,6 +1381,7 @@ $("sBtn").onclick=async()=>{
     const ownerId=userData.user.id;
     const row={
       owner:ownerId,
+      status:"pending",
       make:v("sMake"),
       model:v("sVariant"),
       year:+v("sYear"),
@@ -1390,6 +1407,7 @@ $("sBtn").onclick=async()=>{
       ins=await sb.from("listings").insert(legacyRow).select("id").single();
     }
     if(ins.error)throw ins.error;
+    uploadedPaths.length=0;
 
     // Notify the 3 Pedals Auto KE admin through the secure Supabase Edge Function.
     // The Resend API key is never exposed in this public website.
@@ -1412,7 +1430,10 @@ $("sBtn").onclick=async()=>{
 
     $("sellForm").reset();photos=[];$("prev").innerHTML="";sellMode();
     ok.textContent="Thank you! Your listing was received. We review every listing before it goes live, and you can follow its status under My account.";ok.hidden=false;
-  }catch(e){err.textContent="We couldn't submit that listing: "+(e.message||"please try again.")}
+  }catch(e){
+    if(uploadedPaths.length){try{const cleanup=await sb.storage.from("car-photos").remove(uploadedPaths);if(cleanup.error)console.warn("Could not clean up photos from the failed listing submission:",cleanup.error)}catch(cleanupError){console.warn("Could not clean up photos from the failed listing submission:",cleanupError)}}
+    err.textContent="We couldn't submit that listing: "+(e.message||"please try again.")
+  }
   btn.disabled=false;btn.textContent="Submit listing";
 };
 
