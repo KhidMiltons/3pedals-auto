@@ -1,6 +1,3 @@
--- 3 Pedals Auto KE — Admin-managed Our Projects portfolio
--- Run this once in the Supabase SQL Editor for the same project used by index.html.
--- This creates the portfolio table, RLS policies, and public media bucket.
 
 create extension if not exists pgcrypto;
 
@@ -147,7 +144,7 @@ using (
   )
 );
 
--- Optional: verify the table exists after running the script.
+
 select column_name, data_type
 from information_schema.columns
 where table_schema = 'public' and table_name = 'projects'
