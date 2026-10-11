@@ -1043,7 +1043,7 @@ async function changeProfilePhoto(file){
   }catch(e){err.textContent=e.message||"Could not upload that profile picture."}
 }
 function closeAccountMenu(){const nav=$("accountMenu");if(!nav)return;nav.classList.remove("menu-open");nav.style.setProperty("display","none","important");$("accMenuToggle").setAttribute("aria-expanded","false");$("accMenuToggle").setAttribute("aria-label","Open seller navigation")}
-$("accountMenu").addEventListener("click",event=>{const button=event.target.closest("[data-page]");if(!button)return;const pages=$("accBody").querySelector(".account-pages");if(!pages)return;const selected=button.dataset.page;if(!pages.querySelector(`#accountPage-${CSS.escape(selected)}`))return;pages.querySelectorAll(".account-page").forEach(page=>page.hidden=page.id!==`accountPage-${selected}`);$("accountMenu").querySelectorAll("[data-page]").forEach(item=>item.classList.toggle("active",item===button));closeAccountMenu();$("accBody").scrollTo({top:0,behavior:"smooth"})});
+$("accountMenu").addEventListener("click",event=>{const button=event.target.closest("[data-page]");if(!button)return;const pages=$("accBody").querySelector(".account-pages");if(!pages)return;const selected=button.dataset.page;if(!Array.from(pages.querySelectorAll(".account-page")).some(page=>page.id===`accountPage-${selected}`))return;pages.querySelectorAll(".account-page").forEach(page=>page.hidden=page.id!==`accountPage-${selected}`);$("accountMenu").querySelectorAll("[data-page]").forEach(item=>item.classList.toggle("active",item===button));closeAccountMenu();$("accBody").scrollTo({top:0,behavior:"smooth"})});
 async function openAccount(){
   const d=$("accDlg"),box=$("accBody");
   $("accCloseTop").onclick=()=>d.close();
@@ -1077,7 +1077,7 @@ $("accMenuToggle").onclick=()=>{const nav=$("accountMenu");if(!nav)return;const 
   <section class="danger-zone"><h3>Delete account</h3><p class="meta">Permanently remove your account, listings, and bookings. This cannot be undone.</p><button class="btn ghost" id="accDeleteAccount" type="button">Permanently delete account</button></section>
   <div class="acts" style="margin-top:18px">${profile&&profile.is_admin?'<button class="btn" id="accAdmin">Open admin panel</button>':""}<button class="btn ghost" id="accOut">Sign out</button><button class="btn ghost" id="accClose">Close</button></div>`;
   const dashboard=box.querySelector(".seller-dashboard"),profileCard=box.querySelector(".profile-card"),profileGrid=box.querySelector(".profile-grid"),profileError=$("accProfileErr"),profileActions=$("accSaveProfile")?.parentElement,loginDetails=Array.from(box.children).find(node=>node.classList.contains("account-tools"));
-  if(dashboard&&profileCard&&profileGrid&&profileError&&profileActions&&loginDetails){
+  if(dashboard){
     const dashboardSections=Array.from(dashboard.children),summary=dashboardSections[0],listings=dashboardSections[1],promotions=dashboardSections[2];
     const deleteZone=box.querySelector(".danger-zone"),bookingAction=box.querySelector("#garageBookingAction"),bookingHeading=[...box.querySelectorAll("h3")].find(h=>h.textContent==="My garage bookings and service tickets");
     if(summary)summary.querySelector("h3").id="sellerSummary";if(listings)listings.querySelector("h3").id="sellerListings";if(promotions)promotions.querySelector("h3").id="sellerPromotions";
