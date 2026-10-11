@@ -1051,7 +1051,7 @@ async function changeProfilePhoto(file){
     me=au.data.user||me;profile={...(profile||{}),avatar_url:url};refreshAccountUI();err.textContent="Profile picture updated. Dealer listings now use this image as the yard logo.";openAccount();
   }catch(e){err.textContent=e.message||"Could not upload that profile picture."}
 }
-function closeAccountMenu(){const nav=$("accountMenu");if(!nav)return;nav.classList.remove("menu-open");nav.style.setProperty("display","none","important");$("accMenuToggle").setAttribute("aria-expanded","false");$("accMenuToggle").setAttribute("aria-label","Open seller navigation")}
+function closeAccountMenu(){const nav=$("accountMenu");if(!nav)return;nav.classList.remove("menu-open");nav.style.removeProperty("display");nav.hidden=true;$("accMenuToggle").setAttribute("aria-expanded","false");$("accMenuToggle").setAttribute("aria-label","Open seller navigation")}
 function showSellerAccountPage(selected,button){
   const pages=$("accBody").querySelector(".account-pages"),dashboard=pages?.querySelector("#accountPage-dashboard");if(!pages)return;
   if(["dashboard","listings","promotions"].includes(selected)&&dashboard){
@@ -1068,7 +1068,7 @@ $("accountMenu").addEventListener("click",event=>{const button=event.target.clos
 async function openAccount(){
   const d=$("accDlg"),box=$("accBody");
   $("accCloseTop").onclick=()=>d.close();
-$("accMenuToggle").onclick=()=>{const nav=$("accountMenu");if(!nav)return;const open=!nav.classList.contains("menu-open");nav.hidden=false;nav.classList.toggle("menu-open",open);nav.style.setProperty("display",open?"flex":"none","important");$("accMenuToggle").setAttribute("aria-expanded",String(open));$("accMenuToggle").setAttribute("aria-label",open?"Close seller navigation":"Open seller navigation")};
+$("accMenuToggle").onclick=()=>{const nav=$("accountMenu");if(!nav)return;const open=!nav.classList.contains("menu-open");nav.hidden=!open;nav.classList.toggle("menu-open",open);nav.style.removeProperty("display");$("accMenuToggle").setAttribute("aria-expanded",String(open));$("accMenuToggle").setAttribute("aria-label",open?"Close seller navigation":"Open seller navigation")};
   if(!d.open)d.showModal();
   box.innerHTML='<p class="meta">Loading…</p>';
   const [l,b,sales,promos,packages,prefs]=await Promise.all([
