@@ -728,6 +728,31 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 }
 @media(max-width:380px){header .wrap{grid-template-columns:minmax(0,1fr) 38px 38px!important;gap:6px!important}.account-pill button,.nav-toggle{width:38px!important;height:38px!important;min-width:38px!important}.logo{font-size:18px!important}.hero h1{font-size:34px!important}}
 </style>
+
+<style id="mobile-compact-layout-performance">
+@media(max-width:760px){
+  .auto-quote-rail{position:relative!important;inset:auto!important;transform:none!important;width:100%!important;max-width:560px!important;margin:0 auto 18px!important;border-radius:14px!important}
+  .auto-quote-top{padding:9px 13px 7px!important}
+  .auto-quote-body{min-height:0!important;padding:10px 14px 9px!important}
+  .auto-quote-mark{height:16px!important;font-size:34px!important}
+  .auto-quote-text{font-size:clamp(16px,4.5vw,18px)!important;line-height:1.28!important;margin:4px 0 8px!important}
+  .auto-quote-author{font-size:12px!important}.auto-quote-source{font-size:10px!important}
+  .auto-quote-footer{padding:7px 12px 9px!important}.auto-quote-next{min-height:36px;padding:6px 10px!important}
+  #home .hero{padding:22px 0 14px!important}
+  #home .hero h1{font-size:clamp(34px,9vw,42px)!important;line-height:1.06!important;max-width:18ch!important}
+  #home .hero p{font-size:14px!important;line-height:1.55!important}
+  #journalGrid .journal-entry-media,#journalGrid .journal-entry-media img,#journalGrid .journal-entry-empty{height:clamp(145px,42vw,200px)!important;max-height:200px!important}
+  #journalGrid .journal-entry .project-body{padding:14px!important}
+  #journalGrid .journal-entry .project-body h2{font-size:clamp(20px,6vw,25px)!important;line-height:1.08!important;margin:5px 0 7px!important;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+  #journalGrid .journal-entry .project-body p{font-size:13px!important;line-height:1.5!important;-webkit-line-clamp:2!important}
+  #journalGrid .journal-entry .project-kicker{font-size:10px!important;margin-bottom:4px}
+  #journalGrid .journal-entry .journal-meta{font-size:9px!important;line-height:1.4;gap:4px!important}
+  #journalGrid .journal-entry .journal-read{min-height:38px!important;margin-top:10px!important;padding:8px 12px!important;font-size:12px!important}
+  .project-card,.journal-entry,.tile,.contact-card{box-shadow:0 5px 16px rgba(0,0,0,.18)!important}
+}
+@media(max-width:520px){.auto-quote-live{font-size:8px}.auto-quote-updated{font-size:9px}#home .hero{padding-top:18px!important}#home .hero h1{font-size:clamp(32px,8.5vw,38px)!important;max-width:17ch!important}.home-with-quote{margin-top:4px!important}}
+@media(hover:none) and (max-width:760px){header,.auto-quote-rail{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}.journal-entry-media img{transition:none!important}.project-card,.journal-entry,.tile,.contact-card{transition:none!important}}
+</style>
 </head>
 <body>
 <div class="auth-left" id="adminWrap" hidden><button id="adminOpen">Admin panel</button></div>
