@@ -368,6 +368,15 @@ input,select,textarea{background:rgba(255,255,255,.045);border-color:var(--line)
 footer{border-color:var(--line);background:linear-gradient(180deg,transparent,rgba(183,160,106,.025))}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
+<style id="touch-no-zoom">
+@media (max-width: 820px), (hover: none), (pointer: coarse) {
+  .card:hover,.card:focus-visible,.tile:hover,.tile:focus-visible,.project-card:hover,.project-card:focus-visible,.contact-card:hover,.panel:hover,.mechanic-card:hover,.btn:hover,.back:hover,.logo:hover,.account-pill:hover,.account-icon:hover,nav button:hover,nav a.navlink:hover,.thumb:hover,.thumbs button:hover,.card:active,.tile:active,.btn:active { transform: none !important; }
+  .card:hover img,.card:focus-visible img,.card:hover .swatch,.card:focus-visible .swatch,.project-card:hover img,.project-card:hover video,.account-icon:hover svg { transform: none !important; filter: none !important; }
+  .card:hover .photo:before,.card:focus-visible .photo:before { opacity: 0 !important; clip-path: circle(0 at var(--lens-x,50%) var(--lens-y,50%)) !important; }
+  .card:hover .photo:after,.card:focus-visible .photo:after { opacity: .45 !important; }
+  nav button,nav a.navlink { --dock-scale: 1 !important; }
+}
+</style>
 </head>
 <body>
 <header><div class="wrap">
@@ -492,11 +501,15 @@ const garageSlots=["08:00–09:30","09:30–11:00","11:00–12:30","13:30–15:0
 async function loadAvailableGarageSlots(){const date=$("bDate").value,select=$("bTime"),old=select.value;let available=new Set(garageSlots);if(sb&&date){const {data,error}=await sb.rpc("get_available_garage_slots",{p_date:date});if(!error&&Array.isArray(data))available=new Set(data.map(x=>x.time_slot))}select.innerHTML='<option value="">Choose a time</option>'+garageSlots.map(slot=>`<option value="${slot}"${available.has(slot)?"":" disabled"}>${slot}${available.has(slot)?"":" · Booked"}</option>`).join("");if(available.has(old))select.value=old}
 $("bDate").addEventListener("change",loadAvailableGarageSlots);
 
-function show(t){
+function show(t,options={}){
+  if(!["home","book","roadside","mechanics"].includes(t))return;
   ["home","book","roadside","mechanics"].forEach(s=>$(s).hidden=s!==t);
   document.querySelectorAll("nav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===t));
-  scrollTo(0,0);
+  const hash=t==="home"?"":`#${t}`;
+  if(options.updateUrl!==false&&location.hash!==hash)history.pushState({garageSection:t},"",location.pathname+location.search+hash);
+  if(options.scroll!==false)scrollTo(0,0);
 }
+window.addEventListener("popstate",()=>{const section=location.hash.slice(1);show(["book","roadside","mechanics"].includes(section)?section:"home",{updateUrl:false,scroll:false})});
 document.querySelectorAll("nav button, nav a.navlink").forEach((item,index,items)=>{
   item.addEventListener("pointerenter",e=>{if(e.pointerType!=="mouse")return;items.forEach((el,i)=>{const d=Math.abs(i-index);el.style.setProperty("--dock-scale",d===0?1.16:d===1?1.07:d===2?1.025:1)});item.closest("nav").classList.add("dock-active")});
   item.addEventListener("pointerleave",e=>{if(e.pointerType!=="mouse")return;items.forEach(el=>el.style.removeProperty("--dock-scale"));item.closest("nav").classList.remove("dock-active")});
@@ -507,10 +520,12 @@ document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>show(b.dataset.
 document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>show(b.dataset.go));
 $("inspTile").onclick=()=>{show("book");$("bSvc").value="Pre-purchase inspection"};
 
-// Opened from a car listing: ?service=...&car=...
+// Deep links open booking, while Back first returns to the Garage home section.
 try{
-  const q=new URLSearchParams((window.top||window).location.search),sv=q.get("service"),car=q.get("car");
-  if(sv||car||q.get("section")==="book"){show("book");if(sv&&services.some(s=>s[0]===sv))$("bSvc").value=sv;if(car)$("bCar").value=car.slice(0,120)}
+  const current=new URL((window.top||window).location.href),sv=current.searchParams.get("service"),car=current.searchParams.get("car"),requested=current.searchParams.get("section")==="book"||!!sv||!!car,route=current.hash.slice(1);
+  if(requested){const target=new URL(current);target.searchParams.delete("section");const base=new URL(target);base.searchParams.delete("service");base.searchParams.delete("car");base.hash="";history.replaceState({garageSection:"home"},"",base.pathname+base.search);if(sv&&services.some(s=>s[0]===sv))$("bSvc").value=sv;if(car)$("bCar").value=car.slice(0,120);const query=new URLSearchParams();if(sv)query.set("service",sv);if(car)query.set("car",car);const suffix=query.toString()?`?${query}`:"";history.pushState({garageSection:"book"},"",location.pathname+suffix+"#book");show("book",{updateUrl:false})}
+  else if(["book","roadside","mechanics"].includes(route)){history.replaceState({garageSection:route},"",location.href);show(route,{updateUrl:false,scroll:false})}
+  else history.replaceState({garageSection:"home"},"",location.href);
 }catch(_){}
 
 $("bDate").min=localDateString();
