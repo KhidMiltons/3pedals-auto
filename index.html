@@ -681,9 +681,9 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 #accDlg h1,#accDlg h2,#accDlg h3{font-family:"Playfair Display",Georgia,serif}
 #accDlg .account-tools,#accDlg .profile-card,#accDlg .danger-zone,#accDlg .promotion-package{color:var(--ink);border-color:var(--line)}
 @media(max-width:800px){
- #accDlg{overflow:visible!important}
- #accDlg nav#accountMenu.dashboard-shortcuts{position:fixed!important;top:calc(68px + env(safe-area-inset-top,0px))!important;right:auto!important;bottom:auto!important;left:12px!important;z-index:1000!important;display:none!important;width:min(300px,calc(100vw - 24px))!important;height:auto!important;max-height:calc(78dvh - env(safe-area-inset-top,0px))!important;overflow-x:hidden!important;overflow-y:auto!important;padding:12px!important;margin:0!important;border:1px solid var(--line)!important;border-radius:12px!important;background:var(--surface)!important;box-shadow:0 16px 36px rgba(0,0,0,.5)!important}
- #accDlg nav#accountMenu.dashboard-shortcuts.menu-open{display:flex!important}
+ #accDlg{overflow:visible!important;isolation:isolate}
+ #accDlg nav#accountMenu.dashboard-shortcuts{position:absolute!important;top:calc(68px + env(safe-area-inset-top,0px))!important;right:auto!important;bottom:auto!important;left:12px!important;z-index:1000!important;display:none!important;width:min(320px,calc(100vw - 24px))!important;height:auto!important;max-height:calc(78dvh - env(safe-area-inset-top,0px))!important;overflow-x:hidden!important;overflow-y:auto!important;padding:12px!important;margin:0!important;border:1px solid var(--line)!important;border-radius:14px!important;background:rgba(29,30,32,.97)!important;box-shadow:0 16px 36px rgba(0,0,0,.5)!important;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+ #accDlg nav#accountMenu.dashboard-shortcuts.menu-open:not([hidden]){display:flex!important}
  #accDlg nav#accountMenu.dashboard-shortcuts[hidden]{display:none!important}
  #accDlg nav#accountMenu.dashboard-shortcuts button{flex:none!important;width:100%!important;min-height:44px!important;text-align:left!important}
 }
