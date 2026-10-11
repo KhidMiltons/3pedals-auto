@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0d0d0d">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="description" content="Browse car dealers on 3 Pedals Auto KE and explore their available vehicle collections.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<title>Car Dealers | 3 Pedals Auto KE</title>
+<style>
+:root{color-scheme:dark;--bg:#0d0d0d;--surface:#1a1a1a;--surface2:#202123;--ink:#f5f1e6;--mute:#a8a08a;--line:#333026;--gold:#e3b341;--ease:cubic-bezier(.22,1,.36,1)}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 12% 0,rgba(227,179,65,.08),transparent 32%),var(--bg);color:var(--ink);font:16px/1.6 Manrope,system-ui,sans-serif;min-height:100vh}
+.wrap{width:min(1160px,calc(100% - 36px));margin:auto}.head{position:sticky;top:0;z-index:5;background:rgba(13,13,13,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}.headin{min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:14px}.brand{font:700 23px/1.1 "Playfair Display",Georgia,serif;color:var(--gold);text-decoration:none}.back{padding:8px 13px;border:1px solid var(--line);border-radius:9px;color:var(--ink);text-decoration:none;font-weight:700}.back:hover{border-color:var(--gold);color:var(--gold)}
+main{padding:34px 0 60px}.eyebrow{color:var(--gold);font-size:11px;font-weight:800;letter-spacing:.16em}.intro{max-width:780px;margin-bottom:24px}.intro h1{font:700 clamp(34px,6vw,56px)/1.08 "Playfair Display",Georgia,serif;margin:8px 0 12px}.intro p{color:var(--mute);margin:0}.summary{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0}.stat{padding:13px 17px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}.stat strong{font-size:21px;margin-right:6px}.stat span{color:var(--mute);font-size:14px}.tools{display:flex;gap:12px;align-items:center;margin:22px 0 14px}.tools input{width:min(100%,440px);min-height:46px;padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font:inherit}.tools input:focus{outline:2px solid var(--gold);outline-offset:2px}.count{color:var(--mute);font-size:14px;margin:10px 0 14px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px}.dealer{min-height:150px;display:flex;align-items:center;gap:15px;padding:20px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(145deg,var(--surface2),var(--surface));color:inherit;text-decoration:none;transition:transform .2s var(--ease),border-color .2s,box-shadow .2s}.dealer:hover,.dealer:focus-visible{transform:translateY(-3px);border-color:rgba(227,179,65,.6);box-shadow:0 14px 34px rgba(0,0,0,.25);outline:none}.logo{width:54px;height:54px;flex:0 0 54px;border:1px solid rgba(227,179,65,.35);border-radius:50%;display:grid;place-items:center;overflow:hidden;background:#111;color:var(--gold);font:700 18px "Playfair Display",Georgia,serif}.logo img{width:100%;height:100%;object-fit:cover}.dealer-copy{min-width:0;flex:1}.dealer h2{font-size:18px;line-height:1.25;margin:0 0 6px;overflow-wrap:anywhere}.dealer p{margin:0;color:var(--mute);font-size:14px}.arrow{color:var(--gold);font-size:23px}.state{padding:24px;border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--mute)}footer{padding:20px 0 32px;border-top:1px solid var(--line);color:var(--mute);font-size:13px}
+@media(max-width:520px){.wrap{width:calc(100% - 24px)}.headin{min-height:60px}.brand{font-size:19px}.back{padding:8px 10px;font-size:13px}main{padding-top:25px}.summary{gap:8px}.stat{flex:1 1 135px;padding:11px 13px}.dealer{min-height:112px;padding:15px}.logo{width:46px;height:46px;flex-basis:46px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="head"><div class="wrap headin"><a class="brand" href="/">3 Pedals Auto KE</a><a class="back" href="/inventory">← Browse inventory</a></div></header>
+<main class="wrap">
+  <section class="intro"><span class="eyebrow">3 PEDALS AUTO KE · DEALER DIRECTORY</span><h1>Car dealers in Kenya</h1><p>Explore dealer collections, see how many vehicles each dealer has available, and open a dealer’s full inventory.</p></section>
+  <div class="summary" aria-live="polite"><div class="stat"><strong id="dealerTotal">—</strong><span>dealers</span></div><div class="stat"><strong id="vehicleTotal">—</strong><span>available vehicles</span></div></div>
+  <div class="tools"><input id="search" type="search" placeholder="Search dealers" aria-label="Search dealers"></div>
+  <div id="count" class="count">Loading dealers…</div>
+  <section id="dealerList" class="grid" aria-live="polite"><div class="state">Loading dealer collections…</div></section>
+</main>
+<footer><div class="wrap">3 Pedals Auto KE · Automotive Excellence Reimagined, For Those Who Appreciate the Drive.</div></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script>
+const CFG=window.SB_CONFIG||{},sb=(CFG.url&&!/^PASTE/.test(CFG.url)&&window.supabase)?window.supabase.createClient(CFG.url,CFG.key):null;
+const $=id=>document.getElementById(id),esc=value=>String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+const yardType=row=>{const type=String(row?.seller_type||row?.account_type||"").trim().toLowerCase().replace(/[\s_-]+/g," ");if(["yard","dealer","car yard","car dealer","business"].includes(type))return"yard";if(["private","private seller","individual"].includes(type))return"private";return[row?.yard_name,row?.yard_location,row?.yard_contact].some(value=>String(value||"").trim())?"yard":"private"};
+const nameOf=row=>String(row?.yard_name||row?.seller_name||"Car dealer").trim();let dealers=[];
+function render(){const query=$("search").value.trim().toLowerCase(),shown=dealers.filter(dealer=>dealer.name.toLowerCase().includes(query));$("count").textContent=`${shown.length} ${shown.length===1?"dealer":"dealers"}${query?" found":" listed"}`;$("dealerList").innerHTML=shown.length?shown.map((dealer,index)=>`<a class="dealer" href="yard.html?name=${encodeURIComponent(dealer.name)}" style="--i:${index}"><span class="logo">${dealer.logo?`<img src="${esc(dealer.logo)}" alt="">`:esc(dealer.name.split(/\s+/).map(word=>word[0]).join("").slice(0,2).toUpperCase())}</span><span class="dealer-copy"><h2>${esc(dealer.name)}</h2><p>${dealer.count} ${dealer.count===1?"vehicle":"vehicles"} available</p></span><span class="arrow" aria-hidden="true">›</span></a>`).join(""):`<div class="state">${query?"No dealers match your search.":"No dealer collections are currently available."}</div>`}
+async function load(){if(!sb||!CFG.key||/^PASTE/.test(CFG.key)){$("dealerTotal").textContent="0";$("vehicleTotal").textContent="0";$("count").textContent="Dealer directory unavailable";$("dealerList").innerHTML='<div class="state">The live dealer directory is unavailable right now. Please try again later.</div>';return}try{const {data,error}=await sb.from("listings").select("*").eq("status","approved");if(error)throw error;const groups=new Map();(data||[]).filter(row=>yardType(row)==="yard").forEach(row=>{const name=nameOf(row),key=name.toLocaleLowerCase();if(!groups.has(key))groups.set(key,{name,count:0,logo:row.yard_logo_url||row.seller_logo_url||""});const group=groups.get(key);group.count++;if(!group.logo)group.logo=row.yard_logo_url||row.seller_logo_url||""});dealers=[...groups.values()].sort((a,b)=>a.name.localeCompare(b.name));$("dealerTotal").textContent=dealers.length.toLocaleString("en-KE");$("vehicleTotal").textContent=dealers.reduce((sum,dealer)=>sum+dealer.count,0).toLocaleString("en-KE");render()}catch(error){console.error("Dealer directory could not load:",error);$("dealerTotal").textContent="—";$("vehicleTotal").textContent="—";$("count").textContent="Dealer directory unavailable";$("dealerList").innerHTML='<div class="state">We could not load the dealer directory right now. Please refresh in a moment.</div>'}}
+$("search").addEventListener("input",render);load();
+</script>
+</body>
+</html>
