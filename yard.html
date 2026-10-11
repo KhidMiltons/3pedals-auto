@@ -63,6 +63,10 @@ footer{border-top:1px solid var(--line);color:var(--mute)}
 @media(max-width:520px){.wrap{width:calc(100% - 24px)}.headin{min-height:66px}.logo{font-size:19px}.back{padding:9px 10px;font-size:11px}.hero{padding-top:32px}.grid{grid-template-columns:1fr;gap:12px}.cardbody{padding:14px}.profile{gap:12px}.sectionhead{align-items:flex-start;flex-direction:column;gap:4px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.hero,.profile,.card{animation:none!important}.hero h1:after,.back,.panel,.btn,.card,.card img{transition:none!important}}
 </style>
+<style id="dealer-profile-navigation">
+.headnav{display:flex;align-items:center;gap:9px}.logo{text-decoration:none}
+@media(max-width:520px){.headnav{gap:6px}.home-link{padding-inline:8px}}
+</style>
 <style id="touch-no-zoom">
 @media (max-width: 820px), (hover: none), (pointer: coarse) {
   .card:hover,.card:focus-visible,.tile:hover,.tile:focus-visible,.project-card:hover,.project-card:focus-visible,.contact-card:hover,.panel:hover,.mechanic-card:hover,.btn:hover,.back:hover,.logo:hover,.account-pill:hover,.account-icon:hover,nav button:hover,nav a.navlink:hover,.thumb:hover,.thumbs button:hover,.card:active,.tile:active,.btn:active { transform: none !important; }
@@ -84,7 +88,7 @@ input,select,textarea,.back{background:rgba(255,255,255,.055)!important;color:#f
 </style>
 </head>
 <body>
-<header class="head"><div class="wrap headin"><div class="logo">3 Pedals Auto KE</div><a class="back" href="/inventory">← Back to inventory</a></div></header>
+<header class="head"><div class="wrap headin"><a class="logo" href="/" aria-label="3 Pedals Auto KE home">3 Pedals Auto KE</a><nav class="headnav" aria-label="Dealer navigation"><a class="back" href="dealers.html">← Back to dealers</a><a class="back home-link" href="/">Home</a></nav></div></header>
 <main class="wrap">
 <section class="hero"><span class="eyebrow">3 PEDALS AUTO KE · DEALER PROFILE</span><h1 id="title">Car Yard</h1><p>Explore vehicles currently listed by this car yard. Contact the yard directly or open a vehicle to see its full details.</p></section>
 <section id="profile" class="profile"><div class="panel details"><div class="yardmark">🏢</div><h2 id="yardName">Loading…</h2><div id="contacts"></div><div class="actions" id="actions"></div></div><div class="panel"><div class="statgrid"><div class="stat"><b id="vehicleCount">0</b><span>Available vehicles</span></div><div class="stat"><b id="priceRange">—</b><span>Price range</span></div></div><p class="detail" style="margin-top:18px">Every vehicle shown here is an approved listing currently available through 3 Pedals Auto KE.</p></div></section>
