@@ -706,6 +706,24 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 @media(max-width:760px){#journalGrid .journal-entry{max-height:none}#journalGrid .journal-entry-media,#journalGrid .journal-entry-media img,#journalGrid .journal-entry-empty{height:clamp(170px,48vw,260px);min-height:0;max-height:260px}#journalGrid .journal-entry .project-body{padding:20px}}
 @media(max-width:520px){#journalGrid .journal-entry{max-width:440px}#journalGrid .journal-entry .project-body{padding:16px}#journalGrid .journal-entry .project-body h2{font-size:clamp(23px,7vw,30px);line-height:1.1}#journalGrid .journal-entry .project-body p{font-size:14px;line-height:1.6}#journalGrid .journal-entry .journal-meta{font-size:10px;gap:5px}}
 </style>
+
+<style id="mobile-header-and-gallery-fix">
+.journal-gallery img{object-fit:contain!important;background:#08090b}
+@media(max-width:600px){
+  header .wrap{grid-template-columns:minmax(0,1fr) 42px 42px!important;grid-template-areas:"brand account nav-toggle"!important;align-items:center!important;gap:8px!important;padding-top:max(8px,env(safe-area-inset-top))!important;padding-bottom:8px!important}
+  .logo{font-size:clamp(18px,5.5vw,23px)!important;line-height:1.12;max-width:100%!important;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .account-pill{grid-area:account!important;justify-self:end!important;margin:0!important;padding:2px!important}
+  .account-pill button,.nav-toggle{width:40px!important;height:40px!important;min-width:40px!important;align-self:center!important;justify-self:end!important}
+  .nav-toggle{grid-area:nav-toggle!important;display:inline-flex!important;margin:0!important}
+  nav{top:calc(100% + 8px)!important;right:12px!important;left:auto!important;width:min(300px,calc(100vw - 24px))!important;max-width:calc(100vw - 24px)!important;margin:0!important}
+  .hero{padding:26px 0 16px!important}
+  .hero h1{font-size:clamp(34px,9.5vw,42px)!important;line-height:1.06!important;max-width:16ch!important;letter-spacing:-.025em}
+  .hero p{font-size:15px!important;line-height:1.6!important;margin-top:12px!important}
+  .journal-gallery{border-radius:10px!important}
+  .journal-gallery img{width:100%!important;height:auto!important;aspect-ratio:16/9!important;max-height:min(52vh,420px)!important;object-fit:contain!important}
+}
+@media(max-width:380px){header .wrap{grid-template-columns:minmax(0,1fr) 38px 38px!important;gap:6px!important}.account-pill button,.nav-toggle{width:38px!important;height:38px!important;min-width:38px!important}.logo{font-size:18px!important}.hero h1{font-size:34px!important}}
+</style>
 </head>
 <body>
 <div class="auth-left" id="adminWrap" hidden><button id="adminOpen">Admin panel</button></div>
