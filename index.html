@@ -1076,12 +1076,13 @@ function showSellerAccountPage(selected,button,options={}){
     const target=pages.querySelector(`#accountPage-${selected}`);if(!target)return;
     pages.querySelectorAll(".account-page").forEach(page=>page.hidden=page!==target);
   }
-  if(options.updateHistory!==false&&history.state?.accountOpen&&history.state.accountPage!==selected)history.pushState({...history.state,accountOpen:true,accountPage:selected},"",location.href);
+  if(options.updateHistory!==false&&$("accDlg").open&&history.state?.accountPage!==selected)history.pushState({...history.state,accountOpen:true,accountPage:selected},"",location.href);
   const active=button||$("accountMenu").querySelector(`[data-page="${selected}"]`);$("accountMenu").querySelectorAll("[data-page]").forEach(item=>item.classList.toggle("active",item===active));closeAccountMenu();$("accBody").scrollTo({top:0,behavior:options.scroll===false?"auto":"smooth"});
 }
 $("accountMenu").addEventListener("click",event=>{const button=event.target.closest("[data-page]");if(button)showSellerAccountPage(button.dataset.page,button)});
 const accountDialog=$("accDlg");
 accountDialog.addEventListener("close",()=>{closeAccountMenu();if(history.state?.accountOpen){const state={...history.state};delete state.accountOpen;delete state.accountPage;history.replaceState(state,"",location.href)}});
+accountDialog.addEventListener("cancel",event=>{event.preventDefault();if(history.state?.accountOpen)history.back();else accountDialog.close()});
 window.addEventListener("popstate",event=>{const state=event.state||{},dialog=$("accDlg");if(state.accountOpen){if(!dialog.open)dialog.showModal();if(state.accountPage)showSellerAccountPage(state.accountPage,null,{updateHistory:false,scroll:false})}else if(dialog.open)dialog.close()});
 async function openAccount(){
   const d=$("accDlg"),box=$("accBody");
