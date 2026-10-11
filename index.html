@@ -790,6 +790,21 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 #accountMenu button.active,#accountMenu button[aria-current="page"],#accountMenu .seller-mode-switch button.selected{border-color:rgba(201,183,132,.58)!important;background:linear-gradient(110deg,#c6b27f,#a9925f)!important;color:#171717!important;box-shadow:0 5px 16px rgba(183,160,106,.2),inset 0 1px 0 rgba(255,255,255,.28)!important}
 #accountMenu button.active:hover,#accountMenu button[aria-current="page"]:hover,#accountMenu .seller-mode-switch button.selected:hover{background:linear-gradient(110deg,#d2bf8d,#b49d68)!important;color:#171717!important}
 @media(prefers-reduced-motion:reduce){#accountMenu button{transition:none!important}}
+</style><style id="desktop-account-header-and-glass-fix">
+@media(min-width:701px){
+ #accDlg .account-dialog-head{grid-template-columns:minmax(0,1fr) 42px 42px!important;gap:12px!important}
+ #accDlg .account-dialog-head h2.account-brand-title{display:flex!important;align-items:center!important;gap:12px!important;min-width:0!important;grid-column:1!important;grid-row:1!important;justify-content:flex-start!important;text-align:left!important;padding:0!important} #accDlg .account-dialog-head .account-brand-icon{width:32px!important;height:32px!important;flex:0 0 32px!important}
+ #accDlg .account-dialog-head>#accMenuToggle{grid-column:2!important;grid-row:1!important;justify-self:end!important}
+ #accDlg .account-dialog-head>#accCloseTop{grid-column:3!important;grid-row:1!important;justify-self:end!important}
+}
+#accountMenu.dashboard-shortcuts{background:rgba(28,29,31,.34)!important;border-color:rgba(201,183,132,.52)!important;box-shadow:0 20px 52px rgba(0,0,0,.48),inset 0 1px 0 rgba(255,255,255,.14)!important;backdrop-filter:blur(34px) saturate(155%)!important;-webkit-backdrop-filter:blur(34px) saturate(155%)!important}
+#accountMenu .seller-mode-switch{background:rgba(255,255,255,.055)!important;border-color:rgba(255,255,255,.1)!important}
+#accountMenu button:not(.selected):not(.active){background:rgba(255,255,255,.025)!important}
+#accountMenu button:not(.selected):not(.active):hover,#accountMenu button:not(.selected):not(.active):focus-visible{background:linear-gradient(110deg,rgba(198,178,127,.24),rgba(169,146,95,.13))!important}
+</style><style id="mobile-menu-stronger-translucency">
+@media(max-width:700px){
+ #nav,#nav.is-open,#accountMenu.dashboard-shortcuts{background:rgba(22,23,25,.2)!important;backdrop-filter:blur(34px) saturate(175%)!important;-webkit-backdrop-filter:blur(34px) saturate(175%)!important}
+}
 </style></head>
 <body>
 <div class="auth-left" id="adminWrap" hidden><button id="adminOpen">Admin panel</button></div>
