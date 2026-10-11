@@ -695,6 +695,7 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 #accDlg nav#accountMenu.dashboard-shortcuts{max-height:70dvh!important}
 @media(max-width:700px){#accDlg{width:calc(100vw - 20px)!important;height:min(88dvh,820px)!important;max-height:calc(100dvh - 24px)!important;border-radius:17px!important}#accDlg>.in{padding:env(safe-area-inset-top,8px) 14px max(14px,env(safe-area-inset-bottom))!important}#accDlg nav#accountMenu.dashboard-shortcuts{width:min(320px,calc(100vw - 48px))!important;max-height:72dvh!important;border-radius:14px!important}}
 </style>
+<style id="seller-registration-styles">#authSellerUrlWrap{padding:10px 12px 12px;margin:10px 0;border:1px solid var(--line);border-radius:12px;background:linear-gradient(145deg,rgba(87,54,34,.42),rgba(26,27,29,.9))}#authSellerUrlWrap[hidden]{display:none}#authSellerUrlWrap label{display:block;margin:0 0 7px;color:var(--ink);font-weight:700}#authSellerUrlWrap input{width:100%}#authSellerUrlPreview{margin:7px 0 0;color:var(--gold);overflow-wrap:anywhere}.seller-registration #authProfileDetails{display:block}.seller-registration #authProfileDetails>summary{display:none}.seller-registration #authProfileDetails .auth-optional-inner{padding:10px 12px 12px}.seller-registration #authPhoneField{display:none}</style>
 </head>
 <body>
 <div class="auth-left" id="adminWrap" hidden><button id="adminOpen">Admin panel</button></div>
@@ -830,7 +831,7 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 
 <dialog id="dlg" aria-label="Car details"></dialog>
 <dialog id="journalPhotoViewer" class="journal-photo-viewer" aria-label="Journal photo viewer"><button type="button" class="journal-photo-close" id="journalPhotoClose" aria-label="Close photo viewer">×</button><span class="journal-photo-count" id="journalViewerCount"></span><button type="button" class="journal-photo-step journal-photo-prev" id="journalViewerPrev" aria-label="Previous photo">‹</button><figure><img id="journalViewerImage" alt=""><figcaption id="journalViewerCaption"></figcaption></figure><button type="button" class="journal-photo-step journal-photo-next" id="journalViewerNext" aria-label="Next photo">›</button></dialog>
-<dialog id="authDlg" class="authbox"><div class="in"><button class="auth-close" id="authCloseTop" type="button" aria-label="Close sign in or sign up">×</button><div class="auth-brand"><span class="auth-brand-mark" aria-hidden="true">3P</span><span>3 Pedals Auto KE</span></div><h2 id="authTitle">Create your account</h2><p class="meta auth-intro" id="authIntro">One account for buying and selling with 3 Pedals Auto KE.</p><div class="auth-fields"><details class="auth-optional" id="authProfileDetails"><summary>Profile details <span class="meta">(optional)</span></summary><div class="auth-optional-inner"><div id="authNameField"><label for="authName">Full name</label><input id="authName" autocomplete="name"></div><div id="authPhoneField"><label for="authPhone">Phone number</label><input id="authPhone" type="tel" autocomplete="tel"></div><fieldset class="seg" id="authTypeWrap"><legend>Account type</legend><label><input type="radio" name="accountType" value="private" checked> Private seller</label><label><input type="radio" name="accountType" value="yard"> Car yard / dealer</label></fieldset><p id="authTypeHint" class="meta">Private seller accounts are for individuals selling their own vehicles.</p></div></details><div id="authEmailField"><label for="authEmail">Email</label><input id="authEmail" type="email" autocomplete="email"></div><div id="authPasswordField"><label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="new-password"></div><div id="authConfirmField"><label for="authConfirmPassword">Confirm password</label><input id="authConfirmPassword" type="password" autocomplete="new-password"><small class="meta">At least 8 characters.</small></div><button class="auth-forgot" id="authForgot" type="button" hidden>Forgot password?</button></div><p id="authErr" class="meta" style="color:var(--err)" role="status" aria-live="polite"></p><div class="auth-actions"><button class="btn" id="authSubmit">Create account</button></div><div class="auth-divider" id="authDivider" aria-hidden="true">or</div><button class="btn google-btn" id="authGoogle" type="button"><span class="google-mark" aria-hidden="true">G</span> Continue with Google</button><p class="auth-legal meta" id="authLegal">By continuing, you agree to use 3 Pedals Auto KE responsibly.</p><p class="switch" id="authSwitchRow"><span id="authSwitchText">Already have an account?</span> <button id="authSwitch" type="button">Log in</button></p><button class="auth-back" id="authCloseBack" type="button">‹ Back to marketplace</button></div></dialog>
+<dialog id="authDlg" class="authbox"><div class="in"><button class="auth-close" id="authCloseTop" type="button" aria-label="Close sign in or sign up">×</button><div class="auth-brand"><span class="auth-brand-mark" aria-hidden="true">3P</span><span>3 Pedals Auto KE</span></div><h2 id="authTitle">Create your account</h2><p class="meta auth-intro" id="authIntro">One account for buying and selling with 3 Pedals Auto KE.</p><div class="auth-fields"><details class="auth-optional" id="authProfileDetails"><summary>Profile details <span class="meta">(optional)</span></summary><div class="auth-optional-inner"><div id="authNameField"><label for="authName">Your name</label><input id="authName" autocomplete="name"></div><div id="authPhoneField"><label for="authPhone">Phone number</label><input id="authPhone" type="tel" autocomplete="tel"></div><fieldset class="seg" id="authTypeWrap"><legend>Account type</legend><label><input type="radio" name="accountType" value="private" checked> Private Seller</label><label><input type="radio" name="accountType" value="yard"> Organization / dealership</label></fieldset><p id="authTypeHint" class="meta">Private seller accounts are for individuals selling their own vehicles.</p></div></details><div id="authSellerUrlWrap" hidden><label for="authSellerSlug">Your 3 Pedals Auto URL</label><input id="authSellerSlug" autocomplete="off" autocapitalize="none" spellcheck="false"><small class="meta">Lowercase letters, numbers, and hyphens only. Suggested from your name; you can edit it.</small><p class="meta" id="authSellerUrlPreview" aria-live="polite"></p></div><div id="authEmailField"><label for="authEmail">Email</label><input id="authEmail" type="email" autocomplete="email"></div><div id="authPasswordField"><label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="new-password"></div><div id="authConfirmField"><label for="authConfirmPassword">Confirm password</label><input id="authConfirmPassword" type="password" autocomplete="new-password"><small class="meta">At least 8 characters.</small></div><button class="auth-forgot" id="authForgot" type="button" hidden>Forgot password?</button></div><p id="authErr" class="meta" style="color:var(--err)" role="status" aria-live="polite"></p><div class="auth-actions"><button class="btn" id="authSubmit">Create account</button></div><div class="auth-divider" id="authDivider" aria-hidden="true">or</div><button class="btn google-btn" id="authGoogle" type="button"><span class="google-mark" aria-hidden="true">G</span> Continue with Google</button><p class="auth-legal meta" id="authLegal">By continuing, you agree to use 3 Pedals Auto KE responsibly.</p><p class="switch" id="authSwitchRow"><span id="authSwitchText">Already have an account?</span> <button id="authSwitch" type="button">Log in</button></p><button class="auth-back" id="authCloseBack" type="button">‹ Back to marketplace</button></div></dialog>
 <dialog id="adminDlg" class="authbox wide"><div class="in"><h2>Admin panel</h2><div id="adminPanel"></div><div class="acts" style="margin-top:16px"><button class="btn ghost" id="adminClose">Close</button></div></div></dialog>
 <dialog id="accDlg" class="authbox wide"><div class="in"><div class="account-dialog-head"><button id="accMenuToggle" type="button" aria-label="Open account menu" aria-expanded="false" aria-controls="accountMenu" onpointerup="window.toggleAccountMenu(event)" onclick="window.toggleAccountMenu(event)">☰</button><h2 class="account-brand-title"><img src="favicon.svg" alt="" class="account-brand-icon">3 Pedals Auto KE</h2><button id="accCloseTop" type="button" aria-label="Close account">×</button></div><div id="accBody"></div></div><nav id="accountMenu" class="dashboard-shortcuts" aria-label="Account menu" hidden><div class="seller-nav-identity"><small>SELLER ACCOUNT</small><strong>Seller</strong></div><div class="seller-mode-switch"><button type="button" data-buying>Buying</button><button type="button" class="selected" aria-current="page">Selling</button></div><div class="seller-nav-label">WORKSPACE</div><button type="button" class="active" data-page="dashboard">Analytics</button><button type="button" data-seller-signup>＋ Create seller account</button><button type="button" data-page="listings">Stock</button><button type="button" data-page="promotions">Marketing</button><button type="button" data-page="bookings">Bookings</button><div class="seller-nav-label">ACCOUNT</div><button type="button" data-page="settings">Settings</button><button type="button" data-signout>Log out</button></nav></dialog>
 
@@ -916,7 +917,7 @@ async function syncAccountType(){
 }
 function updateAuthTypeHint(){
   const type=document.querySelector('input[name="accountType"]:checked')?.value||"private";
-  $("authTypeHint").textContent=type==="yard"?"Car yard / dealer accounts are for businesses listing vehicles from a yard or dealership.":"Private seller accounts are for individuals selling their own vehicles.";
+  $("authTypeHint").textContent=type==="yard"?"Organization accounts are for dealerships, companies, and brokers.":"Private Seller accounts are for individuals selling their own vehicles.";
 }
 async function loadSession(){
   if(!sb)return;
@@ -931,28 +932,31 @@ function refreshAccountUI(){
   $("accountOpen").textContent="";
   $("adminWrap").hidden=!(profile&&profile.is_admin);
 }
-function openAuth(mode="register",msg=""){
-  if(!sb){alert("Accounts are not switched on yet. Please contact us on WhatsApp.");return}
-  authMode=mode;const login=mode==="login",recovery=mode==="recovery";
-  $("authProfileDetails").hidden=login||recovery;
-  $("authProfileDetails").open=false;
-  $("authTitle").textContent=recovery?"Choose a new password":login?"Welcome back":"Create your account";
-  $("authIntro").textContent=recovery?"Set a new password for your account.":login?"Sign in to manage your listings, promotions and bookings.":"One account for buying and selling with 3 Pedals Auto KE.";
-  $("authSubmit").textContent=recovery?"Save new password":login?"Log in":"Create account";
-  $("authPassword").autocomplete=login?"current-password":"new-password";
-  $("authNameField").hidden=false;$("authPhoneField").hidden=false;$("authEmailField").hidden=recovery;
-  $("authPasswordField").hidden=false;$("authConfirmField").hidden=login;$("authTypeWrap").hidden=login||recovery;$("authTypeHint").hidden=login||recovery;updateAuthTypeHint();
-  $("authForgot").hidden=!login;$("authGoogle").hidden=recovery;$("authDivider").hidden=recovery;$("authSwitchRow").hidden=recovery;$("authLegal").hidden=recovery;
-  $("authSwitchText").textContent=login?"Need an account?":"Already have an account?";
-  $("authSwitch").textContent=login?"Create one":"Log in";
-  $("authErr").textContent=msg;$("authDlg").showModal();
-}
-$("accountOpen").onclick=()=>me?openAccount():openAuth("register");
+let sellerRegistrationMode=false,sellerSlugEdited=false;
+ function slugifySellerName(value){return String(value||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,48).replace(/-+$/g,"")}
+ function refreshSellerUrlPreview(){const slug=$("authSellerSlug").value.trim();$("authSellerUrlPreview").textContent=slug?`${location.host||"3pedalsauto.co.ke"}/yard.html?slug=${slug}`:`${location.host||"3pedalsauto.co.ke"}/yard.html?slug=your-name`}
+ function openAuth(mode="register",msg="",options={}){
+   sellerRegistrationMode=!!options.seller;authMode=mode;const login=mode==="login",recovery=mode==="recovery",sellerSignup=sellerRegistrationMode&&!login&&!recovery;
+   if(!sb){alert("Accounts are not switched on yet. Please contact us on WhatsApp.");return}
+   $("authDlg").classList.toggle("seller-registration",sellerRegistrationMode);
+   $("authProfileDetails").hidden=(login||recovery)&&!sellerRegistrationMode;$("authProfileDetails").open=sellerSignup;$("authSellerUrlWrap").hidden=!sellerSignup;
+   $("authTitle").textContent=recovery?"Choose a new password":login?(sellerRegistrationMode?"Seller log in":"Welcome back"):(sellerRegistrationMode?"Become a seller":"Create your account");
+   $("authIntro").textContent=recovery?"Set a new password for your account.":login?"Sign in to manage your listings, promotions and bookings.":sellerRegistrationMode?"Create your seller profile and a public URL for your vehicle collection.":"One account for buying and selling with 3 Pedals Auto KE.";
+   $("authSubmit").textContent=recovery?"Save new password":login?"Log in":sellerRegistrationMode?"Create seller account":"Create account";$("authPassword").autocomplete=login?"current-password":"new-password";
+   $("authNameField").hidden=login||recovery;$("authPhoneField").hidden=login||recovery||sellerSignup;$("authEmailField").hidden=recovery||sellerSignup;$("authPasswordField").hidden=sellerSignup;$("authConfirmField").hidden=login||sellerSignup;$("authTypeWrap").hidden=login||recovery;$("authTypeHint").hidden=login||recovery;updateAuthTypeHint();
+   $("authForgot").hidden=!login||sellerRegistrationMode;$("authGoogle").hidden=recovery||sellerRegistrationMode;$("authDivider").hidden=recovery||sellerRegistrationMode;$("authSwitchRow").hidden=recovery||sellerRegistrationMode;$("authLegal").hidden=recovery;
+   $("authSwitchText").textContent=login?"Need an account?":"Already have an account?";$("authSwitch").textContent=login?"Create one":"Log in";
+   if(sellerSignup){if(!sellerSlugEdited)$("authSellerSlug").value=slugifySellerName($("authName").value);refreshSellerUrlPreview()}
+   $("authErr").textContent=msg;$("authDlg").showModal();
+ }
+ $("accountOpen").onclick=()=>me?openAccount():openAuth("register");
 $("accountTile").onclick=()=>me?openAccount():openAuth("register");
 $("authCloseTop").onclick=()=>$("authDlg").close();
 $("authCloseBack").onclick=()=>$("authDlg").close();
-$("authSwitch").onclick=()=>openAuth(authMode==="login"?"register":"login");
-document.querySelectorAll('input[name="accountType"]').forEach(r=>r.onchange=updateAuthTypeHint);
+$("authSwitch").onclick=()=>openAuth(authMode==="login"?"register":"login","",{seller:sellerRegistrationMode});
+ $("authName").addEventListener("input",()=>{if(sellerRegistrationMode&&!sellerSlugEdited){$("authSellerSlug").value=slugifySellerName($("authName").value);refreshSellerUrlPreview()}});$("authSellerSlug").addEventListener("input",()=>{sellerSlugEdited=true;refreshSellerUrlPreview()});
+$("authName").addEventListener("input",()=>{if(sellerRegistrationMode&&!sellerSlugEdited){$("authSellerSlug").value=slugifySellerName($("authName").value);refreshSellerUrlPreview()}});$("authSellerSlug").addEventListener("input",()=>{sellerSlugEdited=true;refreshSellerUrlPreview()});
+ document.querySelectorAll('input[name="accountType"]').forEach(r=>r.onchange=updateAuthTypeHint);
 $("authForgot").onclick=async()=>{
   const email=$("authEmail").value.trim().toLowerCase(),button=$("authForgot"),err=$("authErr");
   if(!email){err.textContent="Enter your account email first, then choose Forgot password?";$("authEmail").focus();return}
@@ -968,7 +972,15 @@ $("authGoogle").onclick=async()=>{
 };
 $("authSubmit").onclick=async()=>{
   const email=$("authEmail").value.trim().toLowerCase(),pass=$("authPassword").value,name=$("authName").value.trim(),phone=$("authPhone").value.trim(),confirmPass=$("authConfirmPassword").value,type=document.querySelector('input[name="accountType"]:checked')?.value||"private",err=$("authErr"),b=$("authSubmit");
-  if(authMode==="recovery"){
+  if(sellerRegistrationMode&&authMode==="register"){
+    if(!me){err.textContent="Sign in to your main account first, then create your seller profile.";return}
+    const slug=$("authSellerSlug").value.trim();if(!name){err.textContent="Enter your seller or business name.";return}if(!slug||!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)||slug.length<3){err.textContent="Enter a seller URL with at least 3 lowercase letters or numbers; hyphens are allowed.";return}
+    b.disabled=true;err.textContent="Checking seller URL…";
+    try{const {data:existing,error:lookupError}=await sb.from("listings").select("id").eq("seller_slug",slug).limit(1);if(lookupError)throw new Error("Seller URLs need the updated seller schema. Run seller_type_schema.sql in Supabase, then try again.");if(existing?.length){err.textContent="That seller URL is already in use. Please choose another.";return}const {data,error}=await sb.auth.updateUser({data:{...(me.user_metadata||{}),seller_name:name,seller_slug:slug,account_type:type}});if(error)throw error;const {error:profileError}=await sb.from("profiles").update({account_type:type,seller_slug:slug}).eq("id",me.id);if(profileError)throw profileError;me=data.user||me;profile={...(profile||{}),account_type:type,seller_slug:slug};$("authDlg").close();await loadSession();openAccount()}
+    catch(e){err.textContent=e.message||"We couldn't create the seller profile. Please try again."}
+    finally{b.disabled=false}
+    return;
+  }  if(authMode==="recovery"){
     if(pass.length<8){err.textContent="Use a password of at least 8 characters.";return}
     if(pass!==confirmPass){err.textContent="The passwords do not match.";return}
     b.disabled=true;err.textContent="Saving your new password…";
@@ -981,13 +993,13 @@ $("authSubmit").onclick=async()=>{
   if(authMode==="register"){
     if(!name){err.textContent="Enter your name.";return}
     if(pass.length<8){err.textContent="Use a password of at least 8 characters.";return}
-    if(pass!==confirmPass){err.textContent="The passwords do not match.";return}
+    if(pass!==confirmPass){err.textContent="The passwords do not match.";return}     if(sellerRegistrationMode){const slug=$("authSellerSlug").value.trim();if(!slug||!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)||slug.length<3){err.textContent="Enter a seller URL with at least 3 lowercase letters or numbers; hyphens are allowed.";return}const {data:existing,error:lookupError}=await sb.from("listings").select("id").eq("seller_slug",slug).limit(1);if(lookupError){err.textContent="Seller URL checks need the updated seller schema. Run seller_type_schema.sql in Supabase, then try again.";return}if(existing?.length){err.textContent="That seller URL is already in use. Please choose another.";return}}
   }
   b.disabled=true;err.textContent="";
-  const res=authMode==="register"?await sb.auth.signUp({email,password:pass,options:{data:{name,phone,account_type:type}}}):await sb.auth.signInWithPassword({email,password:pass});
+  const signupData={name,phone,account_type:type};if(sellerRegistrationMode&&authMode==="register")signupData.seller_slug=$("authSellerSlug").value.trim();const res=authMode==="register"?await sb.auth.signUp({email,password:pass,options:{data:signupData}}):await sb.auth.signInWithPassword({email,password:pass});
   b.disabled=false;
   if(res.error){err.textContent=res.error.message;return}
-  if(authMode==="register"&&!res.data.session){err.textContent="Account created. Check your email for a confirmation link, then log in. Your account type has been saved.";return}
+  if(authMode==="register"&&!res.data.session){err.textContent=sellerRegistrationMode?"Seller account created. Check your email for a confirmation link, then log in. Your seller name, type, and URL have been saved.":"Account created. Check your email for a confirmation link, then log in. Your account type has been saved.";return}
   $("authPassword").value="";$("authConfirmPassword").value="";$("authDlg").close();
   await loadSession();if(location.hash==="#login"||location.hash==="#register")history.replaceState(null,"",location.pathname+location.search);if(me)openAccount();
 };
@@ -1145,7 +1157,7 @@ async function openAccount(){
     closeAccountMenu();menu.innerHTML=`<div class="seller-nav-identity"><small>SELLER ACCOUNT</small><strong class="seller-nav-brand"><img src="favicon.svg" alt="">${esc(name||me.email||"Seller")}</strong><span>${esc(me.email||"")}</span></div><div class="seller-mode-switch"><button type="button" data-buying>Buying</button><button type="button" class="selected" aria-current="page">Selling</button></div><div class="seller-nav-label">WORKSPACE</div><button type="button" class="active" data-page="dashboard">Analytics</button><button type="button" data-seller-signup>＋ Create seller account</button><button type="button" data-page="listings">Stock</button><button type="button" data-page="promotions">Marketing${reminders.length?` · ${reminders.length} due`:""}</button><button type="button" data-page="bookings">Bookings</button><div class="seller-nav-label">ACCOUNT</div><button type="button" data-page="settings">Settings</button><button type="button" data-signout>Log out</button>`;
     dashboard.remove();box.insertBefore(pages,box.firstChild);
     pages.querySelector("[data-open-marketing]")?.addEventListener("click",()=>menu.querySelector('[data-page="promotions"]')?.click());
-    menu.querySelector("[data-seller-signup]").onclick=()=>{$("accDlg").close();closeAccountMenu();openAuth("register","Create a separate seller login with its own email and password.");$("authTitle").textContent="Create seller account";$("authIntro").textContent="Create a separate seller login to manage your vehicle listings and promotions.";$("authProfileDetails").open=true};menu.querySelector("[data-buying]").onclick=()=>{$("accDlg").close();show("buy")};menu.querySelector("[data-signout]").onclick=()=>$("accOut").click();
+    menu.querySelector("[data-seller-signup]").onclick=()=>{$("accDlg").close();closeAccountMenu();sellerSlugEdited=false;$("authName").value=profile?.name||me?.user_metadata?.name||me?.user_metadata?.full_name||"";$("authSellerSlug").value="";openAuth("register","",{seller:true})};menu.querySelector("[data-buying]").onclick=()=>{$("accDlg").close();show("buy")};menu.querySelector("[data-signout]").onclick=()=>$("accOut").click();
   }  $("accPhoto").onchange=e=>changeProfilePhoto(e.target.files[0]);
   if($("accRemovePhoto"))$("accRemovePhoto").onclick=removeProfilePhoto;
   $("accSaveProfile").onclick=saveAccountProfile;
@@ -1616,8 +1628,9 @@ $("sBtn").onclick=async()=>{
       photos:urls,
       whatsapp:wa,
       seller_type:accountType(),
+      seller_slug:userData.user.user_metadata?.seller_slug||"",
       yard_logo_url:yard?profileAvatarUrl()||null:null,
-      seller_name:yard?v("yName"):(v("sName")||(profile&&profile.name)||userData.user.email||""),
+      seller_name:yard?v("yName"):(v("sName")||userData.user.user_metadata?.seller_name||(profile&&profile.name)||userData.user.email||""),
       seller_phone:yard?v("yPhone"):((profile&&profile.phone)||""),
       seller_email:yard?v("yEmail"):(userData.user.email||""),
       contact:yard?v("yContact"):"",
