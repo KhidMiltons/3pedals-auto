@@ -124,6 +124,16 @@ dialog::backdrop{background:rgba(12,13,14,.58);backdrop-filter:blur(5px)}
 .card:hover,.card:focus-visible{transform:translateY(-2px) scale(1)!important}
 .card .photo:before,.card .photo:after{display:none!important}
 </style>
+<style id="3pedals-glass-theme">
+:root{color-scheme:dark;--bg:#0d0d0d;--surface:rgba(27,28,29,.78);--surface2:rgba(34,35,36,.76);--text:#f5f1e6;--ink:#f5f1e6;--muted:#aaa18e;--mute:#aaa18e;--gold:#c9b784;--blue:#c9b784;--line:rgba(201,183,132,.2);--ease:cubic-bezier(.22,1,.36,1)}
+body{background:radial-gradient(ellipse at 12% -8%,rgba(201,183,132,.12),transparent 34%),radial-gradient(ellipse at 90% 18%,rgba(255,255,255,.035),transparent 35%),#0d0d0d!important;color:#f5f1e6!important;font-family:Manrope,system-ui,-apple-system,"Segoe UI",sans-serif!important}
+header,.head{background:linear-gradient(110deg,rgba(17,18,19,.9),rgba(30,30,31,.78))!important;border-color:rgba(201,183,132,.2)!important;backdrop-filter:blur(22px) saturate(140%)!important;-webkit-backdrop-filter:blur(22px) saturate(140%)!important}
+.card,.dealer,.stat,.state,.empty,.error,.panel,.seller-card,.info,.gallery,.seller,.spec,.note{background:linear-gradient(145deg,rgba(40,40,40,.76),rgba(22,23,24,.82))!important;color:#f5f1e6!important;border-color:rgba(201,183,132,.2)!important;backdrop-filter:blur(18px) saturate(135%)!important;-webkit-backdrop-filter:blur(18px) saturate(135%)!important;box-shadow:0 12px 34px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.035)!important;transition:transform .32s var(--ease),border-color .25s,box-shadow .32s!important}
+.card:hover,.card:focus-visible,.dealer:hover,.dealer:focus-visible{transform:translateY(-3px)!important;border-color:rgba(201,183,132,.55)!important;box-shadow:0 20px 46px rgba(0,0,0,.38),0 0 22px rgba(201,183,132,.08)!important}
+input,select,textarea,.back{background:rgba(255,255,255,.055)!important;color:#f5f1e6!important;border-color:rgba(201,183,132,.2)!important;backdrop-filter:blur(12px)!important;-webkit-backdrop-filter:blur(12px)!important}
+.btn{transition:transform .25s var(--ease),filter .25s,box-shadow .25s!important}.btn:hover,.btn:focus-visible{transform:translateY(-2px)!important;filter:brightness(1.08)!important;box-shadow:0 10px 24px rgba(0,0,0,.28)!important}.input::placeholder{color:#aaa18e!important}input::placeholder{color:#aaa18e!important}.eyebrow{color:#c9b784!important}a{color:inherit}.logo,.brand,.price,.arrow{color:#c9b784!important}.status{background:rgba(55,112,72,.2)!important;color:#b7e0bf!important;border-color:rgba(128,194,143,.3)!important}.yard-label{background:rgba(201,183,132,.14)!important;color:#c9b784!important}footer{border-color:rgba(201,183,132,.18)!important;color:#aaa18e!important}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
+</style>
 </head>
 <body>
 <header><div class="wrap"><div class="logo">3 Pedals Auto KE</div><a class="back" href="/">Home</a></div></header>
