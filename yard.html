@@ -95,7 +95,7 @@ input,select,textarea,.back{background:rgba(255,255,255,.055)!important;color:#f
 <script>
 const CFG=window.SB_CONFIG||{};
 const sb=(CFG.url&&!/^PASTE/.test(CFG.url)&&window.supabase)?window.supabase.createClient(CFG.url,CFG.key):null;const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const fmt=n=>Number(n||0).toLocaleString('en-KE');const qs=new URLSearchParams(location.search);const wanted=qs.get('name')||'';
+const fmt=n=>Number(n||0).toLocaleString('en-KE');const qs=new URLSearchParams(location.search);const wanted=qs.get('name')||'',wantedSlug=qs.get('slug')||'';
 function mapUrl(x){return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x)}`}
 function yardType(r){
  const value=String(r?.seller_type||r?.account_type||'').trim().toLowerCase().replace(/[\s_-]+/g,' ');
@@ -106,14 +106,14 @@ function yardType(r){
 function yardNameFor(r){return String(r?.yard_name||r?.seller_name||'').trim()}
 function normalizeYardName(name){return String(name||'').trim().replace(/\s+(?:ke|kenya)$/i,'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'')}
 async function init(){
- if(!wanted){document.getElementById('yardName').textContent='Car yard';document.getElementById('countText').textContent='No yard selected';document.getElementById('grid').innerHTML='<div class="panel empty">Choose a yard from the vehicle listings to see its inventory.</div>';return}
- if(!sb||/^PASTE_/.test(CFG.key)){document.getElementById('yardName').textContent=wanted;document.getElementById('grid').innerHTML='<div class="panel empty">The live database connection is not configured.</div>';return}
+ if(!wanted&&!wantedSlug){document.getElementById('yardName').textContent='Car yard';document.getElementById('countText').textContent='No yard selected';document.getElementById('grid').innerHTML='<div class="panel empty">Choose a yard from the vehicle listings to see its inventory.</div>';return}
+ if(!sb||/^PASTE_/.test(CFG.key)){document.getElementById('yardName').textContent=wanted||wantedSlug;document.getElementById('grid').innerHTML='<div class="panel empty">The live database connection is not configured.</div>';return}
  const {data,error}=await sb.from('listings').select('*').eq('status','approved').order('created_at',{ascending:false});
- if(error){document.getElementById('yardName').textContent=wanted;document.getElementById('countText').textContent='Inventory unavailable';document.getElementById('grid').innerHTML='<div class="panel empty">We could not load this yard right now. Please try again.</div>';return}
+ if(error){document.getElementById('yardName').textContent=wanted||wantedSlug;document.getElementById('countText').textContent='Inventory unavailable';document.getElementById('grid').innerHTML='<div class="panel empty">We could not load this yard right now. Please try again.</div>';return}
  const key=normalizeYardName(wanted);
  const rows=(data||[]).filter(r=>yardType(r)==='yard'&&normalizeYardName(yardNameFor(r))===key);
  if(!rows.length){document.getElementById('yardName').textContent=wanted;document.getElementById('title').textContent=wanted;document.getElementById('countText').textContent='0 available vehicles';document.getElementById('vehicleCount').textContent='0';document.getElementById('priceRange').textContent='—';document.getElementById('grid').innerHTML='<div class="panel empty">No currently available vehicles were found for this yard.</div>';return}
- const first=rows[0],name=yardNameFor(first)||wanted,loc=first.yard_location||first.location||'',phone=first.seller_phone||first.phone||'',email=first.seller_email||first.email||'',web=first.web||first.yard_web||'',contact=first.contact||first.yard_contact||'';
+ const first=rows[0],name=yardNameFor(first)||wanted||wantedSlug,loc=first.yard_location||first.location||'',phone=first.seller_phone||first.phone||'',email=first.seller_email||first.email||'',web=first.web||first.yard_web||'',contact=first.contact||first.yard_contact||'';
  document.title=`${name} | 3 Pedals Auto KE`;document.getElementById('title').textContent=name;document.getElementById('yardName').textContent=name;
  if(first.yard_logo_url||first.seller_logo_url)document.querySelector('.yardmark').innerHTML=`<img src="${esc(first.yard_logo_url||first.seller_logo_url)}" alt="${esc(name)} logo">`;
  document.getElementById('contacts').innerHTML=[contact?`<div class="detail">Contact: <strong>${esc(contact)}</strong></div>`:'',loc?`<div class="detail">📍 <strong>${esc(loc)}</strong></div>`:'',phone?`<div class="detail">📞 <a href="tel:${esc(phone.replace(/\D/g,''))}">${esc(phone)}</a></div>`:'',email?`<div class="detail">✉️ <a href="mailto:${esc(email)}">${esc(email)}</a></div>`:'',web?`<div class="detail">🌐 <a href="${esc(/^https?:\/\//i.test(web)?web:'https://'+web)}" target="_blank" rel="noopener">${esc(web)}</a></div>`:''].join('');
