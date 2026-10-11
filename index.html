@@ -681,7 +681,8 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 #accDlg h1,#accDlg h2,#accDlg h3{font-family:"Playfair Display",Georgia,serif}
 #accDlg .account-tools,#accDlg .profile-card,#accDlg .danger-zone,#accDlg .promotion-package{color:var(--ink);border-color:var(--line)}
 @media(max-width:800px){
- #accDlg nav#accountMenu.dashboard-shortcuts{position:fixed!important;top:calc(68px + env(safe-area-inset-top,0px))!important;right:auto!important;bottom:auto!important;left:12px!important;z-index:1000!important;display:none!important;width:min(300px,calc(100vw - 24px))!important;height:auto!important;max-height:calc(78dvh - env(safe-area-inset-top,0px))!important;overflow-x:hidden!important;overflow-y:auto!important;padding:12px!important;margin:0!important;border:1px solid var(--line)!important;border-radius:12px!important;background:var(--surface)!important;box-shadow:0 16px 36px rgba(0,0,0,.5)!important}
+ #accDlg>.in{position:relative!important}
+ #accDlg nav#accountMenu.dashboard-shortcuts{position:absolute!important;top:68px!important;right:auto!important;bottom:auto!important;left:12px!important;z-index:1000!important;display:none!important;width:min(300px,calc(100vw - 24px))!important;height:auto!important;max-height:calc(78dvh - env(safe-area-inset-top,0px))!important;overflow-x:hidden!important;overflow-y:auto!important;padding:12px!important;margin:0!important;border:1px solid var(--line)!important;border-radius:12px!important;background:var(--surface)!important;box-shadow:0 16px 36px rgba(0,0,0,.5)!important}
  #accDlg nav#accountMenu.dashboard-shortcuts.menu-open{display:flex!important}
  #accDlg nav#accountMenu.dashboard-shortcuts[hidden]{display:none!important}
  #accDlg nav#accountMenu.dashboard-shortcuts button{flex:none!important;width:100%!important;min-height:44px!important;text-align:left!important}
@@ -698,6 +699,7 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
     <button role="tab" data-tab="home" aria-selected="true">Home</button>
     <button role="tab" data-tab="buy" aria-selected="false">Buy a car</button>
     <a class="navlink" href="/inventory">Inventory </a>
+    <a class="navlink" href="/dealers.html">Dealers</a>
     <button role="tab" data-tab="sell" aria-selected="false">Sell your car</button>
     <button role="tab" data-tab="projects" aria-selected="false">Our projects</button>
     <button role="tab" data-tab="journal" aria-selected="false">3 Pedals Journal</button>
@@ -730,6 +732,7 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
   </div></div>
   <div class="tiles">
     <a class="tile" href="/inventory"><h3>Browse inventory</h3><span class="meta">View cars currently listed for sale</span></a>
+    <a class="tile" href="/dealers.html"><h3>Browse dealers</h3><span class="meta">Explore dealer collections and available vehicles</span></a>
     <button class="tile" data-go="sell"><h3>Sell your car</h3><span class="meta">List it in two minutes</span></button>
     <a class="tile" id="gTile" href="/garage"><h3>3 Pedals Garage</h3><span class="meta">Service, repairs and inspections</span></a>
     <button class="tile" id="accountTile"><h3>My account</h3><span class="meta">Manage your vehicles and bookings</span></button>
@@ -1052,6 +1055,7 @@ async function changeProfilePhoto(file){
   }catch(e){err.textContent=e.message||"Could not upload that profile picture."}
 }
 function closeAccountMenu(){const nav=$("accountMenu");if(!nav)return;nav.classList.remove("menu-open");nav.style.removeProperty("display");nav.hidden=true;$("accMenuToggle").setAttribute("aria-expanded","false");$("accMenuToggle").setAttribute("aria-label","Open seller navigation")}
+$("accMenuToggle").addEventListener("click",()=>{const nav=$("accountMenu"),open=nav.hidden||!nav.classList.contains("menu-open");nav.hidden=!open;nav.classList.toggle("menu-open",open);nav.style.removeProperty("display");$("accMenuToggle").setAttribute("aria-expanded",String(open));$("accMenuToggle").setAttribute("aria-label",open?"Close seller navigation":"Open seller navigation")});
 function showSellerAccountPage(selected,button){
   const pages=$("accBody").querySelector(".account-pages"),dashboard=pages?.querySelector("#accountPage-dashboard");if(!pages)return;
   if(["dashboard","listings","promotions"].includes(selected)&&dashboard){
@@ -1068,7 +1072,6 @@ $("accountMenu").addEventListener("click",event=>{const button=event.target.clos
 async function openAccount(){
   const d=$("accDlg"),box=$("accBody");
   $("accCloseTop").onclick=()=>d.close();
-$("accMenuToggle").onclick=()=>{const nav=$("accountMenu");if(!nav)return;const open=!nav.classList.contains("menu-open");nav.hidden=!open;nav.classList.toggle("menu-open",open);nav.style.removeProperty("display");$("accMenuToggle").setAttribute("aria-expanded",String(open));$("accMenuToggle").setAttribute("aria-label",open?"Close seller navigation":"Open seller navigation")};
   if(!d.open)d.showModal();
   box.innerHTML='<p class="meta">Loading…</p>';
   const [l,b,sales,promos,packages,prefs]=await Promise.all([
