@@ -675,9 +675,9 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
  /* Seller listing actions: match the site's glass and warm gold theme. */
  #accDlg .seller-listing-main strong{font-family:Manrope,system-ui,-apple-system,"Segoe UI",sans-serif;font-size:15px;letter-spacing:.005em;color:#f3f0e8}
  #accDlg .seller-listing-main .meta{color:rgba(229,225,214,.68);line-height:1.55}
- #accDlg .seller-listing-actions{padding:5px;border:1px solid rgba(255,255,255,.1);border-radius:14px;background:linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.025));box-shadow:inset 0 1px 0 rgba(255,255,255,.035);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
- #accDlg .seller-listing-actions .btn{min-height:44px;margin:0;padding:10px 14px;border:1px solid transparent;border-radius:11px;background:transparent;color:rgba(243,240,232,.78);font:700 13px/1.2 Manrope,system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.01em;box-shadow:none;transition:transform .2s ease,background .2s ease,border-color .2s ease,color .2s ease,box-shadow .2s ease;-webkit-tap-highlight-color:rgba(227,179,65,.18)}
- #accDlg .seller-listing-actions .btn:hover,#accDlg .seller-listing-actions .btn:focus-visible{transform:translateY(-1px);border-color:rgba(227,179,65,.25);background:linear-gradient(180deg,#dfbb69,#c9a552);color:#171513;box-shadow:0 5px 16px rgba(201,165,82,.2),inset 0 1px 0 rgba(255,255,255,.25);outline:none}
+ #accDlg .seller-listing-actions{padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
+ #accDlg .seller-listing-actions .btn{min-height:44px;margin:0;padding:10px 14px;border:1px solid rgba(201,183,132,.2);border-radius:11px;background:linear-gradient(145deg,rgba(40,40,40,.76),rgba(22,23,24,.82));color:rgba(243,240,232,.84);font:700 13px/1.2 Manrope,system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.01em;box-shadow:0 8px 22px rgba(0,0,0,.16),inset 0 1px 0 rgba(255,255,255,.035);transition:transform .2s ease,background .2s ease,border-color .2s ease,color .2s ease,box-shadow .2s ease;-webkit-tap-highlight-color:rgba(227,179,65,.18)}
+ #accDlg .seller-listing-actions .btn:hover,#accDlg .seller-listing-actions .btn:focus-visible{transform:translateY(-2px);border-color:rgba(227,179,65,.6);background:linear-gradient(145deg,rgba(56,50,37,.92),rgba(27,26,23,.96));color:#f4d88e;box-shadow:0 14px 30px rgba(0,0,0,.26),inset 0 1px 0 rgba(255,255,255,.08);outline:none}
  #accDlg .seller-listing-actions .btn:active{transform:translateY(0) scale(.98)}
  #accDlg .seller-listing-actions [data-del]{border-color:transparent;background:transparent;color:rgba(243,240,232,.72)}
  #accDlg .seller-listing-actions [data-del]:hover,#accDlg .seller-listing-actions [data-del]:focus-visible{border-color:rgba(221,116,105,.65);background:linear-gradient(145deg,rgba(221,116,105,.22),rgba(221,116,105,.08));color:#ffc0b8;box-shadow:0 9px 22px rgba(0,0,0,.28),0 0 0 2px rgba(221,116,105,.08)}
@@ -1062,7 +1062,7 @@ function positionAccountMenu(){const nav=$("accountMenu"),toggle=$("accMenuToggl
 function closeAccountMenu(){const nav=$("accountMenu");if(!nav)return;nav.classList.remove("menu-open");nav.hidden=true;["display","position","inset","left","top","width","max-height","z-index"].forEach(property=>nav.style.removeProperty(property));$("accMenuToggle").setAttribute("aria-expanded","false");$("accMenuToggle").setAttribute("aria-label","Open seller navigation")}
 let lastAccountMenuPointerToggle=0;window.toggleAccountMenu=function(event){const now=Date.now();if(event?.type==="click"&&now-lastAccountMenuPointerToggle<650)return;if(event?.type==="pointerup")lastAccountMenuPointerToggle=now;event?.preventDefault();event?.stopPropagation();const nav=$("accountMenu"),toggle=$("accMenuToggle"),open=toggle.getAttribute("aria-expanded")!=="true";if(open){nav.hidden=false;nav.classList.add("menu-open");nav.style.setProperty("display","flex","important");positionAccountMenu()}else closeAccountMenu();toggle.setAttribute("aria-expanded",String(open));toggle.setAttribute("aria-label",open?"Close seller navigation":"Open seller navigation")};
 window.addEventListener("resize",positionAccountMenu);window.addEventListener("orientationchange",()=>setTimeout(positionAccountMenu,120));
-function showSellerAccountPage(selected,button){
+function showSellerAccountPage(selected,button,options={}){
   const pages=$("accBody").querySelector(".account-pages"),dashboard=pages?.querySelector("#accountPage-dashboard");if(!pages)return;
   if(["dashboard","listings","promotions"].includes(selected)&&dashboard){
     pages.querySelectorAll(".account-page").forEach(page=>page.hidden=page!==dashboard);
@@ -1072,13 +1072,17 @@ function showSellerAccountPage(selected,button){
     const target=pages.querySelector(`#accountPage-${selected}`);if(!target)return;
     pages.querySelectorAll(".account-page").forEach(page=>page.hidden=page!==target);
   }
-  $("accountMenu").querySelectorAll("[data-page]").forEach(item=>item.classList.toggle("active",item===button));closeAccountMenu();$("accBody").scrollTo({top:0,behavior:"smooth"});
+  if(options.updateHistory!==false&&history.state?.accountOpen&&history.state.accountPage!==selected)history.pushState({...history.state,accountOpen:true,accountPage:selected},"",location.href);
+  const active=button||$("accountMenu").querySelector(`[data-page="${selected}"]`);$("accountMenu").querySelectorAll("[data-page]").forEach(item=>item.classList.toggle("active",item===active));closeAccountMenu();$("accBody").scrollTo({top:0,behavior:options.scroll===false?"auto":"smooth"});
 }
 $("accountMenu").addEventListener("click",event=>{const button=event.target.closest("[data-page]");if(button)showSellerAccountPage(button.dataset.page,button)});
+const accountDialog=$("accDlg");
+accountDialog.addEventListener("close",()=>{closeAccountMenu();if(history.state?.accountOpen){const state={...history.state};delete state.accountOpen;delete state.accountPage;history.replaceState(state,"",location.href)}});
+window.addEventListener("popstate",event=>{const state=event.state||{},dialog=$("accDlg");if(state.accountOpen){if(!dialog.open)dialog.showModal();if(state.accountPage)showSellerAccountPage(state.accountPage,null,{updateHistory:false,scroll:false})}else if(dialog.open)dialog.close()});
 async function openAccount(){
   const d=$("accDlg"),box=$("accBody");
   $("accCloseTop").onclick=()=>d.close();
-  if(!d.open)d.showModal();
+  if(!d.open){d.showModal();history.pushState({...history.state,accountOpen:true,accountPage:"dashboard"},"",location.href)}
   box.innerHTML='<p class="meta">Loading…</p>';
   const [l,b,sales,promos,packages,prefs]=await Promise.all([
     sb.from("listings").select("*").eq("owner",me.id).order("created_at",{ascending:false}),
@@ -1136,7 +1140,7 @@ async function openAccount(){
     closeAccountMenu();menu.innerHTML=`<div class="seller-nav-identity"><small>SELLER ACCOUNT</small><strong class="seller-nav-brand"><img src="favicon.svg" alt="">${esc(name||me.email||"Seller")}</strong><span>${esc(me.email||"")}</span></div><div class="seller-mode-switch"><button type="button" data-buying>Buying</button><button type="button" class="selected" aria-current="page">Selling</button></div><div class="seller-nav-label">WORKSPACE</div><button type="button" class="active" data-page="dashboard">Analytics</button><button type="button" data-seller-signup>＋ Create seller account</button><button type="button" data-page="listings">Stock</button><button type="button" data-page="promotions">Marketing${reminders.length?` · ${reminders.length} due`:""}</button><button type="button" data-page="bookings">Bookings</button><div class="seller-nav-label">ACCOUNT</div><button type="button" data-page="settings">Settings</button><button type="button" data-signout>Log out</button>`;
     dashboard.remove();box.insertBefore(pages,box.firstChild);
     pages.querySelector("[data-open-marketing]")?.addEventListener("click",()=>menu.querySelector('[data-page="promotions"]')?.click());
-    menu.querySelector("[data-seller-signup]").onclick=()=>{$("accDlg").close();closeAccountMenu();openAuth("register","Create a separate seller login with its own email and password.");$("authTitle").textContent="Create seller account";$("authIntro").textContent="Create a separate seller login to manage your vehicle listings and promotions.";$("authProfileDetails").open=true};menu.querySelector("[data-buying]").onclick=()=>{$("accDlg").close();show("buy")};menu.querySelector("[data-signout]").onclick=()=>$("accOut").click();menu.querySelectorAll("[data-page]").forEach(button=>button.onclick=()=>showSellerAccountPage(button.dataset.page,button));
+    menu.querySelector("[data-seller-signup]").onclick=()=>{$("accDlg").close();closeAccountMenu();openAuth("register","Create a separate seller login with its own email and password.");$("authTitle").textContent="Create seller account";$("authIntro").textContent="Create a separate seller login to manage your vehicle listings and promotions.";$("authProfileDetails").open=true};menu.querySelector("[data-buying]").onclick=()=>{$("accDlg").close();show("buy")};menu.querySelector("[data-signout]").onclick=()=>$("accOut").click();
   }  $("accPhoto").onchange=e=>changeProfilePhoto(e.target.files[0]);
   if($("accRemovePhoto"))$("accRemovePhoto").onclick=removeProfilePhoto;
   $("accSaveProfile").onclick=saveAccountProfile;
@@ -1760,3 +1764,4 @@ loadSiteSettings();
 
 </body>
 </html>
+
