@@ -677,6 +677,9 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
  #accDlg nav#accountMenu.dashboard-shortcuts{top:calc(60px + env(safe-area-inset-top,0px))!important;left:0!important;width:min(300px,86vw)!important;max-height:calc(100dvh - 60px)!important;border-radius:0 14px 0 0!important}
  #accDlg #accBody{flex:1;min-height:0;width:100%;padding:16px 0 32px;overflow-y:auto}
 }
+#accDlg,#accDlg button,#accDlg input,#accDlg select,#accDlg textarea{font-family:Manrope,system-ui,-apple-system,"Segoe UI",sans-serif}
+#accDlg h1,#accDlg h2,#accDlg h3{font-family:"Playfair Display",Georgia,serif}
+#accDlg .account-tools,#accDlg .profile-card,#accDlg .danger-zone,#accDlg .promotion-package{color:var(--ink);border-color:var(--line)}
 </style>
 </head>
 <body>
@@ -1043,7 +1046,19 @@ async function changeProfilePhoto(file){
   }catch(e){err.textContent=e.message||"Could not upload that profile picture."}
 }
 function closeAccountMenu(){const nav=$("accountMenu");if(!nav)return;nav.classList.remove("menu-open");nav.style.setProperty("display","none","important");$("accMenuToggle").setAttribute("aria-expanded","false");$("accMenuToggle").setAttribute("aria-label","Open seller navigation")}
-$("accountMenu").addEventListener("click",event=>{const button=event.target.closest("[data-page]");if(!button)return;const pages=$("accBody").querySelector(".account-pages");if(!pages)return;const selected=button.dataset.page;if(!Array.from(pages.querySelectorAll(".account-page")).some(page=>page.id===`accountPage-${selected}`))return;pages.querySelectorAll(".account-page").forEach(page=>page.hidden=page.id!==`accountPage-${selected}`);$("accountMenu").querySelectorAll("[data-page]").forEach(item=>item.classList.toggle("active",item===button));closeAccountMenu();$("accBody").scrollTo({top:0,behavior:"smooth"})});
+function showSellerAccountPage(selected,button){
+  const pages=$("accBody").querySelector(".account-pages"),dashboard=pages?.querySelector("#accountPage-dashboard");if(!pages)return;
+  if(["dashboard","listings","promotions"].includes(selected)&&dashboard){
+    pages.querySelectorAll(".account-page").forEach(page=>page.hidden=page!==dashboard);
+    const sections=dashboard.querySelectorAll(":scope > .account-tools");
+    sections.forEach((section,index)=>section.hidden=selected!=="dashboard"&&((selected==="listings"&&index!==1)||(selected==="promotions"&&index!==2)));
+  }else{
+    const target=pages.querySelector(`#accountPage-${selected}`);if(!target)return;
+    pages.querySelectorAll(".account-page").forEach(page=>page.hidden=page!==target);
+  }
+  $("accountMenu").querySelectorAll("[data-page]").forEach(item=>item.classList.toggle("active",item===button));closeAccountMenu();$("accBody").scrollTo({top:0,behavior:"smooth"});
+}
+$("accountMenu").addEventListener("click",event=>{const button=event.target.closest("[data-page]");if(button)showSellerAccountPage(button.dataset.page,button)});
 async function openAccount(){
   const d=$("accDlg"),box=$("accBody");
   $("accCloseTop").onclick=()=>d.close();
@@ -1099,14 +1114,14 @@ $("accMenuToggle").onclick=()=>{const nav=$("accountMenu");if(!nav)return;const 
     settingsInner.querySelectorAll("[data-save-preferences]").forEach(button=>button.onclick=async()=>{const key=button.dataset.savePreferences,status=settingsInner.querySelector(`[data-preference-status="${key}"]`);button.disabled=true;status.textContent="Saving…";const values={seller_id:me.id,preferred_stock_mode:$("prefStockMode").value,bank_details:$("prefBankDetails").value,print_logo_on_documents:$("prefPrintLogo").checked,require_engine_number:$("prefRequireEngine").checked,require_registration_number:$("prefRequireRegistration").checked,require_logbook:$("prefRequireLogbook").checked,require_supplier_documents:$("prefRequireSupplierDocs").checked,repost_reminder_days:Math.max(1,Math.min(365,Number($("prefReminderDays").value)||14)),updated_at:new Date().toISOString()};try{const {error}=await sb.from("seller_settings").upsert(values,{onConflict:"seller_id"});if(error)throw error;sellerPreferences=values;status.textContent="Saved."}catch(error){status.textContent=error.message?.includes("seller_settings")?"Settings storage is not installed yet. Run outputs/seller_account_settings.sql in Supabase SQL Editor.":`Could not save settings: ${error.message||"Please try again."}`}finally{button.disabled=false}});
     const overview=document.createElement("section");overview.className="account-page";overview.id="accountPage-overview";overview.innerHTML=`<div class="dashboard-welcome"><h3>Welcome${name?`, ${esc(name.split(/\s+/)[0])}`:""}</h3><p class="meta" style="margin:0">Your listings, approvals, sales and promotions in one place.</p><p class="meta" style="margin:10px 0 0">Open the menu above to view your dashboard, listings, promotions, bookings, or account settings.</p></div>`;
     const makePage=(id,node)=>{const page=document.createElement("section");page.className="account-page";page.id=`accountPage-${id}`;page.hidden=true;if(node)page.append(node);return page};
-    const dashboardPage=makePage("dashboard",summary),listingsPage=makePage("listings",listings),promotionsPage=makePage("promotions",promotions),bookingsPage=makePage("bookings");
+    const dashboardPage=makePage("dashboard"),bookingsPage=makePage("bookings");dashboardPage.append(summary,listings,promotions);
     if(bookingAction)bookingsPage.append(bookingAction);if(bookingHeading)bookingsPage.append(bookingHeading);
     let bookingNode=bookingHeading?.nextElementSibling;while(bookingNode&&!bookingNode.querySelector("#accOut")){const next=bookingNode.nextElementSibling;bookingsPage.append(bookingNode);bookingNode=next}
-    const pages=document.createElement("div");pages.className="account-pages";pages.append(overview,dashboardPage,listingsPage,promotionsPage,settings,bookingsPage);overview.hidden=true;dashboardPage.hidden=false;
+    const pages=document.createElement("div");pages.className="account-pages";pages.append(overview,dashboardPage,settings,bookingsPage);overview.hidden=true;dashboardPage.hidden=false;
     menu.hidden=false;menu.innerHTML=`<div class="seller-nav-identity"><small>SELLER ACCOUNT</small><strong class="seller-nav-brand"><img src="favicon.svg" alt="">${esc(name||me.email||"Seller")}</strong><span>${esc(me.email||"")}</span></div><div class="seller-mode-switch"><button type="button" data-buying>Buying</button><button type="button" class="selected" aria-current="page">Selling</button></div><div class="seller-nav-label">WORKSPACE</div><button type="button" class="active" data-page="dashboard">Analytics</button><button type="button" data-seller-signup>＋ Create seller account</button><button type="button" data-page="listings">Stock</button><button type="button" data-page="promotions">Marketing${reminders.length?` · ${reminders.length} due`:""}</button><button type="button" data-page="bookings">Bookings</button><div class="seller-nav-label">ACCOUNT</div><button type="button" data-page="settings">Settings</button><button type="button" data-signout>Log out</button>`;
     dashboard.remove();box.insertBefore(pages,box.firstChild);
     pages.querySelector("[data-open-marketing]")?.addEventListener("click",()=>menu.querySelector('[data-page="promotions"]')?.click());
-    menu.querySelector("[data-seller-signup]").onclick=()=>{$("accDlg").close();closeAccountMenu();openAuth("register","Create a separate seller login with its own email and password.");$("authTitle").textContent="Create seller account";$("authIntro").textContent="Create a separate seller login to manage your vehicle listings and promotions.";$("authProfileDetails").open=true};menu.querySelector("[data-buying]").onclick=()=>{$("accDlg").close();show("buy")};menu.querySelector("[data-signout]").onclick=()=>$("accOut").click();menu.querySelectorAll("[data-page]").forEach(button=>button.onclick=()=>{const selected=button.dataset.page;pages.querySelectorAll(".account-page").forEach(page=>page.hidden=page.id!==`accountPage-${selected}`);menu.querySelectorAll("[data-page]").forEach(item=>item.classList.toggle("active",item===button));closeAccountMenu();$("accBody").scrollTo({top:0,behavior:"smooth"})});
+    menu.querySelector("[data-seller-signup]").onclick=()=>{$("accDlg").close();closeAccountMenu();openAuth("register","Create a separate seller login with its own email and password.");$("authTitle").textContent="Create seller account";$("authIntro").textContent="Create a separate seller login to manage your vehicle listings and promotions.";$("authProfileDetails").open=true};menu.querySelector("[data-buying]").onclick=()=>{$("accDlg").close();show("buy")};menu.querySelector("[data-signout]").onclick=()=>$("accOut").click();menu.querySelectorAll("[data-page]").forEach(button=>button.onclick=()=>showSellerAccountPage(button.dataset.page,button));
   }  $("accPhoto").onchange=e=>changeProfilePhoto(e.target.files[0]);
   if($("accRemovePhoto"))$("accRemovePhoto").onclick=removeProfilePhoto;
   $("accSaveProfile").onclick=saveAccountProfile;
