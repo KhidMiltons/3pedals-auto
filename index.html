@@ -837,6 +837,31 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
  #accDlg nav#accountMenu.dashboard-shortcuts.menu-open:not([hidden]){background:rgba(22,23,25,.28)!important;backdrop-filter:blur(48px) saturate(165%)!important;-webkit-backdrop-filter:blur(48px) saturate(165%)!important}
  #accDlg .account-dialog-head{background:rgba(22,23,25,.58)!important;backdrop-filter:blur(26px) saturate(150%)!important;-webkit-backdrop-filter:blur(26px) saturate(150%)!important}
 }
+</style><style id="mobile-auth-dialog-compact">
+@media(max-width:600px){
+ #authDlg{box-sizing:border-box;width:min(440px,calc(100vw - 24px))!important;max-width:calc(100vw - 24px)!important;max-height:calc(100dvh - 16px)!important;margin:auto!important;overflow:hidden!important;border-radius:16px!important}
+ #authDlg>.in{box-sizing:border-box;width:100%!important;max-height:calc(100dvh - 16px)!important;padding:max(12px,env(safe-area-inset-top)) 16px max(12px,env(safe-area-inset-bottom))!important;overflow-x:hidden!important;overflow-y:auto!important;overscroll-behavior:contain!important}
+ #authDlg .auth-close{top:9px!important;right:9px!important;width:34px!important;height:34px!important;font-size:22px!important}
+ #authDlg .auth-brand{gap:7px!important;margin-bottom:11px!important;padding:0 34px!important;font-size:14px!important}
+ #authDlg .auth-brand-mark{width:27px!important;height:27px!important;flex:0 0 27px!important}
+ #authDlg .auth-brand-mark img{width:18px!important;height:18px!important}
+ #authDlg .in>h2{font-size:clamp(25px,7vw,29px)!important;line-height:1.08!important;margin:0 0 5px!important}
+ #authDlg .auth-intro{font-size:13px!important;line-height:1.4!important;margin:0 0 10px!important}
+ #authDlg .auth-fields{gap:0!important}
+ #authDlg .auth-fields label{margin-top:7px!important;font-size:13px!important}
+ #authDlg .auth-fields input{min-height:42px!important;padding:9px 11px!important;font-size:15px!important}
+ #authDlg .auth-fields small.meta{font-size:11px!important;line-height:1.3!important}
+ #authDlg .auth-optional{margin:8px 0 0!important}
+ #authDlg .auth-optional>summary{padding:9px 10px!important;font-size:12px!important}
+ #authDlg .auth-optional-inner{padding:0 10px 10px!important}
+ #authDlg .auth-actions{gap:7px!important;margin-top:12px!important}
+ #authDlg .auth-actions .btn,#authDlg .google-btn{min-height:44px!important;padding:10px 12px!important;font-size:14px!important}
+ #authDlg .auth-divider{gap:9px!important;margin:9px 0!important;font-size:12px!important}
+ #authDlg .auth-legal{font-size:10px!important;line-height:1.35!important;margin:7px 0 0!important}
+ #authDlg .switch{font-size:12px!important;padding:8px 0 0!important;margin-top:8px!important}
+ #authDlg .auth-back{font-size:12px!important;margin:8px auto 0!important;padding:3px!important}
+}
+@media(max-width:380px){#authDlg>.in{padding-left:13px!important;padding-right:13px!important}#authDlg .in>h2{font-size:25px!important}}
 </style></head>
 <body>
 <div class="auth-left" id="adminWrap" hidden><button id="adminOpen">Admin panel</button></div>
