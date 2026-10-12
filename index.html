@@ -963,14 +963,15 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
       </div>
     </div>
     <div class="two">
-      <div><label for="sMake">Make</label><select id="sMake"><option value="">Select make</option></select></div>
-      <div><label for="sModel">Model</label><select id="sModel" disabled><option value="">Select make first</option></select></div>
-      <div><label for="sVariant">Variant</label><select id="sVariant" disabled><option value="">Select model first</option></select></div>
-      <div><label for="sYear">Year</label><input id="sYear" type="number" min="1990" max="2026" placeholder="2018"></div><div><label for="sStockMode">Where is this car?</label><select id="sStockMode"><option value="any">Choose stock type</option><option value="local">Kenya stock</option><option value="import">Import</option></select></div>
+      <div><label for="sMake">Make</label><input id="sMake" list="sMakeOptions" autocomplete="off" placeholder="Search or enter any make"><datalist id="sMakeOptions"></datalist></div>
+      <div><label for="sModel">Model</label><input id="sModel" list="sModelOptions" autocomplete="off" placeholder="Search or enter any model"><datalist id="sModelOptions"></datalist></div>
+      <div><label for="sVariant">Variant / trim (optional)</label><input id="sVariant" list="sVariantOptions" autocomplete="off" placeholder="e.g. Hybrid, GT, 2.0"><datalist id="sVariantOptions"></datalist></div>
+      <div><label for="sYear">Year</label><input id="sYear" type="number" min="1885" max="2026" placeholder="2018"></div><div><label for="sStockMode">Where is this car?</label><select id="sStockMode"><option value="any">Choose stock type</option><option value="local">Kenya stock</option><option value="import">Import</option></select></div>
       <div><label for="sPrice">Asking price (KES)</label><input id="sPrice" type="number" min="0" placeholder="2400000"></div>
       <div><label for="sKm">Mileage (km)</label><input id="sKm" type="number" min="0" placeholder="64000"></div>
       <div><label for="sFuel">Fuel</label><select id="sFuel"><option>Petrol</option><option>Diesel</option><option>Hybrid</option><option>Electric</option></select></div>
     </div>
+    <p class="meta vehicle-catalog-credit">Suggestions include 14,459 model names from 934 makes across six vehicle types. Missing a vehicle? Enter its make and model above. Vehicle data by <a href="https://vehiclesdb.com" target="_blank" rel="noopener">VehiclesDB</a> (catalog 2026.10.4).</p>
     <label for="sDesc">Description</label><textarea id="sDesc" rows="3" placeholder="Service history, condition, reason for selling"></textarea>
     <label for="sPhotos">Car photos (up to 15)</label><input id="sPhotos" type="file" accept="image/*" multiple>
     <p id="sPhotoStatus" class="meta" aria-live="polite">0 of 15 photos selected. You can add up to 15 photos.</p>
@@ -1013,6 +1014,7 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
+<script src="vehicle-catalog.js"></script>
 <script>
 const fmt=n=>Number(n).toLocaleString("en-US");
 // Database connection. Fill in config.js (see SETUP.md). Without it the site runs in demo mode with sample cars.
@@ -1716,22 +1718,15 @@ function shrink(f){return new Promise((res,rej)=>{
     c.width=Math.round(i.width*k);c.height=Math.round(i.height*k);c.getContext("2d").drawImage(i,0,0,c.width,c.height);
     URL.revokeObjectURL(u);res(c.toDataURL("image/jpeg",.78))};
   i.onerror=()=>{URL.revokeObjectURL(u);rej()};i.src=u})}
+let VEHICLE_CATALOG=window.VEHICLE_CATALOG_DATA||{version:"",makes:[],models:{}};
+const vehicleKey=value=>String(value||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]/g,"");
 function populateSellVehicleFilters(){
-  const mk=$("sMake"),mf=$("sModel"),vr=$("sVariant");
-  const makeNames=Object.keys(MODEL_FAMILIES).sort((a,b)=>a.localeCompare(b));
-  mk.innerHTML='<option value="">Select make</option>'+makeNames.map(x=>`<option value="${esc(x)}">${esc(x==="Mercedes-Benz"?"Mercedes":x)}</option>`).join("");
-  mf.innerHTML='<option value="">Select make first</option>';mf.disabled=true;
-  vr.innerHTML='<option value="">Select model first</option>';vr.disabled=true;
-  mk.onchange=()=>{
-    const make=mk.value, models=make?Object.keys(MODEL_FAMILIES[make]||{}).sort((a,b)=>a.localeCompare(b)):[];
-    mf.innerHTML='<option value="">Select model</option>'+models.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
-    mf.disabled=!make;mf.value="";vr.innerHTML='<option value="">Select model first</option>';vr.disabled=true;
-  };
-  mf.onchange=()=>{
-    const make=mk.value, model=mf.value, variants=(MODEL_FAMILIES[make]||{})[model]||[];
-    vr.innerHTML='<option value="">Select variant</option>'+variants.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
-    vr.disabled=!model;vr.value="";
-  };
+  const mk=$("sMake"),mf=$("sModel"),vr=$("sVariant"),makeList=$("sMakeOptions"),modelList=$("sModelOptions"),variantList=$("sVariantOptions");
+  const modelsForMake=make=>{const key=vehicleKey(make),entry=Object.keys(VEHICLE_CATALOG.models).find(name=>vehicleKey(name)===key),catalogModels=entry?VEHICLE_CATALOG.models[entry]:[],known=MODEL_FAMILIES[canonicalMake(make)]||{};return [...new Set([...catalogModels,...Object.keys(known)])].sort((a,b)=>a.localeCompare(b))};
+  const updateMakeOptions=()=>{const names=[...new Set([...Object.keys(MODEL_FAMILIES),...(VEHICLE_CATALOG.makes||[])])].sort((a,b)=>a.localeCompare(b));makeList.innerHTML=names.map(name=>`<option value="${esc(name)}"></option>`).join("")};
+  const updateVariantOptions=()=>{const families=MODEL_FAMILIES[canonicalMake(mk.value)]||{},variants=families[mf.value]||[];variantList.innerHTML=[...new Set(variants)].map(name=>`<option value="${esc(name)}"></option>`).join("")};
+  const updateModelOptions=()=>{modelList.innerHTML=modelsForMake(mk.value).map(name=>`<option value="${esc(name)}"></option>`).join("");updateVariantOptions()};
+  updateMakeOptions();mk.addEventListener("input",updateModelOptions);mk.addEventListener("change",updateModelOptions);mf.addEventListener("input",updateVariantOptions);mf.addEventListener("change",updateVariantOptions);
 }
 populateSellVehicleFilters();
 
@@ -1762,13 +1757,13 @@ $("sCancel").onclick=()=>{
   if(!confirm("Cancel this listing? Your entered details and selected photos will be cleared."))return;
   $("sellForm").reset();photos=[];renderPhotoPreviews();sellMode();$("sErr").textContent="";$("sOk").hidden=true;show("buy");
 };
-$("vehicleDocsLink").onclick=e=>{const q=new URLSearchParams();if($("sMake").value)q.set("make",$("sMake").value);if($("sVariant").value)q.set("model",$("sVariant").value);if($("sYear").value)q.set("year",$("sYear").value);if($("sPrice").value)q.set("price",$("sPrice").value);try{sessionStorage.setItem("3pedals:seller-settings",JSON.stringify({...sellerPreferences,seller_name:profileName(),seller_contact:profilePhone()||me?.email||"",seller_logo:sellerPreferences.print_logo_on_documents!==false?profileAvatarUrl():""}))}catch(_){}if(q.toString())e.currentTarget.href="vehicle_documents.html?"+q.toString()};
+$("vehicleDocsLink").onclick=e=>{const q=new URLSearchParams();if($("sMake").value)q.set("make",$("sMake").value);if($("sModel").value)q.set("model",[$("sModel").value,$("sVariant").value].filter(Boolean).join(" "));if($("sYear").value)q.set("year",$("sYear").value);if($("sPrice").value)q.set("price",$("sPrice").value);try{sessionStorage.setItem("3pedals:seller-settings",JSON.stringify({...sellerPreferences,seller_name:profileName(),seller_contact:profilePhone()||me?.email||"",seller_logo:sellerPreferences.print_logo_on_documents!==false?profileAvatarUrl():""}))}catch(_){}if(q.toString())e.currentTarget.href="vehicle_documents.html?"+q.toString()};
 $("sBtn").onclick=async()=>{
   const v=i=>$(i).value.trim(),err=$("sErr"),yard=modeYard(),ok=$("sOk"),btn=$("sBtn");
   ok.hidden=true;
   if(!sb){err.textContent="Online listing is not switched on yet. Please WhatsApp us your car details.";return}
   if(!me){openAuth("login","Please sign in or create an account before listing a vehicle.");return}
-  if(!v("sMake")||!v("sModel")||!v("sVariant")||!v("sYear")||!v("sPrice")){err.textContent="Select make, model, variant, year and asking price to submit.";return}
+  if(!v("sMake")||!v("sModel")||!v("sYear")||!v("sPrice")){err.textContent="Enter the make, model, year and asking price to submit.";return}
   if(!photos.length){err.textContent="Add at least one photo of the car.";return}
   const wa=normWa($("sWa").value);
   if(!wa){err.textContent="Enter a valid WhatsApp number, for example 0712 345 678.";return}
@@ -1793,7 +1788,7 @@ $("sBtn").onclick=async()=>{
       owner:ownerId,
       status:"pending",
       make:v("sMake"),
-      model:v("sVariant"),
+      model:v("sVariant")?`${v("sModel")} ${v("sVariant")}`:v("sModel"),
       year:+v("sYear"),
       stock_mode:v("sStockMode")||"any",
       price:+v("sPrice"),
