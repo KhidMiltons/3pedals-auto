@@ -21,6 +21,27 @@
 .journal-share-dialog{width:min(520px,calc(100vw - 28px));padding:24px;border:1px solid rgba(201,183,132,.55);border-radius:18px;background:rgba(22,23,24,.96);color:#f5f1e6;box-shadow:0 24px 80px rgba(0,0,0,.65);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
 .journal-share-dialog::backdrop{background:rgba(0,0,0,.68);backdrop-filter:blur(5px)}.journal-share-dialog h2{font:700 24px/1.15 "Playfair Display",Georgia,serif;margin:0 42px 6px 0}.journal-share-dialog p{margin:0 0 18px;color:#aaa18e}.journal-share-dialog label{display:block;font-size:12px;font-weight:700;color:#c9b784}.journal-share-dialog .journal-share-url{display:block;width:100%;margin-top:7px;padding:12px;border:1px solid rgba(201,183,132,.3);border-radius:9px;background:#111213;color:#f5f1e6;font:13px/1.4 Manrope,system-ui,sans-serif}.journal-share-actions{display:flex;gap:9px;margin-top:14px}.journal-share-actions button,.journal-share-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:9px 15px;border:1px solid rgba(201,183,132,.45);border-radius:9px;background:rgba(201,183,132,.12);color:#f5f1e6;text-decoration:none;font:700 14px Manrope,system-ui,sans-serif;cursor:pointer}.journal-share-actions button:hover,.journal-share-actions a:hover{border-color:#c9b784;background:rgba(201,183,132,.22)}.journal-copy-status{display:block;margin-top:12px;color:#aaa18e}.journal-share-close{float:right;width:36px;height:36px;border:1px solid rgba(255,255,255,.14);border-radius:9px;background:rgba(255,255,255,.05);color:#f5f1e6;font-size:22px;cursor:pointer}
 </style>
+<link rel="stylesheet" href="site-theme.css">
+<style id="journal-device-light-theme">
+@media (prefers-color-scheme:light){
+  :root{color-scheme:light;--bg:#f3f1ec;--surface:#fbfaf7;--surface-2:#f6f4ef;--ink:#1a1b1d;--mute:#6f6c64;--line:#dedbd3;--gold:#9a7a3e}
+  html,body{background:#f3f1ec!important;color:#1a1b1d!important}
+  body{background-image:radial-gradient(ellipse at 10% -10%,rgba(183,160,106,.12),transparent 34%),linear-gradient(145deg,#f8f6f1,#efede7 62%,#f5f3ee)!important}
+  .head{background:rgba(251,250,247,.9)!important;border-color:rgba(154,122,62,.22)!important;box-shadow:0 8px 26px rgba(24,25,27,.08)!important}
+  .brand,.eyebrow{color:#806638!important}
+  .back{background:rgba(255,255,255,.72)!important;color:#292822!important;border-color:rgba(154,122,62,.28)!important}
+  .back:hover{background:rgba(183,160,106,.16)!important;color:#624b1d!important}
+  .meta,.vehicle-facts dt,footer{color:#6f6c64!important}
+  .article h1,.vehicle-card h2,.vehicle-facts dd,.body h2,.body h3{color:#1a1b1d!important}
+  .body p,.vehicle-card .vehicle-description,.story-card p{color:#363530!important}
+  .vehicle-card,.story-card,.state{background:linear-gradient(145deg,rgba(255,255,255,.94),rgba(247,245,239,.9))!important;color:#1a1b1d!important;border-color:#dedbd3!important;box-shadow:0 14px 36px rgba(24,25,27,.1)!important}
+  .vehicle-card .card-label{background:rgba(183,160,106,.13)!important;color:#765c2d!important;border-color:rgba(154,122,62,.25)!important}
+  .story-visual{background:radial-gradient(ellipse at center,rgba(183,160,106,.12),transparent 65%),#ebe8e1!important;border-color:#dedbd3!important}
+  .visual-controls button,.visual-count{background:rgba(250,249,245,.9)!important;color:#292822!important;border-color:rgba(154,122,62,.4)!important}
+  .visual-controls button:hover,.visual-controls button:focus-visible{background:#b7a06a!important;color:#171614!important}
+  .photo-lightbox{background:rgba(24,24,24,.9)!important}
+}
+</style>
 </head>
 <body>
 <header class="head"><div class="headin"><a class="brand" href="index.html#journal">3 Pedals Auto KE</a><a class="back" href="index.html#journal">← 3 Pedals Journal</a></div></header>
