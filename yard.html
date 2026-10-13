@@ -87,6 +87,18 @@ input,select,textarea,.back{background:rgba(255,255,255,.055)!important;color:#f
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
 </style>
 <link rel="stylesheet" href="site-theme.css">
+<style id="compact-mobile-yard-vehicle-cards">
+@media(max-width:600px){
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
+  .card{min-width:0;border-radius:12px!important}
+  .photo{aspect-ratio:4/3!important}
+  .cardbody{padding:10px!important}
+  .cardbody h3{font-size:clamp(13px,3.8vw,15px)!important;line-height:1.2!important;overflow-wrap:anywhere}
+  .price{font-size:clamp(16px,4.5vw,19px)!important;line-height:1.15}
+  .tags{gap:4px!important;margin-top:7px!important}
+  .tag{font-size:9px!important;padding:4px 6px!important}
+}
+</style>
 </head>
 <body>
 <header class="head"><div class="wrap headin"><a class="logo" href="/" aria-label="3 Pedals Auto KE home">3 Pedals Auto KE</a><nav class="headnav" aria-label="Dealer navigation"><a class="back" href="dealers.html">← Back to dealers</a><a class="back home-link" href="/">Home</a></nav></div></header>
