@@ -1961,6 +1961,89 @@ loadSiteSettings();
 })();
 </script>
 
+<style id="mobile-light-account-and-nav-contrast">
+@media (max-width:700px) and (prefers-color-scheme:light){
+  /* Keep the seller workspace in step with the phone's light appearance. */
+  dialog#accDlg{
+    color:#24231f!important;
+    background:linear-gradient(145deg,rgba(250,249,245,.94),rgba(239,236,228,.92))!important;
+    border-color:rgba(133,105,52,.38)!important;
+    box-shadow:0 24px 70px rgba(35,30,20,.24),inset 0 1px rgba(255,255,255,.85)!important;
+    -webkit-backdrop-filter:blur(30px) saturate(145%)!important;
+    backdrop-filter:blur(30px) saturate(145%)!important;
+  }
+  dialog#accDlg::backdrop{background:rgba(31,29,25,.38)!important;-webkit-backdrop-filter:blur(8px)!important;backdrop-filter:blur(8px)!important}
+  dialog#accDlg>.in{color:#24231f!important;background:transparent!important}
+  dialog#accDlg .account-dialog-head{
+    color:#29271f!important;
+    background:rgba(248,246,239,.74)!important;
+    border-bottom-color:rgba(133,105,52,.22)!important;
+    box-shadow:0 8px 22px rgba(42,37,27,.08),inset 0 1px rgba(255,255,255,.75)!important;
+    -webkit-backdrop-filter:blur(24px) saturate(145%)!important;
+    backdrop-filter:blur(24px) saturate(145%)!important;
+  }
+  dialog#accDlg .account-dialog-head h2,
+  dialog#accDlg .account-dialog-head h2 span{color:#29271f!important}
+  dialog#accDlg .account-dialog-head button{
+    color:#493a20!important;
+    background:rgba(255,255,255,.72)!important;
+    border-color:rgba(133,105,52,.35)!important;
+    box-shadow:0 3px 12px rgba(35,30,20,.1),inset 0 1px rgba(255,255,255,.85)!important;
+  }
+  dialog#accDlg #accBody,
+  dialog#accDlg #accBody :is(h1,h2,h3,h4,strong,label,button,span,small,p,div,li){color:#292820!important}
+  dialog#accDlg #accBody :is(.meta,.muted,.seller-dashboard p,.account-tools p){color:#6d695f!important}
+  dialog#accDlg #accBody :is(.seller-dashboard .account-tools,.seller-dashboard .stats>div,.dashboard-welcome,.profile-card,.account-settings,.account-tools,.promotion-package){
+    color:#292820!important;background:rgba(255,255,255,.52)!important;border-color:rgba(133,105,52,.2)!important;
+    box-shadow:0 8px 22px rgba(42,37,27,.06),inset 0 1px rgba(255,255,255,.78)!important;
+  }
+  dialog#accDlg #accBody :is(.seller-listing,.account-tools){border-color:rgba(41,39,32,.14)!important}
+  dialog#accDlg #accBody input,dialog#accDlg #accBody select,dialog#accDlg #accBody textarea{
+    color:#292820!important;background:rgba(255,255,255,.76)!important;border-color:rgba(41,39,32,.18)!important;
+  }
+  dialog#accDlg #accountMenu.dashboard-shortcuts,
+  dialog#accDlg nav#accountMenu.dashboard-shortcuts.menu-open:not([hidden]){
+    color:#292820!important;
+    background:rgba(250,249,245,.78)!important;
+    border-color:rgba(133,105,52,.48)!important;
+    box-shadow:0 20px 48px rgba(35,30,20,.22),inset 0 1px rgba(255,255,255,.88)!important;
+    -webkit-backdrop-filter:blur(34px) saturate(150%)!important;
+    backdrop-filter:blur(34px) saturate(150%)!important;
+  }
+  dialog#accDlg #accountMenu .seller-nav-identity{border-bottom-color:rgba(41,39,32,.14)!important}
+  dialog#accDlg #accountMenu .seller-nav-identity :is(small,strong,span){color:#292820!important}
+  dialog#accDlg #accountMenu .seller-nav-identity small,
+  dialog#accDlg #accountMenu .seller-nav-label{color:#806638!important}
+  dialog#accDlg #accountMenu .seller-mode-switch{
+    background:rgba(48,47,43,.075)!important;border-color:rgba(41,39,32,.1)!important;
+    -webkit-backdrop-filter:blur(12px)!important;backdrop-filter:blur(12px)!important;
+  }
+  dialog#accDlg #accountMenu button:not(.selected):not(.active){color:#35332c!important;background:rgba(255,255,255,.18)!important}
+  dialog#accDlg #accountMenu button:not(.selected):not(.active):hover,
+  dialog#accDlg #accountMenu button:not(.selected):not(.active):focus-visible{
+    color:#4b3a1d!important;background:linear-gradient(110deg,rgba(198,178,127,.3),rgba(169,146,95,.16))!important;
+    border-color:rgba(133,105,52,.34)!important;
+  }
+  dialog#accDlg #accountMenu button.active,
+  dialog#accDlg #accountMenu button[aria-current="page"],
+  dialog#accDlg #accountMenu .seller-mode-switch button.selected{
+    color:#211b10!important;background:linear-gradient(110deg,#dfd0a7,#c4ad75)!important;
+    border-color:rgba(133,105,52,.45)!important;
+  }
+  header button.nav-toggle{
+    color:#493a20!important;
+    background:linear-gradient(145deg,rgba(255,255,255,.96),rgba(235,228,210,.92))!important;
+    border:1px solid rgba(133,105,52,.58)!important;
+    box-shadow:0 4px 14px rgba(40,33,20,.16),inset 0 1px rgba(255,255,255,.95)!important;
+  }
+  header button.nav-toggle svg{stroke:#493a20!important;filter:drop-shadow(0 1px rgba(255,255,255,.7))}
+  header button.nav-toggle:focus-visible,header button.nav-toggle:hover{
+    color:#241c0e!important;background:linear-gradient(145deg,#dfd0a7,#c4ad75)!important;
+    border-color:#9a7a3e!important;
+  }
+  header .account-pill button{color:#493a20!important;background:rgba(255,255,255,.9)!important;border-color:rgba(133,105,52,.5)!important}
+}
+</style>
 </body>
 </html>
 
