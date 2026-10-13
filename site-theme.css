@@ -1,0 +1,130 @@
+/* Follow the visitor's device theme across the public site and admin pages. */
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light !important;
+    --bg: #f3f1ec !important;
+    --surface: #fbfaf7 !important;
+    --surface-2: #f6f4ef !important;
+    --surface2: #f6f4ef !important;
+    --card: rgba(251, 250, 247, .9) !important;
+    --panel: rgba(251, 250, 247, .9) !important;
+    --ink: #1a1b1d !important;
+    --text: #1a1b1d !important;
+    --mute: #6f6c64 !important;
+    --muted: #6f6c64 !important;
+    --line: #dedbd3 !important;
+    --gold: #9a7a3e !important;
+    --blue: #806638 !important;
+    --gold-ink: #171717 !important;
+    --alt: #1b1c1e !important;
+    --alt-ink: #f5f2ea !important;
+    --shadow-sm: 0 2px 10px rgba(24,25,27,.055) !important;
+    --shadow: 0 16px 38px rgba(24,25,27,.10) !important;
+  }
+
+  html { color-scheme: light !important; }
+  body {
+    color: #1a1b1d !important;
+    background-color: #f3f1ec !important;
+    background-image: radial-gradient(ellipse at 14% -8%, rgba(183,160,106,.12), transparent 34%), linear-gradient(145deg,#f8f6f1,#efede7 62%,#f5f3ee) !important;
+  }
+
+  header, .head, .top {
+    color: #1a1b1d !important;
+    background: rgba(251,250,247,.84) !important;
+    border-color: rgba(154,122,62,.22) !important;
+    box-shadow: 0 10px 30px rgba(24,25,27,.09) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(135%) !important;
+    backdrop-filter: blur(22px) saturate(135%) !important;
+  }
+  .logo, .brand, .back, .account-pill, .eyebrow, .arrow, .price { color: #806638 !important; }
+  nav {
+    background: rgba(255,255,255,.58) !important;
+    border-color: rgba(26,27,29,.1) !important;
+    box-shadow: 0 8px 24px rgba(24,25,27,.08) !important;
+  }
+  nav button, nav a, nav a.navlink, nav button[aria-selected="false"] {
+    color: #363530 !important;
+    border-color: transparent !important;
+  }
+  nav button:hover, nav a:hover, nav a.navlink:hover {
+    color: #171717 !important;
+    background: rgba(154,122,62,.1) !important;
+    border-color: rgba(154,122,62,.18) !important;
+  }
+  nav button[aria-selected="true"], .tab.active, .primary, .btn.primary {
+    color: #171717 !important;
+    background: linear-gradient(135deg,#d8c497,#b7a06a) !important;
+    border-color: rgba(154,122,62,.35) !important;
+  }
+
+  .card, .dealer, .stat, .state, .empty, .error, .panel, .seller-card,
+  .info, .gallery, .seller, .spec, .note, .listing, .article-item,
+  .project-item, .vehicle-card, .story-card, .contact-card, .promotion-package,
+  .auto-quote-rail, .dashboard-welcome, .account-settings, .authbox,
+  #login, .editor, .contact-form {
+    color: #1a1b1d !important;
+    background: linear-gradient(145deg,rgba(255,255,255,.9),rgba(247,245,239,.86)) !important;
+    border-color: rgba(154,122,62,.2) !important;
+    box-shadow: 0 12px 34px rgba(24,25,27,.09), inset 0 1px rgba(255,255,255,.75) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(125%) !important;
+    backdrop-filter: blur(18px) saturate(125%) !important;
+  }
+  .card:hover, .dealer:hover, .listing:hover, .article-item:hover, .project-item:hover,
+  .vehicle-card:hover, .story-card:hover {
+    border-color: rgba(154,122,62,.48) !important;
+    box-shadow: 0 18px 42px rgba(24,25,27,.14) !important;
+  }
+  .meta, .muted, .mute, .hero p, .intro p, footer, .stat span, .dealer p,
+  .card p, .story-card p, .vehicle-card .vehicle-description, .body p,
+  .contact-card small, .contact-form p, .notice, .state, .summary p {
+    color: #6f6c64 !important;
+  }
+  input, select, textarea, .back, .ghost, .tab:not(.active), .article-share,
+  .journal-share-dialog .journal-share-url {
+    color: #242421 !important;
+    background: rgba(255,255,255,.78) !important;
+    border-color: rgba(26,27,29,.15) !important;
+  }
+  input::placeholder, textarea::placeholder { color: #858177 !important; }
+  .field, .seller-mode-switch, .seg, .dashboard-shortcuts,
+  #accountMenu, .dashboard-shortcuts button {
+    color: #242421 !important;
+    background: rgba(255,255,255,.68) !important;
+    border-color: rgba(26,27,29,.12) !important;
+  }
+  a { color: #765c2d; }
+  .badge, .status { color: #62502c !important; }
+  .badge.published, .status.approved { color: #176b3a !important; }
+  .badge.draft, .status.pending { color: #765900 !important; }
+  .status.rejected { color: #9b2525 !important; }
+
+  .auth-left button, .account-pill button, .seller-nav button,
+  #accountMenu button, .dashboard-shortcuts button {
+    color: #62502c !important;
+  }
+  #accountMenu, .dashboard-shortcuts, .seller-nav, .journal-share-dialog {
+    background: rgba(250,249,245,.9) !important;
+    color: #1a1b1d !important;
+    border-color: rgba(154,122,62,.35) !important;
+  }
+  #accountMenu button:hover, .dashboard-shortcuts button:hover,
+  .article-share:hover, .journal-share-actions button:hover,
+  .journal-share-actions a:hover {
+    background: rgba(183,160,106,.2) !important;
+    color: #624b1d !important;
+  }
+  .journal-share-dialog h2, .journal-share-dialog label,
+  .journal-share-dialog .journal-copy-status { color: #62502c !important; }
+  .journal-share-dialog .journal-share-close { color: #272621 !important; background: rgba(26,27,29,.06) !important; }
+  .auto-quote-text, .auto-quote-author, .auto-quote-source,
+  .auto-quote-updated, .quote-text, .quote-author { color: #292822 !important; }
+  .fab, .auth-left button { background: rgba(250,249,245,.9) !important; }
+
+  /* Keep imagery and image-viewer overlays legible while page chrome changes. */
+  .swatch.has, .swatch-photo, .gal .main, .photos img, .article-photo-choice img,
+  .project-thumbs img, .media-current img, .story-visual img { background-color: #e9e6df !important; }
+  .photo-lightbox { background: rgba(20,20,20,.88) !important; }
+  #paper { background: #fff !important; color: #171717 !important; }
+  #paper h1, #paper h2, #paper p, #paper li { color: #171717 !important; }
+}
