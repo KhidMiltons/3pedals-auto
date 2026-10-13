@@ -1962,7 +1962,7 @@ loadSiteSettings();
 </script>
 
 <style id="mobile-light-account-and-nav-contrast">
-@media (max-width:700px) and (prefers-color-scheme:light){
+@media (prefers-color-scheme:light){
   /* Keep the seller workspace in step with the phone's light appearance. */
   dialog#accDlg{
     color:#24231f!important;
@@ -2000,6 +2000,16 @@ loadSiteSettings();
   dialog#accDlg #accBody :is(.seller-listing,.account-tools){border-color:rgba(41,39,32,.14)!important}
   dialog#accDlg #accBody input,dialog#accDlg #accBody select,dialog#accDlg #accBody textarea{
     color:#292820!important;background:rgba(255,255,255,.76)!important;border-color:rgba(41,39,32,.18)!important;
+  }
+  /* Listing actions retain their dark chocolate surface, so keep their labels light. */
+  dialog#accDlg #accBody .seller-listing-actions .btn.ghost,
+  dialog#accDlg #accBody .seller-listing-actions .btn.ghost :is(span,strong,svg){
+    color:#f5f1e6!important;
+  }
+  dialog#accDlg #accBody .seller-listing-actions .btn.ghost[data-del]{color:#f3e6dc!important}
+  dialog#accDlg #accBody .seller-listing-actions .btn.ghost:hover,
+  dialog#accDlg #accBody .seller-listing-actions .btn.ghost:focus-visible{
+    color:#fff!important;border-color:rgba(201,183,132,.65)!important;
   }
   dialog#accDlg #accountMenu.dashboard-shortcuts,
   dialog#accDlg nav#accountMenu.dashboard-shortcuts.menu-open:not([hidden]){
