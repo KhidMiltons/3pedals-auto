@@ -206,4 +206,28 @@ $("grid").addEventListener("pointermove",e=>{if(e.pointerType!=="mouse")return;c
 ["q","make","max","sort"].forEach(id=>$(id).addEventListener("input",render));
 async function load(){if(!sb||!CFG.key||/^PASTE/.test(CFG.key)){$("count").textContent="Inventory unavailable";$("grid").innerHTML='<div class="error">The inventory database is not connected. Check config.js.</div>';return}const {data,error}=await sb.from("listings").select("*").eq("status","approved").order("created_at",{ascending:false});if(error){$("count").textContent="Inventory unavailable";$("grid").innerHTML='<div class="error">We could not load the inventory right now. Please refresh in a moment.</div>';console.error(error);return}const {data:promoRows}=await sb.from("active_listing_promotions").select("listing_id");const promoted=new Set((promoRows||[]).map(x=>String(x.listing_id)));cars=(data||[]).map(row=>({...rowToCar(row),isPromoted:promoted.has(String(row.id))}));const makes=[...new Set(cars.map(c=>c.make).filter(Boolean))].sort();$("make").innerHTML='<option value="">All makes</option>'+makes.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");render()}load().catch(error=>{console.error("Could not load inventory:",error);$("count").textContent="Inventory unavailable";$("grid").innerHTML='<div class="error">We could not load the inventory right now. Please refresh and try again.</div>'});
 </script>
+<script id="3pedals-analytics-events">
+window.dataLayer = window.dataLayer || [];
+window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
+window.track3PedalsEvent = function(name, params) {
+  window.gtag('event', name, Object.assign({page_location: window.location.href, page_path: window.location.pathname}, params || {}));
+};
+document.addEventListener('click', function(event) {
+  const link = event.target.closest && event.target.closest('a[href]');
+  if (!link) return;
+  const href = link.href || '';
+  if (/wa\.me|api\.whatsapp\.com|whatsapp\.com/i.test(href)) {
+    window.track3PedalsEvent('whatsapp_click', {link_url: href, link_text: (link.innerText || link.getAttribute('aria-label') || 'WhatsApp').trim().slice(0, 100)});
+  }
+});
+(function(){
+  const path = window.location.pathname.toLowerCase();
+  if (path.endsWith('/dealers.html') || path === '/dealers' || path.endsWith('/yard.html')) {
+    window.track3PedalsEvent('dealer_page_view', {page_type: path.endsWith('/yard.html') ? 'yard_profile' : 'dealer_directory'});
+  }
+  if (path.endsWith('/garage.html') || path === '/garage' || path.endsWith('/garage/')) {
+    window.track3PedalsEvent('garage_page_view', {page_type: 'garage'});
+  }
+})();
+</script>
 </body></html>
