@@ -75,21 +75,29 @@ dialog::backdrop{background:rgba(12,13,14,.58);backdrop-filter:blur(5px)}
 @media(max-width:560px){.wrap{width:calc(100% - 24px)}header .wrap{min-height:66px}.logo{font-size:18px}.back{padding:9px 10px;font-size:12px}.hero h1{font-size:clamp(36px,11vw,48px)}.grid{grid-template-columns:1fr}.photo{height:230px}.info{padding:22px 18px}.info h2{font-size:28px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.hero,.filters,.card,.empty,.error{animation:none!important}*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}.hero h1:after{width:72px}}
 
-/* Featured inventory cars */
-.promoted-tag{position:absolute;right:12px;top:12px;z-index:3;padding:6px 10px;border:1px solid rgba(227,179,65,.75);border-radius:999px;background:#171513;color:#e8ca80;font-size:10px;font-weight:800;letter-spacing:.1em;box-shadow:0 5px 16px rgba(0,0,0,.24)}
-.featured-section{margin:18px 0 30px;padding:22px;border:1px solid rgba(227,179,65,.3);border-radius:18px;background:linear-gradient(145deg,rgba(227,179,65,.075),rgba(255,255,255,.018));box-shadow:0 12px 32px rgba(0,0,0,.14)}
+/* Compact inventory and featured vehicle cards */
+.promoted-tag{position:absolute;right:9px;top:9px;z-index:3;padding:5px 8px;border:1px solid rgba(227,179,65,.75);border-radius:999px;background:#171513;color:#e8ca80;font-size:9px;font-weight:800;letter-spacing:.1em;box-shadow:0 5px 16px rgba(0,0,0,.24)}
+.featured-section{margin:16px 0 26px;padding:18px;border:1px solid rgba(227,179,65,.3);border-radius:18px;background:linear-gradient(145deg,rgba(227,179,65,.075),rgba(255,255,255,.018));box-shadow:0 12px 32px rgba(0,0,0,.14)}
 .featured-section[hidden]{display:none!important}
-.featured-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:18px}
-.featured-heading h2{font-size:clamp(25px,3vw,34px);line-height:1.1;margin:6px 0}
+.featured-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:14px}
+.featured-heading h2{font-size:clamp(24px,3vw,32px);line-height:1.1;margin:6px 0}
 .featured-heading p{margin:0;color:var(--muted)}
-.featured-note{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(227,179,65,.35);padding:7px 10px;border-radius:999px;white-space:nowrap}
-.featured-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:0}
-.featured-grid .photo{height:190px}
+.featured-note{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(227,179,65,.35);padding:6px 9px;border-radius:999px;white-space:nowrap}
+.grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.card{position:relative;min-width:0;border-radius:13px}
+.photo{height:185px}
+.body{padding:12px}
+.body h3{font-size:17px;line-height:1.3;margin:0 0 5px}
+.price{font-size:17px;margin-bottom:7px}
+.tags{gap:5px}
+.tag{font-size:11px;padding:3px 7px}
+.dealer-cardline{margin-top:9px;padding-top:8px;font-size:11px}
+.featured-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:0}
+.featured-grid .photo{height:155px}
 .featured-grid .card{width:100%;position:relative}
-.card{position:relative}
-@media(max-width:1000px){.featured-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:700px){.featured-section{padding:14px;margin:16px 0 24px}.featured-heading{align-items:flex-start;flex-direction:column}.featured-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.featured-grid .photo{height:145px}}
-@media(max-width:480px){.featured-grid{grid-template-columns:1fr}.featured-grid .photo{height:190px}}
+@media(max-width:1000px){.grid,.featured-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:700px){.featured-section{padding:13px;margin:15px 0 22px}.featured-heading{align-items:flex-start;flex-direction:column}.grid,.featured-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.photo{height:150px}.featured-grid .photo{height:130px}.body{padding:10px}.body h3{font-size:15px}.price{font-size:15px}.tag{font-size:10px;padding:3px 6px}}
+@media(max-width:420px){.grid,.featured-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.photo{height:125px}.featured-grid .photo{height:115px}.body{padding:9px}.body h3{font-size:14px}.price{font-size:14px}.tags{gap:4px}}
 
 </style>
 <style id="touch-no-zoom">
