@@ -2083,9 +2083,9 @@ loadSiteSettings();
 <style id="account-touch-zoom-performance">
 @media(pointer:coarse){
   #accDlg[open],#accDlg>.in,#accDlg #accBody{touch-action:pan-y pinch-zoom!important}
-  #accDlg::backdrop{-webkit-backdrop-filter:blur(4px)!important;backdrop-filter:blur(4px)!important}
-  #accDlg nav#accountMenu.dashboard-shortcuts.menu-open:not([hidden]){-webkit-backdrop-filter:blur(18px) saturate(140%)!important;backdrop-filter:blur(18px) saturate(140%)!important}
-  #accDlg .account-dialog-head{-webkit-backdrop-filter:blur(16px) saturate(140%)!important;backdrop-filter:blur(16px) saturate(140%)!important}
+  #accDlg::backdrop{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+  #accDlg nav#accountMenu.dashboard-shortcuts.menu-open:not([hidden]){-webkit-backdrop-filter:none!important;backdrop-filter:none!important;box-shadow:none!important;transition:none!important}
+  #accDlg .account-dialog-head{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;box-shadow:none!important;transition:none!important}
 }
 </style>
 </body>
