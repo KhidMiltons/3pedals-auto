@@ -2080,6 +2080,14 @@ loadSiteSettings();
 @media(prefers-color-scheme:light) and (min-width:701px){#accDlg[open]{background:linear-gradient(145deg,#f8f6f1,#efede7 65%,#f5f3ee)!important;color:#292820!important}#accDlg .account-dialog-head{background:rgba(250,249,245,.9)!important;border-bottom-color:rgba(154,122,62,.22)!important}#accDlg nav#accountMenu.dashboard-shortcuts.menu-open:not([hidden]){background:rgba(250,249,245,.78)!important;color:#292820!important;border-color:rgba(154,122,62,.32)!important;backdrop-filter:blur(24px) saturate(140%)!important;-webkit-backdrop-filter:blur(24px) saturate(140%)!important}}
 @media(prefers-color-scheme:light) and (max-width:700px){#accDlg[open]{background:linear-gradient(145deg,#f8f6f1,#efede7 65%,#f5f3ee)!important;color:#292820!important}#accDlg .account-dialog-head{background:rgba(250,249,245,.88)!important}}
 </style>
+<style id="account-touch-zoom-performance">
+@media(pointer:coarse){
+  #accDlg[open],#accDlg>.in,#accDlg #accBody{touch-action:pan-y pinch-zoom!important}
+  #accDlg::backdrop{-webkit-backdrop-filter:blur(4px)!important;backdrop-filter:blur(4px)!important}
+  #accDlg nav#accountMenu.dashboard-shortcuts.menu-open:not([hidden]){-webkit-backdrop-filter:blur(18px) saturate(140%)!important;backdrop-filter:blur(18px) saturate(140%)!important}
+  #accDlg .account-dialog-head{-webkit-backdrop-filter:blur(16px) saturate(140%)!important;backdrop-filter:blur(16px) saturate(140%)!important}
+}
+</style>
 </body>
 </html>
 
