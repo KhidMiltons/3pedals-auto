@@ -1015,7 +1015,7 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
-<script src="vehicle-catalog.js"></script>
+<script defer src="vehicle-catalog.js" onload="window.dispatchEvent(new Event('vehicle-catalog-ready'))"></script>
 <script>
 const fmt=n=>Number(n).toLocaleString("en-US");
 // Database connection. Fill in config.js (see SETUP.md). Without it the site runs in demo mode with sample cars.
@@ -1740,7 +1740,8 @@ function populateSellVehicleFilters(){
   const updateModelOptions=()=>{modelList.innerHTML=modelsForMake(mk.value).map(name=>`<option value="${esc(name)}"></option>`).join("");updateVariantOptions()};
   updateMakeOptions();mk.addEventListener("input",updateModelOptions);mk.addEventListener("change",updateModelOptions);mf.addEventListener("input",updateVariantOptions);mf.addEventListener("change",updateVariantOptions);
 }
-populateSellVehicleFilters();
+if(VEHICLE_CATALOG.makes.length)populateSellVehicleFilters();
+else window.addEventListener("vehicle-catalog-ready",()=>{VEHICLE_CATALOG=window.VEHICLE_CATALOG_DATA||VEHICLE_CATALOG;populateSellVehicleFilters()},{once:true});
 
 function renderPhotoPreviews(){
   const box=$("prev");box.innerHTML="";
@@ -1918,8 +1919,7 @@ loadSiteSettings();
   render(quotes[index]);
   const hadCache=useCached();
   const startWebRefresh=()=>fetchWebQuotes();
-  if(!hadCache)startWebRefresh();
-  else if('requestIdleCallback' in window)requestIdleCallback(startWebRefresh,{timeout:2500});else setTimeout(startWebRefresh,1200);
+  if('requestIdleCallback' in window)requestIdleCallback(startWebRefresh,{timeout:hadCache?3500:5000});else setTimeout(startWebRefresh,hadCache?1200:2500);
   // Refresh twice daily while the page remains open, without blocking first paint.
   setInterval(fetchWebQuotes,12*60*60*1000);
 })();
@@ -1943,22 +1943,32 @@ loadSiteSettings();
 
 <script id="3pedals-performance-runtime">
 (()=>{
-  const applyMedia=()=>{
-    document.querySelectorAll('img').forEach((img,i)=>{
+  const applyMedia=(root,initial=false)=>{
+    const images=[];
+    if(root.nodeType===1&&root.matches('img'))images.push(root);
+    root.querySelectorAll?.('img').forEach(img=>images.push(img));
+    images.forEach((img,i)=>{
       if(!img.hasAttribute('decoding'))img.decoding='async';
-      if(!img.hasAttribute('loading'))img.loading=i<2?'eager':'lazy';
+      if(!img.hasAttribute('loading'))img.loading=initial&&i<2?'eager':'lazy';
       if(!img.hasAttribute('referrerpolicy'))img.referrerPolicy='no-referrer-when-downgrade';
     });
-    document.querySelectorAll('video').forEach(v=>{
+    const videos=[];
+    if(root.nodeType===1&&root.matches('video'))videos.push(root);
+    root.querySelectorAll?.('video').forEach(v=>videos.push(v));
+    videos.forEach(v=>{
       if(!v.hasAttribute('preload'))v.preload='none';
       else if(v.preload==='metadata' && !v.closest('dialog'))v.preload='none';
-      v.setAttribute('playsinline','');
+      if(!v.hasAttribute('playsinline'))v.setAttribute('playsinline','');
       if(!v.hasAttribute('loading'))v.setAttribute('loading','lazy');
     });
   };
-  const run=()=>{try{applyMedia()}catch(e){}};
-  if('requestIdleCallback' in window)requestIdleCallback(run,{timeout:1200});else setTimeout(run,300);
-  new MutationObserver(()=>{clearTimeout(window.__3pMediaTimer);window.__3pMediaTimer=setTimeout(run,80)}).observe(document.body,{childList:true,subtree:true});
+  try{applyMedia(document,true)}catch(e){}
+  let queued=[],scheduled=false;
+  const flush=()=>{scheduled=false;const nodes=queued;queued=[];for(const node of nodes)try{applyMedia(node)}catch(e){}};
+  new MutationObserver(records=>{
+    for(const record of records)for(const node of record.addedNodes)if(node.nodeType===1)queued.push(node);
+    if(queued.length&&!scheduled){scheduled=true;requestAnimationFrame(flush)}
+  }).observe(document.body,{childList:true,subtree:true});
 })();
 </script>
 
