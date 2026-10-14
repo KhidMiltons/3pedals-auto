@@ -1201,6 +1201,7 @@ $("authSubmit").onclick=async()=>{
   const signupData={name,phone,account_type:type};if(sellerRegistrationMode&&authMode==="register")signupData.seller_slug=$("authSellerSlug").value.trim();const res=authMode==="register"?await sb.auth.signUp({email,password:pass,options:{data:signupData}}):await sb.auth.signInWithPassword({email,password:pass});
   b.disabled=false;
   if(res.error){err.textContent=res.error.message;return}
+  if(authMode==="register"||authMode==="login"){window.track3PedalsEvent(authMode==="register"?"sign_up":"login",{method:"email",account_type:type});}
   if(authMode==="register"&&!res.data.session){err.textContent=sellerRegistrationMode?"Seller account created. Check your email for a confirmation link, then log in. Your seller name, type, and URL have been saved.":"Account created. Check your email for a confirmation link, then log in. Your account type has been saved.";return}
   $("authPassword").value="";$("authConfirmPassword").value="";$("authDlg").close();
   await loadSession();if(location.hash==="#login"||location.hash==="#register")history.replaceState(null,"",location.pathname+location.search);if(me)openAccount();
@@ -1852,8 +1853,7 @@ $("sBtn").onclick=async()=>{
       const legacyRow={...row};delete legacyRow.yard_logo_url;
       ins=await sb.from("listings").insert(legacyRow).select("id").single();
     }
-    if(ins.error)throw ins.error;
-    uploadedPaths.length=0;
+    if(ins.error)throw ins.error; window.track3PedalsEvent("sell_car_submission",{listing_id:ins.data?.id||"",make:row.make,model:row.model,year:row.year,seller_type:row.seller_type}); uploadedPaths.length=0;
 
     // Notify the 3 Pedals Auto KE admin through the secure Supabase Edge Function.
     // The Resend API key is never exposed in this public website.
@@ -2124,6 +2124,30 @@ loadSiteSettings();
   #accDlg .account-dialog-head{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;box-shadow:none!important;transition:none!important}
 }
 </style>
+<script id="3pedals-analytics-events">
+window.dataLayer = window.dataLayer || [];
+window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
+window.track3PedalsEvent = function(name, params) {
+  window.gtag('event', name, Object.assign({page_location: window.location.href, page_path: window.location.pathname}, params || {}));
+};
+document.addEventListener('click', function(event) {
+  const link = event.target.closest && event.target.closest('a[href]');
+  if (!link) return;
+  const href = link.href || '';
+  if (/wa\.me|api\.whatsapp\.com|whatsapp\.com/i.test(href)) {
+    window.track3PedalsEvent('whatsapp_click', {link_url: href, link_text: (link.innerText || link.getAttribute('aria-label') || 'WhatsApp').trim().slice(0, 100)});
+  }
+});
+(function(){
+  const path = window.location.pathname.toLowerCase();
+  if (path.endsWith('/dealers.html') || path === '/dealers' || path.endsWith('/yard.html')) {
+    window.track3PedalsEvent('dealer_page_view', {page_type: path.endsWith('/yard.html') ? 'yard_profile' : 'dealer_directory'});
+  }
+  if (path.endsWith('/garage.html') || path === '/garage' || path.endsWith('/garage/')) {
+    window.track3PedalsEvent('garage_page_view', {page_type: 'garage'});
+  }
+})();
+</script>
 </body>
 </html>
 
