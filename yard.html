@@ -77,7 +77,16 @@ footer{border-top:1px solid var(--line);color:var(--mute)}
 @media(max-width:720px){.wrap{width:calc(100% - 32px)}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.hero{padding-top:40px}.sectionhead h2{font-size:28px}}
 @media(max-width:520px){.wrap{width:calc(100% - 24px)}.headin{min-height:66px}.logo{font-size:19px}.back{padding:9px 10px;font-size:11px}.hero{padding-top:32px}.grid{grid-template-columns:1fr;gap:12px}.cardbody{padding:14px}.profile{gap:12px}.sectionhead{align-items:flex-start;flex-direction:column;gap:4px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.hero,.profile,.card{animation:none!important}.hero h1:after,.back,.panel,.btn,.card,.card img{transition:none!important}}
-.yard-inventory-tools{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(140px,1fr) minmax(150px,1fr) auto;gap:10px;margin:0 0 16px}.yard-inventory-tools input,.yard-inventory-tools select{width:100%;min-width:0;border:1px solid var(--line);border-radius:9px;padding:11px 12px;background:var(--surface);color:var(--ink);font:inherit}.yard-inventory-tools select option{background:#292929!important;color:#fff!important}.yard-inventory-tools .btn{margin:0;white-space:nowrap}.grid [data-yard-car][hidden],#yardNoMatches[hidden]{display:none!important}@media(max-width:760px){.yard-inventory-tools{grid-template-columns:1fr 1fr}.yard-inventory-tools input{grid-column:1/-1}.yard-inventory-tools .btn{width:100%}}\n</style>\n<style id="dealer-profile-navigation">
+.yard-inventory-tools{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(140px,1fr) minmax(150px,1fr) auto;gap:10px;margin:0 0 16px}.yard-inventory-tools input,.yard-inventory-tools select{width:100%;min-width:0;border:1px solid var(--line);border-radius:9px;padding:11px 12px;background:var(--surface);color:var(--ink);font:inherit}.yard-inventory-tools select option{background:#292929!important;color:#fff!important}.yard-inventory-tools .btn{margin:0;white-space:nowrap}.grid [data-yard-car][hidden],#yardNoMatches[hidden]{display:none!important}@media(max-width:760px){.yard-inventory-tools{grid-template-columns:1fr 1fr}.yard-inventory-tools input{grid-column:1/-1}.yard-inventory-tools .btn{width:100%}}\n</style>\n<style id="dealer-branding-polish">
+#profile>.panel:first-child{position:relative;overflow:hidden;background:linear-gradient(145deg,#fff 0%,#fbfaf6 100%)}
+#profile>.panel:first-child:before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#172b4d,#d4a017);pointer-events:none}
+.yardmark{width:88px;height:88px;border-radius:20px;margin:0 20px 16px 0;box-shadow:0 12px 28px rgba(0,0,0,.14);border:1px solid rgba(212,160,23,.45)}
+.yardmark img{object-fit:contain;background:#fff;padding:5px}
+.details h2{font-size:clamp(25px,3vw,34px);line-height:1.15;overflow-wrap:anywhere;padding-top:5px}
+.yard-contact-title,.yard-actions-title{position:relative}
+@media(max-width:520px){#profile>.panel:first-child{padding:18px}.yardmark{width:68px;height:68px;border-radius:16px;margin-right:13px}.details h2{font-size:25px}.yard-contact-title,.yard-actions-title{font-size:11px;letter-spacing:.1em}}
+</style>
+<style id="dealer-profile-navigation">
 .headnav{display:flex;align-items:center;gap:9px}.logo{text-decoration:none}
 @media(max-width:520px){.headnav{gap:6px}.home-link{padding-inline:8px}}
 </style>
