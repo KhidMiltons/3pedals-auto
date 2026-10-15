@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://3pedalsauto.co.ke/</loc>
-  </url>
-  <url>
-    <loc>https://3pedalsauto.co.ke/inventory</loc>
-  </url>
-  <url>
-    <loc>https://3pedalsauto.co.ke/dealers.html</loc>
-  </url>
-  <url>
-    <loc>https://3pedalsauto.co.ke/garage.html</loc>
-  </url>
+  <url><loc>https://3pedalsauto.co.ke/</loc></url>
+  <url><loc>https://3pedalsauto.co.ke/inventory</loc></url>
+  <url><loc>https://3pedalsauto.co.ke/dealers.html</loc></url>
+  <url><loc>https://3pedalsauto.co.ke/garage.html</loc></url>
+  <url><loc>https://3pedalsauto.co.ke/vehicle.html?id=3aab4288-acf1-45d2-84c3-4f09165835ce</loc></url>
+  <url><loc>https://3pedalsauto.co.ke/vehicle.html?id=64cee9d3-c971-4d25-ae40-66b1f5f3d3a9</loc></url>
+  <url><loc>https://3pedalsauto.co.ke/vehicle.html?id=6b946959-08d7-4365-a760-0634135aa1b3</loc></url>
+  <url><loc>https://3pedalsauto.co.ke/vehicle.html?id=7e311e25-79dd-4374-b8e7-0de86aae97b4</loc></url>
+  <url><loc>https://3pedalsauto.co.ke/vehicle.html?id=9ea10644-7912-4605-9230-db61a634412e</loc></url>
+  <url><loc>https://3pedalsauto.co.ke/vehicle.html?id=aa3f6f6c-555b-49ed-8f26-a5cb38510561</loc></url>
+  <url><loc>https://3pedalsauto.co.ke/vehicle.html?id=d1d03093-f394-4fed-acb4-cd6227b04c76</loc></url>
+  <url><loc>https://3pedalsauto.co.ke/vehicle.html?id=d50e3d32-e7a5-413b-ba97-2a289e8bad0e</loc></url>
+  <url><loc>https://3pedalsauto.co.ke/vehicle.html?id=d7c5e502-2e28-4a7e-982e-8a0b57cc9345</loc></url>
 </urlset>
