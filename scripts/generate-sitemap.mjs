@@ -67,14 +67,14 @@ const vehicleUrls = listingIds.sort().map((id) => {
 
 const normalizeYardName = (name) => String(name || "")
   .trim()
-  .replace(/\\s+(?:ke|kenya)$/i, "")
+  .replace(/\s+(?:ke|kenya)$/i, "")
   .normalize("NFKD")
-  .replace(/[\\u0300-\\u036f]/g, "")
+  .replace(/[\u0300-\u036f]/g, "")
   .toLowerCase()
   .replace(/[^a-z0-9]/g, "");
 const yardNames = new Map();
 for (const listing of listingRows) {
-  const type = String(listing.seller_type || "").trim().toLowerCase().replace(/[\\s_-]+/g, " ");
+  const type = String(listing.seller_type || "").trim().toLowerCase().replace(/[\s_-]+/g, " ");
   const explicitlyYard = ["yard", "dealer", "car yard", "car dealer", "business"].includes(type);
   const explicitlyPrivate = ["private", "private seller", "individual"].includes(type);
   const hasYardDetails = [listing.yard_name, listing.yard_location, listing.yard_contact]
