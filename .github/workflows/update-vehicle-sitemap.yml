@@ -2,6 +2,12 @@
 name: Update vehicle sitemap
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/generate-sitemap.mjs"
+      - ".github/workflows/update-vehicle-sitemap.yml"
   schedule:
     - cron: "17 2 * * *"
   workflow_dispatch:
