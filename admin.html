@@ -62,7 +62,7 @@ function render(){
 async function load(){
  if(!sb){showNotice("Supabase is not configured. Make sure this page is uploaded beside config.js.","err");return}
  hideNotice();$("listings").innerHTML='<div class="empty">Loading listings…</div>';
- const {data,error}=await sb.from("listings").select("*").order("created_at",{ascending:false});
+ const {data,error}=await sb.from("listings").select("id,make,model,year,price,km,fuel,status,seller_name,seller_phone,seller_email,yard_location,description,photos,whatsapp,seller_type,yard_name").order("created_at",{ascending:false});
  if(error){showNotice("Could not load listings: "+error.message,"err");return}
  all=data||[];render();
 }
@@ -77,7 +77,21 @@ async function checkAdmin(){
 $("loginBtn").onclick=async()=>{const email=$("email").value.trim(),password=$("password").value,err=$("loginErr");err.classList.add("hidden");if(!email||!password){err.textContent="Enter your email and password.";err.classList.remove("hidden");return}const {error}=await sb.auth.signInWithPassword({email,password});if(error){err.textContent=error.message;err.classList.remove("hidden");return}checkAdmin()};
 $("logout").onclick=async()=>{await sb.auth.signOut();location.reload()};
 $("homeBtn").onclick=()=>{window.location.href="/"};
-$("refresh").onclick=async()=>{await Promise.all([load(),loadJournalAdmin(),loadProjectAdmin(),loadMechanics(),loadContactSettings()]);await loadAdminBookings()};
+let refreshInProgress=false;
+$("refresh").onclick=async()=>{
+ if(refreshInProgress)return;
+ refreshInProgress=true;const button=$("refresh"),original=button.textContent;button.disabled=true;button.textContent="Refreshing…";
+ try{
+  const active=document.querySelector("[data-section].active")?.dataset.section||"listingsPanel";
+  if(active==="listingsPanel")await load();
+  else if(active==="bookingsPanel")await loadAdminBookings();
+  else if(active==="mechanicsPanel")await loadMechanics();
+  else if(active==="journalPanel")await loadJournalAdmin();
+  else if(active==="projectsPanel")await loadProjectAdmin();
+  else if(active==="contactPanel")await loadContactSettings();
+ }catch(err){showNotice("Refresh failed: "+(err?.message||err),"err")}
+ finally{refreshInProgress=false;button.disabled=false;button.textContent=original}
+};
 document.querySelectorAll("[data-filter]").forEach(b=>b.onclick=()=>{filter=b.dataset.filter;document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x===b));render()});
 $("listingSearch").addEventListener("input",render);$("clearListingSearch").addEventListener("click",()=>{$("listingSearch").value="";render()});
 document.querySelectorAll("[data-section]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-section]").forEach(x=>x.classList.toggle("active",x===b));["listingsPanel","bookingsPanel","mechanicsPanel","journalPanel","projectsPanel","contactPanel"].forEach(id=>$(id).classList.toggle("section-hidden",id!==b.dataset.section));if(b.dataset.section==="bookingsPanel")$("newBookingBadge").textContent="";});
