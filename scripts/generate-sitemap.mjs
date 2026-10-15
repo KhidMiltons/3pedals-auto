@@ -24,7 +24,7 @@ let offset = 0;
 
 while (true) {
   const endpoint = new URL("/rest/v1/listings", projectUrl);
-  endpoint.searchParams.set("select", "id,yard_name,seller_name,seller_type,yard_location,yard_contact");
+  endpoint.searchParams.set("select", "id,yard_name,seller_name,seller_type,yard_location");
   endpoint.searchParams.set("status", "eq.approved");
   endpoint.searchParams.set("order", "created_at.desc");
 
@@ -77,7 +77,7 @@ for (const listing of listingRows) {
   const type = String(listing.seller_type || "").trim().toLowerCase().replace(/[\s_-]+/g, " ");
   const explicitlyYard = ["yard", "dealer", "car yard", "car dealer", "business"].includes(type);
   const explicitlyPrivate = ["private", "private seller", "individual"].includes(type);
-  const hasYardDetails = [listing.yard_name, listing.yard_location, listing.yard_contact]
+  const hasYardDetails = [listing.yard_name, listing.yard_location]
     .some((value) => String(value || "").trim());
   const isYard = explicitlyYard || (!explicitlyPrivate && hasYardDetails);
   const name = String(listing.yard_name || listing.seller_name || "").trim();
