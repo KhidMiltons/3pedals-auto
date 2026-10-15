@@ -85,7 +85,7 @@ async function checkAdmin(){
  if(!user){$("login").classList.remove("hidden");$("app").classList.add("hidden");return}
  const {data:profile,error}=await sb.from("profiles").select("is_admin").eq("id",user.id).single();
  if(error||!profile?.is_admin){$("login").classList.remove("hidden");$("app").classList.add("hidden");$("loginErr").textContent="This account is not an administrator.";$("loginErr").classList.remove("hidden");await sb.auth.signOut();return}
- adminUserId=user.id;$("login").classList.add("hidden");$("app").classList.remove("hidden");await Promise.all([load(),loadJournalAdmin(),loadProjectAdmin(),loadMechanics(),loadContactSettings()]);await loadAdminBookings();setupBookingAlerts();
+ adminUserId=user.id;$("login").classList.add("hidden");$("app").classList.remove("hidden");let savedSection="listingsPanel";try{savedSection=sessionStorage.getItem("adminActiveSection")||"listingsPanel"}catch(e){}activateAdminSection(savedSection);await Promise.all([load(),loadJournalAdmin(),loadProjectAdmin(),loadMechanics(),loadContactSettings()]);await loadAdminBookings();setupBookingAlerts();
 }
 $("loginBtn").onclick=async()=>{const email=$("email").value.trim(),password=$("password").value,err=$("loginErr");err.classList.add("hidden");if(!email||!password){err.textContent="Enter your email and password.";err.classList.remove("hidden");return}const {error}=await sb.auth.signInWithPassword({email,password});if(error){err.textContent=error.message;err.classList.remove("hidden");return}checkAdmin()};
 $("logout").onclick=async()=>{await sb.auth.signOut();location.reload()};
@@ -110,7 +110,8 @@ $("refresh").onclick=async()=>{
 };
 document.querySelectorAll("[data-filter]").forEach(b=>b.onclick=()=>{filter=b.dataset.filter;document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x===b));render()});
 $("listingSearch").addEventListener("input",render);$("clearListingSearch").addEventListener("click",()=>{$("listingSearch").value="";render()});
-document.querySelectorAll("[data-section]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-section]").forEach(x=>x.classList.toggle("active",x===b));["listingsPanel","bookingsPanel","mechanicsPanel","journalPanel","projectsPanel","contactPanel"].forEach(id=>$(id).classList.toggle("section-hidden",id!==b.dataset.section));if(b.dataset.section==="bookingsPanel")$("newBookingBadge").textContent="";});
+function activateAdminSection(section){const valid=["listingsPanel","bookingsPanel","mechanicsPanel","journalPanel","projectsPanel","contactPanel"];if(!valid.includes(section))section="listingsPanel";document.querySelectorAll("[data-section]").forEach(b=>b.classList.toggle("active",b.dataset.section===section));valid.forEach(id=>$(id).classList.toggle("section-hidden",id!==section));if(section==="bookingsPanel")$("newBookingBadge").textContent="";return section}
+document.querySelectorAll("[data-section]").forEach(b=>b.onclick=()=>{const section=activateAdminSection(b.dataset.section);try{sessionStorage.setItem("adminActiveSection",section)}catch(e){}});
 $("listings").onclick=async e=>{
  const view=e.target.closest("[data-view]");if(view){view.closest(".listing").classList.toggle("open");return}
  const b=e.target.closest("[data-action]");if(!b)return;const id=b.dataset.id,a=b.dataset.action;
