@@ -9,7 +9,7 @@ on:
       - "scripts/generate-sitemap.mjs"
       - ".github/workflows/update-vehicle-sitemap.yml"
   schedule:
-    - cron: "17 2 * * *"
+    - cron: "17 * * * *"
   workflow_dispatch:
 
 permissions:
