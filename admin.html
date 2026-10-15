@@ -94,14 +94,17 @@ let refreshInProgress=false;
 $("refresh").onclick=async()=>{
  if(refreshInProgress)return;
  refreshInProgress=true;const button=$("refresh"),original=button.textContent;button.disabled=true;button.textContent="Refreshing…";
+ const scrollPosition=window.scrollY,activeElement=document.activeElement,activeId=activeElement?.id||"",listingSearchValue=$("listingSearch")?.value||"",activeSection=document.querySelector("[data-section].active")?.dataset.section||"listingsPanel";
  try{
-  const active=document.querySelector("[data-section].active")?.dataset.section||"listingsPanel";
-  if(active==="listingsPanel")await load();
-  else if(active==="bookingsPanel")await loadAdminBookings();
-  else if(active==="mechanicsPanel")await loadMechanics();
-  else if(active==="journalPanel")await loadJournalAdmin();
-  else if(active==="projectsPanel")await loadProjectAdmin();
-  else if(active==="contactPanel")await loadContactSettings();
+  if(activeSection==="listingsPanel")await load();
+  else if(activeSection==="bookingsPanel")await loadAdminBookings();
+  else if(activeSection==="mechanicsPanel")await loadMechanics();
+  else if(activeSection==="journalPanel")await loadJournalAdmin();
+  else if(activeSection==="projectsPanel")await loadProjectAdmin();
+  else if(activeSection==="contactPanel")await loadContactSettings();
+  if($("listingSearch"))$("listingSearch").value=listingSearchValue;
+  window.scrollTo({top:scrollPosition,left:0,behavior:"instant"});
+  if(activeId&&$(activeId))$(activeId).focus({preventScroll:true});
  }catch(err){showNotice("Refresh failed: "+(err?.message||err),"err")}
  finally{refreshInProgress=false;button.disabled=false;button.textContent=original}
 };
