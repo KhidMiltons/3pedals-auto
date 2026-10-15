@@ -13,7 +13,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta name="theme-color" content="#0d0d0d">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <meta name="color-scheme" content="light dark">
-<title>Vehicle Details – 3 Pedals Auto KE</title>
+<title>Cars for Sale in Kenya | 3 Pedals Auto KE</title>
+<meta name="description" content="Explore cars for sale in Kenya on 3 Pedals Auto KE. View vehicle photos, prices, mileage, fuel details, and contact private sellers or car yards.">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="product">
+<meta property="og:site_name" content="3 Pedals Auto KE">
+<meta property="og:title" content="Cars for Sale in Kenya | 3 Pedals Auto KE">
+<meta property="og:description" content="Explore cars for sale in Kenya on 3 Pedals Auto KE. View vehicle photos, prices, mileage, fuel details, and contact private sellers or car yards.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cars for Sale in Kenya | 3 Pedals Auto KE">
+<meta name="twitter:description" content="Explore cars for sale in Kenya on 3 Pedals Auto KE. View vehicle photos, prices, mileage, fuel details, and contact private sellers or car yards.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
@@ -101,6 +110,50 @@ const fmt=n=>Number(n||0).toLocaleString('en-KE');
 const qs=new URLSearchParams(location.search);const id=qs.get('id');
 function waNumber(v){return String(v||'').replace(/[^\d]/g,'').replace(/^0/,'254');}
 function vehicleTitle(r){return `${r.year||''} ${r.make||''} ${r.model||''}`.replace(/\s+/g,' ').trim()}
+function setMeta(key,content,property=false){
+  const attr=property?'property':'name';
+  let el=document.head.querySelector(`meta[${attr}="${key}"]`);
+  if(!el){el=document.createElement('meta');el.setAttribute(attr,key);document.head.appendChild(el)}
+  el.setAttribute('content',content);
+}
+function updateVehicleSeo(r){
+  const title=vehicleTitle(r)||'Vehicle';
+  const seoTitle=`${title} for sale in Kenya | 3 Pedals Auto KE`;
+  const cleanDescription=String(r.description||'').replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim();
+  const description=(`${title} for sale in Kenya. Price: KES ${fmt(r.price)}. Mileage: ${fmt(r.km)} km. Fuel: ${r.fuel||'not specified'}.${cleanDescription?' '+cleanDescription:''}`).slice(0,160);
+  const canonicalUrl=new URL(location.pathname,location.origin);
+  canonicalUrl.searchParams.set('id',String(r.id||id||''));
+  document.title=seoTitle;
+  setMeta('description',description);
+  setMeta('robots','index,follow');
+  setMeta('og:title',seoTitle,true);
+  setMeta('og:description',description,true);
+  setMeta('og:url',canonicalUrl.toString(),true);
+  setMeta('og:type','product',true);
+  setMeta('twitter:title',seoTitle);
+  setMeta('twitter:description',description);
+  const photos=Array.isArray(r.photos)?r.photos.filter(p=>typeof p==='string'&&p.trim()):[];
+  if(photos[0]){setMeta('og:image',photos[0],true);setMeta('twitter:image',photos[0])}
+  let canonical=document.head.querySelector('link[rel="canonical"]');
+  if(!canonical){canonical=document.createElement('link');canonical.rel='canonical';document.head.appendChild(canonical)}
+  canonical.href=canonicalUrl.toString();
+  const schema={
+    '@context':'https://schema.org',
+    '@type':'Vehicle',
+    name:title,
+    url:canonicalUrl.toString(),
+    brand:r.make?{'@type':'Brand',name:String(r.make)}:undefined,
+    model:r.model?String(r.model):undefined,
+    vehicleModelDate:r.year?String(r.year):undefined,
+    fuelType:r.fuel?String(r.fuel):undefined,
+    mileageFromOdometer:Number(r.km)>0?{'@type':'QuantitativeValue',value:Number(r.km),unitCode:'KMT'}:undefined,
+    image:photos.length?photos:undefined,
+    offers:Number(r.price)>0?{'@type':'Offer',priceCurrency:'KES',price:String(Number(r.price)),url:canonicalUrl.toString()}:undefined
+  };
+  let structured=document.getElementById('vehicle-structured-data');
+  if(!structured){structured=document.createElement('script');structured.id='vehicle-structured-data';structured.type='application/ld+json';document.head.appendChild(structured)}
+  structured.textContent=JSON.stringify(schema);
+}
 async function copyText(text){
   try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text);return true}}catch(_e){}
   try{const field=document.createElement('textarea');field.value=text;field.setAttribute('readonly','');field.style.position='fixed';field.style.opacity='0';document.body.appendChild(field);field.select();const copied=document.execCommand('copy');field.remove();if(copied)return true}catch(_e){}
@@ -112,7 +165,7 @@ async function share(){
   if(navigator.share){try{await navigator.share({title,text,url});return}catch(error){if(error?.name==='AbortError')return}}
   await copyVehicleLink();
 }
-function render(r){ window.__listing=r; window.track3PedalsEvent("view_item",{currency:"KES",value:Number(r.price||0),item_id:String(r.id||""),item_name:vehicleTitle(r),item_category:"vehicle",make:r.make||"",model:r.model||"",year:Number(r.year||0),items:[{item_id:String(r.id||""),item_name:vehicleTitle(r),item_category:"vehicle",price:Number(r.price||0),quantity:1}]}); const photos=Array.isArray(r.photos)?r.photos.filter(Boolean):[];
+function render(r){ window.__listing=r; window.track3PedalsEvent("view_item",{currency:"KES",value:Number(r.price||0),item_id:String(r.id||""),item_name:vehicleTitle(r),item_category:"vehicle",make:r.make||"",model:r.model||"",year:Number(r.year||0),items:[{item_id:String(r.id||""),item_name:vehicleTitle(r),item_category:"vehicle",price:Number(r.price||0),quantity:1}]}); updateVehicleSeo(r); const photos=Array.isArray(r.photos)?r.photos.filter(Boolean):[];
   const title=vehicleTitle(r);const phone=r.seller_phone||r.phone||'';const whatsapp=r.whatsapp||phone;const wa=waNumber(whatsapp);
   const ref=`3PA-${String(r.id||"").replace(/-/g,"").slice(0,8).toUpperCase()}`;
   const msg=`Hello 3 Pedals Auto KE, I'm interested in the ${title} listed at KES ${fmt(r.price)}. Vehicle reference: ${ref}. Is it still available?`;
@@ -137,7 +190,6 @@ function render(r){ window.__listing=r; window.track3PedalsEvent("view_item",{cu
   $('shareBtn').onclick=share;
   $('copyLinkBtn').onclick=copyVehicleLink;
   $('copyBtn').onclick=async()=>{const copy=`${title}\nKES ${fmt(r.price)}\nMileage: ${fmt(r.km)} km\nFuel: ${r.fuel||'Not specified'}\nVehicle reference: ${ref}\n${new URL(location.href).href}`;if(await copyText(copy))$('shareFeedback').textContent='Vehicle details copied.';else prompt('Copy vehicle details:',copy)};
-  document.title=`${title} – 3 Pedals Auto KE`;
 }
 async function load(){
   if(!id){$('app').innerHTML='<h2>Vehicle not specified</h2><p>Please return to the Buy section and select a vehicle.</p><a class="btn gold" href="/inventory">Browse cars</a>';return}
