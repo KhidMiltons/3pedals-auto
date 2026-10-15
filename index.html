@@ -1414,7 +1414,7 @@ async function openAccount(){
   });
   $("accOut").onclick=async()=>{await sb.auth.signOut();d.close()};
   $("accClose").onclick=()=>d.close();
-  if($("accAdmin"))$("accAdmin").onclick=()=>{d.close();openAdmin()};
+  if($("accAdmin"))$("accAdmin").onclick=()=>{window.location.href="/admin.html"};
 }
 function photoStoragePaths(photos){
   const prefix="/storage/v1/object/public/car-photos/";
@@ -1625,7 +1625,7 @@ function bindProjectForm(existing){
   $("projectForm")?.addEventListener("submit",()=>saveProject(existing));
   $("projectCancel")?.addEventListener("click",()=>openAdmin());
 }
-$("adminOpen").onclick=openAdmin;$('adminClose').onclick=()=>$("adminDlg").close();
+$("adminOpen").onclick=()=>{window.location.href="/admin.html"};$('adminClose').onclick=()=>$("adminDlg").close();
 $("adminPanel").onclick=async e=>{
   const b=e.target.closest("[data-a]");if(!b)return;
   const id=b.dataset.id,a=b.dataset.a;
