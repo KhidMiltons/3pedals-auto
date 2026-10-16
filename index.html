@@ -1068,7 +1068,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div><label for="sYear">Year</label><input id="sYear" type="number" min="1885" max="2026" placeholder="2018"></div><div><label for="sStockMode">Where is this car?</label><select id="sStockMode"><option value="any">Choose stock type</option><option value="local">Kenya stock</option><option value="import">Import</option></select></div>
       <div><label for="sPrice">Asking price (KES)</label><input id="sPrice" type="number" min="0" placeholder="2400000"></div>
       <div><label for="sKm">Mileage (km)</label><input id="sKm" type="number" min="0" placeholder="64000"></div>
-      <div><label for="sFuel">Fuel</label><select id="sFuel"><option>Petrol</option><option>Diesel</option><option>Hybrid</option><option>Turbo-petrol</option><option>Turbo-diesel</option><option>Full electric</option><option>Petrol hybrid</option><option>Petrol diesel</option></select></div>
+      <div><label for="sFuel">Fuel</label><select id="sFuel"><option>Petrol</option><option>Diesel</option><option>Hybrid</option><option>Turbo-petrol</option><option>Turbo-diesel</option><option>Full electric</option><option>Petrol hybrid</option><option>Diesel hybrid</option></select></div>
     </div>
     <p class="meta vehicle-catalog-credit">Suggestions include 14,459 model names from 934 makes across six vehicle types. Missing a vehicle? Enter its make and model above. Vehicle data by <a href="https://vehiclesdb.com" target="_blank" rel="noopener">VehiclesDB</a> (catalog 2026.10.4).</p>
     <label for="sDesc">Description</label><textarea id="sDesc" rows="3" placeholder="Service history, condition, reason for selling"></textarea>
@@ -1494,7 +1494,7 @@ async function openAccount(){
   const editDialog=document.createElement("dialog");
   editDialog.className="wide";
   editDialog.id="sellerEditListingDialog";
-  editDialog.innerHTML=`<div class="in"><div class="account-dialog-head"><h2>Edit vehicle listing</h2><button type="button" class="btn ghost" id="sellerEditClose">Close</button></div><form id="sellerEditForm"><p class="meta">Your existing photos will be kept. Changes to a live listing return it to review before it is published again.</p><div class="two"><div><label for="editListingMake">Make</label><input id="editListingMake" required maxlength="80"></div><div><label for="editListingModel">Model / variant</label><input id="editListingModel" required maxlength="120"></div><div><label for="editListingYear">Year</label><input id="editListingYear" type="number" min="1885" max="2026" required></div><div><label for="editListingPrice">Asking price (KES)</label><input id="editListingPrice" type="number" min="1" required></div><div><label for="editListingKm">Mileage (km)</label><input id="editListingKm" type="number" min="0"></div><div><label for="editListingFuel">Fuel</label><select id="editListingFuel"><option>Petrol</option><option>Diesel</option><option>Hybrid</option><option>Turbo-petrol</option><option>Turbo-diesel</option><option>Full electric</option><option>Petrol hybrid</option><option>Petrol diesel</option></select></div></div><label for="editListingWhatsapp">WhatsApp number</label><input id="editListingWhatsapp" type="tel" required><label for="editListingDescription">Description</label><textarea id="editListingDescription" rows="4"></textarea><p class="meta" id="sellerEditMessage" role="status" aria-live="polite"></p><div class="acts"><button class="btn" id="sellerEditSave" type="submit">Save changes</button><button class="btn ghost" id="sellerEditCancel" type="button">Cancel</button></div></form></div>`;
+  editDialog.innerHTML=`<div class="in"><div class="account-dialog-head"><h2>Edit vehicle listing</h2><button type="button" class="btn ghost" id="sellerEditClose">Close</button></div><form id="sellerEditForm"><p class="meta">Your existing photos will be kept. Changes to a live listing return it to review before it is published again.</p><div class="two"><div><label for="editListingMake">Make</label><input id="editListingMake" required maxlength="80"></div><div><label for="editListingModel">Model / variant</label><input id="editListingModel" required maxlength="120"></div><div><label for="editListingYear">Year</label><input id="editListingYear" type="number" min="1885" max="2026" required></div><div><label for="editListingPrice">Asking price (KES)</label><input id="editListingPrice" type="number" min="1" required></div><div><label for="editListingKm">Mileage (km)</label><input id="editListingKm" type="number" min="0"></div><div><label for="editListingFuel">Fuel</label><select id="editListingFuel"><option>Petrol</option><option>Diesel</option><option>Hybrid</option><option>Turbo-petrol</option><option>Turbo-diesel</option><option>Full electric</option><option>Petrol hybrid</option><option>Diesel hybrid</option></select></div></div><label for="editListingWhatsapp">WhatsApp number</label><input id="editListingWhatsapp" type="tel" required><label for="editListingDescription">Description</label><textarea id="editListingDescription" rows="4"></textarea><p class="meta" id="sellerEditMessage" role="status" aria-live="polite"></p><div class="acts"><button class="btn" id="sellerEditSave" type="submit">Save changes</button><button class="btn ghost" id="sellerEditCancel" type="button">Cancel</button></div></form></div>`;
   box.appendChild(editDialog);
   const editForm=$("sellerEditForm"),editMessage=$("sellerEditMessage"),editSave=$("sellerEditSave");
   const closeEditDialog=()=>{if(editDialog.open)editDialog.close()};
@@ -1526,7 +1526,7 @@ async function openAccount(){
       if(!data)throw new Error("No listing was updated. It may have changed or you may not own this listing.");
       editMessage.textContent=originalStatus==="approved"?"Saved. This listing is awaiting review before it goes live again.":"Changes saved.";
       editSave.textContent="Saved";
-      setTimeout(()=>{closeEditDialog();openAccount();loadListings()},500);
+      editSave.disabled=false;
     }catch(error){editMessage.textContent=error.message||"Could not save your changes. Please try again.";editSave.disabled=false;editSave.textContent="Save changes"}
   };
   box.querySelectorAll("[data-del]").forEach(bt=>bt.onclick=async()=>{
@@ -2270,6 +2270,13 @@ loadSiteSettings();
     transition:none!important
   }
 }
+
+/* Account listing editor: accessible close control and clear dialog layering */
+#sellerEditListingDialog .account-dialog-head{display:flex;align-items:center;justify-content:space-between;gap:16px}
+#sellerEditListingDialog #sellerEditClose{flex:0 0 auto;min-width:84px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;background:#171717!important;color:#fff!important;border:1px solid #d4a017!important;border-radius:12px;font-weight:700;opacity:1;box-shadow:0 2px 8px rgba(0,0,0,.22)}
+#sellerEditListingDialog #sellerEditClose:hover,#sellerEditListingDialog #sellerEditClose:focus-visible{background:#d4a017!important;color:#111!important;outline:3px solid rgba(212,160,23,.35);outline-offset:2px}
+#sellerEditListingDialog{max-width:min(760px,calc(100vw - 24px));max-height:calc(100dvh - 24px);overflow:auto}
+@media(max-width:600px){#sellerEditListingDialog .account-dialog-head{align-items:flex-start}#sellerEditListingDialog #sellerEditClose{min-width:76px;min-height:44px;padding:10px 14px}}
 </style>
 <script id="3pedals-analytics-events">
 window.dataLayer = window.dataLayer || [];
