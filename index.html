@@ -892,6 +892,31 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 .journal-share-dialog::backdrop{background:rgba(0,0,0,.68);backdrop-filter:blur(5px)}.journal-share-dialog h2{font:700 24px/1.15 "Playfair Display",Georgia,serif;margin:0 42px 6px 0}.journal-share-dialog p{margin:0 0 18px;color:#aaa18e}.journal-share-dialog label{display:block;font-size:12px;font-weight:700;color:#c9b784}.journal-share-dialog .journal-share-url{display:block;width:100%;margin-top:7px;padding:12px;border:1px solid rgba(201,183,132,.3);border-radius:9px;background:#111213;color:#f5f1e6;font:13px/1.4 Manrope,system-ui,sans-serif}.journal-share-actions{display:flex;gap:9px;margin-top:14px}.journal-share-actions button,.journal-share-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:9px 15px;border:1px solid rgba(201,183,132,.45);border-radius:9px;background:rgba(201,183,132,.12);color:#f5f1e6;text-decoration:none;font:700 14px Manrope,system-ui,sans-serif;cursor:pointer}.journal-share-actions button:hover,.journal-share-actions a:hover{border-color:#c9b784;background:rgba(201,183,132,.22)}.journal-copy-status{display:block;margin-top:12px;color:#aaa18e}.journal-share-close{float:right;width:36px;height:36px;border:1px solid rgba(255,255,255,.14);border-radius:9px;background:rgba(255,255,255,.05);color:#f5f1e6;font-size:22px;cursor:pointer}
 </style>
 <link rel="stylesheet" href="site-theme.css">
+
+<style id="account-settings-polish">
+#accDlg .account-page#accountPage-settings>h3{font-size:clamp(27px,3vw,36px);letter-spacing:-.025em;margin:4px 0 8px}
+#accDlg .account-settings-inner{display:block!important}
+#accDlg .account-settings-tabs{position:sticky;top:0;z-index:4;gap:8px;padding:12px 0 14px;margin:0 0 14px;background:var(--bg);border-bottom:1px solid var(--line)}
+#accDlg .account-settings-tabs button{min-height:40px;padding:9px 15px;border-radius:10px;font-weight:700;transition:background .18s ease,border-color .18s ease,transform .18s ease}
+#accDlg .account-settings-tabs button:hover{transform:translateY(-1px)}
+#accDlg .account-settings-tabs button.active{background:var(--gold);color:#171717;border-color:var(--gold);box-shadow:0 5px 15px rgba(180,139,34,.16)}
+#accDlg .settings-section{padding:clamp(16px,2.4vw,26px);border:1px solid var(--line);border-radius:18px;background:var(--surface);box-shadow:var(--shadow-sm);animation:accountSettingsEnter .22s ease-out}
+#accDlg .settings-section>h4{font-size:19px;margin:0 0 5px}
+#accDlg .settings-section>.account-tools{padding:0;border:0;background:transparent;box-shadow:none}
+#accDlg .profile-card{display:flex;align-items:center;gap:18px;padding:18px;border:1px solid var(--line);border-radius:15px;background:var(--surface-2)}
+#accDlg .profile-avatar{width:76px;height:76px;flex:0 0 76px;border-radius:50%;overflow:hidden;display:grid;place-items:center;background:var(--bg);border:2px solid var(--gold);font-size:23px;font-weight:800}
+#accDlg .profile-avatar img{width:100%;height:100%;object-fit:cover}
+#accDlg .profile-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 16px;margin:18px 0}
+#accDlg .profile-grid>div{min-width:0}
+#accDlg .profile-grid label{margin-top:8px}
+#accDlg .profile-grid input,#accDlg .profile-grid select,#accDlg .settings-section input:not([type=checkbox]),#accDlg .settings-section textarea{min-height:44px;border-radius:10px}
+#accDlg #accSaveProfile{min-width:190px}
+#accDlg .settings-section .acts{display:flex;gap:10px;flex-wrap:wrap}
+#accDlg .settings-section [data-preference-status]{margin-top:10px}
+@keyframes accountSettingsEnter{from{opacity:.65;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:600px){#accDlg .profile-card{align-items:flex-start;gap:12px;padding:14px}#accDlg .profile-avatar{width:58px;height:58px;flex-basis:58px}#accDlg .profile-grid{grid-template-columns:1fr}#accDlg .account-settings-tabs{overflow-x:auto;flex-wrap:nowrap}#accDlg .account-settings-tabs button{flex:0 0 auto}}
+@media(prefers-reduced-motion:reduce){#accDlg .settings-section{animation:none!important}}
+</style>
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -1245,7 +1270,7 @@ async function saveAccountProfile(){
       if(!saved)throw new Error("Your details were saved, but the picture could not be saved. Please try again.");
       pendingProfilePhoto=null;
     }
-    refreshAccountUI();err.textContent="Changes saved. You are still in Account Settings.";
+    refreshAccountUI();err.style.color="var(--ok)";err.textContent="Changes saved. You are still in Account Settings.";
     const avatarBox=document.querySelector("#accDlg .profile-avatar");
     if(avatarBox){const url=profileAvatarUrl();avatarBox.innerHTML=url?'<img src="'+esc(url)+'" alt="Profile picture">':esc(initialsFor(profileName(),me.email))}
     if($("accRemovePhoto")&&!profileAvatarUrl())$("accRemovePhoto").remove();
@@ -1255,7 +1280,7 @@ async function saveAccountProfile(){
 async function removeProfilePhoto(){
   if(!profileAvatarUrl())return;
   pendingRemoveProfilePhoto=true;pendingProfilePhoto=null;
-  const err=$("accProfileErr");if(err)err.textContent="Picture removal selected. Click “Save profile changes” to confirm.";
+  const err=$("accProfileErr");if(err){err.style.color="var(--mute)";err.textContent="Picture removal selected. Click “Save profile changes” to confirm."};
   const avatarBox=document.querySelector("#accDlg .profile-avatar");
   if(avatarBox)avatarBox.innerHTML=esc(initialsFor(profileName(),me?.email));
 }
@@ -1377,11 +1402,11 @@ async function openAccount(){
     if(bookingAction)bookingsPage.append(bookingAction);if(bookingHeading)bookingsPage.append(bookingHeading);
     let bookingNode=bookingHeading?.nextElementSibling;while(bookingNode&&!bookingNode.querySelector("#accOut")){const next=bookingNode.nextElementSibling;bookingsPage.append(bookingNode);bookingNode=next}
     const pages=document.createElement("div");pages.className="account-pages";pages.append(overview,dashboardPage,settings,bookingsPage);overview.hidden=true;dashboardPage.hidden=true;settings.hidden=false;
-    closeAccountMenu();menu.innerHTML=`<div class="seller-nav-identity"><small>SELLER ACCOUNT</small><strong class="seller-nav-brand"><img src="favicon.svg" alt="">${esc(name||me.email||"Seller")}</strong><span>${esc(me.email||"")}</span></div><div class="seller-mode-switch"><button type="button" data-buying>Buying</button><button type="button" class="selected" aria-current="page">Selling</button></div><div class="seller-nav-label">WORKSPACE</div><button type="button" class="active" data-page="dashboard">Analytics</button><button type="button" data-seller-signup>＋ Create seller account</button><button type="button" data-page="listings">Stock</button><button type="button" data-page="promotions">Marketing${reminders.length?` · ${reminders.length} due`:""}</button><button type="button" data-page="bookings">Bookings</button><div class="seller-nav-label">ACCOUNT</div><button type="button" data-page="settings">Settings</button><button type="button" data-signout>Log out</button>`;menu.hidden=true;$('accDlg').classList.remove('nav-collapsed');
+    closeAccountMenu();menu.innerHTML=`<div class="seller-nav-identity"><small>SELLER ACCOUNT</small><strong class="seller-nav-brand"><img src="favicon.svg" alt="">${esc(name||me.email||"Seller")}</strong><span>${esc(me.email||"")}</span></div><div class="seller-mode-switch"><button type="button" data-buying>Buying</button><button type="button" class="selected" aria-current="page">Selling</button></div><div class="seller-nav-label">WORKSPACE</div><button type="button" data-page="dashboard">Analytics</button><button type="button" data-seller-signup>＋ Create seller account</button><button type="button" data-page="listings">Stock</button><button type="button" data-page="promotions">Marketing${reminders.length?` · ${reminders.length} due`:""}</button><button type="button" data-page="bookings">Bookings</button><div class="seller-nav-label">ACCOUNT</div><button type="button" class="active" data-page="settings" aria-current="page">Settings</button><button type="button" data-signout>Log out</button>`;menu.hidden=true;$('accDlg').classList.remove('nav-collapsed');
     dashboard.remove();box.insertBefore(pages,box.firstChild);
     pages.querySelector("[data-open-marketing]")?.addEventListener("click",()=>menu.querySelector('[data-page="promotions"]')?.click());
     menu.querySelector("[data-seller-signup]").onclick=()=>{$("accDlg").close();closeAccountMenu();sellerSlugEdited=false;$("authName").value=profile?.name||me?.user_metadata?.name||me?.user_metadata?.full_name||"";$("authSellerSlug").value="";openAuth("register","",{seller:true})};menu.querySelector("[data-buying]").onclick=()=>{$("accDlg").close();show("buy")};menu.querySelector("[data-signout]").onclick=()=>$("accOut").click();
-  }  $("accPhoto").onchange=e=>{pendingProfilePhoto=e.target.files?.[0]||null;pendingRemoveProfilePhoto=false;if(pendingProfilePhoto){const err=$("accProfileErr");if(err)err.textContent="Picture selected. Click “Save profile changes” to upload it."}};
+  }  $("accPhoto").onchange=e=>{pendingProfilePhoto=e.target.files?.[0]||null;pendingRemoveProfilePhoto=false;if(pendingProfilePhoto){const err=$("accProfileErr");if(err){err.style.color="var(--mute)";err.textContent="Picture selected. Click “Save profile changes” to upload it."}}};
   if($("accRemovePhoto"))$("accRemovePhoto").onclick=removeProfilePhoto;
   $("accSaveProfile").onclick=saveAccountProfile;
   $("accUpdateEmail").onclick=updateAccountEmail;
