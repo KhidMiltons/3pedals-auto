@@ -1494,24 +1494,47 @@ async function openAccount(){
   const filterSellerListings=()=>{const query=(listingSearch?.value||"").trim().toLowerCase(),status=listingStatus?.value||"";let shown=0;const rows=box.querySelectorAll("[data-seller-listing]");rows.forEach(row=>{const matches=(!query||(row.dataset.listingSearch||"").includes(query))&&(!status||row.dataset.listingStatus===status);row.hidden=!matches;if(matches)shown++});if(listingCount)listingCount.textContent=`Showing ${shown} of ${rows.length} listings`;};
   listingSearch?.addEventListener("input",filterSellerListings);listingStatus?.addEventListener("change",filterSellerListings);filterSellerListings();
   box.querySelectorAll("[data-view]").forEach(bt=>bt.onclick=()=>{window.location.href=`vehicle.html?id=${encodeURIComponent(bt.dataset.view)}`});
-  // Edit only the signed-in seller's own listing. Existing photo URLs are deliberately left untouched.
+  // Sellers can edit listing details and manage their own photo gallery (maximum 15 photos).
   const editDialog=document.createElement("dialog");
   editDialog.className="wide";
   editDialog.id="sellerEditListingDialog";
-  editDialog.innerHTML=`<div class="in"><div class="account-dialog-head"><h2>Edit vehicle listing</h2><button type="button" class="btn ghost" id="sellerEditClose">Close</button></div><form id="sellerEditForm"><p class="meta">Your existing photos will be kept. Changes to a live listing return it to review before it is published again.</p><div class="two"><div><label for="editListingMake">Make</label><input id="editListingMake" required maxlength="80"></div><div><label for="editListingModel">Model / variant</label><input id="editListingModel" required maxlength="120"></div><div><label for="editListingYear">Year</label><input id="editListingYear" type="number" min="1885" max="2026" required></div><div><label for="editListingPrice">Asking price (KES)</label><input id="editListingPrice" type="number" min="1" required></div><div><label for="editListingKm">Mileage (km)</label><input id="editListingKm" type="number" min="0"></div><div><label for="editListingFuel">Fuel</label><select id="editListingFuel"><option>Petrol</option><option>Diesel</option><option>Hybrid</option><option>Turbo-petrol</option><option>Turbo-diesel</option><option>Full electric</option><option>Petrol hybrid</option><option>Diesel hybrid</option></select></div></div><label for="editListingWhatsapp">WhatsApp number</label><input id="editListingWhatsapp" type="tel" required><label for="editListingDescription">Description</label><textarea id="editListingDescription" rows="4"></textarea><p class="meta" id="sellerEditMessage" role="status" aria-live="polite"></p><div class="acts"><button class="btn" id="sellerEditSave" type="submit">Save changes</button><button class="btn ghost" id="sellerEditCancel" type="button">Cancel</button></div></form></div>`;
+  editDialog.innerHTML=`<div class="in"><div class="account-dialog-head"><h2>Edit vehicle listing</h2><button type="button" class="btn ghost" id="sellerEditClose">Close</button></div><form id="sellerEditForm"><p class="meta">Add, remove or replace photos. Live listing changes return to review before republishing.</p><div class="two"><div><label for="editListingMake">Make</label><input id="editListingMake" required maxlength="80"></div><div><label for="editListingModel">Model / variant</label><input id="editListingModel" required maxlength="120"></div><div><label for="editListingYear">Year</label><input id="editListingYear" type="number" min="1885" max="2026" required></div><div><label for="editListingPrice">Asking price (KES)</label><input id="editListingPrice" type="number" min="1" required></div><div><label for="editListingKm">Mileage (km)</label><input id="editListingKm" type="number" min="0"></div><div><label for="editListingFuel">Fuel</label><select id="editListingFuel"><option>Petrol</option><option>Diesel</option><option>Hybrid</option><option>Turbo-petrol</option><option>Turbo-diesel</option><option>Full electric</option><option>Petrol hybrid</option><option>Diesel hybrid</option></select></div></div><label for="editListingPhotos">Vehicle photos (up to 15 total)</label><input id="editListingPhotos" type="file" accept="image/*" multiple><p class="meta" id="editListingPhotoCount" aria-live="polite">0 of 15 photos</p><div id="editListingPhotoGallery" class="edit-photo-gallery" aria-live="polite"></div><label for="editListingWhatsapp">WhatsApp number</label><input id="editListingWhatsapp" type="tel" required><label for="editListingDescription">Description</label><textarea id="editListingDescription" rows="4"></textarea><p class="meta" id="sellerEditMessage" role="status" aria-live="polite"></p><div class="acts"><button class="btn" id="sellerEditSave" type="submit">Save changes</button><button class="btn ghost" id="sellerEditCancel" type="button">Cancel</button></div></form></div>`;
   box.appendChild(editDialog);
   const editForm=$("sellerEditForm"),editMessage=$("sellerEditMessage"),editSave=$("sellerEditSave");
+  let editPhotoItems=[];
+  const revokeEditPhotoPreviews=()=>editPhotoItems.forEach(item=>{if(item.preview)URL.revokeObjectURL(item.preview)});
+  const renderEditPhotoGallery=()=>{
+    $("editListingPhotoCount").textContent=editPhotoItems.length+" of 15 photos";
+    $("editListingPhotoGallery").innerHTML=editPhotoItems.map((item,index)=>`<div class="edit-photo-item"><img src="${esc(item.preview||item.url)}" alt="Vehicle photo ${index+1}"><button type="button" class="btn ghost" data-remove-edit-photo="${index}" aria-label="Remove photo ${index+1}">Remove</button></div>`).join("");
+    $("editListingPhotoPhotos");
+    $("editListingPhotos").disabled=editPhotoItems.length>=15;
+  };
+  $("editListingPhotoGallery").addEventListener("click",event=>{
+    const button=event.target.closest("[data-remove-edit-photo]");if(!button)return;
+    const index=Number(button.dataset.removeEditPhoto),item=editPhotoItems[index];if(item?.preview)URL.revokeObjectURL(item.preview);
+    editPhotoItems.splice(index,1);renderEditPhotoGallery();
+  });
+  $("editListingPhotos").addEventListener("change",()=>{
+    const chosen=Array.from($("editListingPhotos").files||[]);
+    if(editPhotoItems.length+chosen.length>15){editMessage.textContent="A listing can have up to 15 photos. You can add "+Math.max(0,15-editPhotoItems.length)+" more."; $("editListingPhotos").value="";return}
+    for(const file of chosen){
+      if(!file.type.startsWith("image/")||file.size>10*1024*1024){editMessage.textContent="Each photo must be an image under 10 MB.";continue}
+      editPhotoItems.push({file,preview:URL.createObjectURL(file)});
+    }
+    $("editListingPhotos").value="";renderEditPhotoGallery();
+  });
   const closeEditDialog=()=>{if(editDialog.open)editDialog.close()};
   $("sellerEditClose").onclick=closeEditDialog;$("sellerEditCancel").onclick=closeEditDialog;
   box.querySelectorAll("[data-edit]").forEach(button=>button.onclick=()=>{
     const listing=L.find(item=>String(item.id)===String(button.dataset.edit));
     if(!listing||listing.owner!==me.id||listing.status==="sold"){editMessage.textContent="This listing cannot be edited from this account.";return}
+    revokeEditPhotoPreviews();editPhotoItems=(Array.isArray(listing.photos)?listing.photos:[]).map(url=>({url}));
     editForm.dataset.listingId=listing.id;editForm.dataset.originalStatus=listing.status||"pending";
     $("editListingMake").value=listing.make||"";$("editListingModel").value=listing.model||"";
     $("editListingYear").value=listing.year||"";$("editListingPrice").value=listing.price??"";
     $("editListingKm").value=listing.km??0;$("editListingFuel").value=listing.fuel||"Petrol";
     $("editListingWhatsapp").value=listing.whatsapp||"";$("editListingDescription").value=listing.description||"";
-    editMessage.textContent="";editSave.disabled=false;editSave.textContent="Save changes";
+    editMessage.textContent="";editSave.disabled=false;editSave.textContent="Save changes";renderEditPhotoGallery();
     if(!editDialog.open)editDialog.showModal();
   });
   editForm.onsubmit=async event=>{
@@ -1523,15 +1546,36 @@ async function openAccount(){
     if(!make||!model||!Number.isInteger(year)||year<1885||year>2026||!Number.isFinite(price)||price<=0||!Number.isFinite(km)||km<0||!whatsapp){editMessage.textContent="Check the make, model, year, price, mileage and WhatsApp number.";return}
     const updates={make,model,year,price,km,fuel:$("editListingFuel").value,whatsapp,description:$("editListingDescription").value.trim()};
     if(originalStatus==="approved")updates.status="pending";
-    editSave.disabled=true;editSave.textContent="Saving…";editMessage.textContent="Saving your changes…";
+    editSave.disabled=true;editSave.textContent="Saving…";editMessage.textContent="Saving your changes and photos…";
+    const uploadedPaths=[];
     try{
+      const nextPhotos=[];
+      for(let i=0;i<editPhotoItems.length;i++){
+        const item=editPhotoItems[i];
+        if(item.file){
+          const dataUrl=await shrink(item.file),blob=await (await fetch(dataUrl)).blob();
+          const photoId=crypto.randomUUID?crypto.randomUUID():`${Date.now()}-${Math.random().toString(36).slice(2)}`;
+          const path=`${me.id}/${photoId}-edit-${i}.jpg`;
+          const upload=await sb.storage.from("car-photos").upload(path,blob,{contentType:"image/jpeg"});
+          if(upload.error)throw upload.error;
+          uploadedPaths.push(path);
+          nextPhotos.push(sb.storage.from("car-photos").getPublicUrl(path).data.publicUrl);
+        }else nextPhotos.push(item.url);
+      }
+      updates.photos=nextPhotos;
       const {data,error}=await sb.from("listings").update(updates).eq("id",listingId).eq("owner",me.id).neq("status","sold").select("id").maybeSingle();
       if(error)throw error;
       if(!data)throw new Error("No listing was updated. It may have changed or you may not own this listing.");
-      editMessage.textContent=originalStatus==="approved"?"Saved. This listing is awaiting review before it goes live again.":"Changes saved.";
-      editSave.textContent="Saved";
-      editSave.disabled=false;
-    }catch(error){editMessage.textContent=error.message||"Could not save your changes. Please try again.";editSave.disabled=false;editSave.textContent="Save changes"}
+      const removedPaths=photoStoragePaths((Array.isArray(listing.photos)?listing.photos:[]).filter(url=>!nextPhotos.includes(url)));
+      if(removedPaths.length){const removed=await sb.storage.from("car-photos").remove(removedPaths);if(removed.error)console.warn("Listing saved, but removed photo files could not be cleaned up:",removed.error)}
+      listing.photos=nextPhotos;if(originalStatus==="approved")listing.status="pending";
+      editMessage.textContent=originalStatus==="approved"?"Saved. Photos updated; this listing is awaiting review before it goes live again.":"Changes and photos saved.";
+      editSave.textContent="Saved";editSave.disabled=false;
+      revokeEditPhotoPreviews();editPhotoItems=nextPhotos.map(url=>({url}));renderEditPhotoGallery();
+    }catch(error){
+      if(uploadedPaths.length){const cleanup=await sb.storage.from("car-photos").remove(uploadedPaths);if(cleanup.error)console.warn("Could not clean up newly uploaded listing photos:",cleanup.error)}
+      editMessage.textContent=error.message||"Could not save your changes. Please try again.";editSave.disabled=false;editSave.textContent="Save changes";
+    }
   };
   box.querySelectorAll("[data-del]").forEach(bt=>bt.onclick=async()=>{
     if(!confirm("Delete this listing? This will remove the listing from your account."))return;
@@ -2230,6 +2274,13 @@ loadSiteSettings();
   }
   header .account-pill button{color:#493a20!important;background:rgba(255,255,255,.9)!important;border-color:rgba(133,105,52,.5)!important}
 }
+</style>
+<style id="seller-listing-photo-editor">
+#sellerEditListingDialog .edit-photo-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;margin:10px 0 18px}
+#sellerEditListingDialog .edit-photo-item{min-width:0;border:1px solid var(--line);border-radius:12px;padding:8px;background:var(--surface-2,#f8fafc);display:flex;flex-direction:column;gap:7px}
+#sellerEditListingDialog .edit-photo-item img{display:block;width:100%;height:90px;object-fit:cover;border-radius:8px;background:#e5e7eb}
+#sellerEditListingDialog .edit-photo-item .btn{width:100%;min-height:38px;padding:7px 10px}
+#sellerEditListingDialog #editListingPhotos:disabled{opacity:.6}
 </style>
 <style id="account-panel-full-page-layout">
 #accDlg:not([open]){display:none!important}
