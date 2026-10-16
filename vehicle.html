@@ -205,12 +205,15 @@ async function loadRelated(current){
   host.innerHTML='<div class="related-heading"><div><h2>You may also like</h2><p>More approved vehicles from 3 Pedals Auto KE.</p></div><a class="btn ghost" href="/inventory">View all cars</a></div><div class="related-grid" id="relatedGrid"></div>';
   const vehicle=document.querySelector('.vehicle');if(!vehicle)return;vehicle.insertAdjacentElement('afterend',host);
   try{
-    const {data,error}=await sb.from('listings').select('id,make,model,year,price,km,fuel,photos').eq('status','approved').neq('id',String(current.id)).limit(40);
+    const {data,error}=await sb.from('listings').select('id,make,model,year,price,km,fuel').eq('status','approved').neq('id',String(current.id)).limit(40);
     if(error||!data?.length){host.remove();return}
     const currentMake=String(current.make||'').toLowerCase(),budget=Number(current.price)||0;
     const candidates=data.map(item=>({...item,_score:(String(item.make||'').toLowerCase()===currentMake?3:0)+(budget&&Number(item.price)>0&&Math.abs(Number(item.price)-budget)/budget<=.25?2:0)+(String(item.fuel||'').toLowerCase()===String(current.fuel||'').toLowerCase()?1:0)})).sort((a,b)=>b._score-a._score||Math.abs(Number(a.price||0)-budget)-Math.abs(Number(b.price||0)-budget)).slice(0,3);
     if(!candidates.length){host.remove();return}
-    $('relatedGrid').innerHTML=candidates.map(item=>{const name=vehicleTitle(item),photo=Array.isArray(item.photos)?item.photos.find(p=>typeof p==='string'&&p.trim()):'';return `<a class="related-card" href="/vehicle.html?id=${encodeURIComponent(item.id)}">${photo?`<img class="related-photo" src="${esc(photo)}" alt="${esc(name)}" loading="lazy">`:''}<div class="related-copy"><h3>${esc(name)}</h3><div class="related-price">KES ${fmt(item.price)}</div><div class="related-meta">${fmt(item.km)} km · ${esc(item.fuel||'Fuel not specified')}</div></div></a>`}).join('');
+    const ids=candidates.map(item=>item.id);
+    const {data:photoRows}=await sb.from('listings').select('id,photos').in('id',ids);
+    const photosById=new Map((photoRows||[]).map(item=>[item.id,Array.isArray(item.photos)?item.photos.find(p=>typeof p==='string'&&p.trim()):'']));
+    $('relatedGrid').innerHTML=candidates.map(item=>{const name=vehicleTitle(item),photo=photosById.get(item.id)||'';return `<a class="related-card" href="/vehicle.html?id=${encodeURIComponent(item.id)}">${photo?`<img class="related-photo" src="${esc(photo)}" alt="${esc(name)}" loading="lazy" decoding="async">`:''}<div class="related-copy"><h3>${esc(name)}</h3><div class="related-price">KES ${fmt(item.price)}</div><div class="related-meta">${fmt(item.km)} km · ${esc(item.fuel||'Fuel not specified')}</div></div></a>`}).join('');
   }catch(error){host.remove();console.warn('Related vehicles could not be loaded:',error)}
 }
 async function load(){
