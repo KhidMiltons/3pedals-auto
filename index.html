@@ -917,6 +917,22 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 @media(max-width:600px){#accDlg .profile-card{align-items:flex-start;gap:12px;padding:14px}#accDlg .profile-avatar{width:58px;height:58px;flex-basis:58px}#accDlg .profile-grid{grid-template-columns:1fr}#accDlg .account-settings-tabs{overflow-x:auto;flex-wrap:nowrap}#accDlg .account-settings-tabs button{flex:0 0 auto}}
 @media(prefers-reduced-motion:reduce){#accDlg .settings-section{animation:none!important}}
 </style>
+<style id="mobile-inventory-featured-tag-fix">
+@media(max-width:560px){
+  #buy .card .swatch .promoted-tag{
+    top:8px!important;
+    right:5px!important;
+    left:auto!important;
+    max-width:calc(100% - 10px);
+    padding:4px 5px!important;
+    font-size:8px!important;
+    line-height:1.1!important;
+    letter-spacing:0!important;
+    white-space:nowrap;
+    box-sizing:border-box;
+  }
+}
+</style>
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -971,13 +987,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <a class="tile" id="gTile" href="/garage"><h3>3 Pedals Garage</h3><span class="meta">Service, repairs and inspections</span></a>
     <button class="tile" id="accountTile"><h3>My account</h3><span class="meta">Manage your vehicles and bookings</span></button>
   </div>
-  <section class="featured-section" id="featuredVehicles" aria-labelledby="featuredVehiclesTitle" hidden>
-    <div class="featured-heading">
-      <div><span class="eyebrow">HAND-PICKED VISIBILITY</span><h2 id="featuredVehiclesTitle">Featured Vehicles</h2><p class="meta">Promoted cars, brought closer to your attention.</p></div>
-      <a class="btn alt" href="/inventory">View all vehicles</a>
-    </div>
-    <div class="grid featured-grid" id="featuredGrid" aria-live="polite"></div>
-  </section>
   <div class="journal-intro"><div><span class="eyebrow">3 PEDALS JOURNAL</span><h2>Stories for people who genuinely love cars.</h2><p class="meta">Read buying guides, ownership stories, workshop knowledge, classic-car features, market insights and practical advice from the 3 Pedals team.</p></div><a class="btn alt" href="journal.html">Read the Journal</a></div>
   <div class="project-intro"><div><span class="eyebrow">3 PEDALS AUTO KE</span><h2>Built around cars, people and real work.</h2><p class="meta">Explore our latest vehicle work, inspections, restorations, servicing stories and automotive updates.</p></div><button class="btn alt" data-go="projects">Explore our projects </button></div>
     </div>
@@ -1737,12 +1746,6 @@ function render(){
   r.sort((a,b)=>(Number(b.isPromoted)-Number(a.isPromoted))||(s==="low"?a.price-b.price:s==="high"?b.price-a.price:s==="km"?a.km-b.km:b.year-a.year));
   $("count").textContent=r.length+(r.length===1?" car":" cars")+" found";
   $("grid").innerHTML=r.length?r.map(cardMarkup).join(""):'<p class="meta">No cars match these filters. Clear the search or raise the price limit.</p>';
-  const featuredSection=$("featuredVehicles"),featuredGrid=$("featuredGrid");
-  if(featuredSection&&featuredGrid){
-    const featured=cars.filter(c=>c.isPromoted).slice(0,4);
-    featuredSection.hidden=featured.length===0;
-    featuredGrid.innerHTML=featured.map(cardMarkup).join("");
-  }
 }
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 ["grid","featuredGrid"].forEach(id=>{const el=$(id);if(!el)return;el.addEventListener("click",e=>{if(e.target.closest("a"))return;const card=e.target.closest(".card-main");if(card)location.href=card.dataset.href});el.addEventListener("keydown",e=>{if(e.target.closest("a,button"))return;const card=e.target.closest(".card-main");if(card&&(e.key==="Enter"||e.key===" ")){e.preventDefault();location.href=card.dataset.href}})});
