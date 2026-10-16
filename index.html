@@ -919,18 +919,31 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 </style>
 <style id="mobile-inventory-featured-tag-fix">
 @media(max-width:560px){
+  /* Compact mobile listing details and reserve clear space for the featured badge. */
+  #buy .card-main{position:relative!important;gap:0!important}
+  #buy .card .swatch{width:34%!important;flex-basis:34%!important;min-width:0!important;height:154px!important;min-height:154px!important;padding:6px!important}
+  #buy .card .swatch .swatch-year{font-size:15px!important;line-height:1!important}
   #buy .card .swatch .promoted-tag{
-    top:8px!important;
-    right:5px!important;
-    left:auto!important;
-    max-width:calc(100% - 10px);
-    padding:4px 5px!important;
-    font-size:8px!important;
-    line-height:1.1!important;
-    letter-spacing:0!important;
-    white-space:nowrap;
-    box-sizing:border-box;
+    position:absolute!important;top:7px!important;right:5px!important;left:auto!important;
+    z-index:5!important;max-width:calc(100% - 10px);padding:3px 4px!important;
+    font-size:7px!important;line-height:1!important;letter-spacing:0!important;
+    white-space:nowrap;box-sizing:border-box
   }
+  #buy .card .body{padding:9px 9px 10px!important}
+  #buy .card h3{font-size:14px!important;line-height:1.18!important;margin:0 0 4px!important;-webkit-line-clamp:2;line-clamp:2}
+  #buy .card .price{font-size:16px!important;line-height:1.15!important;margin:4px 0 2px!important;overflow-wrap:anywhere}
+  #buy .card .tag{display:inline-block;font-size:9px!important;line-height:1.15!important;padding:2px 4px!important;margin:4px 2px 0 0!important}
+  #buy .card-extra{padding-top:5px!important;margin-top:5px!important}
+  #buy .card-extra .yard-line{gap:4px!important;margin:3px 0 0!important;font-size:10px!important;line-height:1.2!important;overflow-wrap:anywhere}
+  #buy .card-extra .yard-link{display:block;min-width:0;max-width:100%;overflow-wrap:anywhere;word-break:break-word;font-size:10px!important;line-height:1.2!important}
+  #buy .card-extra .yard-logo{width:20px!important;height:20px!important;flex-basis:20px!important}
+  #buy .card-reveal{margin-top:3px!important;font-size:10px!important}
+}
+@media(max-width:380px){
+  #buy .card .swatch{width:32%!important;flex-basis:32%!important;height:144px!important;min-height:144px!important}
+  #buy .card .body{padding:8px 7px!important}
+  #buy .card h3{font-size:13px!important}
+  #buy .card .price{font-size:15px!important}
 }
 </style>
 </head>
