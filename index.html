@@ -1282,7 +1282,7 @@ $("authSubmit").onclick=async()=>{
   if(authMode==="register"||authMode==="login"){window.track3PedalsEvent(authMode==="register"?"sign_up":"login",{method:"email",account_type:type});}
   if(authMode==="register"&&!res.data.session){err.textContent=sellerRegistrationMode?"Seller account created. Check your email for a confirmation link, then log in. Your seller name, type, and URL have been saved.":"Account created. Check your email for a confirmation link, then log in. Your account type has been saved.";return}
   $("authPassword").value="";$("authConfirmPassword").value="";$("authDlg").close();
-  await loadSession();if(location.hash==="#login"||location.hash==="#register")history.replaceState(null,"",location.pathname+location.search);if(me)openAccount();
+  await loadSession();if(location.hash==="#login"||location.hash==="#register")history.replaceState(null,"",location.pathname+location.search);
 };
 function initialsFor(name,email){const x=String(name||email||"?").trim().split(/\s+/).filter(Boolean);return ((x[0]||"?")[0]+(x[1]||"")[0]).toUpperCase()}
 function profileAvatarUrl(){return (profile&&profile.avatar_url)||me?.user_metadata?.avatar_url||""}
