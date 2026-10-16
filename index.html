@@ -121,7 +121,7 @@ footer{padding-bottom:80px}
 .prev{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
 .prev img{width:88px;height:66px;object-fit:cover;border-radius:6px;border:1px solid var(--line)}
 .swatch.has{height:150px;position:relative;isolation:isolate;overflow:hidden;text-shadow:0 1px 5px rgba(0,0,0,.7);background-size:contain!important;background-color:#17191c}
-.swatch.has:before{content:"";position:absolute;z-index:0;inset:-8px;background-image:inherit;background-size:cover;background-position:center;filter:blur(12px) brightness(.48);transform:scale(1.06);pointer-events:none}
+.swatch.has:before{content:"";position:absolute;z-index:0;inset:0;background:radial-gradient(ellipse at 50% 35%,#30343a 0%,#17191c 72%);pointer-events:none}
 .swatch-photo{position:absolute;z-index:1;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;background:transparent}
 .swatch-year{position:relative;z-index:2}
 .gal .main{width:100%;height:230px;object-fit:cover;display:block}
@@ -1900,7 +1900,7 @@ function variantFor(make,model){const mk=canonicalMake(make),f=familyFor(mk,mode
 function updateBuyFilters(){const mk=$("make").value,mf=$("model").value,cv=$("variant").value;const models=[...new Set(cars.filter(c=>!mk||canonicalMake(c.make)===mk).map(c=>familyFor(c.make,c.model)).filter(Boolean))].sort();$("model").innerHTML='<option value="">All models</option>'+models.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");if(models.includes(mf))$("model").value=mf;const activeModel=$("model").value;const variants=[...new Set(cars.filter(c=>(!mk||canonicalMake(c.make)===mk)&&(!activeModel||familyFor(c.make,c.model)===activeModel)).map(c=>variantFor(c.make,c.model)).filter(Boolean))].sort();$("variant").innerHTML='<option value="">All variants</option>'+variants.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");if(variants.includes(cv))$("variant").value=cv}
 function makes(){const m=[...new Set(cars.map(c=>canonicalMake(c.make)).filter(Boolean))].sort(),cur=$("make").value;$("make").innerHTML='<option value="">All makes</option>'+m.map(x=>`<option value="${esc(x)}">${esc(x==="Mercedes-Benz"?"Mercedes":x)}</option>`).join("");if(m.includes(cur))$("make").value=cur;else $("make").value="";updateBuyFilters()}
 const hasPh=c=>c.photos&&c.photos[0]?" has":"";
-const bgOf=c=>c.photos&&c.photos[0]?`${c.color} url('${c.photos[0]}') center/contain no-repeat`:c.color;
+const bgOf=c=>c.color||"#17191c";
 const cardMarkup=c=>{
   const isYard=c.seller&&c.seller.type==="yard",yardName=c.seller?.name||"Car yard",loc=c.seller?.location||"";
   const vehicleUrl=`vehicle.html?id=${encodeURIComponent(c.id)}`;
