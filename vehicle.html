@@ -166,7 +166,7 @@ async function share(){
   await copyVehicleLink();
 }
 function sellerNameForMessage(r){return String(r.yard_name||r.seller_name||"the seller").trim()||"the seller"}
-function render(r){ window.__listing=r; window.track3PedalsEvent("view_item",{currency:"KES",value:Number(r.price||0),item_id:String(r.id||""),item_name:vehicleTitle(r),item_category:"vehicle",make:r.make||"",model:r.model||"",year:Number(r.year||0),items:[{item_id:String(r.id||""),item_name:vehicleTitle(r),item_category:"vehicle",price:Number(r.price||0),quantity:1}]}); updateVehicleSeo(r); const photos=Array.isArray(r.photos)?r.photos.filter(Boolean):[];
+function render(r){ window.__listing=r; window.track3PedalsEvent("view_item",{currency:"KES",value:Number(r.price||0),item_id:String(r.id||""),item_name:vehicleTitle(r),item_category:"vehicle",make:r.make||"",model:r.model||"",year:Number(r.year||0),items:[{item_id:String(r.id||""),item_name:vehicleTitle(r),item_category:"vehicle",price:Number(r.price||0),quantity:1}]}); updateVehicleSeo(r); if(sb&&r.id)sb.from("seller_listing_analytics").insert({listing_id:r.id,event_type:"view"}).then(({error})=>{if(error)console.debug("Seller view analytics unavailable")}); const photos=Array.isArray(r.photos)?r.photos.filter(Boolean):[];
   const title=vehicleTitle(r);const phone=r.seller_phone||r.phone||'';const whatsapp=r.whatsapp||phone;const wa=waNumber(whatsapp);
   const ref=`3PA-${String(r.id||"").replace(/-/g,"").slice(0,8).toUpperCase()}`;
   const pageUrl=new URL(location.href).href;
@@ -235,6 +235,11 @@ document.addEventListener('click', function(event) {
   const href = link.href || '';
   if (/wa\.me|api\.whatsapp\.com|whatsapp\.com/i.test(href)) {
     window.track3PedalsEvent('whatsapp_click', {link_url: href, link_text: (link.innerText || link.getAttribute('aria-label') || 'WhatsApp').trim().slice(0, 100)});
+    const listingId=window.__listing&&window.__listing.id;
+    if(listingId&&window.supabase&&window.SB_CONFIG&&window.SB_CONFIG.url&&window.SB_CONFIG.anonKey){
+      const analyticsClient=window.supabase.createClient(window.SB_CONFIG.url,window.SB_CONFIG.anonKey);
+      analyticsClient.from('seller_listing_analytics').insert({listing_id:listingId,event_type:'whatsapp_click'}).then(({error})=>{if(error)console.debug('Seller enquiry analytics unavailable')});
+    }
   }
 });
 (function(){
