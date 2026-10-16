@@ -1178,6 +1178,25 @@ function show(t,options={}){
  window.addEventListener("popstate",()=>{const section=location.hash.slice(1);if(["","buy","sell","projects","journal","about","contact"].includes(section))show(section||"home",{updateUrl:false,scroll:false})});
 try{const h=location.hash.replace("#","");if(["buy","sell","projects","journal","about","contact"].includes(h))show(h,{updateUrl:false,scroll:false})}catch(_){}
 
+let accountDataPrefetch=null,accountDataPrefetchUserId=null;
+function fetchAccountData(userId){
+  const listingsRequest=Promise.resolve().then(()=>sb.from("listings").select("*").eq("owner",userId).order("created_at",{ascending:false}));
+  const analyticsRequest=listingsRequest.then(({data,error})=>error||!data?.length?{data:[],error:null}:sb.from("seller_listing_analytics").select("listing_id,event_type,created_at").in("listing_id",data.map(item=>item.id)));
+  return Promise.all([
+    listingsRequest,
+    sb.from("bookings").select("*").eq("user_id",userId).order("created_at",{ascending:false}),
+    sb.from("seller_sales").select("listing_id,reported_sale_price,currency,created_at").eq("seller_id",userId).order("created_at",{ascending:false}),
+    sb.from("listing_promotions").select("id,listing_id,package_name,amount,status,payment_status,starts_at,expires_at,created_at").eq("seller_id",userId).order("created_at",{ascending:false}),
+    sb.from("promotion_packages").select("id,name,description,amount,duration_days").eq("active",true).order("amount",{ascending:true}),
+    sb.from("seller_settings").select("*").eq("seller_id",userId).maybeSingle(),
+    analyticsRequest
+  ]);
+}
+function prefetchAccountData(userId){
+  if(!sb||!userId)return;
+  accountDataPrefetchUserId=userId;
+  accountDataPrefetch=fetchAccountData(userId).catch(error=>{console.warn("Account data prefetch failed; it will be loaded when opened.",error);return null});
+}
 let authMode="register";
 function normalizeAccountType(value){return String(value||"").trim().toLowerCase()==="yard"?"yard":"private"}
 function accountType(){
@@ -1203,7 +1222,7 @@ async function loadSession(){
   if(!sb)return;
   const {data:{session}}=await sb.auth.getSession();
   me=session?session.user:null;profile=null;sellerPreferences={};
-  if(me){const {data}=await sb.from("profiles").select("*").eq("id",me.id).maybeSingle();profile=data;await syncAccountType();const prefs=await sb.from("seller_settings").select("*").eq("seller_id",me.id).maybeSingle();if(!prefs.error&&prefs.data)sellerPreferences=prefs.data}
+  if(me){const {data}=await sb.from("profiles").select("*").eq("id",me.id).maybeSingle();profile=data;await syncAccountType();prefetchAccountData(me.id);const prefs=await sb.from("seller_settings").select("*").eq("seller_id",me.id).maybeSingle();if(!prefs.error&&prefs.data)sellerPreferences=prefs.data}else{accountDataPrefetch=null;accountDataPrefetchUserId=null}
   refreshAccountUI();
   if($("sellTypeLabel"))sellMode();
 }
@@ -1402,18 +1421,16 @@ async function openAccount(){
     let status=box.querySelector(".account-refresh-status");
     if(!status){status=document.createElement("p");status.className="meta account-refresh-status";status.setAttribute("role","status");status.textContent="Refreshing account…";box.prepend(status)}
   }
-  // Start analytics as soon as the listings request resolves, while bookings, sales,
-  // promotions and settings are still loading. This removes an extra serial network wait.
-  const listingsRequest=Promise.resolve().then(()=>sb.from("listings").select("*").eq("owner",me.id).order("created_at",{ascending:false}));
-  const analyticsRequest=listingsRequest.then(({data,error})=>error||!data?.length?{data:[],error:null}:sb.from("seller_listing_analytics").select("listing_id,event_type,created_at").in("listing_id",data.map(item=>item.id)));
-  const [l,b,sales,promos,packages,prefs,analyticsResult]=await Promise.all([
-    listingsRequest,
-    sb.from("bookings").select("*").eq("user_id",me.id).order("created_at",{ascending:false}),
-    sb.from("seller_sales").select("listing_id,reported_sale_price,currency,created_at").eq("seller_id",me.id).order("created_at",{ascending:false}),
-    sb.from("listing_promotions").select("id,listing_id,package_name,amount,status,payment_status,starts_at,expires_at,created_at").eq("seller_id",me.id).order("created_at",{ascending:false}),
-    sb.from("promotion_packages").select("id,name,description,amount,duration_days").eq("active",true).order("amount",{ascending:true}),
-    sb.from("seller_settings").select("*").eq("seller_id",me.id).maybeSingle(),
-    analyticsRequest]);
+  // Reuse account data fetched in the background after sign-in. Consume it once;
+  // later opens/refreshes always fetch fresh values.
+  let accountResults=null;
+  if(accountDataPrefetch&&accountDataPrefetchUserId===me.id){
+    const pending=accountDataPrefetch;accountDataPrefetch=null;accountDataPrefetchUserId=null;
+    accountResults=await pending;
+  }
+  if(!accountResults)accountResults=await fetchAccountData(me.id);
+  if(!accountResults){accountResults=await fetchAccountData(me.id)}
+  const [l,b,sales,promos,packages,prefs,analyticsResult]=accountResults;
   if(l.error){box.innerHTML=`<p class="meta" role="alert">We couldn't load your listings: ${esc(l.error.message)}. Please check the marketplace security SQL has been installed.</p><button class="btn ghost" id="accCloseLoadError" type="button">Close</button>`;$("accCloseLoadError").onclick=()=>d.close();return}
   const L=l.data||[],B=b.data||[],S=sales.data||[],PK=packages.data||[],sellerSettings=prefs.data||{},historyClearedAt=sellerSettings.promotion_history_cleared_at?new Date(sellerSettings.promotion_history_cleared_at).getTime():0,PM=(promos.data||[]).filter(p=>!historyClearedAt||new Date(p.created_at||p.starts_at||0).getTime()>historyClearedAt),reminderDays=Number(sellerSettings.repost_reminder_days)||14,reminderCutoff=Date.now()-reminderDays*86400000,reminders=L.filter(x=>x.status==="approved"&&new Date(x.reposted_at||x.updated_at||x.created_at||0).getTime()<=reminderCutoff),label={pending:"Waiting for approval",approved:"Live",rejected:"Not approved",sold:"Sold"},avatar=profileAvatarUrl(),name=profileName(),phone=profilePhone(),isYard=accountType()==="yard",reportedSales=S.reduce((sum,x)=>sum+Number(x.reported_sale_price||0),0),averageReportedSale=S.length?reportedSales/S.length:0,formatStatus=value=>String(value||"pending").replaceAll("_"," ").replace(/^\w/,letter=>letter.toUpperCase());
   const A=analyticsResult.error?[]:(analyticsResult.data||[]),analyticsReady=!analyticsResult.error,totalViews=A.filter(event=>event.event_type==="view").length,totalEnquiries=A.filter(event=>event.event_type==="whatsapp_click").length;
@@ -1821,11 +1838,14 @@ const rowToCar=(r,i)=>({id:r.id,make:String(r.make||"").trim(),model:String(r.mo
   seller:{type:sellerTypeForListing(r),name:r.yard_name||r.seller_name,contact:r.contact||r.yard_contact,location:r.yard_location||r.location,phone:r.seller_phone||r.phone,email:r.seller_email||r.email,web:r.web||r.yard_web,whatsapp:r.whatsapp,logo:r.yard_logo_url||r.seller_logo_url||""}});
 async function loadListings(){
   if(!sb)return;
-  const {data,error}=await sb.from("listings").select("*").eq("status","approved").order("created_at",{ascending:false});
-  if(error){$("grid").innerHTML='<p class="meta">We could not load the cars right now. Please refresh in a moment.</p>';return}
-  const {data:promoRows}=await sb.from("active_listing_promotions").select("listing_id");
-  const promoted=new Set((promoRows||[]).map(x=>String(x.listing_id)));
-  cars=data.map((row,i)=>({...rowToCar(row,i),isPromoted:promoted.has(String(row.id))}));makes();render();
+  // Load inventory and promotion flags together instead of waiting for two network round-trips.
+  const [inventoryResult,promotionResult]=await Promise.all([
+    sb.from("listings").select("*").eq("status","approved").order("created_at",{ascending:false}),
+    sb.from("active_listing_promotions").select("listing_id")
+  ]);
+  if(inventoryResult.error){$("grid").innerHTML='<p class="meta">We could not load the cars right now. Please refresh in a moment.</p>';return}
+  const promoted=new Set((promotionResult.data||[]).map(x=>String(x.listing_id)));
+  cars=(inventoryResult.data||[]).map((row,i)=>({...rowToCar(row,i),isPromoted:promoted.has(String(row.id))}));makes();render();
 }
 // Listings: cascading Make -> Model -> available Variant filters.
 const MODEL_FAMILIES={
@@ -2069,7 +2089,7 @@ $("sBtn").onclick=async()=>{
 
 document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>show(b.dataset.go));
 if(!sb){$("demoBar").hidden=false;makes();render()}
-else{cars=[];$("grid").innerHTML='<p class="meta">Loading cars…</p>';sb.auth.onAuthStateChange((event,session)=>setTimeout(async()=>{await loadSession();if(event==="PASSWORD_RECOVERY")openAuth("recovery");else if(event==="SIGNED_IN"&&session?.user){$("authDlg").close()}},0));loadListings();loadSession()}
+else{cars=[];$("grid").innerHTML='<div class="inventory-loading-grid" role="status" aria-label="Loading vehicle inventory">'+Array.from({length:8},()=>'<div class="inventory-loading-card"><span></span><i></i><i></i></div>').join("")+'</div>';sb.auth.onAuthStateChange((event,session)=>setTimeout(async()=>{await loadSession();if(event==="PASSWORD_RECOVERY")openAuth("recovery");else if(event==="SIGNED_IN"&&session?.user){$("authDlg").close()}},0));loadListings();loadSession()}
 // Honor incoming auth links only for signed-out visitors. Auth fragments otherwise
 // survive reloads and repeatedly reopen the login/register panel for signed-in users.
 const requestedAuthRoute=location.hash==="#login"?"login":location.hash==="#register"?"register":null;
@@ -2274,6 +2294,14 @@ loadSiteSettings();
   }
   header .account-pill button{color:#493a20!important;background:rgba(255,255,255,.9)!important;border-color:rgba(133,105,52,.5)!important}
 }
+</style>
+<style id="instant-page-loading">
+.inventory-loading-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:16px;width:100%}
+.inventory-loading-card{min-width:0;border:1px solid var(--line);border-radius:16px;padding:10px;overflow:hidden;background:var(--panel,rgba(255,255,255,.55))}
+.inventory-loading-card span,.inventory-loading-card i{display:block;border-radius:9px;background:linear-gradient(100deg,rgba(120,120,120,.08) 20%,rgba(120,120,120,.17) 40%,rgba(120,120,120,.08) 60%);background-size:220% 100%;animation:inventory-shimmer 1.35s ease-in-out infinite}
+.inventory-loading-card span{height:145px;margin-bottom:12px}.inventory-loading-card i{height:11px;margin:9px 0;width:78%}.inventory-loading-card i:last-child{width:48%}
+@keyframes inventory-shimmer{to{background-position-x:-220%}}
+@media(prefers-reduced-motion:reduce){.inventory-loading-card span,.inventory-loading-card i{animation:none}}
 </style>
 <style id="seller-listing-photo-editor">
 #sellerEditListingDialog .edit-photo-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;margin:10px 0 18px}
