@@ -1291,8 +1291,8 @@ function profilePhone(){return (profile&&profile.phone)||me?.user_metadata?.phon
 let pendingProfilePhoto=null,pendingRemoveProfilePhoto=false;
 async function saveAccountProfile(){
   const name=$("accName").value.trim(),phone=$("accPhone").value.trim(),type=normalizeAccountType($("accType").value),err=$("accProfileErr"),btn=$("accSaveProfile");
-  if(!name){err.textContent="Please enter your name.";return}
-  btn.disabled=true;err.textContent="Saving…";
+  if(!name){err.style.color="var(--err)";err.textContent="Please enter your name.";return}
+  btn.disabled=true;err.style.color="var(--mute)";err.textContent="Saving profile changes…";
   try{
     const meta={...(me.user_metadata||{}),name,phone,account_type:type};
     const au=await sb.auth.updateUser({data:meta});
@@ -1316,7 +1316,7 @@ async function saveAccountProfile(){
     const avatarBox=document.querySelector("#accDlg .profile-avatar");
     if(avatarBox){const url=profileAvatarUrl();avatarBox.innerHTML=url?'<img src="'+esc(url)+'" alt="Profile picture">':esc(initialsFor(profileName(),me.email))}
     if($("accRemovePhoto")&&!profileAvatarUrl())$("accRemovePhoto").remove();
-  }catch(e){err.textContent=e.message||"Could not save your details."}
+  }catch(e){err.style.color="var(--err)";err.textContent=e.message||"Could not save your details."}
   btn.disabled=false;
 }
 async function removeProfilePhoto(){
@@ -1386,6 +1386,8 @@ accountDialog.addEventListener("cancel",event=>{event.preventDefault();if(histor
 window.addEventListener("popstate",event=>{const state=event.state||{},dialog=$("accDlg");if(state.accountOpen){if(!dialog.open)dialog.showModal();if(state.accountPage)showSellerAccountPage(state.accountPage,null,{updateHistory:false,scroll:false})}else if(dialog.open)dialog.close()});
 async function openAccount(){
   const d=$("accDlg"),box=$("accBody");
+  // Keep the seller on the page they were using when refreshing data; a fresh open still defaults to Settings.
+  const requestedAccountPage=d.open?(history.state?.accountOpen?history.state.accountPage:null):"settings";
   $("accCloseTop").onclick=()=>d.close();
   if(!d.open){d.showModal();history.pushState({...history.state,accountOpen:true,accountPage:"settings"},"",location.href)}
   const hasCachedAccount=!!box.querySelector(".account-pages");
@@ -1501,6 +1503,7 @@ async function openAccount(){
   $("accOut").onclick=async()=>{await sb.auth.signOut();d.close()};
   $("accClose").onclick=()=>d.close();
   if($("accAdmin"))$("accAdmin").onclick=()=>{window.location.href="/admin.html"};
+  showSellerAccountPage(requestedAccountPage||"settings",null,{updateHistory:false,scroll:false});
 }
 function photoStoragePaths(photos){
   const prefix="/storage/v1/object/public/car-photos/";
