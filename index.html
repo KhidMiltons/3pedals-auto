@@ -1417,7 +1417,7 @@ const accountDialog=$("accDlg");
 accountDialog.addEventListener("close",()=>{closeAccountMenu();if(history.state?.accountOpen){const state={...history.state};delete state.accountOpen;delete state.accountPage;history.replaceState(state,"",location.href)}});
 accountDialog.addEventListener("cancel",event=>{event.preventDefault();if(history.state?.accountOpen)history.back();else accountDialog.close()});
 window.addEventListener("popstate",event=>{const state=event.state||{},dialog=$("accDlg");if(state.accountOpen){if(!dialog.open)dialog.showModal();if(state.accountPage)showSellerAccountPage(state.accountPage,null,{updateHistory:false,scroll:false})}else if(dialog.open)dialog.close()});
-async function openAccount(){
+async function openAccount(options={}){
   const d=$("accDlg"),box=$("accBody");
   // Keep the seller on the page they were using when refreshing data; a fresh open still defaults to Settings.
   const requestedAccountPage=d.open?(history.state?.accountOpen?history.state.accountPage:null):"settings";
@@ -1434,6 +1434,12 @@ async function openAccount(){
   }else{
     let status=box.querySelector(".account-refresh-status");
     if(!status){status=document.createElement("p");status.className="meta account-refresh-status";status.setAttribute("role","status");status.textContent="Refreshing account…";box.prepend(status)}
+  }
+  // If this account has already been rendered, show it immediately and refresh quietly.
+  // The refresh path below updates the visible panel when fresh database data arrives.
+  if(hasCachedAccount&&!options.refresh){
+    openAccount({refresh:true}).catch(error=>console.warn("Background account refresh failed:",error));
+    return;
   }
   // Reuse account data fetched in the background after sign-in. Consume it once;
   // later opens/refreshes always fetch fresh values.
