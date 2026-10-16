@@ -1584,7 +1584,7 @@ async function openAccount(options={}){
     const make=$("editListingMake").value.trim(),model=$("editListingModel").value.trim(),year=Number($("editListingYear").value),price=Number($("editListingPrice").value),km=Number($("editListingKm").value||0),whatsapp=normWa($("editListingWhatsapp").value);
     if(!make||!model||!Number.isInteger(year)||year<1885||year>2026||!Number.isFinite(price)||price<=0||!Number.isFinite(km)||km<0||!whatsapp){editMessage.textContent="Check the make, model, year, price, mileage and WhatsApp number.";return}
     const updates={make,model,year,price,km,fuel:$("editListingFuel").value,whatsapp,description:$("editListingDescription").value.trim()};
-    if(originalStatus==="approved")updates.status="pending";
+    if(originalStatus!=="pending")updates.status="pending";
     editSave.disabled=true;editSave.textContent="Saving…";editMessage.textContent="Saving your changes and photos…";
     const uploadedPaths=[];
     try{
@@ -1607,8 +1607,8 @@ async function openAccount(options={}){
       if(!data)throw new Error("No listing was updated. It may have changed or you may not own this listing.");
       const removedPaths=photoStoragePaths((Array.isArray(listing.photos)?listing.photos:[]).filter(url=>!nextPhotos.includes(url)));
       if(removedPaths.length){const removed=await sb.storage.from("car-photos").remove(removedPaths);if(removed.error)console.warn("Listing saved, but removed photo files could not be cleaned up:",removed.error)}
-      listing.photos=nextPhotos;if(originalStatus==="approved")listing.status="pending";
-      editMessage.textContent=originalStatus==="approved"?"Saved. Photos updated; this listing is awaiting review before it goes live again.":"Changes and photos saved.";
+      listing.photos=nextPhotos;if(originalStatus!=="pending")listing.status="pending";
+      editMessage.textContent=originalStatus!=="pending"?"Saved. Changes and photos are awaiting review before this listing goes live again.":"Changes and photos saved.";
       editSave.textContent="Saved";editSave.disabled=false;
       revokeEditPhotoPreviews();editPhotoItems=nextPhotos.map(url=>({url}));renderEditPhotoGallery();
     }catch(error){
