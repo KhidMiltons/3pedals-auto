@@ -1167,12 +1167,15 @@ if(navToggle){navToggle.onclick=()=>{const open=navToggle.getAttribute("aria-exp
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeNav()});
 document.addEventListener("click",e=>{if(navToggle&&innerWidth<=980&&!$("nav").contains(e.target)&&!navToggle.contains(e.target))closeNav()});
 window.addEventListener("resize",()=>{if(innerWidth>980)closeNav()});
+let projectsSectionRequested=false,journalSectionRequested=false;
 function show(t,options={}){
   if(!["home","buy","sell","projects","journal","about","contact"].includes(t))return;
   ["home","buy","sell","projects","journal","about","contact"].forEach(s=>$(s).hidden=s!==t);
   if(t==="sell"&&$("sStockMode"))$("sStockMode").value=sellerPreferences.preferred_stock_mode||"any";
   $("nav").querySelectorAll("button[data-tab]").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===t));
    const hash=t==="home"?"":`#${t}`;if(options.updateUrl!==false&&location.hash!==hash)history.pushState({siteSection:t},"",location.pathname+location.search+hash);
+  if(t==="projects"&&!projectsSectionRequested){projectsSectionRequested=true;loadProjects()}
+  if(t==="journal"&&!journalSectionRequested){journalSectionRequested=true;loadJournal()}
   if(options.scroll!==false)scrollTo(0,0);
 }
  window.addEventListener("popstate",()=>{const section=location.hash.slice(1);if(["","buy","sell","projects","journal","about","contact"].includes(section))show(section||"home",{updateUrl:false,scroll:false})});
@@ -2113,8 +2116,7 @@ if(requestedAuthRoute){
     openAuth(requestedAuthRoute);
   }).catch(error=>console.warn("Could not restore the account session before opening the auth route:",error));
 }
-loadProjects();
-loadJournal();
+// Defer projects and journal requests until a visitor opens those sections.
 loadSiteSettings();
 
 //  automotive quote rail. It refreshes from public quote pages, with a local fallback.
