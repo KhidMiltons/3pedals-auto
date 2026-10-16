@@ -1182,7 +1182,7 @@ function show(t,options={}){
 try{const h=location.hash.replace("#","");if(["buy","sell","projects","journal","about","contact"].includes(h))show(h,{updateUrl:false,scroll:false})}catch(_){}
 
 let accountDataPrefetch=null,accountDataPrefetchUserId=null;
-function fetchAccountData(userId){
+function fetchAccountData(userId,sellerPrefsRequest=null){
   const listingsRequest=Promise.resolve().then(()=>sb.from("listings").select("*").eq("owner",userId).order("created_at",{ascending:false}));
   const analyticsRequest=listingsRequest.then(({data,error})=>error||!data?.length?{data:[],error:null}:sb.from("seller_listing_analytics").select("listing_id,event_type,created_at").in("listing_id",data.map(item=>item.id)));
   return Promise.all([
@@ -1191,14 +1191,14 @@ function fetchAccountData(userId){
     sb.from("seller_sales").select("listing_id,reported_sale_price,currency,created_at").eq("seller_id",userId).order("created_at",{ascending:false}),
     sb.from("listing_promotions").select("id,listing_id,package_name,amount,status,payment_status,starts_at,expires_at,created_at").eq("seller_id",userId).order("created_at",{ascending:false}),
     sb.from("promotion_packages").select("id,name,description,amount,duration_days").eq("active",true).order("amount",{ascending:true}),
-    sb.from("seller_settings").select("*").eq("seller_id",userId).maybeSingle(),
+    sellerPrefsRequest||sb.from("seller_settings").select("*").eq("seller_id",userId).maybeSingle(),
     analyticsRequest
   ]);
 }
-function prefetchAccountData(userId){
+function prefetchAccountData(userId,sellerPrefsRequest=null){
   if(!sb||!userId)return;
   accountDataPrefetchUserId=userId;
-  accountDataPrefetch=fetchAccountData(userId).catch(error=>{console.warn("Account data prefetch failed; it will be loaded when opened.",error);return null});
+  accountDataPrefetch=fetchAccountData(userId,sellerPrefsRequest).catch(error=>{console.warn("Account data prefetch failed; it will be loaded when opened.",error);return null});
 }
 let authMode="register";
 function normalizeAccountType(value){return String(value||"").trim().toLowerCase()==="yard"?"yard":"private"}
@@ -1226,11 +1226,13 @@ async function loadSession(){
   const {data:{session}}=await sb.auth.getSession();
   me=session?session.user:null;profile=null;sellerPreferences={};
   if(me){
-    // Begin warming the dashboard cache immediately; don't make it wait for profile/settings reads.
-    prefetchAccountData(me.id);
+    // Share the seller-settings request between sign-in initialization and dashboard prefetch.
+    // This avoids asking Supabase for the same settings row twice during account startup.
+    const sellerPrefsRequest=sb.from("seller_settings").select("*").eq("seller_id",me.id).maybeSingle();
+    prefetchAccountData(me.id,sellerPrefsRequest);
     const [profileResult,prefsResult]=await Promise.all([
       sb.from("profiles").select("*").eq("id",me.id).maybeSingle(),
-      sb.from("seller_settings").select("*").eq("seller_id",me.id).maybeSingle()
+      sellerPrefsRequest
     ]);
     profile=profileResult.data||null;
     if(!prefsResult.error&&prefsResult.data)sellerPreferences=prefsResult.data;
