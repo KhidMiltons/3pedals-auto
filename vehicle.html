@@ -236,8 +236,8 @@ document.addEventListener('click', function(event) {
   if (/wa\.me|api\.whatsapp\.com|whatsapp\.com/i.test(href)) {
     window.track3PedalsEvent('whatsapp_click', {link_url: href, link_text: (link.innerText || link.getAttribute('aria-label') || 'WhatsApp').trim().slice(0, 100)});
     const listingId=window.__listing&&window.__listing.id;
-    if(listingId&&window.supabase&&window.SB_CONFIG&&window.SB_CONFIG.url&&window.SB_CONFIG.anonKey){
-      const analyticsClient=window.supabase.createClient(window.SB_CONFIG.url,window.SB_CONFIG.anonKey);
+    if(listingId&&window.supabase&&window.SB_CONFIG&&window.SB_CONFIG.url&&window.SB_CONFIG.key){
+      const analyticsClient=window.supabase.createClient(window.SB_CONFIG.url,window.SB_CONFIG.key);
       analyticsClient.from('seller_listing_analytics').insert({listing_id:listingId,event_type:'whatsapp_click'}).then(({error})=>{if(error)console.debug('Seller enquiry analytics unavailable')});
     }
   }
