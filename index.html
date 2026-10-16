@@ -1527,7 +1527,35 @@ async function openAccount(options={}){
     const listing_id=$("promoListing").value,package_id=$("promoPackage").value,phone_number=$("promoPhone").value.trim(),msg=$("promotionMessage"),button=$("startPromotion");
     if(!listing_id||!package_id||!phone_number){msg.textContent="Choose a live vehicle and package, then enter your M-Pesa number.";return}
     button.disabled=true;msg.textContent="Requesting M-Pesa payment prompt…";
-    try{const {data,error}=await sb.functions.invoke("create-promotion-payment",{body:{listing_id,package_id,phone_number}});if(error)throw error;msg.textContent=data?.message||"Check your phone and approve the M-Pesa prompt. Waiting for secure confirmation…";if(data?.promotion_id){for(let i=0;i<12;i++){await new Promise(resolve=>setTimeout(resolve,5000));const {data:state}=await sb.from("listing_promotions").select("status,payment_status").eq("id",data.promotion_id).maybeSingle();if(state?.payment_status==="verified"||state?.payment_status==="failed"){openAccount();return}}msg.textContent="Payment is still awaiting confirmation. You can close this dashboard and check the promotion history again shortly."}}catch(e){msg.textContent=e.message||"Could not start M-Pesa payment. Please try again."}finally{button.disabled=false}
+    try{
+      const {data,error}=await sb.functions.invoke("create-promotion-payment",{body:{listing_id,package_id,phone_number}});
+      if(error)throw error;
+      msg.textContent=data?.message||"Check your phone and approve the M-Pesa prompt. Waiting for secure confirmation…";
+      if(!data?.promotion_id){
+        msg.textContent=data?.message||"The payment request was sent, but no tracking reference was returned. Check Promotion History before trying again.";
+        return;
+      }
+      let lastPollError=null;
+      for(let i=0;i<12;i++){
+        await new Promise(resolve=>setTimeout(resolve,5000));
+        const {data:state,error:pollError}=await sb.from("listing_promotions").select("status,payment_status").eq("id",data.promotion_id).maybeSingle();
+        if(pollError){lastPollError=pollError;continue}
+        if(state?.payment_status==="verified"){
+          msg.textContent="Payment confirmed. Refreshing your promotion status…";
+          await openAccount({refresh:true});
+          return;
+        }
+        if(state?.payment_status==="failed"){
+          msg.textContent="M-Pesa payment failed or was cancelled. Check the number and try again only after confirming no payment was deducted.";
+          await openAccount({refresh:true});
+          return;
+        }
+      }
+      msg.textContent=lastPollError
+        ?"Your payment prompt was sent, but its status could not be checked. Check Promotion History before retrying."
+        :"Payment is still awaiting confirmation. You can close this dashboard and check Promotion History again shortly.";
+    }catch(e){msg.textContent=e.message||"Could not start M-Pesa payment. Please try again."}
+    finally{button.disabled=false}
   });
   const listingSearch=$("sellerListingSearch"),listingStatus=$("sellerListingStatus"),listingCount=$("sellerListingCount");
   const filterSellerListings=()=>{const query=(listingSearch?.value||"").trim().toLowerCase(),status=listingStatus?.value||"";let shown=0;const rows=box.querySelectorAll("[data-seller-listing]");rows.forEach(row=>{const matches=(!query||(row.dataset.listingSearch||"").includes(query))&&(!status||row.dataset.listingStatus===status);row.hidden=!matches;if(matches)shown++});if(listingCount)listingCount.textContent=`Showing ${shown} of ${rows.length} listings`;};
