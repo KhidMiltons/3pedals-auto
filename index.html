@@ -1042,7 +1042,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <dialog id="journalPhotoViewer" class="journal-photo-viewer" aria-label="Journal photo viewer"><button type="button" class="journal-photo-close" id="journalPhotoClose" aria-label="Close photo viewer">×</button><span class="journal-photo-count" id="journalViewerCount"></span><button type="button" class="journal-photo-step journal-photo-prev" id="journalViewerPrev" aria-label="Previous photo">‹</button><figure><img id="journalViewerImage" alt=""><figcaption id="journalViewerCaption"></figcaption></figure><button type="button" class="journal-photo-step journal-photo-next" id="journalViewerNext" aria-label="Next photo">›</button></dialog>
 <dialog id="authDlg" class="authbox"><div class="in"><button class="auth-close" id="authCloseTop" type="button" aria-label="Close sign in or sign up">×</button><div class="auth-brand"><span class="auth-brand-mark" aria-hidden="true"><img src="favicon.svg" alt=""></span><span>3 Pedals Auto KE</span></div><h2 id="authTitle">Create your account</h2><p class="meta auth-intro" id="authIntro">One account for buying and selling with 3 Pedals Auto KE.</p><div class="auth-fields"><details class="auth-optional" id="authProfileDetails"><summary>Profile details <span class="meta">(optional)</span></summary><div class="auth-optional-inner"><div id="authNameField"><label for="authName">Your name</label><input id="authName" autocomplete="name"></div><div id="authPhoneField"><label for="authPhone">Phone number</label><input id="authPhone" type="tel" autocomplete="tel"></div><fieldset class="seg" id="authTypeWrap"><legend>Account type</legend><label><input type="radio" name="accountType" value="private" checked> Private Seller</label><label><input type="radio" name="accountType" value="yard"> Organization / dealership</label></fieldset><p id="authTypeHint" class="meta">Private seller accounts are for individuals selling their own vehicles.</p></div></details><div id="authSellerUrlWrap" hidden><label for="authSellerSlug">Your 3 Pedals Auto URL</label><input id="authSellerSlug" autocomplete="off" autocapitalize="none" spellcheck="false"><small class="meta">Lowercase letters, numbers, and hyphens only. Suggested from your name; you can edit it.</small><p class="meta" id="authSellerUrlPreview" aria-live="polite"></p></div><div id="authEmailField"><label for="authEmail">Email</label><input id="authEmail" type="email" autocomplete="email"></div><div id="authPasswordField"><label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="new-password"></div><div id="authConfirmField"><label for="authConfirmPassword">Confirm password</label><input id="authConfirmPassword" type="password" autocomplete="new-password"><small class="meta">At least 8 characters.</small></div><button class="auth-forgot" id="authForgot" type="button" hidden>Forgot password?</button></div><p id="authErr" class="meta" style="color:var(--err)" role="status" aria-live="polite"></p><div class="auth-actions"><button class="btn" id="authSubmit">Create account</button></div><div class="auth-divider" id="authDivider" aria-hidden="true">or</div><button class="btn google-btn" id="authGoogle" type="button"><span class="google-mark" aria-hidden="true">G</span> Continue with Google</button><p class="auth-legal meta" id="authLegal">By continuing, you agree to use 3 Pedals Auto KE responsibly.</p><p class="switch" id="authSwitchRow"><span id="authSwitchText">Already have an account?</span> <button id="authSwitch" type="button">Log in</button></p><button class="auth-back" id="authCloseBack" type="button">‹ Back to marketplace</button></div></dialog>
 <dialog id="adminDlg" class="authbox wide"><div class="in"><h2>Admin panel</h2><div id="adminPanel"></div><div class="acts" style="margin-top:16px"><button class="btn ghost" id="adminClose">Close</button></div></div></dialog>
-<dialog id="accDlg" class="authbox wide"><div class="in"><div class="account-dialog-head"><button id="accMenuToggle" type="button" aria-label="Open account menu" aria-expanded="false" aria-controls="accountMenu" onpointerup="window.toggleAccountMenu(event)" onclick="window.toggleAccountMenu(event)">☰</button><h2 class="account-brand-title"><img src="favicon.svg" alt="" class="account-brand-icon"><span>3 Pedals Auto KE</span></h2><button id="accCloseTop" type="button" aria-label="Close account">×</button></div><div id="accBody"></div></div><nav id="accountMenu" class="dashboard-shortcuts" aria-label="Account menu" hidden><div class="seller-nav-identity"><small>SELLER ACCOUNT</small><strong>Seller</strong></div><div class="seller-mode-switch"><button type="button" data-buying>Buying</button><button type="button" class="selected" aria-current="page">Selling</button></div><div class="seller-nav-label">WORKSPACE</div><button type="button" class="active" data-page="dashboard">Analytics</button><button type="button" data-seller-signup>＋ Create seller account</button><button type="button" data-page="listings">Stock</button><button type="button" data-page="promotions">Marketing</button><button type="button" data-page="bookings">Bookings</button><div class="seller-nav-label">ACCOUNT</div><button type="button" data-page="settings">Settings</button><button type="button" data-signout>Log out</button></nav></dialog>
+<dialog id="accDlg" class="authbox wide"><div class="in"><div class="account-dialog-head"><button id="accMenuToggle" type="button" aria-label="Open account menu" aria-expanded="false" aria-controls="accountMenu" onpointerup="window.toggleAccountMenu(event)" onclick="window.toggleAccountMenu(event)">☰</button><h2 class="account-brand-title"><img src="favicon.svg" alt="" class="account-brand-icon"><span>3 Pedals Auto KE</span></h2><button id="accCloseTop" type="button" aria-label="Close account">×</button></div><div id="accBody"></div></div><nav id="accountMenu" class="dashboard-shortcuts" aria-label="Account menu" hidden><div class="seller-nav-identity"><small>SELLER ACCOUNT</small><strong>Seller</strong></div><div class="seller-mode-switch"><button type="button" data-buying>Buying</button><button type="button" class="selected" aria-current="page">Selling</button></div><div class="seller-nav-label">WORKSPACE</div><button type="button" data-page="dashboard">Analytics</button><button type="button" data-seller-signup>＋ Create seller account</button><button type="button" data-page="listings">Stock</button><button type="button" data-page="promotions">Marketing</button><button type="button" data-page="bookings">Bookings</button><div class="seller-nav-label">ACCOUNT</div><button type="button" class="active" data-page="settings">Settings</button><button type="button" data-signout>Log out</button></nav></dialog>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
@@ -1221,6 +1221,7 @@ function initialsFor(name,email){const x=String(name||email||"?").trim().split(/
 function profileAvatarUrl(){return (profile&&profile.avatar_url)||me?.user_metadata?.avatar_url||""}
 function profileName(){return (profile&&profile.name)||me?.user_metadata?.name||me?.user_metadata?.full_name||""}
 function profilePhone(){return (profile&&profile.phone)||me?.user_metadata?.phone||""}
+let pendingProfilePhoto=null,pendingRemoveProfilePhoto=false;
 async function saveAccountProfile(){
   const name=$("accName").value.trim(),phone=$("accPhone").value.trim(),type=normalizeAccountType($("accType").value),err=$("accProfileErr"),btn=$("accSaveProfile");
   if(!name){err.textContent="Please enter your name.";return}
@@ -1234,21 +1235,29 @@ async function saveAccountProfile(){
     const lu=await sb.from("listings").update({seller_type:type,...(type==="yard"?{yard_logo_url:profileAvatarUrl()||null}:{})}).eq("owner",me.id);
     if(lu.error)console.warn("Listing seller type update failed; account type was saved.",lu.error);
     me=au.data.user||me;profile={...(profile||{}),name,phone,account_type:type};
-    refreshAccountUI();err.textContent="Account details and seller type saved.";
-    setTimeout(()=>openAccount(),350);
+    if(pendingRemoveProfilePhoto){
+      const cleared=await sb.auth.updateUser({data:{...(me.user_metadata||{}),avatar_url:null}});if(cleared.error)throw cleared.error;
+      const pc=await sb.from("profiles").update({avatar_url:null}).eq("id",me.id);if(pc.error)console.warn("Could not clear profiles avatar.",pc.error);
+      await sb.from("listings").update({yard_logo_url:null}).eq("owner",me.id);
+      me=cleared.data.user||me;profile={...(profile||{}),avatar_url:null};pendingRemoveProfilePhoto=false;
+    }else if(pendingProfilePhoto){
+      const saved=await changeProfilePhoto(pendingProfilePhoto);
+      if(!saved)throw new Error("Your details were saved, but the picture could not be saved. Please try again.");
+      pendingProfilePhoto=null;
+    }
+    refreshAccountUI();err.textContent="Changes saved. You are still in Account Settings.";
+    const avatarBox=document.querySelector("#accDlg .profile-avatar");
+    if(avatarBox){const url=profileAvatarUrl();avatarBox.innerHTML=url?'<img src="'+esc(url)+'" alt="Profile picture">':esc(initialsFor(profileName(),me.email))}
+    if($("accRemovePhoto")&&!profileAvatarUrl())$("accRemovePhoto").remove();
   }catch(e){err.textContent=e.message||"Could not save your details."}
   btn.disabled=false;
 }
 async function removeProfilePhoto(){
-  const err=$("accProfileErr"),btn=$("accRemovePhoto");if(!profileAvatarUrl())return;
-  btn.disabled=true;err.textContent="Removing profile picture…";
-  try{
-    const au=await sb.auth.updateUser({data:{...(me.user_metadata||{}),avatar_url:null}});if(au.error)throw au.error;
-    const pu=await sb.from("profiles").update({avatar_url:null}).eq("id",me.id);
-    if(pu.error)console.warn("Profile picture was removed from account metadata; profiles.avatar_url may not be writable.",pu.error);
-    await sb.from("listings").update({yard_logo_url:null}).eq("owner",me.id);
-    me=au.data.user||me;profile={...(profile||{}),avatar_url:null};refreshAccountUI();openAccount();
-  }catch(e){err.textContent=e.message||"Could not remove the profile picture.";btn.disabled=false}
+  if(!profileAvatarUrl())return;
+  pendingRemoveProfilePhoto=true;pendingProfilePhoto=null;
+  const err=$("accProfileErr");if(err)err.textContent="Picture removal selected. Click “Save profile changes” to confirm.";
+  const avatarBox=document.querySelector("#accDlg .profile-avatar");
+  if(avatarBox)avatarBox.innerHTML=esc(initialsFor(profileName(),me?.email));
 }
 async function updateAccountEmail(){
   const email=$("accEmail").value.trim().toLowerCase(),err=$("accProfileErr"),btn=$("accUpdateEmail");
@@ -1272,21 +1281,18 @@ async function permanentlyDeleteAccount(){
   catch(e){err.textContent=e.message||"Could not delete the account. Confirm the account deletion SQL has been installed.";btn.disabled=false}
 }
 async function changeProfilePhoto(file){
-  const err=$("accProfileErr");if(!file)return;
-  if(!file.type.startsWith("image/")||file.size>10*1024*1024){err.textContent="Choose an image under 10 MB.";return}
-  err.textContent="Uploading profile picture…";
+  const err=$("accProfileErr");if(!file)return false;
+  if(!file.type.startsWith("image/")||file.size>10*1024*1024){err.textContent="Choose an image under 10 MB.";return false}
+  err.textContent="Saving profile picture…";
   try{
     const x=await shrink(file),blob=await (await fetch(x)).blob(),path=`${me.id}/profile-${Date.now()}.jpg`;
-    const up=await sb.storage.from("car-photos").upload(path,blob,{contentType:"image/jpeg"});
-    if(up.error)throw up.error;
+    const up=await sb.storage.from("car-photos").upload(path,blob,{contentType:"image/jpeg"});if(up.error)throw up.error;
     const url=sb.storage.from("car-photos").getPublicUrl(path).data.publicUrl;
-    const au=await sb.auth.updateUser({data:{...(me.user_metadata||{}),avatar_url:url}});
-    if(au.error)throw au.error;
-    const pu=await sb.from("profiles").update({avatar_url:url}).eq("id",me.id);
-    if(pu.error)console.warn("Avatar saved to account metadata; profiles.avatar_url may not exist yet.",pu.error);
+    const au=await sb.auth.updateUser({data:{...(me.user_metadata||{}),avatar_url:url}});if(au.error)throw au.error;
+    const pu=await sb.from("profiles").update({avatar_url:url}).eq("id",me.id);if(pu.error)console.warn("Avatar saved to account metadata; profiles.avatar_url may not exist yet.",pu.error);
     await sb.from("listings").update({yard_logo_url:url}).eq("owner",me.id);
-    me=au.data.user||me;profile={...(profile||{}),avatar_url:url};refreshAccountUI();err.textContent="Profile picture updated. Dealer listings now use this image as the yard logo.";openAccount();
-  }catch(e){err.textContent=e.message||"Could not upload that profile picture."}
+    me=au.data.user||me;profile={...(profile||{}),avatar_url:url};return true;
+  }catch(e){err.textContent=e.message||"Could not upload that profile picture.";return false}
 }
 function positionAccountMenu(){const nav=$("accountMenu"),toggle=$("accMenuToggle"),dialog=$("accDlg");if(!nav||!toggle||!dialog||nav.hidden||!nav.classList.contains("menu-open"))return;const d=dialog.getBoundingClientRect(),b=toggle.getBoundingClientRect(),pad=12,width=Math.min(320,d.width-pad*2),left=Math.max(pad,Math.min(b.left-d.left,d.width-width-pad)),top=b.bottom+8,available=Math.max(180,Math.min(window.innerHeight*.72,window.innerHeight-b.bottom-24));nav.style.setProperty("position","fixed","important");nav.style.setProperty("inset","auto","important");nav.style.setProperty("left",`${left+d.left}px`,`important`);nav.style.setProperty("top",`${top}px`,`important`);nav.style.setProperty("width",`${width}px`,`important`);nav.style.setProperty("max-height",`${available}px`,`important`);nav.style.setProperty("z-index","1000","important")}
 function clearAccountMenuPosition(nav){["display","position","inset","left","top","width","max-height","z-index"].forEach(property=>nav.style.removeProperty(property))}
@@ -1314,7 +1320,7 @@ window.addEventListener("popstate",event=>{const state=event.state||{},dialog=$(
 async function openAccount(){
   const d=$("accDlg"),box=$("accBody");
   $("accCloseTop").onclick=()=>d.close();
-  if(!d.open){d.showModal();history.pushState({...history.state,accountOpen:true,accountPage:"dashboard"},"",location.href)}
+  if(!d.open){d.showModal();history.pushState({...history.state,accountOpen:true,accountPage:"settings"},"",location.href)}
   box.innerHTML='<p class="meta">Loading…</p>';
   const [l,b,sales,promos,packages,prefs]=await Promise.all([
     sb.from("listings").select("*").eq("owner",me.id).order("created_at",{ascending:false}),
@@ -1370,12 +1376,12 @@ async function openAccount(){
     const dashboardPage=makePage("dashboard"),bookingsPage=makePage("bookings");dashboardPage.append(summary,listings,promotions);
     if(bookingAction)bookingsPage.append(bookingAction);if(bookingHeading)bookingsPage.append(bookingHeading);
     let bookingNode=bookingHeading?.nextElementSibling;while(bookingNode&&!bookingNode.querySelector("#accOut")){const next=bookingNode.nextElementSibling;bookingsPage.append(bookingNode);bookingNode=next}
-    const pages=document.createElement("div");pages.className="account-pages";pages.append(overview,dashboardPage,settings,bookingsPage);overview.hidden=true;dashboardPage.hidden=false;
+    const pages=document.createElement("div");pages.className="account-pages";pages.append(overview,dashboardPage,settings,bookingsPage);overview.hidden=true;dashboardPage.hidden=true;settings.hidden=false;
     closeAccountMenu();menu.innerHTML=`<div class="seller-nav-identity"><small>SELLER ACCOUNT</small><strong class="seller-nav-brand"><img src="favicon.svg" alt="">${esc(name||me.email||"Seller")}</strong><span>${esc(me.email||"")}</span></div><div class="seller-mode-switch"><button type="button" data-buying>Buying</button><button type="button" class="selected" aria-current="page">Selling</button></div><div class="seller-nav-label">WORKSPACE</div><button type="button" class="active" data-page="dashboard">Analytics</button><button type="button" data-seller-signup>＋ Create seller account</button><button type="button" data-page="listings">Stock</button><button type="button" data-page="promotions">Marketing${reminders.length?` · ${reminders.length} due`:""}</button><button type="button" data-page="bookings">Bookings</button><div class="seller-nav-label">ACCOUNT</div><button type="button" data-page="settings">Settings</button><button type="button" data-signout>Log out</button>`;menu.hidden=true;$('accDlg').classList.remove('nav-collapsed');
     dashboard.remove();box.insertBefore(pages,box.firstChild);
     pages.querySelector("[data-open-marketing]")?.addEventListener("click",()=>menu.querySelector('[data-page="promotions"]')?.click());
     menu.querySelector("[data-seller-signup]").onclick=()=>{$("accDlg").close();closeAccountMenu();sellerSlugEdited=false;$("authName").value=profile?.name||me?.user_metadata?.name||me?.user_metadata?.full_name||"";$("authSellerSlug").value="";openAuth("register","",{seller:true})};menu.querySelector("[data-buying]").onclick=()=>{$("accDlg").close();show("buy")};menu.querySelector("[data-signout]").onclick=()=>$("accOut").click();
-  }  $("accPhoto").onchange=e=>changeProfilePhoto(e.target.files[0]);
+  }  $("accPhoto").onchange=e=>{pendingProfilePhoto=e.target.files?.[0]||null;pendingRemoveProfilePhoto=false;if(pendingProfilePhoto){const err=$("accProfileErr");if(err)err.textContent="Picture selected. Click “Save profile changes” to upload it."}};
   if($("accRemovePhoto"))$("accRemovePhoto").onclick=removeProfilePhoto;
   $("accSaveProfile").onclick=saveAccountProfile;
   $("accUpdateEmail").onclick=updateAccountEmail;
