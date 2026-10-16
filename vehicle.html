@@ -218,7 +218,7 @@ async function load(){
   if(!id){app.innerHTML='<h2>Vehicle not specified</h2><p>Please return to the Buy section and select a vehicle.</p><a class="btn gold" href="/inventory">Browse cars</a>';return}
   if(!sb){app.innerHTML='<h2>Vehicle details unavailable</h2><p class="desc">The live vehicle database is not connected. Please try again later.</p><a class="btn gold" href="/inventory">Browse cars</a>';return}
   try{
-    const request=sb.from('listings').select('*').eq('id',id).eq('status','approved').maybeSingle();
+    const request=sb.from('listings').select('*').eq('id',id).maybeSingle();
     const timeout=new Promise((_,reject)=>setTimeout(()=>reject(new Error('Vehicle request timed out')),15000));
     const {data:r,error}=await Promise.race([request,timeout]);
     if(error){console.error('Vehicle lookup failed:',error);app.innerHTML='<h2>Could not load this vehicle</h2><p class="desc">The vehicle details could not be retrieved. Please refresh the page or return to Buy Car and try again.</p><a class="btn gold" href="/inventory">Browse available cars</a>';return}
