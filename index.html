@@ -1402,16 +1402,20 @@ async function openAccount(){
     let status=box.querySelector(".account-refresh-status");
     if(!status){status=document.createElement("p");status.className="meta account-refresh-status";status.setAttribute("role","status");status.textContent="Refreshing account…";box.prepend(status)}
   }
-  const [l,b,sales,promos,packages,prefs]=await Promise.all([
-    sb.from("listings").select("*").eq("owner",me.id).order("created_at",{ascending:false}),
+  // Start analytics as soon as the listings request resolves, while bookings, sales,
+  // promotions and settings are still loading. This removes an extra serial network wait.
+  const listingsRequest=Promise.resolve().then(()=>sb.from("listings").select("*").eq("owner",me.id).order("created_at",{ascending:false}));
+  const analyticsRequest=listingsRequest.then(({data,error})=>error||!data?.length?{data:[],error:null}:sb.from("seller_listing_analytics").select("listing_id,event_type,created_at").in("listing_id",data.map(item=>item.id)));
+  const [l,b,sales,promos,packages,prefs,analyticsResult]=await Promise.all([
+    listingsRequest,
     sb.from("bookings").select("*").eq("user_id",me.id).order("created_at",{ascending:false}),
     sb.from("seller_sales").select("listing_id,reported_sale_price,currency,created_at").eq("seller_id",me.id).order("created_at",{ascending:false}),
     sb.from("listing_promotions").select("id,listing_id,package_name,amount,status,payment_status,starts_at,expires_at,created_at").eq("seller_id",me.id).order("created_at",{ascending:false}),
     sb.from("promotion_packages").select("id,name,description,amount,duration_days").eq("active",true).order("amount",{ascending:true}),
-    sb.from("seller_settings").select("*").eq("seller_id",me.id).maybeSingle()]);
+    sb.from("seller_settings").select("*").eq("seller_id",me.id).maybeSingle(),
+    analyticsRequest]);
   if(l.error){box.innerHTML=`<p class="meta" role="alert">We couldn't load your listings: ${esc(l.error.message)}. Please check the marketplace security SQL has been installed.</p><button class="btn ghost" id="accCloseLoadError" type="button">Close</button>`;$("accCloseLoadError").onclick=()=>d.close();return}
   const L=l.data||[],B=b.data||[],S=sales.data||[],PK=packages.data||[],sellerSettings=prefs.data||{},historyClearedAt=sellerSettings.promotion_history_cleared_at?new Date(sellerSettings.promotion_history_cleared_at).getTime():0,PM=(promos.data||[]).filter(p=>!historyClearedAt||new Date(p.created_at||p.starts_at||0).getTime()>historyClearedAt),reminderDays=Number(sellerSettings.repost_reminder_days)||14,reminderCutoff=Date.now()-reminderDays*86400000,reminders=L.filter(x=>x.status==="approved"&&new Date(x.reposted_at||x.updated_at||x.created_at||0).getTime()<=reminderCutoff),label={pending:"Waiting for approval",approved:"Live",rejected:"Not approved",sold:"Sold"},avatar=profileAvatarUrl(),name=profileName(),phone=profilePhone(),isYard=accountType()==="yard",reportedSales=S.reduce((sum,x)=>sum+Number(x.reported_sale_price||0),0),averageReportedSale=S.length?reportedSales/S.length:0,formatStatus=value=>String(value||"pending").replaceAll("_"," ").replace(/^\w/,letter=>letter.toUpperCase());
-  const analyticsResult=L.length?await sb.from("seller_listing_analytics").select("listing_id,event_type,created_at").in("listing_id",L.map(item=>item.id)):{data:[],error:null};
   const A=analyticsResult.error?[]:(analyticsResult.data||[]),analyticsReady=!analyticsResult.error,totalViews=A.filter(event=>event.event_type==="view").length,totalEnquiries=A.filter(event=>event.event_type==="whatsapp_click").length;
   box.innerHTML=`<div class="profile-card">
     <div class="profile-avatar">${avatar?`<img src="${esc(avatar)}" alt="Profile picture">`:esc(initialsFor(name,me.email))}</div>
