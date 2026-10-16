@@ -1541,13 +1541,17 @@ async function openAccount(options={}){
         const {data:state,error:pollError}=await sb.from("listing_promotions").select("status,payment_status").eq("id",data.promotion_id).maybeSingle();
         if(pollError){lastPollError=pollError;continue}
         if(state?.payment_status==="verified"){
-          msg.textContent="Payment confirmed. Refreshing your promotion status…";
+          const finalMessage="Payment confirmed. Your promotion history has been refreshed.";
           await openAccount({refresh:true});
+          const refreshedMessage=$("promotionMessage");
+          if(refreshedMessage)refreshedMessage.textContent=finalMessage;
           return;
         }
         if(state?.payment_status==="failed"){
-          msg.textContent="M-Pesa payment failed or was cancelled. Check the number and try again only after confirming no payment was deducted.";
+          const finalMessage="M-Pesa payment failed or was cancelled. Check the number and try again only after confirming no payment was deducted.";
           await openAccount({refresh:true});
+          const refreshedMessage=$("promotionMessage");
+          if(refreshedMessage)refreshedMessage.textContent=finalMessage;
           return;
         }
       }
