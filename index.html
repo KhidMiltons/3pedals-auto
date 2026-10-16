@@ -1222,7 +1222,18 @@ async function loadSession(){
   if(!sb)return;
   const {data:{session}}=await sb.auth.getSession();
   me=session?session.user:null;profile=null;sellerPreferences={};
-  if(me){const {data}=await sb.from("profiles").select("*").eq("id",me.id).maybeSingle();profile=data;await syncAccountType();prefetchAccountData(me.id);const prefs=await sb.from("seller_settings").select("*").eq("seller_id",me.id).maybeSingle();if(!prefs.error&&prefs.data)sellerPreferences=prefs.data}else{accountDataPrefetch=null;accountDataPrefetchUserId=null}
+  if(me){
+    // Begin warming the dashboard cache immediately; don't make it wait for profile/settings reads.
+    prefetchAccountData(me.id);
+    const [profileResult,prefsResult]=await Promise.all([
+      sb.from("profiles").select("*").eq("id",me.id).maybeSingle(),
+      sb.from("seller_settings").select("*").eq("seller_id",me.id).maybeSingle()
+    ]);
+    profile=profileResult.data||null;
+    if(!prefsResult.error&&prefsResult.data)sellerPreferences=prefsResult.data;
+    // Keep profile-type synchronization from holding up the signed-in UI.
+    syncAccountType().catch(error=>console.warn("Account type sync failed:",error));
+  }else{accountDataPrefetch=null;accountDataPrefetchUserId=null}
   refreshAccountUI();
   if($("sellTypeLabel"))sellMode();
 }
@@ -1838,14 +1849,17 @@ const rowToCar=(r,i)=>({id:r.id,make:String(r.make||"").trim(),model:String(r.mo
   seller:{type:sellerTypeForListing(r),name:r.yard_name||r.seller_name,contact:r.contact||r.yard_contact,location:r.yard_location||r.location,phone:r.seller_phone||r.phone,email:r.seller_email||r.email,web:r.web||r.yard_web,whatsapp:r.whatsapp,logo:r.yard_logo_url||r.seller_logo_url||""}});
 async function loadListings(){
   if(!sb)return;
-  // Load inventory and promotion flags together instead of waiting for two network round-trips.
-  const [inventoryResult,promotionResult]=await Promise.all([
-    sb.from("listings").select("*").eq("status","approved").order("created_at",{ascending:false}),
-    sb.from("active_listing_promotions").select("listing_id")
-  ]);
+  // Render the core inventory immediately when it arrives; promotion flags enhance it in the background.
+  const inventoryResult=await sb.from("listings").select("*").eq("status","approved").order("created_at",{ascending:false});
   if(inventoryResult.error){$("grid").innerHTML='<p class="meta">We could not load the cars right now. Please refresh in a moment.</p>';return}
-  const promoted=new Set((promotionResult.data||[]).map(x=>String(x.listing_id)));
-  cars=(inventoryResult.data||[]).map((row,i)=>({...rowToCar(row,i),isPromoted:promoted.has(String(row.id))}));makes();render();
+  cars=(inventoryResult.data||[]).map((row,i)=>({...rowToCar(row,i),isPromoted:false}));
+  makes();render();
+  sb.from("active_listing_promotions").select("listing_id").then(({data,error})=>{
+    if(error){console.warn("Could not load promotion badges; inventory remains available.",error);return}
+    const promoted=new Set((data||[]).map(x=>String(x.listing_id)));
+    cars=cars.map(car=>({...car,isPromoted:promoted.has(String(car.id))}));
+    render();
+  }).catch(error=>console.warn("Promotion badge request failed; inventory remains available.",error));
 }
 // Listings: cascading Make -> Model -> available Variant filters.
 const MODEL_FAMILIES={
