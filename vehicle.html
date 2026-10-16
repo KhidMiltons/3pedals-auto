@@ -166,7 +166,7 @@ async function share(){
   await copyVehicleLink();
 }
 function sellerNameForMessage(r){return String(r.yard_name||r.seller_name||"the seller").trim()||"the seller"}
-function render(r){ window.__listing=r; window.track3PedalsEvent("view_item",{currency:"KES",value:Number(r.price||0),item_id:String(r.id||""),item_name:vehicleTitle(r),item_category:"vehicle",make:r.make||"",model:r.model||"",year:Number(r.year||0),items:[{item_id:String(r.id||""),item_name:vehicleTitle(r),item_category:"vehicle",price:Number(r.price||0),quantity:1}]}); updateVehicleSeo(r); if(sb&&r.id)sb.from("seller_listing_analytics").insert({listing_id:r.id,event_type:"view"}).then(({error})=>{if(error)console.debug("Seller view analytics unavailable")}); const photos=Array.isArray(r.photos)?r.photos.filter(Boolean):[];
+function render(r){ window.__listing=r; if(window.track3PedalsEvent)window.track3PedalsEvent("view_item",{currency:"KES",value:Number(r.price||0),item_id:String(r.id||""),item_name:vehicleTitle(r),item_category:"vehicle",make:r.make||"",model:r.model||"",year:Number(r.year||0),items:[{item_id:String(r.id||""),item_name:vehicleTitle(r),item_category:"vehicle",price:Number(r.price||0),quantity:1}]}); updateVehicleSeo(r); if(sb&&r.id)sb.from("seller_listing_analytics").insert({listing_id:r.id,event_type:"view"}).then(({error})=>{if(error)console.debug("Seller view analytics unavailable")}); const photos=Array.isArray(r.photos)?r.photos.filter(Boolean):[];
   const title=vehicleTitle(r);const phone=r.seller_phone||r.phone||'';const whatsapp=r.whatsapp||phone;const wa=waNumber(whatsapp);
   const ref=`3PA-${String(r.id||"").replace(/-/g,"").slice(0,8).toUpperCase()}`;
   const pageUrl=new URL(location.href).href;
