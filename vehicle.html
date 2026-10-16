@@ -180,13 +180,13 @@ function render(r){ window.__listing=r; if(window.track3PedalsEvent)window.track
   const gallery=photos.length?`<div class="gallery"><img id="mainPhoto" class="main-photo" src="${esc(photos[0])}" alt="${esc(title)} photo 1" fetchpriority="high"><div class="thumbs">${photos.map((p,i)=>`<button class="thumb" type="button" data-photo="${i}" aria-current="${i===0}"><img src="${esc(p)}" alt="${esc(title)} photo ${i+1}" loading="lazy"></button>`).join('')}</div></div>`:`<div class="gallery"><div class="main-photo" style="display:grid;place-items:center;color:#e3b341;font:700 42px 'Playfair Display',serif">${esc(r.year||'')}</div></div>`;
   const isYard=r.seller_type==='yard'||!!r.yard_name||!!r.yard_location;
   const sellerName=r.yard_name||r.seller_name||'Seller';
-  const location=r.yard_location||r.location||'';
-  const mapUrl=location?`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`:'';
+  const sellerLocation=r.yard_location||r.location||'';
+  const mapUrl=sellerLocation?`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(sellerLocation)}`:'';
   const yardLink=isYard?`<a class="btn ghost" href="yard.html?name=${encodeURIComponent(sellerName)}">🏢 View ${esc(sellerName)} profile</a>`:'';
   const sellerBits=[
     isYard?`<div class="yard-label">🏢 CAR YARD LISTING</div>`:'',
     isYard?`<p class="meta">This vehicle is listed by a verified car-yard account on 3 Pedals Auto KE.</p>`:'',
-    location?`<p>📍 <strong>${esc(location)}</strong></p>`:'',
+    sellerLocation?`<p>📍 <strong>${esc(sellerLocation)}</strong></p>`:'',
     phone?`<p>📞 ${esc(phone)}</p>`:'',
     r.seller_email?`<p>✉️ ${esc(r.seller_email)}</p>`:'',
     r.web?`<p>🌐 <a href="${esc(/^https?:\/\//i.test(r.web)?r.web:'https://'+r.web)}" target="_blank" rel="noopener">${esc(r.web)}</a></p>`:'',
