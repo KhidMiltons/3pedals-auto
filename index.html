@@ -2183,9 +2183,20 @@ loadSiteSettings();
 <style id="account-touch-zoom-performance">
 @media(pointer:coarse){
   #accDlg[open],#accDlg>.in,#accDlg #accBody{touch-action:pan-y pinch-zoom!important}
-  #accDlg::backdrop{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
-  #accDlg nav#accountMenu.dashboard-shortcuts.menu-open:not([hidden]){-webkit-backdrop-filter:none!important;backdrop-filter:none!important;box-shadow:none!important;transition:none!important}
-  #accDlg .account-dialog-head{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;box-shadow:none!important;transition:none!important}
+  #accDlg::backdrop{-webkit-backdrop-filter:blur(8px)!important;backdrop-filter:blur(8px)!important}
+  #accDlg nav#accountMenu.dashboard-shortcuts.menu-open:not([hidden]){
+    background:rgba(24,25,26,.58)!important;
+    -webkit-backdrop-filter:blur(30px) saturate(155%)!important;
+    backdrop-filter:blur(30px) saturate(155%)!important;
+    box-shadow:0 20px 52px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.12)!important;
+    transition:none!important
+  }
+  #accDlg .account-dialog-head{
+    -webkit-backdrop-filter:blur(24px) saturate(145%)!important;
+    backdrop-filter:blur(24px) saturate(145%)!important;
+    box-shadow:0 8px 24px rgba(0,0,0,.16)!important;
+    transition:none!important
+  }
 }
 </style>
 <script id="3pedals-analytics-events">
