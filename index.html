@@ -966,6 +966,8 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 @media(prefers-reduced-motion:reduce){#accDlg .account-fast-loading *{animation:none!important}}
 @media(max-width:560px){#accDlg .account-fast-loading-grid{gap:8px}#accDlg .account-fast-loading-grid span{height:70px}#accDlg .account-fast-loading-card{padding:14px}}
 </style>
+<style id="account-restore-no-flash">html.account-restoring body{background:#0d0e0f!important}html.account-restoring body>:not(#accDlg){visibility:hidden!important}</style>
+<script>try{if(sessionStorage.getItem("3pedals:account-open")==="1")document.documentElement.classList.add("account-restoring")}catch(_){}</script>
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -1229,7 +1231,7 @@ function updateAuthTypeHint(){
   $("authTypeHint").textContent=type==="yard"?"Organization accounts are for dealerships, companies, and brokers.":"Private Seller accounts are for individuals selling their own vehicles.";
 }
 async function loadSession(){
-  if(!sb)return;
+  if(!sb){document.documentElement.classList.remove("account-restoring");return;}
   const {data:{session}}=await sb.auth.getSession();
   me=session?session.user:null;profile=null;sellerPreferences={};
   if(me){
@@ -1260,6 +1262,7 @@ async function loadSession(){
     }catch(_){}
   }else{
     try{sessionStorage.removeItem("3pedals:account-open");sessionStorage.removeItem("3pedals:account-page")}catch(_){}
+    document.documentElement.classList.remove("account-restoring");
   }
   if($("sellTypeLabel"))sellMode();
 }
@@ -1450,6 +1453,7 @@ async function openAccount(options={}){
   if(!requestedAccountPage)requestedAccountPage="settings";
   $("accCloseTop").onclick=()=>d.close();
   if(!d.open){d.showModal();history.pushState({...history.state,accountOpen:true,accountPage:requestedAccountPage},"",location.href)}
+  document.documentElement.classList.remove("account-restoring");
   try{sessionStorage.setItem("3pedals:account-open","1");sessionStorage.setItem("3pedals:account-page",requestedAccountPage)}catch(_){};
   const hasCachedAccount=!!box.querySelector(".account-pages");
   if(!hasCachedAccount){
