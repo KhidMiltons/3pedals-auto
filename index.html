@@ -100,7 +100,7 @@ dialog{border:1px solid var(--line);border-radius:10px;background:var(--surface)
 dialog::backdrop{background:rgba(0,0,0,.55)}
 dialog .swatch{height:120px}
 dialog .in{padding:18px}
-.specs{display:grid!important;grid-template-columns:max-content max-content!important;grid-auto-flow:row!important;align-items:baseline!important;justify-content:start!important;justify-items:start!important;gap:6px 10px!important;margin:12px 0!important;padding:0!important;width:max-content!important;max-width:100%!important}.specs span,.specs b{justify-self:start!important;align-self:baseline!important;min-width:0!important;max-width:100%!important;overflow-wrap:anywhere!important}.specs b{margin:0!important}
+.specs{display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:flex-start!important;gap:6px!important;margin:12px 0!important;padding:0!important;width:100%!important;max-width:100%!important}.spec-row{display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;align-items:baseline!important;justify-content:flex-start!important;gap:8px!important;width:auto!important;max-width:100%!important;margin:0!important;padding:0!important}.spec-row span{display:inline-block!important;flex:0 0 auto!important;color:var(--mute);font-size:14px}.spec-row b{display:inline-block!important;flex:0 1 auto!important;margin:0!important;min-width:0!important;max-width:100%!important;overflow-wrap:anywhere!important}
 .specs span{color:var(--mute);font-size:14px}
 footer{border-top:1px solid var(--line);padding:22px 0 30px;color:var(--mute);font-size:14px}
 [hidden]{display:none!important}
@@ -522,7 +522,7 @@ main>section{contain:layout style}
   #buy .card .body{padding:14px!important}
   .filters{grid-template-columns:1fr!important}
   .filters input{grid-column:auto!important}
-  .specs{grid-template-columns:max-content minmax(0,max-content)!important;width:max-content!important;max-width:100%!important;gap:6px 10px!important}.specs span,.specs b{justify-self:start!important;min-width:0!important;overflow-wrap:anywhere!important}
+  .specs{width:100%!important;gap:6px!important}.spec-row{max-width:100%!important}.spec-row b{min-width:0!important;overflow-wrap:anywhere!important}
   dialog{max-width:calc(100vw - 20px)!important;width:calc(100vw - 20px)!important;max-height:90dvh!important}
   .thumbs{overflow-x:auto!important;display:flex!important;flex-wrap:nowrap!important}
   .thumbs button{flex:0 0 64px!important}
@@ -2077,7 +2077,7 @@ function detail(id){
     :`<div class="swatch" style="background:${c.color}">${c.year}</div>`;
   d.innerHTML=`${gal}<div class="in">
   <h2>${esc(c.make)} ${esc(c.model)} <span class="meta">${c.year}</span></h2><div class="price">KES ${fmt(c.price)}</div>
-  <div class="specs">${rows.map(r=>`<span>${r[0]}</span><b>${r[1]}</b>`).join("")}</div>
+  <div class="specs">${rows.map(r=>`<div class="spec-row"><span>${r[0]}:</span><b>${r[1]}</b></div>`).join("")}</div>
   <p>${esc(c.desc||"")}</p>
   <p class="meta">Stay safe: view the car in person, check the logbook, and never pay before you have inspected it.</p>
   <div style="display:flex;gap:8px;flex-wrap:wrap">${wa}<button class="btn alt" id="insp">Book inspection at the garage</button><button class="btn ghost" id="cls">Close</button></div></div>`;
