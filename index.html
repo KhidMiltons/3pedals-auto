@@ -1495,7 +1495,7 @@ async function openAccount(options={}){
   const dashboard=box.querySelector(".seller-dashboard"),profileCard=box.querySelector(".profile-card"),profileGrid=box.querySelector(".profile-grid"),profileError=$("accProfileErr"),profileActions=$("accSaveProfile")?.parentElement,loginDetails=Array.from(box.children).find(node=>node.classList.contains("account-tools")),menu=$("accountMenu");
   const accountOwnerId=me.id;
   const refreshPromotionHistory=async()=>{
-    if(!d.open||!me||me.id!==accountOwnerId)return;
+    if(!d.open||!me||me.id!==accountOwnerId||history.state?.accountPage!=="promotions")return;
     const [promotionResult,settingsResult]=await Promise.all([
       sb.from("listing_promotions").select("id,listing_id,package_name,amount,status,payment_status,starts_at,expires_at,created_at").eq("seller_id",accountOwnerId).order("created_at",{ascending:false}),
       sb.from("seller_settings").select("promotion_history_cleared_at").eq("seller_id",accountOwnerId).maybeSingle()
