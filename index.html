@@ -1232,6 +1232,26 @@ function updateAuthTypeHint(){
 }
 async function loadSession(){
   if(!sb){document.documentElement.classList.remove("account-restoring");return;}
+  // Open the saved account panel immediately, before the asynchronous Supabase session
+  // and profile requests, so a refresh never exposes the Home page in between.
+  let restoreAccountPage=null;
+  try{
+    if(sessionStorage.getItem("3pedals:account-open")==="1"){
+      restoreAccountPage=sessionStorage.getItem("3pedals:account-page")||"settings";
+      const restoreDialog=$("accDlg"),restoreBody=$("accBody");
+      if(restoreDialog&&!restoreDialog.open){
+        restoreBody.innerHTML=`<div class="account-fast-loading" role="status" aria-live="polite">
+          <div class="account-fast-loading-head"><span class="account-fast-avatar"></span><span class="account-fast-lines"><i></i><i></i></span></div>
+          <div class="account-fast-loading-grid"><span></span><span></span><span></span></div>
+          <div class="account-fast-loading-card"><i></i><i></i><i></i></div>
+          <p class="meta">Restoring your account…</p>
+        </div>`;
+        restoreDialog.showModal();
+        history.pushState({...history.state,accountOpen:true,accountPage:restoreAccountPage},"",location.href);
+      }
+      document.documentElement.classList.remove("account-restoring");
+    }
+  }catch(_){}
   const {data:{session}}=await sb.auth.getSession();
   me=session?session.user:null;profile=null;sellerPreferences={};
   if(me){
@@ -1252,16 +1272,14 @@ async function loadSession(){
   if(me){
     try{
       if(sessionStorage.getItem("3pedals:account-open")==="1"){
-        const savedPage=sessionStorage.getItem("3pedals:account-page")||"settings";
-        setTimeout(()=>{
-          if(me&&!$("accDlg").open&&sessionStorage.getItem("3pedals:account-open")==="1"){
-            openAccount({refresh:true,restore:true,page:savedPage}).catch(error=>console.warn("Could not restore the account panel:",error));
-          }
-        },0);
+        const savedPage=restoreAccountPage||sessionStorage.getItem("3pedals:account-page")||"settings";
+        // Populate the already-open loading shell as soon as the authenticated session is known.
+        openAccount({refresh:true,restore:true,page:savedPage}).catch(error=>console.warn("Could not restore the account panel:",error));
       }
     }catch(_){}
   }else{
     try{sessionStorage.removeItem("3pedals:account-open");sessionStorage.removeItem("3pedals:account-page")}catch(_){}
+    if($("accDlg").open)$("accDlg").close();
     document.documentElement.classList.remove("account-restoring");
   }
   if($("sellTypeLabel"))sellMode();
