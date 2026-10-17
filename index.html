@@ -1181,7 +1181,7 @@ function show(t,options={}){
  window.addEventListener("popstate",()=>{const section=location.hash.slice(1);if(["","buy","sell","projects","journal","about","contact"].includes(section))show(section||"home",{updateUrl:false,scroll:false})});
 try{const h=location.hash.replace("#","");if(["buy","sell","projects","journal","about","contact"].includes(h))show(h,{updateUrl:false,scroll:false})}catch(_){}
 
-let accountDataPrefetch=null,accountDataPrefetchUserId=null,accountRenderVersion=0;
+let accountDataPrefetch=null,accountDataPrefetchUserId=null,accountRenderVersion=0,promotionHistoryRefreshTimer=null;
 function fetchAccountData(userId,sellerPrefsRequest=null){
   const listingsRequest=Promise.resolve().then(()=>sb.from("listings").select("*").eq("owner",userId).order("created_at",{ascending:false}));
   const analyticsRequest=listingsRequest.then(({data,error})=>error||!data?.length?{data:[],error:null}:sb.from("seller_listing_analytics").select("listing_id,event_type,created_at").in("listing_id",data.map(item=>item.id)));
@@ -1239,6 +1239,20 @@ async function loadSession(){
     syncAccountType().catch(error=>console.warn("Account type sync failed:",error));
   }else{accountDataPrefetch=null;accountDataPrefetchUserId=null}
   refreshAccountUI();
+  if(me){
+    try{
+      if(sessionStorage.getItem("3pedals:account-open")==="1"){
+        const savedPage=sessionStorage.getItem("3pedals:account-page")||"settings";
+        setTimeout(()=>{
+          if(me&&!$("accDlg").open&&sessionStorage.getItem("3pedals:account-open")==="1"){
+            openAccount({refresh:true,restore:true,page:savedPage}).catch(error=>console.warn("Could not restore the account panel:",error));
+          }
+        },0);
+      }
+    }catch(_){}
+  }else{
+    try{sessionStorage.removeItem("3pedals:account-open");sessionStorage.removeItem("3pedals:account-page")}catch(_){}
+  }
   if($("sellTypeLabel"))sellMode();
 }
 function refreshAccountUI(){
@@ -1411,20 +1425,24 @@ function showSellerAccountPage(selected,button,options={}){
     pages.querySelectorAll(".account-page").forEach(page=>page.hidden=page!==target);
   }
   if(options.updateHistory!==false&&$("accDlg").open&&history.state?.accountPage!==selected)history.pushState({...history.state,accountOpen:true,accountPage:selected},"",location.href);
+  try{if($("accDlg").open){sessionStorage.setItem("3pedals:account-open","1");sessionStorage.setItem("3pedals:account-page",selected)}}catch(_){}
   const active=button||$("accountMenu").querySelector(`[data-page="${selected}"]`);$("accountMenu").querySelectorAll("[data-page]").forEach(item=>item.classList.toggle("active",item===active));closeAccountMenu();$("accBody").scrollTo({top:0,behavior:options.scroll===false?"auto":"smooth"});
 }
 $("accountMenu").addEventListener("click",event=>{const button=event.target.closest("[data-page]");if(button)showSellerAccountPage(button.dataset.page,button)});
 const accountDialog=$("accDlg");
-accountDialog.addEventListener("close",()=>{closeAccountMenu();if(history.state?.accountOpen){const state={...history.state};delete state.accountOpen;delete state.accountPage;history.replaceState(state,"",location.href)}});
+accountDialog.addEventListener("close",()=>{closeAccountMenu();if(promotionHistoryRefreshTimer){clearInterval(promotionHistoryRefreshTimer);promotionHistoryRefreshTimer=null}try{sessionStorage.removeItem("3pedals:account-open");sessionStorage.removeItem("3pedals:account-page")}catch(_){}if(history.state?.accountOpen){const state={...history.state};delete state.accountOpen;delete state.accountPage;history.replaceState(state,"",location.href)}});
 accountDialog.addEventListener("cancel",event=>{event.preventDefault();if(history.state?.accountOpen)history.back();else accountDialog.close()});
 window.addEventListener("popstate",event=>{const state=event.state||{},dialog=$("accDlg");if(state.accountOpen){if(!dialog.open)dialog.showModal();if(state.accountPage)showSellerAccountPage(state.accountPage,null,{updateHistory:false,scroll:false})}else if(dialog.open)dialog.close()});
 async function openAccount(options={}){
   const renderVersion=++accountRenderVersion;
   const d=$("accDlg"),box=$("accBody");
-  // Keep the seller on the page they were using when refreshing data; a fresh open still defaults to Settings.
-  const requestedAccountPage=d.open?(history.state?.accountOpen?history.state.accountPage:null):"settings";
+  // Restore the previously selected account page after a data refresh or browser reload.
+  let requestedAccountPage=options.page||((d.open&&history.state?.accountOpen)?history.state.accountPage:null);
+  if(!requestedAccountPage&&options.restore){try{requestedAccountPage=sessionStorage.getItem("3pedals:account-page")}catch(_){}}
+  if(!requestedAccountPage)requestedAccountPage="settings";
   $("accCloseTop").onclick=()=>d.close();
-  if(!d.open){d.showModal();history.pushState({...history.state,accountOpen:true,accountPage:"settings"},"",location.href)}
+  if(!d.open){d.showModal();history.pushState({...history.state,accountOpen:true,accountPage:requestedAccountPage},"",location.href)}
+  try{sessionStorage.setItem("3pedals:account-open","1");sessionStorage.setItem("3pedals:account-page",requestedAccountPage)}catch(_){};
   const hasCachedAccount=!!box.querySelector(".account-pages");
   if(!hasCachedAccount){
     box.innerHTML=`<div class="account-fast-loading" role="status" aria-live="polite">
@@ -1455,6 +1473,7 @@ async function openAccount(options={}){
   const [l,b,sales,promos,packages,prefs,analyticsPromise]=accountResults;
   if(l.error){box.innerHTML=`<p class="meta" role="alert">We couldn't load your listings: ${esc(l.error.message)}. Please check the marketplace security SQL has been installed.</p><button class="btn ghost" id="accCloseLoadError" type="button">Close</button>`;$("accCloseLoadError").onclick=()=>d.close();return}
   const L=l.data||[],B=b.data||[],S=sales.data||[],PK=packages.data||[],sellerSettings=prefs.data||{},historyClearedAt=sellerSettings.promotion_history_cleared_at?new Date(sellerSettings.promotion_history_cleared_at).getTime():0,PM=(promos.data||[]).filter(p=>!historyClearedAt||new Date(p.created_at||p.starts_at||0).getTime()>historyClearedAt),reminderDays=Number(sellerSettings.repost_reminder_days)||14,reminderCutoff=Date.now()-reminderDays*86400000,reminders=L.filter(x=>x.status==="approved"&&new Date(x.reposted_at||x.updated_at||x.created_at||0).getTime()<=reminderCutoff),label={pending:"Waiting for approval",approved:"Live",rejected:"Not approved",sold:"Sold"},avatar=profileAvatarUrl(),name=profileName(),phone=profilePhone(),isYard=accountType()==="yard",reportedSales=S.reduce((sum,x)=>sum+Number(x.reported_sale_price||0),0),averageReportedSale=S.length?reportedSales/S.length:0,formatStatus=value=>String(value||"pending").replaceAll("_"," ").replace(/^\w/,letter=>letter.toUpperCase());
+  const renderPromotionHistory=rows=>rows.length?rows.map(p=>{const vehicle=L.find(x=>String(x.id)===String(p.listing_id));return `<div class="svc promotion-history-item"><div><b>${esc(p.package_name||"Vehicle promotion")}</b><span class="meta">${esc(vehicle?[vehicle.year,vehicle.make,vehicle.model].filter(Boolean).join(" "):"Vehicle listing")} · KES ${fmt(p.amount)}</span><span class="meta">Payment: ${esc(formatStatus(p.payment_status||"pending"))} · Created ${esc(p.created_at?new Date(p.created_at).toLocaleDateString():"Date unavailable")}</span></div><span class="st promotion-status-badge">${esc(p.payment_status==="cancelled"?"Payment cancelled":formatStatus(p.status))}</span></div>`}).join(""):'<p class="meta">No promotion history to show.</p>';
   const listingStatusCounts=L.reduce((counts,item)=>(counts[item.status||"pending"]=(counts[item.status||"pending"]||0)+1,counts),{});
   box.innerHTML=`<div class="profile-card">
     <div class="profile-avatar">${avatar?`<img src="${esc(avatar)}" alt="Profile picture">`:esc(initialsFor(name,me.email))}</div>
@@ -1468,12 +1487,28 @@ async function openAccount(options={}){
    <div class="seller-dashboard">
     <section class="account-tools"><h3>Analytics</h3><p class="meta">${isYard?"Your yard’s vehicles and activity":"Your vehicle listings and activity"}</p>${reminders.length?`<div class="dashboard-welcome" role="status"><strong>${reminders.length} live listing${reminders.length===1?" is":"s are"} due for a repost reminder.</strong> <button class="btn ghost" type="button" data-open-marketing>Review reminders</button></div>`:""}<div class="stats"><div><b>${L.length}</b><span>All listings</span></div><div><b>${(listingStatusCounts.approved||0)}</b><span>Live</span></div><div><b>${(listingStatusCounts.pending||0)}</b><span>Pending review</span></div><div><b>${(listingStatusCounts.rejected||0)}</b><span>Not approved</span></div><div><b>${(listingStatusCounts.sold||0)}</b><span>Sold vehicles</span></div><div><b>${S.length}</b><span>Recorded sale reports</span></div><div><b>KES ${fmt(reportedSales)}</b><span>Total reported sale value</span></div><div><b>KES ${fmt(averageReportedSale)}</b><span>Average reported sale</span></div><div id="sellerAnalyticsStats" hidden></div></div><p class="meta sale-summary-note">Sale amounts are reported by you and are not verified platform earnings or payouts.</p><p class="meta" id="sellerAnalyticsStatus" role="status">Loading listing performance…</p></section>
     <section class="account-tools"><h3>Manage your listings</h3><div class="seller-listing-filters"><label for="sellerListingSearch">Search your vehicles</label><input id="sellerListingSearch" type="search" placeholder="Search make, model or year"><label for="sellerListingStatus">Filter by status</label><select id="sellerListingStatus"><option value="">All listings</option><option value="approved">Live</option><option value="pending">Waiting for approval</option><option value="rejected">Not approved</option><option value="sold">Sold</option></select></div><p class="meta" id="sellerListingCount" aria-live="polite"></p>${L.map(x=>`<div data-seller-listing data-listing-id="${esc(x.id)}" data-listing-status="${esc(x.status)}" data-listing-search="${esc((x.year+" "+x.make+" "+x.model).toLowerCase())}" class="seller-listing"><img class="seller-listing-photo" src="${esc((Array.isArray(x.photos)&&x.photos[0])||"")}" alt="" loading="lazy"><div class="seller-listing-main"><strong>${esc(x.year+" "+x.make+" "+x.model)}</strong><span class="meta">KES ${fmt(x.price)} · ${Array.isArray(x.photos)?x.photos.length:0} photos · ${x.stock_mode==="local"?"Kenya stock":x.stock_mode==="import"?"Import":"Stock type not set"} · <span class="st">${label[x.status]||esc(x.status)}</span></span></div><div class="seller-listing-actions">${x.status==="approved"?`<button class="btn ghost" data-sold="${x.id}" data-title="${esc(x.year+" "+x.make+" "+x.model)}">Mark sold</button><button class="btn ghost" data-promote-listing="${x.id}">Promote</button>`:""}${x.status==="sold"?`<span class="meta">Sale: KES ${fmt(S.find(s=>String(s.listing_id)===String(x.id))?.reported_sale_price||0)}</span>`:""}${x.status!=="sold"?`<button class="btn ghost" data-edit="${esc(x.id)}">Edit</button>`:""}${["approved","sold"].includes(x.status)?`<button class="btn ghost" data-view="${x.id}">View</button>`:""}<button class="btn ghost" data-del="${x.id}">Delete</button></div></div>`).join("")||'<p class="meta">You have no listings yet.</p>'}</section>
-    <section class="account-tools"><h3>Marketing</h3><h4>Listing reminders</h4><p class="meta">Live listings with no repost activity for ${reminderDays} days or more. Mark one reposted after you refresh its photos or promotion.</p>${reminders.length?reminders.map(x=>`<div class="seller-listing"><div class="seller-listing-main"><strong>${esc(x.year+" "+x.make+" "+x.model)}</strong><span class="meta">Last updated ${esc(new Date(x.reposted_at||x.updated_at||x.created_at||0).toLocaleDateString())}</span></div><div class="seller-listing-actions"><button class="btn ghost" type="button" data-reposted="${esc(x.id)}">Mark reposted today</button></div></div>`).join(""):'<p class="meta">No listings are due for a repost reminder.</p>'}<p class="meta" id="reminderMessage" aria-live="polite"></p><h4>Paid promotions</h4><p class="meta">Choose an active listing and package. M-Pesa STK Push payments stay pending until the secure payment callback is verified.</p>${PK.length?`<div class="promotion-package-grid">${PK.map(p=>`<div class="promotion-package"><strong>${esc(p.name)}</strong><span>${esc(p.description||`${p.duration_days} days featured`)}</span><b>KES ${fmt(p.amount)}</b><small class="meta">${Number(p.duration_days)} days</small></div>`).join("")}</div><label for="promoListing">Vehicle to promote</label><select id="promoListing"><option value="">Choose a live vehicle</option>${L.filter(x=>x.status==="approved").map(x=>`<option value="${esc(x.id)}">${esc(x.year+" "+x.make+" "+x.model)}</option>`).join("")}</select><label for="promoPackage">Promotion package</label><select id="promoPackage"><option value="">Choose a package</option>${PK.map(p=>`<option value="${esc(p.id)}">${esc(p.name)} · KES ${fmt(p.amount)} / ${Number(p.duration_days)} days</option>`).join("")}</select><label for="promoPhone">M-Pesa phone number</label><input id="promoPhone" type="tel" autocomplete="tel" value="${esc(phone)}" placeholder="07XX XXX XXX"><button class="btn" type="button" id="startPromotion">Pay with M-Pesa</button><p class="meta" id="promotionMessage" aria-live="polite"></p>`:'<p class="meta">Promotion packages are not configured yet. Please check back later.</p>'}<div class="promotion-history-head"><h4>Promotion history</h4><button class="btn ghost" type="button" id="clearPromotionHistory">Clear history</button></div>${PM.length?PM.map(p=>{const vehicle=L.find(x=>String(x.id)===String(p.listing_id));return `<div class="svc promotion-history-item"><div><b>${esc(p.package_name||"Vehicle promotion")}</b><span class="meta">${esc(vehicle?[vehicle.year,vehicle.make,vehicle.model].filter(Boolean).join(" "):"Vehicle listing")} · KES ${fmt(p.amount)}</span><span class="meta">Payment: ${esc(formatStatus(p.payment_status||"pending"))} · Created ${esc(p.created_at?new Date(p.created_at).toLocaleDateString():"Date unavailable")}</span></div><span class="st promotion-status-badge">${esc(p.payment_status==="cancelled"?"Payment cancelled":formatStatus(p.status))}</span></div>`}).join(""):'<p class="meta">No promotion history to show.</p>'}<p class="meta" id="promotionHistoryMessage" aria-live="polite"></p></section>
+    <section class="account-tools"><h3>Marketing</h3><h4>Listing reminders</h4><p class="meta">Live listings with no repost activity for ${reminderDays} days or more. Mark one reposted after you refresh its photos or promotion.</p>${reminders.length?reminders.map(x=>`<div class="seller-listing"><div class="seller-listing-main"><strong>${esc(x.year+" "+x.make+" "+x.model)}</strong><span class="meta">Last updated ${esc(new Date(x.reposted_at||x.updated_at||x.created_at||0).toLocaleDateString())}</span></div><div class="seller-listing-actions"><button class="btn ghost" type="button" data-reposted="${esc(x.id)}">Mark reposted today</button></div></div>`).join(""):'<p class="meta">No listings are due for a repost reminder.</p>'}<p class="meta" id="reminderMessage" aria-live="polite"></p><h4>Paid promotions</h4><p class="meta">Choose an active listing and package. M-Pesa STK Push payments stay pending until the secure payment callback is verified.</p>${PK.length?`<div class="promotion-package-grid">${PK.map(p=>`<div class="promotion-package"><strong>${esc(p.name)}</strong><span>${esc(p.description||`${p.duration_days} days featured`)}</span><b>KES ${fmt(p.amount)}</b><small class="meta">${Number(p.duration_days)} days</small></div>`).join("")}</div><label for="promoListing">Vehicle to promote</label><select id="promoListing"><option value="">Choose a live vehicle</option>${L.filter(x=>x.status==="approved").map(x=>`<option value="${esc(x.id)}">${esc(x.year+" "+x.make+" "+x.model)}</option>`).join("")}</select><label for="promoPackage">Promotion package</label><select id="promoPackage"><option value="">Choose a package</option>${PK.map(p=>`<option value="${esc(p.id)}">${esc(p.name)} · KES ${fmt(p.amount)} / ${Number(p.duration_days)} days</option>`).join("")}</select><label for="promoPhone">M-Pesa phone number</label><input id="promoPhone" type="tel" autocomplete="tel" value="${esc(phone)}" placeholder="07XX XXX XXX"><button class="btn" type="button" id="startPromotion">Pay with M-Pesa</button><p class="meta" id="promotionMessage" aria-live="polite"></p>`:'<p class="meta">Promotion packages are not configured yet. Please check back later.</p>'}<div class="promotion-history-head"><h4>Promotion history</h4><button class="btn ghost" type="button" id="clearPromotionHistory">Clear history</button></div><div id="promotionHistoryList">${renderPromotionHistory(PM)}</div><p class="meta" id="promotionHistoryMessage" aria-live="polite"></p></section>
    </div>
   <div class="acts" id="garageBookingAction" style="margin-top:16px"><a class="btn alt" href="/garage?section=book">Book a garage service</a></div><h3 style="margin-top:18px">My garage bookings and service tickets</h3>${B.map(x=>`<div class="svc"><div><b>${esc(x.service)}</b><span class="meta">Ticket ${esc(x.ref)} · ${esc(x.date)}${x.time_slot?" · "+esc(x.time_slot):""} · ${esc(x.car||"")}</span><span class="meta">Progress: ${esc(String(x.service_status||x.status).replaceAll("_"," "))}</span></div><span class="st">${esc(x.status)}</span></div>`).join("")||'<p class="meta">No bookings yet.</p>'}
   <section class="danger-zone"><h3>Delete account</h3><p class="meta">Permanently remove your account, listings, and bookings. This cannot be undone.</p><button class="btn ghost" id="accDeleteAccount" type="button">Permanently delete account</button></section>
   <div class="acts" style="margin-top:18px">${profile&&profile.is_admin?'<button class="btn" id="accAdmin">Open admin panel</button>':""}<button class="btn ghost" id="accOut">Sign out</button><button class="btn ghost" id="accClose">Close</button></div>`;
   const dashboard=box.querySelector(".seller-dashboard"),profileCard=box.querySelector(".profile-card"),profileGrid=box.querySelector(".profile-grid"),profileError=$("accProfileErr"),profileActions=$("accSaveProfile")?.parentElement,loginDetails=Array.from(box.children).find(node=>node.classList.contains("account-tools")),menu=$("accountMenu");
+  const accountOwnerId=me.id;
+  const refreshPromotionHistory=async()=>{
+    if(!d.open||!me||me.id!==accountOwnerId)return;
+    const [promotionResult,settingsResult]=await Promise.all([
+      sb.from("listing_promotions").select("id,listing_id,package_name,amount,status,payment_status,starts_at,expires_at,created_at").eq("seller_id",accountOwnerId).order("created_at",{ascending:false}),
+      sb.from("seller_settings").select("promotion_history_cleared_at").eq("seller_id",accountOwnerId).maybeSingle()
+    ]);
+    if(promotionResult.error){console.warn("Promotion history refresh failed:",promotionResult.error.message);return}
+    if(!d.open||!me||me.id!==accountOwnerId)return;
+    const clearedAt=settingsResult.data?.promotion_history_cleared_at?new Date(settingsResult.data.promotion_history_cleared_at).getTime():0;
+    const rows=(promotionResult.data||[]).filter(p=>!clearedAt||new Date(p.created_at||p.starts_at||0).getTime()>clearedAt);
+    const list=box.querySelector("#promotionHistoryList");
+    if(list)list.innerHTML=renderPromotionHistory(rows);
+  };
+  if(promotionHistoryRefreshTimer){clearInterval(promotionHistoryRefreshTimer);promotionHistoryRefreshTimer=null}
+  promotionHistoryRefreshTimer=setInterval(()=>{if(!d.open||!me||me.id!==accountOwnerId){clearInterval(promotionHistoryRefreshTimer);promotionHistoryRefreshTimer=null;return}refreshPromotionHistory().catch(error=>console.warn("Promotion history refresh failed:",error))},2500);
   if(dashboard){
     const dashboardSections=Array.from(dashboard.children),summary=dashboardSections[0],listings=dashboardSections[1],promotions=dashboardSections[2];
     const deleteZone=box.querySelector(".danger-zone"),bookingAction=box.querySelector("#garageBookingAction"),bookingHeading=[...box.querySelectorAll("h3")].find(h=>h.textContent==="My garage bookings and service tickets");
@@ -1536,8 +1571,8 @@ async function openAccount(options={}){
         return;
       }
       let lastPollError=null;
-      for(let i=0;i<12;i++){
-        await new Promise(resolve=>setTimeout(resolve,5000));
+      for(let i=0;i<30;i++){
+        await new Promise(resolve=>setTimeout(resolve,2000));
         const {data:state,error:pollError}=await sb.from("listing_promotions").select("status,payment_status").eq("id",data.promotion_id).maybeSingle();
         if(pollError){lastPollError=pollError;continue}
         if(state?.payment_status==="verified"){
