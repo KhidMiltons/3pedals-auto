@@ -1249,7 +1249,8 @@ async function loadSession(){
         restoreDialog.showModal();
         history.pushState({...history.state,accountOpen:true,accountPage:restoreAccountPage},"",location.href);
       }
-      document.documentElement.classList.remove("account-restoring");
+      // Keep the underlying page concealed until the saved account section has
+      // been fully rendered, preventing a Home-page flash behind the dialog.
     }
   }catch(_){}
   const {data:{session}}=await sb.auth.getSession();
@@ -1479,7 +1480,8 @@ async function openAccount(options={}){
   if(!requestedAccountPage)requestedAccountPage="settings";
   $("accCloseTop").onclick=()=>d.close();
   if(!d.open){d.showModal();history.pushState({...history.state,accountOpen:true,accountPage:requestedAccountPage},"",location.href)}
-  document.documentElement.classList.remove("account-restoring");
+  // During a reload restoration, keep the page concealed until the account UI
+  // has finished rendering the requested section below.
   try{sessionStorage.setItem("3pedals:account-open","1");sessionStorage.setItem("3pedals:account-page",requestedAccountPage)}catch(_){};
   const hasCachedAccount=!!box.querySelector(".account-pages");
   if(!hasCachedAccount){
@@ -1741,6 +1743,8 @@ async function openAccount(options={}){
   $("accClose").onclick=()=>d.close();
   if($("accAdmin"))$("accAdmin").onclick=()=>{window.location.href="/admin.html"};
   showSellerAccountPage(requestedAccountPage||"settings",null,{updateHistory:false,scroll:false});
+  // Reveal the underlying site only after the restored account section is ready.
+  document.documentElement.classList.remove("account-restoring");
   // Cache a session-only snapshot for instant refresh restoration. Strip fields
   // that may contain private account or banking details before persisting markup.
   try{
