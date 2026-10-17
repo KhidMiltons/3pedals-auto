@@ -1174,12 +1174,20 @@ function show(t,options={}){
   if(t==="sell"&&$("sStockMode"))$("sStockMode").value=sellerPreferences.preferred_stock_mode||"any";
   $("nav").querySelectorAll("button[data-tab]").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===t));
    const hash=t==="home"?"":`#${t}`;if(options.updateUrl!==false&&location.hash!==hash)history.pushState({siteSection:t},"",location.pathname+location.search+hash);
+  try{sessionStorage.setItem("3pedals:site-section",t)}catch(_){}
   if(t==="projects"&&!projectsSectionRequested){projectsSectionRequested=true;loadProjects()}
   if(t==="journal"&&!journalSectionRequested){journalSectionRequested=true;loadJournal()}
   if(options.scroll!==false)scrollTo(0,0);
 }
  window.addEventListener("popstate",()=>{const section=location.hash.slice(1);if(["","buy","sell","projects","journal","about","contact"].includes(section))show(section||"home",{updateUrl:false,scroll:false})});
-try{const h=location.hash.replace("#","");if(["buy","sell","projects","journal","about","contact"].includes(h))show(h,{updateUrl:false,scroll:false})}catch(_){}
+try{
+  const allowedSections=["home","buy","sell","projects","journal","about","contact"];
+  const urlSection=location.hash.replace("#","");
+  let savedSection="";
+  try{savedSection=sessionStorage.getItem("3pedals:site-section")||""}catch(_){}
+  const initialSection=allowedSections.includes(urlSection)?(urlSection||"home"):(allowedSections.includes(savedSection)?savedSection:"home");
+  show(initialSection,{updateUrl:false,scroll:false});
+}catch(_){}
 
 let accountDataPrefetch=null,accountDataPrefetchUserId=null,accountRenderVersion=0,promotionHistoryRefreshTimer=null;
 function fetchAccountData(userId,sellerPrefsRequest=null){
