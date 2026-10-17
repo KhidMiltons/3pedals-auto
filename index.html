@@ -966,7 +966,7 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 @media(prefers-reduced-motion:reduce){#accDlg .account-fast-loading *{animation:none!important}}
 @media(max-width:560px){#accDlg .account-fast-loading-grid{gap:8px}#accDlg .account-fast-loading-grid span{height:70px}#accDlg .account-fast-loading-card{padding:14px}}
 </style>
-<style id="account-restore-no-flash">html.account-restoring body{background:#0d0e0f!important}html.account-restoring body>:not(#accDlg){visibility:hidden!important}</style>
+<style id="account-restore-no-flash">html.account-restoring body{visibility:hidden!important;background:#0d0e0f!important}html.account-restoring #accDlg[open]{visibility:visible!important}html.account-restoring #accDlg[open] #accBody{min-height:100px}#accDlg .account-refresh-status{display:none!important}</style>
 <script>try{if(sessionStorage.getItem("3pedals:account-open")==="1")document.documentElement.classList.add("account-restoring")}catch(_){}</script>
 </head>
 <body>
@@ -1240,12 +1240,12 @@ async function loadSession(){
       restoreAccountPage=sessionStorage.getItem("3pedals:account-page")||"settings";
       const restoreDialog=$("accDlg"),restoreBody=$("accBody");
       if(restoreDialog&&!restoreDialog.open){
-        restoreBody.innerHTML=`<div class="account-fast-loading" role="status" aria-live="polite">
-          <div class="account-fast-loading-head"><span class="account-fast-avatar"></span><span class="account-fast-lines"><i></i><i></i></span></div>
-          <div class="account-fast-loading-grid"><span></span><span></span><span></span></div>
-          <div class="account-fast-loading-card"><i></i><i></i><i></i></div>
-          <p class="meta">Restoring your account…</p>
-        </div>`;
+        // Restore a scrubbed, session-only display snapshot instantly; the live
+        // Supabase refresh below replaces it with current data and rebinds actions.
+        let cachedMarkup="";
+        try{cachedMarkup=sessionStorage.getItem("3pedals:account-view-cache")||""}catch(_){}
+        if(cachedMarkup)restoreBody.innerHTML=cachedMarkup;
+        else restoreBody.innerHTML="";
         restoreDialog.showModal();
         history.pushState({...history.state,accountOpen:true,accountPage:restoreAccountPage},"",location.href);
       }
@@ -1454,12 +1454,12 @@ function showSellerAccountPage(selected,button,options={}){
     pages.querySelectorAll(".account-page").forEach(page=>page.hidden=page!==target);
   }
   if(options.updateHistory!==false&&$("accDlg").open&&history.state?.accountPage!==selected)history.pushState({...history.state,accountOpen:true,accountPage:selected},"",location.href);
-  try{if($("accDlg").open){sessionStorage.setItem("3pedals:account-open","1");sessionStorage.setItem("3pedals:account-page",selected)}}catch(_){}
+  try{if($("accDlg").open){sessionStorage.setItem("3pedals:account-open","1");sessionStorage.setItem("3pedals:account-page",selected);const cache=$("accBody").innerHTML;if(cache)sessionStorage.setItem("3pedals:account-view-cache",cache)}}catch(_){}
   const active=button||$("accountMenu").querySelector(`[data-page="${selected}"]`);$("accountMenu").querySelectorAll("[data-page]").forEach(item=>item.classList.toggle("active",item===active));closeAccountMenu();$("accBody").scrollTo({top:0,behavior:options.scroll===false?"auto":"smooth"});
 }
 $("accountMenu").addEventListener("click",event=>{const button=event.target.closest("[data-page]");if(button)showSellerAccountPage(button.dataset.page,button)});
 const accountDialog=$("accDlg");
-accountDialog.addEventListener("close",()=>{closeAccountMenu();if(promotionHistoryRefreshTimer){clearInterval(promotionHistoryRefreshTimer);promotionHistoryRefreshTimer=null}try{sessionStorage.removeItem("3pedals:account-open");sessionStorage.removeItem("3pedals:account-page")}catch(_){}if(history.state?.accountOpen){const state={...history.state};delete state.accountOpen;delete state.accountPage;history.replaceState(state,"",location.href)}});
+accountDialog.addEventListener("close",()=>{closeAccountMenu();if(promotionHistoryRefreshTimer){clearInterval(promotionHistoryRefreshTimer);promotionHistoryRefreshTimer=null}try{sessionStorage.removeItem("3pedals:account-open");sessionStorage.removeItem("3pedals:account-page");sessionStorage.removeItem("3pedals:account-view-cache")}catch(_){}if(history.state?.accountOpen){const state={...history.state};delete state.accountOpen;delete state.accountPage;history.replaceState(state,"",location.href)}});
 accountDialog.addEventListener("cancel",event=>{event.preventDefault();if(history.state?.accountOpen)history.back();else accountDialog.close()});
 window.addEventListener("popstate",event=>{const state=event.state||{},dialog=$("accDlg");if(state.accountOpen){if(!dialog.open)dialog.showModal();if(state.accountPage)showSellerAccountPage(state.accountPage,null,{updateHistory:false,scroll:false})}else if(dialog.open)dialog.close()});
 async function openAccount(options={}){
@@ -1482,8 +1482,7 @@ async function openAccount(options={}){
       <p class="meta">Opening your account…</p>
     </div>`;
   }else{
-    let status=box.querySelector(".account-refresh-status");
-    if(!status){status=document.createElement("p");status.className="meta account-refresh-status";status.setAttribute("role","status");status.textContent="Refreshing account…";box.prepend(status)}
+    // Keep the existing view visible while fresh data loads; no spinner or status banner.
   }
   // If this account has already been rendered, show it immediately and refresh quietly.
   // The refresh path below updates the visible panel when fresh database data arrives.
@@ -1734,6 +1733,14 @@ async function openAccount(options={}){
   $("accClose").onclick=()=>d.close();
   if($("accAdmin"))$("accAdmin").onclick=()=>{window.location.href="/admin.html"};
   showSellerAccountPage(requestedAccountPage||"settings",null,{updateHistory:false,scroll:false});
+  // Cache a session-only snapshot for instant refresh restoration. Strip fields
+  // that may contain private account or banking details before persisting markup.
+  try{
+    const snapshot=box.cloneNode(true);
+    snapshot.querySelectorAll('input[type="password"],input[type="email"],input[type="tel"],input[type="file"],#prefBankDetails,textarea').forEach(field=>{field.value="";if("checked" in field)field.checked=false});
+    snapshot.querySelectorAll("#accProfileErr,.account-refresh-status,[role='alert']").forEach(node=>node.remove());
+    sessionStorage.setItem("3pedals:account-view-cache",snapshot.innerHTML);
+  }catch(_){}
   if(analyticsPromise){Promise.resolve(analyticsPromise).then(analyticsResult=>{if(renderVersion!==accountRenderVersion||!d.open||!box.querySelector(".account-pages"))return;const status=$("sellerAnalyticsStatus"),stats=$("sellerAnalyticsStats");if(analyticsResult?.error){if(status)status.textContent="Listing performance metrics are unavailable. Check that the seller analytics SQL setup is installed in Supabase.";return}const events=analyticsResult?.data||[],metrics=new Map();let views=0,enquiries=0;for(const event of events){const key=String(event.listing_id),metric=metrics.get(key)||{views:0,whatsapp:0};if(event.event_type==="view"){views++;metric.views++}if(event.event_type==="whatsapp_click"){enquiries++;metric.whatsapp++}metrics.set(key,metric)}if(stats){stats.hidden=false;stats.innerHTML=`<div><b>${views}</b><span>Vehicle page views</span></div><div><b>${enquiries}</b><span>WhatsApp enquiries clicked</span></div>`;stats.style.display="contents"}box.querySelectorAll("[data-seller-listing]").forEach(row=>{let metric=row.querySelector(".seller-listing-metrics");if(!metric){metric=document.createElement("span");metric.className="meta seller-listing-metrics";row.querySelector(".seller-listing-main")?.append(metric)}const value=metrics.get(String(row.dataset.listingId))||{views:0,whatsapp:0};metric.textContent=`${value.views} views · ${value.whatsapp} WhatsApp enquiry clicks`});if(status)status.textContent=""}).catch(error=>{if(renderVersion===accountRenderVersion){const status=$("sellerAnalyticsStatus");if(status)status.textContent="Listing performance metrics could not be loaded right now.";console.warn("Seller analytics load failed:",error)}})}
 }
 function photoStoragePaths(photos){
