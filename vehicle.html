@@ -205,7 +205,7 @@ async function loadRelated(current){
   host.innerHTML='<div class="related-heading"><div><h2>You may also like</h2><p>More approved vehicles from 3 Pedals Auto KE.</p></div><a class="btn ghost" href="/inventory">View all cars</a></div><div class="related-grid" id="relatedGrid"></div>';
   const vehicle=document.querySelector('.vehicle');if(!vehicle)return;vehicle.insertAdjacentElement('afterend',host);
   try{
-    const {data,error}=await sb.from('listings').select('id,make,model,year,price,km,fuel').eq('status','approved').neq('id',String(current.id)).limit(40);
+    const {data,error}=await sb.from('listings').select('id,make,model,year,price,km,fuel').eq('status','approved').neq('id',String(current.id)).limit(8);
     if(error||!data?.length){host.remove();return}
     const currentMake=String(current.make||'').toLowerCase(),budget=Number(current.price)||0;
     const candidates=data.map(item=>({...item,_score:(String(item.make||'').toLowerCase()===currentMake?3:0)+(budget&&Number(item.price)>0&&Math.abs(Number(item.price)-budget)/budget<=.25?2:0)+(String(item.fuel||'').toLowerCase()===String(current.fuel||'').toLowerCase()?1:0)})).sort((a,b)=>b._score-a._score||Math.abs(Number(a.price||0)-budget)-Math.abs(Number(b.price||0)-budget)).slice(0,3);
@@ -221,7 +221,7 @@ async function load(){
   if(!id){app.innerHTML='<h2>Vehicle not specified</h2><p>Please return to the Buy section and select a vehicle.</p><a class="btn gold" href="/inventory">Browse cars</a>';return}
   if(!sb){app.innerHTML='<h2>Vehicle details unavailable</h2><p class="desc">The live vehicle database is not connected. Please try again later.</p><a class="btn gold" href="/inventory">Browse cars</a>';return}
   try{
-    const request=sb.from('listings').select('*').eq('id',id).maybeSingle();
+    const request=sb.from('listings').select('id,make,model,year,price,km,fuel,description,photos,whatsapp,seller_name,seller_phone,seller_email,yard_name,yard_location,status,created_at,seller_type,contact,yard_web,yard_logo_url').eq('id',id).maybeSingle();
     const timeout=new Promise((_,reject)=>setTimeout(()=>reject(new Error('Vehicle request timed out')),15000));
     const {data:r,error}=await Promise.race([request,timeout]);
     if(error){console.error('Vehicle lookup failed:',error);app.innerHTML='<h2>Could not load this vehicle</h2><p class="desc">The vehicle details could not be retrieved. Please refresh the page or return to Buy Car and try again.</p><a class="btn gold" href="/inventory">Browse available cars</a>';return}
