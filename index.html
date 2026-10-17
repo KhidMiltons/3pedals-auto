@@ -1454,7 +1454,15 @@ function showSellerAccountPage(selected,button,options={}){
     pages.querySelectorAll(".account-page").forEach(page=>page.hidden=page!==target);
   }
   if(options.updateHistory!==false&&$("accDlg").open&&history.state?.accountPage!==selected)history.pushState({...history.state,accountOpen:true,accountPage:selected},"",location.href);
-  try{if($("accDlg").open){sessionStorage.setItem("3pedals:account-open","1");sessionStorage.setItem("3pedals:account-page",selected);const cache=$("accBody").innerHTML;if(cache)sessionStorage.setItem("3pedals:account-view-cache",cache)}}catch(_){}
+  try{
+    if($("accDlg").open){
+      sessionStorage.setItem("3pedals:account-open","1");sessionStorage.setItem("3pedals:account-page",selected);
+      const snapshot=$("accBody").cloneNode(true);
+      snapshot.querySelectorAll('input[type="password"],input[type="email"],input[type="tel"],input[type="file"],#prefBankDetails,textarea').forEach(field=>{field.value="";field.removeAttribute("value");field.textContent="";field.removeAttribute("checked");if("checked" in field)field.checked=false});
+      snapshot.querySelectorAll("#accProfileErr,.account-refresh-status,[role='alert']").forEach(node=>node.remove());
+      sessionStorage.setItem("3pedals:account-view-cache",snapshot.innerHTML);
+    }
+  }catch(_){}
   const active=button||$("accountMenu").querySelector(`[data-page="${selected}"]`);$("accountMenu").querySelectorAll("[data-page]").forEach(item=>item.classList.toggle("active",item===active));closeAccountMenu();$("accBody").scrollTo({top:0,behavior:options.scroll===false?"auto":"smooth"});
 }
 $("accountMenu").addEventListener("click",event=>{const button=event.target.closest("[data-page]");if(button)showSellerAccountPage(button.dataset.page,button)});
@@ -1737,7 +1745,7 @@ async function openAccount(options={}){
   // that may contain private account or banking details before persisting markup.
   try{
     const snapshot=box.cloneNode(true);
-    snapshot.querySelectorAll('input[type="password"],input[type="email"],input[type="tel"],input[type="file"],#prefBankDetails,textarea').forEach(field=>{field.value="";if("checked" in field)field.checked=false});
+    snapshot.querySelectorAll('input[type="password"],input[type="email"],input[type="tel"],input[type="file"],#prefBankDetails,textarea').forEach(field=>{field.value="";field.removeAttribute("value");field.textContent="";field.removeAttribute("checked");if("checked" in field)field.checked=false});
     snapshot.querySelectorAll("#accProfileErr,.account-refresh-status,[role='alert']").forEach(node=>node.remove());
     sessionStorage.setItem("3pedals:account-view-cache",snapshot.innerHTML);
   }catch(_){}
