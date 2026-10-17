@@ -133,7 +133,7 @@ footer{padding-bottom:80px}
 .specs b{word-break:break-word}
 nav a.navlink{color:inherit;text-decoration:none;padding:7px 13px;border-radius:6px;font-weight:600;border:1px solid #d4a017;white-space:nowrap}
 a.tile{text-decoration:none;color:inherit}
-.auth-left{position:fixed;left:14px;top:50%;transform:translateY(-50%);z-index:20}.auth-left button{border:1px solid #d4a017;background:#0d0d0d;color:#e3b341;padding:9px 12px;border-radius:6px;font-weight:600;cursor:pointer}.account-pill{display:inline-flex;align-items:center;gap:8px;margin-left:auto;font-size:13px;color:#e3b341}.account-pill button{border:0;background:none;color:#e3b341;cursor:pointer;font-weight:600}.authbox{max-width:520px}.authbox .switch{margin-top:12px;color:var(--mute);font-size:14px}.authbox .switch button{border:0;background:none;color:var(--blue);font-weight:600;cursor:pointer;padding:0}.admin-table{width:100%;border-collapse:collapse;font-size:14px}.admin-table th,.admin-table td{border-bottom:1px solid var(--line);padding:8px;text-align:left}
+.auth-left{position:fixed;left:14px;top:auto;bottom:18px;transform:none;z-index:20;animation:none!important;transition:none!important}.auth-left button{border:1px solid #d4a017;background:#0d0d0d;color:#e3b341;padding:9px 12px;border-radius:6px;font-weight:600;cursor:pointer;animation:none!important;transition:none!important;transform:none!important}.auth-left button:hover,.auth-left button:focus-visible{transform:none!important;animation:none!important}.account-pill{display:inline-flex;align-items:center;gap:8px;margin-left:auto;font-size:13px;color:#e3b341}.account-pill button{border:0;background:none;color:#e3b341;cursor:pointer;font-weight:600}.authbox{max-width:520px}.authbox .switch{margin-top:12px;color:var(--mute);font-size:14px}.authbox .switch button{border:0;background:none;color:var(--blue);font-weight:600;cursor:pointer;padding:0}.admin-table{width:100%;border-collapse:collapse;font-size:14px}.admin-table th,.admin-table td{border-bottom:1px solid var(--line);padding:8px;text-align:left}
 
 /* 3 Pedals professional UI refresh */
 :root{
@@ -1914,7 +1914,7 @@ function adminProjectsHtml(P){
 async function openAdmin(){
   if(!sb||!profile||!profile.is_admin)return;
   if(!$("adminDlg").open)$("adminDlg").showModal();
-  $("adminPanel").innerHTML='<p class="meta">Loading dashboard…</p>';
+  $("adminPanel").innerHTML='<div class="admin-loading-state" role="status" aria-live="polite"><span class="admin-loading-spinner" aria-hidden="true"></span><strong>Loading admin workspace</strong><span class="meta">Fetching listings, bookings and site settings…</span></div>';
   const [l,b,p,pr,settings]=await Promise.all([
     sb.from("listings").select("*").order("created_at",{ascending:false}),
     sb.from("bookings").select("*").order("created_at",{ascending:false}),
@@ -1985,7 +1985,7 @@ const rowToCar=(r,i)=>({id:r.id,make:String(r.make||"").trim(),model:String(r.mo
 async function loadListings(){
   if(!sb)return;
   // Render the core inventory immediately when it arrives; promotion flags enhance it in the background.
-  const inventoryResult=await sb.from("listings").select("*").eq("status","approved").order("created_at",{ascending:false});
+  const inventoryResult=await sb.from("listings").select("id,make,model,year,price,km,fuel,description,photos,whatsapp,seller_name,seller_phone,seller_email,yard_name,yard_location,status,created_at,seller_type,contact,yard_web,yard_logo_url").eq("status","approved").order("created_at",{ascending:false});
   if(inventoryResult.error){$("grid").innerHTML='<p class="meta">We could not load the cars right now. Please refresh in a moment.</p>';return}
   cars=(inventoryResult.data||[]).map((row,i)=>({...rowToCar(row,i),isPromoted:false}));
   makes();render();
@@ -2442,6 +2442,12 @@ loadSiteSettings();
   }
   header .account-pill button{color:#493a20!important;background:rgba(255,255,255,.9)!important;border-color:rgba(133,105,52,.5)!important}
 }
+<style id="admin-loading-polish">
+.admin-loading-state{min-height:190px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:28px 16px}
+.admin-loading-spinner{width:28px;height:28px;border:3px solid var(--line);border-top-color:var(--gold);border-radius:50%;animation:admin-loading-spin .8s linear infinite}
+@keyframes admin-loading-spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.admin-loading-spinner{animation:none;border-top-color:var(--line)}}
+</style>
 </style>
 <style id="instant-page-loading">
 .inventory-loading-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:16px;width:100%}
