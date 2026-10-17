@@ -100,7 +100,7 @@ dialog{border:1px solid var(--line);border-radius:10px;background:var(--surface)
 dialog::backdrop{background:rgba(0,0,0,.55)}
 dialog .swatch{height:120px}
 dialog .in{padding:18px}
-.specs{display:grid;grid-template-columns:max-content minmax(0,1fr);align-items:baseline;justify-content:start;gap:6px 10px;margin:12px 0}.specs span{justify-self:start}.specs b{justify-self:start;min-width:0;overflow-wrap:anywhere}
+.specs{display:grid!important;grid-template-columns:max-content max-content!important;grid-auto-flow:row!important;align-items:baseline!important;justify-content:start!important;justify-items:start!important;gap:6px 10px!important;margin:12px 0!important;padding:0!important;width:max-content!important;max-width:100%!important}.specs span,.specs b{justify-self:start!important;align-self:baseline!important;min-width:0!important;max-width:100%!important;overflow-wrap:anywhere!important}.specs b{margin:0!important}
 .specs span{color:var(--mute);font-size:14px}
 footer{border-top:1px solid var(--line);padding:22px 0 30px;color:var(--mute);font-size:14px}
 [hidden]{display:none!important}
@@ -522,7 +522,7 @@ main>section{contain:layout style}
   #buy .card .body{padding:14px!important}
   .filters{grid-template-columns:1fr!important}
   .filters input{grid-column:auto!important}
-  .specs{grid-template-columns:max-content minmax(0,1fr)!important;gap:6px 10px!important}.specs span,.specs b{justify-self:start!important;min-width:0!important;overflow-wrap:anywhere!important}
+  .specs{grid-template-columns:max-content minmax(0,max-content)!important;width:max-content!important;max-width:100%!important;gap:6px 10px!important}.specs span,.specs b{justify-self:start!important;min-width:0!important;overflow-wrap:anywhere!important}
   dialog{max-width:calc(100vw - 20px)!important;width:calc(100vw - 20px)!important;max-height:90dvh!important}
   .thumbs{overflow-x:auto!important;display:flex!important;flex-wrap:nowrap!important}
   .thumbs button{flex:0 0 64px!important}
