@@ -34,6 +34,29 @@ jobs:
       - name: Generate sitemap
         run: node scripts/generate-sitemap.mjs
 
+      - name: Validate sitemap XML and URLs
+        run: |
+          python - <<'PY'
+          import xml.etree.ElementTree as ET
+
+          namespace = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+          root = ET.parse("sitemap.xml").getroot()
+          urls = [node.text.strip() for node in root.findall("sm:url/sm:loc", namespace) if node.text and node.text.strip()]
+
+          if root.tag != "{http://www.sitemaps.org/schemas/sitemap/0.9}urlset":
+              raise SystemExit("Sitemap has an unexpected root element.")
+          if not urls:
+              raise SystemExit("Sitemap contains no URLs.")
+          if "https://3pedalsauto.co.ke/journal.html" not in urls:
+              raise SystemExit("Journal index is missing from sitemap.xml.")
+          if len(urls) != len(set(urls)):
+              raise SystemExit("Sitemap contains duplicate URLs.")
+          if any(not url.startswith("https://3pedalsauto.co.ke/") for url in urls):
+              raise SystemExit("Sitemap contains a URL outside the canonical HTTPS domain.")
+
+          print(f"Sitemap validation passed: {len(urls)} unique HTTPS URLs; Journal index is present.")
+          PY
+
       - name: Commit sitemap changes
         run: |
           git config user.name "github-actions[bot]"
