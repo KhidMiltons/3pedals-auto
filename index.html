@@ -2005,7 +2005,7 @@ function sellerTypeForListing(r){
 const rowToCar=(r,i)=>({id:r.id,make:String(r.make||"").trim(),model:String(r.model||"").trim(),year:r.year,price:r.price,km:r.km||0,fuel:r.fuel||"",desc:r.description||"",photos:r.photos||[],color:colors[i%colors.length],isPromoted:false,
   seller:{type:sellerTypeForListing(r),name:r.yard_name||r.seller_name,contact:r.contact||r.yard_contact,location:r.yard_location||r.location,phone:r.seller_phone||r.phone,email:r.seller_email||r.email,web:r.web||r.yard_web,whatsapp:r.whatsapp,logo:r.yard_logo_url||r.seller_logo_url||""}});
 const HOME_LISTINGS_CACHE_KEY="3pedals:home-approved:v4";
-function readHomeListingsCache(){try{const raw=localStorage.getItem(HOME_LISTINGS_CACHE_KEY)||sessionStorage.getItem(HOME_LISTINGS_CACHE_KEY);const saved=JSON.parse(raw||"null");return saved&&Array.isArray(saved.rows)&&Date.now()-saved.at<10*60*1000?saved.rows:null}catch(_){return null}}
+function readHomeListingsCache(){try{const legacy=HOME_LISTINGS_CACHE_KEY.replace(":v4",":v3");const raw=localStorage.getItem(HOME_LISTINGS_CACHE_KEY)||sessionStorage.getItem(HOME_LISTINGS_CACHE_KEY)||localStorage.getItem(legacy)||sessionStorage.getItem(legacy);const saved=JSON.parse(raw||"null");return saved&&Array.isArray(saved.rows)&&Date.now()-saved.at<10*60*1000?saved.rows:null}catch(_){return null}}
 function writeHomeListingsCache(rows){const value=JSON.stringify({at:Date.now(),rows});try{localStorage.setItem(HOME_LISTINGS_CACHE_KEY,value)}catch(_){}try{sessionStorage.setItem(HOME_LISTINGS_CACHE_KEY,value)}catch(_){/* Cache is optional; live inventory still works. */}}
 function applyHomeListings(rows){
   cars=(rows||[]).map((row,i)=>({...rowToCar(row,i),isPromoted:false}));
