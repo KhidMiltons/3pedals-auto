@@ -109,7 +109,7 @@ while (true) {
 
 const storySlug = (title) => String(title || "story")
   .normalize("NFKD")
-  .replace(/[\\u0300-\\u036f]/g, "")
+  .replace(/[\u0300-\u036f]/g, "")
   .toLowerCase()
   .replace(/[^a-z0-9]+/g, "-")
   .replace(/^-+|-+$/g, "") || "story";
