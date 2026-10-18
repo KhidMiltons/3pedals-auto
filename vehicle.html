@@ -220,20 +220,23 @@ async function load(){
   const app=$('app');
   if(!id){app.innerHTML='<h2>Vehicle not specified</h2><p>Please return to the Buy section and select a vehicle.</p><a class="btn gold" href="/inventory">Browse cars</a>';return}
   if(!sb){app.innerHTML='<h2>Vehicle details unavailable</h2><p class="desc">The live vehicle database is not connected. Please try again later.</p><a class="btn gold" href="/inventory">Browse cars</a>';return}
+  const cacheKey='3pedals:vehicle:v2:'+String(id);
+  let cached=null,renderedFromCache=false;
+  try{const saved=JSON.parse(sessionStorage.getItem(cacheKey)||'null');if(saved&&saved.row&&Date.now()-saved.at<30*60*1000&&saved.row.status==='approved'){cached=saved.row;render(cached);renderedFromCache=true}}catch(_){}
   try{
     const request=sb.from('listings').select('id,make,model,year,price,km,fuel,description,photos,whatsapp,seller_name,seller_phone,seller_email,yard_name,yard_location,status,created_at,seller_type,contact,yard_web,yard_logo_url').eq('id',id).maybeSingle();
     const timeout=new Promise((_,reject)=>setTimeout(()=>reject(new Error('Vehicle request timed out')),15000));
     const {data:r,error}=await Promise.race([request,timeout]);
-    if(error){console.error('Vehicle lookup failed:',error);app.innerHTML='<h2>Could not load this vehicle</h2><p class="desc">The vehicle details could not be retrieved. Please refresh the page or return to Buy Car and try again.</p><a class="btn gold" href="/inventory">Browse available cars</a>';return}
-    if(!r){app.innerHTML='<h2>Vehicle unavailable</h2><p class="desc">This vehicle may have been sold, removed, or is no longer available on the website.</p><a class="btn gold" href="/inventory">Browse available cars</a>';return}
-    render(r);
+    if(error){console.error('Vehicle lookup failed:',error);if(!renderedFromCache)app.innerHTML='<h2>Could not load this vehicle</h2><p class="desc">The vehicle details could not be retrieved. Please refresh the page or return to Buy Car and try again.</p><a class="btn gold" href="/inventory">Browse available cars</a>';else loadRelated(cached).catch(()=>{});return}
+    if(!r){try{sessionStorage.removeItem(cacheKey)}catch(_){}app.innerHTML='<h2>Vehicle unavailable</h2><p class="desc">This vehicle may have been sold, removed, or is no longer available on the website.</p><a class="btn gold" href="/inventory">Browse cars</a>';return}
+    render(r);try{sessionStorage.setItem(cacheKey,JSON.stringify({at:Date.now(),row:r}))}catch(_){}
     loadRelated(r).catch(error=>console.warn('Related vehicles could not be loaded:',error));
   }catch(error){
     console.error('Vehicle page load failed:',error);
-    app.innerHTML='<h2>Vehicle details could not load</h2><p class="desc">The request did not complete. Check your connection and refresh, or browse the available cars below.</p><a class="btn gold" href="/inventory">Browse available cars</a>';
+    if(renderedFromCache)loadRelated(cached).catch(()=>{});
+    else app.innerHTML='<h2>Vehicle details could not load</h2><p class="desc">The request did not complete. Check your connection and refresh, or browse the available cars below.</p><a class="btn gold" href="/inventory">Browse available cars</a>';
   }
 }
-load();
 </script>
 <script id="3pedals-analytics-events">
 window.dataLayer = window.dataLayer || [];
