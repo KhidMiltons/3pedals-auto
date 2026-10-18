@@ -47,8 +47,8 @@ header{background:rgba(20,21,22,.86);border-bottom:1px solid rgba(183,160,106,.2
 .logo{color:#c9b784;letter-spacing:.055em;text-transform:uppercase;font-family:'Playfair Display',Georgia,serif}
 .back{color:#e6e2d8;background:rgba(255,255,255,.055);border-color:rgba(255,255,255,.13);backdrop-filter:blur(14px);transition:transform .35s var(--ease),background .25s,border-color .25s,box-shadow .25s}
 .back:hover{transform:translateY(-2px);background:rgba(183,160,106,.12);border-color:rgba(183,160,106,.42);box-shadow:0 8px 24px rgba(0,0,0,.18)}
-main{padding-top:42px}
-.hero{padding:28px 0 24px;animation:riseIn .62s var(--ease) both}
+main{padding-top:0}
+.hero{padding:0 0 24px;animation:riseIn .62s var(--ease) both}
 .eyebrow{color:var(--gold);letter-spacing:.19em}
 .hero h1{font-family:'Playfair Display',Georgia,serif;position:relative;letter-spacing:-.025em;text-wrap:balance}
 .hero h1:after{content:"";display:block;width:72px;height:3px;margin-top:17px;border-radius:99px;background:linear-gradient(90deg,var(--gold),rgba(183,160,106,.15));box-shadow:0 0 18px rgba(183,160,106,.20);transition:width .55s var(--ease)}
@@ -210,18 +210,15 @@ input,select,textarea,.back{background:rgba(255,255,255,.055)!important;color:#f
 @media(prefers-reduced-motion:reduce){.card,.photo img{transition:none!important}}
 </style>
 <style id="featured-panel-container-compact">
-/* Compact the featured SECTION container only; leave vehicle-card sizing untouched. */
+/* Restore the panel's original height and spacing; reduce only its width. */
 .featured-section{
-  width:min(100%,1120px)!important;
-  margin:18px auto 26px!important;
-  padding:14px!important;
-  border-radius:15px!important;
+  width:min(100%,1000px)!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  box-sizing:border-box!important;
 }
-.featured-heading{gap:10px!important;margin-bottom:12px!important}
-.featured-heading h2{margin-top:3px!important;margin-bottom:4px!important}
 @media(max-width:760px){
-  .featured-section{width:100%!important;margin:14px 0 20px!important;padding:11px!important}
-  .featured-heading{margin-bottom:10px!important}
+  .featured-section{width:100%!important;margin-left:0!important;margin-right:0!important}
 }
 </style>
 
