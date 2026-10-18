@@ -186,24 +186,29 @@ input,select,textarea,.back{background:rgba(255,255,255,.055)!important;color:#f
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
 </style>
 <link rel="stylesheet" href="site-theme.css">
+
 <style id="inventory-speed-and-compact-featured">
-/* Render compact featured cards on wide screens; keep touch layouts comfortable. */
+/* Compact featured cards on desktop; keep touch layouts comfortable. */
 @media(min-width:1200px){
-  .featured-grid{grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:9px!important}
-  .featured-grid .photo{height:104px!important}
-  .featured-grid .body{padding:8px!important}
-  .featured-grid .body h3{font-size:13px!important;line-height:1.2!important}
-  .featured-grid .price{font-size:13px!important;margin-bottom:5px!important}
-  .featured-grid .tag{font-size:9px!important;padding:3px 5px!important}
-  .featured-grid .dealer-cardline{font-size:9px!important}
+  .featured-grid{grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:8px!important}
+  .featured-grid .card{min-width:0!important}
+  .featured-grid .photo{height:82px!important}
+  .featured-grid .body{padding:6px!important}
+  .featured-grid .body h3{font-size:12px!important;line-height:1.15!important;margin-bottom:3px!important}
+  .featured-grid .price{font-size:12px!important;margin-bottom:4px!important}
+  .featured-grid .tags{gap:3px!important}
+  .featured-grid .tag{font-size:8px!important;padding:2px 4px!important}
+  .featured-grid .dealer-cardline{font-size:9px!important;margin-top:4px!important;padding-top:4px!important}
+  .featured-grid .promoted-tag{right:5px!important;top:5px!important;padding:2px 4px!important;font-size:7px!important}
 }
 @media(min-width:900px) and (max-width:1199px){
-  .featured-grid{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:9px!important}
-  .featured-grid .photo{height:112px!important}
+  .featured-grid{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:8px!important}
+  .featured-grid .photo{height:90px!important}
+  .featured-grid .body{padding:7px!important}
+  .featured-grid .body h3,.featured-grid .price{font-size:12px!important}
 }
 @media(prefers-reduced-motion:reduce){.card,.photo img{transition:none!important}}
-</style>
-</head>
+</style></head>
 <body>
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M8B39FNW"
@@ -234,9 +239,9 @@ function handleCardClick(e){const b=e.target.closest(".card");if(!b||e.target.cl
 $("grid").addEventListener("pointermove",e=>{if(e.pointerType!=="mouse")return;const photo=e.target.closest(".photo");if(!photo)return;const r=photo.getBoundingClientRect();photo.style.setProperty("--lens-x",`${((e.clientX-r.left)/r.width)*100}%`);photo.style.setProperty("--lens-y",`${((e.clientY-r.top)/r.height)*100}%`)});
 ["q","make","modelFilter","yearFilter","fuel","max","sort"].forEach(id=>$(id).addEventListener("input",render));$("make").addEventListener("change",()=>{updateModelOptions();render()});$("clearFilters").addEventListener("click",()=>{$("q").value="";$("make").value="";$("modelFilter").value="";$("yearFilter").value="";$("fuel").value="";$("max").value="0";$("sort").value="new";updateModelOptions();render()});
 function updateModelOptions(){const make=$("make").value,models=[...new Set(cars.filter(c=>!make||c.make===make).map(c=>c.model).filter(Boolean))].sort((a,b)=>a.localeCompare(b)),select=$("modelFilter"),previous=select.value;select.innerHTML='<option value="">All models</option>'+models.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");select.disabled=!models.length;if(models.includes(previous))select.value=previous}
-const INVENTORY_CACHE_KEY="3pedals:inventory-approved:v3";
-function readInventoryCache(){try{const saved=JSON.parse(sessionStorage.getItem(INVENTORY_CACHE_KEY)||"null");return saved&&Array.isArray(saved.rows)&&Date.now()-saved.at<30*60*1000?saved.rows:null}catch(_){return null}}
-function writeInventoryCache(rows){try{sessionStorage.setItem(INVENTORY_CACHE_KEY,JSON.stringify({at:Date.now(),rows}))}catch(_){/* Storage may be full or disabled; live loading still works. */}}
+const INVENTORY_CACHE_KEY="3pedals:inventory-approved:v4";
+function readInventoryCache(){try{const raw=localStorage.getItem(INVENTORY_CACHE_KEY)||sessionStorage.getItem(INVENTORY_CACHE_KEY);const saved=JSON.parse(raw||"null");return saved&&Array.isArray(saved.rows)&&Date.now()-saved.at<10*60*1000?saved.rows:null}catch(_){return null}}
+function writeInventoryCache(rows){const value=JSON.stringify({at:Date.now(),rows});try{localStorage.setItem(INVENTORY_CACHE_KEY,value)}catch(_){}try{sessionStorage.setItem(INVENTORY_CACHE_KEY,value)}catch(_){/* Storage may be full or disabled; live loading still works. */}}
 function applyInventoryRows(rows){
   const oldMake=$("make").value,oldYear=$("yearFilter").value,oldFuel=$("fuel").value;
   cars=(rows||[]).map(row=>({...rowToCar(row),isPromoted:false}));
@@ -255,13 +260,17 @@ async function load(){
   if(!sb||!CFG.key||/^PASTE/.test(CFG.key)){$("count").textContent="Inventory unavailable";$("grid").innerHTML='<div class="error">The inventory database is not connected. Check config.js.</div>';return}
   const cachedRows=readInventoryCache();
   if(cachedRows){applyInventoryRows(cachedRows);$("count").textContent+=" · refreshing";}
-  const {data,error}=await sb.from("listings").select("id,make,model,year,price,km,fuel,description,photos,whatsapp,seller_name,seller_phone,seller_email,yard_name,yard_location,status,created_at,seller_type,contact,yard_web,yard_logo_url").eq("status","approved").order("created_at",{ascending:false});
-  if(error){
+  let result=await sb.from("listings").select("id,make,model,year,price,km,fuel,description,photos,whatsapp,seller_name,seller_phone,seller_email,yard_name,yard_location,status,created_at,seller_type,contact,yard_web,yard_logo_url").eq("status","approved").order("created_at",{ascending:false});
+  if(result.error){
+    console.warn("Optimized inventory query failed; retrying with the full listing row.",result.error);
+    result=await sb.from("listings").select("*").eq("status","approved").order("created_at",{ascending:false});
+  }
+  if(result.error){
     if(!cachedRows){$("count").textContent="Inventory unavailable";$("grid").innerHTML='<div class="error">We could not load the inventory right now. Please refresh in a moment.</div>'}
     else $("count").textContent+=" · showing recently loaded cars";
-    console.error("Inventory refresh failed:",error);return;
+    console.error("Inventory refresh failed:",result.error);return;
   }
-  const rows=data||[];writeInventoryCache(rows);applyInventoryRows(rows);
+  const rows=result.data||[];writeInventoryCache(rows);applyInventoryRows(rows);
   sb.from("active_listing_promotions").select("listing_id").then(({data:promoRows,error:promoError})=>{
     if(promoError){console.warn("Promotion badges could not be loaded; inventory is still available.",promoError);return}
     const promoted=new Set((promoRows||[]).map(x=>String(x.listing_id)));
