@@ -16,6 +16,7 @@ const pageUrls = [
   "https://3pedalsauto.co.ke/inventory",
   "https://3pedalsauto.co.ke/dealers.html",
   "https://3pedalsauto.co.ke/garage.html",
+  "https://3pedalsauto.co.ke/journal.html",
 ];
 
 const listingRows = [];
@@ -65,6 +66,64 @@ const vehicleUrls = listingIds.sort().map((id) => {
   return url.toString();
 });
 
+// Include every currently published Journal article. The public SELECT policy on
+// public.projects allows published rows to be read with the site's publishable key.
+const articleRows = [];
+offset = 0;
+while (true) {
+  const endpoint = new URL("/rest/v1/projects", projectUrl);
+  endpoint.searchParams.set("select", "id,title,created_at,updated_at");
+  endpoint.searchParams.set("type", "eq.article");
+  endpoint.searchParams.set("published", "eq.true");
+  endpoint.searchParams.set("order", "created_at.desc");
+
+  const response = await fetch(endpoint, {
+    headers: {
+      apikey: apiKey,
+      Authorization: `Bearer ${apiKey}`,
+      Range: `${offset}-${offset + pageSize - 1}`,
+      "Range-Unit": "items",
+      Accept: "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    const details = await response.text();
+    throw new Error(`Supabase published Journal articles request failed (${response.status}): ${details}`);
+  }
+
+  const batch = await response.json();
+  if (!Array.isArray(batch)) {
+    throw new Error("Supabase returned an unexpected response while fetching Journal articles.");
+  }
+
+  for (const article of batch) {
+    if (typeof article.id === "string" && article.id.length > 0 && typeof article.title === "string") {
+      articleRows.push(article);
+    }
+  }
+
+  if (batch.length < pageSize) break;
+  offset += pageSize;
+}
+
+const storySlug = (title) => String(title || "story")
+  .normalize("NFKD")
+  .replace(/[\\u0300-\\u036f]/g, "")
+  .toLowerCase()
+  .replace(/[^a-z0-9]+/g, "-")
+  .replace(/^-+|-+$/g, "") || "story";
+
+const articleUrls = [...new Map(articleRows.map((article) => {
+  const url = new URL("https://3pedalsauto.co.ke/journal.html");
+  url.searchParams.set("slug", storySlug(article.title));
+  url.searchParams.set("id", article.id);
+  return [url.toString(), {
+    url: url.toString(),
+    lastmod: article.updated_at || article.created_at || null,
+  }];
+})).values()];
+
 const normalizeYardName = (name) => String(name || "")
   .trim()
   .replace(/\s+(?:ke|kenya)$/i, "")
@@ -102,9 +161,10 @@ const sitemap = [
   '<?xml version="1.0" encoding="UTF-8"?>',
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
   ...allUrls.map((url) => `  <url><loc>${xmlEscape(url)}</loc></url>`),
+  ...articleUrls.map(({ url, lastmod }) => `  <url><loc>${xmlEscape(url)}</loc>${lastmod && !Number.isNaN(Date.parse(lastmod)) ? `<lastmod>${new Date(lastmod).toISOString()}</lastmod>` : ""}</url>`),
   "</urlset>",
   "",
 ].join("\n");
 
 writeFileSync(path.join(root, "sitemap.xml"), sitemap, "utf8");
-console.log(`Generated sitemap.xml with ${pageUrls.length} main pages, ${yardUrls.length} dealer profiles, and ${vehicleUrls.length} approved vehicle pages.`);
+console.log(`Generated sitemap.xml with ${pageUrls.length} main pages, ${yardUrls.length} dealer profiles, ${vehicleUrls.length} approved vehicle pages, and ${articleUrls.length} published Journal articles.`);
