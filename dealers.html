@@ -74,9 +74,9 @@ const dealerDisplayName=name=>String(name||"").trim().replace(/\s+(?:ke|kenya)$/
 const dealerKey=name=>dealerDisplayName(name).normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]/g,"");const dealerSlug=name=>dealerDisplayName(name).normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");
 let dealers=[];
 function render(){const query=$("search").value.trim().toLowerCase(),location=$("locationFilter").value,sort=$("dealerSort").value;let shown=dealers.filter(dealer=>(!query||`${dealer.name} ${dealer.location||""}`.toLowerCase().includes(query))&&(!location||dealer.location===location));shown.sort((a,b)=>sort==="vehicles"?(b.count-a.count)||a.name.localeCompare(b.name):a.name.localeCompare(b.name));$("count").textContent=`${shown.length} ${shown.length===1?"dealer":"dealers"}${query||location?" found":" listed"}`;$("dealerList").innerHTML=shown.length?shown.map((dealer,index)=>`<a class="dealer" href="yard.html?slug=${encodeURIComponent(dealer.slug)}&dealer=${encodeURIComponent(dealer.key)}&name=${encodeURIComponent(dealer.name)}" style="--i:${index}"><span class="logo">${dealer.logo?`<img src="${esc(dealer.logo)}" alt="">`:esc(dealer.name.split(/\s+/).map(word=>word[0]).join("").slice(0,2).toUpperCase())}</span><span class="dealer-copy"><h2>${esc(dealer.name)}</h2><p>${dealer.location?`${esc(dealer.location)} · `:""}${dealer.count} ${dealer.count===1?"vehicle":"vehicles"} available</p></span><span class="arrow" aria-hidden="true">›</span></a>`).join(""):`<div class="state">${query||location?"No dealers match those filters.":"No dealer collections are currently available."}</div>`}
-const DEALERS_CACHE_KEY="3pedals:dealer-directory:v2";
-function readDealersCache(){try{const saved=JSON.parse(sessionStorage.getItem(DEALERS_CACHE_KEY)||"null");return saved&&Array.isArray(saved.rows)&&Date.now()-saved.at<30*60*1000?saved.rows:null}catch(_){return null}}
-function writeDealersCache(rows){try{sessionStorage.setItem(DEALERS_CACHE_KEY,JSON.stringify({at:Date.now(),rows}))}catch(_){}}
+const DEALERS_CACHE_KEY="3pedals:dealer-directory:v3";
+function readDealersCache(){try{const raw=localStorage.getItem(DEALERS_CACHE_KEY)||sessionStorage.getItem(DEALERS_CACHE_KEY);const saved=JSON.parse(raw||"null");return saved&&Array.isArray(saved.rows)&&Date.now()-saved.at<10*60*1000?saved.rows:null}catch(_){return null}}
+function writeDealersCache(rows){const value=JSON.stringify({at:Date.now(),rows});try{localStorage.setItem(DEALERS_CACHE_KEY,value)}catch(_){}try{sessionStorage.setItem(DEALERS_CACHE_KEY,value)}catch(_){}}
 function applyDealerRows(data){
   const groups=new Map();
   (data||[]).filter(row=>yardType(row)==="yard").forEach(row=>{
@@ -99,9 +99,15 @@ async function load(){
   if(!sb||!CFG.key||/^PASTE/.test(CFG.key)){$("dealerTotal").textContent="0";$("vehicleTotal").textContent="0";$("count").textContent="Dealer directory unavailable";$("dealerList").innerHTML='<div class="state">The live dealer directory is unavailable right now. Please try again later.</div>';return}
   const cachedRows=readDealersCache();if(cachedRows)applyDealerRows(cachedRows);
   try{
-    const {data,error}=await sb.from("listings").select("id,seller_type,account_type,yard_name,seller_name,yard_location,location,seller_slug,yard_logo_url,seller_logo_url,status").eq("status","approved");
-    if(error)throw error;
-    const rows=data||[];writeDealersCache(rows);applyDealerRows(rows);
+    // Use fields known to exist in the current listings schema; unsupported optional columns
+    // make PostgREST reject the entire select and leave the dealer directory empty.
+    let result=await sb.from("listings").select("id,seller_type,yard_name,seller_name,yard_location,yard_logo_url,status").eq("status","approved");
+    if(result.error){
+      console.warn("Dealer directory field query failed; retrying with all listing columns.",result.error);
+      result=await sb.from("listings").select("*").eq("status","approved");
+    }
+    if(result.error)throw result.error;
+    const rows=result.data||[];writeDealersCache(rows);applyDealerRows(rows);
   }catch(error){
     console.error("Dealer directory could not refresh:",error);
     if(!cachedRows){$("dealerTotal").textContent="—";$("vehicleTotal").textContent="—";$("count").textContent="Dealer directory unavailable";$("dealerList").innerHTML='<div class="state">We could not load the dealer directory right now. Please refresh in a moment.</div>'}
