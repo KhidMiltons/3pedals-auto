@@ -992,15 +992,13 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 }
 </style>
 <style id="featured-panel-container-compact">
-/* Restore the panel's original height and spacing; reduce only its width. */
+/* Keep the original panel height and spacing; align its width with the vehicle listing grid. */
 .featured-section{
-  width:min(100%,1000px)!important;
-  margin-left:auto!important;
-  margin-right:auto!important;
+  width:100%!important;
+  max-width:100%!important;
+  margin-left:0!important;
+  margin-right:0!important;
   box-sizing:border-box!important;
-}
-@media(max-width:760px){
-  .featured-section{width:100%!important;margin-left:0!important;margin-right:0!important}
 }
 </style>
 
