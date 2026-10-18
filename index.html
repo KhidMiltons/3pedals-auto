@@ -990,7 +990,24 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
   .featured-grid .card .body{padding:8px!important}
   .featured-grid .card h3,.featured-grid .card .price{font-size:13px!important}
 }
-</style></head>
+</style>
+<style id="featured-panel-container-compact">
+/* Compact the featured SECTION container only; leave vehicle-card sizing untouched. */
+.featured-section{
+  width:min(100%,1120px)!important;
+  margin:18px auto 26px!important;
+  padding:14px!important;
+  border-radius:15px!important;
+}
+.featured-heading{gap:10px!important;margin-bottom:12px!important}
+.featured-heading h2{margin-top:3px!important;margin-bottom:4px!important}
+@media(max-width:760px){
+  .featured-section{width:100%!important;margin:14px 0 20px!important;padding:11px!important}
+  .featured-heading{margin-bottom:10px!important}
+}
+</style>
+
+</head>
 <body>
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M8B39FNW"
