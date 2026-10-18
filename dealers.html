@@ -72,7 +72,39 @@ const dealerDisplayName=name=>String(name||"").trim().replace(/\s+(?:ke|kenya)$/
 const dealerKey=name=>dealerDisplayName(name).normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]/g,"");const dealerSlug=name=>dealerDisplayName(name).normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");
 let dealers=[];
 function render(){const query=$("search").value.trim().toLowerCase(),location=$("locationFilter").value,sort=$("dealerSort").value;let shown=dealers.filter(dealer=>(!query||`${dealer.name} ${dealer.location||""}`.toLowerCase().includes(query))&&(!location||dealer.location===location));shown.sort((a,b)=>sort==="vehicles"?(b.count-a.count)||a.name.localeCompare(b.name):a.name.localeCompare(b.name));$("count").textContent=`${shown.length} ${shown.length===1?"dealer":"dealers"}${query||location?" found":" listed"}`;$("dealerList").innerHTML=shown.length?shown.map((dealer,index)=>`<a class="dealer" href="yard.html?slug=${encodeURIComponent(dealer.slug)}&dealer=${encodeURIComponent(dealer.key)}&name=${encodeURIComponent(dealer.name)}" style="--i:${index}"><span class="logo">${dealer.logo?`<img src="${esc(dealer.logo)}" alt="">`:esc(dealer.name.split(/\s+/).map(word=>word[0]).join("").slice(0,2).toUpperCase())}</span><span class="dealer-copy"><h2>${esc(dealer.name)}</h2><p>${dealer.location?`${esc(dealer.location)} · `:""}${dealer.count} ${dealer.count===1?"vehicle":"vehicles"} available</p></span><span class="arrow" aria-hidden="true">›</span></a>`).join(""):`<div class="state">${query||location?"No dealers match those filters.":"No dealer collections are currently available."}</div>`}
-async function load(){if(!sb||!CFG.key||/^PASTE/.test(CFG.key)){$("dealerTotal").textContent="0";$("vehicleTotal").textContent="0";$("count").textContent="Dealer directory unavailable";$("dealerList").innerHTML='<div class="state">The live dealer directory is unavailable right now. Please try again later.</div>';return}try{const {data,error}=await sb.from("listings").select("*").eq("status","approved");if(error)throw error;const groups=new Map();(data||[]).filter(row=>yardType(row)==="yard").forEach(row=>{const rawName=nameOf(row),name=dealerDisplayName(rawName)||rawName,slug=String(row.seller_slug||dealerSlug(rawName)),key=dealerKey(rawName);if(!groups.has(key))groups.set(key,{name,slug,key,count:0,logo:row.yard_logo_url||row.seller_logo_url||"",location:String(row.yard_location||row.location||"").trim()});const group=groups.get(key);group.count++;if(!group.logo)group.logo=row.yard_logo_url||row.seller_logo_url||"";if(!group.location)group.location=String(row.yard_location||row.location||"").trim();const displayWords=name.split(/\s+/).length,groupWords=group.name.split(/\s+/).length;if(displayWords>groupWords||(displayWords===groupWords&&name.length>group.name.length))group.name=name});dealers=[...groups.values()].sort((a,b)=>a.name.localeCompare(b.name));const locations=[...new Set(dealers.map(dealer=>dealer.location).filter(Boolean))].sort((a,b)=>a.localeCompare(b));$("locationFilter").innerHTML='<option value="" selected>Select location</option>'+locations.map(location=>`<option value="${esc(location)}">${esc(location)}</option>`).join("");$("dealerTotal").textContent=dealers.length.toLocaleString("en-KE");$("vehicleTotal").textContent=dealers.reduce((sum,dealer)=>sum+dealer.count,0).toLocaleString("en-KE");render()}catch(error){console.error("Dealer directory could not load:",error);$("dealerTotal").textContent="—";$("vehicleTotal").textContent="—";$("count").textContent="Dealer directory unavailable";$("dealerList").innerHTML='<div class="state">We could not load the dealer directory right now. Please refresh in a moment.</div>'}}
+const DEALERS_CACHE_KEY="3pedals:dealer-directory:v2";
+function readDealersCache(){try{const saved=JSON.parse(sessionStorage.getItem(DEALERS_CACHE_KEY)||"null");return saved&&Array.isArray(saved.rows)&&Date.now()-saved.at<30*60*1000?saved.rows:null}catch(_){return null}}
+function writeDealersCache(rows){try{sessionStorage.setItem(DEALERS_CACHE_KEY,JSON.stringify({at:Date.now(),rows}))}catch(_){}}
+function applyDealerRows(data){
+  const groups=new Map();
+  (data||[]).filter(row=>yardType(row)==="yard").forEach(row=>{
+    const rawName=nameOf(row),name=dealerDisplayName(rawName)||rawName,slug=String(row.seller_slug||dealerSlug(rawName)),key=dealerKey(rawName);
+    if(!groups.has(key))groups.set(key,{name,slug,key,count:0,logo:row.yard_logo_url||row.seller_logo_url||"",location:String(row.yard_location||row.location||"").trim()});
+    const group=groups.get(key);group.count++;
+    if(!group.logo)group.logo=row.yard_logo_url||row.seller_logo_url||"";
+    if(!group.location)group.location=String(row.yard_location||row.location||"").trim();
+    const displayWords=name.split(/\s+/).length,groupWords=group.name.split(/\s+/).length;
+    if(displayWords>groupWords||(displayWords===groupWords&&name.length>group.name.length))group.name=name;
+  });
+  dealers=[...groups.values()].sort((a,b)=>a.name.localeCompare(b.name));
+  const locations=[...new Set(dealers.map(dealer=>dealer.location).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+  $("locationFilter").innerHTML='<option value="" selected>Select location</option>'+locations.map(location=>`<option value="${esc(location)}">${esc(location)}</option>`).join("");
+  $("dealerTotal").textContent=dealers.length.toLocaleString("en-KE");
+  $("vehicleTotal").textContent=dealers.reduce((sum,dealer)=>sum+dealer.count,0).toLocaleString("en-KE");
+  render();
+}
+async function load(){
+  if(!sb||!CFG.key||/^PASTE/.test(CFG.key)){$("dealerTotal").textContent="0";$("vehicleTotal").textContent="0";$("count").textContent="Dealer directory unavailable";$("dealerList").innerHTML='<div class="state">The live dealer directory is unavailable right now. Please try again later.</div>';return}
+  const cachedRows=readDealersCache();if(cachedRows)applyDealerRows(cachedRows);
+  try{
+    const {data,error}=await sb.from("listings").select("id,seller_type,account_type,yard_name,seller_name,yard_location,location,seller_slug,yard_logo_url,seller_logo_url,status").eq("status","approved");
+    if(error)throw error;
+    const rows=data||[];writeDealersCache(rows);applyDealerRows(rows);
+  }catch(error){
+    console.error("Dealer directory could not refresh:",error);
+    if(!cachedRows){$("dealerTotal").textContent="—";$("vehicleTotal").textContent="—";$("count").textContent="Dealer directory unavailable";$("dealerList").innerHTML='<div class="state">We could not load the dealer directory right now. Please refresh in a moment.</div>'}
+  }
+}
 $("search").addEventListener("input",render);$("locationFilter").addEventListener("change",render);$("dealerSort").addEventListener("change",render);$("clearDealerFilters").addEventListener("click",()=>{$("search").value="";$("locationFilter").value="";$("dealerSort").value="name";render()});load();
 </script>
 <script id="3pedals-analytics-events">
