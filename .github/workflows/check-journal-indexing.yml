@@ -1,0 +1,43 @@
+name: Check Journal indexing in Google Search Console
+
+on:
+  schedule:
+    - cron: "41 5 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: journal-indexing-check
+  cancel-in-progress: false
+
+jobs:
+  inspect-journal-urls:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Inspect published Journal URLs
+        env:
+          GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON }}
+          GSC_PROPERTY_URL: ${{ vars.GSC_PROPERTY_URL }}
+        run: node scripts/check-journal-indexing.mjs
+
+      - name: Upload indexing reports
+        if: always() && hashFiles('journal-indexing-report.md', 'journal-indexing-report.csv') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: journal-indexing-report
+          path: |
+            journal-indexing-report.md
+            journal-indexing-report.csv
+          if-no-files-found: warn
+          retention-days: 30
