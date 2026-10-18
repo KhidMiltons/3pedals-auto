@@ -972,7 +972,25 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 </style>
 <style id="account-restore-no-flash">html.account-restoring body{visibility:hidden!important;background:#0d0e0f!important}html.account-restoring #accDlg[open]{visibility:visible!important}html.account-restoring #accDlg[open] #accBody{min-height:100px}#accDlg .account-refresh-status{display:none!important}</style>
 <script>try{if(sessionStorage.getItem("3pedals:account-open")==="1")document.documentElement.classList.add("account-restoring")}catch(_){}</script>
-</head>
+<style id="featured-card-compact-fix">
+@media(min-width:1100px){
+  .featured-grid{grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:8px!important}
+  .featured-grid .swatch{height:96px!important;min-height:96px!important}
+  .featured-grid .swatch-photo{height:100%!important;min-height:0!important;object-fit:cover!important}
+  .featured-grid .card .body{padding:7px!important}
+  .featured-grid .card h3{font-size:12px!important;line-height:1.2!important;margin:0 0 4px!important}
+  .featured-grid .card .price{font-size:12px!important;margin:0 0 4px!important}
+  .featured-grid .card .tag{font-size:8px!important;padding:2px 4px!important}
+  .featured-grid .card .card-extra{margin-top:5px!important}
+  .featured-grid .card .yard-line{font-size:9px!important;gap:4px!important}
+}
+@media(min-width:761px) and (max-width:1099px){
+  .featured-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:8px!important}
+  .featured-grid .swatch{height:100px!important;min-height:100px!important}
+  .featured-grid .card .body{padding:8px!important}
+  .featured-grid .card h3,.featured-grid .card .price{font-size:13px!important}
+}
+</style></head>
 <body>
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M8B39FNW"
@@ -1986,9 +2004,9 @@ function sellerTypeForListing(r){
 }
 const rowToCar=(r,i)=>({id:r.id,make:String(r.make||"").trim(),model:String(r.model||"").trim(),year:r.year,price:r.price,km:r.km||0,fuel:r.fuel||"",desc:r.description||"",photos:r.photos||[],color:colors[i%colors.length],isPromoted:false,
   seller:{type:sellerTypeForListing(r),name:r.yard_name||r.seller_name,contact:r.contact||r.yard_contact,location:r.yard_location||r.location,phone:r.seller_phone||r.phone,email:r.seller_email||r.email,web:r.web||r.yard_web,whatsapp:r.whatsapp,logo:r.yard_logo_url||r.seller_logo_url||""}});
-const HOME_LISTINGS_CACHE_KEY="3pedals:home-approved:v3";
-function readHomeListingsCache(){try{const saved=JSON.parse(sessionStorage.getItem(HOME_LISTINGS_CACHE_KEY)||"null");return saved&&Array.isArray(saved.rows)&&Date.now()-saved.at<30*60*1000?saved.rows:null}catch(_){return null}}
-function writeHomeListingsCache(rows){try{sessionStorage.setItem(HOME_LISTINGS_CACHE_KEY,JSON.stringify({at:Date.now(),rows}))}catch(_){/* Cache is optional; live inventory still works. */}}
+const HOME_LISTINGS_CACHE_KEY="3pedals:home-approved:v4";
+function readHomeListingsCache(){try{const raw=localStorage.getItem(HOME_LISTINGS_CACHE_KEY)||sessionStorage.getItem(HOME_LISTINGS_CACHE_KEY);const saved=JSON.parse(raw||"null");return saved&&Array.isArray(saved.rows)&&Date.now()-saved.at<10*60*1000?saved.rows:null}catch(_){return null}}
+function writeHomeListingsCache(rows){const value=JSON.stringify({at:Date.now(),rows});try{localStorage.setItem(HOME_LISTINGS_CACHE_KEY,value)}catch(_){}try{sessionStorage.setItem(HOME_LISTINGS_CACHE_KEY,value)}catch(_){/* Cache is optional; live inventory still works. */}}
 function applyHomeListings(rows){
   cars=(rows||[]).map((row,i)=>({...rowToCar(row,i),isPromoted:false}));
   makes();render();
@@ -1997,7 +2015,11 @@ async function loadListings(){
   if(!sb)return;
   const cachedRows=readHomeListingsCache();
   if(cachedRows)applyHomeListings(cachedRows);
-  const inventoryResult=await sb.from("listings").select("id,make,model,year,price,km,fuel,description,photos,whatsapp,seller_name,seller_phone,seller_email,yard_name,yard_location,status,created_at,seller_type,contact,yard_web,yard_logo_url").eq("status","approved").order("created_at",{ascending:false});
+  let inventoryResult=await sb.from("listings").select("id,make,model,year,price,km,fuel,description,photos,whatsapp,seller_name,seller_phone,seller_email,yard_name,yard_location,status,created_at,seller_type,contact,yard_web,yard_logo_url").eq("status","approved").order("created_at",{ascending:false});
+  if(inventoryResult.error){
+    console.warn("Optimized inventory query failed; retrying with the full listing row.",inventoryResult.error);
+    inventoryResult=await sb.from("listings").select("*").eq("status","approved").order("created_at",{ascending:false});
+  }
   if(inventoryResult.error){
     if(!cachedRows)$("grid").innerHTML='<p class="meta">We could not load the cars right now. Please refresh in a moment.</p>';
     else console.warn("Inventory refresh failed; showing recently loaded cars.",inventoryResult.error);
@@ -2041,7 +2063,7 @@ function updateBuyFilters(){const mk=$("make").value,mf=$("model").value,cv=$("v
 function makes(){const m=[...new Set(cars.map(c=>canonicalMake(c.make)).filter(Boolean))].sort(),cur=$("make").value;$("make").innerHTML='<option value="">All makes</option>'+m.map(x=>`<option value="${esc(x)}">${esc(x==="Mercedes-Benz"?"Mercedes":x)}</option>`).join("");if(m.includes(cur))$("make").value=cur;else $("make").value="";updateBuyFilters()}
 const hasPh=c=>c.photos&&c.photos[0]?" has":"";
 const bgOf=c=>c.color||"#17191c";
-const cardMarkup=c=>{
+const cardMarkup=(c,i)=>{
   const isYard=c.seller&&c.seller.type==="yard",yardName=c.seller?.name||"Car yard",loc=c.seller?.location||"";
   const vehicleUrl=`vehicle.html?id=${encodeURIComponent(c.id)}`;
   const yardUrl=`yard.html?name=${encodeURIComponent(yardName)}`;
