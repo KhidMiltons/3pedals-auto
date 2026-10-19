@@ -1006,6 +1006,47 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 }
 </style>
 
+<style id="mobile-fast-interactions">
+/* Small screens: avoid decorative motion and costly blur/filter work during scrolling. */
+@media (max-width: 820px), (hover: none), (pointer: coarse) {
+  html { scroll-behavior: auto !important; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.001ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+  .card:hover, .card:focus-visible, .tile:hover, .tile:focus-visible,
+  .project-card:hover, .project-card:focus-visible, .contact-card:hover,
+  .panel:hover, .mechanic-card:hover, .btn:hover, .back:hover, .logo:hover,
+  .account-pill:hover, .account-icon:hover, nav button:hover, nav a.navlink:hover,
+  .thumb:hover, .thumbs button:hover, .card:active, .tile:active, .btn:active {
+    transform: none !important;
+    filter: none !important;
+    box-shadow: none !important;
+  }
+  .card:hover img, .card:focus-visible img, .card:hover .swatch,
+  .card:focus-visible .swatch, .project-card:hover img, .project-card:hover video,
+  .account-icon:hover svg { transform: none !important; filter: none !important; }
+  .card-reveal { transition: none !important; }
+  nav button, nav a.navlink { --dock-scale: 1 !important; }
+  .backdrop-blur, .glass, .panel, .filters input, .filters select {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+@media (max-width: 820px) and (prefers-reduced-motion: no-preference) {
+  main > section:not([hidden]) { animation: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -2360,6 +2401,8 @@ loadSiteSettings();
 (()=>{
   const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(reduced)return;
+  const smallOrTouch=window.matchMedia&&window.matchMedia('(max-width: 820px), (hover: none), (pointer: coarse)').matches;
+  if(smallOrTouch)return;
   const apply=()=>{
     document.querySelectorAll('main > section:not([hidden])').forEach(s=>{
       s.animate([{opacity:.001,transform:'translateY(10px)'},{opacity:1,transform:'translateY(0)'}],{duration:420,easing:'cubic-bezier(.22,1,.36,1)',fill:'both'});
