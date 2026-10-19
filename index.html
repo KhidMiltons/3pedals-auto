@@ -1168,33 +1168,26 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 </style>
 
 <style id="translucent-glass-action-buttons">
-/* Subtle translucent glass finish for the home WhatsApp and Admin actions. */
-#publicWhatsappHero,
-#publicWhatsappFab,
-#adminOpen,
-#accAdmin{
-  background:linear-gradient(135deg,rgba(255,255,255,.19),rgba(255,255,255,.055))!important;
-  color:var(--ink,#f8fafc)!important;
-  border:1px solid rgba(215,169,40,.58)!important;
-  -webkit-backdrop-filter:blur(16px) saturate(155%)!important;
-  backdrop-filter:blur(16px) saturate(155%)!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.24),0 8px 24px rgba(0,0,0,.14)!important;
+/* Translucent glass icon buttons for the home WhatsApp and Admin actions. */
+.glass-icon-btn{
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  width:48px!important;height:48px!important;min-width:48px!important;padding:0!important;
+  border-radius:50%!important;box-sizing:border-box!important;
+  background:linear-gradient(135deg,rgba(255,255,255,.20),rgba(255,255,255,.055))!important;
+  color:var(--ink,#f8fafc)!important;border:1px solid rgba(215,169,40,.62)!important;
+  -webkit-backdrop-filter:blur(16px) saturate(160%)!important;backdrop-filter:blur(16px) saturate(160%)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 8px 24px rgba(0,0,0,.16)!important;
   transition:background .2s ease,border-color .2s ease,transform .2s ease,box-shadow .2s ease!important;
 }
-#publicWhatsappHero:hover,
-#publicWhatsappFab:hover,
-#adminOpen:hover,
-#accAdmin:hover{
-  background:linear-gradient(135deg,rgba(255,255,255,.28),rgba(215,169,40,.13))!important;
-  border-color:rgba(215,169,40,.9)!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.32),0 10px 28px rgba(0,0,0,.2)!important;
-  transform:translateY(-1px);
-}
-#publicWhatsappFab{color:#f7e7b0!important;border-width:1px!important}
-#adminOpen,#accAdmin{border-radius:999px!important;padding:11px 17px!important;cursor:pointer}
-@media(prefers-reduced-motion:reduce){
-  #publicWhatsappHero,#publicWhatsappFab,#adminOpen,#accAdmin{transition:none!important}
-}
+.glass-icon-btn svg{width:23px!important;height:23px!important;display:block!important;fill:none!important;stroke:currentColor!important;stroke-width:1.65!important;stroke-linecap:round!important;stroke-linejoin:round!important}
+.glass-icon-btn:hover{background:linear-gradient(135deg,rgba(255,255,255,.30),rgba(215,169,40,.15))!important;border-color:rgba(215,169,40,.95)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 10px 28px rgba(0,0,0,.2)!important;transform:translateY(-1px)}
+#publicWhatsappHero{font-size:0!important;gap:0!important}
+#publicWhatsappHero svg{color:#f7e7b0}
+#publicWhatsappFab{width:52px!important;height:52px!important;min-width:52px!important;right:18px!important;bottom:calc(18px + env(safe-area-inset-bottom,0px))!important;padding:0!important;color:#f7e7b0!important;border-width:1px!important;z-index:20}
+#publicWhatsappFab svg{width:25px!important;height:25px!important}
+#adminOpen,#accAdmin{cursor:pointer!important}
+@media(max-width:600px){#publicWhatsappHero{width:44px!important;height:44px!important;min-width:44px!important}#publicWhatsappFab{width:50px!important;height:50px!important;min-width:50px!important}}
+@media(prefers-reduced-motion:reduce){.glass-icon-btn{transition:none!important}}
 </style>
 
 </head>
@@ -1204,7 +1197,7 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-<div class="auth-left" id="adminWrap" hidden><button id="adminOpen">Admin panel</button></div>
+<div class="auth-left" id="adminWrap" hidden><button class="glass-icon-btn admin-glass-icon" id="adminOpen" aria-label="Open admin panel" title="Admin panel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 6v5c0 4.6-2.9 7.8-7 10-4.1-2.2-7-5.4-7-10V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg></button></div>
 <header><div class="wrap">
   <div class="logo" style="cursor:pointer" onclick="window.location.reload()" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){window.location.reload()}">3 Pedals Auto KE</div>
   <div class="account-pill" aria-label="Account"><span id="accountText">Not signed in</span><button id="accountOpen" aria-label="Open account" title="Account"></button></div>
@@ -1241,7 +1234,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="hero"><h1>Buy and sell cars with 3 Pedals Auto KE.</h1>
   <p>Automotive Excellence Reimagined, For Those Who Appreciate the Drive.</p>
   <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
-    <a class="btn wa" id="publicWhatsappHero" href="https://wa.me/254750495841?text=Hello%203%20Pedals%20Auto%20KE%2C%20I%27d%20like%20to%20enquire." target="_blank" rel="noopener">Chat on WhatsApp</a>
+    <a class="btn wa glass-icon-btn" id="publicWhatsappHero" href="https://wa.me/254750495841?text=Hello%203%20Pedals%20Auto%20KE%2C%20I%27d%20like%20to%20enquire." target="_blank" rel="noopener" aria-label="Chat on WhatsApp" title="Chat on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.8a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.4-4.9A8.4 8.4 0 1 1 20.5 11.8Z"/><path d="M8.4 7.7c.2-.5.4-.5.7-.5h.5c.2 0 .4.1.5.4l.8 1.8c.1.2.1.4-.1.6l-.6.7c-.2.2-.2.4 0 .7.5.8 1.2 1.5 2.1 2 .2.1.4.1.6-.1l.8-.9c.2-.2.4-.2.6-.1l1.7.8c.3.1.4.3.4.5 0 .4-.2 1.1-.7 1.5-.5.5-1.2.7-2 .5-1-.2-2.3-.8-3.5-1.9-1.4-1.2-2.3-2.7-2.5-3.8-.2-.9.1-1.5.7-2.2Z"/></svg></a>
     <a class="btn alt" href="/garage">Visit 3 Pedals Garage </a>
   </div></div>
   <div class="tiles">
@@ -1334,7 +1327,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <footer><div class="wrap"><span id="footerBrand">3 Pedals Auto KE</span> · <span id="footerNote">Prices in KES.</span></div></footer>
 
-<a class="fab" id="publicWhatsappFab" href="https://wa.me/254750495841?text=Hello%203%20Pedals%20Auto%20KE" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">WhatsApp us</a>
+<a class="fab glass-icon-btn" id="publicWhatsappFab" href="https://wa.me/254750495841?text=Hello%203%20Pedals%20Auto%20KE" target="_blank" rel="noopener" aria-label="Chat on WhatsApp" title="Chat on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.8a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.4-4.9A8.4 8.4 0 1 1 20.5 11.8Z"/><path d="M8.4 7.7c.2-.5.4-.5.7-.5h.5c.2 0 .4.1.5.4l.8 1.8c.1.2.1.4-.1.6l-.6.7c-.2.2-.2.4 0 .7.5.8 1.2 1.5 2.1 2 .2.1.4.1.6-.1l.8-.9c.2-.2.4-.2.6-.1l1.7.8c.3.1.4.3.4.5 0 .4-.2 1.1-.7 1.5-.5.5-1.2.7-2 .5-1-.2-2.3-.8-3.5-1.9-1.4-1.2-2.3-2.7-2.5-3.8-.2-.9.1-1.5.7-2.2Z"/></svg></a>
 
 <dialog id="dlg" aria-label="Car details"></dialog>
 <dialog id="journalPhotoViewer" class="journal-photo-viewer" aria-label="Journal photo viewer"><button type="button" class="journal-photo-close" id="journalPhotoClose" aria-label="Close photo viewer">×</button><span class="journal-photo-count" id="journalViewerCount"></span><button type="button" class="journal-photo-step journal-photo-prev" id="journalViewerPrev" aria-label="Previous photo">‹</button><figure><img id="journalViewerImage" alt=""><figcaption id="journalViewerCaption"></figcaption></figure><button type="button" class="journal-photo-step journal-photo-next" id="journalViewerNext" aria-label="Next photo">›</button></dialog>
@@ -1759,7 +1752,7 @@ async function openAccount(options={}){
    </div>
   <div class="acts" id="garageBookingAction" style="margin-top:16px"><a class="btn alt" href="/garage?section=book">Book a garage service</a></div><h3 style="margin-top:18px">My garage bookings and service tickets</h3>${B.map(x=>`<div class="svc"><div><b>${esc(x.service)}</b><span class="meta">Ticket ${esc(x.ref)} · ${esc(x.date)}${x.time_slot?" · "+esc(x.time_slot):""} · ${esc(x.car||"")}</span><span class="meta">Progress: ${esc(String(x.service_status||x.status).replaceAll("_"," "))}</span></div><span class="st">${esc(x.status)}</span></div>`).join("")||'<p class="meta">No bookings yet.</p>'}
   <section class="danger-zone"><h3>Delete account</h3><p class="meta">Permanently remove your account, listings, and bookings. This cannot be undone.</p><button class="btn ghost" id="accDeleteAccount" type="button">Permanently delete account</button></section>
-  <div class="acts" style="margin-top:18px">${profile&&profile.is_admin?'<button class="btn" id="accAdmin">Open admin panel</button>':""}<button class="btn ghost" id="accOut">Sign out</button><button class="btn ghost" id="accClose">Close</button></div>`;
+  <div class="acts" style="margin-top:18px">${profile&&profile.is_admin?'<button class="btn glass-icon-btn admin-glass-icon" id="accAdmin" aria-label="Open admin panel" title="Admin panel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 6v5c0 4.6-2.9 7.8-7 10-4.1-2.2-7-5.4-7-10V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg></button>':""}<button class="btn ghost" id="accOut">Sign out</button><button class="btn ghost" id="accClose">Close</button></div>`;
   const dashboard=box.querySelector(".seller-dashboard"),profileCard=box.querySelector(".profile-card"),profileGrid=box.querySelector(".profile-grid"),profileError=$("accProfileErr"),profileActions=$("accSaveProfile")?.parentElement,loginDetails=Array.from(box.children).find(node=>node.classList.contains("account-tools")),menu=$("accountMenu");
   const accountOwnerId=me.id;
   const refreshPromotionHistory=async()=>{
