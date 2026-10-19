@@ -1092,6 +1092,31 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
  #buy #grid .card .body h3,#buy #grid .card .body .price,#buy #grid .card .body .tag,#buy #grid .card .body .card-extra,#buy #grid .card .body .yard-line{position:static!important;max-width:100%!important}
 }
 </style>
+<style id="mobile-inventory-compact-final">
+@media(max-width:560px){
+  /* Remove excess space before the inventory heading. */
+  #buy{padding-top:0!important;margin-top:0!important}
+  #buy .hero{padding:0 0 6px!important;margin:0!important;min-height:0!important}
+  #buy .hero h1{margin:0!important;padding:0!important}
+  #buy .hero p{margin:4px 0 0!important}
+  /* Keep mobile inventory cards to photo, name and price only. */
+  #buy #grid .card .body{padding:6px 7px!important;gap:0!important}
+  #buy #grid .card .body h3{min-height:0!important;height:auto!important;margin:0 0 1px!important;padding:0!important;font-size:13px!important;line-height:1.15!important}
+  #buy #grid .card .body .price{margin:0!important;padding:0!important;font-size:14px!important;line-height:1.12!important}
+  #buy #grid .card .body .tag,
+  #buy #grid .card .body .card-extra,
+  #buy #grid .card .body .yard-line,
+  #buy #grid .card .body .card-reveal{display:none!important}
+  /* Featured cards use the same compact name/price treatment, without seller details. */
+  .featured-grid .card .body{padding:6px 7px!important;gap:0!important}
+  .featured-grid .card .body h3{min-height:0!important;height:auto!important;margin:0 0 1px!important;padding:0!important;line-height:1.15!important}
+  .featured-grid .card .body .price{margin:0!important;padding:0!important;line-height:1.12!important}
+  .featured-grid .card .body .tag,
+  .featured-grid .card .body .card-extra,
+  .featured-grid .card .body .yard-line,
+  .featured-grid .card .body .card-reveal{display:none!important}
+}
+</style>
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
