@@ -1168,25 +1168,23 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 </style>
 
 <style id="translucent-glass-action-buttons">
-/* Borderless translucent glass icons: no outline, ring, or button shadow. */
+/* Only the icon artwork is visible: transparent hit area, translucent glass-like strokes, no frame. */
 .glass-icon-btn{
   display:inline-flex!important;align-items:center!important;justify-content:center!important;
   width:48px!important;height:48px!important;min-width:48px!important;padding:0!important;
   border:0!important;outline:0!important;border-radius:0!important;box-sizing:border-box!important;
-  background:linear-gradient(135deg,rgba(255,255,255,.14),rgba(255,255,255,.025))!important;
-  color:var(--ink,#f8fafc)!important;
-  -webkit-backdrop-filter:blur(16px) saturate(160%)!important;backdrop-filter:blur(16px) saturate(160%)!important;
-  box-shadow:none!important;
-  transition:background .2s ease,transform .2s ease!important;
+  background:transparent!important;color:rgba(235,207,133,.82)!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;box-shadow:none!important;
+  transition:transform .2s ease,color .2s ease,opacity .2s ease!important;opacity:.84!important;
 }
-.glass-icon-btn:focus,.glass-icon-btn:focus-visible{outline:0!important;border:0!important;box-shadow:none!important}
-.glass-icon-btn svg{width:23px!important;height:23px!important;display:block!important;fill:none!important;stroke:currentColor!important;stroke-width:1.65!important;stroke-linecap:round!important;stroke-linejoin:round!important}
-.glass-icon-btn:hover{background:linear-gradient(135deg,rgba(255,255,255,.22),rgba(215,169,40,.07))!important;border:0!important;outline:0!important;box-shadow:none!important;transform:translateY(-1px)}
-#publicWhatsappHero{font-size:0!important;gap:0!important}
-#publicWhatsappHero svg{color:#f7e7b0}
-#publicWhatsappFab{width:52px!important;height:52px!important;min-width:52px!important;right:18px!important;bottom:calc(18px + env(safe-area-inset-bottom,0px))!important;padding:0!important;color:#f7e7b0!important;border:0!important;outline:0!important;box-shadow:none!important;z-index:20}
-#publicWhatsappFab svg{width:25px!important;height:25px!important}
-#adminOpen,#accAdmin{cursor:pointer!important}
+.glass-icon-btn:focus,.glass-icon-btn:focus-visible{outline:0!important;border:0!important;box-shadow:none!important;background:transparent!important}
+.glass-icon-btn svg{width:25px!important;height:25px!important;display:block!important;fill:none!important;stroke:currentColor!important;stroke-width:1.65!important;stroke-linecap:round!important;stroke-linejoin:round!important;opacity:.86!important;filter:drop-shadow(0 0 4px rgba(215,169,40,.16))}
+.glass-icon-btn:hover{background:transparent!important;border:0!important;outline:0!important;box-shadow:none!important;transform:translateY(-1px);opacity:1!important;color:rgba(255,235,183,.98)!important}
+#publicWhatsappHero{font-size:0!important;gap:0!important;background:transparent!important}
+#publicWhatsappHero svg{color:rgba(235,207,133,.86)!important}
+#publicWhatsappFab{width:52px!important;height:52px!important;min-width:52px!important;right:18px!important;bottom:calc(18px + env(safe-area-inset-bottom,0px))!important;padding:0!important;color:rgba(235,207,133,.86)!important;border:0!important;outline:0!important;box-shadow:none!important;background:transparent!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;z-index:20}
+#publicWhatsappFab svg{width:27px!important;height:27px!important}
+#adminOpen,#accAdmin{cursor:pointer!important;background:transparent!important}
 @media(max-width:600px){#publicWhatsappHero{width:44px!important;height:44px!important;min-width:44px!important}#publicWhatsappFab{width:50px!important;height:50px!important;min-width:50px!important}}
 @media(prefers-reduced-motion:reduce){.glass-icon-btn{transition:none!important}}
 </style>
