@@ -285,8 +285,24 @@ input,select,textarea,.back{background:rgba(255,255,255,.055)!important;color:#f
   .grid .card .body,.featured-grid .card .body { display:flex!important; flex-direction:column!important; gap:0!important; flex:0 0 auto!important; width:100%!important; min-width:0!important; height:auto!important; margin:0!important; padding:6px 7px!important; overflow:hidden!important; }
   .grid .card .body h3,.featured-grid .card .body h3 { display:-webkit-box!important; -webkit-box-orient:vertical!important; -webkit-line-clamp:2!important; min-height:0!important; height:auto!important; margin:0 0 1px!important; padding:0!important; font-size:13px!important; line-height:1.15!important; overflow:hidden!important; }
   .grid .card .body .price,.featured-grid .card .body .price { margin:0!important; padding:0!important; font-size:14px!important; line-height:1.12!important; }
-  .grid .card .body .tags,.grid .card .body .dealer-cardline,
-  .featured-grid .card .body .tags,.featured-grid .card .body .dealer-cardline { display:none!important; }
+  /* Keep mileage, fuel, listing type and yard name compactly BELOW each card photo/title. */
+  .grid .card .body .tags,.featured-grid .card .body .tags {
+    display:flex!important; flex-wrap:wrap!important; align-items:center!important;
+    gap:3px!important; margin:4px 0 0!important; padding:0!important;
+  }
+  .grid .card .body .tag,.featured-grid .card .body .tag {
+    display:inline-flex!important; align-items:center!important; font-size:9px!important;
+    line-height:1.2!important; padding:2px 5px!important; margin:0!important;
+  }
+  .grid .card .body .dealer-cardline,.featured-grid .card .body .dealer-cardline {
+    display:flex!important; position:static!important; align-items:center!important;
+    gap:4px!important; margin:4px 0 0!important; padding:4px 0 0!important;
+    border-top:1px solid var(--line)!important; font-size:9px!important; line-height:1.2!important;
+    min-width:0!important; overflow-wrap:anywhere!important;
+  }
+  .grid .card .body .dealer-cardline img,.featured-grid .card .body .dealer-cardline img {
+    width:17px!important; height:17px!important; flex:0 0 17px!important;
+  }
 }
 </style>
 
