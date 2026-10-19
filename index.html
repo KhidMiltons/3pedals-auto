@@ -1067,6 +1067,15 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
   #buy #grid .card .price{font-size:14px!important;line-height:1.25!important;margin-top:5px!important;overflow-wrap:anywhere!important}
 }
 </style>
+<style id="mobile-photo-text-separation">
+@media(max-width:560px){
+ #buy #grid .card{display:flex!important;flex-direction:column!important;align-items:stretch!important}
+ #buy #grid .card .swatch{position:relative!important;display:block!important;flex:0 0 auto!important;width:100%!important;height:clamp(125px,34vw,155px)!important;min-height:0!important;margin:0!important;border-radius:0!important;overflow:hidden!important;aspect-ratio:4/3!important}
+ #buy #grid .card .swatch-photo{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:0!important;object-fit:cover!important;object-position:center!important}
+ #buy #grid .card .body{position:relative!important;display:flex!important;flex-direction:column!important;flex:1 0 auto!important;width:100%!important;min-width:0!important;height:auto!important;padding:9px!important;overflow:visible!important}
+ #buy #grid .card .body h3,#buy #grid .card .body .price,#buy #grid .card .body .tag,#buy #grid .card .body .card-extra,#buy #grid .card .body .yard-line{position:static!important;max-width:100%!important}
+}
+</style>
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
