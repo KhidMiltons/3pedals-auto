@@ -156,6 +156,15 @@ dialog::backdrop{background:rgba(12,13,14,.58);backdrop-filter:blur(5px)}
   .grid .dealer-cardline{margin-top:auto!important;padding-top:6px!important;font-size:10px!important}
 }
 </style>
+<style id="mobile-photo-text-separation">
+@media(max-width:560px){
+ .grid .card{display:flex!important;flex-direction:column!important;align-items:stretch!important}
+ .grid .card .photo{position:relative!important;display:block!important;flex:0 0 auto!important;width:100%!important;height:clamp(125px,34vw,155px)!important;min-height:0!important;margin:0!important;overflow:hidden!important;aspect-ratio:4/3!important}
+ .grid .card .photo>img.inventory-photo{position:absolute!important;inset:0!important;display:block!important;width:100%!important;height:100%!important;min-height:0!important;object-fit:cover!important;object-position:center!important}
+ .grid .card .body{position:relative!important;display:flex!important;flex-direction:column!important;flex:1 0 auto!important;width:100%!important;min-width:0!important;height:auto!important;padding:9px!important;overflow:visible!important}
+ .grid .card .body h3,.grid .card .body .price,.grid .card .body .tags,.grid .card .body .dealer-cardline{position:static!important;max-width:100%!important}
+}
+</style>
 
 <style id="vehicle-detail-responsive">
 .detail{grid-template-columns:1fr;gap:0}.gallery{padding:18px 18px 12px}.mainimg{display:block;width:100%;aspect-ratio:16/9;object-fit:contain;background:#0c0d0f}.info{padding:8px 26px 26px}.detail-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:18px}.detail-heading h2{font-size:clamp(28px,4vw,42px);line-height:1.12;margin:3px 0 8px}.detail-price{font:700 clamp(22px,3vw,30px)/1.2 'Playfair Display',Georgia,serif;color:var(--gold);white-space:nowrap}.detail-ref{font-size:12px;color:var(--muted);margin:0 0 14px}.detail-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin:16px 0 20px;border-top:1px solid var(--dialog-line)}.detail-fact{display:flex;justify-content:space-between;gap:14px;padding:14px 10px;border-bottom:1px solid var(--dialog-line);min-width:0}.detail-fact span{color:var(--muted)}.detail-fact strong{text-align:right;overflow-wrap:anywhere}.seller-card{display:flex;align-items:center;gap:12px;padding:14px;border:1px solid var(--dialog-line);border-radius:14px;background:rgba(255,255,255,.035);margin:16px 0}.seller-avatar{width:48px;height:48px;flex:0 0 48px;object-fit:cover;border-radius:50%;background:rgba(183,160,106,.16);display:grid;place-items:center;color:var(--gold);font-weight:800}.seller-card p{margin:2px 0;color:var(--muted)}.detail-section{margin:18px 0}.detail-section h3{font:700 18px 'Playfair Display',Georgia,serif;margin:0 0 8px}.detail-section p{margin:0;color:var(--muted);white-space:pre-wrap;overflow-wrap:anywhere}.detail-disclosure{border-top:1px solid var(--dialog-line);padding:15px 0}.detail-disclosure summary{cursor:pointer;font-weight:800}.detail-disclosure .detail-facts{margin-bottom:0}.detail-note{padding:14px;border-radius:12px;background:rgba(183,160,106,.10);color:var(--muted);margin-top:16px}.detail-close{margin-left:auto}
