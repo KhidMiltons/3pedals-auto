@@ -938,6 +938,20 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
   #buy .card-main{position:relative!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:0!important;width:100%!important;min-width:0!important}
   #buy .card .swatch{display:flex!important;width:100%!important;max-width:100%!important;flex:0 0 auto!important;box-sizing:border-box!important;min-width:0!important;height:clamp(150px,48vw,200px)!important;min-height:0!important;align-self:stretch!important;padding:8px!important}
   #buy .card .body{display:block!important;width:100%!important;max-width:100%!important;min-width:0!important;flex:1 1 auto!important;box-sizing:border-box!important}
+  /* Tighten the inventory heading area on mobile. */
+  #buy .hero{padding:3px 0 7px!important;margin:0!important}
+  #buy .hero h1{margin:0!important}
+  #buy .hero p{margin:5px 0 0!important}
+  /* Mobile cards show only the vehicle name and price; full details are on the vehicle page. */
+  #buy .card .body{padding:7px 8px 8px!important}
+  #buy .card h3{margin:0 0 1px!important;font-size:13px!important;line-height:1.15!important;min-height:0!important}
+  #buy .card .price{margin:0!important;font-size:15px!important;line-height:1.12!important}
+  #buy .card .tag,#buy .card-extra,#buy .card-reveal{display:none!important}
+  /* Featured vehicle tiles stay compact without seller details or extra gaps. */
+  .featured-grid .card .body{padding:6px 7px!important}
+  .featured-grid .card h3{margin:0 0 1px!important;line-height:1.15!important}
+  .featured-grid .card .price{margin:0!important;line-height:1.12!important}
+  .featured-grid .card .tag,.featured-grid .card .card-extra,.featured-grid .card .yard-line,.featured-grid .card .card-reveal{display:none!important}
   #buy .card .swatch .swatch-year{font-size:15px!important;line-height:1!important}
   #buy .card .yard-badge{font-size:8px!important;line-height:1!important;padding:3px 5px!important;letter-spacing:.02em!important;max-width:calc(100% - 12px)!important;white-space:nowrap!important;z-index:6!important}
   #buy .card .swatch .promoted-tag{
