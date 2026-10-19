@@ -1746,7 +1746,7 @@ async function openAccount(options={}){
           const dataUrl=await shrink(item.file),blob=await (await fetch(dataUrl)).blob();
           const photoId=crypto.randomUUID?crypto.randomUUID():`${Date.now()}-${Math.random().toString(36).slice(2)}`;
           const path=`${me.id}/${photoId}-edit-${i}.jpg`;
-          const upload=await sb.storage.from("car-photos").upload(path,blob,{contentType:"image/jpeg"});
+          const upload=await sb.storage.from("car-photos").upload(path,blob,{contentType:"image/jpeg",cacheControl:"31536000"});
           if(upload.error)throw upload.error;
           uploadedPaths.push(path);
           nextPhotos.push(sb.storage.from("car-photos").getPublicUrl(path).data.publicUrl);
@@ -2160,7 +2160,7 @@ function shrink(f){return new Promise((res,rej)=>{
   const u=URL.createObjectURL(f),i=new Image();
   i.onload=()=>{const m=900,k=Math.min(1,m/Math.max(i.width,i.height)),c=document.createElement("canvas");
     c.width=Math.round(i.width*k);c.height=Math.round(i.height*k);c.getContext("2d").drawImage(i,0,0,c.width,c.height);
-    URL.revokeObjectURL(u);res(c.toDataURL("image/jpeg",.78))};
+    URL.revokeObjectURL(u);res(c.toDataURL("image/jpeg",.72))};
   i.onerror=()=>{URL.revokeObjectURL(u);rej()};i.src=u})}
 let VEHICLE_CATALOG=window.VEHICLE_CATALOG_DATA||{version:"",makes:[],models:{}};
 const vehicleKey=value=>String(value||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]/g,"");
@@ -2221,7 +2221,7 @@ $("sBtn").onclick=async()=>{
       const blob=await (await fetch(photos[i])).blob();
       const photoId=crypto.randomUUID?crypto.randomUUID():`${Date.now()}-${Math.random().toString(36).slice(2)}`;
       const path=`${me.id}/${photoId}-${i}.jpg`;
-      const up=await sb.storage.from("car-photos").upload(path,blob,{contentType:"image/jpeg"});
+      const up=await sb.storage.from("car-photos").upload(path,blob,{contentType:"image/jpeg",cacheControl:"31536000"});
       if(up.error)throw up.error;
       uploadedPaths.push(path);
       urls.push(sb.storage.from("car-photos").getPublicUrl(path).data.publicUrl);
