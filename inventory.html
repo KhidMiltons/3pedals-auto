@@ -125,6 +125,19 @@ dialog::backdrop{background:rgba(12,13,14,.58);backdrop-filter:blur(5px)}
 @media(max-width:700px){.featured-section{padding:13px;margin:15px 0 22px}.featured-heading{align-items:flex-start;flex-direction:column}.grid,.featured-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.photo{height:150px}.featured-grid .photo{height:130px}.body{padding:10px}.body h3{font-size:15px}.price{font-size:15px}.tag{font-size:10px;padding:3px 6px}}
 @media(max-width:420px){.grid,.featured-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.photo{height:125px}.featured-grid .photo{height:115px}.body{padding:9px}.body h3{font-size:14px}.price{font-size:14px}.tags{gap:4px}}
 
+
+/* Compact the inventory promotions panel and remove its tagline. */
+.featured-section{margin:0 0 12px!important;padding:0!important;border:0!important;border-radius:0!important;background:none!important;box-shadow:none!important}
+.featured-heading{margin:0 0 8px!important;gap:8px!important;align-items:center!important}
+.featured-heading h2{margin:0!important}
+.featured-heading .eyebrow{display:none!important}
+.featured-note{padding:3px 7px!important}
+.featured-grid{margin:0!important}
+@media(max-width:700px){
+.featured-section{margin:0 0 10px!important;padding:0!important}
+.featured-heading{margin:0 0 7px!important;flex-direction:row!important;align-items:center!important;justify-content:space-between!important}
+.featured-heading h2{font-size:22px!important;line-height:1.1!important}
+}
 </style>
 <style id="touch-no-zoom">
 @media (max-width: 820px), (hover: none), (pointer: coarse) {
@@ -290,7 +303,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section>
 <div class="filters"><input id="q" type="search" placeholder="Search make, model or year" aria-label="Search make, model or year"><select id="make" aria-label="Filter by make"><option value="">All makes</option></select><select id="modelFilter" aria-label="Filter by model" disabled><option value="">All models</option></select><select id="yearFilter" aria-label="Filter by year"><option value="">All years</option></select><select id="fuel" aria-label="Filter by fuel type"><option value="">All fuel types</option></select><select id="max" aria-label="Maximum price"><option value="0">Any price</option><option value="1000000">Up to KES 1,000,000</option><option value="2000000">Up to KES 2,000,000</option><option value="3500000">Up to KES 3,500,000</option><option value="5000000">Up to KES 5,000,000</option><option value="10000000">Up to KES 10,000,000</option><option value="20000000">Up to KES 20,000,000</option></select><select id="sort" aria-label="Sort inventory"><option value="new">Newest / newest model year</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option><option value="km">Lowest mileage</option></select><button class="back" id="clearFilters" type="button">Clear filters</button></div>
 <section class="featured-section" id="featuredVehicles" aria-labelledby="featuredVehiclesTitle" hidden>
-<div class="featured-heading"><div><span class="eyebrow">HAND-PICKED VISIBILITY</span><h2 id="featuredVehiclesTitle">Featured Vehicles</h2><p>Promoted cars, brought closer to your attention.</p></div><span class="featured-note">Paid promotions</span></div>
+<div class="featured-heading"><div><span class="eyebrow">HAND-PICKED VISIBILITY</span><h2 id="featuredVehiclesTitle">Featured Vehicles</h2></div><span class="featured-note">Paid promotions</span></div>
 <div id="featuredGrid" class="grid featured-grid" aria-live="polite"></div>
 </section>
 <div id="count" class="count">Loading inventory…</div><div id="grid" class="grid"></div><div class="load-more-wrap"><button id="loadMoreCars" class="back" type="button" hidden>Show more cars</button></div>
