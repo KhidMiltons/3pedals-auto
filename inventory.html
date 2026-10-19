@@ -136,36 +136,9 @@ dialog::backdrop{background:rgba(12,13,14,.58);backdrop-filter:blur(5px)}
 }
 </style>
 <style id="mobile-inventory-cards">
-@media(max-width:560px){
-  .grid{grid-template-columns:1fr;gap:12px}
-  .grid .card{display:grid;grid-template-columns:minmax(106px,34%) minmax(0,1fr);align-items:stretch;min-height:154px;border-radius:14px}
-  .grid .photo{height:auto!important;min-height:154px;aspect-ratio:1/1;background-size:contain;background-color:#17191c}
-  .grid .body{min-width:0;display:flex;flex-direction:column;padding:13px 12px}
-  .grid .body h3{font-size:17px;line-height:1.2;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;white-space:normal;overflow:hidden}
-  .grid .price{font-size:18px;margin:7px 0 0;color:#e4cf98}
-  .grid .tags{margin-top:7px;line-height:1.45}
-  .grid .tag{display:inline-block;font-size:11px;padding:2px 4px;border:0;border-radius:0}
-  .grid .dealer-cardline{margin-top:auto;padding-top:8px;border:0;justify-content:flex-end;font-size:11px}
-  .grid .dealer-cardline img{width:24px;height:24px}
-}
+@media(max-width:560px){.grid,.featured-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}.grid .card{display:flex!important;flex-direction:column!important;min-width:0;min-height:0;border-radius:12px;overflow:hidden}.grid .photo{width:100%!important;height:clamp(112px,32vw,150px)!important;min-height:0!important;aspect-ratio:4/3;background-size:cover!important;background-position:center;background-color:#17191c}.grid .body{min-width:0;display:flex;flex-direction:column;padding:9px!important;overflow:hidden}.grid .body h3{font-size:13px;line-height:1.25;min-height:2.5em;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;white-space:normal;overflow:hidden;overflow-wrap:anywhere}.grid .price{font-size:14px;margin:6px 0 0;color:#e4cf98;overflow-wrap:anywhere}.grid .tags{margin-top:6px;line-height:1.35}.grid .tag{display:inline-block;font-size:9px;padding:2px 4px;border:0;border-radius:0}.grid .dealer-cardline{margin-top:auto;padding-top:6px;border:0;justify-content:flex-end;font-size:10px;min-width:0}.grid .dealer-cardline img{width:22px;height:22px}.grid .dealer-cardline span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
 </style>
-<style id="mobile-inventory-card-fix">
-@media(max-width:560px){
-  .grid .card{grid-template-columns:minmax(112px,38%) minmax(0,1fr);grid-template-areas:"car-photo car-info";overflow:hidden;position:relative}
-  .grid .photo{grid-area:car-photo;grid-column:1;grid-row:1;width:100%;min-width:0;min-height:158px;z-index:1;background-position:center;background-repeat:no-repeat;background-size:contain!important}
-  .grid .body{grid-area:car-info;grid-column:2;grid-row:1;position:relative;z-index:2;overflow:hidden;width:100%;min-width:0;max-width:100%;}
-  .grid .body h3{width:100%;max-width:100%;overflow-wrap:anywhere}
-  .grid .dealer-cardline{max-width:100%;overflow:hidden}
-  .grid .dealer-cardline span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-}
-.gallery{position:relative;touch-action:pan-y;overscroll-behavior-x:contain}
-.mainimg{display:block;touch-action:pan-y;user-select:none;-webkit-user-drag:none}
-.gallery-step{position:absolute;top:calc(50% - 24px);z-index:3;width:48px;height:56px;padding:0;border:1px solid rgba(255,255,255,.22);border-radius:10px;background:rgba(12,13,14,.72);color:#f5f1e6;font-size:34px;line-height:1;display:grid;place-items:center;cursor:pointer;backdrop-filter:blur(10px)}
-.gallery-step:hover{background:rgba(183,160,106,.7)}
-.gallery-prev{left:24px}.gallery-next{right:24px}
-.gallery-count{position:absolute;right:24px;top:28px;z-index:3;padding:5px 8px;border-radius:6px;background:rgba(12,13,14,.72);color:#fff;font-size:12px;font-weight:700}
-@media(max-width:560px){.gallery-step{width:42px;height:48px}.gallery-prev{left:24px}.gallery-next{right:24px}.gallery-count{right:24px;top:24px}}
-</style>
+
 <style id="vehicle-detail-responsive">
 .detail{grid-template-columns:1fr;gap:0}.gallery{padding:18px 18px 12px}.mainimg{display:block;width:100%;aspect-ratio:16/9;object-fit:contain;background:#0c0d0f}.info{padding:8px 26px 26px}.detail-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:18px}.detail-heading h2{font-size:clamp(28px,4vw,42px);line-height:1.12;margin:3px 0 8px}.detail-price{font:700 clamp(22px,3vw,30px)/1.2 'Playfair Display',Georgia,serif;color:var(--gold);white-space:nowrap}.detail-ref{font-size:12px;color:var(--muted);margin:0 0 14px}.detail-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin:16px 0 20px;border-top:1px solid var(--dialog-line)}.detail-fact{display:flex;justify-content:space-between;gap:14px;padding:14px 10px;border-bottom:1px solid var(--dialog-line);min-width:0}.detail-fact span{color:var(--muted)}.detail-fact strong{text-align:right;overflow-wrap:anywhere}.seller-card{display:flex;align-items:center;gap:12px;padding:14px;border:1px solid var(--dialog-line);border-radius:14px;background:rgba(255,255,255,.035);margin:16px 0}.seller-avatar{width:48px;height:48px;flex:0 0 48px;object-fit:cover;border-radius:50%;background:rgba(183,160,106,.16);display:grid;place-items:center;color:var(--gold);font-weight:800}.seller-card p{margin:2px 0;color:var(--muted)}.detail-section{margin:18px 0}.detail-section h3{font:700 18px 'Playfair Display',Georgia,serif;margin:0 0 8px}.detail-section p{margin:0;color:var(--muted);white-space:pre-wrap;overflow-wrap:anywhere}.detail-disclosure{border-top:1px solid var(--dialog-line);padding:15px 0}.detail-disclosure summary{cursor:pointer;font-weight:800}.detail-disclosure .detail-facts{margin-bottom:0}.detail-note{padding:14px;border-radius:12px;background:rgba(183,160,106,.10);color:var(--muted);margin-top:16px}.detail-close{margin-left:auto}
 @media(max-width:700px){dialog{position:fixed;inset:0;width:100%;height:100%;height:100dvh;max-width:none;max-height:none;margin:0;border-radius:0;border:0;padding:0;overflow-y:auto;overscroll-behavior:contain}.detail{display:block}.gallery{padding:12px 12px 8px}.mainimg{aspect-ratio:4/3;border-radius:12px}.thumbs{margin-top:9px;padding:0 0 4px;scrollbar-width:none}.thumbs::-webkit-scrollbar{display:none}.thumbs button{min-width:72px}.info{padding:16px 18px calc(28px + env(safe-area-inset-bottom))}.detail-heading{display:block}.detail-heading h2{font-size:clamp(27px,8vw,36px)}.detail-price{font-size:25px;margin:5px 0 8px}.detail-facts{grid-template-columns:1fr;margin:12px 0 16px}.detail-fact{padding:13px 8px}.seller-card{margin-top:14px}.actions{display:grid;grid-template-columns:1fr 1fr}.actions .btn{width:100%;text-align:center;padding:11px 8px}.actions .btn:first-child{grid-column:1/-1}.detail-close{margin:0}.gallery-step{width:42px;height:48px}.gallery-prev{left:12px}.gallery-next{right:12px}.gallery-count{right:12px;top:20px}}
