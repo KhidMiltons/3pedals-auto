@@ -135,8 +135,26 @@ dialog::backdrop{background:rgba(12,13,14,.58);backdrop-filter:blur(5px)}
   nav button,nav a.navlink { --dock-scale: 1 !important; }
 }
 </style>
-<style id="mobile-inventory-cards">
-@media(max-width:560px){.grid,.featured-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}.grid .card{display:flex!important;flex-direction:column!important;min-width:0;min-height:0;border-radius:12px;overflow:hidden}.grid .photo{width:100%!important;height:clamp(112px,32vw,150px)!important;min-height:0!important;aspect-ratio:4/3;background-size:cover!important;background-position:center;background-color:#17191c}.grid .body{min-width:0;display:flex;flex-direction:column;padding:9px!important;overflow:hidden}.grid .body h3{font-size:13px;line-height:1.25;min-height:2.5em;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;white-space:normal;overflow:hidden;overflow-wrap:anywhere}.grid .price{font-size:14px;margin:6px 0 0;color:#e4cf98;overflow-wrap:anywhere}.grid .tags{margin-top:6px;line-height:1.35}.grid .tag{display:inline-block;font-size:9px;padding:2px 4px;border:0;border-radius:0}.grid .dealer-cardline{margin-top:auto;padding-top:6px;border:0;justify-content:flex-end;font-size:10px;min-width:0}.grid .dealer-cardline img{width:22px;height:22px}.grid .dealer-cardline span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
+<style id="mobile-inventory-filters">
+@media(max-width:560px){
+  main.wrap{padding-top:22px!important}
+  .hero h1{font-size:32px!important;line-height:1.1!important}
+  .hero p{font-size:14px!important}
+  .filters{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;margin:14px 0!important}
+  .filters #q{grid-column:1/-1!important}
+  .filters input,.filters select,.filters .back{width:100%!important;min-width:0!important;min-height:44px!important;padding:9px 10px!important;font-size:13px!important;border-radius:8px!important}
+  .filters #clearFilters{grid-column:1/-1!important}
+  .grid,.featured-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
+  .grid .card{display:flex!important;flex-direction:column!important;min-width:0!important;min-height:0!important;overflow:hidden!important}
+  .grid .photo{width:100%!important;height:clamp(112px,32vw,150px)!important;min-height:0!important;aspect-ratio:4/3!important;background-size:cover!important;background-position:center!important}
+  .grid .photo>img.inventory-photo{object-fit:cover!important;width:100%!important;height:100%!important}
+  .grid .body{display:flex!important;flex-direction:column!important;min-width:0!important;padding:9px!important;overflow:hidden!important}
+  .grid .body h3{font-size:13px!important;line-height:1.25!important;min-height:2.5em!important;display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:2!important;line-clamp:2!important;overflow:hidden!important;overflow-wrap:anywhere!important}
+  .grid .price{font-size:14px!important;line-height:1.25!important;margin:6px 0!important;overflow-wrap:anywhere!important}
+  .grid .tags{gap:4px!important}
+  .grid .tag{font-size:9px!important;padding:2px 4px!important}
+  .grid .dealer-cardline{margin-top:auto!important;padding-top:6px!important;font-size:10px!important}
+}
 </style>
 
 <style id="vehicle-detail-responsive">
