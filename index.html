@@ -1166,6 +1166,37 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 #journalGrid.journal-grid>.journal-entry .journal-entry-media,#journalGrid.journal-grid>.journal-entry .journal-entry-media img,#journalGrid.journal-grid>.journal-entry .journal-entry-empty{height:clamp(190px,52vw,300px)!important;max-height:300px!important}
 }
 </style>
+
+<style id="translucent-glass-action-buttons">
+/* Subtle translucent glass finish for the home WhatsApp and Admin actions. */
+#publicWhatsappHero,
+#publicWhatsappFab,
+#adminOpen,
+#accAdmin{
+  background:linear-gradient(135deg,rgba(255,255,255,.19),rgba(255,255,255,.055))!important;
+  color:var(--ink,#f8fafc)!important;
+  border:1px solid rgba(215,169,40,.58)!important;
+  -webkit-backdrop-filter:blur(16px) saturate(155%)!important;
+  backdrop-filter:blur(16px) saturate(155%)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.24),0 8px 24px rgba(0,0,0,.14)!important;
+  transition:background .2s ease,border-color .2s ease,transform .2s ease,box-shadow .2s ease!important;
+}
+#publicWhatsappHero:hover,
+#publicWhatsappFab:hover,
+#adminOpen:hover,
+#accAdmin:hover{
+  background:linear-gradient(135deg,rgba(255,255,255,.28),rgba(215,169,40,.13))!important;
+  border-color:rgba(215,169,40,.9)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.32),0 10px 28px rgba(0,0,0,.2)!important;
+  transform:translateY(-1px);
+}
+#publicWhatsappFab{color:#f7e7b0!important;border-width:1px!important}
+#adminOpen,#accAdmin{border-radius:999px!important;padding:11px 17px!important;cursor:pointer}
+@media(prefers-reduced-motion:reduce){
+  #publicWhatsappHero,#publicWhatsappFab,#adminOpen,#accAdmin{transition:none!important}
+}
+</style>
+
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
