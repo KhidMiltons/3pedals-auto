@@ -89,6 +89,43 @@ input,select,textarea,.back{background:rgba(255,255,255,.055)!important;color:#f
   .btn.gold{background:linear-gradient(135deg,#d8c497,#b7a06a)!important;color:#211b10!important}
 }
 </style>
+<style id="mobile-fast-interactions">
+/* Keep touch navigation responsive by disabling decorative motion on small screens. */
+@media (max-width: 820px), (hover: none), (pointer: coarse) {
+  html { scroll-behavior: auto !important; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.001ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+  .card:hover, .card:focus-visible, .tile:hover, .tile:focus-visible,
+  .project-card:hover, .project-card:focus-visible, .btn:hover, .back:hover,
+  .logo:hover, nav button:hover, nav a:hover, .thumb:hover, .thumbs button:hover,
+  .card:active, .tile:active, .btn:active {
+    transform: none !important;
+    filter: none !important;
+    box-shadow: none !important;
+  }
+  .card:hover img, .card:focus-visible img, .card:hover .photo,
+  .card:focus-visible .photo, .project-card:hover img, .project-card:hover video {
+    transform: none !important;
+    filter: none !important;
+  }
+  .filters input, .filters select, .glass, .panel {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
