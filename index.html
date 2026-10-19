@@ -1120,23 +1120,36 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 
 <style id="mobile-inventory-spacing-override">
 @media (max-width:560px) {
-  #buy { padding:0!important; margin:0!important; }
+  /* This page's real card markup uses .card-main and .swatch, not .photo. */
+  #buy { padding-top:0!important; margin-top:0!important; }
   #buy .hero { display:block!important; padding:0 0 6px!important; margin:0!important; min-height:0!important; gap:0!important; }
   #buy .hero h1 { margin:0!important; padding:0!important; line-height:1.12!important; min-height:0!important; }
   #buy .hero p { margin:4px 0 0!important; padding:0!important; }
   #buy .filters { margin:8px 0!important; }
-  #buy #grid { row-gap:8px!important; }
-  #buy #grid .card { min-height:0!important; height:auto!important; }
-  #buy #grid .card .swatch { flex:0 0 auto!important; margin:0!important; }
-  #buy #grid .card .body { display:flex!important; flex-direction:column!important; gap:0!important; padding:6px 7px!important; margin:0!important; }
-  #buy #grid .card .body h3 { min-height:0!important; height:auto!important; margin:0 0 1px!important; padding:0!important; line-height:1.15!important; }
-  #buy #grid .card .body .price { margin:0!important; padding:0!important; line-height:1.12!important; }
-  #buy #grid .card .body .tag,
-  #buy #grid .card .body .card-extra,
-  #buy #grid .card .body .yard-line,
-  #buy #grid .card .body .card-reveal,
-  #buy #grid .card .body .tags,
-  #buy #grid .card .body .dealer-cardline { display:none!important; }
+  #buy .grid { grid-template-columns:repeat(2,minmax(0,1fr))!important; gap:8px!important; }
+  #buy .grid>.card { display:flex!important; flex-direction:column!important; min-width:0!important; height:auto!important; min-height:0!important; overflow:hidden!important; }
+  #buy .grid>.card .card-main { display:flex!important; flex-direction:column!important; align-items:stretch!important; gap:0!important; width:100%!important; height:auto!important; min-height:0!important; }
+  #buy .grid>.card .swatch { display:block!important; position:relative!important; width:100%!important; max-width:100%!important; height:clamp(125px,38vw,165px)!important; min-height:0!important; flex:0 0 auto!important; margin:0!important; padding:0!important; box-sizing:border-box!important; background-size:cover!important; background-position:center!important; overflow:hidden!important; }
+  #buy .grid>.card .swatch-photo { position:absolute!important; inset:0!important; display:block!important; width:100%!important; height:100%!important; min-height:0!important; object-fit:cover!important; object-position:center!important; }
+  #buy .grid>.card .body { display:block!important; width:100%!important; min-width:0!important; height:auto!important; min-height:0!important; flex:0 0 auto!important; box-sizing:border-box!important; margin:0!important; padding:6px 7px!important; gap:0!important; overflow:hidden!important; }
+  #buy .grid>.card .body h3 { display:-webkit-box!important; -webkit-box-orient:vertical!important; -webkit-line-clamp:2!important; min-height:0!important; height:auto!important; margin:0 0 1px!important; padding:0!important; font-size:13px!important; line-height:1.15!important; overflow:hidden!important; }
+  #buy .grid>.card .body .price { display:block!important; margin:0!important; padding:0!important; font-size:14px!important; line-height:1.12!important; }
+  #buy .grid>.card .body>.tag,
+  #buy .grid>.card .body .card-extra,
+  #buy .grid>.card .body .yard-line,
+  #buy .grid>.card .body .card-reveal { display:none!important; }
+  #buy .grid>.card>.yard-badge { font-size:8px!important; padding:2px 4px!important; }
+  /* Featured cards on the home page also show only the photo, name and price. */
+  .featured-grid>.card .card-main { display:flex!important; flex-direction:column!important; gap:0!important; }
+  .featured-grid>.card .swatch { width:100%!important; height:clamp(110px,32vw,145px)!important; min-height:0!important; flex:0 0 auto!important; }
+  .featured-grid>.card .swatch-photo { position:absolute!important; inset:0!important; width:100%!important; height:100%!important; object-fit:cover!important; }
+  .featured-grid>.card .body { padding:6px 7px!important; margin:0!important; }
+  .featured-grid>.card .body h3 { min-height:0!important; margin:0 0 1px!important; font-size:12px!important; line-height:1.15!important; }
+  .featured-grid>.card .body .price { margin:0!important; font-size:13px!important; line-height:1.12!important; }
+  .featured-grid>.card .body>.tag,
+  .featured-grid>.card .body .card-extra,
+  .featured-grid>.card .body .yard-line,
+  .featured-grid>.card .body .card-reveal { display:none!important; }
 }
 </style>
 
