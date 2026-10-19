@@ -934,8 +934,10 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 <style id="mobile-inventory-featured-tag-fix">
 @media(max-width:560px){
   /* Compact mobile listing details and reserve clear space for the featured badge. */
-  #buy .card-main{position:relative!important;gap:0!important}
-  #buy .card .swatch{width:34%!important;flex-basis:34%!important;min-width:0!important;height:154px!important;min-height:154px!important;padding:6px!important}
+  /* Keep the photo full-width above the vehicle details on mobile. */
+  #buy .card-main{position:relative!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:0!important;width:100%!important;min-width:0!important}
+  #buy .card .swatch{display:flex!important;width:100%!important;max-width:100%!important;flex:0 0 auto!important;box-sizing:border-box!important;min-width:0!important;height:clamp(150px,48vw,200px)!important;min-height:0!important;align-self:stretch!important;padding:8px!important}
+  #buy .card .body{display:block!important;width:100%!important;max-width:100%!important;min-width:0!important;flex:1 1 auto!important;box-sizing:border-box!important}
   #buy .card .swatch .swatch-year{font-size:15px!important;line-height:1!important}
   #buy .card .yard-badge{font-size:8px!important;line-height:1!important;padding:3px 5px!important;letter-spacing:.02em!important;max-width:calc(100% - 12px)!important;white-space:nowrap!important;z-index:6!important}
   #buy .card .swatch .promoted-tag{
