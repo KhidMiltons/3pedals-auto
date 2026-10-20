@@ -1194,6 +1194,37 @@ body:has(#home[hidden]) #adminWrap{display:none!important}
 @media(prefers-reduced-motion:reduce){.glass-icon-btn{transition:none!important}}
 </style>
 
+
+<style id="desktop-journal-article-size">
+/* Give journal stories more room on desktop while preserving the two-column layout and compact mobile cards. */
+@media (min-width: 761px){
+  #journalGrid.journal-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:clamp(24px,2.4vw,36px)!important;
+  }
+  #journalGrid.journal-grid>.journal-entry .journal-entry-media,
+  #journalGrid.journal-grid>.journal-entry .journal-entry-media img,
+  #journalGrid.journal-grid>.journal-entry .journal-entry-empty{
+    height:clamp(260px,25vw,360px)!important;
+    max-height:360px!important;
+  }
+  #journalGrid.journal-grid>.journal-entry .project-body{
+    padding:clamp(26px,2.7vw,40px)!important;
+    gap:10px;
+  }
+  #journalGrid.journal-grid>.journal-entry .project-body h2{
+    font-size:clamp(30px,3.1vw,44px)!important;
+    line-height:1.08!important;
+  }
+  #journalGrid.journal-grid>.journal-entry .project-body p{
+    font-size:clamp(15px,1.15vw,17px)!important;
+    line-height:1.75!important;
+    -webkit-line-clamp:5;
+  }
+  #journalGrid.journal-grid>.journal-entry .journal-meta{font-size:12px!important}
+  #journalGrid.journal-grid>.journal-entry .journal-read{min-height:44px!important;padding:11px 17px!important}
+}
+</style>
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
