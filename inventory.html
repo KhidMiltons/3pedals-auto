@@ -457,28 +457,28 @@ document.addEventListener('click', function(event) {
 </script>
 
 <style id="featured-cards-match-standard">
-/* Featured listings use the exact same card dimensions and typography as regular inventory cards. */
-#featuredGrid.featured-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:14px!important}
+/* Keep featured cards compact while retaining the standard inventory card design. */
+#featuredGrid.featured-grid{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:10px!important}
 #featuredGrid.featured-grid .card{width:100%!important;min-width:0!important}
-#featuredGrid.featured-grid .photo{height:230px!important;aspect-ratio:auto!important}
-#featuredGrid.featured-grid .body{padding:16px!important}
-#featuredGrid.featured-grid .body h3{font-size:21px!important;line-height:normal!important;margin:0 0 6px!important;min-height:0!important;height:auto!important}
-#featuredGrid.featured-grid .price{font-size:20px!important;line-height:normal!important;margin-bottom:9px!important}
-#featuredGrid.featured-grid .tag{font-size:12px!important;padding:4px 8px!important}
-#featuredGrid.featured-grid .dealer-cardline{font-size:12px!important;margin-top:12px!important;padding-top:10px!important}
-#featuredGrid.featured-grid .promoted-tag{right:9px!important;top:9px!important;padding:5px 8px!important;font-size:9px!important}
-@media(max-width:1000px){#featuredGrid.featured-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+#featuredGrid.featured-grid .photo{height:145px!important;aspect-ratio:auto!important}
+#featuredGrid.featured-grid .body{padding:10px!important}
+#featuredGrid.featured-grid .body h3{font-size:15px!important;line-height:1.2!important;margin:0 0 4px!important;min-height:0!important;height:auto!important}
+#featuredGrid.featured-grid .price{font-size:15px!important;line-height:1.2!important;margin-bottom:6px!important}
+#featuredGrid.featured-grid .tag{font-size:10px!important;padding:3px 6px!important}
+#featuredGrid.featured-grid .dealer-cardline{font-size:10px!important;margin-top:7px!important;padding-top:6px!important}
+#featuredGrid.featured-grid .promoted-tag{right:7px!important;top:7px!important;padding:4px 6px!important;font-size:8px!important}
+@media(max-width:1100px){#featuredGrid.featured-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:10px!important}}
 @media(max-width:700px){
  #featuredGrid.featured-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
- #featuredGrid.featured-grid .photo{height:clamp(112px,32vw,150px)!important;aspect-ratio:4/3!important}
- #featuredGrid.featured-grid .body{padding:6px 7px!important}
- #featuredGrid.featured-grid .body h3{font-size:13px!important;line-height:1.15!important;margin:0 0 1px!important;min-height:0!important}
- #featuredGrid.featured-grid .price{font-size:14px!important;line-height:1.12!important;margin:0!important}
- #featuredGrid.featured-grid .tag{font-size:10px!important;padding:3px 6px!important}
- #featuredGrid.featured-grid .dealer-cardline{font-size:10px!important;margin-top:7px!important;padding-top:6px!important}
- #featuredGrid.featured-grid .promoted-tag{right:6px!important;top:6px!important;padding:3px 5px!important;font-size:8px!important}
+ #featuredGrid.featured-grid .photo{height:clamp(112px,32vw,140px)!important;aspect-ratio:4/3!important}
+ #featuredGrid.featured-grid .body{padding:7px!important}
+ #featuredGrid.featured-grid .body h3{font-size:13px!important;line-height:1.15!important;margin:0 0 2px!important;min-height:0!important}
+ #featuredGrid.featured-grid .price{font-size:14px!important;line-height:1.12!important;margin:0 0 4px!important}
+ #featuredGrid.featured-grid .tag{font-size:9px!important;padding:2px 5px!important}
+ #featuredGrid.featured-grid .dealer-cardline{font-size:9px!important;margin-top:5px!important;padding-top:5px!important}
+ #featuredGrid.featured-grid .promoted-tag{right:5px!important;top:5px!important;padding:3px 5px!important;font-size:7px!important}
 }
-@media(max-width:420px){#featuredGrid.featured-grid{gap:8px!important}}
+@media(max-width:420px){#featuredGrid.featured-grid{gap:8px!important}#featuredGrid.featured-grid .photo{height:115px!important}}
 </style>
 
 </body></html>
