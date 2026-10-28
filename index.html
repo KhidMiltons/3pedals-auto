@@ -3325,6 +3325,88 @@ dialog.authbox input:focus,dialog.authbox select:focus,dialog.authbox textarea:f
 }
 #accDlg #accountMenu button:hover{background:rgba(255,255,255,.13)!important}
 </style>
+
+<style id="account-true-glass-responsive-fix">
+/* True glass account workspace: clear, neutral, and responsive without gold accents. */
+#accDlg.authbox{
+ background:rgba(255,255,255,.09)!important;
+ color:inherit!important;
+ border:1px solid rgba(255,255,255,.22)!important;
+ box-shadow:0 24px 72px rgba(0,0,0,.16),inset 0 1px 0 rgba(255,255,255,.2)!important;
+ -webkit-backdrop-filter:blur(42px) saturate(175%)!important;
+ backdrop-filter:blur(42px) saturate(175%)!important;
+}
+#accDlg.authbox::backdrop{background:rgba(24,28,34,.12)!important;-webkit-backdrop-filter:blur(12px)!important;backdrop-filter:blur(12px)!important}
+#accDlg .in{background:transparent!important}
+#accDlg .account-dialog-head{
+ display:grid!important;grid-template-columns:auto minmax(0,1fr) auto!important;
+ align-items:center!important;gap:clamp(10px,2vw,18px)!important;
+ padding:clamp(12px,2.4vw,22px)!important;margin:0 0 14px!important;
+ background:rgba(255,255,255,.055)!important;
+ border:0!important;border-radius:20px!important;
+}
+#accDlg .account-brand-title{
+ display:flex!important;align-items:center!important;justify-content:center!important;gap:10px!important;
+ min-width:0!important;margin:0!important;font-size:clamp(19px,2.2vw,28px)!important;
+ line-height:1.2!important;letter-spacing:-.025em!important;font-weight:700!important;
+ white-space:normal!important;text-align:center!important;
+}
+#accDlg .account-brand-title span{font-size:inherit!important;overflow-wrap:anywhere!important}
+#accDlg .account-brand-icon{width:clamp(25px,3vw,34px)!important;height:clamp(25px,3vw,34px)!important;flex:0 0 auto!important}
+#accDlg #accMenuToggle,#accDlg #accCloseTop{
+ width:clamp(38px,4vw,46px)!important;height:clamp(38px,4vw,46px)!important;
+ display:grid!important;place-items:center!important;padding:0!important;
+ color:inherit!important;background:rgba(255,255,255,.13)!important;
+ border:1px solid rgba(255,255,255,.2)!important;border-radius:14px!important;
+}
+#accDlg #accBody{min-width:0!important}
+#accDlg #accBody>*,#accDlg #accBody section,#accDlg #accBody article{min-width:0}
+#accDlg #accBody .dashboard-card,#accDlg #accBody .stat-card,#accDlg #accBody .metric-card,
+#accDlg #accBody .panel,#accDlg #accBody .card,
+#accDlg #accBody [class*="dashboard-card"],#accDlg #accBody [class*="stat-card"],
+#accDlg #accBody [class*="metric-card"],#accDlg #accBody [class*="panel"]{
+ background:rgba(255,255,255,.095)!important;
+ border:1px solid rgba(255,255,255,.19)!important;
+ border-radius:18px!important;
+ box-shadow:0 12px 32px rgba(0,0,0,.075),inset 0 1px 0 rgba(255,255,255,.16)!important;
+}
+#accDlg #accountMenu.dashboard-shortcuts{
+ background:rgba(255,255,255,.17)!important;
+ border:1px solid rgba(255,255,255,.24)!important;
+ -webkit-backdrop-filter:blur(36px) saturate(175%)!important;
+ backdrop-filter:blur(36px) saturate(175%)!important;
+ box-shadow:0 20px 55px rgba(0,0,0,.14)!important;
+}
+#accDlg #accountMenu button:hover{background:rgba(255,255,255,.18)!important}
+#accDlg input:focus,#accDlg select:focus,#accDlg textarea:focus,
+#accBody input:focus,#accBody select:focus,#accBody textarea:focus{
+ outline:2px solid rgba(255,255,255,.48)!important;outline-offset:2px!important;
+}
+@media(max-width:700px){
+ #accDlg.authbox{width:calc(100vw - 16px)!important;max-width:calc(100vw - 16px)!important;max-height:calc(100dvh - 16px)!important;padding:0!important;border-radius:22px!important;overflow:auto!important}
+ #accDlg>.in{padding:12px!important}
+ #accDlg .account-dialog-head{grid-template-columns:38px minmax(0,1fr) 38px!important;gap:8px!important;padding:10px!important;margin-bottom:10px!important}
+ #accDlg .account-brand-title{font-size:clamp(17px,4.7vw,23px)!important;gap:7px!important}
+ #accDlg .account-brand-icon{width:24px!important;height:24px!important}
+ #accDlg #accMenuToggle,#accDlg #accCloseTop{width:38px!important;height:38px!important}
+ #accDlg #accBody .dashboard-card,#accDlg #accBody .stat-card,#accDlg #accBody .metric-card,
+ #accDlg #accBody .panel,#accDlg #accBody .card,
+ #accDlg #accBody [class*="dashboard-card"],#accDlg #accBody [class*="stat-card"],
+ #accDlg #accBody [class*="metric-card"],#accDlg #accBody [class*="panel"]{
+  padding:clamp(10px,2.6vw,16px)!important;margin-block:8px!important;border-radius:16px!important;
+ }
+ #accDlg #accBody h1,#accDlg #accBody h2{font-size:clamp(18px,4.5vw,24px)!important;line-height:1.25!important}
+ #accDlg #accBody h3{font-size:clamp(15px,3.8vw,19px)!important}
+ #accDlg #accBody .grid,#accDlg #accBody [class*="grid"],#accDlg #accBody [class*="stats"]{
+  min-width:0!important;grid-template-columns:repeat(auto-fit,minmax(min(100%,145px),1fr))!important;
+ }
+}
+@media(min-width:701px) and (max-width:900px){
+ #accDlg.authbox{max-width:calc(100vw - 28px)!important}
+ #accDlg .account-brand-title{font-size:22px!important}
+ #accDlg #accBody .dashboard-card,#accDlg #accBody .stat-card,#accDlg #accBody .metric-card{padding:14px!important}
+}
+</style>
 </body>
 </html>
 
