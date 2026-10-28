@@ -3065,6 +3065,29 @@ input,select,textarea{background:rgba(255,255,255,.055)!important}
   .tile,.card,.panel,.contact-card,.journal-card,.project-card{background-color:rgba(20,22,25,.38)!important}
 }
 </style>
+
+<style id="auth-switch-clickability-fix">
+#authDlg #authSwitchRow{position:relative!important;z-index:50!important;isolation:isolate!important;pointer-events:auto!important}
+#authDlg #authSwitch{position:relative!important;z-index:51!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;min-height:40px!important;min-width:64px!important;padding:8px 12px!important;margin:0 0 0 4px!important;pointer-events:auto!important;touch-action:manipulation!important;cursor:pointer!important}
+#authDlg #authSwitchRow *{pointer-events:auto}
+#authDlg .in{position:relative;z-index:1}
+</style>
+<script id="auth-switch-single-handler-fix">
+(()=>{
+ const button=document.getElementById('authSwitch');
+ if(!button||button.dataset.directToggleBound)return;
+ button.dataset.directToggleBound='1';
+ button.addEventListener('click',event=>{
+   event.preventDefault();
+   event.stopImmediatePropagation();
+   if(typeof openAuth==='function'){
+     const current=typeof authMode!=='undefined'?authMode:'register';
+     const seller=typeof sellerRegistrationMode!=='undefined'&&!!sellerRegistrationMode;
+     openAuth(current==='login'?'register':'login','',{seller});
+   }
+ },true);
+})();
+</script>
 </body>
 </html>
 
