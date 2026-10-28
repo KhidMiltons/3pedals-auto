@@ -788,5 +788,21 @@ body>header nav a#cLink{border:1px solid rgba(255,255,255,.46)!important;border-
 body>header #accountOpen{max-width:36px!important}
 @media(max-width:820px){body>header{width:calc(100% - 20px)!important;margin:10px auto 0!important;border-radius:18px!important}body>header>.wrap{padding:15px 16px!important;gap:12px!important}body>header .logo{flex:1 1 calc(100% - 56px)!important;max-width:none!important}body>header .account-pill{order:2!important}body>header nav{order:3!important;flex:1 1 100%!important;justify-content:flex-start!important;gap:6px 15px!important}body>header nav button,body>header nav a{font-size:11px!important;padding:7px 0!important}}
 @media(max-width:420px){body>header nav{gap:5px 11px!important}body>header nav button,body>header nav a{font-size:10px!important}}
-</style><style id="garage-account-interaction-fix">body>header #accountOpen{pointer-events:auto!important;position:relative!important;z-index:30!important;cursor:pointer!important;opacity:1!important}body>header .account-pill{pointer-events:auto!important;position:relative!important;z-index:30!important}body>header nav button:hover,body>header nav a:hover,body>header #accountOpen:hover{transform:translateY(-2px)!important;box-shadow:0 8px 22px rgba(0,0,0,.22)!important;border-color:rgba(211,181,143,.7)!important}body>header #accountOpen:focus-visible{outline:2px solid #d3b58f!important;outline-offset:3px!important}</style></body>
+</style><style id="garage-account-interaction-fix">body>header #accountOpen{pointer-events:auto!important;position:relative!important;z-index:30!important;cursor:pointer!important;opacity:1!important}body>header .account-pill{pointer-events:auto!important;position:relative!important;z-index:30!important}body>header nav button:hover,body>header nav a:hover,body>header #accountOpen:hover{transform:translateY(-2px)!important;box-shadow:0 8px 22px rgba(0,0,0,.22)!important;border-color:rgba(211,181,143,.7)!important}body>header #accountOpen:focus-visible{outline:2px solid #d3b58f!important;outline-offset:3px!important}</style>
+<style id="borderless-glass-footer-and-garage">
+/* Borderless translucent glass for Garage page sections and footer. */
+footer,body>footer,.site-footer,#footer,.garage-hero,.garage-section,.garage-panel,.garage-card,
+.tiles .tile,.tile,.card,.panel,.service-card,.booking-card,.contact-card,.stat,.showroom-vehicle-note,
+.garage .tile,.garage .card,.garage .panel{
+  border:0!important;border-top:0!important;border-bottom:0!important;outline:0!important;
+  background:rgba(20,22,25,.28)!important;
+  -webkit-backdrop-filter:blur(24px) saturate(145%)!important;
+  backdrop-filter:blur(24px) saturate(145%)!important;
+  box-shadow:0 16px 42px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.07)!important;
+}
+footer::before,footer::after,body>footer::before,body>footer::after{border:0!important;box-shadow:none!important}
+@media(max-width:760px){footer,body>footer{padding-bottom:calc(80px + env(safe-area-inset-bottom,0px))!important}}
+</style>
+
+</body>
 </html>
