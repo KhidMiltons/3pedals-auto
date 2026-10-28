@@ -3112,6 +3112,34 @@ input,select,textarea{background:rgba(255,255,255,.055)!important}
  },true);
 })();
 </script>
+
+<style id="auth-switch-hard-reset">
+#authDlg #authSwitchRow{display:flex!important;align-items:center!important;justify-content:center!important;gap:6px!important;position:relative!important;z-index:9999!important;pointer-events:auto!important;visibility:visible!important;opacity:1!important}
+#authDlg #authSwitch{display:inline-flex!important;position:relative!important;z-index:10000!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;cursor:pointer!important;min-height:44px!important;padding:10px 14px!important;border:1px solid rgba(212,160,23,.65)!important;border-radius:999px!important;color:var(--gold,#d4a017)!important;background:rgba(212,160,23,.10)!important}
+#authDlg #authSwitchRow span{pointer-events:none!important}
+</style>
+<script id="auth-switch-hard-reset-js">
+(()=>{
+ function bind(){
+   const old=document.getElementById('authSwitch');
+   if(!old||!old.parentNode)return;
+   // Replace the element to remove conflicting legacy listeners attached by earlier repairs.
+   const button=old.cloneNode(true);
+   old.replaceWith(button);
+   button.type='button';
+   button.addEventListener('click',event=>{
+     event.preventDefault();
+     event.stopPropagation();
+     const mode=typeof authMode!=='undefined'?authMode:'register';
+     const seller=typeof sellerRegistrationMode!=='undefined'&&!!sellerRegistrationMode;
+     if(typeof openAuth==='function')openAuth(mode==='login'?'register':'login','',{seller});
+     else {const error=document.getElementById('authErr');if(error)error.textContent='Sign-in form is still loading. Refresh the page and try again.'}
+   });
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind,{once:true});else bind();
+})();
+</script>
+
 </body>
 </html>
 
