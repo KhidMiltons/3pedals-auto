@@ -3394,6 +3394,43 @@ header #accountOpen svg,header #accountOpen img,header #accountOpen i,header #ac
  header .logo{font-size:clamp(22px,5.4vw,29px)!important;max-width:none!important;white-space:nowrap!important}
 }
 </style>
+
+<style id="header-glass-brand-responsive-fix">
+/* Header-only refinement: preserve the page wallpaper and give the brand/nav proper presence. */
+header,body>header,.site-header,.navbar,.nav-shell,.nav-wrap{
+ background:rgba(255,255,255,.075)!important;
+ border:1px solid rgba(255,255,255,.16)!important;
+ box-shadow:0 12px 36px rgba(0,0,0,.10),inset 0 1px 0 rgba(255,255,255,.12)!important;
+ -webkit-backdrop-filter:blur(28px) saturate(165%)!important;
+ backdrop-filter:blur(28px) saturate(165%)!important;
+}
+header>.wrap,header .wrap{
+ min-height:76px!important;gap:clamp(12px,2vw,26px)!important;
+}
+header .logo,.site-header .logo{
+ display:block!important;white-space:nowrap!important;
+ font-size:clamp(23px,2.2vw,32px)!important;
+ line-height:1.12!important;letter-spacing:-.045em!important;font-weight:750!important;
+ flex:0 0 auto!important;max-width:none!important;
+}
+header nav,header #nav{gap:clamp(6px,1vw,14px)!important}
+header nav button,header nav a,header #nav button,header #nav a{
+ font-size:clamp(13px,1.05vw,15px)!important;padding:10px clamp(8px,1vw,14px)!important;
+ white-space:nowrap!important;
+}
+@media(max-width:760px){
+ header>.wrap,header .wrap{min-height:68px!important;gap:10px!important}
+ header .logo,.site-header .logo{
+  font-size:clamp(21px,5.2vw,28px)!important;
+  letter-spacing:-.04em!important;max-width:calc(100vw - 150px)!important;
+  white-space:normal!important;line-height:1.05!important;
+ }
+}
+@media(min-width:761px) and (max-width:1100px){
+ header .logo,.site-header .logo{font-size:clamp(23px,2.6vw,29px)!important}
+ header>.wrap,header .wrap{gap:12px!important}
+}
+</style>
 </body>
 </html>
 
