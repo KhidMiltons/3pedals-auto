@@ -629,3 +629,66 @@ main.wrap { width:min(calc(100% - 48px),1160px) !important; max-width:1160px !im
  body > header #nav { gap:8px 13px !important; }
  #home .hero { min-height:650px !important; }
 }
+
+
+/* === Full-screen cinematic wallpaper + text-only glass panels (home and garage) === */
+html { min-height:100%; background:#08090b !important; }
+body {
+  background-color:#08090b !important;
+  background-image:
+    linear-gradient(90deg,rgba(4,5,7,.70) 0%,rgba(4,5,7,.38) 55%,rgba(4,5,7,.48) 100%),
+    linear-gradient(180deg,rgba(4,5,7,.25) 0%,rgba(4,5,7,.10) 45%,rgba(4,5,7,.76) 100%),
+    url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=2400&q=90") !important;
+  background-position:center,center,center center !important;
+  background-size:cover,cover,cover !important;
+  background-repeat:no-repeat,no-repeat,no-repeat !important;
+  background-attachment:fixed,fixed,fixed !important;
+}
+body:before { content:none !important; display:none !important; }
+body:after { background:radial-gradient(ellipse at 70% 20%,rgba(210,179,143,.08),transparent 48%) !important; }
+body > header {
+  background:rgba(18,19,22,.34) !important;
+  border:1px solid rgba(255,255,255,.48) !important;
+  border-radius:28px !important;
+  -webkit-backdrop-filter:blur(26px) saturate(130%) !important;
+  backdrop-filter:blur(26px) saturate(130%) !important;
+}
+main.wrap { position:relative !important; z-index:1 !important; }
+#home .hero, #home .garage-hero, .garage-hero {
+  background:rgba(22,23,26,.24) !important;
+  border:1px solid rgba(255,255,255,.50) !important;
+  border-radius:0 0 30px 30px !important;
+  box-shadow:0 25px 80px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.10) !important;
+  -webkit-backdrop-filter:blur(22px) saturate(125%) !important;
+  backdrop-filter:blur(22px) saturate(125%) !important;
+}
+/* Remove the car photo from the hero panel: the only photo is the page wallpaper. */
+#home .hero {
+  background-image:linear-gradient(110deg,rgba(15,16,18,.24),rgba(255,255,255,.035)) !important;
+  border-top:1px solid rgba(255,255,255,.50) !important;
+  border-radius:30px !important;
+  min-height:calc(100svh - 180px) !important;
+}
+#home .showroom-vehicle-note {
+  background:rgba(18,19,22,.34) !important;
+  border:1px solid rgba(255,255,255,.54) !important;
+  -webkit-backdrop-filter:blur(24px) saturate(140%) !important;
+  backdrop-filter:blur(24px) saturate(140%) !important;
+}
+#home .tile, #home .tiles .tile, .tiles .tile, .card, .panel, .service-card,
+.booking-card, .garage-card, .contact-card, .feature-card {
+  background:rgba(19,20,23,.36) !important;
+  border:1px solid rgba(255,255,255,.20) !important;
+  box-shadow:0 12px 34px rgba(0,0,0,.16),inset 0 1px rgba(255,255,255,.07) !important;
+  -webkit-backdrop-filter:blur(22px) saturate(135%) !important;
+  backdrop-filter:blur(22px) saturate(135%) !important;
+}
+#home .tile:hover, .tiles .tile:hover {
+  background:rgba(37,38,41,.48) !important;
+  border-color:rgba(221,192,160,.48) !important;
+}
+body > footer { background:rgba(10,11,13,.42) !important; -webkit-backdrop-filter:blur(22px); backdrop-filter:blur(22px); }
+@media(max-width:760px) {
+  body { background-attachment:scroll,scroll,scroll !important; background-position:center,center,58% center !important; }
+  #home .hero { min-height:calc(100svh - 145px) !important; }
+}
