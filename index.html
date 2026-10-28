@@ -3307,6 +3307,42 @@ footer::before,footer::after,body>footer::before,body>footer::after{border:0!imp
   }
 }
 </style>
+
+<style id="header-alignment-account-icon-repair">
+/* Align the brand, navigation and account control without replacing the existing icon. */
+header>.wrap{
+ display:flex!important;align-items:center!important;justify-content:space-between!important;
+ flex-wrap:nowrap!important;min-width:0!important;
+}
+header .logo{flex:0 1 auto!important;display:flex!important;align-items:center!important;margin:0!important}
+header #nav{display:flex;align-items:center;justify-content:center;flex:1 1 auto;min-width:0}
+header .account-pill{display:flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;flex:0 0 auto!important;min-width:0!important}
+header #accountOpen{
+ display:inline-flex!important;align-items:center!important;justify-content:center!important;
+ flex:0 0 42px!important;width:42px!important;height:42px!important;min-width:42px!important;
+ padding:0!important;line-height:1!important;position:relative!important;
+ border-radius:50%!important;overflow:visible!important;visibility:visible!important;opacity:1!important;
+}
+header #accountOpen svg,header #accountOpen img,header #accountOpen i,
+header #accountOpen .icon{display:block!important;width:21px!important;height:21px!important;max-width:21px!important;max-height:21px!important;flex:0 0 auto!important}
+header #accountOpen::before,header #accountOpen::after{pointer-events:none!important}
+header #accountText{display:inline-block!important;line-height:1.25!important;white-space:nowrap!important}
+@media(min-width:901px){
+ header>.wrap{gap:clamp(12px,1.6vw,24px)!important}
+ header .logo{font-size:clamp(23px,1.9vw,30px)!important}
+ header #nav{gap:clamp(8px,1.15vw,18px)!important}
+}
+@media(max-width:900px){
+ header>.wrap{gap:10px!important}
+ header .logo{font-size:clamp(19px,4.8vw,25px)!important;max-width:52vw!important}
+ header .account-pill{gap:5px!important}
+ header #accountOpen{width:38px!important;height:38px!important;min-width:38px!important;flex-basis:38px!important}
+}
+@media(max-width:540px){
+ header #accountText{max-width:80px!important;overflow:hidden!important;text-overflow:ellipsis!important}
+ header .logo{max-width:48vw!important}
+}
+</style>
 </body>
 </html>
 
