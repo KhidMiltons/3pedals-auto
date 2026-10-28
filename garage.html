@@ -744,5 +744,15 @@ document.addEventListener('click', function(event) {
   }
 })();
 </script>
+
+<style id="final-background-wallpaper-fix">
+html,body{background-color:#08090b!important}
+body{background-image:linear-gradient(90deg,rgba(4,5,7,.56),rgba(4,5,7,.28) 55%,rgba(4,5,7,.40)),linear-gradient(180deg,rgba(4,5,7,.10),rgba(4,5,7,.18) 55%,rgba(4,5,7,.55)),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=2400&q=90")!important;background-position:center,center,center center!important;background-size:cover,cover,cover!important;background-repeat:no-repeat,no-repeat,no-repeat!important;background-attachment:fixed,fixed,fixed!important}
+body:before{content:none!important;display:none!important}
+body:after{background:linear-gradient(90deg,rgba(0,0,0,.10),transparent 48%,rgba(0,0,0,.10))!important}
+#home .hero, .garage-hero{background:rgba(18,19,22,.28)!important;background-image:linear-gradient(110deg,rgba(15,16,18,.22),rgba(255,255,255,.025))!important;backdrop-filter:blur(22px) saturate(130%)!important;-webkit-backdrop-filter:blur(22px) saturate(130%)!important}
+#home .tile,.tiles .tile,.showroom-vehicle-note,.garage-hero ~ .tiles .tile{background:rgba(19,20,23,.32)!important;backdrop-filter:blur(22px) saturate(135%)!important;-webkit-backdrop-filter:blur(22px) saturate(135%)!important}
+@media(max-width:760px){body{background-attachment:scroll,scroll,scroll!important;background-position:center,center,58% center!important}}
+</style>
 </body>
 </html>
