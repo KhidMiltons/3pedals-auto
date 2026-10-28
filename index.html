@@ -3240,59 +3240,6 @@ footer::before,footer::after,body>footer::before,body>footer::after{border:0!imp
 }
 </style>
 
-
-<style id="sitewide-premium-glass-account-refresh">
-/* Account and sign-in panels: quiet, translucent glass rather than opaque modal boxes. */
-dialog.authbox{
- color:var(--text,#f5f3ef)!important;
- background:rgba(18,21,25,.76)!important;
- border:1px solid rgba(255,255,255,.12)!important;
- border-radius:28px!important;
- box-shadow:0 32px 100px rgba(0,0,0,.48),inset 0 1px 0 rgba(255,255,255,.09)!important;
- -webkit-backdrop-filter:blur(32px) saturate(155%)!important;
- backdrop-filter:blur(32px) saturate(155%)!important;
- max-width:min(960px,calc(100vw - 24px))!important;
-}
-dialog.authbox::backdrop{background:rgba(5,7,10,.58)!important;-webkit-backdrop-filter:blur(8px)!important;backdrop-filter:blur(8px)!important}
-dialog.authbox>.in{background:transparent!important}
-dialog.authbox input,dialog.authbox select,dialog.authbox textarea,
-#accBody input,#accBody select,#accBody textarea{
- background:rgba(255,255,255,.055)!important;color:inherit!important;
- border:1px solid rgba(255,255,255,.13)!important;border-radius:14px!important;
- box-shadow:inset 0 1px 0 rgba(255,255,255,.035)!important;
-}
-dialog.authbox input:focus,dialog.authbox select:focus,dialog.authbox textarea:focus,
-#accBody input:focus,#accBody select:focus,#accBody textarea:focus{
- outline:2px solid rgba(220,204,171,.42)!important;outline-offset:1px!important;
-}
-#accDlg .account-dialog-head{position:sticky;top:0;z-index:5;padding:12px 4px 18px!important;margin-bottom:16px!important;background:rgba(18,21,25,.55)!important;-webkit-backdrop-filter:blur(20px)!important;backdrop-filter:blur(20px)!important;border-bottom:0!important}
-#accDlg .account-brand-title{letter-spacing:-.035em!important;font-weight:650!important}
-#accDlg #accMenuToggle,#accDlg #accCloseTop,.authbox .auth-close{
- background:rgba(255,255,255,.07)!important;border:1px solid rgba(255,255,255,.12)!important;
- color:inherit!important;border-radius:14px!important;transition:background .2s ease,transform .2s ease!important;
-}
-#accDlg #accMenuToggle:hover,#accDlg #accCloseTop:hover,.authbox .auth-close:hover{background:rgba(255,255,255,.13)!important;transform:translateY(-1px)}
-#accBody .dashboard-card,#accBody .stat-card,#accBody .metric-card,#accBody .panel,#accBody .card,
-#accBody [class*="dashboard-card"],#accBody [class*="stat-card"],#accBody [class*="metric-card"],#accBody [class*="panel"]{
- background:rgba(255,255,255,.045)!important;border:1px solid rgba(255,255,255,.085)!important;
- border-radius:20px!important;box-shadow:0 12px 36px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.035)!important;
-}
-#accDlg #accountMenu.dashboard-shortcuts{
- background:rgba(19,22,26,.92)!important;border:1px solid rgba(255,255,255,.1)!important;
- border-radius:22px!important;box-shadow:0 24px 70px rgba(0,0,0,.32)!important;
- -webkit-backdrop-filter:blur(28px) saturate(150%)!important;backdrop-filter:blur(28px) saturate(150%)!important;
-}
-#accDlg #accountMenu button{border-radius:13px!important;transition:background .18s ease,transform .18s ease!important}
-#accDlg #accountMenu button:hover{background:rgba(255,255,255,.075)!important;transform:translateX(2px)}
-dialog.authbox button,dialog.authbox .btn{transition:transform .18s ease,filter .18s ease!important}
-dialog.authbox button:hover{filter:brightness(1.08)}
-@media(max-width:640px){
- dialog.authbox{max-width:calc(100vw - 16px)!important;max-height:calc(100dvh - 16px)!important;border-radius:22px!important}
- dialog.authbox>.in{padding:clamp(16px,4vw,24px)!important}
- #accDlg .account-dialog-head{padding-top:6px!important}
-}
-@media(prefers-reduced-motion:reduce){dialog.authbox *,#accDlg *{transition:none!important;animation:none!important}}
-</style>
 </body>
 </html>
 
