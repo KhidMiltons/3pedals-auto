@@ -3171,6 +3171,26 @@ footer a,body>footer a{position:relative}
 @media(max-width:760px){footer,body>footer{padding-bottom:calc(80px + env(safe-area-inset-bottom,0px))!important}}
 </style>
 
+
+<style id="dealer-garage-location-borderless-glass">
+/* Remove gold accent rules and use a subtle frosted-glass surface in dealer, garage and location sections. */
+footer,body>footer,.site-footer,#footer,
+#dealer,.dealer-section,.dealer-card,.dealer-panel,.dealer-hero,.dealer-location,
+#garage,.garage-section,.garage-card,.garage-panel,.garage-hero,
+#location,.location-section,.location-card,.location-panel,.location-hero,
+#dealers .tile,#dealers .card,#dealers .panel,
+#garage .tile,#garage .card,#garage .panel,
+#location .tile,#location .card,#location .panel{
+ border:0!important;border-top:0!important;border-bottom:0!important;outline:0!important;
+ background:rgba(20,22,25,.28)!important;
+ -webkit-backdrop-filter:blur(24px) saturate(145%)!important;
+ backdrop-filter:blur(24px) saturate(145%)!important;
+ box-shadow:0 16px 42px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.06)!important;
+}
+.garage-hero,.dealer-hero,.location-hero{border-left:0!important;border-right:0!important}
+footer::before,footer::after,body>footer::before,body>footer::after{border:0!important;box-shadow:none!important}
+</style>
+
 </body>
 </html>
 
