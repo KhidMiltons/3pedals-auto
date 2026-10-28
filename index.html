@@ -2943,6 +2943,26 @@ body:after{background:linear-gradient(90deg,rgba(0,0,0,.10),transparent 48%,rgba
 })();
 </script>
 
+
+<script id="contact-navigation-repair">
+(()=>{
+ const button=document.querySelector('#nav [data-tab="contact"]');
+ const nav=document.getElementById('nav');
+ if(!button||button.dataset.contactRepairBound)return;
+ button.dataset.contactRepairBound='1';
+ button.addEventListener('click',event=>{
+   event.preventDefault();
+   document.querySelectorAll('main.wrap > section').forEach(section=>section.hidden=section.id!=='contact');
+   document.querySelectorAll('#nav button[data-tab]').forEach(item=>item.setAttribute('aria-selected',String(item===button)));
+   history.pushState({siteSection:'contact'},'',location.pathname+location.search+'#contact');
+   window.scrollTo({top:0,behavior:'smooth'});
+   nav?.classList.remove('mobile-menu-open','is-open');
+   document.body.classList.remove('nav-open');
+   const toggle=document.getElementById('navToggle');
+   if(toggle){toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Open navigation')}
+ },true);
+})();
+</script>
 </body>
 </html>
 
