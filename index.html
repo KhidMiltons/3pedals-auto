@@ -2990,6 +2990,40 @@ body:after{background:linear-gradient(90deg,rgba(0,0,0,.10),transparent 48%,rgba
  },true);
 })();
 </script>
+
+<style id="account-hang-and-premium-cards-fix">
+/* Account dialogs: keep controls above content and always reachable */
+#authDlg,#accDlg{color:var(--text,#f5f2eb);background:rgba(17,19,21,.94);border:1px solid rgba(195,169,112,.38);border-radius:22px;box-shadow:0 28px 90px rgba(0,0,0,.48);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
+#authDlg::backdrop,#accDlg::backdrop{background:rgba(5,7,9,.64);backdrop-filter:blur(5px)}
+#authDlg .in,#accDlg .in{position:relative}
+#authCloseTop,#accCloseTop{position:sticky;top:0;z-index:20;float:right;display:grid;place-items:center;width:42px;height:42px;border-radius:50%;border:1px solid rgba(195,169,112,.38);background:rgba(255,255,255,.08);color:inherit;font-size:26px;cursor:pointer;pointer-events:auto}
+#authSwitch,#authCloseBack,#authSubmit,#accountRetryButton{position:relative;z-index:3;pointer-events:auto;cursor:pointer}
+.account-load-error{padding:24px;border:1px solid rgba(195,169,112,.35);border-radius:16px;background:rgba(255,255,255,.045)}
+.account-load-error button{padding:10px 16px;border-radius:999px;background:var(--gold,#c3a970);color:#171717;border:0;font-weight:700;cursor:pointer}
+footer{position:relative;margin-top:48px;padding:34px 0 38px!important;border-top:1px solid rgba(195,169,112,.32)!important;background:linear-gradient(180deg,rgba(24,26,28,.76),rgba(10,11,12,.96));color:rgba(245,242,235,.76);backdrop-filter:blur(18px)}
+footer .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+#footerBrand{font-family:"Playfair Display",serif;font-size:20px;letter-spacing:.02em;color:#e2c78c}
+#footerNote{font-size:13px;letter-spacing:.04em}
+.journal-intro,.journal-card,.project-intro,.project-card,.project-public-empty,.contact-card,.tile{background:linear-gradient(145deg,rgba(35,37,39,.82),rgba(15,17,18,.78))!important;border:1px solid rgba(195,169,112,.24)!important;border-radius:18px!important;box-shadow:0 16px 44px rgba(0,0,0,.18)!important;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.journal-card:hover,.contact-card:hover,.tile:hover,.project-card:hover{border-color:rgba(195,169,112,.62)!important;box-shadow:0 22px 54px rgba(0,0,0,.3)!important}
+.journal-card-top,.project-card .project-article{background:linear-gradient(145deg,rgba(195,169,112,.12),rgba(20,22,23,.88))!important}
+.journal-card-body h2,.project-body h2,.project-intro h2,.journal-intro h2{color:#f4efe4}
+.journal-read,.project-kicker,.contact-card span{color:#d9bd7d!important}
+@media(max-width:600px){footer{margin-top:30px;padding:26px 0 32px!important}footer .wrap{align-items:flex-start;flex-direction:column}.journal-intro{padding:22px!important}.journal-card-body{padding:18px}.project-body{padding:20px}}
+</style>
+<script id="account-dialog-reliable-controls">
+(()=>{ 
+ const byId=id=>document.getElementById(id);
+ document.addEventListener('click',event=>{
+   const target=event.target.closest('button');
+   if(!target)return;
+   if(target.id==='authCloseTop'||target.id==='authCloseBack'){event.preventDefault();byId('authDlg')?.close();return}
+   if(target.id==='authSwitch'){event.preventDefault();if(typeof openAuth==='function')openAuth(window.authMode==='login'?'register':'login','',{seller:!!window.sellerRegistrationMode});return}
+   if(target.id==='accCloseTop'||target.id==='accCloseLoadError'){event.preventDefault();const d=byId('accDlg');if(d?.open)d.close();return}
+   if(target.id==='accountRetryButton'){event.preventDefault();if(typeof openAccount==='function')openAccount({refresh:true}).catch(err=>{console.error(err);const b=byId('accBody');if(b)b.innerHTML='<div class="account-load-error" role="alert"><h3>Still unable to load</h3><p>Please check your connection and try again.</p><button type="button" id="accountRetryButton">Try again</button></div>'});return}
+ });
+})();
+</script>
 </body>
 </html>
 
