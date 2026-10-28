@@ -2963,6 +2963,33 @@ body:after{background:linear-gradient(90deg,rgba(0,0,0,.10),transparent 48%,rgba
  },true);
 })();
 </script>
+
+<script id="account-button-recovery">
+(()=>{
+ const button=document.getElementById('accountOpen');
+ if(!button||button.dataset.accountRecoveryBound)return;
+ button.dataset.accountRecoveryBound='1';
+ button.addEventListener('click',async event=>{
+   event.preventDefault();
+   event.stopImmediatePropagation();
+   const auth=document.getElementById('authDlg'),account=document.getElementById('accDlg'),body=document.getElementById('accBody');
+   try{
+     if(typeof me!=='undefined'&&me){
+       if(typeof openAccount!=='function')throw new Error('Account dashboard script did not initialize. Refresh the page and try again.');
+       await openAccount();
+       if(account&&!body?.textContent?.trim())body.innerHTML='<p role="alert" class="meta">Your account opened but its content did not load. Please refresh and try again.</p>';
+     }else{
+       if(typeof openAuth!=='function')throw new Error('Sign-in form did not initialize. Refresh the page and try again.');
+       openAuth('register');
+     }
+   }catch(error){
+     console.error('Account panel failed to open:',error);
+     if(account?.open&&body)body.innerHTML='<div class="account-load-error" role="alert"><h3>We couldn’t load your account</h3><p>'+String(error?.message||'Please refresh and try again.').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))+'</p><button type="button" id="accountRetryButton">Try again</button></div>';
+     else if(auth&&!auth.open){auth.showModal();auth.querySelector('#authErr').textContent=error?.message||'Could not open sign in. Please refresh and try again.';}
+   }
+ },true);
+})();
+</script>
 </body>
 </html>
 
