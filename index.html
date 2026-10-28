@@ -3431,6 +3431,88 @@ header nav button,header nav a,header #nav button,header #nav a{
  header>.wrap,header .wrap{gap:12px!important}
 }
 </style>
+
+<style id="account-icon-glass-and-global-skeleton-refresh">
+/* Keep the original wallpaper/background intact. Only tune account controls and loading states. */
+header #accountOpen{
+ font-size:0!important;text-indent:-9999px!important;
+ background:rgba(255,255,255,.10)!important;
+ border:1px solid rgba(255,255,255,.22)!important;
+ box-shadow:0 8px 24px rgba(0,0,0,.08),inset 0 1px 0 rgba(255,255,255,.18)!important;
+ -webkit-backdrop-filter:blur(18px) saturate(160%)!important;
+ backdrop-filter:blur(18px) saturate(160%)!important;
+}
+header #accountOpen::before{
+ content:""!important;display:block!important;width:22px!important;height:22px!important;
+ background-repeat:no-repeat!important;background-position:center!important;background-size:contain!important;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3Cpath d='M5 21v-2a7 7 0 0 1 14 0v2'/%3E%3C/svg%3E")!important;
+}
+header #accountOpen::after{content:none!important}
+#accDlg.authbox{
+ background:rgba(255,255,255,.09)!important;
+ border:1px solid rgba(255,255,255,.2)!important;
+ box-shadow:0 24px 72px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.18)!important;
+ -webkit-backdrop-filter:blur(38px) saturate(165%)!important;
+ backdrop-filter:blur(38px) saturate(165%)!important;
+}
+#accDlg .account-fast-loading-head,#accDlg .account-fast-loading-grid,#accDlg .account-fast-loading-card{gap:12px}
+#accDlg .account-fast-avatar,#accDlg .account-fast-lines i,
+#accDlg .account-fast-loading-grid span,#accDlg .account-fast-loading-card i,
+.skeleton,.skeleton-line,.skeleton-card,.skeleton-image{
+ display:block;position:relative;overflow:hidden;
+ background:rgba(255,255,255,.10)!important;border:1px solid rgba(255,255,255,.09)!important;
+ border-radius:12px;
+}
+#accDlg .account-fast-avatar{width:48px;height:48px;border-radius:50%}
+#accDlg .account-fast-lines{display:grid;gap:8px;flex:1}
+#accDlg .account-fast-lines i{height:11px}
+#accDlg .account-fast-lines i:last-child{width:62%}
+#accDlg .account-fast-loading-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:18px 0}
+#accDlg .account-fast-loading-grid span{height:76px}
+#accDlg .account-fast-loading-card{display:grid;gap:10px;padding:16px;border-radius:18px;background:rgba(255,255,255,.035)}
+#accDlg .account-fast-loading-card i{height:12px}
+#accDlg .account-fast-loading-card i:nth-child(2){width:78%}
+#accDlg .account-fast-loading-card i:nth-child(3){width:52%}
+.skeleton::after,.skeleton-line::after,.skeleton-card::after,.skeleton-image::after,
+#accDlg .account-fast-avatar::after,#accDlg .account-fast-lines i::after,
+#accDlg .account-fast-loading-grid span::after,#accDlg .account-fast-loading-card i::after{
+ content:"";position:absolute;inset:0;transform:translateX(-100%);
+ background:linear-gradient(90deg,transparent,rgba(255,255,255,.16),transparent);
+ animation:pedals-skeleton-shimmer 1.25s ease-in-out infinite;
+}
+@keyframes pedals-skeleton-shimmer{to{transform:translateX(100%)}}
+@media(prefers-reduced-motion:reduce){
+ .skeleton::after,.skeleton-line::after,.skeleton-card::after,.skeleton-image::after,
+ #accDlg .account-fast-avatar::after,#accDlg .account-fast-lines i::after,
+ #accDlg .account-fast-loading-grid span::after,#accDlg .account-fast-loading-card i::after{animation:none!important}
+}
+@media(hover:none) and (pointer:coarse){
+ header .logo{font-size:clamp(23px,5.2vw,31px)!important;max-width:calc(100vw - 145px)!important;white-space:nowrap!important}
+ header>.wrap{min-height:68px!important}
+}
+</style>
+<script id="safe-fast-refresh-and-skeletons">
+(()=> {
+ // Use browser cache on normal reloads and restore the previous scroll position.
+ window.addEventListener('pageshow',()=>{document.documentElement.classList.remove('is-refreshing')},{passive:true});
+ // Add skeletons only to explicitly marked async content containers, never replace the page wallpaper/content.
+ window.PedalsLoading={
+  show(target,count=3){
+   const el=typeof target==='string'?document.querySelector(target):target;
+   if(!el||el.dataset.loadingSkeleton==='true')return;
+   el.dataset.loadingSkeleton='true';
+   el.setAttribute('aria-busy','true');
+   const n=Math.max(1,Math.min(8,Number(count)||3));
+   el.innerHTML='<div class="pedals-skeleton-list">'+Array.from({length:n},()=>'<div class="skeleton-card" style="min-height:96px;padding:16px"><div class="skeleton-line" style="height:14px;width:48%;margin-bottom:14px"></div><div class="skeleton-line" style="height:10px;width:82%;margin-bottom:9px"></div><div class="skeleton-line" style="height:10px;width:64%"></div></div>').join('')+'</div>';
+  },
+  hide(target){
+   const el=typeof target==='string'?document.querySelector(target):target;
+   if(!el)return;
+   delete el.dataset.loadingSkeleton;el.removeAttribute('aria-busy');
+  }
+ };
+})();
+</script>
 </body>
 </html>
 
