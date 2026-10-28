@@ -1244,8 +1244,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <div class="auth-left" id="adminWrap" hidden><button class="glass-icon-btn admin-glass-icon" id="adminOpen" aria-label="Open admin panel" title="Admin panel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 6v5c0 4.6-2.9 7.8-7 10-4.1-2.2-7-5.4-7-10V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg></button></div>
 <header><div class="wrap">
-  <div class="logo" style="cursor:pointer" onclick="window.location.reload()" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){window.location.reload()}">3 Pedals Auto KE</div>
-  <div class="account-pill" aria-label="Account"><span id="accountText">Not signed in</span><button id="accountOpen" aria-label="Open account" title="Account"></button></div>
+  <a class="logo" href="/" aria-label="3 Pedals Auto KE home">3 Pedals Auto KE</a>
+  <div class="account-pill" aria-label="Account"><span id="accountText">Not signed in</span><button id="accountOpen" type="button" aria-label="Open account" title="Account"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="3.5"></circle><path d="M4.5 20c.7-4 3.2-6 7.5-6s6.8 2 7.5 6"></path></svg></button></div>
   <button class="nav-toggle" id="navToggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="nav"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
   <nav id="nav" aria-label="Main navigation">
     <button type="button" role="tab" data-tab="home" aria-selected="true">Home</button>
@@ -3241,6 +3241,29 @@ footer::before,footer::after,body>footer::before,body>footer::after{border:0!imp
 }
 </style>
 
+
+<style id="header-navigation-account-visibility-fix">
+header .logo{display:inline-flex!important;align-items:center!important;text-decoration:none!important;white-space:nowrap!important;flex-shrink:0!important}
+header .account-pill{display:inline-flex!important;align-items:center!important;gap:8px!important;margin-left:auto!important;color:inherit!important}
+header #accountOpen{
+ display:inline-flex!important;align-items:center!important;justify-content:center!important;
+ width:46px!important;height:46px!important;min-width:46px!important;flex:0 0 46px!important;
+ padding:9px!important;border:1px solid rgba(255,255,255,.2)!important;border-radius:15px!important;
+ background:rgba(255,255,255,.09)!important;color:inherit!important;cursor:pointer!important;
+ -webkit-backdrop-filter:blur(18px) saturate(150%)!important;backdrop-filter:blur(18px) saturate(150%)!important;
+}
+header #accountOpen svg{display:block!important;width:27px!important;height:27px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.8!important;stroke-linecap:round!important;stroke-linejoin:round!important}
+header #accountOpen:hover{background:rgba(255,255,255,.16)!important}
+header #nav a.navlink{text-decoration:none!important}
+@media(max-width:760px){
+ header .wrap{gap:10px!important;flex-wrap:wrap!important}
+ header .logo{font-size:clamp(19px,5vw,25px)!important;max-width:calc(100% - 150px)!important;overflow:hidden!important;text-overflow:ellipsis!important}
+ header .account-pill{gap:4px!important}
+ header #accountText{display:none!important}
+ header #accountOpen{width:44px!important;height:44px!important;min-width:44px!important;flex-basis:44px!important}
+ header #nav{width:100%!important}
+}
+</style>
 </body>
 </html>
 
