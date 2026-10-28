@@ -3513,6 +3513,32 @@ header #accountOpen::after{content:none!important}
  };
 })();
 </script>
+
+<style id="header-branding-size-correction">
+/* Give the 3 Pedals Auto KE wordmark clear prominence across desktop and mobile layouts. */
+header .logo,header .site-brand,.brand,header .branding-name{
+ font-size:clamp(25px,2.15vw,34px)!important;
+ line-height:1.08!important;
+ letter-spacing:-.045em!important;
+ font-weight:700!important;
+ white-space:nowrap!important;
+ max-width:none!important;
+ flex-shrink:0!important;
+}
+header>.wrap{gap:clamp(12px,2vw,26px)!important}
+@media(max-width:900px){
+ header .logo,header .site-brand,.brand,header .branding-name{
+  font-size:clamp(24px,3.2vw,31px)!important;
+  max-width:calc(100vw - 180px)!important;
+ }
+}
+@media(max-width:600px){
+ header .logo,header .site-brand,.brand,header .branding-name{
+  font-size:clamp(22px,5.4vw,28px)!important;
+  max-width:calc(100vw - 150px)!important;
+ }
+}
+</style>
 </body>
 </html>
 
