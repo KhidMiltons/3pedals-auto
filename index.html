@@ -3025,6 +3025,46 @@ footer .wrap{display:block}
  });
 })();
 </script>
+
+<style id="sitewide-glassmorphism-refresh">
+/* Unified, borderless glassmorphism across 3 Pedals Auto KE */
+:root{--glass-fill:rgba(20,22,25,.34);--glass-fill-strong:rgba(17,19,22,.58);--glass-stroke:rgba(255,255,255,.13);--glass-highlight:rgba(255,255,255,.08)}
+header,body>header,.site-header,.navbar,.nav-shell,.nav-wrap,
+#nav,dialog,.authbox,.modal,.drawer,
+.hero,.tile,.card,.panel,.contact-card,.journal-intro,.journal-card,
+.project-intro,.project-card,.project-public-empty,.vehicle-card,.listing,
+.dealer,.featured-panel,.promotion-package,.dashboard-card,.contact-form,
+.filter-panel,.search-panel,.stat,.service-card,.booking-card,.garage-card,
+.showroom-vehicle-note,#autoQuoteRail,.account-pages,.account-tools,
+.account-page,.account-fast-loading,.account-load-error{
+  background-color:var(--glass-fill)!important;
+  border-color:var(--glass-stroke)!important;
+  -webkit-backdrop-filter:blur(22px) saturate(140%)!important;
+  backdrop-filter:blur(22px) saturate(140%)!important;
+  box-shadow:0 16px 44px rgba(0,0,0,.16),inset 0 1px 0 rgba(255,255,255,.07)!important;
+}
+header,body>header,.site-header,.navbar,.nav-shell,.nav-wrap{background-color:rgba(15,17,20,.38)!important}
+#nav{background-color:rgba(17,19,22,.56)!important}
+#home .hero{background-color:rgba(18,20,23,.28)!important}
+footer,body>footer,footer .wrap{
+  border:0!important;border-top:0!important;outline:0!important;
+  background:rgba(20,22,25,.22)!important;
+  -webkit-backdrop-filter:blur(26px) saturate(145%)!important;
+  backdrop-filter:blur(26px) saturate(145%)!important;
+  box-shadow:none!important;
+}
+footer{padding-top:20px!important}
+input,select,textarea,button,.btn{
+  -webkit-backdrop-filter:blur(14px) saturate(130%);
+  backdrop-filter:blur(14px) saturate(130%);
+}
+input,select,textarea{background:rgba(255,255,255,.055)!important}
+#authDlg,#accDlg{background:rgba(18,20,23,.62)!important;border-color:rgba(255,255,255,.16)!important}
+@media(max-width:760px){
+  header,body>header{background:rgba(15,17,20,.46)!important}
+  .tile,.card,.panel,.contact-card,.journal-card,.project-card{background-color:rgba(20,22,25,.38)!important}
+}
+</style>
 </body>
 </html>
 
