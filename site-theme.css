@@ -1,3 +1,93 @@
+/* Site-wide glassmorphism layer: preserves the existing graphite + champagne-gold identity. */
+:root {
+  --glass-surface: rgba(19, 20, 23, .68);
+  --glass-surface-soft: rgba(255, 255, 255, .045);
+  --glass-edge: rgba(211, 185, 125, .22);
+  --glass-edge-hover: rgba(211, 185, 125, .42);
+  --glass-shadow: 0 16px 42px rgba(0, 0, 0, .20), inset 0 1px rgba(255, 255, 255, .07);
+  --champagne-gradient: linear-gradient(135deg, #f1dfb0 0%, #c9a45c 52%, #9b773b 100%);
+}
+
+/* Shared chrome and navigation */
+header, .head, .top, .site-header, .navbar, .nav-shell, .nav-wrap {
+  background: rgba(18, 19, 22, .66) !important;
+  border-color: var(--glass-edge) !important;
+  box-shadow: 0 10px 34px rgba(0, 0, 0, .16), inset 0 1px rgba(255, 255, 255, .055) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(150%) !important;
+  backdrop-filter: blur(22px) saturate(150%) !important;
+}
+nav, .nav, .nav-links, .mobile-nav, .seller-nav {
+  background: rgba(22, 23, 26, .58) !important;
+  border-color: rgba(211, 185, 125, .16) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(145%) !important;
+  backdrop-filter: blur(20px) saturate(145%) !important;
+}
+
+/* Shared cards, content panels, forms and dashboards */
+.card, .dealer, .stat, .state, .empty, .error, .panel, .seller-card,
+.info, .gallery, .seller, .spec, .note, .listing, .article-item,
+.project-item, .vehicle-card, .story-card, .contact-card, .promotion-package,
+.auto-quote-rail, .dashboard-welcome, .account-settings, .authbox,
+#login, .editor, .contact-form, .modal-content, .dialog-card,
+.settings-card, .package, .featured-panel, .filter-panel, .search-panel,
+.vehicle-detail-card, .article-card, .account-page, .dashboard-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, .075), rgba(255, 255, 255, .025)), var(--glass-surface) !important;
+  border-color: var(--glass-edge) !important;
+  box-shadow: var(--glass-shadow) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(135%) !important;
+  backdrop-filter: blur(18px) saturate(135%) !important;
+}
+.card:hover, .dealer:hover, .listing:hover, .article-item:hover,
+.project-item:hover, .vehicle-card:hover, .story-card:hover,
+.contact-card:hover, .promotion-package:hover {
+  border-color: var(--glass-edge-hover) !important;
+  box-shadow: 0 18px 46px rgba(0, 0, 0, .24), inset 0 1px rgba(255, 255, 255, .08) !important;
+}
+
+/* Translucent controls; primary champagne-gold actions retain their own gradient. */
+input, select, textarea, .field, .seg, .seller-mode-switch,
+.dashboard-shortcuts, #accountMenu, .dropdown-menu, .popover,
+.journal-share-dialog, .journal-share-url {
+  background-color: rgba(255, 255, 255, .055) !important;
+  border-color: rgba(211, 185, 125, .19) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(130%) !important;
+  backdrop-filter: blur(14px) saturate(130%) !important;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: rgba(211, 185, 125, .62) !important;
+  box-shadow: 0 0 0 3px rgba(201, 164, 92, .12) !important;
+}
+button:not(.primary):not(.btn-primary):not(.button-primary):not(.gold-button),
+.btn:not(.primary):not(.btn-primary):not(.button-primary):not(.gold-button),
+a.navlink {
+  -webkit-tap-highlight-color: transparent;
+}
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid rgba(211, 185, 125, .72);
+  outline-offset: 3px;
+}
+
+/* Keep the glass refined on mobile and respect reduced-motion preferences. */
+@media (max-width: 640px) {
+  header, .head, .top, .site-header, .navbar, .nav-shell, .nav-wrap,
+  nav, .nav, .nav-links, .mobile-nav, .seller-nav,
+  .card, .dealer, .stat, .panel, .listing, .vehicle-card, .story-card,
+  .contact-card, .promotion-package, .account-settings, .authbox,
+  .modal-content, .dialog-card, .settings-card, .featured-panel {
+    -webkit-backdrop-filter: blur(11px) saturate(125%) !important;
+    backdrop-filter: blur(11px) saturate(125%) !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card, .dealer, .listing, .article-item, .project-item,
+  .vehicle-card, .story-card, .contact-card, .promotion-package {
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* Follow the visitor's device theme across the public site and admin pages. */
 @media (prefers-color-scheme: light) {
   :root {
