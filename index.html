@@ -3240,6 +3240,39 @@ footer::before,footer::after,body>footer::before,body>footer::after{border:0!imp
 }
 </style>
 
+
+<style id="desktop-header-type-size-refresh">
+/* Improve desktop header hierarchy without changing mobile layout or backgrounds. */
+@media (min-width: 901px){
+ header .wrap{
+  min-height:88px!important;
+  gap:clamp(18px,2.2vw,34px)!important;
+ }
+ header .logo{
+  font-size:clamp(25px,2vw,32px)!important;
+  line-height:1.15!important;
+  letter-spacing:-.045em!important;
+  font-weight:700!important;
+  white-space:nowrap!important;
+ }
+ header #nav{
+  gap:clamp(12px,1.5vw,24px)!important;
+ }
+ header #nav button,
+ header #nav a,
+ header #nav .navlink{
+  font-size:clamp(15px,1.12vw,18px)!important;
+  line-height:1.25!important;
+  font-weight:550!important;
+  padding:11px 5px!important;
+  white-space:nowrap!important;
+ }
+ header .account-pill,
+ header #accountText{
+  font-size:15px!important;
+ }
+}
+</style>
 </body>
 </html>
 
