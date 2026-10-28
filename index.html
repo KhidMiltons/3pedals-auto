@@ -1250,7 +1250,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <nav id="nav" aria-label="Main navigation">
     <button type="button" role="tab" data-tab="about" aria-selected="false">About Us</button>
     <a class="navlink" href="/inventory">Fleet</a>
-    <button type="button" role="tab" data-tab="buy" aria-selected="false">Pricing</button>
+    <a class="navlink" href="/">3 Pedals</a>
     <a class="navlink" href="/dealers.html">Locations</a>
     <button type="button" role="tab" data-tab="contact" aria-selected="false" class="nav-contact">Contact Us</button>
   </nav>
@@ -2909,26 +2909,6 @@ body:after{background:linear-gradient(90deg,rgba(0,0,0,.10),transparent 48%,rgba
    if(hero && !hero.contains(quote)) hero.appendChild(quote);
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',placeQuote,{once:true});else placeQuote();
- // Provide a reliable click path even if an earlier page script failed before binding.
- document.addEventListener('click',event=>{
-   const button=event.target.closest('#accountOpen');
-   if(!button)return;
-   event.preventDefault();event.stopImmediatePropagation();
-   const account=byId('accDlg'), auth=byId('authDlg');
-   const target=account||auth;
-   if(!target)return;
-   try{
-     if(target.open) return;
-     if(typeof target.showModal==='function')target.showModal();
-     else {target.setAttribute('open','');target.style.display='block';}
-   }catch(error){console.error('Could not open account dialog',error);}
- },true);
- document.addEventListener('click',event=>{
-   if(event.target.closest('#accCloseTop,#authCloseTop')) {
-     const dialog=event.target.closest('dialog');
-     if(dialog?.open)dialog.close();
-   }
- });
  // Refresh the public quote card periodically; the existing quote loader provides web lookup and fallback content.
  const updated=byId('autoQuoteUpdated'), next=byId('autoQuoteNext');
  if(next && !window.__threePedalsQuoteRefreshTimer){
