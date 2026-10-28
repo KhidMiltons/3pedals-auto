@@ -2940,6 +2940,29 @@ body:after{background:linear-gradient(90deg,rgba(0,0,0,.10),transparent 48%,rgba
 })();
 </script>
 
+
+<style id="restore-mobile-navigation-menu">
+@media(max-width:760px){
+ body>header>.wrap{display:grid!important;grid-template-columns:minmax(0,1fr) auto auto!important;align-items:center!important;gap:10px!important;position:relative!important}
+ body>header .nav-toggle{display:inline-flex!important;grid-column:3!important;grid-row:1!important;width:42px!important;height:42px!important;visibility:visible!important;opacity:1!important;z-index:1002!important}
+ body>header .account-pill{grid-column:2!important;grid-row:1!important}
+ body>header #nav{display:none!important;position:absolute!important;top:calc(100% + 8px)!important;left:0!important;right:0!important;z-index:1001!important;grid-column:1/-1!important;grid-row:2!important;padding:14px!important;margin:0!important;gap:8px!important;flex-direction:column!important;align-items:stretch!important;flex-wrap:nowrap!important;background:rgba(16,18,21,.94)!important;border:1px solid rgba(255,255,255,.22)!important;border-radius:18px!important;box-shadow:0 18px 42px rgba(0,0,0,.38)!important;backdrop-filter:blur(24px) saturate(140%)!important;-webkit-backdrop-filter:blur(24px) saturate(140%)!important}
+ body>header #nav.mobile-menu-open{display:flex!important}
+ body>header #nav button,body>header #nav a{display:flex!important;width:100%!important;box-sizing:border-box!important;text-align:left!important;justify-content:flex-start!important;padding:12px 14px!important;border-radius:11px!important;font-size:13px!important}
+}
+</style>
+<script id="restore-mobile-navigation-menu-js">
+(()=>{
+ const toggle=document.getElementById('navToggle'),nav=document.getElementById('nav');
+ if(!toggle||!nav)return;
+ const close=()=>{nav.classList.remove('mobile-menu-open');toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Open navigation');document.body.classList.remove('nav-open')};
+ toggle.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();const opening=!nav.classList.contains('mobile-menu-open');nav.classList.toggle('mobile-menu-open',opening);toggle.setAttribute('aria-expanded',String(opening));toggle.setAttribute('aria-label',opening?'Close navigation':'Open navigation');document.body.classList.toggle('nav-open',opening)});
+ nav.addEventListener('click',event=>{if(event.target.closest('a,button'))close()});
+ document.addEventListener('click',event=>{if(!event.target.closest('#nav')&&!event.target.closest('#navToggle'))close()});
+ document.addEventListener('keydown',event=>{if(event.key==='Escape')close()});
+})();
+</script>
+
 </body>
 </html>
 
