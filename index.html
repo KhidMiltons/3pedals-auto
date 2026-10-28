@@ -1423,7 +1423,7 @@ let cars=[
 // Where the separate garage site lives. Change this if the garage is on another address.
 const GARAGE_URL="__TPA_GARAGE_URL__".indexOf("__")===0?"/garage":"__TPA_GARAGE_URL__";
 const $=id=>document.getElementById(id);
-$("gLink").href=GARAGE_URL;$("gTile").href=GARAGE_URL;
+const garageLink=$("gLink"),garageTile=$("gTile");if(garageLink)garageLink.href=GARAGE_URL;if(garageTile)garageTile.href=GARAGE_URL;
 
 // Tabs
 $("nav").querySelectorAll("button[data-tab]").forEach(b=>b.onclick=()=>{show(b.dataset.tab);closeNav()});
