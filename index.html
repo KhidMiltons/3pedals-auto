@@ -3018,7 +3018,8 @@ footer .wrap{display:block}
    const target=event.target.closest('button');
    if(!target)return;
    if(target.id==='authCloseTop'||target.id==='authCloseBack'){event.preventDefault();byId('authDlg')?.close();return}
-   if(target.id==='authSwitch'){event.preventDefault();if(typeof openAuth==='function')openAuth((typeof authMode!=='undefined'&&authMode==='login')?'register':'login','',{seller:typeof sellerRegistrationMode!=='undefined'&&!!sellerRegistrationMode});return}
+   // Let the existing authSwitch.onclick handler toggle modes exactly once.
+   if(target.id==='authSwitch')return;
    if(target.id==='accCloseTop'||target.id==='accCloseLoadError'){event.preventDefault();const d=byId('accDlg');if(d?.open)d.close();return}
    if(target.id==='accountRetryButton'){event.preventDefault();if(typeof openAccount==='function')openAccount({refresh:true}).catch(err=>{console.error(err);const b=byId('accBody');if(b)b.innerHTML='<div class="account-load-error" role="alert"><h3>Still unable to load</h3><p>Please check your connection and try again.</p><button type="button" id="accountRetryButton">Try again</button></div>'});return}
  });
