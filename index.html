@@ -3273,6 +3273,40 @@ footer::before,footer::after,body>footer::before,body>footer::after{border:0!imp
  }
 }
 </style>
+
+<style id="touch-device-desktop-view-card-compact">
+/* Compact layout on phones even when the browser requests the desktop site.
+   Uses touch hardware detection rather than viewport width, so desktop mode still fits. */
+@media (hover:none) and (pointer:coarse){
+  header .wrap{min-height:64px!important;padding-inline:14px!important;gap:10px!important}
+  header .logo,header .brand,header .site-brand{
+    font-size:clamp(19px,4.8vw,25px)!important;line-height:1.15!important;
+    letter-spacing:-.035em!important;white-space:normal!important;max-width:52vw!important;
+  }
+  header #nav{gap:8px!important}
+  header #nav button,header #nav a,header #nav .navlink{padding:8px 7px!important;font-size:13px!important}
+  .tile,.card,.vehicle-card,.listing,.journal-card,.project-card,.contact-card,
+  .service-card,.booking-card,.garage-card,.dealer-card,.location-card,
+  .promotion-package,.dashboard-card,.stat-card,.metric-card{
+    box-sizing:border-box!important;max-width:100%!important;min-width:0!important;
+    padding:clamp(10px,2.2vw,15px)!important;
+    border-radius:16px!important;
+  }
+  .tiles,.cards,.card-grid,.vehicle-grid,.listing-grid,.journal-grid,.project-grid,
+  .services-grid,.booking-grid,.garage-grid,.dealer-grid,.location-grid,
+  .dashboard-grid,.stats-grid{
+    gap:12px!important;align-items:start!important;
+  }
+  .tile h1,.tile h2,.tile h3,.card h1,.card h2,.card h3,
+  .vehicle-card h1,.vehicle-card h2,.vehicle-card h3,.listing h1,.listing h2,.listing h3{
+    line-height:1.22!important;overflow-wrap:anywhere;
+  }
+  #accDlg #accBody .dashboard-card,#accDlg #accBody .stat-card,#accDlg #accBody .metric-card,
+  #accDlg #accBody .panel,#accDlg #accBody .card{
+    padding:12px!important;margin-block:8px!important;
+  }
+}
+</style>
 </body>
 </html>
 
