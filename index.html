@@ -2870,6 +2870,76 @@ body:after{background:linear-gradient(90deg,rgba(0,0,0,.10),transparent 48%,rgba
 #home .tile,.tiles .tile,.showroom-vehicle-note{background:rgba(19,20,23,.32)!important;backdrop-filter:blur(22px) saturate(135%)!important;-webkit-backdrop-filter:blur(22px) saturate(135%)!important}
 @media(max-width:760px){body{background-attachment:scroll,scroll,scroll!important;background-position:center,center,58% center!important}}
 </style>
-<style id="final-interaction-and-quote-fix">#home #autoQuoteRail{display:block!important;position:relative!important;left:auto!important;top:auto!important;bottom:auto!important;transform:none!important;width:min(100%,290px)!important;max-width:100%!important;margin:0 0 22px auto!important;z-index:3!important;background:rgba(19,20,23,.34)!important;border:1px solid rgba(255,255,255,.34)!important;border-radius:18px!important;backdrop-filter:blur(22px) saturate(140%)!important;-webkit-backdrop-filter:blur(22px) saturate(140%)!important;color:#fff!important}#home .home-with-quote{display:flex!important;flex-direction:column!important;gap:0!important}#home .auto-quote-text,#home .auto-quote-label,#home .auto-quote-author{color:#fff!important}button,a,[role=button],summary,.account-pill,.account-icon,.tile,.card,.panel,.project-card,.contact-card,.mechanic-card,.nav-contact{transition:transform .22s ease,background-color .22s ease,border-color .22s ease,box-shadow .22s ease,opacity .22s ease!important}button:hover,a:hover,[role=button]:hover,summary:hover,.account-pill:hover,.account-icon:hover,.tile:hover,.card:hover,.panel:hover,.project-card:hover,.contact-card:hover,.mechanic-card:hover,.nav-contact:hover{border-color:rgba(211,181,143,.72)!important;box-shadow:0 10px 26px rgba(0,0,0,.2),0 0 0 1px rgba(211,181,143,.12)!important}button:hover,a:hover,[role=button]:hover,.tile:hover,.card:hover,.project-card:hover,.contact-card:hover,.mechanic-card:hover{transform:translateY(-2px)!important}button:focus-visible,a:focus-visible,[role=button]:focus-visible{outline:2px solid #d3b58f!important;outline-offset:3px!important}@media(max-width:760px){#home #autoQuoteRail{width:100%!important;margin:0 0 14px!important}}</style></body>
+<style id="final-interaction-and-quote-fix">#home #autoQuoteRail{display:block!important;position:relative!important;left:auto!important;top:auto!important;bottom:auto!important;transform:none!important;width:min(100%,290px)!important;max-width:100%!important;margin:0 0 22px auto!important;z-index:3!important;background:rgba(19,20,23,.34)!important;border:1px solid rgba(255,255,255,.34)!important;border-radius:18px!important;backdrop-filter:blur(22px) saturate(140%)!important;-webkit-backdrop-filter:blur(22px) saturate(140%)!important;color:#fff!important}#home .home-with-quote{display:flex!important;flex-direction:column!important;gap:0!important}#home .auto-quote-text,#home .auto-quote-label,#home .auto-quote-author{color:#fff!important}button,a,[role=button],summary,.account-pill,.account-icon,.tile,.card,.panel,.project-card,.contact-card,.mechanic-card,.nav-contact{transition:transform .22s ease,background-color .22s ease,border-color .22s ease,box-shadow .22s ease,opacity .22s ease!important}button:hover,a:hover,[role=button]:hover,summary:hover,.account-pill:hover,.account-icon:hover,.tile:hover,.card:hover,.panel:hover,.project-card:hover,.contact-card:hover,.mechanic-card:hover,.nav-contact:hover{border-color:rgba(211,181,143,.72)!important;box-shadow:0 10px 26px rgba(0,0,0,.2),0 0 0 1px rgba(211,181,143,.12)!important}button:hover,a:hover,[role=button]:hover,.tile:hover,.card:hover,.project-card:hover,.contact-card:hover,.mechanic-card:hover{transform:translateY(-2px)!important}button:focus-visible,a:focus-visible,[role=button]:focus-visible{outline:2px solid #d3b58f!important;outline-offset:3px!important}@media(max-width:760px){#home #autoQuoteRail{width:100%!important;margin:0 0 14px!important}}</style>
+<style id="home-quote-mobile-account-repair">
+/* Keep the quote inside the home hero glass panel. */
+#home .home-with-quote{display:block!important}
+#home #autoQuoteRail{display:block!important;position:relative!important;float:none!important;width:min(100%,390px)!important;max-width:100%!important;margin:24px 0 0!important;box-sizing:border-box!important;z-index:2!important}
+#home .home-with-quote>div{min-width:0!important}
+#home .hero{display:flex!important;flex-direction:column!important;align-items:flex-start!important}
+#home .hero #autoQuoteRail{align-self:flex-start!important}
+#autoQuoteRail .auto-quote-body{min-height:0!important;padding:14px 16px!important}
+#autoQuoteRail .auto-quote-text{font-size:clamp(15px,2vw,19px)!important;line-height:1.4!important;margin:5px 0 10px!important}
+#autoQuoteRail .auto-quote-top{padding:12px 15px 8px!important}
+#autoQuoteRail .auto-quote-footer{padding:8px 14px 10px!important}
+@media(max-width:640px){
+ body>header{margin-bottom:12px!important}
+ body>header>.wrap{padding:0 12px!important}
+ main.wrap{width:calc(100% - 20px)!important}
+ #home .hero{min-height:0!important;padding:24px 17px!important;gap:12px!important;border-radius:22px!important}
+ #home .hero h1{font-size:clamp(2rem,8.5vw,2.8rem)!important;line-height:1.06!important;margin:8px 0 10px!important}
+ #home .hero p{font-size:13px!important;line-height:1.5!important}
+ #home .showroom-actions{gap:8px!important;flex-wrap:wrap!important}
+ #home .showroom-actions .btn{padding:10px 13px!important;font-size:12px!important}
+ #home .showroom-vehicle-note{position:relative!important;inset:auto!important;width:100%!important;margin-top:10px!important}
+ #home #autoQuoteRail{width:100%!important;margin:14px 0 0!important}
+ #home .tiles,.tiles,.cols,.grid,.vehicle-grid,.journal-grid{gap:10px!important}
+ #home .tile,.tiles .tile,.card,.panel,.service-card,.booking-card,.garage-card,.contact-card,.feature-card,.dealer,.stat{padding:12px!important;border-radius:15px!important}
+ #home .tile h2,#home .tile h3,.card h2,.card h3,.panel h2,.panel h3{font-size:15px!important;line-height:1.25!important}
+}
+</style>
+<script id="account-button-and-home-quote-repair">
+(()=>{
+ const byId=id=>document.getElementById(id);
+ // Move the quote card into the hero glass panel so it belongs to the same home-screen panel.
+ function placeQuote(){
+   const quote=byId('autoQuoteRail'), home=byId('home');
+   if(!quote||!home)return;
+   const hero=home.querySelector('.hero');
+   if(hero && !hero.contains(quote)) hero.appendChild(quote);
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',placeQuote,{once:true});else placeQuote();
+ // Provide a reliable click path even if an earlier page script failed before binding.
+ document.addEventListener('click',event=>{
+   const button=event.target.closest('#accountOpen');
+   if(!button)return;
+   event.preventDefault();event.stopImmediatePropagation();
+   const account=byId('accDlg'), auth=byId('authDlg');
+   const target=account||auth;
+   if(!target)return;
+   try{
+     if(target.open) return;
+     if(typeof target.showModal==='function')target.showModal();
+     else {target.setAttribute('open','');target.style.display='block';}
+   }catch(error){console.error('Could not open account dialog',error);}
+ },true);
+ document.addEventListener('click',event=>{
+   if(event.target.closest('#accCloseTop,#authCloseTop')) {
+     const dialog=event.target.closest('dialog');
+     if(dialog?.open)dialog.close();
+   }
+ });
+ // Refresh the public quote card periodically; the existing quote loader provides web lookup and fallback content.
+ const updated=byId('autoQuoteUpdated'), next=byId('autoQuoteNext');
+ if(next && !window.__threePedalsQuoteRefreshTimer){
+   window.__threePedalsQuoteRefreshTimer=window.setInterval(()=>{
+     if(document.visibilityState==='visible' && next.isConnected) next.click();
+   },6*60*60*1000);
+   if(updated)updated.textContent='Refreshes automatically';
+ }
+})();
+</script>
+
+</body>
 </html>
 
