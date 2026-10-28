@@ -1595,9 +1595,17 @@ $("authForgot").onclick=async()=>{
   finally{button.disabled=false}
 };
 $("authGoogle").onclick=async()=>{
-  const button=$("authGoogle"),err=$("authErr");button.disabled=true;err.textContent="Opening Google sign-in…";
-  try{const {error}=await sb.auth.signInWithOAuth({provider:"google",options:{redirectTo:`${location.origin}${location.pathname}`}});if(error)throw error}
-  catch(e){err.textContent=e.message||"Google sign-in could not start. Please try email instead.";button.disabled=false}
+  const button=$("authGoogle"),err=$("authErr");
+  if(!sb){err.textContent="Sign-in is temporarily unavailable. Please refresh and try again.";return}
+  button.disabled=true;err.textContent="Connecting to Google…";
+  try{
+    const {error}=await sb.auth.signInWithOAuth({provider:"google",options:{redirectTo:"https://3pedalsauto.co.ke/" ,queryParams:{prompt:"select_account"}}});
+    if(error)throw error;
+  }catch(e){
+    console.error("3 Pedals Google sign-in failed:",e);
+    err.textContent=e?.message||"Google sign-in could not start. Check the Supabase Google provider settings and allowed redirect URLs.";
+    button.disabled=false;
+  }
 };
 $("authSubmit").onclick=async()=>{
   const email=$("authEmail").value.trim().toLowerCase(),pass=$("authPassword").value,name=$("authName").value.trim(),phone=$("authPhone").value.trim(),confirmPass=$("authConfirmPassword").value,type=document.querySelector('input[name="accountType"]:checked')?.value||"private",err=$("authErr"),b=$("authSubmit");
@@ -1624,14 +1632,30 @@ $("authSubmit").onclick=async()=>{
     if(pass.length<8){err.textContent="Use a password of at least 8 characters.";return}
     if(pass!==confirmPass){err.textContent="The passwords do not match.";return}     if(sellerRegistrationMode){const slug=$("authSellerSlug").value.trim();if(!slug||!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)||slug.length<3){err.textContent="Enter a seller URL with at least 3 lowercase letters or numbers; hyphens are allowed.";return}const {data:existing,error:lookupError}=await sb.from("listings").select("id").eq("seller_slug",slug).limit(1);if(lookupError){err.textContent="Seller URL checks need the updated seller schema. Run seller_type_schema.sql in Supabase, then try again.";return}if(existing?.length){err.textContent="That seller URL is already in use. Please choose another.";return}}
   }
-  b.disabled=true;err.textContent="";
-  const signupData={name,phone,account_type:type};if(sellerRegistrationMode&&authMode==="register")signupData.seller_slug=$("authSellerSlug").value.trim();const res=authMode==="register"?await sb.auth.signUp({email,password:pass,options:{data:signupData}}):await sb.auth.signInWithPassword({email,password:pass});
-  b.disabled=false;
-  if(res.error){err.textContent=res.error.message;return}
-  if(authMode==="register"||authMode==="login"){window.track3PedalsEvent(authMode==="register"?"sign_up":"login",{method:"email",account_type:type});}
-  if(authMode==="register"&&!res.data.session){err.textContent=sellerRegistrationMode?"Seller account created. Check your email for a confirmation link, then log in. Your seller name, type, and URL have been saved.":"Account created. Check your email for a confirmation link, then log in. Your account type has been saved.";return}
-  $("authPassword").value="";$("authConfirmPassword").value="";$("authDlg").close();
-  await loadSession();if(location.hash==="#login"||location.hash==="#register")history.replaceState(null,"",location.pathname+location.search);
+  b.disabled=true;err.textContent=authMode==="register"?"Creating your account…":"Signing you in…";
+  try{
+    const signupData={name,phone,account_type:type};
+    const res=authMode==="register"
+      ?await sb.auth.signUp({email,password:pass,options:{data:signupData,emailRedirectTo:"https://3pedalsauto.co.ke/"}})
+      :await sb.auth.signInWithPassword({email,password:pass});
+    if(res.error)throw res.error;
+    if(authMode==="register"||authMode==="login"){
+      try{window.track3PedalsEvent?.(authMode==="register"?"sign_up":"login",{method:"email",account_type:type})}catch(trackError){console.warn("Analytics event failed",trackError)}
+    }
+    if(authMode==="register"&&!res.data.session){
+      err.textContent="Account created. Check your email for a confirmation link, then return to 3pedalsauto.co.ke and log in.";
+      return;
+    }
+    $("authPassword").value="";$("authConfirmPassword").value="";
+    $("authDlg").close();
+    await loadSession();
+    if(location.hash==="#login"||location.hash==="#register")history.replaceState(null,"",location.pathname+location.search);
+  }catch(error){
+    console.error("3 Pedals authentication failed:",error);
+    err.textContent=error?.message||"We couldn't complete this request. Check your connection and try again.";
+  }finally{
+    b.disabled=false;
+  }
 };
 function initialsFor(name,email){const x=String(name||email||"?").trim().split(/\s+/).filter(Boolean);return ((x[0]||"?")[0]+(x[1]||"")[0]).toUpperCase()}
 function profileAvatarUrl(){return (profile&&profile.avatar_url)||me?.user_metadata?.avatar_url||""}
