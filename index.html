@@ -3191,6 +3191,37 @@ footer,body>footer,.site-footer,#footer,
 footer::before,footer::after,body>footer::before,body>footer::after{border:0!important;box-shadow:none!important}
 </style>
 
+
+<script id="account-login-switch-final-fix">
+(()=>{
+ const bind=()=>{
+  const button=document.getElementById('authSwitch');
+  if(!button||button.dataset.loginSwitchFinalFix==='1')return;
+  button.dataset.loginSwitchFinalFix='1';
+  button.addEventListener('click',event=>{
+   event.preventDefault();
+   event.stopImmediatePropagation();
+   try{
+    const current=typeof authMode!=='undefined'?authMode:'register';
+    const next=current==='login'?'register':'login';
+    if(typeof openAuth!=='function')throw new Error('The sign-in form has not initialized. Refresh the page and try again.');
+    const seller=typeof sellerRegistrationMode!=='undefined'&&!!sellerRegistrationMode;
+    openAuth(next,'',{seller});
+    const dialog=document.getElementById('authDlg');
+    if(dialog&&!dialog.open)dialog.showModal();
+   }catch(error){
+    console.error('3 Pedals login switch failed:',error);
+    const message=document.getElementById('authErr');
+    if(message)message.textContent=error?.message||'Unable to open the login form. Refresh and try again.';
+    const dialog=document.getElementById('authDlg');
+    if(dialog&&!dialog.open){try{dialog.showModal()}catch(_){}}
+   }
+  },true);
+ };
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind,{once:true});else bind();
+})();
+</script>
+
 </body>
 </html>
 
