@@ -1566,7 +1566,7 @@ let sellerRegistrationMode=false,sellerSlugEdited=false;
  function refreshSellerUrlPreview(){const slug=$("authSellerSlug").value.trim();$("authSellerUrlPreview").textContent=slug?`${location.host||"3pedalsauto.co.ke"}/yard.html?slug=${slug}`:`${location.host||"3pedalsauto.co.ke"}/yard.html?slug=your-name`}
  function openAuth(mode="register",msg="",options={}){
    sellerRegistrationMode=!!options.seller;authMode=mode;const login=mode==="login",recovery=mode==="recovery",sellerSignup=sellerRegistrationMode&&!login&&!recovery;
-   if(!sb){alert("Accounts are not switched on yet. Please contact us on WhatsApp.");return}
+   if(!sb){msg=msg||"Sign-in is temporarily unavailable because the account service did not initialize. Refresh the page and try again.";console.error("3 Pedals account service is unavailable: Supabase client is not initialized.")}
    $("authDlg").classList.toggle("seller-registration",sellerRegistrationMode);
    $("authProfileDetails").hidden=(login||recovery)&&!sellerRegistrationMode;$("authProfileDetails").open=sellerSignup;$("authSellerUrlWrap").hidden=!sellerSignup;
    $("authTitle").textContent=recovery?"Choose a new password":login?(sellerRegistrationMode?"Seller log in":"Welcome back"):(sellerRegistrationMode?"Become a seller":"Create your account");
@@ -3139,6 +3139,23 @@ input,select,textarea{background:rgba(255,255,255,.055)!important}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind,{once:true});else bind();
 })();
 </script>
+
+
+<style id="borderless-glass-footer-and-garage">
+/* Keep the footer and Garage page consistent with the site's translucent glass design. */
+footer,body>footer,.site-footer,#footer,.garage-hero,.garage-section,.garage-panel,.garage-card,
+#garage .tile,#garage .card,#garage .panel,#garage .service-card,#garage .booking-card,
+#garage .contact-card,#garage .stat,#garage .showroom-vehicle-note{
+  border:0!important;border-top:0!important;border-bottom:0!important;outline:0!important;
+  background:rgba(20,22,25,.28)!important;
+  -webkit-backdrop-filter:blur(24px) saturate(145%)!important;
+  backdrop-filter:blur(24px) saturate(145%)!important;
+  box-shadow:0 16px 42px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.07)!important;
+}
+footer::before,footer::after,body>footer::before,body>footer::after{border:0!important;box-shadow:none!important}
+footer a,body>footer a{position:relative}
+@media(max-width:760px){footer,body>footer{padding-bottom:calc(80px + env(safe-area-inset-bottom,0px))!important}}
+</style>
 
 </body>
 </html>
