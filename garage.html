@@ -754,5 +754,27 @@ body:after{background:linear-gradient(90deg,rgba(0,0,0,.10),transparent 48%,rgba
 #home .tile,.tiles .tile,.showroom-vehicle-note,.garage-hero ~ .tiles .tile{background:rgba(19,20,23,.32)!important;backdrop-filter:blur(22px) saturate(135%)!important;-webkit-backdrop-filter:blur(22px) saturate(135%)!important}
 @media(max-width:760px){body{background-attachment:scroll,scroll,scroll!important;background-position:center,center,58% center!important}}
 </style>
+
+<style id="garage-header-layout-fix">
+body>header{width:min(calc(100% - 48px),1160px)!important;margin:clamp(18px,4vw,56px) auto 0!important;border:1px solid rgba(255,255,255,.48)!important;border-radius:26px 26px 0 0!important;border-bottom:0!important;background:rgba(18,19,22,.34)!important;box-shadow:none!important;-webkit-backdrop-filter:blur(26px) saturate(130%)!important;backdrop-filter:blur(26px) saturate(130%)!important}
+body>header>.wrap{width:100%!important;max-width:none!important;min-height:82px!important;box-sizing:border-box!important;padding:0 clamp(20px,4.5vw,62px)!important;display:grid!important;grid-template-columns:minmax(120px,1fr) auto minmax(42px,1fr)!important;align-items:center!important;gap:24px!important}
+body>header .logo{grid-column:1!important;grid-row:1!important;max-width:110px!important;color:#fff!important;font-size:14px!important;line-height:1.05!important;letter-spacing:-.035em!important;font-weight:800!important;text-transform:uppercase!important;cursor:pointer}
+body>header nav{grid-column:2!important;grid-row:1!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:clamp(14px,2.4vw,34px)!important;width:auto!important;position:static!important;margin:0!important;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important;white-space:nowrap!important}
+body>header nav button,body>header nav a{display:inline-flex!important;align-items:center!important;padding:8px 0!important;margin:0!important;border:0!important;border-radius:0!important;background:transparent!important;color:rgba(255,255,255,.9)!important;font:400 12px/1.35 Manrope,Arial,sans-serif!important;text-decoration:none!important;box-shadow:none!important;white-space:nowrap!important}
+body>header nav button:hover,body>header nav a:hover{color:#d9bda4!important}
+body>header nav [aria-selected="true"]{color:#fff!important;background:transparent!important}
+body>header .account-pill{grid-column:3!important;grid-row:1!important;justify-self:end!important;display:flex!important;align-items:center!important;margin:0!important;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important}
+body>header #accountOpen{display:flex!important;align-items:center!important;justify-content:center!important;width:30px!important;height:30px!important;padding:0!important;border:1px solid rgba(255,255,255,.5)!important;border-radius:50%!important;background:rgba(255,255,255,.06)!important;color:#fff!important}
+body>header #accountOpen svg{width:17px!important;height:17px!important;stroke:currentColor!important}
+@media(max-width:760px){
+ body>header{width:calc(100% - 20px)!important;margin:10px auto 0!important;border-radius:20px 20px 0 0!important}
+ body>header>.wrap{grid-template-columns:1fr auto!important;grid-template-rows:auto auto!important;gap:10px!important;min-height:0!important;padding:17px 18px 0!important}
+ body>header .logo{grid-column:1!important;grid-row:1!important}
+ body>header .account-pill{grid-column:2!important;grid-row:1!important}
+ body>header nav{grid-column:1/-1!important;grid-row:2!important;justify-content:flex-start!important;flex-wrap:wrap!important;white-space:normal!important;gap:10px 17px!important;padding:7px 0 14px!important}
+ body>header nav button,body>header nav a{font-size:11px!important}
+}
+@media(max-width:390px){body>header nav{gap:9px 13px!important}body>header nav button,body>header nav a{font-size:10px!important}}
+</style>
 </body>
 </html>
