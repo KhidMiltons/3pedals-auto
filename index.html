@@ -3343,6 +3343,57 @@ header #accountText{display:inline-block!important;line-height:1.25!important;wh
  header .logo{max-width:48vw!important}
 }
 </style>
+
+<style id="final-header-brand-and-account-icon-fix">
+/* Final header correction: keep the existing site background and navigation behavior untouched. */
+header>.wrap{
+ display:grid!important;
+ grid-template-columns:minmax(max-content,1fr) auto minmax(0,2fr)!important;
+ align-items:center!important;
+ gap:clamp(10px,1.6vw,24px)!important;
+}
+header .logo{
+ display:block!important;
+ width:max-content!important;
+ max-width:none!important;
+ flex:none!important;
+ font-size:clamp(25px,2.4vw,36px)!important;
+ line-height:1.12!important;
+ font-weight:750!important;
+ letter-spacing:-.04em!important;
+ white-space:nowrap!important;
+}
+header .account-pill{grid-column:2;grid-row:1;display:flex!important;align-items:center!important}
+header #nav{grid-column:3;grid-row:1;justify-self:end;display:flex!important;align-items:center!important;min-width:0!important}
+header #accountOpen{
+ position:relative!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;
+ width:44px!important;height:44px!important;min-width:44px!important;flex:0 0 44px!important;
+ padding:0!important;border-radius:50%!important;overflow:hidden!important;
+ background:rgba(255,255,255,.09)!important;border:1px solid rgba(255,255,255,.2)!important;
+ color:inherit!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.14)!important;
+}
+header #accountOpen::before{
+ content:""!important;display:block!important;width:21px!important;height:21px!important;flex:0 0 21px!important;
+ background-repeat:no-repeat!important;background-position:center!important;background-size:contain!important;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3Cpath d='M5 21v-2a7 7 0 0 1 14 0v2'/%3E%3C/svg%3E")!important;
+}
+header #accountOpen svg,header #accountOpen img,header #accountOpen i,header #accountOpen .icon{display:none!important}
+@media(max-width:900px){
+ header>.wrap{grid-template-columns:minmax(0,1fr) auto auto!important;gap:10px!important}
+ header .logo{font-size:clamp(22px,3.4vw,30px)!important;max-width:none!important}
+ header .account-pill{grid-column:2!important}
+ header #nav{grid-column:1/-1!important;grid-row:2!important;justify-self:stretch!important}
+ header #accountOpen{width:42px!important;height:42px!important;min-width:42px!important;flex-basis:42px!important}
+}
+@media(max-width:540px){
+ header>.wrap{grid-template-columns:minmax(0,1fr) auto auto!important}
+ header .logo{font-size:clamp(20px,5.3vw,27px)!important;letter-spacing:-.035em!important}
+ header #accountText{max-width:80px!important;overflow:hidden!important;text-overflow:ellipsis!important}
+}
+@media(hover:none) and (pointer:coarse){
+ header .logo{font-size:clamp(22px,5.4vw,29px)!important;max-width:none!important;white-space:nowrap!important}
+}
+</style>
 </body>
 </html>
 
