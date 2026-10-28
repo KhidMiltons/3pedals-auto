@@ -3293,6 +3293,38 @@ dialog.authbox button:hover{filter:brightness(1.08)}
 }
 @media(prefers-reduced-motion:reduce){dialog.authbox *,#accDlg *{transition:none!important;animation:none!important}}
 </style>
+
+<style id="account-neutral-clear-glass">
+/* Neutral, airy glass: remove gold accents and heavy dark modal fills. */
+dialog.authbox{
+ color:var(--text,#f5f5f5)!important;
+ background:rgba(255,255,255,.075)!important;
+ border:1px solid rgba(255,255,255,.2)!important;
+ box-shadow:0 24px 80px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.16)!important;
+ -webkit-backdrop-filter:blur(36px) saturate(165%)!important;
+ backdrop-filter:blur(36px) saturate(165%)!important;
+}
+dialog.authbox::backdrop{background:rgba(20,24,30,.18)!important;-webkit-backdrop-filter:blur(10px)!important;backdrop-filter:blur(10px)!important}
+dialog.authbox input:focus,dialog.authbox select:focus,dialog.authbox textarea:focus,
+#accBody input:focus,#accBody select:focus,#accBody textarea:focus{
+ outline:2px solid rgba(255,255,255,.4)!important;outline-offset:2px!important;
+}
+#accDlg .account-dialog-head{background:rgba(255,255,255,.035)!important}
+#accDlg #accMenuToggle,#accDlg #accCloseTop,.authbox .auth-close{
+ background:rgba(255,255,255,.1)!important;border-color:rgba(255,255,255,.17)!important;
+}
+#accDlg #accMenuToggle:hover,#accDlg #accCloseTop:hover,.authbox .auth-close:hover{background:rgba(255,255,255,.18)!important}
+#accBody .dashboard-card,#accBody .stat-card,#accBody .metric-card,#accBody .panel,#accBody .card,
+#accBody [class*="dashboard-card"],#accBody [class*="stat-card"],#accBody [class*="metric-card"],#accBody [class*="panel"]{
+ background:rgba(255,255,255,.075)!important;border-color:rgba(255,255,255,.14)!important;
+ box-shadow:0 10px 30px rgba(0,0,0,.07),inset 0 1px 0 rgba(255,255,255,.1)!important;
+}
+#accDlg #accountMenu.dashboard-shortcuts{
+ background:rgba(255,255,255,.12)!important;border-color:rgba(255,255,255,.18)!important;
+ box-shadow:0 20px 60px rgba(0,0,0,.16)!important;
+}
+#accDlg #accountMenu button:hover{background:rgba(255,255,255,.13)!important}
+</style>
 </body>
 </html>
 
