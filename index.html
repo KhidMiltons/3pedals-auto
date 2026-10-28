@@ -3222,6 +3222,24 @@ footer::before,footer::after,body>footer::before,body>footer::after{border:0!imp
 })();
 </script>
 
+
+<style id="location-footer-glass-no-gold">
+/* Location section: remove the gold separator and match the site's translucent glass surfaces. */
+#location footer,#location .site-footer,#location .location-footer,
+#location footer::before,#location footer::after,
+#location .site-footer::before,#location .site-footer::after,
+#location .location-footer::before,#location .location-footer::after{
+ border:0!important;border-top:0!important;border-bottom:0!important;
+ background:rgba(20,22,25,.28)!important;
+ -webkit-backdrop-filter:blur(24px) saturate(145%)!important;
+ backdrop-filter:blur(24px) saturate(145%)!important;
+ box-shadow:0 16px 42px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.06)!important;
+}
+#location hr,#location .gold-line,#location .gold-divider,#location .section-divider{
+ border:0!important;height:0!important;background:transparent!important;box-shadow:none!important;
+}
+</style>
+
 </body>
 </html>
 
