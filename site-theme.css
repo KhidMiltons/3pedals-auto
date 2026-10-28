@@ -386,3 +386,28 @@ a{color:#e4ce9d}
  footer{padding-bottom:calc(22px + env(safe-area-inset-bottom,0px))!important}
 }
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+
+/* Background image stays behind the page; content cards remain opaque. */
+body {
+  background-color: #090a0c !important;
+  background-image:
+    linear-gradient(180deg, rgba(5,6,8,.72), rgba(5,6,8,.88)),
+    url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=2400&q=85") !important;
+  background-position: center top, center top !important;
+  background-size: cover, cover !important;
+  background-repeat: no-repeat, no-repeat !important;
+  background-attachment: fixed, fixed !important;
+}
+/* Do not use negative-z-index pseudo-elements for the background image. */
+body:before { background-image: linear-gradient(120deg, transparent 0%, rgba(255,255,255,.025) 45%, transparent 70%) !important; }
+/* Opaque graphite surfaces prevent the page wallpaper showing through cards. */
+.card, .dealer, .stat, .state, .empty, .error, .panel, .seller-card, .listing,
+.article-item, .project-item, .vehicle-card, .story-card, .contact-card,
+.promotion-package, .dashboard-welcome, .account-settings, .authbox, .editor,
+.contact-form, .settings-card, .package, .featured-panel, .filter-panel,
+.search-panel, .vehicle-detail-card, .article-card, .account-page, .dashboard-card {
+  background: #17191c !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
