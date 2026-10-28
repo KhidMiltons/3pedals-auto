@@ -477,3 +477,155 @@ body:before { background-image: linear-gradient(120deg, transparent 0%, rgba(255
   #home .hero h1 { font-size:clamp(2.35rem,10vw,3.5rem) !important; max-width:12ch !important; }
   #home .hero p { max-width:34ch !important; }
 }
+
+/* === 3 Pedals homepage: match the supplied framed luxury showroom reference === */
+body { background-color:#08090b !important; }
+body:before { opacity:.22 !important; }
+body:after { background:linear-gradient(180deg,rgba(0,0,0,.2),rgba(0,0,0,.65)) !important; }
+body > header {
+  width:min(calc(100% - 48px),1160px) !important;
+  margin:clamp(22px,5vw,72px) auto 0 !important;
+  padding:0 !important;
+  border:1px solid rgba(232,228,220,.55) !important;
+  border-radius:30px 30px 0 0 !important;
+  border-bottom:0 !important;
+  background:rgba(23,24,26,.62) !important;
+  box-shadow:none !important;
+  -webkit-backdrop-filter:blur(22px) saturate(120%) !important;
+  backdrop-filter:blur(22px) saturate(120%) !important;
+}
+body > header > .wrap {
+  width:100% !important;
+  max-width:none !important;
+  min-height:82px !important;
+  box-sizing:border-box !important;
+  padding:0 clamp(20px,4.5vw,62px) !important;
+  display:grid !important;
+  grid-template-columns:minmax(110px,1fr) auto minmax(110px,1fr) !important;
+  align-items:center !important;
+  gap:24px !important;
+}
+body > header .logo {
+  color:#fff !important;
+  font-size:15px !important;
+  font-weight:850 !important;
+  line-height:.95 !important;
+  letter-spacing:-.045em !important;
+  max-width:95px !important;
+  text-transform:uppercase !important;
+}
+body > header #nav {
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:clamp(16px,2.6vw,42px) !important;
+  width:auto !important;
+  position:static !important;
+  padding:0 !important;
+  margin:0 !important;
+  background:transparent !important;
+  border:0 !important;
+  box-shadow:none !important;
+  white-space:nowrap !important;
+}
+body > header #nav button,
+body > header #nav a {
+  appearance:none !important;
+  padding:8px 0 !important;
+  margin:0 !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  color:rgba(255,255,255,.88) !important;
+  font:400 12px/1.3 Manrope,Arial,sans-serif !important;
+  text-decoration:none !important;
+  box-shadow:none !important;
+  cursor:pointer !important;
+}
+body > header #nav button:hover,
+body > header #nav a:hover { color:#d9bda4 !important; }
+body > header #nav .nav-contact {
+  justify-self:end !important;
+  padding:12px 19px !important;
+  border:1px solid rgba(255,255,255,.8) !important;
+  border-radius:11px !important;
+  background:rgba(255,255,255,.07) !important;
+}
+body > header .account-pill { justify-self:end !important; background:transparent !important; border:0 !important; padding:0 !important; }
+body > header #accountText { display:none !important; }
+body > header #accountOpen { width:28px !important; height:28px !important; opacity:.75 !important; }
+body > header .nav-toggle { display:none !important; }
+main.wrap { width:min(calc(100% - 48px),1160px) !important; max-width:1160px !important; padding:0 !important; margin:0 auto !important; }
+#home { padding:0 !important; }
+#home .home-with-quote { display:block !important; }
+#home #autoQuoteRail { display:none !important; }
+#home .home-with-quote > div { display:block !important; min-width:0 !important; }
+#home .hero {
+  position:relative !important;
+  isolation:isolate !important;
+  width:100% !important;
+  max-width:none !important;
+  min-height:clamp(520px,58vw,790px) !important;
+  margin:0 auto 38px !important;
+  padding:clamp(38px,5vw,68px) clamp(24px,4.5vw,62px) !important;
+  display:flex !important;
+  flex-direction:column !important;
+  justify-content:center !important;
+  align-items:flex-start !important;
+  overflow:hidden !important;
+  box-sizing:border-box !important;
+  border:1px solid rgba(232,228,220,.55) !important;
+  border-top:0 !important;
+  border-radius:0 0 30px 30px !important;
+  background:
+    linear-gradient(90deg,rgba(5,6,8,.82) 0%,rgba(5,6,8,.56) 42%,rgba(5,6,8,.08) 100%),
+    linear-gradient(0deg,rgba(5,6,8,.20),transparent 48%),
+    url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=2400&q=85") center 55%/cover no-repeat !important;
+  box-shadow:0 25px 80px rgba(0,0,0,.4),inset 0 0 0 8px rgba(255,255,255,.035) !important;
+  -webkit-backdrop-filter:none !important; backdrop-filter:none !important;
+}
+#home .showroom-copy { max-width:610px !important; position:relative !important; z-index:2 !important; }
+#home .showroom-kicker { display:block !important; color:#d1b49a !important; font-size:10px !important; letter-spacing:.22em !important; margin-bottom:18px !important; font-weight:700 !important; }
+#home .hero h1 {
+  max-width:650px !important; margin:0 0 18px !important; color:#fff !important;
+  font-size:clamp(2.55rem,5.3vw,4.2rem) !important; font-weight:760 !important;
+  line-height:1.03 !important; letter-spacing:-.05em !important; text-wrap:balance !important;
+  text-shadow:0 3px 28px rgba(0,0,0,.3) !important;
+}
+#home .hero h1 span { display:block !important; color:#c8a58a !important; }
+#home .hero p { max-width:500px !important; margin:0 !important; color:rgba(255,255,255,.92) !important; font-size:15px !important; line-height:1.6 !important; text-shadow:0 2px 15px rgba(0,0,0,.75) !important; }
+#home .showroom-actions { display:flex !important; gap:12px !important; flex-wrap:wrap !important; margin-top:30px !important; }
+#home .showroom-actions .btn { min-width:116px !important; min-height:44px !important; display:inline-flex !important; align-items:center !important; justify-content:center !important; box-sizing:border-box !important; padding:12px 22px !important; border-radius:11px !important; font-size:14px !important; text-decoration:none !important; }
+#home .showroom-actions .showroom-primary { color:#111 !important; background:#fff !important; border:1px solid #fff !important; }
+#home .showroom-actions .showroom-secondary { color:#fff !important; background:rgba(255,255,255,.13) !important; border:1px solid rgba(255,255,255,.72) !important; -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px); }
+#home .showroom-vehicle-note {
+  position:absolute !important; z-index:3 !important; right:clamp(18px,3vw,38px) !important; bottom:clamp(18px,4vw,48px) !important;
+  display:flex !important; align-items:flex-start !important; gap:12px !important; width:220px !important; padding:14px !important;
+  color:#fff !important; text-decoration:none !important; border:1px solid rgba(255,255,255,.58) !important; border-radius:12px !important;
+  background:rgba(30,31,32,.52) !important; box-shadow:0 10px 30px rgba(0,0,0,.2) !important;
+  -webkit-backdrop-filter:blur(16px) saturate(125%) !important; backdrop-filter:blur(16px) saturate(125%) !important;
+}
+#home .showroom-note-dot { flex:0 0 11px !important; width:11px !important; height:11px !important; margin-top:4px !important; border-radius:50% !important; background:#fff !important; box-shadow:0 0 0 6px rgba(255,255,255,.12) !important; }
+#home .showroom-note-content { display:flex !important; flex-direction:column !important; gap:6px !important; }
+#home .showroom-note-content strong { font-size:12px !important; font-weight:600 !important; }
+#home .showroom-note-content small { font-size:11px !important; color:rgba(255,255,255,.82) !important; }
+#home .showroom-more { font-size:10px !important; text-decoration:underline !important; text-underline-offset:3px !important; }
+#home .tiles { gap:14px !important; }
+#home .tile { background:#17191c !important; border:1px solid rgba(225,203,155,.18) !important; -webkit-backdrop-filter:none !important; backdrop-filter:none !important; }
+@media(max-width:760px) {
+ body > header { width:calc(100% - 20px) !important; margin-top:10px !important; border-radius:20px 20px 0 0 !important; }
+ body > header > .wrap { grid-template-columns:1fr auto !important; min-height:68px !important; padding:0 18px !important; gap:10px !important; }
+ body > header #nav { grid-column:1/-1 !important; grid-row:2 !important; flex-wrap:wrap !important; gap:12px 18px !important; padding:0 0 14px !important; white-space:normal !important; }
+ body > header #nav button, body > header #nav a { font-size:11px !important; }
+ body > header .account-pill { grid-column:2 !important; grid-row:1 !important; }
+ body > header .nav-toggle { display:none !important; }
+ main.wrap { width:calc(100% - 20px) !important; }
+ #home .hero { min-height:620px !important; padding:32px 22px 170px !important; border-radius:0 0 20px 20px !important; background-position:59% center !important; }
+ #home .hero h1 { font-size:clamp(2.4rem,10vw,3.5rem) !important; max-width:12ch !important; }
+ #home .hero p { max-width:34ch !important; font-size:14px !important; }
+ #home .showroom-vehicle-note { width:calc(100% - 44px) !important; box-sizing:border-box !important; right:22px !important; bottom:20px !important; }
+}
+@media(max-width:420px) {
+ body > header #nav { gap:8px 13px !important; }
+ #home .hero { min-height:650px !important; }
+}
