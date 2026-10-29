@@ -821,5 +821,33 @@ footer,body>footer,.site-footer,#footer,
 footer::before,footer::after,body>footer::before,body>footer::after{border:0!important;box-shadow:none!important}
 </style>
 
+
+<style id="garage-match-home-about-glass">
+/* Match Home/About: a softly blurred automotive wallpaper behind readable translucent glass surfaces. */
+html,body{background:transparent!important;background-color:transparent!important}
+html{min-height:100%;background-color:#0d0d0d!important}
+body{position:relative!important;isolation:isolate!important;min-height:100vh!important}
+body:before{
+ content:""!important;display:block!important;position:fixed!important;inset:-10px!important;z-index:-1!important;pointer-events:none!important;
+ background:linear-gradient(110deg,rgba(8,9,11,.42),rgba(8,9,11,.18) 48%,rgba(8,9,11,.42)),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=2400&q=90") center center/cover no-repeat!important;
+ filter:blur(4px)!important;transform:scale(1.025)!important
+}
+body:after{content:none!important;display:none!important}
+.garage-hero,.garage-section,.garage-panel,.garage-card,.service-card,.booking-card,.contact-card,.stat,.svc,.rating-box,
+main section,.panel,.card{
+ background:linear-gradient(145deg,rgba(24,24,25,.30),rgba(17,17,18,.38))!important;
+ border-color:rgba(255,255,255,.22)!important;
+ box-shadow:0 14px 38px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.14)!important;
+ -webkit-backdrop-filter:blur(24px) saturate(125%)!important;
+ backdrop-filter:blur(24px) saturate(125%)!important
+}
+input,select,textarea{
+ background:rgba(20,20,21,.30)!important;border-color:rgba(255,255,255,.25)!important;
+ -webkit-backdrop-filter:blur(16px)!important;backdrop-filter:blur(16px)!important
+}
+@media(max-width:760px){
+ body:before{background-image:linear-gradient(180deg,rgba(8,9,11,.38),rgba(8,9,11,.50)),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1400&q=85")!important}
+}
+</style>
 </body>
 </html>
