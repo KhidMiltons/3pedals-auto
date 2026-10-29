@@ -37,6 +37,60 @@ button:hover{transform:none}
 </style><link rel="stylesheet" href="site-theme.css">
 
 <link rel="stylesheet" href="/dashboard-glass.css?v=3">
+
+<style id="admin-grid-alignment-fix">
+/* Keep admin dashboard cards, forms and detail grids aligned to consistent columns. */
+#app .stats{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  align-items:stretch!important;
+  gap:14px!important;
+}
+#app .stat{
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  align-items:flex-start!important;
+  min-width:0!important;
+  min-height:108px!important;
+  height:100%!important;
+  padding:18px!important;
+}
+#app .stat b{line-height:1.1!important;margin:0 0 8px!important;font-variant-numeric:tabular-nums}
+#app .stat span{display:block!important;line-height:1.4!important;min-height:2.8em!important}
+#app .grid,#app .fields,#app .editor-grid,#app .contact-grid{
+  align-items:stretch!important;
+  grid-auto-flow:row!important;
+}
+#app .grid>* ,#app .fields>* ,#app .editor-grid>* ,#app .contact-grid>*{
+  min-width:0!important;
+  max-width:100%!important;
+}
+#app .editor-grid{row-gap:14px!important;column-gap:16px!important}
+#app .editor-grid>.full,#app .contact-grid>.full{grid-column:1/-1!important;width:100%!important}
+#app .fields{gap:10px!important}
+#app .field{height:100%!important;min-width:0!important;overflow-wrap:anywhere}
+#app .field strong{min-height:1.4em;line-height:1.35}
+#app .admin-tabs{align-items:stretch!important}
+#app .admin-tabs .tab{min-height:42px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:6px!important}
+@media(max-width:900px){
+  #app .stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:760px){
+  #app .stats{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+  #app .stat{min-height:94px!important;padding:14px!important}
+  #app .editor-grid,#app .contact-grid{grid-template-columns:minmax(0,1fr)!important;row-gap:12px!important}
+  #app .editor-grid>.full,#app .contact-grid>.full{grid-column:1!important}
+  #app .grid{grid-template-columns:minmax(0,1fr)!important;gap:12px!important}
+  #app .fields{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+}
+@media(max-width:420px){
+  #app .stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  #app .stat span{font-size:12px!important}
+  #app .fields{grid-template-columns:minmax(0,1fr)!important}
+}
+</style>
+
 </head>
 <body>
 <div id="login" class="hidden"><div class="brand">3 Pedals Auto KE<span>Admin verification</span></div><h1>Sign in</h1><p class="meta">Only approved 3 Pedals Auto KE administrators can access vehicle verification.</p><label>Email</label><input id="email" type="email" autocomplete="username"><label>Password</label><input id="password" type="password" autocomplete="current-password"><p id="loginErr" class="notice err hidden"></p><button id="loginBtn" class="primary" style="width:100%;margin-top:15px">Sign in</button></div>
