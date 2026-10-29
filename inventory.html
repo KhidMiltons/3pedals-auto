@@ -462,27 +462,25 @@ body::before{
 
 
 <style id="fleet-restore-and-blur-wallpaper">
-/* Visible, fixed automotive wallpaper with blur confined to the background layer. */
-html{background:#0d0d0d!important}
+/* Restore the automotive wallpaper on the page canvas itself so it cannot sit behind a solid body background. */
+html{
+  min-height:100%;
+  background-color:#0d0d0d!important;
+  background-image:linear-gradient(180deg,rgba(5,6,8,.48),rgba(5,6,8,.64)),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=2400&q=85")!important;
+  background-position:center center!important;
+  background-size:cover!important;
+  background-repeat:no-repeat!important;
+  background-attachment:fixed!important;
+}
 body{
+  min-height:100vh!important;
   background:transparent!important;
   position:relative!important;
-  isolation:isolate!important;
 }
+/* Remove the old negative-layer background pseudo-element; it was hidden behind the root canvas. */
 body::before{
-  content:""!important;
-  position:fixed!important;
-  inset:-18px!important;
-  z-index:-1!important;
-  pointer-events:none!important;
-  background:
-    linear-gradient(180deg,rgba(5,6,8,.52),rgba(5,6,8,.68)),
-    url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=2400&q=85")
-    center center/cover no-repeat!important;
-  filter:blur(7px)!important;
-  transform:scale(1.035)!important;
+  content:none!important;
 }
-/* Keep the root transparent so the fixed image layer is not covered by a solid page background. */
 </style>
 
 </head>
