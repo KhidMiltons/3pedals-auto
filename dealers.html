@@ -189,6 +189,15 @@ a:hover,button:hover{border-color:rgba(255,255,255,.34)!important;box-shadow:0 8
 #clearDealerFilters:hover,#clearDealerFilters:focus-visible{transform:translateY(-2px)!important;background:rgba(255,255,255,.1)!important;border-color:rgba(255,255,255,.36)!important;color:#fff!important;box-shadow:0 8px 22px rgba(0,0,0,.2)!important;outline:none}
 @media(max-width:520px){.headin{gap:10px!important}.head .brand{font-size:13px!important;letter-spacing:.09em!important}.head .back{padding:8px 10px!important;font-size:12px!important}}
 @media(prefers-reduced-motion:reduce){.head .back,.head .brand,.dealer,.stat,.state,.empty,.error,.tools input,.tools select,#clearDealerFilters,a,button{transition:none!important}}
+
+/* Reliable wallpaper layer: keep it above the document background and behind all page content. */
+html{background:#08090b!important}
+body{background:transparent!important;background-image:none!important;isolation:isolate!important}
+body::before{z-index:0!important;filter:blur(3px)!important;transform:scale(1.035)!important}
+body>*{position:relative;z-index:1}
+.headin{display:flex!important;justify-content:space-between!important;align-items:center!important}
+.head .brand{order:0!important;margin-right:auto!important;margin-left:0!important}
+.head .back{order:1!important;margin-left:auto!important;float:right!important}
 </style>
 <style id="site-wide-mobile-glass-status-area">
 /* Consistent mobile glass treatment for the system safe-area/status region across public pages. */
