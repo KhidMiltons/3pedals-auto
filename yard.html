@@ -473,7 +473,7 @@ header.head .logo:hover{opacity:.84!important}
 
 
 <style id="yard-nav-buttons-match-main-site">
-header.head .headnav a.back,header.head .headnav a.back:visited,header.head .headnav a.back:focus,header.head .headnav a.back:active{
+header.head .headnav .back{
   --dock-scale:1;
   min-height:42px!important;
   display:inline-flex!important;
@@ -482,10 +482,8 @@ header.head .headnav a.back,header.head .headnav a.back:visited,header.head .hea
   box-sizing:border-box!important;
   padding:9px 15px!important;
   border-radius:12px!important;
-  border:0!important;
-  background:transparent!important;
-  background-color:transparent!important;
-  background-image:none!important;
+  border:1px solid rgba(255,255,255,.10)!important;
+  background:rgba(255,255,255,.055)!important;
   color:#d7d9de!important;
   font-family:inherit!important;
   font-size:14px!important;
@@ -496,17 +494,17 @@ header.head .headnav a.back,header.head .headnav a.back:visited,header.head .hea
   white-space:nowrap!important;
   cursor:pointer!important;
   box-shadow:none!important;
+  -webkit-backdrop-filter:blur(14px) saturate(130%)!important;
+  backdrop-filter:blur(14px) saturate(130%)!important;
   transform:translateY(calc((1 - var(--dock-scale))*2px)) scale(var(--dock-scale))!important;
   transform-origin:center bottom!important;
   transition:transform .46s cubic-bezier(.22,1,.36,1),background .32s ease,box-shadow .32s ease,border-color .32s ease,color .32s ease!important;
 }
-header.head .headnav a.back:hover{
-  background:transparent!important;
-  background-color:transparent!important;
-  background-image:none!important;
-  border-color:transparent!important;
+header.head .headnav .back:hover{
+  background:rgba(255,255,255,.10)!important;
+  border-color:rgba(255,255,255,.10)!important;
   color:#fff!important;
-  box-shadow:none!important;
+  box-shadow:0 8px 18px rgba(0,0,0,.16)!important;
   --dock-scale:1.04;
   z-index:2!important;
 }
@@ -520,24 +518,6 @@ header.head .headnav a.back:hover{
 </style>
 
 
-<style id="yard-nav-force-no-fill">
-html body header.head .headin nav.headnav a.back,
-html body header.head .headin nav.headnav a.back:link,
-html body header.head .headin nav.headnav a.back:visited,
-html body header.head .headin nav.headnav a.back:hover,
-html body header.head .headin nav.headnav a.back:focus,
-html body header.head .headin nav.headnav a.back:focus-visible,
-html body header.head .headin nav.headnav a.back:active {
-  background: none !important;
-  background-color: transparent !important;
-  background-image: none !important;
-  border: 0 !important;
-  box-shadow: none !important;
-  -webkit-appearance: none !important;
-  appearance: none !important;
-  outline-offset: 3px;
-}
-</style>
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
