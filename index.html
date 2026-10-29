@@ -1250,7 +1250,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="account-pill" aria-label="Account"><span id="accountText">Not signed in</span><button id="accountOpen" aria-label="Open account" title="Account"></button></div>
   <button class="nav-toggle" id="navToggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="nav"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
   <nav id="nav" aria-label="Main navigation">
-    <a class="navlink" href="/" aria-label="Home">Home</a>
+    <button type="button" class="navlink" role="tab" data-tab="home" aria-selected="true" aria-label="Home">Home</button>
     <button type="button" role="tab" data-tab="about" aria-selected="false">About Us</button>
     <a class="navlink" href="/inventory">Fleet</a>
     <a class="navlink" href="/garage.html">3 Pedals Garage</a>
@@ -3475,5 +3475,34 @@ input::placeholder,textarea::placeholder{color:rgba(255,255,255,.68)!important}
  }
 }
 </style>
+
+<script id="home-navigation-recovery">
+(()=> {
+  const home = document.querySelector('#nav [data-tab="home"]');
+  if (!home || home.dataset.homeRecoveryBound === '1') return;
+  home.dataset.homeRecoveryBound = '1';
+  home.addEventListener('click', event => {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    try { if (typeof show === 'function') show('home'); }
+    catch (error) { console.error('Home navigation failed:', error); }
+    document.querySelectorAll('main.wrap > section').forEach(section => {
+      section.hidden = section.id !== 'home';
+    });
+    document.querySelectorAll('#nav button[data-tab]').forEach(item => {
+      item.setAttribute('aria-selected', String(item === home));
+    });
+    try { sessionStorage.setItem('3pedals:site-section', 'home'); } catch (_) {}
+    try { history.replaceState({siteSection:'home'}, '', location.pathname + location.search); } catch (_) {}
+    const nav = document.getElementById('nav');
+    nav?.classList.remove('mobile-menu-open', 'is-open');
+    document.body.classList.remove('nav-open');
+    const toggle = document.getElementById('navToggle');
+    if (toggle) { toggle.setAttribute('aria-expanded','false'); toggle.setAttribute('aria-label','Open navigation'); }
+    window.scrollTo({top:0,behavior:'auto'});
+  }, true);
+})();
+</script>
+
 </body>
 </html>
