@@ -381,6 +381,29 @@ main.wrap>.hero h1:after{margin-top:10px!important;width:48px!important}
 main.wrap>.hero p{font-size:14px!important;line-height:1.65!important;max-width:620px!important;margin:0!important}
 @media(max-width:620px){main.wrap>.hero{padding:15px 16px 14px!important;margin:8px 0 16px!important}main.wrap>.hero h1{font-size:30px!important}main.wrap>.hero p{font-size:13px!important}}
 </style>
+
+<style id="fleet-heading-no-image-compact">
+/* Remove imagery only from the main Fleet introduction card; keep the page wallpaper and vehicle photos. */
+main.wrap > .hero{
+  background-image:none!important;
+  background-color:rgba(255,255,255,.035)!important;
+  min-height:0!important;
+  padding:12px 18px 11px!important;
+  margin:8px 0 14px!important;
+  border:1px solid rgba(255,255,255,.14)!important;
+  border-radius:14px!important;
+  box-shadow:0 8px 22px rgba(0,0,0,.12)!important;
+}
+main.wrap > .hero h1{font-size:clamp(27px,3.5vw,38px)!important;line-height:1.08!important;margin:4px 0 6px!important}
+main.wrap > .hero h1:after{margin-top:7px!important;width:40px!important}
+main.wrap > .hero p{font-size:13px!important;line-height:1.5!important;max-width:580px!important;margin:0!important}
+@media(max-width:620px){
+  main.wrap > .hero{padding:10px 13px!important;margin:6px 0 12px!important}
+  main.wrap > .hero h1{font-size:27px!important}
+  main.wrap > .hero p{font-size:12px!important}
+}
+</style>
+
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
