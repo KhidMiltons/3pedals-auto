@@ -474,6 +474,7 @@ header.head .logo:hover{opacity:.84!important}
 
 <style id="yard-nav-buttons-match-main-site">
 header.head .headnav .back{
+  --dock-scale:1;
   min-height:42px!important;
   display:inline-flex!important;
   align-items:center!important;
@@ -481,7 +482,7 @@ header.head .headnav .back{
   box-sizing:border-box!important;
   padding:9px 15px!important;
   border-radius:12px!important;
-  border:1px solid rgba(255,255,255,.10)!important;
+  border:1px solid transparent!important;
   background:transparent!important;
   color:#d7d9de!important;
   font-family:inherit!important;
@@ -491,17 +492,19 @@ header.head .headnav .back{
   line-height:1!important;
   text-decoration:none!important;
   white-space:nowrap!important;
+  cursor:pointer!important;
   box-shadow:none!important;
-  -webkit-backdrop-filter:blur(14px) saturate(130%)!important;
-  backdrop-filter:blur(14px) saturate(130%)!important;
-  transition:background .25s ease,border-color .25s ease,color .25s ease!important;
+  transform:translateY(calc((1 - var(--dock-scale))*2px)) scale(var(--dock-scale))!important;
+  transform-origin:center bottom!important;
+  transition:transform .46s cubic-bezier(.22,1,.36,1),background .32s ease,box-shadow .32s ease,border-color .32s ease,color .32s ease!important;
 }
 header.head .headnav .back:hover{
-  background:rgba(255,255,255,.06)!important;
-  border-color:rgba(255,255,255,.16)!important;
+  background:rgba(255,255,255,.10)!important;
+  border-color:rgba(255,255,255,.10)!important;
   color:#fff!important;
   box-shadow:0 8px 18px rgba(0,0,0,.16)!important;
-  transform:none!important;
+  --dock-scale:1.04;
+  z-index:2!important;
 }
 @media(max-width:600px){
  header.head .headnav{gap:7px!important}
