@@ -1282,5 +1282,25 @@ header nav button,header nav a.navlink{
 })();
 </script>
 
+
+<style id="garage-mobile-transparent-status-area">
+/* Let the mobile top safe-area/status region blend into the glass header instead of a solid dark strip. */
+@media(max-width:800px){
+  html{background:rgba(15,17,20,.12)!important}
+  body{padding-top:0!important}
+  header{
+    padding-top:env(safe-area-inset-top,0px)!important;
+    background:rgba(15,17,20,.18)!important;
+    border-bottom-color:rgba(255,255,255,.12)!important;
+    -webkit-backdrop-filter:blur(26px) saturate(145%)!important;
+    backdrop-filter:blur(26px) saturate(145%)!important;
+  }
+  header .wrap{padding-top:8px!important}
+  @supports(padding: constant(safe-area-inset-top)){
+    header{padding-top:constant(safe-area-inset-top)!important}
+  }
+}
+</style>
+
 </body>
 </html>
