@@ -1345,5 +1345,58 @@ header nav button,header nav a.navlink{
 }
 </style>
 
+
+<style id="garage-account-adjacent-compact-cards">
+/* Keep account and menu controls as a tight pair; reduce oversized Garage cards on mobile. */
+@media(max-width:800px){
+  header .wrap{
+    grid-template-columns:minmax(0,1fr) 38px 38px!important;
+    grid-template-areas:"brand account menu"!important;
+    column-gap:7px!important;
+  }
+  header .account-pill{
+    grid-area:account!important;
+    width:38px!important;min-width:38px!important;
+    margin:0!important;padding:0!important;
+    display:flex!important;align-items:center!important;justify-content:center!important;
+  }
+  header #accountOpen,.garage-nav-toggle{
+    width:38px!important;height:38px!important;min-width:38px!important;
+    margin:0!important;padding:0!important;flex:0 0 38px!important;
+  }
+  header .logo{max-width:100%!important;min-width:0!important}
+  .tiles{gap:10px!important;margin:8px 0 18px!important}
+  .tile{
+    min-height:94px!important;
+    padding:13px!important;
+    gap:3px!important;
+    border-radius:13px!important;
+  }
+  .tile h3{font-size:21px!important;line-height:1.2!important;margin:0 0 3px!important}
+  .tile p,.tile .meta{font-size:12px!important;line-height:1.45!important;margin-top:2px!important}
+  .panel,main section .panel{
+    padding:15px!important;
+    margin-bottom:18px!important;
+    border-radius:13px!important;
+  }
+  .panel h2{font-size:22px!important;line-height:1.25!important;margin-bottom:7px!important}
+  .panel h3{font-size:17px!important}
+  .cols{gap:12px!important}
+  .svc,.service-card,.booking-card,.contact-card,.garage-card{
+    padding:12px!important;
+    border-radius:12px!important;
+  }
+  .stat{padding:11px!important}
+}
+@media(max-width:430px){
+  header .wrap{padding-left:12px!important;padding-right:12px!important;column-gap:6px!important}
+  header .logo{font-size:21px!important;letter-spacing:.02em!important}
+  .tiles{grid-template-columns:1fr 1fr!important}
+  .tile{min-height:86px!important;padding:11px!important}
+  .tile h3{font-size:19px!important}
+  .panel,main section .panel{padding:13px!important}
+}
+</style>
+
 </body>
 </html>
