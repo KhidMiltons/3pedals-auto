@@ -95,4 +95,23 @@ function brandHeader(){if(sellerDocPrefs.print_logo_on_documents===false)return 
 function checklistDoc(f){const checked=[...f.querySelectorAll('input[name="checks"]:checked')].map(x=>`<li>☑ ${esc(x.value)}</li>`),unchecked=[...f.querySelectorAll('input[name="checks"]:not(:checked)')].map(x=>`<li>☐ ${esc(x.value)}</li>`);return `${brandHeader()}<h1>Vehicle and Logbook Due-Diligence Checklist</h1><p style="text-align:center">Working checklist</p><table class="rows"><tr><th>Registration</th><td>${esc(val(f,"registration"))}</td><th>Chassis / VIN</th><td>${esc(val(f,"chassis")||"Not entered")}</td></tr><tr><th>Seller / registered owner</th><td>${esc(val(f,"owner")||"Not entered")}</td><th>Date</th><td>${esc(val(f,"date"))}</td></tr></table><h2>Checks recorded</h2><ul>${[...checked,...unchecked].join("")}</ul><h2>Notes / follow-up</h2><p>${esc(val(f,"notes")||"No notes entered.").replaceAll("\n","<br>")}</p><p>Prepared by: ${esc(val(f,"preparedBy")||"Not entered")} · Reviewer initials: ${esc(val(f,"initials")||"Not entered")}</p><h2>Official references</h2><p>Use the NTSA service portal to verify the logbook/eLogbook details using the available official verification process. The Traffic Act contains the ownership and transfer framework; current procedures and timelines should be confirmed with NTSA/eCitizen.</p><p>NTSA service portal: https://serviceportal.ntsa.go.ke/<br>NTSA eLogbook guidance: https://app.ntsa.go.ke/eLogbooksensitization/<br>Kenya Traffic Act (Cap. 403): https://www.kenyalaw.org/kl/fileadmin/pdfdownloads/Acts/TrafficAct_Cap.403_No.37and38of2012Amendments.pdf</p><p style="font-size:11px">This checklist records checks performed by the user; it is not an official NTSA verification certificate and does not prove title or absence of finance/security interests.</p>`}
 function inspectionDoc(f){const rows=items.map((x,i)=>`<tr><th>${esc(x)}</th><td>${esc(val(f,"check_"+i))}</td><td>${esc(val(f,"note_"+i)||"—")}</td></tr>`).join("");return `${brandHeader()}<h1>Vehicle Inspection Report</h1><p style="text-align:center">Observations at time of inspection</p><table class="rows"><tr><th>Vehicle</th><td>${esc(val(f,"vehicle"))}</td><th>Registration</th><td>${esc(val(f,"registration"))}</td></tr><tr><th>Chassis / VIN</th><td>${esc(val(f,"chassis")||"Not stated")}</td><th>Odometer</th><td>${esc(val(f,"mileage")||"Not stated")} km</td></tr><tr><th>Inspection date</th><td>${esc(val(f,"date"))}</td><th>Inspector / workshop</th><td>${esc(val(f,"inspector"))}</td></tr></table><h2>Inspection observations</h2><table class="rows"><tr><th>Area</th><th>Finding</th><th>Notes</th></tr>${rows}</table><h2>Road test and recommendation</h2><p>Road test: ${esc(val(f,"roadTest"))}</p><p>Overall recommendation: ${esc(val(f,"recommendation"))}</p><p>Additional observations / limitations: ${esc(val(f,"limitations")||"None recorded.").replaceAll("\n","<br>")}</p><div class="signatures"><div>Inspector signature: ______________________<br>Name: ${esc(val(f,"inspector"))}<br>Date: ${esc(val(f,"date"))}</div><div>Customer acknowledgement (optional): ______________________<br>Name: ______________________<br>Date: __________________</div></div><p style="margin-top:25px;font-size:11px">This report records limited observations on the stated date. It is not a warranty, certification of roadworthiness, or guarantee of future condition.</p>`}
 document.querySelectorAll(".docform").forEach(form=>form.onsubmit=e=>{e.preventDefault();let html=form.id==="agreement"?agreementDoc(form):form.id==="checklist"?checklistDoc(form):inspectionDoc(form);document.getElementById("paper").innerHTML=html;document.getElementById("preview").hidden=false;document.getElementById("preview").scrollIntoView({behavior:"smooth"});setTimeout(()=>window.print(),150)});
-</script></body></html>
+</script>
+<style id="site-wide-mobile-glass-status-area">
+/* Consistent mobile glass treatment for the system safe-area/status region across public pages. */
+@media(max-width:800px){
+  html{background:transparent!important}
+  body{padding-top:0!important}
+  body>header,header.site-header,.site-header,header{
+    padding-top:env(safe-area-inset-top,0px)!important;
+    background-color:rgba(15,17,20,.18)!important;
+    border-bottom-color:rgba(255,255,255,.14)!important;
+    -webkit-backdrop-filter:blur(26px) saturate(145%)!important;
+    backdrop-filter:blur(26px) saturate(145%)!important;
+  }
+  @supports(padding:constant(safe-area-inset-top)){
+    body>header,header.site-header,.site-header,header{padding-top:constant(safe-area-inset-top)!important}
+  }
+}
+</style>
+
+</body></html>
