@@ -899,5 +899,81 @@ body:before{filter:blur(2px)!important}
  #home>.hero.garage-hero h1{font-size:clamp(24px,6.5vw,30px)!important}
 }
 </style>
+
+<style id="garage-standalone-home-glass-sections">
+/* Match the compact, borderless glass cards used on the Garage home screen. */
+#book,#roadside,#mechanics{
+  display:block;
+  background:transparent!important;
+  background-image:none!important;
+  border:0!important;outline:0!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+  padding:0!important;
+}
+#book[hidden],#roadside[hidden],#mechanics[hidden]{display:none!important}
+#book>.hero.garage-hero,
+#roadside>.hero.garage-hero,
+#mechanics>.hero.garage-hero{
+  display:block!important;box-sizing:border-box!important;
+  width:100%!important;max-width:none!important;min-width:0!important;
+  min-height:0!important;height:auto!important;
+  margin:18px 0 20px!important;padding:18px 22px!important;
+  border:0!important;border-radius:18px!important;
+  background:linear-gradient(145deg,rgba(34,36,39,.16),rgba(17,18,20,.24))!important;
+  box-shadow:0 14px 30px rgba(0,0,0,.16)!important;
+  -webkit-backdrop-filter:blur(12px) saturate(130%)!important;
+  backdrop-filter:blur(12px) saturate(130%)!important;
+}
+#book>.hero.garage-hero h1,
+#roadside>.hero.garage-hero h1,
+#mechanics>.hero.garage-hero h1{
+  max-width:17em!important;margin:0 0 8px!important;
+  font-size:clamp(25px,2.8vw,34px)!important;line-height:1.12!important;
+}
+#book>.hero.garage-hero p,
+#roadside>.hero.garage-hero p,
+#mechanics>.hero.garage-hero p{
+  max-width:54ch!important;margin:0!important;font-size:14px!important;line-height:1.5!important;
+}
+/* Keep service list, booking form, roadside intro and request form as separate cards. */
+#book>.cols,#roadside>.cols{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:16px!important;padding:0 0 28px!important}
+#book>.cols>.panel,#roadside>.cols>.panel{
+  box-sizing:border-box!important;min-width:0!important;height:auto!important;
+  margin:0!important;padding:20px!important;border:0!important;border-radius:18px!important;
+  background:linear-gradient(145deg,rgba(34,36,39,.16),rgba(17,18,20,.24))!important;
+  box-shadow:0 14px 30px rgba(0,0,0,.16)!important;
+  -webkit-backdrop-filter:blur(12px) saturate(130%)!important;
+  backdrop-filter:blur(12px) saturate(130%)!important;
+}
+#book>.cols>.panel h2,#roadside>.cols>.panel h2{font-size:26px!important;margin-top:0}
+#book #svcList .svc{border-bottom:1px solid rgba(255,255,255,.12)!important}
+#book #svcList .svc:last-child{border-bottom:0!important}
+#mechanics #mechanicDirectory{
+  display:grid!important;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))!important;
+  gap:16px!important;padding:0 0 28px!important;background:transparent!important;
+  border:0!important;box-shadow:none!important;backdrop-filter:none!important;
+}
+#mechanics #mechanicDirectory>.empty-state,
+#mechanics #mechanicDirectory>.card,
+#mechanics #mechanicDirectory>.tile,
+#mechanics #mechanicDirectory>article,
+#mechanics #mechanicDirectory>div{
+  border:0!important;border-radius:16px!important;
+  background:linear-gradient(145deg,rgba(34,36,39,.16),rgba(17,18,20,.24))!important;
+  box-shadow:0 14px 30px rgba(0,0,0,.16)!important;
+  -webkit-backdrop-filter:blur(12px) saturate(130%)!important;
+  backdrop-filter:blur(12px) saturate(130%)!important;
+}
+@media(max-width:760px){
+ #book>.hero.garage-hero,#roadside>.hero.garage-hero,#mechanics>.hero.garage-hero{
+  width:100%!important;max-width:100%!important;margin:14px 0 18px!important;padding:17px!important
+ }
+ #book>.hero.garage-hero h1,#roadside>.hero.garage-hero h1,#mechanics>.hero.garage-hero h1{font-size:clamp(24px,6.5vw,30px)!important}
+ #book>.cols,#roadside>.cols{grid-template-columns:minmax(0,1fr)!important;gap:14px!important}
+ #book>.cols>.panel,#roadside>.cols>.panel{padding:17px!important}
+}
+</style>
+
 </body>
 </html>
