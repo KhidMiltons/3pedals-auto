@@ -2781,27 +2781,82 @@ loadSiteSettings();
 <style id="account-panel-full-page-layout">
 #accDlg:not([open]){display:none!important}
 @media(min-width:701px){
-  #accDlg[open]{position:fixed!important;inset:0!important;margin:0!important;display:grid!important;grid-template-columns:minmax(0,1fr)!important;grid-template-rows:74px minmax(0,1fr)!important;width:100vw!important;max-width:none!important;height:100dvh!important;max-height:100dvh!important;padding:0!important;overflow:hidden!important;border:0!important;border-radius:0!important;background:linear-gradient(145deg,rgba(27,28,29,.98),rgba(13,14,15,.98))!important;color:#f5f1e6!important;box-shadow:none!important}
-  #accDlg::backdrop{background:rgba(5,6,7,.72)!important;-webkit-backdrop-filter:blur(8px)!important;backdrop-filter:blur(8px)!important}
-  #accDlg>.in{display:contents!important}
-  #accDlg .account-dialog-head{grid-column:1/-1!important;grid-row:1!important;display:grid!important;grid-template-columns:minmax(0,1fr) 42px 42px!important;align-items:center!important;gap:12px!important;width:100%!important;max-width:none!important;height:74px!important;margin:0!important;padding:10px 28px!important;position:relative!important;top:auto!important;border-bottom:1px solid rgba(201,183,132,.22)!important;background:rgba(27,28,29,.78)!important;box-shadow:0 8px 24px rgba(0,0,0,.16)!important;backdrop-filter:blur(24px) saturate(145%)!important;-webkit-backdrop-filter:blur(24px) saturate(145%)!important}
-  #accDlg .account-dialog-head h2.account-brand-title{grid-column:1!important;grid-row:1!important;justify-self:start!important;justify-content:flex-start!important;margin:0!important;text-align:left!important}
-  #accDlg .account-dialog-head>#accMenuToggle{grid-column:2!important;grid-row:1!important;justify-self:end!important;margin:0!important}
-  #accDlg .account-dialog-head>#accCloseTop{grid-column:3!important;grid-row:1!important;justify-self:end!important;margin:0!important}
-  #accDlg nav#accountMenu.dashboard-shortcuts.menu-open:not([hidden]){position:fixed!important;inset:auto!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;width:min(320px,calc(100vw - 24px))!important;max-width:none!important;height:auto!important;max-height:min(72dvh,680px)!important;overflow:auto!important;margin:0!important;padding:18px 14px max(24px,env(safe-area-inset-bottom))!important;border:1px solid rgba(201,183,132,.42)!important;border-radius:14px!important;background:rgba(24,25,26,.76)!important;color:#f5f1e6!important;box-shadow:0 20px 60px rgba(0,0,0,.36)!important;backdrop-filter:blur(26px) saturate(145%)!important;-webkit-backdrop-filter:blur(26px) saturate(145%)!important}
+  /* Desktop account workspace: permanent left dashboard rail + separate content column. */
+  #accDlg[open]{
+    position:fixed!important;inset:0!important;margin:0!important;display:grid!important;
+    grid-template-columns:250px minmax(0,1fr)!important;grid-template-rows:minmax(0,1fr)!important;
+    width:100vw!important;max-width:none!important;height:100dvh!important;max-height:100dvh!important;
+    padding:0!important;overflow:hidden!important;border:0!important;border-radius:0!important;
+    background:rgba(235,240,245,.40)!important;color:#202833!important;
+    box-shadow:none!important;-webkit-backdrop-filter:blur(28px) saturate(135%)!important;backdrop-filter:blur(28px) saturate(135%)!important;
+  }
+  #accDlg::backdrop{background:rgba(28,35,44,.34)!important;-webkit-backdrop-filter:blur(8px)!important;backdrop-filter:blur(8px)!important}
+  #accDlg>.in{
+    grid-column:2!important;grid-row:1!important;display:flex!important;flex-direction:column!important;
+    min-width:0!important;min-height:0!important;width:100%!important;height:100%!important;max-height:100dvh!important;
+    gap:0!important;margin:0!important;padding:0!important;overflow:hidden!important;
+    background:rgba(255,255,255,.22)!important;
+  }
+  #accDlg .account-dialog-head{
+    position:relative!important;top:auto!important;z-index:8!important;flex:none!important;
+    display:grid!important;grid-template-columns:minmax(0,1fr) 54px 40px!important;grid-template-rows:minmax(58px,auto)!important;
+    align-items:center!important;gap:10px!important;width:100%!important;height:auto!important;min-height:72px!important;
+    margin:0!important;padding:12px clamp(18px,2.5vw,36px)!important;box-sizing:border-box!important;
+    border:0!important;border-bottom:1px solid rgba(80,94,110,.15)!important;border-radius:0!important;
+    background:rgba(255,255,255,.38)!important;box-shadow:0 5px 24px rgba(45,58,75,.04)!important;
+    -webkit-backdrop-filter:blur(22px) saturate(140%)!important;backdrop-filter:blur(22px) saturate(140%)!important;
+  }
+  #accDlg .account-dialog-head h2.account-brand-title{grid-column:1!important;grid-row:1!important;justify-self:start!important;margin:0!important;text-align:left!important;color:#263241!important}
+  #accDlg .account-dialog-head>#accMenuToggle{display:none!important}
+  #accDlg .account-dialog-head>#accHomeTop{grid-column:2!important;grid-row:1!important;justify-self:stretch!important;width:54px!important}
+  #accDlg .account-dialog-head>#accCloseTop{grid-column:3!important;grid-row:1!important;justify-self:end!important}
+  #accDlg nav#accountMenu.dashboard-shortcuts,
+  #accDlg nav#accountMenu.dashboard-shortcuts[hidden]{
+    grid-column:1!important;grid-row:1!important;position:relative!important;inset:auto!important;
+    display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;
+    flex-direction:column!important;align-items:stretch!important;gap:5px!important;
+    width:100%!important;min-width:0!important;max-width:none!important;height:100%!important;max-height:100dvh!important;
+    overflow-x:hidden!important;overflow-y:auto!important;margin:0!important;padding:22px 14px max(24px,env(safe-area-inset-bottom))!important;
+    box-sizing:border-box!important;border:0!important;border-right:1px solid rgba(255,255,255,.64)!important;border-radius:0!important;
+    background:linear-gradient(155deg,rgba(255,255,255,.54),rgba(230,237,245,.32))!important;color:#394556!important;
+    box-shadow:inset -1px 0 rgba(255,255,255,.42)!important;
+    -webkit-backdrop-filter:blur(28px) saturate(145%)!important;backdrop-filter:blur(28px) saturate(145%)!important;
+  }
   #accDlg nav#accountMenu .seller-nav-identity{margin-bottom:12px!important}
   #accDlg nav#accountMenu button{min-height:42px!important}
-  #accDlg #accBody{grid-column:1!important;grid-row:2!important;width:100%!important;max-width:1280px!important;height:100%!important;min-height:0!important;margin:0 auto!important;padding:28px clamp(22px,4vw,56px) 48px!important;overflow:auto!important;overscroll-behavior:contain!important}
+  #accDlg #accBody{
+    flex:1 1 auto!important;grid-column:auto!important;grid-row:auto!important;min-width:0!important;min-height:0!important;
+    width:100%!important;max-width:none!important;height:auto!important;margin:0!important;
+    padding:26px clamp(18px,3vw,44px) 48px!important;overflow:auto!important;overscroll-behavior:contain!important;
+    box-sizing:border-box!important;background:transparent!important;color:#263241!important;
+  }
+  #accDlg .account-page,#accDlg .account-pages{color:#263241!important;background:transparent!important}
+  #accDlg .account-page h3,#accDlg .account-page h4,#accDlg .account-page label,
+  #accDlg .account-page p,#accDlg .account-page strong,#accDlg .account-page span{color:inherit}
+  #accDlg .account-settings,#accDlg .dashboard-welcome,#accDlg .profile-card,#accDlg .seller-listing,
+  #accDlg .account-page .card,#accDlg .account-tools>.panel,#accDlg .account-tools>section{
+    color:#263241!important;background:rgba(255,255,255,.50)!important;
+    border-color:rgba(255,255,255,.72)!important;box-shadow:0 10px 30px rgba(45,58,75,.06),inset 0 1px rgba(255,255,255,.72)!important;
+    -webkit-backdrop-filter:blur(18px) saturate(135%)!important;backdrop-filter:blur(18px) saturate(135%)!important;
+  }
+  #accDlg .meta,#accDlg .account-page p{color:#657184!important}
+  #accDlg input,#accDlg select,#accDlg textarea{color:#263241!important;background:rgba(255,255,255,.72)!important;border-color:rgba(110,125,145,.24)!important}
+  #accDlg #accountMenu.dashboard-shortcuts button{color:#4b5665!important}
+  #accDlg #accountMenu.dashboard-shortcuts button:hover,
+  #accDlg #accountMenu.dashboard-shortcuts button.active,
+  #accDlg #accountMenu.dashboard-shortcuts button[aria-current="page"]{
+    color:#202833!important;background:rgba(255,255,255,.70)!important;border-color:rgba(255,255,255,.86)!important;
+    box-shadow:0 5px 16px rgba(38,52,70,.07),inset 0 1px rgba(255,255,255,.8)!important;transform:translateX(2px)!important;
+  }
 }
 @media(max-width:700px){
-  #accDlg[open]{position:fixed!important;inset:0!important;margin:0!important;display:block!important;width:100vw!important;max-width:none!important;height:100dvh!important;max-height:100dvh!important;padding:0!important;overflow:hidden!important;border:0!important;border-radius:0!important;background:linear-gradient(145deg,rgba(27,28,29,.98),rgba(13,14,15,.98))!important;color:#f5f1e6!important;touch-action:pan-y pinch-zoom!important}
-  #accDlg>.in{display:flex!important;flex-direction:column!important;gap:0!important;width:100%!important;height:100%!important;max-height:100%!important;padding:env(safe-area-inset-top,8px) 12px env(safe-area-inset-bottom,10px)!important;overflow:hidden!important;touch-action:pan-y pinch-zoom!important}
-  #accDlg .account-dialog-head{position:relative!important;top:auto!important;z-index:40!important;flex:none!important;width:calc(100% + 24px)!important;height:auto!important;min-height:62px!important;margin:0 -12px!important;padding:9px 12px!important;background:rgba(27,28,29,.8)!important}
-  #accDlg #accBody{flex:1 1 auto!important;width:100%!important;max-width:none!important;min-height:0!important;margin:0!important;padding:16px 0 max(28px,env(safe-area-inset-bottom))!important;overflow:auto!important;overscroll-behavior:contain!important;touch-action:pan-y pinch-zoom!important}
-  #accDlg nav#accountMenu.dashboard-shortcuts.menu-open:not([hidden]){position:absolute!important;z-index:1000!important;max-height:min(72dvh,680px)!important;border:1px solid rgba(201,183,132,.42)!important;border-radius:14px!important}
+  #accDlg[open]{position:fixed!important;inset:0!important;margin:0!important;display:block!important;width:100vw!important;max-width:none!important;height:100dvh!important;max-height:100dvh!important;padding:0!important;overflow:hidden!important;border:0!important;border-radius:0!important;background:rgba(239,243,248,.72)!important;color:#202833!important;touch-action:pan-y pinch-zoom!important;-webkit-backdrop-filter:blur(24px) saturate(135%)!important;backdrop-filter:blur(24px) saturate(135%)!important}
+  #accDlg>.in{display:flex!important;flex-direction:column!important;gap:0!important;width:100%!important;height:100%!important;max-height:100%!important;padding:env(safe-area-inset-top,8px) 12px env(safe-area-inset-bottom,10px)!important;overflow:hidden!important;touch-action:pan-y pinch-zoom!important;background:transparent!important}
+  #accDlg .account-dialog-head{position:relative!important;top:auto!important;z-index:40!important;flex:none!important;width:calc(100% + 24px)!important;height:auto!important;min-height:62px!important;margin:0 -12px!important;padding:9px 12px!important;background:rgba(255,255,255,.46)!important;border-bottom:1px solid rgba(80,94,110,.15)!important}
+  #accDlg #accBody{flex:1 1 auto!important;width:100%!important;max-width:none!important;min-height:0!important;margin:0!important;padding:16px 0 max(28px,env(safe-area-inset-bottom))!important;overflow:auto!important;overscroll-behavior:contain!important;touch-action:pan-y pinch-zoom!important;background:transparent!important;color:#263241!important}
+  #accDlg nav#accountMenu.dashboard-shortcuts.menu-open:not([hidden]){position:absolute!important;z-index:1000!important;max-height:min(72dvh,680px)!important;border:1px solid rgba(120,135,152,.28)!important;border-radius:14px!important;background:rgba(245,248,252,.88)!important;color:#394556!important}
 }
-@media(prefers-color-scheme:light) and (min-width:701px){#accDlg[open]{background:linear-gradient(145deg,#f8f6f1,#efede7 65%,#f5f3ee)!important;color:#292820!important}#accDlg .account-dialog-head{background:rgba(250,249,245,.9)!important;border-bottom-color:rgba(154,122,62,.22)!important}#accDlg nav#accountMenu.dashboard-shortcuts.menu-open:not([hidden]){background:rgba(250,249,245,.78)!important;color:#292820!important;border-color:rgba(154,122,62,.32)!important;backdrop-filter:blur(24px) saturate(140%)!important;-webkit-backdrop-filter:blur(24px) saturate(140%)!important}}
-@media(prefers-color-scheme:light) and (max-width:700px){#accDlg[open]{background:linear-gradient(145deg,#f8f6f1,#efede7 65%,#f5f3ee)!important;color:#292820!important}#accDlg .account-dialog-head{background:rgba(250,249,245,.88)!important}}
+@media(prefers-reduced-motion:reduce){#accDlg *,#accDlg *::before,#accDlg *::after{transition:none!important;animation:none!important}}
 </style>
 <style id="account-touch-zoom-performance">
 @media(pointer:coarse){
