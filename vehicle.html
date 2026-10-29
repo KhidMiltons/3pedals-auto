@@ -165,7 +165,7 @@ alt=""
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-<header><div class="wrap head"><a class="logo" href="/">3 Pedals Auto KE</a><a class="back" href="index.html#buy">← Back to Buy</a></div></header>
+<header><div class="wrap head"><a class="logo" href="/">3 Pedals Auto KE</a><a class="back" href="/dealers.html">← Back to Dealers</a></div></header>
 <main class="wrap">
   <div class="crumb">3 Pedals Auto KE / Vehicle details</div>
   <div id="app" class="state">Loading vehicle…</div>
@@ -437,3 +437,27 @@ body>header,header.site-header,.site-header,header{
 
 </body>
 </html>
+
+
+<style id="dealer-vehicle-detail-glass-and-wallpaper">
+/* Vehicle opened from a dealer profile: use dealer navigation and the same blurred automotive glass theme. */
+html{background:transparent!important}
+body{position:relative!important;isolation:isolate!important;background:transparent!important;min-height:100vh!important}
+body:before{
+ content:""!important;display:block!important;position:fixed!important;inset:-12px!important;z-index:-1!important;pointer-events:none!important;
+ background:linear-gradient(180deg,rgba(5,6,8,.48),rgba(5,6,8,.62)),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=2400&q=85") center/cover no-repeat!important;
+ filter:blur(4px)!important;transform:scale(1.025)!important;
+}
+header{position:sticky!important;top:0!important;z-index:30!important}
+header .wrap.head{width:min(1380px,calc(100% - 36px))!important;max-width:1380px!important;margin-inline:auto!important;box-sizing:border-box!important;justify-content:space-between!important}
+header .back{margin-left:auto!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;background:rgba(255,255,255,.09)!important;color:rgba(255,255,255,.94)!important;border:1px solid rgba(255,255,255,.19)!important;border-radius:12px!important;box-shadow:0 8px 26px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.10)!important;-webkit-backdrop-filter:blur(18px) saturate(145%)!important;backdrop-filter:blur(18px) saturate(145%)!important}
+.card,.panel,.vehicle-card,.vehicle-details,.details,.gallery,.gallery-wrap,.info-card,.specs,.spec-card,.related-card,main article,main .content{
+ background-color:rgba(20,22,25,.40)!important;
+ background-image:linear-gradient(135deg,rgba(255,255,255,.095),rgba(255,255,255,.025))!important;
+ border-color:rgba(255,255,255,.17)!important;
+ box-shadow:0 14px 36px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.08)!important;
+ -webkit-backdrop-filter:blur(18px) saturate(140%)!important;
+ backdrop-filter:blur(18px) saturate(140%)!important;
+}
+@media(max-width:600px){header .wrap.head{width:calc(100% - 24px)!important;gap:10px!important}header .back{padding:8px 10px!important;font-size:12px!important}}
+</style>
