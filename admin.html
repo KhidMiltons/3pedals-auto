@@ -257,3 +257,11 @@ document.addEventListener("keydown",e=>{if(lightbox.classList.contains("hidden")
 let adminCheckInProgress=false;async function runAdminCheck(){if(adminCheckInProgress)return;adminCheckInProgress=true;try{await checkAdmin()}finally{adminCheckInProgress=false}}sb?.auth.onAuthStateChange(()=>setTimeout(runAdminCheck,0));runAdminCheck();
 </script>
 </body></html>
+
+/* Admin brand identity and glass action controls */
+body:has(#app) .brand{display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 15px;border:1px solid rgba(255,255,255,.20);border-radius:16px;background:linear-gradient(120deg,rgba(227,196,123,.14),rgba(255,255,255,.04),rgba(0,0,0,.10));box-shadow:0 8px 26px rgba(0,0,0,.14),inset 0 1px rgba(255,255,255,.12);-webkit-backdrop-filter:blur(16px) saturate(135%);backdrop-filter:blur(16px) saturate(135%);font-size:clamp(26px,3vw,38px);font-weight:800;letter-spacing:.015em;color:#d9bd78}
+body:has(#app) .brand span{display:block;flex-basis:100%;font-size:10px;letter-spacing:.12em;color:rgba(245,242,234,.70)}
+body:has(#app) .top .actions button,body:has(#app) .primary,body:has(#app) .ghost{border:1px solid rgba(255,255,255,.20);border-radius:12px;background:rgba(255,255,255,.07);color:#f5f1e8;box-shadow:0 8px 22px rgba(0,0,0,.12),inset 0 1px rgba(255,255,255,.10);-webkit-backdrop-filter:blur(14px) saturate(135%);backdrop-filter:blur(14px) saturate(135%)}
+body:has(#app) .primary,body:has(#app) .tab.active{background:linear-gradient(120deg,rgba(227,196,123,.92),rgba(151,119,58,.92));color:#171717;border-color:rgba(238,215,158,.55)}
+body:has(#app) .top .actions button:hover,body:has(#app) .primary:hover,body:has(#app) .ghost:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.38);box-shadow:0 12px 28px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.15)}
+@media(max-width:760px){body:has(#app) .brand{font-size:27px;padding:9px 12px}body:has(#app) .top{align-items:stretch!important}body:has(#app) .top .actions{width:100%}body:has(#app) .top .actions button{flex:1 1 auto}}
