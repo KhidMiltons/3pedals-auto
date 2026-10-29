@@ -462,7 +462,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <header><div class="wrap">
   <div class="logo" style="cursor:pointer" onclick="window.location.reload()" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){window.location.reload()}">3 Pedals Garage</div>
   <div class="account-pill"><button id="accountOpen" class="account-icon" type="button" aria-label="Log in" title="Log in"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.6"/><path d="M4.8 20c.8-3.8 3.2-5.8 7.2-5.8s6.4 2 7.2 5.8"/></svg></button></div>
-  <nav role="tablist" aria-label="Sections">
+  <button class="garage-nav-toggle" id="garageNavToggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="garageSectionNav"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+  <nav id="garageSectionNav" role="tablist" aria-label="Sections">
     <button role="tab" data-tab="home" aria-selected="true">Home</button>
     <button role="tab" data-tab="book" aria-selected="false">Services &amp; booking</button>
     <button role="tab" data-tab="roadside" aria-selected="false">Mobile mechanic</button>
@@ -1206,6 +1207,80 @@ header nav button,header nav a.navlink{
   header nav button,header nav a.navlink{font-size:13px!important;padding:9px 12px!important}
 }
 </style>
+
+
+<style id="garage-mobile-dashboard-menu">
+/* Mobile: keep the Garage dashboard compact and place section links in a homepage-style menu. */
+.garage-nav-toggle{display:none!important}
+@media(max-width:800px){
+  header{position:sticky!important;top:0!important;z-index:1000!important}
+  header .wrap{
+    position:relative!important;
+    grid-template-columns:minmax(0,1fr) auto auto!important;
+    grid-template-areas:"brand account menu"!important;
+    gap:10px!important;
+    min-height:64px!important;
+    padding:9px 14px!important;
+  }
+  header .logo{grid-area:brand!important;font-size:25px!important;max-width:calc(100vw - 145px)!important}
+  header .account-pill{grid-area:account!important;justify-self:end!important}
+  .garage-nav-toggle{
+    grid-area:menu!important;display:flex!important;align-items:center!important;justify-content:center!important;
+    width:40px!important;height:40px!important;padding:0!important;flex:0 0 40px!important;
+    border:1px solid rgba(255,255,255,.22)!important;border-radius:12px!important;
+    background:rgba(255,255,255,.09)!important;color:#f7f7f5!important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.10)!important;
+    -webkit-backdrop-filter:blur(16px)!important;backdrop-filter:blur(16px)!important;cursor:pointer!important;
+  }
+  .garage-nav-toggle svg{width:21px!important;height:21px!important}
+  header nav#garageSectionNav{
+    display:none!important;position:absolute!important;top:calc(100% + 7px)!important;left:14px!important;right:14px!important;
+    width:auto!important;max-width:none!important;max-height:min(68dvh,390px)!important;overflow-y:auto!important;overflow-x:hidden!important;
+    flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;gap:4px!important;
+    margin:0!important;padding:9px!important;border:1px solid rgba(255,255,255,.18)!important;border-radius:17px!important;
+    background:rgba(18,20,23,.88)!important;box-shadow:0 18px 42px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.09)!important;
+    -webkit-backdrop-filter:blur(24px) saturate(145%)!important;backdrop-filter:blur(24px) saturate(145%)!important;
+    z-index:1001!important;white-space:normal!important;
+  }
+  header nav#garageSectionNav.is-open{display:flex!important}
+  header nav#garageSectionNav button,header nav#garageSectionNav a.navlink{
+    display:flex!important;width:100%!important;min-height:40px!important;justify-content:flex-start!important;
+    padding:10px 12px!important;font-size:14px!important;line-height:1.25!important;text-align:left!important;
+    border-radius:10px!important;white-space:normal!important;flex:0 0 auto!important;
+  }
+}
+@media(max-width:420px){
+  header .logo{font-size:22px!important;max-width:calc(100vw - 135px)!important}
+  .garage-nav-toggle{width:38px!important;height:38px!important;flex-basis:38px!important}
+}
+</style>
+<script id="garage-mobile-dashboard-menu-behavior">
+(function(){
+  const toggle=document.getElementById('garageNavToggle');
+  const menu=document.getElementById('garageSectionNav');
+  if(!toggle||!menu||toggle.dataset.menuReady==='true')return;
+  toggle.dataset.menuReady='true';
+  const closeMenu=()=>{
+    menu.classList.remove('is-open');
+    toggle.setAttribute('aria-expanded','false');
+    toggle.setAttribute('aria-label','Open navigation menu');
+  };
+  toggle.addEventListener('click',()=>{
+    const opening=!menu.classList.contains('is-open');
+    menu.classList.toggle('is-open',opening);
+    toggle.setAttribute('aria-expanded',String(opening));
+    toggle.setAttribute('aria-label',opening?'Close navigation menu':'Open navigation menu');
+  });
+  menu.addEventListener('click',event=>{
+    if(event.target.closest('button[role="tab"],a'))closeMenu();
+  });
+  document.addEventListener('click',event=>{
+    if(!menu.contains(event.target)&&!toggle.contains(event.target))closeMenu();
+  });
+  document.addEventListener('keydown',event=>{if(event.key==='Escape')closeMenu()});
+  window.addEventListener('resize',()=>{if(window.innerWidth>800)closeMenu()});
+})();
+</script>
 
 </body>
 </html>
