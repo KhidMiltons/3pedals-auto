@@ -369,3 +369,41 @@ body:before{
   .hero p{font-size:12px!important;line-height:1.45!important}
 }
 </style>
+
+
+<style id="yard-wallpaper-lighter-blur-all-glass-cards">
+/* Reduce wallpaper blur and keep all dealer page cards consistently glassy. */
+body:before{
+  filter:blur(3px)!important;
+  transform:scale(1.018)!important;
+  background:linear-gradient(180deg,rgba(5,6,8,.48),rgba(5,6,8,.60)),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=2400&q=85") center/cover no-repeat!important;
+}
+#profile .panel,
+#profile .details,
+#profile .stat,
+#profile .detail,
+#profile .yardmark,
+#profile .actions .btn,
+.card,
+.stat,
+.detail,
+.panel{
+  background-color:rgba(20,22,25,.38)!important;
+  background-image:linear-gradient(135deg,rgba(255,255,255,.10),rgba(255,255,255,.025))!important;
+  border-color:rgba(255,255,255,.17)!important;
+  box-shadow:0 12px 32px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.09)!important;
+  -webkit-backdrop-filter:blur(18px) saturate(140%)!important;
+  backdrop-filter:blur(18px) saturate(140%)!important;
+}
+#profile .yardmark{background-color:rgba(255,255,255,.07)!important}
+#profile .detail,.detail,.stat{color:rgba(255,255,255,.82)!important}
+#profile .detail a,.detail a{color:#fff!important}
+.card{color:#fff!important}
+.cardbody h3,.price,.sectionhead h2{color:#fff!important}
+.tag{background:rgba(255,255,255,.09)!important;color:rgba(255,255,255,.82)!important;border:1px solid rgba(255,255,255,.10)!important}
+.btn{background:rgba(255,255,255,.08)!important;color:#fff!important;border-color:rgba(255,255,255,.18)!important}
+.btn.primary{background:rgba(255,255,255,.16)!important;color:#fff!important}
+.btn.gold{background:rgba(201,183,132,.78)!important;color:#171717!important;border-color:rgba(201,183,132,.55)!important}
+.head{background:rgba(18,20,23,.32)!important;border-bottom-color:rgba(255,255,255,.14)!important;-webkit-backdrop-filter:blur(20px) saturate(140%)!important;backdrop-filter:blur(20px) saturate(140%)!important}
+
+</style>
