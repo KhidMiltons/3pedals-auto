@@ -3406,45 +3406,73 @@ footer::before,footer::after,body>footer::before,body>footer::after{border:0!imp
 </style>
 
 <style id="global-blurred-glass-wallpaper">
-/* Full-screen automotive wallpaper with a soft blur; all UI surfaces stay translucent. */
+/* Neutral smoked glass over the existing automotive photo; avoid a blue wash. */
 html,body{background:transparent!important;background-color:transparent!important}
-body{isolation:isolate!important}
+body{position:relative!important;isolation:isolate!important}
 body:before{
- content:""!important;display:block!important;position:fixed!important;inset:-12px!important;z-index:-2!important;pointer-events:none!important;
- background-image:linear-gradient(115deg,rgba(5,9,15,.66),rgba(8,13,21,.42) 52%,rgba(5,9,15,.62)),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=2400&q=90")!important;
- background-position:center,center center!important;background-size:cover,cover!important;background-repeat:no-repeat,no-repeat!important;
- filter:blur(5px)!important;transform:scale(1.035)!important
+ content:""!important;display:block!important;position:fixed!important;inset:-10px!important;z-index:-1!important;pointer-events:none!important;
+ background:
+ linear-gradient(110deg,rgba(8,9,11,.42),rgba(8,9,11,.18) 48%,rgba(8,9,11,.42)),
+ url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=2400&q=90") center center/cover no-repeat!important;
+ filter:blur(4px)!important;transform:scale(1.025)!important
 }
-body:after{
- content:""!important;display:block!important;position:fixed!important;inset:0!important;z-index:-1!important;pointer-events:none!important;
- background:linear-gradient(180deg,rgba(4,8,14,.16),rgba(4,8,14,.28) 55%,rgba(4,8,14,.46))!important
-}
-/* Avoid opaque white fills; keep text contrast with smoked, blurred glass. */
-header,body>header,.site-header,.navbar,.nav-shell,.nav-wrap,
+body:after{content:none!important;display:none!important}
+/* Glass should reveal the photograph through its surface, with a visible edge highlight. */
+header,body>header,.site-header,.navbar,.nav-shell,.nav-wrap,#nav,
 #home .hero,#home .tile,.tiles .tile,.showroom-vehicle-note,
-.card,.panel,.contact-card,.journal-intro,.journal-card,
-.authbox,.modal,.drawer{
- background-color:rgba(14,21,31,.42)!important;
- border-color:rgba(255,255,255,.16)!important;
- -webkit-backdrop-filter:blur(22px) saturate(140%)!important;
- backdrop-filter:blur(22px) saturate(140%)!important
+.card,.panel,.contact-card,.journal-intro,.journal-card,.project-intro,.project-card,
+.project-public-empty,.vehicle-card,.listing,.dealer,.featured-panel,.promotion-package,
+.dashboard-card,.contact-form,.filter-panel,.search-panel,.stat,.service-card,.booking-card,
+.garage-card,#autoQuoteRail,.authbox,.modal,.drawer,dialog{
+ background-color:rgba(24,24,25,.24)!important;
+ border:1px solid rgba(255,255,255,.22)!important;
+ box-shadow:0 14px 38px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.16)!important;
+ -webkit-backdrop-filter:blur(24px) saturate(125%)!important;
+ backdrop-filter:blur(24px) saturate(125%)!important
 }
-header,body>header,.site-header,.navbar,.nav-shell,.nav-wrap{background-color:rgba(10,16,25,.58)!important}
-#accDlg[open],#accDlg[open]>.in{background:rgba(10,16,25,.28)!important}
+header,body>header,.site-header,.navbar,.nav-shell,.nav-wrap{
+ background-color:rgba(17,17,18,.38)!important;
+ border-color:rgba(255,255,255,.18)!important
+}
+#home .hero{background-color:rgba(24,24,25,.18)!important}
+#home .tile,.tiles .tile,.showroom-vehicle-note,.card,.panel,.contact-card,.journal-card,.project-card{
+ background-color:rgba(24,24,25,.24)!important
+}
+input,select,textarea{
+ background:rgba(20,20,21,.30)!important;color:inherit!important;
+ border:1px solid rgba(255,255,255,.25)!important;
+ -webkit-backdrop-filter:blur(16px)!important;backdrop-filter:blur(16px)!important
+}
+input::placeholder,textarea::placeholder{color:rgba(255,255,255,.68)!important}
+#authDlg,#accDlg{background:rgba(17,17,18,.32)!important;border-color:rgba(255,255,255,.20)!important}
+#accDlg[open],#accDlg[open]>.in{background:rgba(17,17,18,.22)!important}
 #accDlg[open] .account-settings,#accDlg[open] .dashboard-welcome,#accDlg[open] .profile-card,
 #accDlg[open] .seller-listing,#accDlg[open] .account-page .card,#accDlg[open] .account-tools>.panel,
 #accDlg[open] .account-tools>section,#accDlg[open] .account-page section,
 #accDlg[open] .account-page .stats>div,#accDlg[open] .stat{
- background:rgba(18,28,41,.58)!important;
- border-color:rgba(255,255,255,.17)!important;
- -webkit-backdrop-filter:blur(22px) saturate(145%)!important;
- backdrop-filter:blur(22px) saturate(145%)!important
+ background:rgba(24,24,25,.30)!important;
+ border:1px solid rgba(255,255,255,.22)!important;
+ box-shadow:0 12px 32px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.15)!important;
+ -webkit-backdrop-filter:blur(24px) saturate(125%)!important;
+ backdrop-filter:blur(24px) saturate(125%)!important
 }
+#accDlg[open] nav#accountMenu.dashboard-shortcuts{
+ background:rgba(17,17,18,.48)!important;border-right:1px solid rgba(255,255,255,.18)!important;
+ -webkit-backdrop-filter:blur(26px) saturate(125%)!important;backdrop-filter:blur(26px) saturate(125%)!important
+}
+#accDlg[open] .account-dialog-head{background:rgba(17,17,18,.38)!important;border-bottom:1px solid rgba(255,255,255,.16)!important}
+#accDlg[open] input,#accDlg[open] select,#accDlg[open] textarea{background:rgba(20,20,21,.42)!important}
+#accDlg[open] .account-settings-tabs button.active{background:rgba(255,255,255,.13)!important;border:1px solid rgba(255,255,255,.24)!important}
 @media(max-width:760px){
- body:before{background-image:linear-gradient(180deg,rgba(5,9,15,.64),rgba(5,9,15,.70)),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1400&q=85")!important}
+ body:before{background-image:linear-gradient(180deg,rgba(8,9,11,.38),rgba(8,9,11,.50)),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1400&q=85")!important}
+ #accDlg[open] nav#accountMenu.dashboard-shortcuts.menu-open:not([hidden]){background:rgba(17,17,18,.86)!important}
 }
-@media(prefers-reduced-motion:reduce){
- .card,.tile,button,a{transition-duration:.01ms!important;animation-duration:.01ms!important}
+@media(hover:hover){
+ .card:hover,.tile:hover,.project-card:hover,.contact-card:hover,.journal-card:hover{
+  background-color:rgba(40,40,41,.32)!important;border-color:rgba(255,255,255,.34)!important;
+  box-shadow:0 20px 46px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.20)!important;
+  -webkit-backdrop-filter:blur(28px) saturate(135%)!important;backdrop-filter:blur(28px) saturate(135%)!important
+ }
 }
 </style>
 </body>
