@@ -1081,5 +1081,33 @@ main section .panel,main section .card,main section article {
 }
 </style>
 
+
+<style id="garage-larger-navigation-header">
+/* Give the Garage link dock a more prominent, easier-to-read footprint. */
+header .wrap{gap:22px!important}
+header nav{
+  gap:8px!important;
+  padding:9px!important;
+  border-radius:19px!important;
+}
+header nav button,
+header nav a.navlink{
+  min-height:48px!important;
+  padding:12px 18px!important;
+  font-size:15px!important;
+  line-height:1.15!important;
+  border-radius:13px!important;
+}
+@media(max-width:800px){
+  header .wrap{gap:11px 12px!important}
+  header nav{gap:6px!important;padding:7px!important}
+  header nav button,header nav a.navlink{
+    min-height:46px!important;
+    padding:11px 16px!important;
+    font-size:14px!important;
+  }
+}
+</style>
+
 </body>
 </html>
