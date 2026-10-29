@@ -158,7 +158,36 @@ document.addEventListener('click', function(event) {
   }
 })();
 </script>
-<style id="dealer-directory-glass-refresh">body{background:#08090b!important;background-image:linear-gradient(90deg,rgba(4,5,7,.62),rgba(4,5,7,.32),rgba(4,5,7,.55)),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=2400&q=85")!important;background-position:center,center!important;background-size:cover,cover!important;background-attachment:fixed,fixed!important}.head{background:rgba(18,19,22,.38)!important;border:1px solid rgba(255,255,255,.35)!important;border-radius:22px!important;backdrop-filter:blur(24px)!important;-webkit-backdrop-filter:blur(24px)!important}.dealer,.stat,.state,.empty,.error,.tools input,.tools select{background:rgba(20,21,23,.48)!important;backdrop-filter:blur(20px) saturate(130%)!important;-webkit-backdrop-filter:blur(20px) saturate(130%)!important;border-color:rgba(201,183,132,.25)!important}.dealer:hover,.dealer:focus-visible{transform:translateY(-3px)!important}a,button,.dealer,.back{transition:all .22s ease!important}a:hover,button:hover,.back:hover{border-color:rgba(211,181,143,.72)!important;box-shadow:0 10px 26px rgba(0,0,0,.2)!important}</style>
+<style id="dealer-directory-glass-refresh">
+/* Keep the existing automotive wallpaper, but blur it on its own layer. */
+html,body{min-height:100%;background:#08090b!important}
+body{position:relative!important;isolation:isolate!important;background-image:none!important}
+body::before{
+  content:"";position:fixed;inset:-14px;z-index:-1;pointer-events:none;
+  background-image:linear-gradient(90deg,rgba(4,5,7,.66),rgba(4,5,7,.34),rgba(4,5,7,.58)),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=2400&q=85");
+  background-position:center,center;background-size:cover,cover;background-repeat:no-repeat;
+  filter:blur(8px);transform:scale(1.025);
+}
+.head{background:rgba(18,19,22,.30)!important;border:0!important;border-bottom:1px solid rgba(255,255,255,.14)!important;border-radius:0!important;backdrop-filter:blur(24px) saturate(140%)!important;-webkit-backdrop-filter:blur(24px) saturate(140%)!important}
+.headin{justify-content:space-between!important}
+.head .back{order:-1!important;align-self:center!important;background:rgba(255,255,255,.045)!important;border:1px solid rgba(255,255,255,.14)!important;border-radius:11px!important;box-shadow:none!important;backdrop-filter:blur(14px)!important;-webkit-backdrop-filter:blur(14px)!important;transition:transform .28s var(--ease),color .28s,border-color .28s,background .28s,box-shadow .28s!important}
+.head .back:hover,.head .back:focus-visible{transform:translateY(-2px)!important;color:#fff!important;background:rgba(255,255,255,.09)!important;border-color:rgba(201,183,132,.58)!important;box-shadow:0 8px 22px rgba(0,0,0,.22)!important;outline:none}
+.head .brand{order:2!important;margin-left:auto!important;display:inline-flex!important;align-items:center!important;min-height:42px!important;text-transform:uppercase!important;letter-spacing:.13em!important;font:700 clamp(14px,2vw,20px)/1.15 "Playfair Display",Georgia,serif!important;color:#f5f1e6!important;text-shadow:0 2px 18px rgba(0,0,0,.55)!important;transition:color .28s,text-shadow .28s,transform .28s!important}
+.head .brand:hover,.head .brand:focus-visible{color:#d8c69c!important;text-shadow:0 0 20px rgba(201,183,132,.2)!important;transform:translateY(-1px)!important;outline:none}
+.dealer,.stat,.state,.empty,.error,.tools input,.tools select{background:rgba(20,21,23,.48)!important;backdrop-filter:blur(20px) saturate(130%)!important;-webkit-backdrop-filter:blur(20px) saturate(130%)!important;border-color:rgba(201,183,132,.25)!important}
+.dealer{transition:transform .32s var(--ease),border-color .28s,box-shadow .32s,background .28s!important}
+.dealer:hover,.dealer:focus-visible{transform:translateY(-5px) scale(1.008)!important;border-color:rgba(201,183,132,.65)!important;box-shadow:0 20px 44px rgba(0,0,0,.34),0 0 22px rgba(201,183,132,.09)!important;outline:none}
+.stat,.state{transition:transform .28s var(--ease),border-color .28s,box-shadow .28s,background .28s!important}
+.stat:hover,.state:hover{transform:translateY(-2px)!important;border-color:rgba(201,183,132,.42)!important;box-shadow:0 12px 28px rgba(0,0,0,.22)!important}
+.tools input,.tools select{transition:border-color .22s,box-shadow .22s,background .22s!important}
+.tools input:hover,.tools select:hover{border-color:rgba(201,183,132,.52)!important;background:rgba(30,31,33,.64)!important}
+.tools input:focus,.tools select:focus{border-color:rgba(201,183,132,.72)!important;box-shadow:0 0 0 3px rgba(201,183,132,.12)!important;outline:none!important}
+#clearDealerFilters{transition:transform .25s var(--ease),border-color .25s,color .25s,background .25s,box-shadow .25s!important}
+#clearDealerFilters:hover,#clearDealerFilters:focus-visible{transform:translateY(-2px)!important;background:rgba(255,255,255,.09)!important;border-color:rgba(201,183,132,.62)!important;color:#fff!important;box-shadow:0 8px 22px rgba(0,0,0,.2)!important;outline:none}
+a,button,.dealer,.back{ -webkit-tap-highlight-color:transparent}
+@media(max-width:520px){.headin{gap:10px!important}.head .brand{font-size:13px!important;letter-spacing:.09em!important}.head .back{padding:8px 10px!important;font-size:12px!important}}
+@media(prefers-reduced-motion:reduce){.head .back,.head .brand,.dealer,.stat,.state,.tools input,.tools select,#clearDealerFilters{transition:none!important}}
+</style>
 <style id="site-wide-mobile-glass-status-area">
 /* Consistent mobile glass treatment for the system safe-area/status region across public pages. */
 @media(max-width:800px){
