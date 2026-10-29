@@ -380,5 +380,20 @@ document.addEventListener('click', function(event) {
 }
 </style>
 
+
+
+<style id="site-wide-mobile-full-screen-scroll">
+/* Site-wide mobile screen-by-screen scrolling. Preserve natural scrolling for long pages and forms. */
+@media(max-width:760px){
+  html{scroll-behavior:smooth!important;scroll-snap-type:y proximity!important;scroll-padding-top:74px!important;overscroll-behavior-y:contain}
+  body{min-height:100%;overflow-x:hidden!important;overflow-y:auto!important}
+  main>section,main section[id],body>section,section.page-section,section.content-section{
+    scroll-snap-align:start!important;scroll-snap-stop:normal!important;scroll-margin-top:74px!important;box-sizing:border-box!important
+  }
+  @supports not (height:100svh){main>section,main section[id],body>section,section.page-section,section.content-section{scroll-margin-top:74px!important}}
+}
+@media(max-width:760px) and (prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}
+</style>
+
 </body>
 </html>
