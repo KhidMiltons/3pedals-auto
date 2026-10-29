@@ -395,5 +395,25 @@ document.addEventListener('click', function(event) {
 @media(max-width:760px) and (prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}
 </style>
 
+<style id="site-wide-mobile-glass-status-area">
+/* Transparent mobile status/safe-area and header edge; keep the page wallpaper visible while scrolling. */
+@media(max-width:800px){
+  html{background:transparent!important}
+  body{padding-top:0!important}
+  body>header,header.site-header,.site-header,header{
+    padding-top:env(safe-area-inset-top,0px)!important;
+    background:transparent!important;
+    border-top:0!important;
+    border-bottom:0!important;
+    box-shadow:none!important;
+    -webkit-backdrop-filter:blur(18px) saturate(120%)!important;
+    backdrop-filter:blur(18px) saturate(120%)!important;
+  }
+  @supports(padding:constant(safe-area-inset-top)){
+    body>header,header.site-header,.site-header,header{padding-top:constant(safe-area-inset-top)!important}
+  }
+}
+</style>
+
 </body>
 </html>
