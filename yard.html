@@ -388,6 +388,35 @@ main.wrap>.hero{margin-top:8px!important}
  main.wrap>.hero{margin-top:6px!important}
 }
 </style>
+
+<style id="yard-header-brand-refinement">
+header.head .logo{
+  display:inline-flex!important;
+  align-items:center!important;
+  font-family:'Playfair Display',Georgia,serif!important;
+  font-size:clamp(25px,2.2vw,32px)!important;
+  font-weight:700!important;
+  line-height:1.12!important;
+  letter-spacing:.035em!important;
+  text-transform:none!important;
+  color:rgba(255,255,255,.97)!important;
+  text-shadow:0 2px 16px rgba(0,0,0,.28)!important;
+  padding:5px 0!important;
+  white-space:nowrap!important;
+  transition:opacity .2s ease!important;
+}
+header.head .logo:hover{opacity:.84!important}
+@media(max-width:600px){
+  header.head .headin{gap:10px!important}
+  header.head .logo{font-size:clamp(19px,5vw,25px)!important;letter-spacing:.015em!important}
+}
+@media(max-width:380px){
+  header.head .logo{font-size:18px!important}
+  header.head .headnav{gap:4px!important}
+  header.head .back{padding:7px 8px!important;font-size:11px!important}
+}
+</style>
+
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
