@@ -462,9 +462,13 @@ body::before{
 
 
 <style id="fleet-restore-and-blur-wallpaper">
-/* Keep the shared automotive wallpaper visible behind a blurred layer; Fleet content and car photos stay sharp. */
+/* Visible, fixed automotive wallpaper with blur confined to the background layer. */
 html{background:#0d0d0d!important}
-body{background:transparent!important;position:relative!important}
+body{
+  background:transparent!important;
+  position:relative!important;
+  isolation:isolate!important;
+}
 body::before{
   content:""!important;
   position:fixed!important;
@@ -472,12 +476,13 @@ body::before{
   z-index:-1!important;
   pointer-events:none!important;
   background:
-    linear-gradient(180deg,rgba(5,6,8,.60),rgba(5,6,8,.74)),
+    linear-gradient(180deg,rgba(5,6,8,.52),rgba(5,6,8,.68)),
     url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=2400&q=85")
     center center/cover no-repeat!important;
   filter:blur(7px)!important;
   transform:scale(1.035)!important;
 }
+/* Keep the root transparent so the fixed image layer is not covered by a solid page background. */
 </style>
 
 </head>
