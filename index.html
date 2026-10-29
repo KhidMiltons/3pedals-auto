@@ -3560,5 +3560,30 @@ input::placeholder,textarea::placeholder{color:rgba(255,255,255,.68)!important}
 })();
 </script>
 
+
+<style id="home-lighter-glass">
+/* Keep the automotive wallpaper visible on Home; reduce only the Home cards' glass blur. */
+#home .hero,
+#home .tile,
+#home .tiles .tile,
+#home .showroom-vehicle-note,
+#home .auto-quote-rail,
+#home .journal-intro,
+#home .project-intro{
+  background-color:rgba(20,22,25,.30)!important;
+  -webkit-backdrop-filter:blur(8px) saturate(118%)!important;
+  backdrop-filter:blur(8px) saturate(118%)!important;
+}
+#home .tile,
+#home .tiles .tile,
+#home .showroom-vehicle-note,
+#home .auto-quote-rail,
+#home .journal-intro,
+#home .project-intro{
+  border-color:rgba(255,255,255,.20)!important;
+  box-shadow:0 12px 30px rgba(0,0,0,.16),inset 0 1px 0 rgba(255,255,255,.12)!important;
+}
+</style>
+
 </body>
 </html>
