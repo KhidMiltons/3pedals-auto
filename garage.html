@@ -1547,5 +1547,36 @@ header nav button,header nav a.navlink{
 }
 </style>
 
+
+<style id="garage-mobile-full-screen-scroll">
+/* Mobile full-screen vertical section scrolling, while allowing long sections to remain fully readable. */
+@media(max-width:760px){
+  html{
+    scroll-behavior:smooth!important;
+    scroll-snap-type:y proximity!important;
+    scroll-padding-top:74px!important;
+    overscroll-behavior-y:contain;
+  }
+  body{min-height:100%;overflow-x:hidden!important;overflow-y:auto!important}
+  body>header{scroll-snap-align:start!important;scroll-snap-stop:normal!important}
+  main.wrap>section{
+    min-height:calc(100svh - 74px)!important;
+    scroll-snap-align:start!important;
+    scroll-snap-stop:normal!important;
+    scroll-margin-top:74px!important;
+    box-sizing:border-box!important;
+    padding-bottom:max(20px,env(safe-area-inset-bottom,0px))!important;
+  }
+  @supports not (height:100svh){
+    main.wrap>section{min-height:calc(100vh - 74px)!important}
+  }
+  /* Keep content-driven sections scrollable rather than clipping tall booking forms. */
+  main.wrap>section>*{max-width:100%}
+}
+@media(max-width:760px) and (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto!important}
+}
+</style>
+
 </body>
 </html>
