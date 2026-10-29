@@ -404,6 +404,42 @@ main.wrap > .hero p{font-size:13px!important;line-height:1.5!important;max-width
 }
 </style>
 
+
+<style id="inventory-background-soft-focus-and-search-hover">
+/* Soften the page wallpaper behind the inventory content without blurring cards or vehicle photos. */
+body::before{
+  filter:blur(4px)!important;
+  transform:scale(1.015);
+}
+/* Smooth, visible hover/focus feedback for inventory search and filter controls. */
+.filters input,.filters select{
+  transition:background-color .2s ease,border-color .2s ease,box-shadow .2s ease,transform .2s ease!important;
+}
+.filters input:hover,.filters select:hover{
+  border-color:rgba(183,160,106,.8)!important;
+  background-color:rgba(255,255,255,.13)!important;
+  box-shadow:0 5px 16px rgba(0,0,0,.10),inset 0 1px 0 rgba(255,255,255,.12)!important;
+  transform:translateY(-1px);
+}
+.filters input:focus-visible,.filters select:focus-visible{
+  outline:2px solid rgba(183,160,106,.72)!important;
+  outline-offset:2px!important;
+  border-color:rgba(183,160,106,.95)!important;
+  background-color:rgba(255,255,255,.16)!important;
+  box-shadow:0 0 0 4px rgba(183,160,106,.16),0 8px 20px rgba(0,0,0,.12)!important;
+}
+@media(prefers-color-scheme:dark){
+  .filters input:hover,.filters select:hover{background-color:rgba(255,255,255,.10)!important}
+  .filters input:focus-visible,.filters select:focus-visible{background-color:rgba(255,255,255,.12)!important}
+}
+@media(hover:none){
+  .filters input:hover,.filters select:hover{transform:none;box-shadow:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .filters input,.filters select{transition:none!important}
+}
+</style>
+
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
