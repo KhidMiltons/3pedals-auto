@@ -417,6 +417,60 @@ header.head .logo:hover{opacity:.84!important}
 }
 </style>
 
+
+<style id="yard-inventory-compact-inline-controls">
+.yard-inventory-tools{
+  display:grid!important;
+  grid-template-columns:minmax(180px,1.5fr) minmax(120px,.85fr) minmax(145px,1fr) auto!important;
+  align-items:center!important;
+  gap:8px!important;
+  width:100%!important;
+  box-sizing:border-box!important;
+  margin:0 0 14px!important;
+}
+.yard-inventory-tools input,
+.yard-inventory-tools select{
+  height:40px!important;
+  min-height:40px!important;
+  box-sizing:border-box!important;
+  padding:8px 11px!important;
+  border-radius:11px!important;
+  font-size:13px!important;
+  line-height:1.2!important;
+  background:rgba(255,255,255,.075)!important;
+  color:rgba(255,255,255,.94)!important;
+  border:1px solid rgba(255,255,255,.17)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05)!important;
+  -webkit-backdrop-filter:blur(14px) saturate(130%)!important;
+  backdrop-filter:blur(14px) saturate(130%)!important;
+}
+.yard-inventory-tools input::placeholder{color:rgba(255,255,255,.58)!important}
+.yard-inventory-tools select option{background:#202226!important;color:#fff!important}
+.yard-inventory-tools .btn{
+  height:40px!important;
+  min-height:40px!important;
+  padding:8px 13px!important;
+  border-radius:11px!important;
+  font-size:12px!important;
+  white-space:nowrap!important;
+}
+@media(max-width:760px){
+ .yard-inventory-tools{
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  gap:8px!important;
+ }
+ .yard-inventory-tools input{grid-column:auto!important}
+ .yard-inventory-tools input,
+ .yard-inventory-tools select,
+ .yard-inventory-tools .btn{width:100%!important;min-width:0!important}
+}
+@media(max-width:390px){
+ .yard-inventory-tools input,
+ .yard-inventory-tools select{font-size:12px!important;padding:7px 8px!important}
+ .yard-inventory-tools .btn{padding:7px 8px!important}
+}
+</style>
+
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
