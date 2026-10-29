@@ -1398,5 +1398,81 @@ header nav button,header nav a.navlink{
 }
 </style>
 
+
+<style id="garage-mobile-header-match-home-final">
+/* Match the Home page's mobile header layout and frosted navigation panel. */
+@media(max-width:760px){
+  header{
+    position:sticky!important;top:0!important;z-index:1000!important;
+    margin:0 0 12px!important;
+    background:rgba(15,17,20,.22)!important;
+    border-bottom:1px solid rgba(255,255,255,.14)!important;
+    box-shadow:0 10px 30px rgba(0,0,0,.16)!important;
+    -webkit-backdrop-filter:blur(26px) saturate(145%)!important;
+    backdrop-filter:blur(26px) saturate(145%)!important;
+  }
+  header .wrap{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) 40px 40px!important;
+    grid-template-areas:"brand account menu"!important;
+    align-items:center!important;
+    gap:10px!important;
+    min-height:62px!important;
+    padding:8px 12px!important;
+    position:relative!important;
+  }
+  header .logo{
+    grid-area:brand!important;
+    max-width:100%!important;min-width:0!important;
+    overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important;
+    font-size:clamp(20px,5.6vw,25px)!important;
+    letter-spacing:.025em!important;line-height:1.15!important;
+  }
+  header .account-pill{
+    grid-area:account!important;display:flex!important;align-items:center!important;justify-content:center!important;
+    width:40px!important;min-width:40px!important;margin:0!important;padding:0!important;
+  }
+  header #accountOpen,.garage-nav-toggle{
+    display:inline-flex!important;align-items:center!important;justify-content:center!important;
+    width:40px!important;height:40px!important;min-width:40px!important;flex:0 0 40px!important;
+    margin:0!important;padding:0!important;border-radius:12px!important;
+    color:#f3f0e8!important;background:rgba(255,255,255,.07)!important;
+    border:1px solid rgba(255,255,255,.20)!important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.10)!important;
+    -webkit-backdrop-filter:blur(16px) saturate(140%)!important;backdrop-filter:blur(16px) saturate(140%)!important;
+  }
+  header #accountOpen svg,.garage-nav-toggle svg{width:20px!important;height:20px!important}
+  header nav#garageSectionNav{
+    display:none!important;position:absolute!important;top:calc(100% + 8px)!important;
+    left:12px!important;right:12px!important;width:auto!important;max-width:none!important;
+    max-height:min(72dvh,440px)!important;overflow-y:auto!important;overflow-x:hidden!important;
+    grid-column:1/-1!important;grid-row:2!important;
+    margin:0!important;padding:14px!important;gap:8px!important;
+    flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;flex-wrap:nowrap!important;
+    background:rgba(16,18,21,.82)!important;border:1px solid rgba(255,255,255,.22)!important;
+    border-radius:18px!important;box-shadow:0 18px 42px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.08)!important;
+    -webkit-backdrop-filter:blur(24px) saturate(140%)!important;backdrop-filter:blur(24px) saturate(140%)!important;
+    z-index:1001!important;
+  }
+  header nav#garageSectionNav.is-open{display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}
+  header nav#garageSectionNav button,header nav#garageSectionNav a.navlink{
+    display:flex!important;align-items:center!important;justify-content:flex-start!important;
+    width:100%!important;min-height:42px!important;box-sizing:border-box!important;flex:0 0 auto!important;
+    padding:12px 14px!important;border:1px solid transparent!important;border-radius:11px!important;
+    font-size:13px!important;line-height:1.25!important;text-align:left!important;text-decoration:none!important;
+    color:#f3f0e8!important;background:rgba(255,255,255,.035)!important;white-space:normal!important;
+  }
+  header nav#garageSectionNav button[aria-selected="true"]{
+    color:#fff!important;background:rgba(255,255,255,.11)!important;border-color:rgba(255,255,255,.10)!important;
+  }
+}
+@media(max-width:380px){
+  header .wrap{grid-template-columns:minmax(0,1fr) 36px 36px!important;gap:7px!important;padding-left:10px!important;padding-right:10px!important}
+  header .account-pill,header #accountOpen,.garage-nav-toggle{width:36px!important;min-width:36px!important;height:36px!important;flex-basis:36px!important}
+  header .logo{font-size:20px!important}
+  header nav#garageSectionNav{left:10px!important;right:10px!important}
+}
+</style>
+
 </body>
 </html>
