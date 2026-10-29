@@ -864,6 +864,36 @@ main section,main article,main .section,.garage .tile,.garage .card,.garage .pan
 }
 .garage-hero{background-color:rgba(24,25,27,.16)!important}
 body:before{filter:blur(2px)!important}
+
+<style id="garage-compact-home-hero">
+/* Make the opening Garage message a compact standalone card. */
+#home>.garage-hero{
+  box-sizing:border-box!important;
+  width:min(100%,900px)!important;
+  margin:22px auto 24px!important;
+  padding:clamp(20px,3vw,30px)!important;
+  border:0!important;
+  border-radius:20px!important;
+  min-height:0!important;
+}
+#home>.garage-hero h1{
+  max-width:18em!important;
+  margin:0 0 10px!important;
+  font-size:clamp(27px,3.2vw,42px)!important;
+  line-height:1.12!important;
+}
+#home>.garage-hero p{
+  max-width:58ch!important;
+  margin:0!important;
+  font-size:clamp(14px,1.25vw,16px)!important;
+  line-height:1.55!important;
+}
+#home>.garage-hero>div{margin-top:14px!important}
+@media(max-width:760px){
+  #home>.garage-hero{width:100%!important;margin:16px auto 20px!important;padding:20px!important}
+  #home>.garage-hero h1{font-size:clamp(25px,7vw,34px)!important}
+}
+</style>
 </style>
 </body>
 </html>
