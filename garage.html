@@ -1474,5 +1474,78 @@ header nav button,header nav a.navlink{
 }
 </style>
 
+
+<style id="garage-mobile-home-header-exact-fix">
+@media(max-width:760px){
+  body>header{position:sticky!important;top:0!important;z-index:1000!important}
+  body>header>.wrap{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) 40px 40px!important;
+    grid-template-rows:auto!important;
+    grid-template-areas:none!important;
+    align-items:center!important;
+    justify-content:initial!important;
+    gap:10px!important;
+    min-height:62px!important;
+    padding:8px 12px!important;
+    position:relative!important;
+  }
+  body>header>.wrap>.logo{grid-column:1!important;grid-row:1!important;min-width:0!important;max-width:100%!important}
+  /* Explicit columns ensure the account button sits immediately BEFORE the hamburger. */
+  body>header>.wrap>.account-pill{
+    grid-column:2!important;grid-row:1!important;justify-self:end!important;
+    display:flex!important;align-items:center!important;justify-content:center!important;
+    width:40px!important;min-width:40px!important;margin:0!important;padding:0!important;
+  }
+  body>header>.wrap>#garageNavToggle{
+    grid-column:3!important;grid-row:1!important;justify-self:end!important;
+    display:inline-flex!important;visibility:visible!important;opacity:1!important;
+    width:40px!important;height:40px!important;min-width:40px!important;flex:0 0 40px!important;
+    margin:0!important;padding:0!important;
+  }
+  body>header #accountOpen,body>header #garageNavToggle{
+    box-sizing:border-box!important;border-radius:12px!important;
+    color:#f3f0e8!important;background:rgba(255,255,255,.07)!important;
+    border:1px solid rgba(255,255,255,.20)!important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.10)!important;
+    -webkit-backdrop-filter:blur(16px) saturate(140%)!important;
+    backdrop-filter:blur(16px) saturate(140%)!important;
+  }
+  body>header #accountOpen{width:40px!important;height:40px!important;min-width:40px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important}
+  body>header #accountOpen svg{width:20px!important;height:20px!important;stroke:currentColor!important;stroke-width:1.7!important}
+  body>header #garageNavToggle svg{width:20px!important;height:20px!important}
+  body>header>.wrap>nav#garageSectionNav{
+    display:none!important;position:absolute!important;top:calc(100% + 8px)!important;
+    left:12px!important;right:12px!important;bottom:auto!important;
+    width:auto!important;max-width:none!important;max-height:min(72dvh,440px)!important;
+    overflow-y:auto!important;overflow-x:hidden!important;z-index:1001!important;
+    margin:0!important;padding:14px!important;gap:8px!important;
+    flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;flex-wrap:nowrap!important;
+    background:rgba(16,18,21,.94)!important;
+    border:1px solid rgba(255,255,255,.22)!important;border-radius:18px!important;
+    box-shadow:0 18px 42px rgba(0,0,0,.38)!important;
+    -webkit-backdrop-filter:blur(24px) saturate(140%)!important;
+    backdrop-filter:blur(24px) saturate(140%)!important;
+  }
+  body>header>.wrap>nav#garageSectionNav.is-open{
+    display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;
+  }
+  body>header>.wrap>nav#garageSectionNav button,
+  body>header>.wrap>nav#garageSectionNav a.navlink{
+    display:flex!important;visibility:visible!important;opacity:1!important;
+    flex:0 0 auto!important;width:100%!important;min-height:42px!important;
+    box-sizing:border-box!important;text-align:left!important;justify-content:flex-start!important;align-items:center!important;
+    padding:12px 14px!important;border-radius:11px!important;font-size:13px!important;line-height:1.25!important;
+    color:#f3f0e8!important;background:rgba(255,255,255,.035)!important;
+    border:1px solid transparent!important;text-decoration:none!important;
+  }
+}
+@media(max-width:380px){
+  body>header>.wrap{grid-template-columns:minmax(0,1fr) 36px 36px!important;gap:7px!important;padding-left:10px!important;padding-right:10px!important}
+  body>header>.wrap>.account-pill,body>header #accountOpen,body>header #garageNavToggle{width:36px!important;min-width:36px!important;height:36px!important;flex-basis:36px!important}
+  body>header>.wrap>nav#garageSectionNav{left:10px!important;right:10px!important}
+}
+</style>
+
 </body>
 </html>
