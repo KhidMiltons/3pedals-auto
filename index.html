@@ -1231,6 +1231,35 @@ fbq('track', 'PageView');
 <!-- End Meta Pixel Code -->
 
 <link rel="stylesheet" href="/dashboard-glass.css?v=4">
+
+<style id="about-glass-redesign">
+/* About page: text-led content only; the site's existing blurred automotive wallpaper remains visible. */
+#about.about-page{padding:clamp(22px,4vw,48px) 0 36px;color:var(--ink)}
+#about .about-intro{max-width:850px;margin:0 auto 28px;text-align:center}
+#about .about-intro .eyebrow{letter-spacing:.22em;font-size:11px;font-weight:700;opacity:.8}
+#about .about-intro h1{font-size:clamp(34px,5vw,62px);line-height:1.05;letter-spacing:-.035em;margin:15px auto;max-width:850px}
+#about .about-intro h1 span{display:inline-block}
+#about .about-intro>p{max-width:660px;margin:0 auto;color:var(--muted);font-size:clamp(15px,1.5vw,18px);line-height:1.75}
+#about .about-story-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:18px;align-items:stretch}
+#about .about-glass-card,#about .about-value-card{min-width:0;border:1px solid rgba(255,255,255,.17);border-radius:20px;background:rgba(18,23,30,.36);-webkit-backdrop-filter:blur(24px) saturate(125%);backdrop-filter:blur(24px) saturate(125%);box-shadow:0 18px 46px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.07)}
+#about .about-glass-card{padding:clamp(22px,3vw,38px)}
+#about .about-overline,#about .about-value-number{font-size:10px;letter-spacing:.19em;font-weight:700;color:var(--muted)}
+#about .about-glass-card h2{font-size:clamp(23px,2.5vw,32px);line-height:1.2;margin:12px 0 16px;letter-spacing:-.02em}
+#about .about-glass-card>p{font-size:15px;line-height:1.8;color:var(--muted);margin:0 0 14px}
+#about .about-glass-card>p:last-child{margin-bottom:0}
+#about .about-principle{display:grid;grid-template-columns:38px 1fr;gap:13px;padding:15px 0;border-top:1px solid rgba(255,255,255,.12)}
+#about .about-principle-mark{font-size:11px;letter-spacing:.08em;color:var(--muted);padding-top:3px}
+#about .about-principle h3,#about .about-value-card h3{font-size:16px;line-height:1.35;margin:0 0 5px}
+#about .about-principle p,#about .about-value-card p{font-size:13px;line-height:1.7;color:var(--muted);margin:0}
+#about .about-values{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:18px}
+#about .about-value-card{padding:22px 24px}
+#about .about-value-card h3{font-size:17px;margin:12px 0 7px}
+#about .about-signoff{margin:28px auto 0;text-align:center;max-width:620px}
+#about .about-signoff span{font-size:10px;letter-spacing:.25em;font-weight:700;color:var(--muted)}
+#about .about-signoff p{font-size:14px;line-height:1.7;margin:8px 0 0;color:var(--muted)}
+@media(max-width:760px){#about.about-page{padding-top:18px}#about .about-intro{text-align:left;margin-bottom:20px}#about .about-intro>p{margin-left:0}#about .about-story-grid,#about .about-values{grid-template-columns:1fr}#about .about-glass-card{padding:22px}#about .about-values{gap:10px}#about .about-value-card{padding:18px 20px}#about .about-signoff{text-align:left}}
+</style>
+
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
@@ -1371,7 +1400,34 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div id="journalGrid" class="journal-grid"><div class="project-public-empty"><h3>Loading the latest stories…</h3><p class="meta">Published articles will appear here.</p></div></div>
 </section>
 
-<section id="about" hidden><div class="hero"><span class="eyebrow">ABOUT US</span><h1 id="aboutTitle">3 Pedals Auto KE</h1><p id="aboutIntro">We bring vehicle sales, honest advice and professional garage services together under one automotive brand.</p></div><div class="cols"><div class="panel"><h2 id="aboutWhatTitle">What we do</h2><p id="aboutWhatBody">We help clients buy and sell vehicles while giving them access to servicing, repairs and pre-purchase inspections through 3 Pedals Garage.</p><p class="meta" id="aboutFocusBody">Our focus is straightforward communication, careful vehicle checks and a professional experience from enquiry to ownership.</p></div><div class="panel"><h2 id="aboutApproachTitle">Our approach</h2><div class="svc"><div><b id="aboutTransparentTitle">Transparent</b><span class="meta" id="aboutTransparentBody">Clear information before you decide.</span></div></div><div class="svc"><div><b id="aboutPracticalTitle">Practical</b><span class="meta" id="aboutPracticalBody">Advice based on the actual vehicle and your needs.</span></div></div><div class="svc"><div><b id="aboutConnectedTitle">Connected</b><span class="meta" id="aboutConnectedBody">Sales and garage support in one place.</span></div></div></div></div></section>
+<section id="about" class="about-page" hidden>
+  <div class="about-intro">
+    <span class="eyebrow">ABOUT 3 PEDALS AUTO KE</span>
+    <h1 id="aboutTitle">A better way to experience <span>motoring.</span></h1>
+    <p id="aboutIntro">We connect people with the right vehicles through clear information, thoughtful guidance and a genuine appreciation for the drive.</p>
+  </div>
+  <div class="about-story-grid">
+    <article class="about-glass-card about-story-card">
+      <span class="about-overline">WHO WE ARE</span>
+      <h2>Built around the love of cars.</h2>
+      <p>3 Pedals Auto KE is an automotive platform for drivers, buyers and sellers who value quality, confidence and service. We bring vehicle discovery and sales together with the practical expertise of 3 Pedals Garage, helping make the journey from first enquiry to ownership feel more straightforward.</p>
+      <p>From everyday transport to vehicles chosen for their character and performance, we believe the right car should fit your needs, your plans and the way you love to drive.</p>
+    </article>
+    <article class="about-glass-card about-approach-card">
+      <span class="about-overline">HOW WE WORK</span>
+      <h2>Confidence at every step.</h2>
+      <div class="about-principle"><span class="about-principle-mark">01</span><div><h3>Clear information</h3><p>We encourage open communication so you can ask questions and make informed decisions.</p></div></div>
+      <div class="about-principle"><span class="about-principle-mark">02</span><div><h3>Practical expertise</h3><p>Vehicle needs are different. Our sales and garage services help you consider the details that matter.</p></div></div>
+      <div class="about-principle"><span class="about-principle-mark">03</span><div><h3>People first</h3><p>We aim to make every interaction respectful, responsive and focused on your needs.</p></div></div>
+    </article>
+  </div>
+  <div class="about-values" aria-label="What guides us">
+    <article class="about-value-card"><span class="about-value-number">01 / QUALITY</span><h3>Choose with care</h3><p>Look beyond the badge and focus on condition, suitability and value.</p></article>
+    <article class="about-value-card"><span class="about-value-number">02 / TRUST</span><h3>Honest conversations</h3><p>Useful answers and clear expectations help build better automotive decisions.</p></article>
+    <article class="about-value-card"><span class="about-value-number">03 / SERVICE</span><h3>Support that continues</h3><p>Explore vehicle sales alongside servicing, repairs and inspection support through 3 Pedals Garage.</p></article>
+  </div>
+  <div class="about-signoff"><span>3 PEDALS AUTO KE</span><p>Automotive excellence reimagined, for those who appreciate the drive.</p></div>
+</section>
 
 <section id="contact" hidden><div class="hero"><span class="eyebrow">CONTACT US</span><h1>Let’s talk about your car.</h1><p>Choose the channel that works best for you. For the fastest response, message us on WhatsApp.</p></div><div class="contact-grid"><a class="contact-card" id="publicWhatsapp" href="https://wa.me/254750495841" target="_blank" rel="noopener"><span>💬 WHATSAPP</span><strong>Message us</strong><small>Fastest way to reach us</small></a><a class="contact-card" id="publicEmailLink" href="mailto:3pedalsautoke@gmail.com"><span>✉️ EMAIL</span><strong id="publicEmail">3pedalsautoke@gmail.com</strong><small>Appointments and enquiries</small></a><div class="contact-card"><span>📍 ADDRESS</span><strong id="publicAddress">P.O. Box 462-00516</strong><small>3 Pedals Auto KE</small></div><a class="contact-card social-card" id="publicInstagram" href="https://instagram.com/3pedalsauto" target="_blank" rel="noopener"><span>📸 INSTAGRAM</span><strong>Instagram</strong><small>Open Instagram</small></a><a class="contact-card social-card" id="publicFacebook" href="https://facebook.com/3pedalsauto" target="_blank" rel="noopener"><span>📘 FACEBOOK</span><strong>Facebook</strong><small>Open Facebook</small></a><a class="contact-card social-card" id="publicTwitter" href="https://twitter.com/3pedalsauto" target="_blank" rel="noopener"><span>🐦 X / TWITTER</span><strong>X / Twitter</strong><small>Open X / Twitter</small></a><a class="contact-card social-card" id="publicTiktok" href="https://tiktok.com/@3pedalsauto" target="_blank" rel="noopener"><span>🎵 TIKTOK</span><strong>@3pedalsauto</strong><small>Open TikTok</small></a></div></section>
 
