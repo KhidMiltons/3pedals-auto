@@ -199,7 +199,7 @@ async function init(){
  const businessSchema={'@context':'https://schema.org','@type':'AutoDealer',name,url:canonicalUrl.toString(),description:seoDescription,...(phone?{telephone:phone}:{}),...(email?{email}:{}),...(loc?{address:{'@type':'PostalAddress',streetAddress:loc,addressCountry:'KE'}}:{})};
  structured.textContent=JSON.stringify(businessSchema);
  document.getElementById('title').textContent=name;document.getElementById('yardName').textContent=name;
- if(first.yard_logo_url||first.seller_logo_url)document.querySelector('.yardmark').innerHTML=`<img src="${esc(first.yard_logo_url||first.seller_logo_url)}" alt="${esc(name)} logo">`;
+ // Keep dealer branding as a compact text/icon mark; do not inject a photo inside the profile card.
  document.getElementById('contacts').innerHTML=[contact?`<div class="detail">Contact: <strong>${esc(contact)}</strong></div>`:'',loc?`<div class="detail">📍 <strong>${esc(loc)}</strong></div>`:'',phone?`<div class="detail">📞 <a href="tel:${esc(phone.replace(/\D/g,''))}">${esc(phone)}</a></div>`:'',email?`<div class="detail">✉️ <a href="mailto:${esc(email)}">${esc(email)}</a></div>`:'',web?`<div class="detail">🌐 <a href="${esc(/^https?:\/\//i.test(web)?web:'https://'+web)}" target="_blank" rel="noopener">${esc(web)}</a></div>`:''].join('');
  const wa=(first.whatsapp||phone||'').replace(/\D/g,'');document.getElementById('actions').innerHTML=[phone?`<a class="btn primary" href="tel:${esc(phone.replace(/\D/g,''))}">📞 Call yard</a>`:'',wa?`<a class="btn gold" href="https://wa.me/${esc(wa)}?text=${encodeURIComponent('Hello '+name+', I found your vehicles on 3 Pedals Auto KE and would like to enquire.') }" target="_blank" rel="noopener">💬 WhatsApp yard</a>`:'',loc?`<a class="btn" href="${esc(mapUrl(loc))}" target="_blank" rel="noopener">📍 Get directions</a>`:'',web?`<a class="btn" href="${esc(/^https?:\/\//i.test(web)?web:'https://'+web)}" target="_blank" rel="noopener">🌐 Visit website</a>`:'',`<button class="btn" type="button" id="shareYardProfile">↗ Share this yard</button>`].join('');
  document.getElementById('shareYardProfile').addEventListener('click',async()=>{const shareData={title:name+' | 3 Pedals Auto KE',text:'Explore available vehicles from '+name+' on 3 Pedals Auto KE.',url:window.location.href};try{if(navigator.share){await navigator.share(shareData)}else if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(shareData.url);alert('Dealer profile link copied.')}else{window.prompt('Copy this dealer profile link:',shareData.url)}}catch(error){if(error&&error.name!=='AbortError')window.prompt('Copy this dealer profile link:',shareData.url)}});
@@ -312,3 +312,37 @@ body>header,header.site-header,.site-header,header{
 
 </body>
 </html>
+
+
+<style id="yard-profile-compact-no-photo-blurred-wallpaper">
+/* Dealer profile: no logo photo inside the name card; compact text-first glass details. */
+#profile .yardmark img{display:none!important}
+#profile .yardmark{
+ width:46px!important;height:46px!important;flex:0 0 46px!important;
+ margin:0 12px 8px 0!important;border-radius:13px!important;
+ font-size:22px!important;box-shadow:none!important;
+ background:rgba(255,255,255,.055)!important;
+ border:1px solid rgba(255,255,255,.16)!important;
+}
+#profile .details{min-height:0!important;padding:16px!important}
+#profile .details h2{font-size:clamp(22px,2.8vw,28px)!important;line-height:1.16!important;padding-top:2px!important;margin-bottom:5px!important}
+#profile .yard-contact-title,#profile .yard-actions-title{margin-top:12px!important;margin-bottom:7px!important}
+#profile .detail{padding:8px 10px!important;margin:6px 0!important}
+#profile .actions{gap:7px!important;margin-top:8px!important}
+#profile .actions .btn{padding:9px 11px!important;flex-basis:130px!important}
+@media(max-width:600px){
+ #profile .details{padding:14px!important}
+ #profile .yardmark{width:40px!important;height:40px!important;flex-basis:40px!important;margin-right:10px!important;font-size:19px!important}
+ #profile .details h2{font-size:22px!important}
+ #profile .yard-contact-title,#profile .yard-actions-title{font-size:10px!important;margin-top:10px!important}
+ #profile .actions .btn{padding:9px 10px!important;flex-basis:120px!important}
+}
+/* Blur the page wallpaper behind the profile while leaving cards and text sharp. */
+html,body{background:transparent!important}
+body{position:relative!important;isolation:isolate!important;background-image:none!important;background-color:#090a0c!important}
+body:before{
+ content:""!important;display:block!important;position:fixed!important;inset:-12px!important;z-index:-1!important;pointer-events:none!important;
+ background:linear-gradient(180deg,rgba(5,6,8,.70),rgba(5,6,8,.82)),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=2400&q=85") center/cover no-repeat!important;
+ filter:blur(7px)!important;transform:scale(1.035)!important;
+}
+</style>
