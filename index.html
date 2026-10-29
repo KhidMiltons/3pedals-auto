@@ -3678,3 +3678,29 @@ body>header,header.site-header,.site-header,header{
 
 </body>
 </html>
+
+
+<style id="mobile-expanded-menu-card-compact">
+/* Compact the expanded mobile navigation card while preserving its glass appearance. */
+@media(max-width:600px){
+  body>header #nav,
+  body>header #nav.is-open,
+  body>header #nav.mobile-menu-open{
+    top:calc(100% + 6px)!important;
+    right:10px!important;left:auto!important;
+    width:min(184px,calc(100vw - 76px))!important;
+    max-width:min(184px,calc(100vw - 76px))!important;
+    max-height:min(60dvh,340px)!important;
+    padding:5px!important;gap:2px!important;
+    border-radius:12px!important;
+  }
+  body>header #nav button,
+  body>header #nav a.navlink{
+    min-height:32px!important;
+    padding:5px 8px!important;
+    font-size:12px!important;line-height:1.2!important;
+    border-radius:8px!important;
+  }
+}
+</style>
+
