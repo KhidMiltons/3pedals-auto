@@ -180,4 +180,23 @@ $("grid").addEventListener("pointermove",e=>{if(e.pointerType!=="mouse")return;c
 ["q","make","max","sort"].forEach(id=>$(id).addEventListener("input",render));
 async function load(){if(!sb||!CFG.key||/^PASTE/.test(CFG.key)){$("count").textContent="Inventory unavailable";$("grid").innerHTML='<div class="error">The inventory database is not connected. Check config.js.</div>';return}const {data,error}=await sb.from("listings").select("*").eq("status","approved").order("created_at",{ascending:false});if(error){$("count").textContent="Inventory unavailable";$("grid").innerHTML='<div class="error">We could not load the inventory right now. Please refresh in a moment.</div>';console.error(error);return}const {data:paidPromotions}=await sb.from("active_listing_promotions").select("listing_id");const promoted=new Set((paidPromotions||[]).map(x=>String(x.listing_id)));cars=(data||[]).map(row=>({...rowToCar(row),promoted:promoted.has(String(row.id))}));const makes=[...new Set(cars.map(c=>c.make).filter(Boolean))].sort();$("make").innerHTML='<option value="">All makes</option>'+makes.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");render()}load().catch(error=>{console.error("Could not load inventory:",error);$("count").textContent="Inventory unavailable";$("grid").innerHTML='<div class="error">We could not load the inventory right now. Please refresh and try again.</div>'});
 </script>
+
+<style id="site-wide-mobile-glass-status-area">
+/* Consistent mobile glass treatment for the system safe-area/status region across public pages. */
+@media(max-width:800px){
+  html{background:transparent!important}
+  body{padding-top:0!important}
+  body>header,header.site-header,.site-header,header{
+    padding-top:env(safe-area-inset-top,0px)!important;
+    background-color:rgba(15,17,20,.18)!important;
+    border-bottom-color:rgba(255,255,255,.14)!important;
+    -webkit-backdrop-filter:blur(26px) saturate(145%)!important;
+    backdrop-filter:blur(26px) saturate(145%)!important;
+  }
+  @supports(padding:constant(safe-area-inset-top)){
+    body>header,header.site-header,.site-header,header{padding-top:constant(safe-area-inset-top)!important}
+  }
+}
+</style>
+
 </body></html>
