@@ -1882,3 +1882,21 @@ body>header,header.site-header,.site-header,header{
  }
 }
 </style>
+
+
+<style id="garage-mobile-dropdown-stronger-glass-opacity">
+/* Garage dropdown links panel only: make the opened menu less transparent and more legible. */
+@media(max-width:800px){
+ html body>header>.wrap>nav#garageSectionNav.is-open,
+ html body>header>.wrap>nav#garageSectionNav[aria-hidden="false"],
+ html body>header>.wrap>nav#garageSectionNav[style*="display: flex"]{
+  background:rgba(18,20,23,.86)!important;
+  background-color:rgba(18,20,23,.86)!important;
+  background-image:none!important;
+  -webkit-backdrop-filter:blur(48px) saturate(180%)!important;
+  backdrop-filter:blur(48px) saturate(180%)!important;
+  border:1px solid rgba(255,255,255,.26)!important;
+  box-shadow:0 18px 44px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.14)!important;
+ }
+}
+</style>
