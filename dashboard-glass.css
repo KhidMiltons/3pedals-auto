@@ -68,3 +68,144 @@ body>header .nav-toggle{grid-area:nav-toggle!important}
  #accDlg .account-dialog-head>#accHomeTop{height:34px!important;min-width:42px!important;padding:0 7px!important;font-size:12px!important}
  body>header .logo{font-size:clamp(18px,5vw,24px)!important;letter-spacing:0!important}
 }
+
+
+/* 2026-10 account dashboard: fixed left rail, separate header actions, light glassmorphism */
+#accDlg{
+  display:grid!important;
+  grid-template-columns:228px minmax(0,1fr)!important;
+  grid-template-rows:minmax(0,1fr)!important;
+  gap:0!important;
+  width:min(1160px,calc(100vw - 28px))!important;
+  max-width:1160px!important;
+  max-height:92dvh!important;
+  overflow:hidden!important;
+  padding:0!important;
+  color:#202833!important;
+  background:rgba(244,248,252,.58)!important;
+  border:1px solid rgba(255,255,255,.72)!important;
+  border-radius:24px!important;
+  box-shadow:0 28px 90px rgba(25,35,50,.22),inset 0 1px rgba(255,255,255,.8)!important;
+  -webkit-backdrop-filter:blur(34px) saturate(155%)!important;
+  backdrop-filter:blur(34px) saturate(155%)!important;
+}
+#accDlg::backdrop{background:rgba(24,32,43,.30)!important;-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px)}
+#accDlg>.in{
+  grid-column:2!important;grid-row:1!important;
+  min-width:0!important;min-height:0!important;max-height:92dvh!important;
+  overflow:auto!important;padding:20px 24px 24px!important;
+  background:rgba(255,255,255,.28)!important;
+  border:0!important;border-radius:0!important;
+}
+#accDlg #accountMenu.dashboard-shortcuts,
+#accDlg nav#accountMenu.dashboard-shortcuts[hidden]{
+  grid-column:1!important;grid-row:1!important;
+  position:relative!important;inset:auto!important;
+  display:flex!important;flex-direction:column!important;align-items:stretch!important;
+  gap:5px!important;width:100%!important;min-width:0!important;max-width:none!important;
+  max-height:92dvh!important;overflow-y:auto!important;overflow-x:hidden!important;
+  margin:0!important;padding:18px 12px!important;
+  border:0!important;border-right:1px solid rgba(255,255,255,.58)!important;
+  border-radius:0!important;
+  background:linear-gradient(160deg,rgba(255,255,255,.56),rgba(232,239,247,.38))!important;
+  box-shadow:inset -1px 0 rgba(255,255,255,.45)!important;
+  -webkit-backdrop-filter:blur(28px) saturate(150%)!important;backdrop-filter:blur(28px) saturate(150%)!important;
+}
+#accDlg .seller-nav-identity{padding:12px 10px 16px!important;margin:0 0 8px!important;border-bottom:1px solid rgba(91,108,128,.16)!important}
+#accDlg .seller-nav-identity small{display:block;color:#718096!important;font-size:10px!important;letter-spacing:.12em!important}
+#accDlg .seller-nav-identity strong{display:block;margin-top:5px!important;color:#202833!important;font-size:17px!important}
+#accDlg .seller-mode-switch{display:grid!important;grid-template-columns:1fr 1fr!important;gap:4px!important;padding:4px!important;margin:0 0 10px!important;border:1px solid rgba(100,116,139,.14)!important;border-radius:12px!important;background:rgba(255,255,255,.38)!important}
+#accDlg .seller-mode-switch button{min-width:0!important;padding:8px 3px!important;text-align:center!important;font-size:11px!important;color:#5b6675!important;border-radius:8px!important}
+#accDlg .seller-mode-switch button.selected{background:rgba(255,255,255,.78)!important;color:#202833!important;box-shadow:0 2px 8px rgba(38,52,70,.08)!important}
+#accDlg .seller-nav-label{padding:12px 10px 5px!important;color:#8994a2!important;font-size:10px!important;letter-spacing:.13em!important;font-weight:800!important}
+#accDlg #accountMenu.dashboard-shortcuts button{
+  display:flex!important;align-items:center!important;gap:8px!important;
+  width:100%!important;min-height:40px!important;flex:0 0 auto!important;
+  padding:10px 11px!important;margin:0!important;text-align:left!important;
+  border:1px solid transparent!important;border-radius:11px!important;
+  background:transparent!important;color:#4b5665!important;
+  font-size:13px!important;font-weight:650!important;line-height:1.25!important;
+  white-space:normal!important;overflow-wrap:anywhere!important;
+  box-shadow:none!important;transform:none!important;
+}
+#accDlg #accountMenu.dashboard-shortcuts button:hover,
+#accDlg #accountMenu.dashboard-shortcuts button.active,
+#accDlg #accountMenu.dashboard-shortcuts button[aria-current="page"]{
+  color:#1f2937!important;
+  background:rgba(255,255,255,.68)!important;
+  border-color:rgba(255,255,255,.86)!important;
+  box-shadow:0 5px 16px rgba(38,52,70,.07),inset 0 1px rgba(255,255,255,.85)!important;
+  transform:translateX(2px)!important;
+}
+#accDlg .account-dialog-head{
+  position:sticky!important;top:0!important;z-index:8!important;
+  display:grid!important;grid-template-columns:40px minmax(0,1fr) 54px 40px!important;
+  grid-template-rows:minmax(40px,auto)!important;gap:10px!important;align-items:center!important;
+  padding:0 0 16px!important;margin:0 0 18px!important;
+  background:rgba(245,248,252,.50)!important;
+  border:0!important;border-bottom:1px solid rgba(100,116,139,.15)!important;
+  -webkit-backdrop-filter:blur(22px) saturate(150%)!important;backdrop-filter:blur(22px) saturate(150%)!important;
+}
+#accDlg .account-dialog-head h2{
+  grid-column:2!important;grid-row:1!important;min-width:0!important;
+  text-align:left!important;font-size:clamp(17px,2vw,24px)!important;line-height:1.2!important;
+  white-space:normal!important;overflow-wrap:anywhere!important;color:#202833!important;
+}
+#accDlg .account-dialog-head>#accMenuToggle{grid-column:1!important;grid-row:1!important}
+#accDlg .account-dialog-head>#accHomeTop{grid-column:3!important;grid-row:1!important;justify-self:stretch!important;min-width:0!important;width:100%!important}
+#accDlg .account-dialog-head>#accCloseTop{grid-column:4!important;grid-row:1!important;justify-self:end!important}
+#accDlg .account-dialog-head>#accMenuToggle,
+#accDlg .account-dialog-head>#accHomeTop,
+#accDlg .account-dialog-head>#accCloseTop{
+  position:relative!important;inset:auto!important;float:none!important;z-index:2!important;
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  width:40px!important;min-width:0!important;height:40px!important;min-height:40px!important;
+  margin:0!important;padding:0!important;box-sizing:border-box!important;
+  border:1px solid rgba(255,255,255,.88)!important;border-radius:13px!important;
+  background:rgba(255,255,255,.48)!important;color:#394556!important;
+  box-shadow:0 4px 14px rgba(45,58,75,.06),inset 0 1px rgba(255,255,255,.9)!important;
+  -webkit-backdrop-filter:blur(16px)!important;backdrop-filter:blur(16px)!important;
+}
+#accDlg .account-dialog-head>#accHomeTop{width:54px!important;font-size:12px!important;font-weight:700!important}
+#accDlg .account-dialog-head>#accCloseTop{font-size:23px!important;line-height:1!important}
+#accDlg .account-dialog-head>#accMenuToggle:hover,
+#accDlg .account-dialog-head>#accHomeTop:hover,
+#accDlg .account-dialog-head>#accCloseTop:hover{background:rgba(255,255,255,.82)!important;border-color:#fff!important;color:#202833!important}
+#accDlg .account-pages,#accDlg .account-page,#accDlg .account-tools,#accDlg .account-settings-inner{min-width:0!important}
+#accDlg .account-settings,#accDlg .dashboard-welcome,#accDlg .profile-card,#accDlg .seller-listing,
+#accDlg .account-page .card,#accDlg .account-tools>.panel,#accDlg .account-tools>section{
+  color:#263241!important;
+  background:linear-gradient(135deg,rgba(255,255,255,.76),rgba(255,255,255,.38))!important;
+  border:1px solid rgba(255,255,255,.78)!important;border-radius:18px!important;
+  box-shadow:0 12px 32px rgba(40,54,72,.07),inset 0 1px rgba(255,255,255,.9)!important;
+  -webkit-backdrop-filter:blur(22px) saturate(150%)!important;backdrop-filter:blur(22px) saturate(150%)!important;
+}
+#accDlg input,#accDlg select,#accDlg textarea{
+  color:#263241!important;background:rgba(255,255,255,.58)!important;
+  border:1px solid rgba(110,125,145,.22)!important;border-radius:11px!important;
+}
+#accDlg .meta,#accDlg .account-page p{color:#657184}
+@media(max-width:700px){
+  #accDlg{grid-template-columns:154px minmax(0,1fr)!important;width:calc(100vw - 12px)!important;max-height:94dvh!important;border-radius:18px!important}
+  #accDlg>.in{padding:12px 12px 18px!important;max-height:94dvh!important}
+  #accDlg #accountMenu.dashboard-shortcuts,#accDlg nav#accountMenu.dashboard-shortcuts[hidden]{max-height:94dvh!important;padding:12px 7px!important}
+  #accDlg #accountMenu.dashboard-shortcuts button{min-height:38px!important;padding:9px 8px!important;font-size:11px!important}
+  #accDlg .seller-nav-identity{padding:8px 6px 12px!important}
+  #accDlg .seller-nav-identity strong{font-size:14px!important}
+  #accDlg .seller-mode-switch button{font-size:10px!important}
+  #accDlg .account-dialog-head{grid-template-columns:34px minmax(0,1fr) 48px 34px!important;gap:5px!important;padding-bottom:12px!important;margin-bottom:12px!important}
+  #accDlg .account-dialog-head h2{font-size:16px!important}
+  #accDlg .account-dialog-head>#accMenuToggle,#accDlg .account-dialog-head>#accCloseTop{width:34px!important;height:36px!important;min-height:36px!important}
+  #accDlg .account-dialog-head>#accHomeTop{width:48px!important;height:36px!important;min-height:36px!important;font-size:11px!important}
+}
+@media(max-width:390px){
+  #accDlg{grid-template-columns:126px minmax(0,1fr)!important}
+  #accDlg>.in{padding:10px 9px 14px!important}
+  #accDlg #accountMenu.dashboard-shortcuts,#accDlg nav#accountMenu.dashboard-shortcuts[hidden]{padding:10px 5px!important}
+  #accDlg #accountMenu.dashboard-shortcuts button{font-size:10px!important;padding:8px 6px!important}
+  #accDlg .account-dialog-head{grid-template-columns:30px minmax(0,1fr) 43px 30px!important;gap:4px!important}
+  #accDlg .account-dialog-head h2{font-size:14px!important}
+  #accDlg .account-dialog-head>#accMenuToggle,#accDlg .account-dialog-head>#accCloseTop{width:30px!important;height:34px!important;min-height:34px!important}
+  #accDlg .account-dialog-head>#accHomeTop{width:43px!important;height:34px!important;min-height:34px!important;font-size:10px!important}
+}
+@media(prefers-reduced-motion:reduce){#accDlg *,#accDlg *::before,#accDlg *::after{transition:none!important;animation:none!important}}
