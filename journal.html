@@ -167,4 +167,23 @@ const ld={"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","head
 function renderIndex(items){document.title='3 Pedals Journal | 3 Pedals Auto KE';document.getElementById('canonicalUrl').href=new URL('journal.html',location.href).href;document.getElementById('article').innerHTML='<span class="eyebrow">3 Pedals Auto KE · Journal</span><h1>Stories for people who love cars.</h1><p class="meta">Public automotive stories, buying advice, ownership notes, and workshop knowledge.</p><div class="journal-list">'+items.map(p=>{const image=mediaFor(p).find(m=>m.is_cover||m.cover)||mediaFor(p)[0],url='journal.html?slug='+encodeURIComponent(storySlug(p.title))+'&id='+encodeURIComponent(p.id);return '<a class="story-card" href="'+esc(url)+'">'+(image?'<img src="'+esc(image.url)+'" alt="'+esc(p.title)+'" loading="lazy">':'')+'<div><span class="eyebrow">'+esc(p.category||'Automotive Journal')+'</span><h2>'+esc(p.title)+'</h2><p>'+esc(p.description||'Read the full story.')+'</p></div></a>'}).join('')+'</div>';meta('meta[name="description"]','Read public automotive stories, buying advice and ownership features from 3 Pedals Auto KE.')}
 async function load(){if(!sb){notFound('Journal is unavailable right now. Please try again later.');return}if(!articleId){const {data,error}=await sb.from('projects').select('*').eq('published',true).eq('type','article').order('created_at',{ascending:false});if(error){console.error(error);notFound('Journal is unavailable right now. Please try again later.');return}renderIndex(data||[]);return}const {data,error}=await sb.from('projects').select('*').eq('id',articleId).eq('published',true).eq('type','article').maybeSingle();if(error){console.error(error);notFound('Journal is unavailable right now. Please try again later.');return}if(!data||!data.body){notFound('This article is not available or has not been published.');return}render(data)}load().catch(error=>{console.error(error);notFound('We could not load this story. Please refresh and try again.')});
 </script>
+
+<style id="site-wide-mobile-glass-status-area">
+/* Consistent mobile glass treatment for the system safe-area/status region across public pages. */
+@media(max-width:800px){
+  html{background:transparent!important}
+  body{padding-top:0!important}
+  body>header,header.site-header,.site-header,header{
+    padding-top:env(safe-area-inset-top,0px)!important;
+    background-color:rgba(15,17,20,.18)!important;
+    border-bottom-color:rgba(255,255,255,.14)!important;
+    -webkit-backdrop-filter:blur(26px) saturate(145%)!important;
+    backdrop-filter:blur(26px) saturate(145%)!important;
+  }
+  @supports(padding:constant(safe-area-inset-top)){
+    body>header,header.site-header,.site-header,header{padding-top:constant(safe-area-inset-top)!important}
+  }
+}
+</style>
+
 </body></html>
