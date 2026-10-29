@@ -199,6 +199,36 @@ body>*{position:relative;z-index:1}
 .head .brand{order:0!important;margin-right:auto!important;margin-left:0!important}
 .head .back{order:1!important;margin-left:auto!important;float:right!important}
 </style>
+<style id="dealers-wallpaper-and-header-final-fix">
+/* Reliable wallpaper restoration: put the image on the root canvas, not behind a negative body layer. */
+html{
+  min-height:100%!important;
+  background-color:#08090b!important;
+  background-image:linear-gradient(90deg,rgba(4,5,7,.48),rgba(4,5,7,.24),rgba(4,5,7,.44)),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=2400&q=85")!important;
+  background-position:center center!important;
+  background-size:cover!important;
+  background-repeat:no-repeat!important;
+  background-attachment:fixed!important;
+}
+body{
+  min-height:100vh!important;
+  background:rgba(8,9,11,.10)!important;
+  background-image:none!important;
+  position:relative!important;
+  isolation:auto!important;
+}
+/* Remove the previously unreliable pseudo-image layer. */
+body::before{content:none!important;display:none!important}
+.head{background:rgba(18,19,22,.32)!important;border:1px solid rgba(255,255,255,.20)!important;border-radius:20px!important;backdrop-filter:blur(24px) saturate(145%)!important;-webkit-backdrop-filter:blur(24px) saturate(145%)!important;box-shadow:0 12px 34px rgba(0,0,0,.18)!important}
+.headin{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:14px!important}
+.head .brand{order:0!important;margin-left:0!important;margin-right:auto!important}
+.head .back{order:1!important;margin-left:auto!important;float:none!important;background:rgba(255,255,255,.07)!important;border:1px solid rgba(255,255,255,.20)!important;border-radius:12px!important;backdrop-filter:blur(14px)!important;-webkit-backdrop-filter:blur(14px)!important}
+.dealer,.stat,.state,.empty,.error,.tools input,.tools select{background:rgba(20,21,23,.48)!important;backdrop-filter:blur(20px) saturate(130%)!important;-webkit-backdrop-filter:blur(20px) saturate(130%)!important;border-color:rgba(255,255,255,.20)!important}
+.dealer:hover,.dealer:focus-visible{transform:translateY(-4px)!important;border-color:rgba(255,255,255,.42)!important;box-shadow:0 20px 44px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.08)!important}
+a,button,.dealer,.back{transition:transform .24s ease,border-color .24s ease,background .24s ease,box-shadow .24s ease!important}
+a:hover,button:hover,.back:hover{border-color:rgba(255,255,255,.40)!important;box-shadow:0 8px 22px rgba(0,0,0,.22)!important}
+@media(max-width:520px){.headin{gap:10px!important}.head .brand{font-size:13px!important;letter-spacing:.09em!important}.head .back{padding:8px 10px!important;font-size:12px!important}}
+</style>
 <style id="site-wide-mobile-glass-status-area">
 /* Consistent mobile glass treatment for the system safe-area/status region across public pages. */
 @media(max-width:800px){
