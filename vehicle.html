@@ -361,5 +361,24 @@ document.addEventListener('click', function(event) {
   }
 })();
 </script>
+
+<style id="site-wide-mobile-glass-status-area">
+/* Consistent mobile glass treatment for the system safe-area/status region across public pages. */
+@media(max-width:800px){
+  html{background:transparent!important}
+  body{padding-top:0!important}
+  body>header,header.site-header,.site-header,header{
+    padding-top:env(safe-area-inset-top,0px)!important;
+    background-color:rgba(15,17,20,.18)!important;
+    border-bottom-color:rgba(255,255,255,.14)!important;
+    -webkit-backdrop-filter:blur(26px) saturate(145%)!important;
+    backdrop-filter:blur(26px) saturate(145%)!important;
+  }
+  @supports(padding:constant(safe-area-inset-top)){
+    body>header,header.site-header,.site-header,header{padding-top:constant(safe-area-inset-top)!important}
+  }
+}
+</style>
+
 </body>
 </html>
