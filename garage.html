@@ -851,49 +851,53 @@ input,select,textarea{
 </style>
 
 <style id="garage-visible-wallpaper-glass">
-/* Standalone borderless glass cards with a lighter blur so the automotive wallpaper stays visible. */
+/* Borderless standalone glass cards; lighter blur keeps the wallpaper visible. */
 .garage-hero,.garage-section,.garage-panel,.garage-card,.service-card,.booking-card,
 .contact-card,.stat,.svc,.rating-box,.tiles .tile,.tile,.panel,.card,
 main section,main article,main .section,.garage .tile,.garage .card,.garage .panel{
  background:linear-gradient(145deg,rgba(34,36,39,.16),rgba(17,18,20,.24))!important;
  background-image:linear-gradient(145deg,rgba(34,36,39,.16),rgba(17,18,20,.24))!important;
- border:0!important;border-top:0!important;border-right:0!important;border-bottom:0!important;border-left:0!important;outline:0!important;
+ border:0!important;outline:0!important;
  box-shadow:0 14px 30px rgba(0,0,0,.16)!important;
  -webkit-backdrop-filter:blur(12px) saturate(130%)!important;
  backdrop-filter:blur(12px) saturate(130%)!important
 }
 .garage-hero{background-color:rgba(24,25,27,.16)!important}
 body:before{filter:blur(2px)!important}
-
-<style id="garage-compact-home-hero">
-/* Make the opening Garage message a compact standalone card. */
-#home>.garage-hero{
-  box-sizing:border-box!important;
-  width:min(100%,900px)!important;
-  margin:22px auto 24px!important;
-  padding:clamp(20px,3vw,30px)!important;
-  border:0!important;
-  border-radius:20px!important;
-  min-height:0!important;
-}
-#home>.garage-hero h1{
-  max-width:18em!important;
-  margin:0 0 10px!important;
-  font-size:clamp(27px,3.2vw,42px)!important;
-  line-height:1.12!important;
-}
-#home>.garage-hero p{
-  max-width:58ch!important;
-  margin:0!important;
-  font-size:clamp(14px,1.25vw,16px)!important;
-  line-height:1.55!important;
-}
-#home>.garage-hero>div{margin-top:14px!important}
-@media(max-width:760px){
-  #home>.garage-hero{width:100%!important;margin:16px auto 20px!important;padding:20px!important}
-  #home>.garage-hero h1{font-size:clamp(25px,7vw,34px)!important}
-}
 </style>
+<style id="garage-compact-home-hero">
+/* Explicitly constrain the opening message card, overriding the original hero sizing. */
+#home>.hero.garage-hero{
+ display:block!important;
+ box-sizing:border-box!important;
+ width:min(100%,760px)!important;
+ max-width:760px!important;
+ min-width:0!important;
+ min-height:0!important;
+ height:auto!important;
+ margin:18px auto 20px!important;
+ padding:18px 22px!important;
+ border:0!important;
+ border-radius:18px!important;
+}
+#home>.hero.garage-hero h1{
+ max-width:17em!important;
+ margin:0 0 8px!important;
+ font-size:clamp(25px,2.8vw,34px)!important;
+ line-height:1.12!important;
+}
+#home>.hero.garage-hero p{
+ max-width:54ch!important;
+ margin:0!important;
+ font-size:14px!important;
+ line-height:1.5!important;
+}
+#home>.hero.garage-hero>div{margin-top:12px!important}
+#home>.hero.garage-hero .btn{padding:9px 13px!important;font-size:13px!important}
+@media(max-width:760px){
+ #home>.hero.garage-hero{width:100%!important;max-width:100%!important;margin:14px auto 18px!important;padding:17px!important}
+ #home>.hero.garage-hero h1{font-size:clamp(24px,6.5vw,30px)!important}
+}
 </style>
 </body>
 </html>
