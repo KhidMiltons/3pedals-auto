@@ -1641,5 +1641,29 @@ body>header,header.site-header,.site-header,header{
 }
 </style>
 
+<style id="garage-desktop-larger-typography">
+/* Further enlarge Garage typography on desktop only; mobile remains unchanged. */
+@media(min-width:801px){
+  body{font-size:20px;line-height:1.62}
+  .wrap{max-width:1200px}
+  .logo{font-size:40px}
+  nav button,nav a{font-size:19px;padding:10px 16px}
+  .hero{padding:42px 0 28px}
+  .hero h1{font-size:clamp(60px,6vw,86px)}
+  .hero p{font-size:21px;line-height:1.7}
+  h2{font-size:42px}
+  .card h3{font-size:30px}
+  .price{font-size:32px}
+  .meta,.tag,.specs span,footer{font-size:18px}
+  label{font-size:18px}
+  input,select,textarea{font-size:19px;padding:12px 14px}
+  .btn{font-size:19px;padding:13px 21px}
+  .tile h3{font-size:34px}
+  .panel{font-size:20px;padding:24px}
+  .svc{font-size:20px;padding:15px 0}
+  .count{font-size:18px}
+}
+</style>
+
 </body>
 </html>
