@@ -3328,5 +3328,64 @@ footer::before,footer::after,body>footer::before,body>footer::after{border:0!imp
 }
 @media(prefers-color-scheme:light){@media(min-width:701px){#accDlg[open]{background:rgba(235,240,245,.40)!important;color:#202833!important}}}
 </style>
+
+<style id="account-glass-readable-text-fix">
+/* Account dashboard: stronger contrast while keeping the translucent glass look. */
+#accDlg[open]{color:#202a36!important}
+#accDlg[open]>.in,#accDlg[open] #accBody,#accDlg[open] .account-pages,#accDlg[open] .account-page,
+#accDlg[open] .account-tools,#accDlg[open] .account-settings-inner{color:#202a36!important;background:transparent!important}
+#accDlg[open] .account-page h1,#accDlg[open] .account-page h2,#accDlg[open] .account-page h3,
+#accDlg[open] .account-page h4,#accDlg[open] .account-page h5,#accDlg[open] .account-page p,
+#accDlg[open] .account-page label,#accDlg[open] .account-page span,#accDlg[open] .account-page strong,
+#accDlg[open] .account-page small,#accDlg[open] .account-page li,#accDlg[open] .account-page a,
+#accDlg[open] .account-tools h1,#accDlg[open] .account-tools h2,#accDlg[open] .account-tools h3,
+#accDlg[open] .account-tools h4,#accDlg[open] .account-tools p,#accDlg[open] .account-tools label,
+#accDlg[open] .account-tools span,#accDlg[open] .account-tools strong,
+#accDlg[open] .account-settings-inner h1,#accDlg[open] .account-settings-inner h2,
+#accDlg[open] .account-settings-inner h3,#accDlg[open] .account-settings-inner h4,
+#accDlg[open] .account-settings-inner p,#accDlg[open] .account-settings-inner label,
+#accDlg[open] .account-settings-inner span,#accDlg[open] .account-settings-inner strong{
+ color:#202a36!important;text-shadow:none!important;opacity:1!important
+}
+#accDlg[open] .meta,#accDlg[open] .account-page .meta,#accDlg[open] .account-tools .meta,
+#accDlg[open] .account-settings-inner .meta{color:#526174!important;opacity:1!important}
+#accDlg[open] .account-settings,#accDlg[open] .dashboard-welcome,#accDlg[open] .profile-card,
+#accDlg[open] .seller-listing,#accDlg[open] .account-page .card,#accDlg[open] .account-tools>.panel,
+#accDlg[open] .account-tools>section,#accDlg[open] .account-page section,
+#accDlg[open] .account-page .stats>div,#accDlg[open] .stat{
+ background:rgba(255,255,255,.82)!important;color:#202a36!important;
+ border:1px solid rgba(255,255,255,.94)!important;border-radius:16px!important;
+ box-shadow:0 8px 24px rgba(34,48,65,.07),inset 0 1px rgba(255,255,255,.95)!important;
+ -webkit-backdrop-filter:blur(16px) saturate(125%)!important;backdrop-filter:blur(16px) saturate(125%)!important
+}
+#accDlg[open] input,#accDlg[open] select,#accDlg[open] textarea{
+ color:#17212e!important;background:rgba(255,255,255,.94)!important;
+ border:1px solid rgba(92,108,127,.34)!important;box-shadow:inset 0 1px 2px rgba(30,41,55,.04)!important;
+}
+#accDlg[open] input::placeholder,#accDlg[open] textarea::placeholder{color:#667386!important;opacity:1!important}
+#accDlg[open] input:focus,#accDlg[open] select:focus,#accDlg[open] textarea:focus{
+ outline:2px solid rgba(76,105,139,.32)!important;outline-offset:1px!important;border-color:#7186a0!important
+}
+#accDlg[open] .account-settings-tabs button,#accDlg[open] .account-page button,
+#accDlg[open] .account-tools button{color:#263447!important}
+#accDlg[open] .account-settings-tabs button.active{background:rgba(255,255,255,.94)!important;color:#182434!important;border-color:rgba(92,108,127,.42)!important}
+#accDlg[open] nav#accountMenu.dashboard-shortcuts{background:rgba(241,246,251,.92)!important;color:#344154!important;border-right-color:rgba(255,255,255,.96)!important}
+#accDlg[open] nav#accountMenu .seller-nav-identity strong,
+#accDlg[open] nav#accountMenu .seller-nav-label,
+#accDlg[open] nav#accountMenu .seller-mode-switch button{color:#344154!important}
+#accDlg[open] nav#accountMenu .seller-nav-identity small{color:#647286!important}
+#accDlg[open] nav#accountMenu .seller-mode-switch{background:rgba(221,229,238,.68)!important}
+#accDlg[open] nav#accountMenu .seller-mode-switch button.selected{background:rgba(255,255,255,.96)!important;color:#1d2938!important}
+#accDlg[open] .account-dialog-head{background:rgba(247,250,253,.90)!important}
+#accDlg[open] .account-dialog-head h2{color:#202a36!important}
+#accDlg[open] .account-dialog-head>#accMenuToggle,#accDlg[open] .account-dialog-head>#accHomeTop,
+#accDlg[open] .account-dialog-head>#accCloseTop{background:rgba(255,255,255,.94)!important;color:#263447!important;border-color:rgba(100,116,135,.22)!important}
+@media(max-width:700px){
+ #accDlg[open]{background:rgba(239,243,248,.94)!important}
+ #accDlg[open] .account-page .card,#accDlg[open] .account-settings,#accDlg[open] .profile-card,
+ #accDlg[open] .account-tools>section,#accDlg[open] .account-tools>.panel{background:rgba(255,255,255,.88)!important}
+ #accDlg[open] nav#accountMenu.dashboard-shortcuts.menu-open:not([hidden]){background:rgba(247,250,253,.97)!important}
+}
+</style>
 </body>
 </html>
