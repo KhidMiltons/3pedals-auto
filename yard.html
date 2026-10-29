@@ -473,7 +473,7 @@ header.head .logo:hover{opacity:.84!important}
 
 
 <style id="yard-nav-buttons-match-main-site">
-header.head .headnav .back{
+header.head .headnav a.back,header.head .headnav a.back:visited,header.head .headnav a.back:focus,header.head .headnav a.back:active{
   --dock-scale:1;
   min-height:42px!important;
   display:inline-flex!important;
@@ -482,8 +482,10 @@ header.head .headnav .back{
   box-sizing:border-box!important;
   padding:9px 15px!important;
   border-radius:12px!important;
-  border:1px solid transparent!important;
-  background:none!important;
+  border:0!important;
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
   color:#d7d9de!important;
   font-family:inherit!important;
   font-size:14px!important;
@@ -498,9 +500,11 @@ header.head .headnav .back{
   transform-origin:center bottom!important;
   transition:transform .46s cubic-bezier(.22,1,.36,1),background .32s ease,box-shadow .32s ease,border-color .32s ease,color .32s ease!important;
 }
-header.head .headnav .back:hover{
-  background:none!important;
-  border-color:rgba(255,255,255,.10)!important;
+header.head .headnav a.back:hover{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border-color:transparent!important;
   color:#fff!important;
   box-shadow:none!important;
   --dock-scale:1.04;
