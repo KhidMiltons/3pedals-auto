@@ -35,15 +35,8 @@ button:hover{transform:none}
 .contact-grid .full{grid-column:1/-1}
 .article-photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px;margin:12px 0}.article-photo-choice{position:relative;min-width:0;padding:8px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.035)}.article-photo-choice:has(input:checked){border-color:rgba(227,179,65,.75);box-shadow:0 0 0 2px rgba(227,179,65,.14)}.article-photo-choice img{width:100%;height:118px;display:block;object-fit:cover;border-radius:8px;background:#090a0b}.article-photo-choice label{display:flex;align-items:center;gap:7px;margin:8px 0 0;color:var(--ink);font-size:11px;letter-spacing:0;cursor:pointer}.article-photo-choice input{width:auto;margin:0;accent-color:var(--gold)}.media-remove{position:absolute;right:12px;top:12px;width:28px;height:28px;padding:0;border:1px solid rgba(255,255,255,.55);border-radius:50%;background:rgba(15,15,15,.86);color:#fff;font-size:20px;line-height:1;display:grid;place-items:center;z-index:2}.media-remove:hover{background:#a52d2d;transform:scale(1.06)}.photo-help{font-size:12px;margin:6px 0 0;color:var(--muted)}
 </style><link rel="stylesheet" href="site-theme.css">
-<style>
-/* Admin brand identity and glass action controls */
-body:has(#app) .brand{display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 15px;border:1px solid rgba(255,255,255,.20);border-radius:16px;background:linear-gradient(120deg,rgba(227,196,123,.14),rgba(255,255,255,.04),rgba(0,0,0,.10));box-shadow:0 8px 26px rgba(0,0,0,.14),inset 0 1px rgba(255,255,255,.12);-webkit-backdrop-filter:blur(16px) saturate(135%);backdrop-filter:blur(16px) saturate(135%);font-size:clamp(26px,3vw,38px);font-weight:800;letter-spacing:.015em;color:#d9bd78}
-body:has(#app) .brand span{display:block;flex-basis:100%;font-size:10px;letter-spacing:.12em;color:rgba(245,242,234,.70)}
-body:has(#app) .top .actions button,body:has(#app) .primary,body:has(#app) .ghost{border:1px solid rgba(255,255,255,.20);border-radius:12px;background:rgba(255,255,255,.07);color:#f5f1e8;box-shadow:0 8px 22px rgba(0,0,0,.12),inset 0 1px rgba(255,255,255,.10);-webkit-backdrop-filter:blur(14px) saturate(135%);backdrop-filter:blur(14px) saturate(135%)}
-body:has(#app) .primary,body:has(#app) .tab.active{background:linear-gradient(120deg,rgba(227,196,123,.92),rgba(151,119,58,.92));color:#171717;border-color:rgba(238,215,158,.55)}
-body:has(#app) .top .actions button:hover,body:has(#app) .primary:hover,body:has(#app) .ghost:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.38);box-shadow:0 12px 28px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.15)}
-@media(max-width:760px){body:has(#app) .brand{font-size:27px;padding:9px 12px}body:has(#app) .top{align-items:stretch!important}body:has(#app) .top .actions{width:100%}body:has(#app) .top .actions button{flex:1 1 auto}}
-</style>
+
+<link rel="stylesheet" href="/dashboard-glass.css?v=3">
 </head>
 <body>
 <div id="login" class="hidden"><div class="brand">3 Pedals Auto KE<span>Admin verification</span></div><h1>Sign in</h1><p class="meta">Only approved 3 Pedals Auto KE administrators can access vehicle verification.</p><label>Email</label><input id="email" type="email" autocomplete="username"><label>Password</label><input id="password" type="password" autocomplete="current-password"><p id="loginErr" class="notice err hidden"></p><button id="loginBtn" class="primary" style="width:100%;margin-top:15px">Sign in</button></div>
