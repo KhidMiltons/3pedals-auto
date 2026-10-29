@@ -1302,5 +1302,48 @@ header nav button,header nav a.navlink{
 }
 </style>
 
+
+<style id="garage-mobile-home-menu-match">
+@media(max-width:800px){
+  /* Keep the account and hamburger controls side by side at the right of the brand. */
+  header .wrap{
+    grid-template-columns:minmax(0,1fr) auto auto!important;
+    grid-template-areas:"brand account menu"!important;
+    align-items:center!important;
+  }
+  header .account-pill{grid-area:account!important;justify-self:end!important;align-self:center!important}
+  header #accountOpen{width:38px!important;height:38px!important;border-radius:12px!important;background:rgba(255,255,255,.07)!important;border-color:rgba(255,255,255,.20)!important}
+  header #accountOpen svg{width:19px!important;height:19px!important}
+  .garage-nav-toggle{grid-area:menu!important;width:38px!important;height:38px!important;flex-basis:38px!important}
+  header nav#garageSectionNav{
+    top:calc(100% + 8px)!important;right:12px!important;left:auto!important;
+    width:min(210px,calc(100vw - 88px))!important;max-width:min(210px,calc(100vw - 88px))!important;
+    max-height:min(72dvh,440px)!important;padding:6px!important;gap:2px!important;
+    align-items:stretch!important;flex-direction:column!important;
+    background:rgba(22,23,25,.66)!important;border:1px solid rgba(201,183,132,.38)!important;
+    border-radius:14px!important;box-shadow:0 18px 44px rgba(0,0,0,.48),inset 0 1px 0 rgba(255,255,255,.09)!important;
+    -webkit-backdrop-filter:blur(24px) saturate(145%)!important;backdrop-filter:blur(24px) saturate(145%)!important;
+  }
+  header nav#garageSectionNav button,header nav#garageSectionNav a.navlink{
+    width:100%!important;min-height:36px!important;flex:0 0 auto!important;
+    padding:8px 10px!important;font-size:13px!important;font-weight:500!important;
+    border:1px solid transparent!important;border-radius:9px!important;
+    background:transparent!important;color:rgba(243,240,232,.88)!important;
+    transition:background .2s ease,border-color .2s ease,color .2s ease,transform .2s ease!important;
+  }
+  header nav#garageSectionNav button:hover,header nav#garageSectionNav button:focus-visible,
+  header nav#garageSectionNav a.navlink:hover,header nav#garageSectionNav a.navlink:focus-visible{
+    transform:translateX(2px)!important;border-color:rgba(201,183,132,.42)!important;
+    background:linear-gradient(110deg,rgba(198,178,127,.20),rgba(169,146,95,.11))!important;color:#f1d995!important;
+  }
+  header nav#garageSectionNav button[aria-selected="true"]{
+    background:rgba(255,255,255,.09)!important;color:#fff!important;border-color:rgba(255,255,255,.10)!important;
+  }
+}
+@media(max-width:420px){
+  header .logo{max-width:calc(100vw - 142px)!important}
+}
+</style>
+
 </body>
 </html>
