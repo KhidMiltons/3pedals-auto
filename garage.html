@@ -1838,3 +1838,26 @@ body>header,header.site-header,.site-header,header{
  }
 }
 </style>
+
+
+<style id="garage-mobile-expanded-menu-icon-readable-glass-fix">
+/* Garage section only: make the expanded menu icon/control visibly frosted and readable on mobile. */
+@media(max-width:800px){
+ html body>header button#garageNavToggle.garage-nav-toggle[aria-expanded="true"],
+ html body:has(header #garageSectionNav.is-open)>header button#garageNavToggle.garage-nav-toggle{
+  color:#fff!important;
+  background:rgba(18,20,23,.78)!important;
+  background-color:rgba(18,20,23,.78)!important;
+  background-image:none!important;
+  -webkit-backdrop-filter:blur(36px) saturate(180%)!important;
+  backdrop-filter:blur(36px) saturate(180%)!important;
+  border:1px solid rgba(255,255,255,.38)!important;
+  box-shadow:0 8px 24px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.18)!important;
+ }
+ html body>header button#garageNavToggle.garage-nav-toggle[aria-expanded="true"] svg,
+ html body:has(header #garageSectionNav.is-open)>header button#garageNavToggle.garage-nav-toggle svg{
+  opacity:1!important;
+  filter:drop-shadow(0 1px 2px rgba(0,0,0,.45))!important;
+ }
+}
+</style>
