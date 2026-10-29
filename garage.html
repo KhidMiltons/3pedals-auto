@@ -1031,5 +1031,55 @@ body:before{filter:blur(2px)!important}
 }
 </style>
 
+
+<style id="garage-consistent-glass-hover">
+/* One restrained glass hover interaction across every Garage card and interactive tile. */
+#home>.hero.garage-hero,
+#book>.hero.garage-hero,#roadside>.hero.garage-hero,#mechanics>.hero.garage-hero,
+#book>.cols>.panel,#roadside>.cols>.panel,
+#mechanics #mechanicDirectory>.empty-state,
+#mechanics #mechanicDirectory>.card,
+#mechanics #mechanicDirectory>.tile,
+#mechanics #mechanicDirectory>article,
+#mechanics #mechanicDirectory>div,
+#book #svcList .svc,
+.garage-card,.service-card,.booking-card,.contact-card,.stat,.tiles .tile,
+main section .panel,main section .card,main section article {
+  transition:transform .24s ease, background-color .24s ease, box-shadow .24s ease, opacity .24s ease!important;
+  transform:translateY(0);
+}
+@media (hover:hover) and (pointer:fine) {
+  #home>.hero.garage-hero:hover,
+  #book>.hero.garage-hero:hover,#roadside>.hero.garage-hero:hover,#mechanics>.hero.garage-hero:hover,
+  #book>.cols>.panel:hover,#roadside>.cols>.panel:hover,
+  #mechanics #mechanicDirectory>.empty-state:hover,
+  #mechanics #mechanicDirectory>.card:hover,
+  #mechanics #mechanicDirectory>.tile:hover,
+  #mechanics #mechanicDirectory>article:hover,
+  #mechanics #mechanicDirectory>div:hover,
+  .garage-card:hover,.service-card:hover,.booking-card:hover,.contact-card:hover,.stat:hover,.tiles .tile:hover,
+  main section .panel:hover,main section .card:hover,main section article:hover {
+    transform:translateY(-4px);
+    background-color:rgba(255,255,255,.035)!important;
+    box-shadow:0 19px 38px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.07)!important;
+  }
+  #book #svcList .svc:hover {
+    transform:translateX(3px);
+    background:rgba(255,255,255,.035)!important;
+  }
+}
+#home>.hero.garage-hero:focus-within,
+#book>.hero.garage-hero:focus-within,#roadside>.hero.garage-hero:focus-within,#mechanics>.hero.garage-hero:focus-within,
+#book>.cols>.panel:focus-within,#roadside>.cols>.panel:focus-within {
+  box-shadow:0 17px 34px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.08)!important;
+}
+@media(prefers-reduced-motion:reduce) {
+  #home>.hero.garage-hero,#book>.hero.garage-hero,#roadside>.hero.garage-hero,#mechanics>.hero.garage-hero,
+  #book>.cols>.panel,#roadside>.cols>.panel,#mechanics #mechanicDirectory>*,
+  #book #svcList .svc,.garage-card,.service-card,.booking-card,.contact-card,.stat,.tiles .tile,
+  main section .panel,main section .card,main section article {transition:none!important}
+}
+</style>
+
 </body>
 </html>
