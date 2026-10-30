@@ -179,6 +179,22 @@ html body h1,html body h2,html body h3,html body .logo,html body .brand{font-fam
 html body > header .logo,html body > header .brand{font-family:"Playfair Display",Georgia,serif!important;font-size:27px!important;font-weight:700!important;letter-spacing:.03em!important;text-transform:uppercase!important}
 html body > header nav a,html body > header nav button,html body > header .headnav a,html body > header .headnav button,html body > header .back{font-family:Manrope,system-ui,sans-serif!important;font-size:14px!important;font-weight:400!important;letter-spacing:0!important}
 </style>
+
+<style id="inventory-home-typography-and-grid-alignment">
+/* Match the Home header's type hierarchy on the live inventory views. */
+html body,html body input,html body select,html body button{font-family:Manrope,system-ui,-apple-system,"Segoe UI",sans-serif!important}
+html body h1,html body h2,html body h3,html body .logo{font-family:"Playfair Display",Georgia,serif!important}
+html body header .logo{font-size:27px!important;font-weight:700!important;letter-spacing:.03em!important;text-transform:uppercase!important;color:#e3b341!important}
+html body header .back{font-family:Manrope,system-ui,sans-serif!important;font-size:14px!important;font-weight:400!important;color:#d7d9de!important}
+/* The Current inventory panel, filters and vehicle grid share one exact content width. */
+main.wrap{width:min(1180px,calc(100% - 48px))!important;max-width:1180px!important;box-sizing:border-box!important}
+main.wrap>.hero{display:block!important;width:100%!important;max-width:none!important;box-sizing:border-box!important;margin-left:0!important;margin-right:0!important}
+main.wrap>section:not(.hero){width:100%!important;max-width:none!important;min-width:0!important;box-sizing:border-box!important}
+main.wrap .filters,main.wrap #count,main.wrap #grid,main.wrap .featured-section{width:100%!important;max-width:none!important;min-width:0!important;box-sizing:border-box!important;margin-left:0!important;margin-right:0!important}
+main.wrap #grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:850px){main.wrap #grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){main.wrap{width:calc(100% - 24px)!important}main.wrap #grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
