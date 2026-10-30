@@ -941,3 +941,11 @@ body>header,header.site-header,.site-header,header{
 
 </body>
 </html>
+
+<!-- Reduced background photo blur while preserving the glass surfaces -->
+<style id="reduced-background-photo-blur">
+html body::before{
+  filter:blur(1px)!important;
+  transform:scale(1.008)!important;
+}
+</style>
