@@ -288,5 +288,20 @@ body > :not(#dealers-blurred-wallpaper){
 header.head{z-index:5!important}
 </style>
 
+
+<style id="dealers-card-borderless">
+/* Remove outlines from the glass header and directory cards while retaining their translucent surfaces. */
+header.head,
+.dealer,
+.stat,
+.state{
+  border:0!important;
+  outline:0!important;
+}
+.dealer:hover,.dealer:focus-visible{
+  border:0!important;
+}
+</style>
+
 </body>
 </html>
