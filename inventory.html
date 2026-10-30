@@ -949,3 +949,43 @@ html body::before{
   transform:scale(1.008)!important;
 }
 </style>
+
+<!-- Refined inventory header: lighter glass blur with corner-only accents -->
+<style id="inventory-header-corner-only">
+html body>header{
+  position:relative!important;
+  border:0!important;
+  border-top:0!important;
+  border-bottom:0!important;
+  outline:0!important;
+  -webkit-backdrop-filter:blur(7px) saturate(125%)!important;
+  backdrop-filter:blur(7px) saturate(125%)!important;
+  overflow:visible!important;
+}
+html body>header::before,
+html body>header::after{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  display:block!important;
+  pointer-events:none!important;
+  border:0!important;
+  border-radius:inherit!important;
+  box-shadow:none!important;
+}
+html body>header::before{
+  background:
+    linear-gradient(rgba(255,255,255,.42),rgba(255,255,255,.42)) left top/22px 1px no-repeat,
+    linear-gradient(rgba(255,255,255,.42),rgba(255,255,255,.42)) left top/1px 22px no-repeat,
+    linear-gradient(rgba(255,255,255,.42),rgba(255,255,255,.42)) right top/22px 1px no-repeat,
+    linear-gradient(rgba(255,255,255,.42),rgba(255,255,255,.42)) right top/1px 22px no-repeat;
+}
+html body>header::after{
+  background:
+    linear-gradient(rgba(255,255,255,.42),rgba(255,255,255,.42)) left bottom/22px 1px no-repeat,
+    linear-gradient(rgba(255,255,255,.42),rgba(255,255,255,.42)) left bottom/1px 22px no-repeat,
+    linear-gradient(rgba(255,255,255,.42),rgba(255,255,255,.42)) right bottom/22px 1px no-repeat,
+    linear-gradient(rgba(255,255,255,.42),rgba(255,255,255,.42)) right bottom/1px 22px no-repeat;
+}
+html body>header>.wrap{position:relative!important;z-index:1!important}
+</style>
