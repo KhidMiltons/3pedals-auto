@@ -289,17 +289,19 @@ header.head{z-index:5!important}
 </style>
 
 
-<style id="dealers-card-borderless">
-/* Remove outlines from the glass header and directory cards while retaining their translucent surfaces. */
-header.head,
-.dealer,
-.stat,
-.state{
-  border:0!important;
-  outline:0!important;
+<style id="dealers-home-glass-borders">
+/* Match the subtle white glass edges used by the Home header and cards. */
+header.head{
+  border:1px solid rgba(255,255,255,.18)!important;
+  box-shadow:0 14px 38px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.16)!important;
+}
+.dealer,.stat,.state{
+  border:1px solid rgba(255,255,255,.22)!important;
+  box-shadow:0 14px 38px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.14)!important;
 }
 .dealer:hover,.dealer:focus-visible{
-  border:0!important;
+  border-color:rgba(255,255,255,.34)!important;
+  box-shadow:0 20px 46px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.20)!important;
 }
 </style>
 
