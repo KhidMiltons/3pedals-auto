@@ -296,3 +296,11 @@ $("grid").addEventListener("pointermove",e=>{if(e.pointerType!=="mouse")return;c
 async function load(){if(!sb||!CFG.key||/^PASTE/.test(CFG.key)){$("count").textContent="Inventory unavailable";$("grid").innerHTML='<div class="error">The inventory database is not connected. Check config.js.</div>';return}const {data,error}=await sb.from("listings").select("*").eq("status","approved").order("created_at",{ascending:false});if(error){$("count").textContent="Inventory unavailable";$("grid").innerHTML='<div class="error">We could not load the inventory right now. Please refresh in a moment.</div>';console.error(error);return}const {data:paidPromotions}=await sb.from("active_listing_promotions").select("listing_id");const promoted=new Set((paidPromotions||[]).map(x=>String(x.listing_id)));cars=(data||[]).map(row=>({...rowToCar(row),promoted:promoted.has(String(row.id))}));const makes=[...new Set(cars.map(c=>c.make).filter(Boolean))].sort();$("make").innerHTML='<option value="">All makes</option>'+makes.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");render()}load().catch(error=>{console.error("Could not load inventory:",error);$("count").textContent="Inventory unavailable";$("grid").innerHTML='<div class="error">We could not load the inventory right now. Please refresh and try again.</div>'});
 </script>
 </body></html>
+
+<!-- Reduced background photo blur while preserving the glass surfaces -->
+<style id="reduced-background-photo-blur">
+html body::before{
+  filter:blur(1px)!important;
+  transform:scale(1.008)!important;
+}
+</style>
