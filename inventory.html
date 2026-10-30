@@ -534,6 +534,33 @@ html body>header{border:0!important;border-bottom:0!important;outline:0!importan
 html body>header::before,html body>header::after{border:0!important;box-shadow:none!important}
 @media(max-width:560px){html body main.wrap>.count,html body main.wrap>#count{padding:7px 0!important;margin:8px 0 12px!important}}
 </style>
+
+<style id="inventory-header-exact-grid-width">
+/* Match the outer glass header card to the exact width of main.wrap and the vehicle grid. */
+html body>header{
+  display:block!important;width:min(1180px,calc(100% - 48px))!important;
+  max-width:none!important;box-sizing:border-box!important;
+  margin:14px auto 12px!important;left:auto!important;right:auto!important;
+}
+html body>header>.wrap{
+  width:100%!important;max-width:none!important;margin:0!important;
+  box-sizing:border-box!important;padding-left:24px!important;padding-right:24px!important;
+}
+html body main.wrap{
+  width:min(1180px,calc(100% - 48px))!important;
+  max-width:none!important;margin-left:auto!important;margin-right:auto!important;
+  box-sizing:border-box!important;
+}
+html body main.wrap>#grid,html body main.wrap>.grid{
+  width:100%!important;max-width:none!important;margin-left:0!important;margin-right:0!important;
+  box-sizing:border-box!important;
+}
+@media(max-width:560px){
+  html body>header{width:calc(100% - 24px)!important;margin:10px auto!important}
+  html body>header>.wrap{padding-left:12px!important;padding-right:12px!important}
+  html body main.wrap{width:calc(100% - 24px)!important}
+}
+</style>
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
