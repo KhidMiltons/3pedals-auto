@@ -721,3 +721,96 @@ body:has(#app) input,body:has(#app) select,body:has(#app) textarea{color:#f7f4ed
 body:has(#app) .photos img{border-color:rgba(255,255,255,.22)!important}
 @media(max-width:760px){#accDlg{-webkit-backdrop-filter:blur(13px) saturate(125%)!important;backdrop-filter:blur(13px) saturate(125%)!important}#accDlg .account-page,#accDlg .account-tools,#accDlg .dashboard-welcome,#accDlg .account-settings,#accDlg .profile-card,#accDlg .seller-listing,#accDlg .stat,body:has(#app) .stat,body:has(#app) .listing,body:has(#app) .attention-panel{-webkit-backdrop-filter:blur(12px) saturate(125%)!important;backdrop-filter:blur(12px) saturate(125%)!important}}
 @media(prefers-reduced-motion:reduce){#accDlg *,body:has(#app) *{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+
+
+/* 3 Pedals editorial polish — cleaner hierarchy, calmer spacing and consistent controls.
+   Deliberately leaves the existing Porsche wallpaper, page layouts and glass identity intact. */
+:root{
+  --editorial-ink:#f7f4ed;
+  --editorial-muted:rgba(239,235,225,.72);
+  --editorial-edge:rgba(255,255,255,.19);
+  --editorial-edge-hover:rgba(255,255,255,.34);
+  --editorial-glass:rgba(20,22,25,.38);
+  --editorial-ease:cubic-bezier(.22,1,.36,1);
+}
+body{
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+h1,h2,h3,h4{
+  text-wrap:balance;
+  letter-spacing:-.025em;
+}
+p,li,.muted,.meta,.description{
+  text-wrap:pretty;
+}
+main.wrap{
+  padding-bottom:clamp(28px,5vw,64px);
+}
+section:not(.hero):not(.garage-hero):not(.journal-hero){
+  scroll-margin-top:110px;
+}
+.card,.dealer,.stat,.panel,.listing,.vehicle-card,.story-card,.contact-card,
+.promotion-package,.article-item,.project-item,.tile,.profile-card,
+.feature-card,.service-card,.booking-card,.garage-card,.filter-panel,
+.search-panel,.featured-panel,.article-card,.journal-card{
+  border-color:var(--editorial-edge)!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.018)),var(--editorial-glass)!important;
+  box-shadow:0 14px 38px rgba(0,0,0,.19),inset 0 1px rgba(255,255,255,.085)!important;
+  transition:transform .28s var(--editorial-ease),border-color .28s ease,box-shadow .28s ease,background .28s ease!important;
+}
+.card:hover,.dealer:hover,.listing:hover,.vehicle-card:hover,.story-card:hover,
+.contact-card:hover,.promotion-package:hover,.article-item:hover,.project-item:hover,
+.tile:hover,.profile-card:hover,.feature-card:hover,.service-card:hover,
+.booking-card:hover,.garage-card:hover,.journal-card:hover{
+  border-color:var(--editorial-edge-hover)!important;
+  box-shadow:0 20px 48px rgba(0,0,0,.25),inset 0 1px rgba(255,255,255,.12)!important;
+}
+button,a.button,.btn,.primary,.btn-primary,.button-primary,.gold-button{
+  transition:transform .22s var(--editorial-ease),box-shadow .22s ease,background-color .22s ease,border-color .22s ease!important;
+}
+button:hover,a.button:hover,.btn:hover,.primary:hover,.btn-primary:hover,
+.button-primary:hover,.gold-button:hover{
+  transform:translateY(-2px);
+}
+button:active,a.button:active,.btn:active{
+  transform:translateY(0) scale(.985);
+}
+input,select,textarea{
+  border-radius:12px;
+}
+input:focus,select:focus,textarea:focus{
+  outline:none;
+  border-color:rgba(255,255,255,.42)!important;
+  box-shadow:0 0 0 3px rgba(255,255,255,.075)!important;
+}
+a{
+  text-underline-offset:4px;
+}
+a:not(.button):not(.btn):not(.navlink):hover{
+  text-decoration-color:rgba(255,255,255,.55);
+}
+header,body>.header,body>header{
+  -webkit-backdrop-filter:blur(18px) saturate(135%)!important;
+  backdrop-filter:blur(18px) saturate(135%)!important;
+}
+@media(min-width:761px){
+  main.wrap{width:min( calc(100% - 56px), 1440px);}
+  .card,.dealer,.panel,.listing,.vehicle-card,.story-card,.contact-card{
+    border-radius:18px;
+  }
+}
+@media(max-width:760px){
+  main.wrap{padding-bottom:30px;}
+  .card,.dealer,.stat,.panel,.listing,.vehicle-card,.story-card,.contact-card,
+  .promotion-package,.article-item,.project-item,.tile,.profile-card{
+    -webkit-backdrop-filter:blur(12px) saturate(125%)!important;
+    backdrop-filter:blur(12px) saturate(125%)!important;
+  }
+  button:hover,a.button:hover,.btn:hover,.primary:hover,.btn-primary:hover,
+  .button-primary:hover,.gold-button:hover{transform:none;}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important;}
+}
