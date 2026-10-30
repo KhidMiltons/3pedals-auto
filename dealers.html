@@ -232,5 +232,32 @@ body>header,header.site-header,.site-header,header{
 }
 </style>
 
+
+<style id="dealers-header-back-right-fix">
+/* Pin only the header Back control to the far-right edge of the header content. */
+header.head > .wrap.headin{
+  position:relative!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  width:min(1160px,calc(100% - 36px))!important;
+  min-height:68px!important;
+}
+header.head > .wrap.headin > .brand{
+  margin-right:auto!important;
+  flex:0 1 auto!important;
+}
+header.head > .wrap.headin > .back{
+  position:absolute!important;
+  right:0!important;
+  left:auto!important;
+  margin:0!important;
+  flex:0 0 auto!important;
+}
+@media(max-width:520px){
+  header.head > .wrap.headin{width:calc(100% - 24px)!important;min-height:60px!important}
+}
+</style>
+
 </body>
 </html>
