@@ -598,6 +598,14 @@ html body > header nav button[aria-selected="true"],html body > header nav a[ari
 }
 
 </style>
+
+<style id="home-header-font-colors">
+/* Match header text colors to the Home page: champagne brand, soft-white navigation, white hover, dark active text. */
+html body > header :is(.logo,.brand){color:#e3b341!important}
+html body > header :is(nav a,nav button,.headnav a,.headnav button,.back){color:#d7d9de!important}
+html body > header :is(nav a:hover,nav button:hover,.headnav a:hover,.headnav button:hover,.back:hover){color:#fff!important}
+html body > header nav button[aria-selected="true"],html body > header nav a[aria-current="page"],html body > header .headnav button[aria-selected="true"],html body > header .headnav a[aria-current="page"]{color:#111!important}
+</style>
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
