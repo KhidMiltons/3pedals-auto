@@ -120,7 +120,7 @@ alt=""
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-<header class="head"><div class="headin"><a class="brand" href="index.html#journal">3 Pedals Auto KE</a><a class="back" href="index.html#journal">← 3 Pedals Journal</a></div></header>
+<header class="head"><div class="headin"><a class="brand" href="index.html#journal">3 Pedals Auto KE</a><a class="back" href="index.html">← Home</a></div></header>
 <main><article class="article" id="article"><div class="state">Loading story…</div></article></main>
 <footer>3 Pedals Auto KE · Automotive Excellence Reimagined, For Those Who Appreciate the Drive.</footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="config.js"></script>
@@ -241,5 +241,40 @@ body>header,header.site-header,.site-header,header{
 }
 </style>
 
+
+<style id="journal-home-glass-header">
+/* Match the Home page's floating translucent glass navigation bar. */
+header.head{
+  position:sticky!important;top:12px!important;z-index:100!important;
+  width:min(1160px,calc(100% - 32px))!important;
+  margin:18px auto 0!important;
+  border:1px solid rgba(255,255,255,.18)!important;
+  border-radius:30px!important;
+  background:rgba(30,31,34,.42)!important;
+  box-shadow:0 18px 55px rgba(0,0,0,.26),inset 0 1px rgba(255,255,255,.12)!important;
+  -webkit-backdrop-filter:blur(26px) saturate(135%)!important;
+  backdrop-filter:blur(26px) saturate(135%)!important;
+}
+header.head .headin{min-height:82px!important;width:calc(100% - 64px)!important}
+header.head .brand{
+  display:inline-flex!important;align-items:center!important;
+  min-height:48px!important;padding:5px 12px!important;
+  border:1px solid rgba(255,255,255,.20)!important;border-radius:16px!important;
+  color:#e7d4a2!important;
+}
+header.head .back{
+  border:1px solid rgba(255,255,255,.56)!important;border-radius:12px!important;
+  background:rgba(255,255,255,.10)!important;color:#f5f1e8!important;
+  -webkit-backdrop-filter:blur(14px) saturate(130%)!important;
+  backdrop-filter:blur(14px) saturate(130%)!important;
+}
+header.head .back:hover{background:rgba(255,255,255,.16)!important;border-color:rgba(255,255,255,.72)!important}
+@media(max-width:640px){
+ header.head{top:8px!important;width:calc(100% - 20px)!important;margin-top:10px!important;border-radius:20px!important}
+ header.head .headin{width:calc(100% - 28px)!important;min-height:64px!important}
+ header.head .brand{font-size:18px!important;padding:5px 8px!important}
+ header.head .back{font-size:12px!important;padding:7px 9px!important}
+}
+</style>
 </body>
 </html>
