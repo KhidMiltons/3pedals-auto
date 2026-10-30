@@ -2128,3 +2128,100 @@ html body > header nav#garageSectionNav{background:transparent!important;border:
  }
 }
 </style>
+
+
+<!-- Desktop Garage header aligned with the Home screen: compact brand, account and menu controls. -->
+<style id="garage-desktop-home-header-refresh">
+@media(min-width:801px){
+  header{background:rgba(13,15,18,.42)!important;border:0!important;box-shadow:0 8px 28px rgba(0,0,0,.16)!important;-webkit-backdrop-filter:blur(22px) saturate(145%)!important;backdrop-filter:blur(22px) saturate(145%)!important}
+  header .wrap{
+    min-height:72px!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) 46px 46px!important;
+    grid-template-areas:"brand account menu"!important;
+    align-items:center!important;
+    gap:12px!important;
+    padding:10px 28px!important;
+  }
+  header .logo{
+    grid-area:brand!important;
+    min-width:0!important;
+    width:max-content!important;
+    max-width:100%!important;
+    font-family:"Playfair Display",Georgia,serif!important;
+    font-size:clamp(19px,1.65vw,23px)!important;
+    line-height:1.15!important;
+    font-weight:700!important;
+    letter-spacing:.025em!important;
+    text-transform:none!important;
+    white-space:nowrap!important;
+    color:#f4f1e9!important;
+  }
+  header .account-pill{
+    grid-area:account!important;justify-self:end!important;
+    width:42px!important;height:42px!important;padding:0!important;margin:0!important;
+    display:grid!important;place-items:center!important;
+    border:1px solid rgba(255,255,255,.22)!important;border-radius:13px!important;
+    background:rgba(255,255,255,.07)!important;
+    -webkit-backdrop-filter:blur(18px) saturate(145%)!important;backdrop-filter:blur(18px) saturate(145%)!important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.10)!important;
+  }
+  header #accountOpen{width:40px!important;height:40px!important;padding:0!important;display:grid!important;place-items:center!important;color:#f5f5f3!important}
+  header #accountOpen svg{width:20px!important;height:20px!important;stroke:currentColor!important;stroke-width:1.7!important}
+  header .garage-nav-toggle{
+    grid-area:menu!important;display:flex!important;align-items:center!important;justify-content:center!important;
+    width:42px!important;height:42px!important;padding:0!important;
+    border:1px solid rgba(255,255,255,.22)!important;border-radius:13px!important;
+    color:#f5f5f3!important;background:rgba(255,255,255,.07)!important;cursor:pointer!important;
+    -webkit-backdrop-filter:blur(18px) saturate(145%)!important;backdrop-filter:blur(18px) saturate(145%)!important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.10)!important;
+    transition:background .2s ease,border-color .2s ease,transform .2s ease!important;
+  }
+  header .garage-nav-toggle svg{width:20px!important;height:20px!important}
+  header .account-pill:hover,header .garage-nav-toggle:hover{
+    background:rgba(255,255,255,.13)!important;border-color:rgba(255,255,255,.38)!important;transform:translateY(-1px)!important
+  }
+  header nav#garageSectionNav{
+    display:none!important;position:absolute!important;top:calc(100% + 9px)!important;right:28px!important;left:auto!important;
+    width:min(340px,calc(100vw - 56px))!important;max-width:none!important;
+    flex-direction:column!important;align-items:stretch!important;gap:5px!important;padding:10px!important;margin:0!important;
+    border:1px solid rgba(255,255,255,.20)!important;border-radius:17px!important;
+    background:rgba(22,24,27,.82)!important;color:#f5f5f3!important;
+    -webkit-backdrop-filter:blur(34px) saturate(165%)!important;backdrop-filter:blur(34px) saturate(165%)!important;
+    box-shadow:0 18px 48px rgba(0,0,0,.36),inset 0 1px 0 rgba(255,255,255,.10)!important;
+    overflow:visible!important;z-index:1001!important;
+  }
+  header nav#garageSectionNav.is-open{display:flex!important}
+  header nav#garageSectionNav button,header nav#garageSectionNav a.navlink{
+    width:100%!important;min-height:44px!important;justify-content:flex-start!important;text-align:left!important;
+    padding:11px 13px!important;border:1px solid transparent!important;border-radius:11px!important;
+    background:transparent!important;color:#f5f5f3!important;font-size:14px!important;font-weight:600!important;
+    box-shadow:none!important;transform:none!important;transition:background .2s ease,border-color .2s ease!important;
+  }
+  header nav#garageSectionNav button:hover,header nav#garageSectionNav a.navlink:hover{
+    background:rgba(255,255,255,.10)!important;border-color:rgba(255,255,255,.10)!important
+  }
+  header nav#garageSectionNav button[aria-selected="true"]{
+    background:rgba(255,255,255,.14)!important;border-color:rgba(255,255,255,.12)!important;color:#fff!important
+  }
+  header nav#garageSectionNav a.navlink{border-color:transparent!important}
+  /* Home-style desktop buttons and action controls throughout Garage. */
+  .btn{
+    min-height:44px!important;padding:11px 18px!important;border-radius:10px!important;
+    display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;
+    font-family:Manrope,system-ui,sans-serif!important;font-size:14px!important;font-weight:700!important;
+    letter-spacing:.01em!important;border:1px solid rgba(255,255,255,.16)!important;
+    box-shadow:0 4px 14px rgba(0,0,0,.14)!important;
+    transition:transform .18s ease,background .18s ease,border-color .18s ease,box-shadow .18s ease!important;
+  }
+  .btn:hover{transform:translateY(-2px)!important;box-shadow:0 9px 22px rgba(0,0,0,.20)!important}
+  .btn.alt{background:rgba(255,255,255,.12)!important;color:#f5f5f3!important;border-color:rgba(255,255,255,.24)!important}
+  .btn.ghost{background:rgba(255,255,255,.06)!important;color:var(--ink)!important;border-color:rgba(255,255,255,.22)!important}
+  .btn.wa{background:#f2f1ed!important;color:#17191c!important;border-color:rgba(255,255,255,.5)!important}
+  .tile,.panel{border-radius:16px!important}
+  .tile:hover{transform:translateY(-3px)!important}
+}
+@media(prefers-reduced-motion:reduce){
+  header .garage-nav-toggle,.btn,.tile{transition:none!important}
+}
+</style>
