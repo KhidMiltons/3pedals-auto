@@ -316,6 +316,24 @@ html body>header>.wrap{background:transparent!important;border:0!important;box-s
 html body>header{border:0!important;border-bottom:0!important;outline:0!important;box-shadow:0 12px 34px rgba(0,0,0,.16)!important}
 html body>header>.wrap{border:0!important;outline:0!important}
 </style>
+
+<style id="inventory-statusbar-clean-grid-alignment">
+/* Remove every divider/outline from the inventory status strip and align it exactly with vehicle cards. */
+html body main.wrap>.count,
+html body main.wrap>#count,
+html body main.wrap .inventory-statusbar,
+html body main.wrap .statusbar{
+  display:block!important;width:100%!important;max-width:none!important;min-width:0!important;
+  box-sizing:border-box!important;margin:10px 0 16px!important;padding:8px 0!important;
+  border:0!important;border-top:0!important;border-bottom:0!important;outline:0!important;
+  background:transparent!important;box-shadow:none!important;border-radius:0!important;
+}
+html body main.wrap>#grid,
+html body main.wrap>.grid{width:100%!important;max-width:none!important;margin-left:0!important;margin-right:0!important;box-sizing:border-box!important}
+html body>header{border:0!important;border-bottom:0!important;outline:0!important}
+html body>header::before,html body>header::after{border:0!important;box-shadow:none!important}
+@media(max-width:560px){html body main.wrap>.count,html body main.wrap>#count{padding:7px 0!important;margin:8px 0 12px!important}}
+</style>
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
