@@ -290,14 +290,20 @@ header.head{z-index:5!important}
 
 
 <style id="dealers-home-glass-borders">
-/* Match the subtle white glass edges used by the Home header and cards. */
+/* Match the Home screen's white-edged translucent glass cards. */
 header.head{
   border:1px solid rgba(255,255,255,.18)!important;
   box-shadow:0 14px 38px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.16)!important;
 }
 .dealer,.stat,.state{
   border:1px solid rgba(255,255,255,.22)!important;
-  box-shadow:0 14px 38px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.14)!important;
+  box-shadow:0 12px 30px rgba(0,0,0,.16),inset 0 1px 0 rgba(255,255,255,.12)!important;
+}
+.stat{
+  background:rgba(20,22,25,.30)!important;
+  -webkit-backdrop-filter:blur(8px) saturate(118%)!important;
+  backdrop-filter:blur(8px) saturate(118%)!important;
+  border-radius:15px!important;
 }
 .dealer:hover,.dealer:focus-visible{
   border-color:rgba(255,255,255,.34)!important;
