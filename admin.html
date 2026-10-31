@@ -515,6 +515,29 @@ html body>main:not(.wrap){
   }
 }
 </style>
+
+<style id="admin-dashboard-frame-alignment">
+/* The admin dashboard has its own #app frame rather than a body-level main element. */
+html body #app.wrap{
+  box-sizing:border-box!important;
+  width:min(calc(100% - 48px),1180px)!important;
+  max-width:1180px!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  padding-left:0!important;
+  padding-right:0!important;
+}
+html body #app.wrap>header.top{
+  box-sizing:border-box!important;
+  width:100%!important;
+  max-width:none!important;
+  margin-left:0!important;
+  margin-right:0!important;
+}
+@media(max-width:760px){
+  html body #app.wrap{width:calc(100% - 32px)!important;max-width:none!important}
+}
+</style>
 </body>
 </html>
 
