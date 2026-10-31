@@ -760,6 +760,44 @@ html body>main:not(.wrap){
   }
 }
 </style>
+
+<style id="inventory-header-grid-edge-alignment">
+/* Make the inventory header shell use the exact outer frame occupied by the vehicle grids. */
+html body>header,
+html body>main.wrap{
+  box-sizing:border-box!important;
+  width:min(1180px,calc(100% - 48px))!important;
+  max-width:1180px!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+html body>header{
+  padding-left:0!important;
+  padding-right:0!important;
+}
+html body>header>.wrap{
+  box-sizing:border-box!important;
+  width:100%!important;
+  max-width:none!important;
+  margin-left:0!important;
+  margin-right:0!important;
+}
+html body>main.wrap>#grid,
+html body>main.wrap>#featuredVehicles,
+html body>main.wrap>#featuredVehicles>.featured-grid{
+  box-sizing:border-box!important;
+  width:100%!important;
+  max-width:none!important;
+}
+@media(max-width:760px){
+  html body>header,
+  html body>main.wrap{
+    width:calc(100% - 32px)!important;
+    max-width:none!important;
+  }
+  html body>header>.wrap{width:100%!important;max-width:none!important}
+}
+</style>
 </body></html>
 
 <style id="homepage-header-match-final">
