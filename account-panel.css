@@ -1,0 +1,171 @@
+/* 3 Pedals Auto KE — independent glassmorphic account dashboard */
+#accDlg.account-dashboard-dialog{
+  --ad-line:rgba(255,255,255,.14);
+  --ad-muted:rgba(239,244,249,.62);
+  --ad-text:#f4f7fa;
+  --ad-glass:rgba(255,255,255,.065);
+  position:fixed!important;inset:4vh 3vw!important;margin:0!important;
+  width:94vw!important;max-width:1480px!important;height:92vh!important;max-height:92vh!important;
+  padding:0!important;overflow:hidden!important;display:grid!important;
+  grid-template-columns:258px minmax(0,1fr)!important;grid-template-rows:minmax(0,1fr)!important;
+  gap:0!important;border:1px solid rgba(255,255,255,.19)!important;border-radius:25px!important;
+  color:var(--ad-text)!important;background:rgba(17,23,29,.76)!important;
+  box-shadow:0 30px 100px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.10)!important;
+  -webkit-backdrop-filter:blur(28px) saturate(135%)!important;backdrop-filter:blur(28px) saturate(135%)!important;
+  isolation:isolate
+}
+#accDlg.account-dashboard-dialog::backdrop{
+  background:rgba(4,8,12,.58)!important;
+  -webkit-backdrop-filter:blur(5px) saturate(110%)!important;backdrop-filter:blur(5px) saturate(110%)!important
+}
+#accDlg.account-dashboard-dialog>.account-sidebar{
+  grid-column:1!important;grid-row:1!important;position:relative!important;inset:auto!important;
+  display:flex!important;visibility:visible!important;opacity:1!important;transform:none!important;
+  flex-direction:column!important;align-items:stretch!important;gap:5px!important;
+  width:100%!important;height:100%!important;min-width:0!important;max-height:none!important;
+  overflow-y:auto!important;overflow-x:hidden!important;box-sizing:border-box!important;
+  margin:0!important;padding:25px 17px 18px!important;border:0!important;
+  border-right:1px solid var(--ad-line)!important;border-radius:0!important;
+  background:linear-gradient(155deg,rgba(255,255,255,.095),rgba(255,255,255,.035) 58%,rgba(0,0,0,.13))!important;
+  box-shadow:none!important;-webkit-backdrop-filter:blur(20px) saturate(125%)!important;backdrop-filter:blur(20px) saturate(125%)!important;
+  scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.2) transparent
+}
+#accDlg.account-dashboard-dialog>.account-sidebar[hidden]{display:flex!important}
+#accDlg .account-sidebar-brand{display:flex!important;align-items:center!important;gap:11px!important;
+  padding:3px 8px 21px!important;margin:0 0 15px!important;border-bottom:1px solid var(--ad-line)!important}
+#accDlg .account-sidebar-brand img{width:39px!important;height:39px!important;flex:0 0 39px!important;
+  border:1px solid rgba(255,255,255,.22)!important;border-radius:11px!important;object-fit:cover!important}
+#accDlg .account-sidebar-brand div{display:grid!important;gap:4px!important}
+#accDlg .account-sidebar-brand strong{font:750 12px/1.1 Manrope,system-ui,sans-serif!important;letter-spacing:.16em!important;color:#fff!important}
+#accDlg .account-sidebar-brand span{font:600 9px/1.2 Manrope,system-ui,sans-serif!important;letter-spacing:.16em!important;color:var(--ad-muted)!important}
+#accDlg .seller-nav-identity{display:grid!important;gap:6px!important;padding:7px 10px 14px!important;margin:0 0 5px!important;border:0!important}
+#accDlg .seller-nav-identity small,#accDlg .seller-nav-label{font:750 9px/1.3 Manrope,system-ui,sans-serif!important;letter-spacing:.16em!important;color:var(--ad-muted)!important}
+#accDlg .seller-nav-identity strong{display:block!important;margin-top:2px!important;color:#fff!important;font-size:15px!important;font-weight:650!important;overflow-wrap:anywhere}
+#accDlg .seller-nav-identity>span{font-size:11px!important;color:var(--ad-muted)!important;overflow-wrap:anywhere}
+#accDlg .seller-mode-switch{display:grid!important;grid-template-columns:1fr 1fr!important;gap:5px!important;
+  padding:4px!important;margin:0 0 11px!important;border:1px solid var(--ad-line)!important;
+  border-radius:11px!important;background:rgba(0,0,0,.17)!important}
+#accDlg .seller-mode-switch button{min-height:34px!important;padding:7px!important;border:0!important;border-radius:8px!important;
+  background:transparent!important;color:var(--ad-muted)!important;font-size:11px!important}
+#accDlg .seller-mode-switch button.selected{background:rgba(255,255,255,.14)!important;color:#fff!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.1)!important}
+#accDlg .seller-nav-label{padding:14px 10px 6px!important}
+#accDlg nav#accountMenu.account-sidebar>button{display:flex!important;align-items:center!important;gap:11px!important;
+  width:100%!important;min-height:41px!important;flex:0 0 auto!important;padding:9px 11px!important;margin:0!important;
+  border:1px solid transparent!important;border-radius:10px!important;background:transparent!important;
+  color:rgba(242,246,250,.75)!important;text-align:left!important;font:600 12px/1.35 Manrope,system-ui,sans-serif!important;
+  box-shadow:none!important;transform:none!important;transition:background .18s ease,border-color .18s ease,color .18s ease!important}
+#accDlg nav#accountMenu.account-sidebar>button::before{content:"";width:17px;height:17px;flex:0 0 17px;opacity:.76;
+  background:currentColor;mask-repeat:no-repeat;mask-position:center;mask-size:contain}
+#accDlg nav#accountMenu.account-sidebar>button[data-page="dashboard"]::before{mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8'%3E%3Crect x='3' y='3' width='8' height='8' rx='2'/%3E%3Crect x='13' y='3' width='8' height='5' rx='2'/%3E%3Crect x='13' y='10' width='8' height='11' rx='2'/%3E%3Crect x='3' y='13' width='8' height='8' rx='2'/%3E%3C/svg%3E")}
+#accDlg nav#accountMenu.account-sidebar>button[data-page="listings"]::before{mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8'%3E%3Cpath d='M3 7h18M5 7l1.5-3h11L19 7v13H5z'/%3E%3Cpath d='M9 11h6'/%3E%3C/svg%3E")}
+#accDlg nav#accountMenu.account-sidebar>button[data-page="promotions"]::before{mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8'%3E%3Cpath d='m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z'/%3E%3C/svg%3E")}
+#accDlg nav#accountMenu.account-sidebar>button[data-page="bookings"]::before{mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8'%3E%3Crect x='3' y='5' width='18' height='16' rx='2'/%3E%3Cpath d='M7 3v4m10-4v4M3 10h18m-13 4h3m-3 3h7'/%3E%3C/svg%3E")}
+#accDlg nav#accountMenu.account-sidebar>button[data-page="settings"]::before{mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8'%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3Cpath d='m19.4 15 .1.1 1.4 1.1-1.4 2.4-1.7-.6a8 8 0 0 1-1.7 1l-.3 1.8h-2.8l-.3-1.8a8 8 0 0 1-1.7-1l-1.7.6-1.4-2.4 1.4-1.1a7 7 0 0 1 0-2l-1.4-1.1 1.4-2.4 1.7.6a8 8 0 0 1 1.7-1l.3-1.8h2.8l.3 1.8a8 8 0 0 1 1.7 1l1.7-.6 1.4 2.4-1.4 1.1a7 7 0 0 1 0 2Z'/%3E%3C/svg%3E")}
+#accDlg nav#accountMenu.account-sidebar>button[data-seller-signup]::before{mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8'%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3Cpath d='M4 21c1-4 3.5-6 8-6m7-1v7m-3.5-3.5h7'/%3E%3C/svg%3E")}
+#accDlg nav#accountMenu.account-sidebar>button[data-signout]::before{mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8'%3E%3Cpath d='M10 17l5-5-5-5m5 5H3m9-9h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7'/%3E%3C/svg%3E")}
+#accDlg nav#accountMenu.account-sidebar>button:hover,#accDlg nav#accountMenu.account-sidebar>button:focus-visible,
+#accDlg nav#accountMenu.account-sidebar>button.active,#accDlg nav#accountMenu.account-sidebar>button[aria-current="page"]{
+  background:rgba(255,255,255,.105)!important;border-color:rgba(255,255,255,.13)!important;color:#fff!important;outline:none!important}
+#accDlg .account-sidebar-footer{margin-top:auto!important;padding-top:13px!important;border-top:1px solid var(--ad-line)!important}
+#accDlg .account-sidebar-footer button{color:rgba(255,225,225,.8)!important}
+#accDlg .account-dashboard-main{
+  grid-column:2!important;grid-row:1!important;display:flex!important;flex-direction:column!important;
+  min-width:0!important;min-height:0!important;width:100%!important;height:100%!important;max-height:none!important;
+  box-sizing:border-box!important;overflow:hidden!important;padding:26px 31px 24px!important;
+  background:rgba(255,255,255,.018)!important;border:0!important;border-radius:0!important
+}
+#accDlg .account-dialog-head{position:relative!important;top:auto!important;z-index:3!important;display:grid!important;
+  grid-template-columns:minmax(0,1fr) 66px 40px!important;align-items:center!important;gap:11px!important;
+  flex:0 0 auto!important;width:100%!important;margin:0 0 23px!important;padding:0 0 18px!important;
+  background:transparent!important;border:0!important;border-bottom:1px solid var(--ad-line)!important;box-shadow:none!important}
+#accDlg .account-dialog-head #accMenuToggle{display:none!important}
+#accDlg .account-dialog-head h2.account-brand-title{grid-column:1!important;grid-row:1!important;display:flex!important;
+  align-items:center!important;gap:11px!important;min-width:0!important;margin:0!important;color:#fff!important;
+  font-size:20px!important;line-height:1.2!important;letter-spacing:-.035em!important;text-align:left!important}
+#accDlg .account-dialog-head .account-brand-icon{width:32px!important;height:32px!important;flex:0 0 32px!important;
+  border:1px solid rgba(255,255,255,.2)!important;border-radius:9px!important;object-fit:cover!important}
+#accDlg .account-dialog-head button{min-width:40px!important;width:40px!important;height:40px!important;
+  display:grid!important;place-items:center!important;padding:0!important;border:1px solid var(--ad-line)!important;
+  border-radius:11px!important;background:rgba(255,255,255,.055)!important;color:#f5f7f9!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08)!important;font-size:12px!important;transition:background .18s,border-color .18s!important}
+#accDlg .account-dialog-head button:hover{background:rgba(255,255,255,.12)!important;border-color:rgba(255,255,255,.25)!important}
+#accDlg .account-dialog-head #accHomeTop{grid-column:2!important;grid-row:1!important;width:66px!important;min-width:66px!important}
+#accDlg .account-dialog-head #accCloseTop{grid-column:3!important;grid-row:1!important;font-size:24px!important}
+#accDlg #accBody{flex:1 1 auto!important;min-height:0!important;min-width:0!important;overflow:auto!important;
+  overscroll-behavior:contain!important;padding:0 5px 22px 0!important;scrollbar-width:thin!important;
+  scrollbar-color:rgba(255,255,255,.22) transparent!important;color:var(--ad-text)!important}
+#accDlg #accBody .account-pages{display:block!important;min-width:0!important}
+#accDlg #accBody .profile-card,#accDlg #accBody .account-tools,#accDlg #accBody .account-page,
+#accDlg #accBody .account-settings,#accDlg #accBody .account-stat,#accDlg #accBody .profile-grid>div,
+#accDlg #accBody .svc,#accDlg #accBody .seller-summary-card{
+  color:var(--ad-text)!important;background:rgba(255,255,255,.055)!important;
+  border:1px solid var(--ad-line)!important;border-radius:16px!important;
+  box-shadow:0 10px 28px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.035)!important
+}
+#accDlg #accBody .profile-card{padding:20px!important;gap:17px!important}
+#accDlg #accBody .account-tools,#accDlg #accBody .account-page,#accDlg #accBody .account-settings{padding:20px!important}
+#accDlg #accBody .profile-grid{gap:13px!important}
+#accDlg #accBody :is(h1,h2,h3,h4,strong,b,label){color:#f4f7fa!important}
+#accDlg #accBody :is(p,small,.meta,.muted,.description,.subtitle){color:var(--ad-muted)!important}
+#accDlg #accBody input,#accDlg #accBody select,#accDlg #accBody textarea{
+  background:rgba(4,8,12,.28)!important;border:1px solid rgba(255,255,255,.17)!important;
+  border-radius:10px!important;color:#f5f7fa!important;box-shadow:none!important
+}
+#accDlg #accBody input::placeholder,#accDlg #accBody textarea::placeholder{color:rgba(239,244,249,.42)!important}
+#accDlg #accBody input:focus,#accDlg #accBody select:focus,#accDlg #accBody textarea:focus{
+  outline:2px solid rgba(255,255,255,.2)!important;outline-offset:1px!important;border-color:rgba(255,255,255,.35)!important
+}
+#accDlg #accBody .btn{border-radius:10px!important;box-shadow:none!important}
+#accDlg #accBody .btn.ghost{background:rgba(255,255,255,.055)!important;border:1px solid var(--ad-line)!important;color:#f4f7fa!important}
+#accDlg #accBody .account-page[hidden],#accDlg #accBody [hidden]{display:none!important}
+#accDlg #accBody .stats{gap:12px!important}
+#accDlg #accBody .stats>*{border-radius:14px!important}
+#accDlg #accBody .seller-listing{background:rgba(255,255,255,.045)!important;border:1px solid var(--ad-line)!important;border-radius:13px!important}
+#accDlg #accBody .promotion-package-grid{gap:12px!important}
+#accDlg #accBody .account-settings-tabs{gap:7px!important}
+#accDlg #accBody .account-settings-tabs button{border-radius:9px!important}
+#accDlg #accBody .account-fast-loading{padding:12px 0!important}
+#accDlg #accBody .account-fast-loading-head span,#accDlg #accBody .account-fast-loading-grid span,
+#accDlg #accBody .account-fast-loading-card i{background:rgba(255,255,255,.09)!important;border-radius:12px!important}
+@media(max-width:760px){
+  #accDlg.account-dashboard-dialog{inset:0!important;width:100vw!important;height:100dvh!important;max-width:none!important;max-height:100dvh!important;
+    border:0!important;border-radius:0!important;grid-template-columns:minmax(0,1fr)!important}
+  #accDlg .account-dashboard-main{grid-column:1!important;grid-row:1!important;padding:14px 15px max(16px,env(safe-area-inset-bottom))!important}
+  #accDlg .account-dialog-head{grid-template-columns:38px minmax(0,1fr) 56px 38px!important;gap:7px!important;margin-bottom:17px!important;padding-bottom:13px!important}
+  #accDlg .account-dialog-head #accMenuToggle{display:grid!important;grid-column:1!important;grid-row:1!important;
+    place-items:center!important;font-size:0!important}
+  #accDlg .account-dialog-head #accMenuToggle::before{content:"";display:block;width:18px;height:14px;
+    background:linear-gradient(to bottom,currentColor 0 2px,transparent 2px 6px,currentColor 6px 8px,transparent 8px 12px,currentColor 12px 14px)}
+  #accDlg .account-dialog-head h2.account-brand-title{grid-column:2!important;grid-row:1!important;gap:7px!important;font-size:clamp(13px,3.8vw,17px)!important}
+  #accDlg .account-dialog-head .account-brand-icon{width:26px!important;height:26px!important;flex-basis:26px!important}
+  #accDlg .account-dialog-head #accHomeTop{grid-column:3!important;grid-row:1!important;width:56px!important;min-width:56px!important}
+  #accDlg .account-dialog-head #accCloseTop{grid-column:4!important;grid-row:1!important}
+  #accDlg nav#accountMenu.account-sidebar,#accDlg nav#accountMenu.account-sidebar[hidden]{
+    position:fixed!important;inset:auto auto auto 12px!important;top:calc(62px + env(safe-area-inset-top))!important;
+    z-index:1005!important;display:none!important;visibility:visible!important;opacity:1!important;
+    width:min(290px,calc(100vw - 24px))!important;height:auto!important;max-height:calc(100dvh - 88px)!important;
+    padding:16px!important;border:1px solid rgba(255,255,255,.18)!important;border-radius:17px!important;
+    background:rgba(19,25,31,.94)!important;box-shadow:0 20px 55px rgba(0,0,0,.42)!important;
+    -webkit-backdrop-filter:blur(25px) saturate(135%)!important;backdrop-filter:blur(25px) saturate(135%)!important
+  }
+  #accDlg nav#accountMenu.account-sidebar.menu-open{display:flex!important}
+  #accDlg #accBody{padding-right:0!important}
+  #accDlg #accBody .profile-card{align-items:flex-start!important;flex-wrap:wrap!important;padding:15px!important}
+  #accDlg #accBody .account-tools,#accDlg #accBody .account-page,#accDlg #accBody .account-settings{padding:15px!important}
+  #accDlg #accBody .profile-grid{grid-template-columns:minmax(0,1fr)!important}
+}
+@media(max-width:390px){
+  #accDlg .account-dashboard-main{padding-left:11px!important;padding-right:11px!important}
+  #accDlg .account-dialog-head{grid-template-columns:34px minmax(0,1fr) 49px 34px!important;gap:5px!important}
+  #accDlg .account-dialog-head button{width:34px!important;min-width:34px!important;height:35px!important}
+  #accDlg .account-dialog-head #accHomeTop{width:49px!important;min-width:49px!important;font-size:10px!important}
+  #accDlg .account-dialog-head h2.account-brand-title{font-size:12px!important}
+}
+@media(hover:hover){
+  #accDlg #accBody .profile-card:hover,#accDlg #accBody .account-tools:hover,#accDlg #accBody .account-page:hover{
+    border-color:rgba(255,255,255,.24)!important;box-shadow:0 14px 32px rgba(0,0,0,.16)!important
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  #accDlg.account-dashboard-dialog * ,#accDlg.account-dashboard-dialog *::before,#accDlg.account-dashboard-dialog *::after{animation:none!important;transition:none!important}
+}
