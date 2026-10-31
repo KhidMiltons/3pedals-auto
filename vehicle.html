@@ -592,3 +592,57 @@ header .back{margin-left:auto!important;display:inline-flex!important;align-item
 }
 @media(max-width:600px){header .wrap.head{width:calc(100% - 24px)!important;gap:10px!important}header .back{padding:8px 10px!important;font-size:12px!important}}
 </style>
+
+
+<style id="dealer-vehicle-home-glass-header">
+/* Match the floating Home/Garage glass header on vehicle details opened from dealer listings. */
+html body>header{
+  position:sticky!important;top:12px!important;z-index:1000!important;
+  display:block!important;box-sizing:border-box!important;
+  width:min(1160px,calc(100% - 32px))!important;max-width:1160px!important;
+  margin:18px auto 0!important;padding:0!important;
+  border:1px solid rgba(255,255,255,.18)!important;border-radius:30px!important;
+  background:rgba(34,35,38,.72)!important;background-image:none!important;
+  box-shadow:0 18px 55px rgba(0,0,0,.26),inset 0 1px 0 rgba(255,255,255,.12)!important;
+  -webkit-backdrop-filter:blur(26px) saturate(145%)!important;
+  backdrop-filter:blur(26px) saturate(145%)!important;
+}
+html body>header>.wrap.head{
+  box-sizing:border-box!important;width:100%!important;max-width:none!important;
+  min-height:82px!important;padding:10px 24px!important;margin:0!important;
+  display:flex!important;align-items:center!important;justify-content:space-between!important;
+  gap:18px!important;background:transparent!important;border:0!important;box-shadow:none!important;
+}
+html body>header .logo{
+  color:#f1eee7!important;font-family:"Playfair Display",Georgia,serif!important;
+  font-size:27px!important;font-weight:700!important;letter-spacing:.03em!important;
+}
+html body>header .back{
+  margin-left:auto!important;flex:0 0 auto!important;
+  min-height:42px!important;padding:9px 15px!important;border-radius:12px!important;
+  background:rgba(255,255,255,.07)!important;color:#f1eee7!important;
+  border:1px solid rgba(255,255,255,.2)!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.09),0 8px 24px rgba(0,0,0,.18)!important;
+  -webkit-backdrop-filter:blur(18px) saturate(145%)!important;
+  backdrop-filter:blur(18px) saturate(145%)!important;
+  transition:transform .35s cubic-bezier(.22,1,.36,1),background .25s,border-color .25s!important;
+}
+html body>header .back:hover{
+  transform:translateY(-2px)!important;background:rgba(255,255,255,.13)!important;
+  border-color:rgba(255,255,255,.32)!important;color:#fff!important;
+}
+@media(max-width:800px){
+  html body>header{
+    top:8px!important;width:calc(100% - 20px)!important;
+    margin:10px auto 0!important;border-radius:20px!important;
+  }
+  html body>header>.wrap.head{
+    min-height:64px!important;padding:8px 12px!important;gap:8px!important;
+  }
+  html body>header .logo{font-size:clamp(18px,4.8vw,23px)!important;white-space:normal!important}
+  html body>header .back{min-height:38px!important;padding:8px 10px!important;font-size:12px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  html body>header .back{transition:none!important}
+}
+</style>
