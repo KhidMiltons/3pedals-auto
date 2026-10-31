@@ -4,6 +4,9 @@
   "use strict";
   const mount = document.getElementById("accountPanelMount");
   if (!mount) return;
+  // Keep the modal outside page-level stacking/transform contexts so it always
+  // overlays the marketplace instead of appearing underneath it.
+  if (mount.parentElement !== document.body) document.body.appendChild(mount);
   mount.innerHTML = `
     <dialog id="accDlg" class="account-dashboard-dialog" aria-label="3 Pedals account dashboard">
       <nav id="accountMenu" class="dashboard-shortcuts account-sidebar" aria-label="Account navigation" hidden>
