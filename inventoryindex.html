@@ -645,3 +645,55 @@ main.wrap>.inventory-intro-compact p{
   main.wrap>.inventory-intro-compact p{font-size:13px!important;line-height:1.6!important}
 }
 </style>
+
+
+<style id="inventory-mobile-filters-header-and-background-refinement">
+/* Keep the inventory header aligned precisely with the vehicle grid, with no status/divider line. */
+html body>header{
+  position:relative!important;top:auto!important;
+  width:min(1180px,calc(100% - 48px))!important;max-width:none!important;
+  margin:14px auto 12px!important;
+  border:0!important;border-bottom:0!important;outline:0!important;
+  box-shadow:0 10px 30px rgba(0,0,0,.12)!important;
+}
+html body>header::before,html body>header::after{
+  border:0!important;outline:0!important;box-shadow:none!important;
+}
+html body>header>.wrap{
+  width:100%!important;max-width:none!important;margin:0!important;
+}
+html body main.wrap{
+  width:min(1180px,calc(100% - 48px))!important;max-width:none!important;
+}
+@media(max-width:560px){
+  html body>header{width:calc(100% - 24px)!important;margin:10px auto 12px!important}
+  html body main.wrap{width:calc(100% - 24px)!important}
+}
+/* Subtle background softening without blurring vehicle photos, cards or text. */
+html body::before{
+  position:fixed!important;inset:-3px!important;z-index:0!important;pointer-events:none!important;
+  content:""!important;background:rgba(12,14,17,.10)!important;
+  -webkit-backdrop-filter:blur(1.6px)!important;backdrop-filter:blur(1.6px)!important;
+}
+html body>header,html body>main,html body>dialog,html body>footer{
+  position:relative;z-index:1;
+}
+/* Compact 2-column filter layout on phones: search + make, then price + sort. */
+@media(max-width:560px){
+  html body main.wrap .filters{
+    display:grid!important;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr)!important;
+    gap:8px!important;margin:14px 0 12px!important;
+  }
+  html body main.wrap .filters input,
+  html body main.wrap .filters select{
+    width:100%!important;min-width:0!important;min-height:40px!important;
+    height:40px!important;padding:7px 9px!important;border-radius:10px!important;
+    font-size:12px!important;line-height:1.2!important;
+  }
+  html body main.wrap .filters input{font-size:13px!important}
+}
+@media(max-width:360px){
+  html body main.wrap .filters{gap:6px!important;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)!important}
+  html body main.wrap .filters input,html body main.wrap .filters select{padding:6px 7px!important;font-size:11px!important}
+}
+</style>
