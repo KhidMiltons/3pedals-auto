@@ -2123,7 +2123,7 @@ async function openAccount(options={}){
       ...S.filter(x=>x.created_at).map(x=>({time:x.created_at,title:"Sale reported",detail:"KES "+fmt(x.reported_sale_price||0),kind:"sale"}))
     ].filter(item=>Number.isFinite(new Date(item.time).getTime())).sort((a,b)=>new Date(b.time)-new Date(a.time)).slice(0,6);
     const activityMarkup=activityItems.length?activityItems.map(item=>`<article class="account-activity-item"><span class="account-activity-dot ${esc(item.kind)}"></span><div><strong>${esc(item.title)}</strong><p>${esc(item.detail)}</p></div><time datetime="${esc(item.time)}">${esc(new Date(item.time).toLocaleDateString("en-KE",{day:"numeric",month:"short",year:"numeric"}))}</time></article>`).join(""):'<p class="account-overview-empty">Your recent account activity will appear here.</p>';
-    const firstName=name?name.split(/\\s+/)[0]:"there";
+    const firstName=name?name.split(/\s+/)[0]:"there";
     overview.innerHTML=`<div class="account-overview-heading"><div><p class="account-eyebrow">YOUR 3 PEDALS WORKSPACE</p><h3>Welcome back, ${esc(firstName)}</h3><p>Here’s what’s happening with your garage today.</p></div><span class="account-member-chip"><span></span> Account active</span></div>
       <div class="account-overview-stats">
         <button type="button" data-overview-page="listings"><span class="account-overview-stat-icon">▧</span><span class="account-overview-stat-label">My listings</span><strong>${L.length}</strong><small>${listingStatusCounts.approved||0} live · ${listingStatusCounts.pending||0} awaiting review</small></button>
