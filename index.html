@@ -3804,3 +3804,20 @@ body>header,header.site-header,.site-header,header{
 }
 @media(prefers-reduced-motion:reduce){#adminOpen,#publicWhatsappFab{transition:none!important}}
 </style>
+
+<style id="floating-admin-whatsapp-header-text-gradient">
+/* Match floating shortcut fills to the homepage header text gradient; no blur or glass backdrop. */
+#adminWrap .admin-glass-icon,#adminOpen,#publicWhatsappFab{
+  background:linear-gradient(135deg,rgba(244,241,233,.92),rgba(194,190,181,.78))!important;
+  background-image:linear-gradient(135deg,rgba(244,241,233,.92),rgba(194,190,181,.78))!important;
+  border:1px solid rgba(244,241,233,.72)!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+  box-shadow:0 4px 14px rgba(0,0,0,.16)!important;
+  transition:filter .18s ease,transform .18s ease!important;
+}
+#adminOpen svg,#publicWhatsappFab svg{filter:none!important;opacity:1!important;color:#17191c!important}
+#adminOpen:hover,#publicWhatsappFab:hover{
+  filter:brightness(1.04)!important;transform:translateY(-1px)!important;
+}
+@media(prefers-reduced-motion:reduce){#adminOpen,#publicWhatsappFab{transition:none!important}}
+</style>
