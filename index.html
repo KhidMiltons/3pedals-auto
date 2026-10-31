@@ -1737,7 +1737,7 @@ async function saveAccountProfile(){
     if(lu.error&&dealerFields)throw new Error("Your profile was saved, but dealer information could not be updated on your listings: "+lu.error.message);
     if(lu.error)console.warn("Listing seller type update failed; account type was saved.",lu.error);
     if(dealerFields){const dealerMeta={...(me.user_metadata||{}),dealer_name:dealerFields.yard_name,dealer_contact:dealerFields.contact,dealer_location:dealerFields.yard_location,dealer_phone:dealerFields.seller_phone,dealer_email:dealerFields.seller_email,dealer_whatsapp:dealerFields.whatsapp,dealer_website:dealerFields.yard_web};const dealerAuth=await sb.auth.updateUser({data:dealerMeta});if(dealerAuth.error)throw dealerAuth.error;me=dealerAuth.data.user||me}
-    me=au.data.user||me;profile={...(profile||{}),name,phone,account_type:type};
+    me=dealerFields?me:(au.data.user||me);profile={...(profile||{}),name,phone,account_type:type};
     if(pendingRemoveProfilePhoto){
       const cleared=await sb.auth.updateUser({data:{...(me.user_metadata||{}),avatar_url:null}});if(cleared.error)throw cleared.error;
       const pc=await sb.from("profiles").update({avatar_url:null}).eq("id",me.id);if(pc.error)console.warn("Could not clear profiles avatar.",pc.error);
