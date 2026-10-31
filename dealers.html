@@ -715,3 +715,27 @@ html body>footer>.wrap{
   margin:0 auto!important;
 }
 </style>
+
+<style id="dealers-footer-bottom-layout-fix">
+/* Keep the footer at the bottom of the viewport on short pages,
+   while allowing it to follow the full dealer grid on longer pages. */
+html,html body{min-height:100%!important}
+html body{
+  min-height:100vh!important;
+  display:flex!important;
+  flex-direction:column!important;
+}
+html body>header.head{flex:0 0 auto!important}
+html body>main.wrap{
+  flex:1 0 auto!important;
+  width:min(1160px,calc(100% - 36px))!important;
+}
+html body>footer{
+  flex:0 0 auto!important;
+  width:100%!important;
+  margin-top:auto!important;
+}
+@media(max-width:520px){
+  html body>main.wrap{width:calc(100% - 24px)!important}
+}
+</style>
