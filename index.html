@@ -1457,7 +1457,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
-<script defer src="vehicle-catalog.js" onload="window.dispatchEvent(new Event('vehicle-catalog-ready'))"></script>
+<script async src="vehicle-catalog.js" onload="window.dispatchEvent(new Event('vehicle-catalog-ready'))"></script>
 <script>
 const fmt=n=>Number(n).toLocaleString("en-US");
 // Database connection. Fill in config.js (see SETUP.md). Without it the site runs in demo mode with sample cars.
