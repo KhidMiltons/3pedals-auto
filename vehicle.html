@@ -285,7 +285,9 @@ html body > header nav a,html body > header nav button,html body > header .headn
 </style>
 <style id="vehicle-header-home-cars-nav">
 /* Home and Cars for Sale are now part of the glass header. */
-html body>header>.wrap.head{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:14px!important}
+html body>header>.wrap.head{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:10px!important}
+html body>header .back{order:2!important;margin-left:auto!important;flex:0 0 auto!important}
+html body>header .vehicle-header-nav{order:3!important;margin-left:0!important;margin-right:0!important;flex:0 0 auto!important}
 html body>header .vehicle-header-nav{
  display:flex!important;align-items:center!important;justify-content:center!important;gap:6px!important;
  margin-left:auto!important;margin-right:0!important;padding:4px!important;border:1px solid rgba(255,255,255,.14)!important;
@@ -305,9 +307,9 @@ html body>header .vehicle-header-nav a:hover,html body>header .vehicle-header-na
 html body>header .back{margin-left:0!important;flex:0 0 auto!important}
 @media(max-width:800px){
  html body>header>.wrap.head{gap:8px!important;flex-wrap:nowrap!important}
- html body>header .vehicle-header-nav{gap:2px!important;padding:3px!important;margin-left:auto!important}
+ html body>header .vehicle-header-nav{gap:2px!important;padding:3px!important;margin-left:0!important}
  html body>header .vehicle-header-nav a{min-height:36px!important;padding:8px 9px!important;font-size:11px!important}
- html body>header .back{padding:8px 9px!important;font-size:11px!important;white-space:nowrap!important}
+ html body>header .back{padding:8px 9px!important;font-size:11px!important;white-space:nowrap!important;margin-left:auto!important}
 }
 @media(max-width:430px){
  html body>header .logo{font-size:16px!important;max-width:34vw!important;white-space:normal!important;line-height:1.05!important}
@@ -315,6 +317,11 @@ html body>header .back{margin-left:0!important;flex:0 0 auto!important}
  html body>header .back{padding:7px 7px!important;font-size:10px!important}
 }
 @media(prefers-reduced-motion:reduce){html body>header .vehicle-header-nav a{transition:none!important}}
+</style>
+<style id="vehicle-card-header-spacing">
+/* Give the vehicle information card a clear gap beneath the floating header. */
+html body>main.wrap{padding-top:48px!important}
+@media(max-width:800px){html body>main.wrap{padding-top:30px!important}}
 </style>
 </head>
 <body>
@@ -329,7 +336,7 @@ alt=""
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-<header><div class="wrap head"><a class="logo" href="/">3 Pedals Auto KE</a><nav class="vehicle-header-nav" aria-label="Main navigation"><a href="/">Home</a><a href="/inventory.html">Cars for Sale</a></nav><a class="back" href="/dealers.html">← Back to Dealers</a></div></header>
+<header><div class="wrap head"><a class="logo" href="/">3 Pedals Auto KE</a><a class="back" href="/dealers.html">← Back to Dealers</a><nav class="vehicle-header-nav" aria-label="Main navigation"><a href="/">Home</a><a href="/inventory.html">Cars for Sale</a></nav></div></header>
 <main class="wrap">
   <div id="app" class="state">Loading vehicle…</div>
 </main>
