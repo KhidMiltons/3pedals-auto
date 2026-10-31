@@ -684,8 +684,8 @@ async function loadGarageSettings(){
  applyGarageSettings();
 }
 const MECHANICS_CACHE_KEY="3pedals:verified-mechanics:v2";
-function readMechanicsCache(){try{const saved=JSON.parse(sessionStorage.getItem(MECHANICS_CACHE_KEY)||"null");return saved&&Array.isArray(saved.rows)&&Date.now()-saved.at<30*60*1000?saved.rows:null}catch(_){return null}}
-function writeMechanicsCache(rows){try{sessionStorage.setItem(MECHANICS_CACHE_KEY,JSON.stringify({at:Date.now(),rows}))}catch(_){}}
+function readMechanicsCache(){try{const saved=JSON.parse(localStorage.getItem(MECHANICS_CACHE_KEY)||sessionStorage.getItem(MECHANICS_CACHE_KEY)||"null");return saved&&Array.isArray(saved.rows)&&Date.now()-saved.at<30*60*1000?saved.rows:null}catch(_){return null}}
+function writeMechanicsCache(rows){const value=JSON.stringify({at:Date.now(),rows});try{localStorage.setItem(MECHANICS_CACHE_KEY,value);sessionStorage.setItem(MECHANICS_CACHE_KEY,value)}catch(_){}}
 function renderPublicMechanics(data){
   const box=$("mechanicDirectory");
   if(!data?.length){box.innerHTML='<div class="empty-state">Our verified mechanics directory is being updated. Contact the garage for help.</div>';return}
