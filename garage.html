@@ -2765,3 +2765,44 @@ html body #home #garageContactCard .garage-contact-row{
   padding-inline:0!important;
 }
 </style>
+
+<style id="garage-contact-glass-justified-final">
+/* Final contact panel: inset glass surface, balanced alignment and restrained hover motion. */
+html body #home #garageContactCard.contact{
+  display:block!important;box-sizing:border-box!important;width:min(100%,1080px)!important;max-width:1080px!important;
+  margin:28px auto 42px!important;padding:clamp(22px,3.5vw,38px)!important;position:relative!important;
+  isolation:isolate!important;overflow:hidden!important;
+  background:linear-gradient(135deg,rgba(255,255,255,.105),rgba(255,255,255,.035))!important;
+  background-color:rgba(255,255,255,.055)!important;background-image:linear-gradient(135deg,rgba(255,255,255,.105),rgba(255,255,255,.035))!important;
+  border:1px solid rgba(255,255,255,.16)!important;border-radius:24px!important;outline:0!important;
+  box-shadow:0 18px 55px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.10)!important;
+  -webkit-backdrop-filter:blur(22px) saturate(145%)!important;backdrop-filter:blur(22px) saturate(145%)!important;
+  transition:transform .28s ease,border-color .28s ease,box-shadow .28s ease!important;
+}
+html body #home #garageContactCard.contact:hover{transform:translateY(-4px)!important;border-color:rgba(255,255,255,.25)!important;box-shadow:0 25px 65px rgba(0,0,0,.29),inset 0 1px 0 rgba(255,255,255,.14)!important}
+html body #home #garageContactCard.contact>h2{margin:0 0 18px!important;padding:0!important;text-align:left!important;letter-spacing:-.035em!important}
+html body #home #garageContactCard .garage-contact-row,html body #home #garageContactCard .svc.garage-contact-row{
+  box-sizing:border-box!important;display:grid!important;grid-template-columns:42px minmax(0,1fr) minmax(210px,auto)!important;
+  align-items:center!important;justify-content:stretch!important;column-gap:18px!important;row-gap:6px!important;
+  width:100%!important;min-width:0!important;margin:0!important;padding:17px 12px!important;
+  border:1px solid transparent!important;border-bottom-color:rgba(255,255,255,.10)!important;border-radius:14px!important;
+  background:transparent!important;box-shadow:none!important;transition:background .22s ease,border-color .22s ease,transform .22s ease!important;
+}
+html body #home #garageContactCard .garage-contact-row:last-child{border-bottom-color:transparent!important}
+html body #home #garageContactCard .garage-contact-row:hover{background:rgba(255,255,255,.065)!important;border-color:rgba(255,255,255,.10)!important;transform:translateX(3px)!important}
+html body #home #garageContactCard .garage-contact-copy{min-width:0!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:4px!important;text-align:justify!important;overflow-wrap:anywhere!important}
+html body #home #garageContactCard .garage-contact-copy b{font-weight:650!important;text-align:left!important}
+html body #home #garageContactCard .garage-contact-copy .meta{max-width:100%!important;text-align:justify!important;line-height:1.5!important}
+html body #home #garageContactCard .garage-contact-row>a,html body #home #garageContactCard .garage-contact-row>#garageAddressContact{
+  min-width:0!important;max-width:100%!important;justify-self:end!important;text-align:right!important;overflow-wrap:anywhere!important;word-break:break-word!important;line-height:1.5!important
+}
+html body #home #garageContactCard .garage-contact-icon{flex:none!important;width:40px!important;height:40px!important;border-radius:12px!important;background:rgba(255,255,255,.075)!important;border:1px solid rgba(255,255,255,.14)!important;transition:background .22s ease,border-color .22s ease,transform .22s ease!important}
+html body #home #garageContactCard .garage-contact-row:hover .garage-contact-icon{background:rgba(255,255,255,.13)!important;border-color:rgba(255,255,255,.23)!important;transform:scale(1.04)!important}
+@media(max-width:650px){
+ html body #home #garageContactCard.contact{width:100%!important;margin:22px auto 32px!important;padding:20px 14px!important;border-radius:20px!important}
+ html body #home #garageContactCard .garage-contact-row,html body #home #garageContactCard .svc.garage-contact-row{grid-template-columns:36px minmax(0,1fr)!important;column-gap:12px!important;row-gap:7px!important;padding:14px 8px!important}
+ html body #home #garageContactCard .garage-contact-icon{width:36px!important;height:36px!important}
+ html body #home #garageContactCard .garage-contact-row>a,html body #home #garageContactCard .garage-contact-row>#garageAddressContact{grid-column:2!important;justify-self:start!important;text-align:left!important;max-width:100%!important}
+}
+@media(prefers-reduced-motion:reduce){html body #home #garageContactCard.contact,html body #home #garageContactCard .garage-contact-row,html body #home #garageContactCard .garage-contact-icon{transition:none!important}}
+</style>
