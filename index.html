@@ -1707,6 +1707,35 @@ try{
 }catch(_){}
 
 let accountDataPrefetch=null,accountDataPrefetchUserId=null,accountRenderVersion=0,promotionHistoryRefreshTimer=null;
+let savedVehicleIds=new Set(),savedVehicleRows=[],savedVehiclesLoadedFor=null;
+async function loadSavedVehicles(){
+  if(!sb||!me){savedVehicleIds=new Set();savedVehicleRows=[];savedVehiclesLoadedFor=null;return []}
+  if(savedVehiclesLoadedFor===me.id)return savedVehicleRows;
+  const userId=me.id;
+  const {data,error}=await sb.from("saved_vehicles").select("listing_id,created_at,listing:listings(id,make,model,year,price,km,fuel,photos,status)").order("created_at",{ascending:false});
+  if(error){console.warn("Saved vehicles could not be loaded:",error);return []}
+  if(me?.id!==userId)return [];
+  savedVehicleRows=(data||[]).filter(row=>row.listing&&String(row.listing.status||"").toLowerCase()==="approved");
+  savedVehicleIds=new Set((data||[]).map(row=>String(row.listing_id)));
+  savedVehiclesLoadedFor=userId;return savedVehicleRows;
+}
+async function toggleSavedVehicle(id,button){
+  if(!me){openAuth("login","Sign in to save vehicles to your account.");return}
+  id=String(id);const removing=savedVehicleIds.has(id);
+  if(button){button.disabled=true;button.textContent=removing?"Removing…":"Saving…"}
+  const result=removing?await sb.from("saved_vehicles").delete().eq("listing_id",id):await sb.from("saved_vehicles").insert({listing_id:id,user_id:me.id});
+  if(result.error){if(button){button.disabled=false;button.textContent=removing?"Remove saved":"Save vehicle"}alert(result.error.message||"Could not update saved vehicles.");return}
+  if(removing){savedVehicleIds.delete(id);savedVehicleRows=savedVehicleRows.filter(row=>String(row.listing_id)!==id)}
+  else{savedVehicleIds.add(id);savedVehiclesLoadedFor=null;await loadSavedVehicles()}
+  document.querySelectorAll("[data-save-vehicle]").forEach(el=>{if(el.dataset.saveVehicle===id){el.textContent=savedVehicleIds.has(id)?"Saved ✓":"Save vehicle";el.setAttribute("aria-pressed",String(savedVehicleIds.has(id)));el.disabled=false}});
+  renderSavedVehicles();
+}
+function renderSavedVehicles(){
+  const target=$("savedVehiclesGrid");if(!target)return;
+  if(!savedVehicleRows.length){target.innerHTML='<div class="account-overview-empty">No saved vehicles yet. Browse the marketplace and save cars to keep them here.</div>';return}
+  target.innerHTML=savedVehicleRows.map(row=>{const v=row.listing;if(!v)return "";const title=[v.year,v.make,v.model].filter(Boolean).join(" ");const photo=Array.isArray(v.photos)?v.photos[0]:"";return '<article class="account-saved-vehicle"><a href="vehicle.html?id='+encodeURIComponent(v.id)+'" class="account-saved-vehicle-image">'+(photo?'<img src="'+esc(photo)+'" alt="'+esc(title)+'" loading="lazy">':'<span>3 PEDALS</span>')+'</a><div class="account-saved-vehicle-info"><strong>'+esc(title)+'</strong><b>KES '+fmt(v.price)+'</b><small>'+fmt(v.km||0)+' km · '+esc(v.fuel||"Fuel not specified")+'</small><div><a href="vehicle.html?id='+encodeURIComponent(v.id)+'">View vehicle</a><button type="button" data-save-vehicle="'+esc(v.id)+'" aria-pressed="true">Remove saved</button></div></div></article>'}).join("");
+  target.querySelectorAll("[data-save-vehicle]").forEach(button=>button.onclick=()=>toggleSavedVehicle(button.dataset.saveVehicle,button));
+}
 function fetchAccountData(userId,sellerPrefsRequest=null){
   const listingsRequest=Promise.resolve().then(()=>sb.from("listings").select("*").eq("owner",userId).order("created_at",{ascending:false}));
   const analyticsRequest=listingsRequest.then(({data,error})=>error||!data?.length?{data:[],error:null}:sb.from("seller_listing_analytics").select("listing_id,event_type,created_at").in("listing_id",data.map(item=>item.id)));
@@ -1769,7 +1798,7 @@ async function loadSession(){
     }
   }catch(_){}
   const {data:{session}}=await sb.auth.getSession();
-  me=session?session.user:null;profile=null;sellerPreferences={};
+  me=session?session.user:null;profile=null;sellerPreferences={};savedVehicleIds=new Set();savedVehicleRows=[];savedVehiclesLoadedFor=null;
   if(me){
     // Share the seller-settings request between sign-in initialization and dashboard prefetch.
     // This avoids asking Supabase for the same settings row twice during account startup.
@@ -1989,6 +2018,8 @@ let lastAccountMenuPointerToggle=0;window.toggleAccountMenu=function(event){cons
 window.addEventListener("resize",()=>positionAccountMenu());window.addEventListener("orientationchange",()=>setTimeout(positionAccountMenu,120));
 function showSellerAccountPage(selected,button,options={}){
   const pages=$("accBody").querySelector(".account-pages"),dashboard=pages?.querySelector("#accountPage-dashboard");if(!pages)return;
+  if(selected==="buying"){pages.querySelectorAll(".account-page").forEach(page=>page.hidden=page.id!=="accountPage-buying");loadSavedVehicles().then(renderSavedVehicles)}
+  else
   if(["dashboard","listings"].includes(selected)&&dashboard){
     pages.querySelectorAll(".account-page").forEach(page=>page.hidden=page!==dashboard);
     const sections=dashboard.querySelectorAll(":scope > .account-tools");
@@ -2137,16 +2168,18 @@ async function openAccount(options={}){
         <section class="account-overview-panel account-quick-panel"><p class="account-eyebrow">QUICK ACTIONS</p><h4>What would you like to do?</h4><button type="button" data-overview-page="listings"><span>＋</span><span><strong>Manage my vehicles</strong><small>Update photos, prices and listing status</small></span><b>›</b></button><button type="button" data-overview-page="promotions"><span>✧</span><span><strong>Promote a vehicle</strong><small>Give an approved listing more visibility</small></span><b>›</b></button><button type="button" data-overview-page="bookings"><span>▦</span><span><strong>View garage bookings</strong><small>Review service requests and appointments</small></span><b>›</b></button><button type="button" data-overview-buying><span>⌕</span><span><strong>Browse vehicles</strong><small>Explore the 3 Pedals marketplace</small></span><b>›</b></button></section>
       </div>`;
     const makePage=(id,node)=>{const page=document.createElement("section");page.className="account-page";page.id=`accountPage-${id}`;page.hidden=true;if(node)page.append(node);return page};
-    const activityPage=makePage("activity");
+    const activityPage=makePage("activity"),buyingPage=makePage("buying");
+    buyingPage.innerHTML='<section class="account-tools account-buyer-workspace"><div class="account-activity-page-head"><div><p class="account-eyebrow">YOUR MARKETPLACE</p><h3>Buying workspace</h3><p class="meta">Keep track of vehicles you are considering.</p></div><a class="btn ghost" href="#buy" data-browse-buying>Browse vehicles</a></div><h4>Saved vehicles</h4><div id="savedVehiclesGrid" class="account-saved-vehicles-grid"><p class="meta">Loading your saved vehicles…</p></div></section>';
     activityPage.innerHTML=`<section class="account-tools account-full-activity"><div class="account-activity-page-head"><div><p class="account-eyebrow">YOUR ACCOUNT HISTORY</p><h3>Activity centre</h3><p class="meta">A chronological record of your marketplace and garage activity.</p></div><span>${allActivityItems.length} events</span></div><div class="account-activity-list">${allActivityItems.length?allActivityItems.map(item=>`<article class="account-activity-item"><span class="account-activity-dot ${esc(item.kind)}"></span><div><strong>${esc(item.title)}</strong><p>${esc(item.detail)}</p></div><time datetime="${esc(item.time)}">${esc(new Date(item.time).toLocaleString("en-KE",{day:"numeric",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"}))}</time></article>`).join(""):'<p class="account-overview-empty">Your recent account activity will appear here as you use the marketplace.</p>'}</div></section>`;
     const dashboardPage=makePage("dashboard"),promotionsPage=makePage("promotions"),bookingsPage=makePage("bookings");promotionsPage.classList.add("account-promotions-page");promotionsPage.append(promotions);dashboardPage.append(summary,listings);bookingsPage.classList.add("account-bookings-page");
     if(bookingAction)bookingsPage.append(bookingAction);if(bookingHeading)bookingsPage.append(bookingHeading);
     let bookingNode=bookingHeading?.nextElementSibling;while(bookingNode&&!bookingNode.querySelector("#accOut")){const next=bookingNode.nextElementSibling;bookingsPage.append(bookingNode);bookingNode=next}
-    bookingsPage.querySelectorAll(".svc").forEach(item=>item.classList.add("account-booking-item"));if(bookingHeading)bookingHeading.classList.add("account-bookings-heading");const pages=document.createElement("div");pages.className="account-pages";pages.append(overview,dashboardPage,promotionsPage,settings,bookingsPage,activityPage);overview.hidden=false;dashboardPage.hidden=true;settings.hidden=true;
-    closeAccountMenu();menu.innerHTML=`<div class="account-sidebar-brand"><img src="favicon.svg" alt=""><div><strong>3 PEDALS</strong><span>AUTO KE · ACCOUNT</span></div></div><div class="seller-nav-identity"><small>SELLER ACCOUNT</small><strong class="seller-nav-brand"><img src="favicon.svg" alt="">${esc(name||me.email||"Seller")}</strong><span>${esc(me.email||"")}</span></div><div class="seller-mode-switch"><button type="button" data-buying>Buying</button><button type="button" class="selected" aria-current="page">Selling</button></div><div class="seller-nav-label">WORKSPACE</div><button type="button" class="active" data-page="overview" aria-current="page">Overview</button><button type="button" data-page="dashboard">Insights</button><button type="button" data-page="listings">My listings</button><button type="button" data-page="promotions">Promotions${reminders.length?` · ${reminders.length} due`:""}</button><button type="button" data-page="bookings">Garage bookings</button><button type="button" data-page="activity">Activity centre</button><button type="button" data-seller-signup>Create seller account</button><div class="seller-nav-label">ACCOUNT</div><button type="button" data-page="settings" data-account-tab="business">Profile</button><button type="button" data-page="settings" data-account-tab="account">Settings</button><div class="account-sidebar-footer"><button type="button" data-signout>Log out</button></div>`;menu.hidden=window.matchMedia('(max-width:760px)').matches;$('accDlg').classList.remove('nav-collapsed');
-    dashboard.remove();box.insertBefore(pages,box.firstChild);pages.querySelectorAll("[data-overview-page]").forEach(button=>button.addEventListener("click",()=>menu.querySelector(`[data-page="${button.dataset.overviewPage}"]`)?.click()));pages.querySelector("[data-overview-buying]")?.addEventListener("click",()=>{d.close();show("buy")});
+    bookingsPage.querySelectorAll(".svc").forEach(item=>item.classList.add("account-booking-item"));if(bookingHeading)bookingHeading.classList.add("account-bookings-heading");const pages=document.createElement("div");pages.className="account-pages";pages.append(overview,buyingPage,dashboardPage,promotionsPage,settings,bookingsPage,activityPage);overview.hidden=false;dashboardPage.hidden=true;settings.hidden=true;
+    closeAccountMenu();menu.innerHTML=`<div class="account-sidebar-brand"><img src="favicon.svg" alt=""><div><strong>3 PEDALS</strong><span>AUTO KE · ACCOUNT</span></div></div><div class="seller-nav-identity"><small>SELLER ACCOUNT</small><strong class="seller-nav-brand"><img src="favicon.svg" alt="">${esc(name||me.email||"Seller")}</strong><span>${esc(me.email||"")}</span></div><div class="seller-mode-switch"><button type="button" data-buying>Buying</button><button type="button" class="selected" aria-current="page">Selling</button></div><div class="seller-nav-label">WORKSPACE</div><button type="button" class="active" data-page="overview" aria-current="page">Overview</button><button type="button" data-page="buying">Buying workspace</button><button type="button" data-page="dashboard">Insights</button><button type="button" data-page="listings">My listings</button><button type="button" data-page="promotions">Promotions${reminders.length?` · ${reminders.length} due`:""}</button><button type="button" data-page="bookings">Garage bookings</button><button type="button" data-page="activity">Activity centre</button><button type="button" data-seller-signup>Create seller account</button><div class="seller-nav-label">ACCOUNT</div><button type="button" data-page="settings" data-account-tab="business">Profile</button><button type="button" data-page="settings" data-account-tab="account">Settings</button><div class="account-sidebar-footer"><button type="button" data-signout>Log out</button></div>`;menu.hidden=window.matchMedia('(max-width:760px)').matches;$('accDlg').classList.remove('nav-collapsed');
+    dashboard.remove();box.insertBefore(pages,box.firstChild);pages.querySelectorAll("[data-overview-page]").forEach(button=>button.addEventListener("click",()=>menu.querySelector(`[data-page="${button.dataset.overviewPage}"]`)?.click()));
+    pages.querySelector("[data-browse-buying]")?.addEventListener("click",event=>{event.preventDefault();d.close();show("buy")});pages.querySelector("[data-overview-buying]")?.addEventListener("click",()=>{d.close();show("buy")});
     pages.querySelector("[data-open-marketing]")?.addEventListener("click",()=>menu.querySelector('[data-page="promotions"]')?.click());
-    menu.querySelector("[data-seller-signup]").onclick=()=>{$("accDlg").close();closeAccountMenu();sellerSlugEdited=false;$("authName").value=profile?.name||me?.user_metadata?.name||me?.user_metadata?.full_name||"";$("authSellerSlug").value="";openAuth("register","",{seller:true})};menu.querySelector("[data-buying]").onclick=()=>{$("accDlg").close();show("buy")};menu.querySelector("[data-signout]").onclick=()=>$("accOut").click();
+    menu.querySelector("[data-seller-signup]").onclick=()=>{$("accDlg").close();closeAccountMenu();sellerSlugEdited=false;$("authName").value=profile?.name||me?.user_metadata?.name||me?.user_metadata?.full_name||"";$("authSellerSlug").value="";openAuth("register","",{seller:true})};menu.querySelector("[data-buying]").onclick=()=>showSellerAccountPage("buying",menu.querySelector('[data-page="buying"]'));menu.querySelector("[data-signout]").onclick=()=>$("accOut").click();
   }  $("accPhoto").onchange=e=>{pendingProfilePhoto=e.target.files?.[0]||null;pendingRemoveProfilePhoto=false;if(pendingProfilePhoto){const err=$("accProfileErr");if(err){err.style.color="var(--mute)";err.textContent="Picture selected. Click “Save profile changes” to upload it."}}};
   if($("accRemovePhoto"))$("accRemovePhoto").onclick=removeProfilePhoto;
   $("accSaveProfile").onclick=saveAccountProfile;
@@ -2613,6 +2646,7 @@ const bgOf=c=>c.color||"#17191c";
 const cardMarkup=(c,i)=>{
   const isYard=c.seller&&c.seller.type==="yard",yardName=c.seller?.name||"Car yard",loc=c.seller?.location||"";
   const vehicleUrl=`vehicle.html?id=${encodeURIComponent(c.id)}`;
+  const saved=savedVehicleIds.has(String(c.id));
   const yardUrl=`yard.html?name=${encodeURIComponent(yardName)}`;
   return `<article class="card">
     <div class="card-main" role="link" tabindex="0" data-href="${vehicleUrl}">
@@ -2623,6 +2657,7 @@ const cardMarkup=(c,i)=>{
       ${isYard?`<div class="card-extra"><div class="yard-line">${c.seller.logo?`<img class="yard-logo" src="${esc(c.seller.logo)}" alt="${esc(yardName)} logo" loading="lazy">`:`<span aria-hidden="true">🏢</span>`}<a class="yard-link" href="${yardUrl}">${esc(yardName)}</a></div>${loc?`<div class="yard-line">📍 ${esc(loc)}</div>`:""}<div class="card-reveal"><a class="yard-link" href="${yardUrl}">View dealer profile</a></div></div>`:""}
       </div>
     </div>
+    <div class="account-card-save-wrap"><button type="button" class="account-card-save" data-save-vehicle="${esc(c.id)}" aria-pressed="${String(saved)}">${saved?"Saved ✓":"Save vehicle"}</button></div>
   </article>`;
 };
 function render(){
@@ -2633,7 +2668,7 @@ function render(){
   $("grid").innerHTML=r.length?r.map(cardMarkup).join(""):'<p class="meta">No cars match these filters. Clear the search or raise the price limit.</p>';
 }
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-["grid","featuredGrid"].forEach(id=>{const el=$(id);if(!el)return;el.addEventListener("click",e=>{if(e.target.closest("a"))return;const card=e.target.closest(".card-main");if(card)location.href=card.dataset.href});el.addEventListener("keydown",e=>{if(e.target.closest("a,button"))return;const card=e.target.closest(".card-main");if(card&&(e.key==="Enter"||e.key===" ")){e.preventDefault();location.href=card.dataset.href}})});
+["grid","featuredGrid"].forEach(id=>{const el=$(id);if(!el)return;el.addEventListener("click",e=>{const save=e.target.closest("[data-save-vehicle]");if(save){e.preventDefault();e.stopPropagation();toggleSavedVehicle(save.dataset.saveVehicle,save);return}if(e.target.closest("a"))return;const card=e.target.closest(".card-main");if(card)location.href=card.dataset.href});el.addEventListener("keydown",e=>{if(e.target.closest("a,button"))return;const card=e.target.closest(".card-main");if(card&&(e.key==="Enter"||e.key===" ")){e.preventDefault();location.href=card.dataset.href}})});
 ["q","max","sort"].forEach(i=>$(i).addEventListener("input",render));
 $("make").addEventListener("change",()=>{updateBuyFilters();render()});
 $("model").addEventListener("change",()=>{updateBuyFilters();render()});
