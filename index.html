@@ -3695,48 +3695,6 @@ body>header,header.site-header,.site-header,header{
 }
 </style>
 
-<style id="site-header-content-grid-alignment">
-/* Shared page frame: header shell and primary content frame use the same measured width and centered gutters. */
-html body>header,
-html body>main.wrap,
-html body>main:not(.wrap){
-  box-sizing:border-box!important;
-  width:min(calc(100% - 48px),1180px)!important;
-  max-width:1180px!important;
-  margin-left:auto!important;
-  margin-right:auto!important;
-}
-html body>header>.wrap,
-html body>header>.headin,
-html body>header>.head,
-html body>header>.wrap.headin{
-  box-sizing:border-box!important;
-  width:100%!important;
-  max-width:none!important;
-  margin-left:0!important;
-  margin-right:0!important;
-}
-html body>main.wrap,
-html body>main:not(.wrap){
-  padding-left:0!important;
-  padding-right:0!important;
-}
-@media(max-width:760px){
-  html body>header,
-  html body>main.wrap,
-  html body>main:not(.wrap){
-    width:calc(100% - 32px)!important;
-    max-width:none!important;
-  }
-  html body>header>.wrap,
-  html body>header>.headin,
-  html body>header>.head,
-  html body>header>.wrap.headin{
-    width:100%!important;
-    max-width:none!important;
-  }
-}
-</style>
 </body>
 </html>
 
@@ -3881,21 +3839,4 @@ html body :is(.brand,.logo,.brand-name,.site-brand,.wordmark,header .brand,heade
 html body :is(button,.btn,a.button,.back,nav a,nav button){font-family:"Manrope",system-ui,sans-serif!important;font-weight:600!important}
 html body :is(.price,.amount,.vehicle-price,[data-price]){font-family:"Manrope",system-ui,sans-serif!important;font-weight:700!important;font-variant-numeric:tabular-nums}
 html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){font-family:"Playfair Display",Georgia,serif!important;font-weight:600!important;letter-spacing:-.02em!important}
-</style>
-
-
-<style id="homepage-content-header-width-alignment">
-/* Home content columns fill the same shared frame as the site header. */
-html body>main.wrap>#home,
-html body>main.wrap>#home>.home-with-quote,
-html body>main.wrap>#home>.home-with-quote>div,
-html body>main.wrap>#home .hero,
-html body>main.wrap>#home .tiles,
-html body>main.wrap>#home .journal-intro,
-html body>main.wrap>#home .project-intro{
-  box-sizing:border-box!important;
-  width:100%!important;
-  max-width:100%!important;
-}
-html body>main.wrap>#home .hero{margin-left:0!important;margin-right:0!important}
 </style>
