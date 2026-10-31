@@ -2984,3 +2984,26 @@ html body #home #garageContactCard .garage-contact-icon{
   html body #home #garageContactCard.contact{ -webkit-backdrop-filter:none!important;backdrop-filter:none!important }
 }
 </style>
+
+
+<style id="homepage-header-match-final">
+/* Match the homepage header shell: transparent smoked glass, a soft backdrop
+   blur, and no heavy fill, gold strip, or opaque gradient. Keep each page's
+   existing header layout, controls, spacing, and responsive behaviour. */
+html body>header,
+html body>header.head,
+html body>header.top,
+html body>header.site-header,
+html body>header .site-header{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border-top-color:transparent!important;
+  border-right-color:transparent!important;
+  border-bottom-color:transparent!important;
+  border-left-color:transparent!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:blur(18px) saturate(120%)!important;
+  backdrop-filter:blur(18px) saturate(120%)!important;
+}
+</style>
