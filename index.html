@@ -1989,7 +1989,7 @@ let lastAccountMenuPointerToggle=0;window.toggleAccountMenu=function(event){cons
 window.addEventListener("resize",()=>positionAccountMenu());window.addEventListener("orientationchange",()=>setTimeout(positionAccountMenu,120));
 function showSellerAccountPage(selected,button,options={}){
   const pages=$("accBody").querySelector(".account-pages"),dashboard=pages?.querySelector("#accountPage-dashboard");if(!pages)return;
-  if(["dashboard","listings","promotions"].includes(selected)&&dashboard){
+  if(["dashboard","listings"].includes(selected)&&dashboard){
     pages.querySelectorAll(".account-page").forEach(page=>page.hidden=page!==dashboard);
     const sections=dashboard.querySelectorAll(":scope > .account-tools");
     sections.forEach((section,index)=>section.hidden=selected!=="dashboard"&&((selected==="listings"&&index!==1)||(selected==="promotions"&&index!==2)));
@@ -2139,10 +2139,10 @@ async function openAccount(options={}){
     const makePage=(id,node)=>{const page=document.createElement("section");page.className="account-page";page.id=`accountPage-${id}`;page.hidden=true;if(node)page.append(node);return page};
     const activityPage=makePage("activity");
     activityPage.innerHTML=`<section class="account-tools account-full-activity"><div class="account-activity-page-head"><div><p class="account-eyebrow">YOUR ACCOUNT HISTORY</p><h3>Activity centre</h3><p class="meta">A chronological record of your marketplace and garage activity.</p></div><span>${allActivityItems.length} events</span></div><div class="account-activity-list">${allActivityItems.length?allActivityItems.map(item=>`<article class="account-activity-item"><span class="account-activity-dot ${esc(item.kind)}"></span><div><strong>${esc(item.title)}</strong><p>${esc(item.detail)}</p></div><time datetime="${esc(item.time)}">${esc(new Date(item.time).toLocaleString("en-KE",{day:"numeric",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"}))}</time></article>`).join(""):'<p class="account-overview-empty">Your recent account activity will appear here as you use the marketplace.</p>'}</div></section>`;
-    const dashboardPage=makePage("dashboard"),bookingsPage=makePage("bookings");dashboardPage.append(summary,listings,promotions);
+    const dashboardPage=makePage("dashboard"),promotionsPage=makePage("promotions"),bookingsPage=makePage("bookings");promotionsPage.classList.add("account-promotions-page");promotionsPage.append(promotions);dashboardPage.append(summary,listings);bookingsPage.classList.add("account-bookings-page");
     if(bookingAction)bookingsPage.append(bookingAction);if(bookingHeading)bookingsPage.append(bookingHeading);
     let bookingNode=bookingHeading?.nextElementSibling;while(bookingNode&&!bookingNode.querySelector("#accOut")){const next=bookingNode.nextElementSibling;bookingsPage.append(bookingNode);bookingNode=next}
-    const pages=document.createElement("div");pages.className="account-pages";pages.append(overview,dashboardPage,settings,bookingsPage,activityPage);overview.hidden=false;dashboardPage.hidden=true;settings.hidden=true;
+    bookingsPage.querySelectorAll(".svc").forEach(item=>item.classList.add("account-booking-item"));if(bookingHeading)bookingHeading.classList.add("account-bookings-heading");const pages=document.createElement("div");pages.className="account-pages";pages.append(overview,dashboardPage,promotionsPage,settings,bookingsPage,activityPage);overview.hidden=false;dashboardPage.hidden=true;settings.hidden=true;
     closeAccountMenu();menu.innerHTML=`<div class="account-sidebar-brand"><img src="favicon.svg" alt=""><div><strong>3 PEDALS</strong><span>AUTO KE · ACCOUNT</span></div></div><div class="seller-nav-identity"><small>SELLER ACCOUNT</small><strong class="seller-nav-brand"><img src="favicon.svg" alt="">${esc(name||me.email||"Seller")}</strong><span>${esc(me.email||"")}</span></div><div class="seller-mode-switch"><button type="button" data-buying>Buying</button><button type="button" class="selected" aria-current="page">Selling</button></div><div class="seller-nav-label">WORKSPACE</div><button type="button" class="active" data-page="overview" aria-current="page">Overview</button><button type="button" data-page="dashboard">Insights</button><button type="button" data-page="listings">My listings</button><button type="button" data-page="promotions">Promotions${reminders.length?` · ${reminders.length} due`:""}</button><button type="button" data-page="bookings">Garage bookings</button><button type="button" data-page="activity">Activity centre</button><button type="button" data-seller-signup>Create seller account</button><div class="seller-nav-label">ACCOUNT</div><button type="button" data-page="settings" data-account-tab="business">Profile</button><button type="button" data-page="settings" data-account-tab="account">Settings</button><div class="account-sidebar-footer"><button type="button" data-signout>Log out</button></div>`;menu.hidden=window.matchMedia('(max-width:760px)').matches;$('accDlg').classList.remove('nav-collapsed');
     dashboard.remove();box.insertBefore(pages,box.firstChild);pages.querySelectorAll("[data-overview-page]").forEach(button=>button.addEventListener("click",()=>menu.querySelector(`[data-page="${button.dataset.overviewPage}"]`)?.click()));pages.querySelector("[data-overview-buying]")?.addEventListener("click",()=>{d.close();show("buy")});
     pages.querySelector("[data-open-marketing]")?.addEventListener("click",()=>menu.querySelector('[data-page="promotions"]')?.click());
@@ -4147,6 +4147,6 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){f
 #home .home-with-quote{padding-top:clamp(18px,2.4vw,30px)!important}
 @media(max-width:760px){#home .home-with-quote{padding-top:20px!important}}
 </style>
-<link rel="stylesheet" href="account-panel.css?v=6">
+<link rel="stylesheet" href="account-panel.css?v=7">
 </body>
 </html>
