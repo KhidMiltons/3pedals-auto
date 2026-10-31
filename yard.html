@@ -953,9 +953,12 @@ html body>header .site-header{
 </style>
 
 
+
+
+
 <style id="homepage-header-rounded-outline-final">
-/* Match the homepage's visible floating rounded outline while keeping the
-   header face transparent. Preserve each page's existing width and layout. */
+/* Match homepage: only the rounded left/right end edges are visible.
+   Top and bottom edges stay transparent; preserve each page's layout. */
 html body>header,
 html body>header.head,
 html body>header.top,
@@ -965,9 +968,12 @@ html body>header .site-header{
   background:transparent!important;
   background-color:transparent!important;
   background-image:none!important;
-  border:1px solid rgba(255,255,255,.18)!important;
+  border-top:0!important;
+  border-bottom:0!important;
+  border-left:1px solid rgba(255,255,255,.18)!important;
+  border-right:1px solid rgba(255,255,255,.18)!important;
   border-radius:22px!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.10)!important;
+  box-shadow:none!important;
   -webkit-backdrop-filter:blur(18px) saturate(120%)!important;
   backdrop-filter:blur(18px) saturate(120%)!important;
 }
