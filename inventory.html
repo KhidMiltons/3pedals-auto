@@ -592,4 +592,22 @@ document.addEventListener('click', function(event) {
 @media(max-width:420px){#featuredGrid.featured-grid{gap:8px!important}#featuredGrid.featured-grid .photo{height:115px!important}}
 </style>
 
+
+<style id="inventory-mobile-wallpaper-fix">
+/* Keep the automotive wallpaper visible on mobile; prevent dark body layers from covering it. */
+html,body{background-color:transparent!important}
+body{position:relative!important;isolation:isolate!important;min-height:100vh!important}
+body:before{
+ content:""!important;display:block!important;position:fixed!important;inset:-18px!important;z-index:-1!important;pointer-events:none!important;
+ background:
+  linear-gradient(180deg,rgba(8,9,10,.42),rgba(8,9,10,.58)),
+  url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=2400&q=85") center center/cover no-repeat!important;
+ filter:blur(2px)!important;transform:scale(1.035)!important;
+}
+@media(max-width:700px){
+ body:before{inset:-12px!important;background-position:center center!important;background-size:cover!important;filter:blur(1.5px)!important;transform:scale(1.025)!important}
+ main,header,dialog{position:relative}
+}
+</style>
+
 </body></html>
