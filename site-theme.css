@@ -860,3 +860,87 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){
   font-weight:600!important;
   letter-spacing:-.02em!important;
 }
+
+
+/* Official responsive spacing system — 3 Pedals Auto KE */
+:root{
+  --space-1:4px;
+  --space-2:8px;
+  --space-3:12px;
+  --space-4:16px;
+  --space-5:20px;
+  --space-6:24px;
+  --space-8:32px;
+  --space-10:40px;
+  --space-12:48px;
+  --space-16:64px;
+  --page-gutter:clamp(16px,2.8vw,40px);
+  --page-top-gap:clamp(24px,3vw,40px);
+  --section-gap:clamp(40px,5vw,64px);
+  --card-gap:clamp(14px,1.7vw,24px);
+  --text-gap:12px;
+}
+/* Clear breathing room between the floating header and the page content. */
+html body>header + main,
+html body>header.head + main,
+html body>header.site-header + main{
+  margin-top:var(--page-top-gap)!important;
+}
+/* Consistent page gutters without forcing a new width or changing grids. */
+html body>main.wrap{
+  padding-left:var(--page-gutter)!important;
+  padding-right:var(--page-gutter)!important;
+}
+/* Text rhythm: readable paragraphs and deliberate heading separation. */
+html body :is(h1,h2,h3,h4,h5,h6){
+  margin-block:0 14px;
+}
+html body :is(h1,h2,h3)+p,
+html body :is(h1,h2,h3)+.subtitle,
+html body :is(h1,h2,h3)+.description{
+  margin-top:0!important;
+}
+html body p{
+  line-height:1.7;
+}
+html body p+p{
+  margin-top:var(--text-gap);
+}
+html body :is(.intro,.hero,.page-intro,.section-intro)>p:first-of-type{
+  max-width:72ch;
+  margin-bottom:0;
+}
+html body main.wrap>section+section{
+  margin-top:var(--section-gap);
+}
+html body :is(.grid,.cards,.vehicle-grid,.dealer-grid,.listing-grid){
+  column-gap:var(--card-gap);
+  row-gap:var(--card-gap);
+}
+html body :is(.intro,.hero,.page-intro,.section-intro) :is(h1,h2){
+  margin-bottom:12px;
+}
+@media(max-width:760px){
+  :root{
+    --page-top-gap:20px;
+    --section-gap:40px;
+    --card-gap:14px;
+    --text-gap:10px;
+  }
+  html body>header + main,
+  html body>header.head + main,
+  html body>header.site-header + main{
+    margin-top:var(--page-top-gap)!important;
+  }
+  html body>main.wrap{
+    padding-left:0!important;
+    padding-right:0!important;
+  }
+  html body :is(h1,h2,h3,h4,h5,h6){
+    margin-bottom:10px;
+  }
+  html body p{line-height:1.68}
+}
+@media(prefers-reduced-motion:reduce){
+  html body *{scroll-behavior:auto!important}
+}
