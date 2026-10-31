@@ -710,15 +710,18 @@ async function init(){
  if(!wanted&&!wantedSlug&&!wantedDealer){document.getElementById('yardName').textContent='Car yard';document.getElementById('countText').textContent='No yard selected';document.getElementById('grid').innerHTML='<div class="panel empty">Choose a yard from the vehicle listings to see its inventory.</div>';return}
  if(!sb||/^PASTE_/.test(CFG.key)){document.getElementById('yardName').textContent=wanted||wantedSlug;document.getElementById('grid').innerHTML='<div class="panel empty">The live database connection is not configured.</div>';return}
  // Reuse recently loaded approved inventory immediately, then refresh it in the background.
- const YARD_CACHE_KEY='3pedals:yard-approved:v2';
+ const YARD_CACHE_KEY='3pedals:yard-approved:v3';
  let cachedRows=null;
  try{const saved=JSON.parse(localStorage.getItem(YARD_CACHE_KEY)||sessionStorage.getItem(YARD_CACHE_KEY)||'null');if(saved&&Array.isArray(saved.rows)&&Date.now()-saved.at<3*60*1000)cachedRows=saved.rows}catch(_){}
  let data=cachedRows,error=null;
- const refreshApprovedRows=()=>sb.from('listings').select('*').eq('status','approved').order('created_at',{ascending:false}).then(result=>{
+ const refreshApprovedRows=()=>sb.from('listings').select('id,make,model,year,price,km,fuel,photos,created_at,seller_type,yard_name,seller_name,yard_location,seller_phone,seller_email,yard_web,contact,seller_slug,whatsapp').eq('status','approved').order('created_at',{ascending:false}).then(result=>{
   if(result.error){console.warn('Yard inventory background refresh failed:',result.error);return result}
-  try{const value=JSON.stringify({at:Date.now(),rows:result.data||[]});localStorage.setItem(YARD_CACHE_KEY,value);sessionStorage.setItem(YARD_CACHE_KEY,value)}catch(_){}
-  if(!cachedRows)data=result.data||[];
-  return result;
+  // This page displays one thumbnail per vehicle; discard the unused gallery URLs
+  // before caching so storage, parsing and mobile memory costs stay small.
+  const compactRows=(result.data||[]).map(row=>({...row,photos:Array.isArray(row.photos)&&row.photos.length?[row.photos[0]]:[]}));
+  try{const value=JSON.stringify({at:Date.now(),rows:compactRows});localStorage.setItem(YARD_CACHE_KEY,value);sessionStorage.setItem(YARD_CACHE_KEY,value)}catch(_){}
+  if(!cachedRows)data=compactRows;
+  return {...result,data:compactRows};
  });
  if(cachedRows){refreshApprovedRows()}
  else{
