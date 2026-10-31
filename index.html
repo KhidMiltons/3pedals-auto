@@ -3843,8 +3843,10 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){f
 
 
 <style id="homepage-content-header-width-alignment">
-/* Match the header shell's outer edges to the visible edges of the Home cards. */
-html body>header{
+/* Use one identical outer container for the Home header and every Home content card.
+   The main wrapper has no inner gutter, so card edges align with the header shell itself. */
+html body>header,
+html body>main.wrap{
   box-sizing:border-box!important;
   width:min(calc(100% - 80px),1392px)!important;
   max-width:1392px!important;
@@ -3861,15 +3863,13 @@ html body>header>.wrap{
   padding-right:24px!important;
 }
 html body>main.wrap{
-  box-sizing:border-box!important;
-  width:min(calc(100% - 32px),1440px)!important;
-  max-width:1440px!important;
-  margin:24px auto 0!important;
-  padding-left:24px!important;
-  padding-right:24px!important;
+  margin-top:24px!important;
+  padding-left:0!important;
+  padding-right:0!important;
 }
 @media(max-width:760px){
-  html body>header{
+  html body>header,
+  html body>main.wrap{
     width:calc(100% - 44px)!important;
     max-width:none!important;
   }
@@ -3880,11 +3880,9 @@ html body>main.wrap{
     padding-right:12px!important;
   }
   html body>main.wrap{
-    width:calc(100% - 20px)!important;
-    max-width:none!important;
     margin-top:16px!important;
-    padding-left:12px!important;
-    padding-right:12px!important;
+    padding-left:0!important;
+    padding-right:0!important;
   }
 }
 </style>
