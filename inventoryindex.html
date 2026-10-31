@@ -376,7 +376,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <header><div class="wrap"><div class="logo">3 Pedals Auto KE</div><a class="back" href="/">Home</a></div></header>
 <main class="wrap">
-<section class="hero"><span class="eyebrow">3 PEDALS AUTO KE</span><h1>Current inventory.</h1><p>Browse vehicles currently approved and listed for sale. Open any car to see its photos, specifications, seller details and WhatsApp contact.</p></section>
+<section class="hero inventory-intro-compact"><span class="eyebrow">THE 3 PEDALS COLLECTION</span><h1>Find the car you’ve been looking for.</h1><p>Explore a carefully presented selection of vehicles from trusted sellers. Whether you’re searching for your everyday drive, a family companion or something truly special, discover quality options, compare the details and find the right car for your next journey.</p></section>
 <section>
 <div class="filters"><input id="q" type="search" placeholder="Search make or model"><select id="make"><option value="">All makes</option></select><select id="max"><option value="0">Any price</option><option value="1000000">Up to KES 1,000,000</option><option value="2000000">Up to KES 2,000,000</option><option value="3500000">Up to KES 3,500,000</option><option value="5000000">Up to KES 5,000,000</option></select><select id="sort"><option value="new">Newest first</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option><option value="km">Lowest mileage</option></select></div>
 <div id="count" class="count">Loading inventory…</div><div id="grid" class="grid"></div>
@@ -609,4 +609,39 @@ html body>header .back:hover{
   html body>header .back{padding:7px 9px!important;font-size:12px!important}
 }
 @media(prefers-reduced-motion:reduce){html body>header .back{transition:none!important;transform:none!important}}
+</style>
+
+
+<style id="inventory-intro-compact-no-image">
+/* A clean, compact text-only introduction above the vehicle listings. */
+main.wrap>.inventory-intro-compact{
+  position:relative!important;display:block!important;isolation:isolate!important;
+  width:100%!important;max-width:none!important;min-height:0!important;
+  margin:12px 0 22px!important;padding:22px 26px!important;
+  overflow:hidden!important;border:1px solid rgba(255,255,255,.14)!important;
+  border-radius:20px!important;
+  background:linear-gradient(120deg,rgba(255,255,255,.075),rgba(255,255,255,.025))!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 12px 30px rgba(0,0,0,.12)!important;
+  -webkit-backdrop-filter:blur(16px) saturate(125%)!important;
+  backdrop-filter:blur(16px) saturate(125%)!important;
+}
+main.wrap>.inventory-intro-compact img,
+main.wrap>.inventory-intro-compact picture,
+main.wrap>.inventory-intro-compact video{display:none!important}
+main.wrap>.inventory-intro-compact::before,
+main.wrap>.inventory-intro-compact::after{content:none!important;display:none!important;background-image:none!important}
+main.wrap>.inventory-intro-compact .eyebrow{display:block;margin:0 0 5px;font-size:10px;letter-spacing:.2em}
+main.wrap>.inventory-intro-compact h1{
+  margin:0 0 8px!important;font-size:clamp(27px,3.4vw,42px)!important;
+  line-height:1.12!important;letter-spacing:-.025em!important
+}
+main.wrap>.inventory-intro-compact p{
+  max-width:850px!important;margin:0!important;color:var(--muted)!important;
+  font-size:14px!important;line-height:1.7!important
+}
+@media(max-width:560px){
+  main.wrap>.inventory-intro-compact{margin:8px 0 16px!important;padding:17px 16px!important;border-radius:16px!important}
+  main.wrap>.inventory-intro-compact h1{font-size:clamp(25px,7vw,32px)!important}
+  main.wrap>.inventory-intro-compact p{font-size:13px!important;line-height:1.6!important}
+}
 </style>
