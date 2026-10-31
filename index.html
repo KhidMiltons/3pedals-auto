@@ -1800,6 +1800,7 @@ async function loadSession(){
   const {data:{session}}=await sb.auth.getSession();
   me=session?session.user:null;profile=null;sellerPreferences={};savedVehicleIds=new Set();savedVehicleRows=[];savedVehiclesLoadedFor=null;
   if(me){
+    loadSavedVehicles().catch(error=>console.warn("Saved vehicles preload failed:",error));
     // Share the seller-settings request between sign-in initialization and dashboard prefetch.
     // This avoids asking Supabase for the same settings row twice during account startup.
     const sellerPrefsRequest=sb.from("seller_settings").select("*").eq("seller_id",me.id).maybeSingle();
