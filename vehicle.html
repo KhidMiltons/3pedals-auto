@@ -283,6 +283,39 @@ html body h1,html body h2,html body h3,html body .logo,html body .brand{font-fam
 html body > header .logo,html body > header .brand{font-family:"Playfair Display",Georgia,serif!important;font-size:27px!important;font-weight:700!important;letter-spacing:.03em!important;text-transform:uppercase!important}
 html body > header nav a,html body > header nav button,html body > header .headnav a,html body > header .headnav button,html body > header .back{font-family:Manrope,system-ui,sans-serif!important;font-size:14px!important;font-weight:400!important;letter-spacing:0!important}
 </style>
+<style id="vehicle-header-home-cars-nav">
+/* Home and Cars for Sale are now part of the glass header. */
+html body>header>.wrap.head{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:14px!important}
+html body>header .vehicle-header-nav{
+ display:flex!important;align-items:center!important;justify-content:center!important;gap:6px!important;
+ margin-left:auto!important;margin-right:0!important;padding:4px!important;border:1px solid rgba(255,255,255,.14)!important;
+ border-radius:14px!important;background:rgba(255,255,255,.055)!important;
+ -webkit-backdrop-filter:blur(14px)!important;backdrop-filter:blur(14px)!important
+}
+html body>header .vehicle-header-nav a{
+ display:inline-flex!important;align-items:center!important;justify-content:center!important;min-height:40px!important;
+ padding:9px 14px!important;border:1px solid transparent!important;border-radius:10px!important;
+ background:transparent!important;color:#f1eee7!important;font:600 13px/1.2 Manrope,system-ui,sans-serif!important;
+ text-decoration:none!important;white-space:nowrap!important;transition:background .25s ease,border-color .25s ease,transform .25s ease!important
+}
+html body>header .vehicle-header-nav a:hover,html body>header .vehicle-header-nav a:focus-visible{
+ background:rgba(255,255,255,.12)!important;border-color:rgba(255,255,255,.16)!important;color:#fff!important;
+ transform:translateY(-1px)!important;outline:none!important
+}
+html body>header .back{margin-left:0!important;flex:0 0 auto!important}
+@media(max-width:800px){
+ html body>header>.wrap.head{gap:8px!important;flex-wrap:nowrap!important}
+ html body>header .vehicle-header-nav{gap:2px!important;padding:3px!important;margin-left:auto!important}
+ html body>header .vehicle-header-nav a{min-height:36px!important;padding:8px 9px!important;font-size:11px!important}
+ html body>header .back{padding:8px 9px!important;font-size:11px!important;white-space:nowrap!important}
+}
+@media(max-width:430px){
+ html body>header .logo{font-size:16px!important;max-width:34vw!important;white-space:normal!important;line-height:1.05!important}
+ html body>header .vehicle-header-nav a{padding:7px 7px!important;font-size:10px!important}
+ html body>header .back{padding:7px 7px!important;font-size:10px!important}
+}
+@media(prefers-reduced-motion:reduce){html body>header .vehicle-header-nav a{transition:none!important}}
+</style>
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
@@ -296,9 +329,8 @@ alt=""
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-<header><div class="wrap head"><a class="logo" href="/">3 Pedals Auto KE</a><a class="back" href="/dealers.html">← Back to Dealers</a></div></header>
+<header><div class="wrap head"><a class="logo" href="/">3 Pedals Auto KE</a><nav class="vehicle-header-nav" aria-label="Main navigation"><a href="/">Home</a><a href="/inventory.html">Cars for Sale</a></nav><a class="back" href="/dealers.html">← Back to Dealers</a></div></header>
 <main class="wrap">
-  <div class="crumb">3 Pedals Auto KE / Vehicle details</div>
   <div id="app" class="state">Loading vehicle…</div>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -368,8 +400,6 @@ function updateVehicleSeo(r){
   let breadcrumbData=document.getElementById('vehicle-breadcrumb-structured-data');
   if(!breadcrumbData){breadcrumbData=document.createElement('script');breadcrumbData.id='vehicle-breadcrumb-structured-data';breadcrumbData.type='application/ld+json';document.head.appendChild(breadcrumbData)}
   breadcrumbData.textContent=JSON.stringify(breadcrumbSchema);
-  const crumb=document.querySelector('.crumb');
-  if(crumb)crumb.innerHTML='<a href="/">Home</a> / <a href="/inventory">Cars for sale</a> / '+esc(title);
 }
 async function copyText(text){
   try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text);return true}}catch(_e){}
