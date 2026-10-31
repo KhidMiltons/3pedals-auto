@@ -482,3 +482,26 @@ html body :is(h1,h2,h3,h4,h5,h6){font-family:Manrope,Inter,system-ui,-apple-syst
 .garage-contact-settings-heading h2{font-size:19px;margin:0 0 4px;font-weight:700}
 .garage-contact-settings-heading p{margin:0;color:var(--muted);font-size:13px}
 </style>
+
+
+<style id="homepage-header-match-final">
+/* Match the homepage header shell: transparent smoked glass, a soft backdrop
+   blur, and no heavy fill, gold strip, or opaque gradient. Keep each page's
+   existing header layout, controls, spacing, and responsive behaviour. */
+html body>header,
+html body>header.head,
+html body>header.top,
+html body>header.site-header,
+html body>header .site-header{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border-top-color:transparent!important;
+  border-right-color:transparent!important;
+  border-bottom-color:transparent!important;
+  border-left-color:transparent!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:blur(18px) saturate(120%)!important;
+  backdrop-filter:blur(18px) saturate(120%)!important;
+}
+</style>
