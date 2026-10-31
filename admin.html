@@ -95,7 +95,7 @@ button:hover{transform:none}
 <body>
 <div id="login" class="hidden"><div class="brand">3 Pedals Auto KE<span>Admin verification</span></div><h1>Sign in</h1><p class="meta">Only approved 3 Pedals Auto KE administrators can access vehicle verification.</p><label>Email</label><input id="email" type="email" autocomplete="username"><label>Password</label><input id="password" type="password" autocomplete="current-password"><p id="loginErr" class="notice err hidden"></p><button id="loginBtn" class="primary" style="width:100%;margin-top:15px">Sign in</button></div>
 <div id="app" class="wrap hidden">
-  <header class="top"><div class="brand">3 Pedals Auto KE<span>Admin dashboard · listings · garage bookings · mechanics · website settings</span></div><div class="actions"><button class="ghost" id="homeBtn" type="button">← Back to home</button><button class="ghost" id="refresh">Refresh</button><button class="ghost" id="logout">Sign out</button></div></header>
+  <header class="top"><div class="brand">3 Pedals Auto KE<span>Admin dashboard · listings · garage bookings · mechanics · website settings</span></div><div class="actions"><button class="ghost" id="homeBtn" type="button">← Back to account</button><button class="ghost" id="refresh">Refresh</button><button class="ghost" id="logout">Sign out</button></div></header>
   <div id="notice" class="notice hidden"></div>
   <div class="stats"><div class="stat"><b id="pendingCount">0</b><span>Pending verification</span></div><div class="stat"><b id="approvedCount">0</b><span>Approved / live</span></div><div class="stat"><b id="rejectedCount">0</b><span>Rejected</span></div><div class="stat"><b id="totalCount">0</b><span>Total listings</span></div></div>
   <section class="attention-panel" aria-label="Admin quick actions"><div class="attention-copy"><strong>Needs your attention</strong><span>Jump directly to pending vehicle approvals or garage requests.</span></div><div class="attention-actions"><button type="button" class="ghost" id="reviewPendingBtn">Review pending <span class="attention-count" id="pendingQuickCount">0</span></button><button type="button" class="ghost" id="openBookingsBtn">Open garage bookings</button></div></section>
@@ -151,7 +151,7 @@ async function checkAdmin(){
 }
 $("loginBtn").onclick=async()=>{const email=$("email").value.trim(),password=$("password").value,err=$("loginErr");err.classList.add("hidden");if(!email||!password){err.textContent="Enter your email and password.";err.classList.remove("hidden");return}const {error}=await sb.auth.signInWithPassword({email,password});if(error){err.textContent=error.message;err.classList.remove("hidden");return}checkAdmin()};
 $("logout").onclick=async()=>{await sb.auth.signOut();location.reload()};
-$("homeBtn").onclick=()=>{window.location.href="/"};
+$("homeBtn").onclick=()=>{try{sessionStorage.setItem("3pedals:account-open","1");if(!sessionStorage.getItem("3pedals:account-page"))sessionStorage.setItem("3pedals:account-page","settings")}catch(_){}window.location.href="/"};
 let refreshInProgress=false;
 $("refresh").onclick=async()=>{
  if(refreshInProgress)return;
