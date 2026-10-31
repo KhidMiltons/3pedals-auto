@@ -2384,3 +2384,63 @@ body:before{
   body>header .logo{font-size:14px!important}
 }
 </style>
+
+
+<style id="garage-desktop-navigation-restored-mobile-wordmark-refined">
+/* Restore the Garage's horizontal desktop navigation; keep the collapsible menu for mobile only. */
+@media(min-width:801px){
+  body>header>.wrap{
+    display:grid!important;
+    grid-template-columns:minmax(190px,auto) minmax(0,1fr) 46px!important;
+    grid-template-areas:"brand nav account"!important;
+    align-items:center!important;
+    gap:18px!important;
+  }
+  body>header .logo{grid-area:brand!important}
+  body>header nav#garageSectionNav{
+    grid-area:nav!important;
+    position:static!important;
+    display:flex!important;
+    width:auto!important;
+    max-width:none!important;
+    min-width:0!important;
+    flex-direction:row!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:4px!important;
+    margin:0!important;
+    padding:6px!important;
+    overflow:visible!important;
+    border-radius:15px!important;
+  }
+  body>header nav#garageSectionNav button,
+  body>header nav#garageSectionNav a.navlink{
+    width:auto!important;
+    min-width:0!important;
+    min-height:40px!important;
+    flex:0 1 auto!important;
+    justify-content:center!important;
+    text-align:center!important;
+    white-space:nowrap!important;
+    padding:9px 11px!important;
+    font-size:12px!important;
+  }
+  body>header nav#garageSectionNav button[aria-selected="true"]{
+    background:rgba(255,255,255,.14)!important;
+    border-color:rgba(255,255,255,.12)!important;
+    color:#fff!important;
+  }
+  body>header .account-pill{grid-area:account!important;justify-self:end!important}
+  body>header .garage-nav-toggle{display:none!important}
+}
+@media(max-width:800px){
+  body>header .logo{
+    font-size:clamp(13px,3.4vw,15px)!important;
+    line-height:1.1!important;
+    letter-spacing:0!important;
+  }
+}
+@media(max-width:380px){
+  body>header .logo{font-size:13px!important}
+}
+</style>
