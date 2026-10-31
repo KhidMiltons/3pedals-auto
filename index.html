@@ -3843,11 +3843,11 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){f
 
 
 <style id="homepage-content-header-width-alignment">
-/* Match the header's inner edges exactly to the homepage content, and leave a clear breathing gap below the sticky header. */
+/* Match the header shell's outer edges to the visible edges of the Home cards. */
 html body>header{
   box-sizing:border-box!important;
-  width:min(calc(100% - 32px),1440px)!important;
-  max-width:1440px!important;
+  width:min(calc(100% - 80px),1392px)!important;
+  max-width:1392px!important;
   margin-left:auto!important;
   margin-right:auto!important;
 }
@@ -3870,7 +3870,7 @@ html body>main.wrap{
 }
 @media(max-width:760px){
   html body>header{
-    width:calc(100% - 20px)!important;
+    width:calc(100% - 44px)!important;
     max-width:none!important;
   }
   html body>header>.wrap{
