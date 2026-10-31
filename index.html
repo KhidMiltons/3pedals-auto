@@ -3867,6 +3867,22 @@ html body>main.wrap{
   padding-left:0!important;
   padding-right:0!important;
 }
+/* Remove the hero's older independent width so every Home card shares the container edges. */
+html body>main.wrap>#home,
+html body>main.wrap>#home>.home-with-quote,
+html body>main.wrap>#home>.home-with-quote>div,
+html body>main.wrap>#home .hero,
+html body>main.wrap>#home .tiles,
+html body>main.wrap>#home .journal-intro,
+html body>main.wrap>#home .project-intro{
+  box-sizing:border-box!important;
+  width:100%!important;
+  max-width:100%!important;
+}
+html body>main.wrap>#home .hero{
+  margin-left:0!important;
+  margin-right:0!important;
+}
 @media(max-width:760px){
   html body>header,
   html body>main.wrap{
