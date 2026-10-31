@@ -310,7 +310,7 @@ async function load(){
  const {data,error}=await request;
  if(error){console.error(error);if(!cached)notFound('Journal is unavailable right now. Please try again later.');return}
  if(articleId){
-  if(!data||!data.body){if(!cached)notFound('This article is not available or has not been published.');return}
+  if(!data||!data.body){try{localStorage.removeItem(cacheKey);sessionStorage.removeItem(cacheKey)}catch(_){}notFound('This article is not available or has not been published.');return}
   writeJournalCache(cacheKey,data);render(data);
  }else{
   const rows=data||[];writeJournalCache(cacheKey,rows);renderIndex(rows);
