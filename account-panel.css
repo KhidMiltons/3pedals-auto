@@ -400,3 +400,124 @@
   #accDlg #accBody .account-full-activity .account-activity-item{grid-template-columns:8px minmax(0,1fr)!important;gap:8px!important}
   #accDlg #accBody .account-full-activity .account-activity-item time{grid-column:2!important}
 }
+
+
+/* Dedicated promotions workspace and garage booking cards. */
+#accDlg #accBody .account-promotions-page{display:grid!important;gap:14px!important;align-content:start!important}
+#accDlg #accBody .account-promotions-page>.account-tools{
+  min-width:0!important;margin:0!important;padding:19px!important;
+  border:1px solid var(--ad-line)!important;border-radius:16px!important;
+  background:rgba(255,255,255,.045)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035)!important
+}
+#accDlg #accBody .account-promotions-page>.account-tools>h3{
+  margin:0 0 7px!important;font-size:20px!important;letter-spacing:-.035em!important
+}
+#accDlg #accBody .account-promotions-page>.account-tools>h4{
+  margin:18px 0 7px!important;font-size:13px!important;letter-spacing:-.015em!important
+}
+#accDlg #accBody .account-promotions-page>.account-tools>p.meta{
+  max-width:760px!important;font-size:10px!important;line-height:1.65!important
+}
+#accDlg #accBody .account-promotions-page .promotion-package-grid{
+  display:grid!important;grid-template-columns:repeat(auto-fit,minmax(160px,1fr))!important;
+  gap:9px!important;margin:12px 0 18px!important
+}
+#accDlg #accBody .account-promotions-page .promotion-package{
+  display:grid!important;align-content:start!important;gap:7px!important;min-width:0!important;
+  padding:14px!important;border:1px solid rgba(255,255,255,.12)!important;
+  border-radius:12px!important;background:rgba(255,255,255,.045)!important
+}
+#accDlg #accBody .account-promotions-page .promotion-package strong{font-size:12px!important;color:#f4f7fa!important}
+#accDlg #accBody .account-promotions-page .promotion-package>span,
+#accDlg #accBody .account-promotions-page .promotion-package small{font-size:9px!important;line-height:1.5!important;color:var(--ad-muted)!important}
+#accDlg #accBody .account-promotions-page .promotion-package>b{font-size:18px!important;line-height:1.2!important;color:#fff!important}
+#accDlg #accBody .account-promotions-page label{
+  display:block!important;margin:13px 0 6px!important;color:var(--ad-muted)!important;
+  font-size:10px!important;font-weight:650!important
+}
+#accDlg #accBody .account-promotions-page #promoListing,
+#accDlg #accBody .account-promotions-page #promoPackage,
+#accDlg #accBody .account-promotions-page #promoPhone{
+  display:block!important;width:100%!important;max-width:620px!important;min-height:43px!important;
+  padding:10px 12px!important;border:1px solid rgba(255,255,255,.15)!important;
+  border-radius:10px!important;background:rgba(8,12,17,.52)!important;
+  color:#f4f7fa!important;font-size:11px!important
+}
+#accDlg #accBody .account-promotions-page #startPromotion{
+  min-height:42px!important;margin-top:15px!important;padding:10px 16px!important;
+  border:1px solid rgba(255,255,255,.18)!important;border-radius:10px!important;
+  background:rgba(255,255,255,.13)!important;color:#fff!important;font-size:11px!important;
+  font-weight:700!important;transition:background .18s,border-color .18s!important
+}
+#accDlg #accBody .account-promotions-page #startPromotion:hover:not(:disabled){
+  background:rgba(255,255,255,.2)!important;border-color:rgba(255,255,255,.3)!important
+}
+#accDlg #accBody .account-promotions-page #startPromotion:disabled{opacity:.55!important;cursor:wait!important}
+#accDlg #accBody .account-promotions-page #promotionMessage,
+#accDlg #accBody .account-promotions-page #promotionHistoryMessage{min-height:16px!important;margin:9px 0!important}
+#accDlg #accBody .account-promotions-page .promotion-history-head{
+  display:flex!important;align-items:center!important;justify-content:space-between!important;
+  gap:12px!important;margin-top:24px!important;padding-top:16px!important;
+  border-top:1px solid rgba(255,255,255,.10)!important
+}
+#accDlg #accBody .account-promotions-page .promotion-history-head h4{margin:0!important}
+#accDlg #accBody .account-promotions-page .promotion-history-head button{
+  min-height:32px!important;padding:6px 10px!important;border:1px solid var(--ad-line)!important;
+  border-radius:8px!important;background:rgba(255,255,255,.045)!important;
+  color:var(--ad-muted)!important;font-size:9px!important
+}
+#accDlg #accBody .account-promotions-page .promotion-history-item{
+  display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:center!important;gap:12px!important;margin:8px 0!important;padding:13px!important;
+  border:1px solid rgba(255,255,255,.10)!important;border-radius:11px!important;
+  background:rgba(255,255,255,.035)!important
+}
+#accDlg #accBody .account-promotions-page .promotion-history-item>div{display:grid!important;gap:4px!important;min-width:0!important}
+#accDlg #accBody .account-promotions-page .promotion-history-item>div>b{font-size:11px!important;color:#f4f7fa!important}
+#accDlg #accBody .account-promotions-page .promotion-history-item .meta{font-size:9px!important;line-height:1.5!important;overflow-wrap:anywhere!important}
+#accDlg #accBody .account-promotions-page .promotion-status-badge{
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  max-width:160px!important;padding:6px 9px!important;border:1px solid rgba(255,255,255,.14)!important;
+  border-radius:999px!important;background:rgba(255,255,255,.07)!important;
+  color:rgba(255,255,255,.84)!important;font-size:9px!important;white-space:normal!important;text-align:center!important
+}
+#accDlg #accBody .account-bookings-page{display:grid!important;gap:10px!important;align-content:start!important}
+#accDlg #accBody .account-bookings-page>#garageBookingAction{
+  display:flex!important;justify-content:flex-start!important;margin:0!important;padding:16px!important;
+  border:1px solid var(--ad-line)!important;border-radius:14px!important;
+  background:rgba(255,255,255,.045)!important
+}
+#accDlg #accBody .account-bookings-page>#garageBookingAction .btn{
+  min-height:39px!important;padding:9px 13px!important;border:1px solid rgba(255,255,255,.16)!important;
+  border-radius:9px!important;background:rgba(255,255,255,.12)!important;color:#fff!important;font-size:10px!important
+}
+#accDlg #accBody .account-bookings-page>.account-bookings-heading{
+  margin:8px 0 2px!important;font-size:19px!important;letter-spacing:-.03em!important
+}
+#accDlg #accBody .account-bookings-page>.account-booking-item{
+  display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;align-items:center!important;
+  gap:12px!important;margin:0!important;padding:15px!important;border:1px solid rgba(255,255,255,.11)!important;
+  border-radius:13px!important;background:rgba(255,255,255,.045)!important
+}
+#accDlg #accBody .account-bookings-page>.account-booking-item>div{display:grid!important;gap:5px!important;min-width:0!important}
+#accDlg #accBody .account-bookings-page>.account-booking-item>div>b{font-size:12px!important;color:#f4f7fa!important}
+#accDlg #accBody .account-bookings-page>.account-booking-item .meta{font-size:10px!important;line-height:1.55!important;overflow-wrap:anywhere!important}
+#accDlg #accBody .account-bookings-page>.account-booking-item>.st{
+  align-self:start!important;padding:5px 8px!important;border:1px solid rgba(255,255,255,.14)!important;
+  border-radius:999px!important;background:rgba(255,255,255,.07)!important;
+  color:rgba(255,255,255,.84)!important;font-size:9px!important;white-space:nowrap!important
+}
+@media(max-width:600px){
+  #accDlg #accBody .account-promotions-page>.account-tools{padding:14px!important}
+  #accDlg #accBody .account-promotions-page .promotion-package-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+  #accDlg #accBody .account-promotions-page .promotion-package{padding:11px!important}
+  #accDlg #accBody .account-promotions-page .promotion-package>b{font-size:15px!important}
+  #accDlg #accBody .account-promotions-page .promotion-history-item{grid-template-columns:minmax(0,1fr)!important;gap:8px!important}
+  #accDlg #accBody .account-promotions-page .promotion-status-badge{justify-self:start!important}
+  #accDlg #accBody .account-bookings-page>.account-booking-item{grid-template-columns:minmax(0,1fr)!important;gap:9px!important;padding:12px!important}
+  #accDlg #accBody .account-bookings-page>.account-booking-item>.st{justify-self:start!important}
+}
+@media(prefers-reduced-motion:reduce){
+  #accDlg #accBody .account-promotions-page #startPromotion{transition:none!important}
+}
