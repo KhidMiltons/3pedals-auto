@@ -3784,3 +3784,23 @@ body>header,header.site-header,.site-header,header{
  }
 }
 </style>
+
+<style id="floating-admin-whatsapp-clear-glass">
+/* Home floating Admin and WhatsApp shortcuts: clearer, less gradient-heavy glass. */
+#adminWrap .admin-glass-icon,#adminOpen,#publicWhatsappFab{
+ background:rgba(255,255,255,.035)!important;background-image:none!important;
+ border:1px solid rgba(255,255,255,.20)!important;
+ box-shadow:0 5px 18px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.10)!important;
+ -webkit-backdrop-filter:blur(7px) saturate(112%)!important;backdrop-filter:blur(7px) saturate(112%)!important;
+ transition:background-color .18s ease,border-color .18s ease,transform .18s ease!important;
+}
+#adminOpen svg,#publicWhatsappFab svg{filter:none!important;opacity:.88!important}
+#adminOpen:hover,#publicWhatsappFab:hover{background:rgba(255,255,255,.075)!important;border-color:rgba(255,255,255,.30)!important;transform:translateY(-1px)!important}
+@media(max-width:600px){
+ #adminWrap .admin-glass-icon,#adminOpen,#publicWhatsappFab{
+  background:rgba(255,255,255,.025)!important;-webkit-backdrop-filter:blur(5px) saturate(108%)!important;backdrop-filter:blur(5px) saturate(108%)!important;
+  box-shadow:0 3px 12px rgba(0,0,0,.10),inset 0 1px 0 rgba(255,255,255,.08)!important;
+ }
+}
+@media(prefers-reduced-motion:reduce){#adminOpen,#publicWhatsappFab{transition:none!important}}
+</style>
