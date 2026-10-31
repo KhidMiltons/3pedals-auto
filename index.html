@@ -3695,6 +3695,78 @@ body>header,header.site-header,.site-header,header{
 }
 </style>
 
+
+<style id="account-panel-redesign-v1">
+#accDlg{--acc-line:rgba(255,255,255,.14);display:grid!important;grid-template-columns:248px minmax(0,1fr)!important;grid-template-rows:minmax(0,1fr)!important;gap:0!important;width:min(1240px,calc(100vw - 40px))!important;max-width:1240px!important;height:min(860px,92dvh)!important;max-height:92dvh!important;padding:0!important;overflow:hidden!important;isolation:isolate!important;color:#f3f5f7!important;background:rgba(13,17,22,.70)!important;border:1px solid rgba(255,255,255,.22)!important;border-radius:24px!important;box-shadow:0 34px 110px rgba(0,0,0,.52),inset 0 1px rgba(255,255,255,.13)!important;-webkit-backdrop-filter:blur(26px) saturate(125%)!important;backdrop-filter:blur(26px) saturate(125%)!important}
+#accDlg::backdrop{background:rgba(5,8,12,.68)!important;-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px)}
+#accDlg>.in{grid-column:2!important;grid-row:1!important;display:flex!important;flex-direction:column!important;min-width:0!important;min-height:0!important;height:100%!important;max-height:none!important;overflow:hidden!important;padding:25px 30px 24px!important;background:rgba(17,21,26,.32)!important;border:0!important;border-radius:0!important}
+#accDlg nav#accountMenu.dashboard-shortcuts,#accDlg nav#accountMenu.dashboard-shortcuts[hidden]{grid-column:1!important;grid-row:1!important;position:relative!important;inset:auto!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:5px!important;width:100%!important;min-width:0!important;max-width:none!important;height:100%!important;max-height:none!important;overflow-x:hidden!important;overflow-y:auto!important;overscroll-behavior:contain!important;margin:0!important;padding:24px 15px 20px!important;border:0!important;border-right:1px solid var(--acc-line)!important;border-radius:0!important;background:linear-gradient(160deg,rgba(255,255,255,.095),rgba(255,255,255,.025) 42%,rgba(0,0,0,.12))!important;box-shadow:inset -1px 0 rgba(255,255,255,.035)!important;-webkit-backdrop-filter:blur(24px) saturate(120%)!important;backdrop-filter:blur(24px) saturate(120%)!important}
+#accDlg nav#accountMenu[hidden]{display:none!important}
+#accDlg .seller-nav-identity{padding:12px 12px 20px!important;margin:0 0 13px!important;border-bottom:1px solid var(--acc-line)!important}
+#accDlg .seller-nav-identity small{display:block;color:#9ca8b5!important;font-size:9px!important;font-weight:800!important;letter-spacing:.19em!important}
+#accDlg .seller-nav-identity strong{display:block;margin-top:8px!important;color:#fff!important;font-size:19px!important;font-weight:700!important;letter-spacing:-.035em!important}
+#accDlg .seller-nav-identity span{color:#aeb7c2!important}
+#accDlg .seller-mode-switch{display:grid!important;grid-template-columns:1fr 1fr!important;gap:4px!important;padding:4px!important;margin:0 0 15px!important;border:1px solid var(--acc-line)!important;border-radius:12px!important;background:rgba(0,0,0,.18)!important}
+#accDlg .seller-mode-switch button{min-width:0!important;min-height:34px!important;padding:7px 4px!important;border:0!important;border-radius:8px!important;color:#bac3cd!important;background:transparent!important;font-size:11px!important;font-weight:650!important}
+#accDlg .seller-mode-switch button.selected{color:#fff!important;background:rgba(255,255,255,.14)!important;box-shadow:inset 0 1px rgba(255,255,255,.12)!important}
+#accDlg .seller-nav-label{padding:15px 12px 6px!important;color:#8793a0!important;font-size:9px!important;font-weight:800!important;letter-spacing:.18em!important}
+#accDlg nav#accountMenu button{display:flex!important;align-items:center!important;gap:10px!important;width:100%!important;min-height:43px!important;flex:0 0 auto!important;padding:11px 12px!important;margin:0!important;text-align:left!important;white-space:normal!important;border:1px solid transparent!important;border-radius:11px!important;background:transparent!important;color:#c3cbd4!important;font-size:12px!important;font-weight:650!important;line-height:1.3!important;box-shadow:none!important;transform:none!important;transition:background .18s ease,border-color .18s ease,color .18s ease!important}
+#accDlg nav#accountMenu button:hover,#accDlg nav#accountMenu button:focus-visible,#accDlg nav#accountMenu button.active,#accDlg nav#accountMenu button[aria-current="page"]{color:#fff!important;background:rgba(255,255,255,.105)!important;border-color:rgba(255,255,255,.12)!important;box-shadow:inset 0 1px rgba(255,255,255,.08)!important;outline:none!important;transform:translateX(2px)!important}
+#accDlg nav#accountMenu button[data-signout]{margin-top:auto!important;color:#d5b7b7!important}
+#accDlg .account-dialog-head{position:relative!important;top:auto!important;z-index:4!important;flex:0 0 auto!important;display:grid!important;grid-template-columns:42px minmax(0,1fr) 62px 42px!important;gap:12px!important;align-items:center!important;padding:0 0 19px!important;margin:0 0 23px!important;background:transparent!important;border:0!important;border-bottom:1px solid var(--acc-line)!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+#accDlg .account-dialog-head h2{grid-column:2!important;grid-row:1!important;min-width:0!important;margin:0!important;display:flex!important;align-items:center!important;gap:10px!important;text-align:left!important;color:#f6f7f8!important;font-size:clamp(17px,1.7vw,22px)!important;font-weight:700!important;letter-spacing:-.035em!important;line-height:1.2!important;white-space:normal!important}
+#accDlg .account-dialog-head h2 img{width:30px!important;height:30px!important;border:1px solid rgba(255,255,255,.22)!important;border-radius:9px!important}
+#accDlg .account-dialog-head>#accMenuToggle{grid-column:1!important;grid-row:1!important}
+#accDlg .account-dialog-head>#accHomeTop{grid-column:3!important;grid-row:1!important;width:62px!important;min-width:62px!important}
+#accDlg .account-dialog-head>#accCloseTop{grid-column:4!important;grid-row:1!important}
+#accDlg .account-dialog-head>#accMenuToggle,#accDlg .account-dialog-head>#accHomeTop,#accDlg .account-dialog-head>#accCloseTop{position:relative!important;inset:auto!important;float:none!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;width:42px!important;min-width:42px!important;height:42px!important;min-height:42px!important;margin:0!important;padding:0!important;border:1px solid rgba(255,255,255,.19)!important;border-radius:12px!important;background:rgba(255,255,255,.075)!important;color:#f0f2f4!important;font-size:15px!important;font-weight:650!important;box-shadow:inset 0 1px rgba(255,255,255,.08)!important;-webkit-backdrop-filter:blur(12px)!important;backdrop-filter:blur(12px)!important;transition:background .2s ease,border-color .2s ease!important}
+#accDlg .account-dialog-head>#accCloseTop{font-size:25px!important;font-weight:400!important}
+#accDlg .account-dialog-head>#accMenuToggle:hover,#accDlg .account-dialog-head>#accHomeTop:hover,#accDlg .account-dialog-head>#accCloseTop:hover{background:rgba(255,255,255,.16)!important;border-color:rgba(255,255,255,.34)!important}
+#accDlg #accBody{flex:1 1 auto!important;min-width:0!important;min-height:0!important;width:100%!important;max-width:none!important;margin:0!important;padding:0 4px 18px 0!important;overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain!important}
+#accDlg .account-pages,#accDlg .account-page,#accDlg .account-tools,#accDlg .account-settings-inner{width:100%!important;max-width:none!important;min-width:0!important}
+#accDlg .account-page>h3{color:#f3f5f7!important;font-size:22px!important;letter-spacing:-.035em!important;margin:0 0 17px!important}
+#accDlg .account-page p,#accDlg .account-page .meta,#accDlg .account-page small{color:#b5bec8!important}
+#accDlg .account-settings,#accDlg .dashboard-welcome,#accDlg .profile-card,#accDlg .seller-listing,#accDlg .account-page .card,#accDlg .account-tools>.panel,#accDlg .account-tools>section,#accDlg .account-page .stats>div,#accDlg .stat{color:#eef1f4!important;background:linear-gradient(145deg,rgba(255,255,255,.105),rgba(255,255,255,.035))!important;border:1px solid rgba(255,255,255,.15)!important;border-radius:17px!important;box-shadow:0 14px 34px rgba(0,0,0,.16),inset 0 1px rgba(255,255,255,.09)!important;-webkit-backdrop-filter:blur(16px) saturate(120%)!important;backdrop-filter:blur(16px) saturate(120%)!important}
+#accDlg .dashboard-welcome{padding:22px!important}
+#accDlg input,#accDlg select,#accDlg textarea{min-width:0!important;max-width:100%!important;box-sizing:border-box!important;color:#f1f3f5!important;background:rgba(0,0,0,.20)!important;border:1px solid rgba(255,255,255,.17)!important;border-radius:10px!important}
+#accDlg input::placeholder,#accDlg textarea::placeholder{color:#9da8b4!important}
+#accDlg label{color:#dce1e6!important}
+#accDlg .account-settings-tabs button{border:1px solid var(--acc-line)!important;border-radius:10px!important;background:rgba(255,255,255,.055)!important;color:#cbd2d9!important}
+#accDlg .account-settings-tabs button.active{background:rgba(255,255,255,.15)!important;border-color:rgba(255,255,255,.24)!important;color:#fff!important}
+#accDlg .btn,#accDlg button.btn{border-radius:10px!important}
+@media(max-width:760px){
+#accDlg{display:block!important;position:fixed!important;width:calc(100vw - 16px)!important;height:calc(100dvh - 20px)!important;max-height:calc(100dvh - 20px)!important;margin:auto!important;border-radius:19px!important}
+#accDlg>.in{height:100%!important;max-height:none!important;padding:14px 16px 12px!important;overflow:hidden!important}
+#accDlg .account-dialog-head{grid-template-columns:38px minmax(0,1fr) 54px 38px!important;gap:7px!important;width:100%!important;padding:0 0 13px!important;margin:0 0 15px!important}
+#accDlg .account-dialog-head h2{font-size:16px!important;gap:7px!important}
+#accDlg .account-dialog-head h2 img{width:26px!important;height:26px!important}
+#accDlg .account-dialog-head>#accMenuToggle,#accDlg .account-dialog-head>#accCloseTop{width:38px!important;min-width:38px!important;height:38px!important;min-height:38px!important}
+#accDlg .account-dialog-head>#accHomeTop{width:54px!important;min-width:54px!important;height:38px!important;min-height:38px!important;font-size:12px!important}
+#accDlg nav#accountMenu.dashboard-shortcuts,#accDlg nav#accountMenu.dashboard-shortcuts[hidden]{display:none!important;position:absolute!important;top:72px!important;left:12px!important;right:auto!important;bottom:12px!important;z-index:20!important;width:min(290px,calc(100vw - 52px))!important;height:auto!important;max-height:calc(100% - 90px)!important;padding:16px 12px!important;border:1px solid rgba(255,255,255,.19)!important;border-radius:16px!important;background:rgba(14,18,23,.96)!important;box-shadow:0 22px 60px rgba(0,0,0,.48)!important;-webkit-backdrop-filter:blur(28px) saturate(130%)!important;backdrop-filter:blur(28px) saturate(130%)!important}
+#accDlg nav#accountMenu.dashboard-shortcuts.menu-open{display:flex!important}
+#accDlg nav#accountMenu[hidden]{display:none!important}
+#accDlg #accBody{padding:0 1px 20px 0!important}
+#accDlg .account-page>h3{font-size:19px!important}
+#accDlg .dashboard-welcome{padding:17px!important}
+#accDlg .account-page .stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+#accDlg .seller-listing{grid-template-columns:54px minmax(0,1fr)!important}
+#accDlg .seller-listing-photo{width:54px!important;height:50px!important}
+#accDlg .seller-listing-actions{grid-column:1/-1!important;justify-content:flex-start!important}
+#accDlg .seller-listing-actions .btn{flex:1 1 auto}
+#accDlg .promotion-package-grid{grid-template-columns:1fr!important}
+#accDlg .account-settings-inner{padding:0 2px 12px!important}
+}
+@media(max-width:390px){
+#accDlg>.in{padding:11px 12px 10px!important}
+#accDlg .account-dialog-head{grid-template-columns:34px minmax(0,1fr) 48px 34px!important;gap:5px!important}
+#accDlg .account-dialog-head h2{font-size:14px!important}
+#accDlg .account-dialog-head>#accMenuToggle,#accDlg .account-dialog-head>#accCloseTop{width:34px!important;min-width:34px!important;height:35px!important;min-height:35px!important}
+#accDlg .account-dialog-head>#accHomeTop{width:48px!important;min-width:48px!important;height:35px!important;min-height:35px!important;font-size:11px!important}
+}
+@media(hover:hover){#accDlg .account-settings:hover,#accDlg .account-page .card:hover,#accDlg .account-tools>section:hover{border-color:rgba(255,255,255,.24)!important;transform:translateY(-1px);transition:transform .2s ease,border-color .2s ease!important}}
+@media(prefers-reduced-motion:reduce){#accDlg *,#accDlg *:before,#accDlg *:after{animation:none!important;transition:none!important}}
+</style>
+
 </body>
 </html>
 
