@@ -3839,4 +3839,8 @@ html body :is(.brand,.logo,.brand-name,.site-brand,.wordmark,header .brand,heade
 html body :is(button,.btn,a.button,.back,nav a,nav button){font-family:"Manrope",system-ui,sans-serif!important;font-weight:600!important}
 html body :is(.price,.amount,.vehicle-price,[data-price]){font-family:"Manrope",system-ui,sans-serif!important;font-weight:700!important;font-variant-numeric:tabular-nums}
 html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){font-family:"Playfair Display",Georgia,serif!important;font-weight:600!important;letter-spacing:-.02em!important}
+
+/* Home: add deliberate breathing room between the sticky header and introduction card. */
+#home .home-with-quote{padding-top:clamp(18px,2.4vw,30px)!important}
+@media(max-width:760px){#home .home-with-quote{padding-top:20px!important}}
 </style>
