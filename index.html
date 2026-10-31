@@ -3843,7 +3843,7 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){f
 
 
 <style id="homepage-content-header-width-alignment">
-/* Preserve the header's original outer sizing; align its inner content to the homepage grid. */
+/* Match the header's inner edges exactly to the homepage content, and leave a clear breathing gap below the sticky header. */
 html body>header{
   box-sizing:border-box!important;
   width:min(calc(100% - 32px),1440px)!important;
@@ -3854,7 +3854,7 @@ html body>header{
 html body>header>.wrap{
   box-sizing:border-box!important;
   width:100%!important;
-  max-width:1180px!important;
+  max-width:none!important;
   margin-left:auto!important;
   margin-right:auto!important;
   padding-left:24px!important;
@@ -3864,8 +3864,7 @@ html body>main.wrap{
   box-sizing:border-box!important;
   width:min(calc(100% - 32px),1440px)!important;
   max-width:1440px!important;
-  margin-left:auto!important;
-  margin-right:auto!important;
+  margin:24px auto 0!important;
   padding-left:24px!important;
   padding-right:24px!important;
 }
@@ -3875,6 +3874,7 @@ html body>main.wrap{
     max-width:none!important;
   }
   html body>header>.wrap{
+    width:100%!important;
     max-width:none!important;
     padding-left:12px!important;
     padding-right:12px!important;
@@ -3882,8 +3882,9 @@ html body>main.wrap{
   html body>main.wrap{
     width:calc(100% - 20px)!important;
     max-width:none!important;
-    padding-left:0!important;
-    padding-right:0!important;
+    margin-top:16px!important;
+    padding-left:12px!important;
+    padding-right:12px!important;
   }
 }
 </style>
