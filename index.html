@@ -1812,7 +1812,7 @@ async function changeProfilePhoto(file){
 }
 function positionAccountMenu(){const nav=$("accountMenu"),toggle=$("accMenuToggle"),dialog=$("accDlg");if(!nav||!toggle||!dialog||nav.hidden||!nav.classList.contains("menu-open"))return;const d=dialog.getBoundingClientRect(),b=toggle.getBoundingClientRect(),pad=12,width=Math.min(320,d.width-pad*2),left=Math.max(pad,Math.min(b.left-d.left,d.width-width-pad)),top=b.bottom+8,available=Math.max(180,Math.min(window.innerHeight*.72,window.innerHeight-b.bottom-24));nav.style.setProperty("position","fixed","important");nav.style.setProperty("inset","auto","important");nav.style.setProperty("left",`${left+d.left}px`,`important`);nav.style.setProperty("top",`${top}px`,`important`);nav.style.setProperty("width",`${width}px`,`important`);nav.style.setProperty("max-height",`${available}px`,`important`);nav.style.setProperty("z-index","1000","important")}
 function clearAccountMenuPosition(nav){["display","position","inset","left","top","width","max-height","z-index"].forEach(property=>nav.style.removeProperty(property))}
-function closeAccountMenu(){const nav=$("accountMenu"),toggle=$("accMenuToggle");if(!nav)return;nav.classList.remove("menu-open");clearAccountMenuPosition(nav);nav.hidden=true;toggle?.setAttribute("aria-expanded","false");toggle?.setAttribute("aria-label","Open seller navigation")}
+function closeAccountMenu(){const nav=$("accountMenu"),toggle=$("accMenuToggle");if(!nav)return;nav.classList.remove("menu-open");clearAccountMenuPosition(nav);const desktop=window.matchMedia("(min-width: 761px)").matches;nav.hidden=!desktop;if(desktop){nav.style.setProperty("display","flex","important");nav.style.setProperty("position","relative","important");nav.style.removeProperty("left");nav.style.removeProperty("top");nav.style.removeProperty("width");nav.style.removeProperty("max-height")}toggle?.setAttribute("aria-expanded","false");toggle?.setAttribute("aria-label","Open seller navigation")}
 let lastAccountMenuPointerToggle=0;window.toggleAccountMenu=function(event){const now=Date.now();if(event?.type==="click"&&now-lastAccountMenuPointerToggle<650)return;if(event?.type==="pointerup")lastAccountMenuPointerToggle=now;event?.preventDefault();event?.stopPropagation();const nav=$("accountMenu"),toggle=$("accMenuToggle");if(!nav||!toggle)return;const open=toggle.getAttribute("aria-expanded")!=="true";if(open){nav.hidden=false;nav.classList.add("menu-open");nav.style.setProperty("display","flex","important");positionAccountMenu()}else closeAccountMenu();toggle.setAttribute("aria-expanded",String(open));toggle.setAttribute("aria-label",open?"Close seller navigation":"Open seller navigation")};
 window.addEventListener("resize",()=>positionAccountMenu());window.addEventListener("orientationchange",()=>setTimeout(positionAccountMenu,120));
 function showSellerAccountPage(selected,button,options={}){
@@ -3800,7 +3800,9 @@ body>header,header.site-header,.site-header,header{
 </style>
 
 
-<style id="account-panel-fresh-layout">
+
+
+<style id="account-panel-fresh-layout-final">
 /* Fresh account workspace: fixed navigation rail + focused content canvas. */
 #accDlg{
  --fresh-line:rgba(255,255,255,.13);
@@ -3932,7 +3934,6 @@ body>header,header.site-header,.site-header,header{
 }
 @media(prefers-reduced-motion:reduce){#accDlg *,#accDlg *:before,#accDlg *:after{transition:none!important;animation:none!important}}
 </style>
-
 </body>
 </html>
 
