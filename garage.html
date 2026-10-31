@@ -2751,3 +2751,17 @@ html body #home #garageContactCard .garage-contact-row>#garageAddressContact{
   }
 }
 </style>
+
+<style id="garage-contact-content-inset">
+/* Give the contact details comfortable breathing room without restoring a card background. */
+html body #home #garageContactCard{
+  box-sizing:border-box!important;
+  padding-inline:clamp(16px,3.2vw,34px)!important;
+}
+html body #home #garageContactCard>h2{
+  margin-inline:0!important;
+}
+html body #home #garageContactCard .garage-contact-row{
+  padding-inline:0!important;
+}
+</style>
