@@ -1929,6 +1929,74 @@ html body #home #garageContactCard.contact:hover{
 }
 </style>
 
+
+<style id="shared-home-wallpaper-glass-treatment">
+/* Match the homepage: softly blurred Porsche wallpaper, restrained dark overlay,
+   translucent surfaces and crisp foreground content. */
+html{background:#08090b!important}
+html body{
+  position:relative!important;
+  isolation:isolate!important;
+  background:transparent!important;
+  background-color:transparent!important;
+}
+html body:before{
+  content:""!important;
+  display:block!important;
+  position:fixed!important;
+  inset:-10px!important;
+  z-index:-1!important;
+  pointer-events:none!important;
+  background:
+    linear-gradient(110deg,rgba(8,9,11,.42),rgba(8,9,11,.18) 48%,rgba(8,9,11,.42)),
+    url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72") center center/cover no-repeat!important;
+  filter:blur(4px)!important;
+  transform:scale(1.025)!important;
+}
+html body:after{content:none!important;display:none!important}
+html body header,html body .head,html body .top,html body .site-header,
+html body .navbar,html body .nav-shell,html body .nav-wrap{
+  background:rgba(17,18,20,.42)!important;
+  border-color:rgba(255,255,255,.18)!important;
+  box-shadow:0 14px 38px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.10)!important;
+  -webkit-backdrop-filter:blur(22px) saturate(135%)!important;
+  backdrop-filter:blur(22px) saturate(135%)!important;
+}
+html body .card,html body .panel,html body .dealer,html body .stat,
+html body .state,html body .empty,html body .error,html body .seller-card,
+html body .info,html body .gallery,html body .seller,html body .spec,
+html body .note,html body .listing,html body .article-item,
+html body .project-item,html body .vehicle-card,html body .story-card,
+html body .contact-card,html body .promotion-package,html body .dashboard-card,
+html body .featured-panel,html body .filter-panel,html body .search-panel,
+html body .vehicle-detail-card,html body .article-card,html body .account-page,
+html body .editor,html body .contact-form,html body .package,html body .notice,
+html body .booking-card,html body .service-card,html body .yard-card{
+  background-color:rgba(24,25,27,.30)!important;
+  border-color:rgba(255,255,255,.18)!important;
+  box-shadow:0 14px 38px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.09)!important;
+  -webkit-backdrop-filter:blur(18px) saturate(130%)!important;
+  backdrop-filter:blur(18px) saturate(130%)!important;
+}
+html body input,html body select,html body textarea{
+  background-color:rgba(20,21,23,.34)!important;
+  border-color:rgba(255,255,255,.20)!important;
+  -webkit-backdrop-filter:blur(12px)!important;
+  backdrop-filter:blur(12px)!important;
+}
+@media(max-width:760px){
+  html body:before{
+    background-image:
+      linear-gradient(180deg,rgba(8,9,11,.38),rgba(8,9,11,.50)),
+      url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72")!important;
+    background-position:center,58% center!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  html body:before{filter:none!important}
+}
+</style>
+
 </body>
 </html>
 
