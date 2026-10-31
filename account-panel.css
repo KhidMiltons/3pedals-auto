@@ -374,3 +374,29 @@
 @media(prefers-reduced-motion:reduce){
   #accDlg #accBody .seller-listing,#accDlg #accBody .seller-listing-actions .btn{transition:none!important}
 }
+
+
+/* Dedicated activity centre and overview activity navigation. */
+#accDlg nav#accountMenu.account-sidebar>button[data-page="activity"]::before{
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8'%3E%3Cpath d='M4 5h16M4 12h16M4 19h10'/%3E%3Ccircle cx='19' cy='19' r='2'/%3E%3C/svg%3E")
+}
+#accDlg #accBody .account-overview-panel-head>button{
+  padding:6px 9px!important;border:1px solid var(--ad-line)!important;border-radius:8px!important;
+  background:rgba(255,255,255,.045)!important;color:rgba(244,247,250,.8)!important;font-size:9px!important
+}
+#accDlg #accBody .account-overview-panel-head>button:hover{background:rgba(255,255,255,.11)!important;color:#fff!important}
+#accDlg #accBody .account-full-activity{margin:0!important;padding:19px!important;border:1px solid var(--ad-line)!important;border-radius:16px!important;background:rgba(255,255,255,.045)!important}
+#accDlg #accBody .account-activity-page-head{display:flex!important;align-items:flex-start!important;justify-content:space-between!important;gap:14px!important;margin-bottom:15px!important}
+#accDlg #accBody .account-activity-page-head h3{margin:5px 0!important;font-size:20px!important;letter-spacing:-.035em!important}
+#accDlg #accBody .account-activity-page-head p.meta{margin:0!important;font-size:11px!important}
+#accDlg #accBody .account-activity-page-head>span{padding:6px 9px!important;border:1px solid var(--ad-line)!important;border-radius:999px!important;color:var(--ad-muted)!important;font-size:9px!important;white-space:nowrap!important}
+#accDlg #accBody .account-full-activity .account-activity-item{padding:14px 0!important}
+#accDlg #accBody .account-full-activity .account-activity-item strong{font-size:12px!important}
+#accDlg #accBody .account-full-activity .account-activity-item p{font-size:10px!important}
+#accDlg #accBody .account-full-activity .account-activity-item time{font-size:9px!important}
+@media(max-width:600px){
+  #accDlg #accBody .account-full-activity{padding:14px!important}
+  #accDlg #accBody .account-activity-page-head{flex-direction:column!important}
+  #accDlg #accBody .account-full-activity .account-activity-item{grid-template-columns:8px minmax(0,1fr)!important;gap:8px!important}
+  #accDlg #accBody .account-full-activity .account-activity-item time{grid-column:2!important}
+}
