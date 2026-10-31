@@ -1893,7 +1893,43 @@ html body > header nav#garageSectionNav{background:transparent!important;border:
  html body > header{top:8px!important;width:calc(100% - 20px)!important;margin:10px auto 0!important;border-radius:20px!important}
  html body > header > .wrap{min-height:64px!important;padding:8px 12px!important;gap:8px!important}
 }
-</style></body>
+</style>
+<style id="garage-contact-no-blur-edge-aligned">
+/* Final override: keep the contact panel dark and subtle, with no white wash or blur.
+   Its outer edges align with the other full-width Garage content cards. */
+html body #home #garageContactCard.contact{
+  display:block!important;
+  box-sizing:border-box!important;
+  width:100%!important;
+  max-width:none!important;
+  margin:28px 0 42px!important;
+  padding:clamp(20px,2.8vw,30px)!important;
+  background:rgba(19,20,23,.24)!important;
+  background-color:rgba(19,20,23,.24)!important;
+  background-image:none!important;
+  border:1px solid rgba(255,255,255,.16)!important;
+  border-radius:20px!important;
+  box-shadow:0 12px 34px rgba(0,0,0,.16),inset 0 1px rgba(255,255,255,.045)!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+  transition:transform .28s ease,border-color .28s ease,box-shadow .28s ease!important;
+}
+html body #home #garageContactCard.contact:hover{
+  transform:translateY(-3px)!important;
+  border-color:rgba(255,255,255,.25)!important;
+  box-shadow:0 18px 42px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.06)!important;
+}
+@media(max-width:650px){
+  html body #home #garageContactCard.contact{
+    width:100%!important;
+    margin:22px 0 32px!important;
+    padding:18px 14px!important;
+    border-radius:18px!important;
+  }
+}
+</style>
+
+</body>
 </html>
 
 
