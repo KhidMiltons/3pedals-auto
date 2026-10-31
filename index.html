@@ -1513,9 +1513,10 @@ function show(t,options={}){
 try{
   const allowedSections=["home","buy","sell","projects","journal","about","contact"];
   const urlSection=location.hash.replace("#","");
-  let savedSection="";
-  try{savedSection=sessionStorage.getItem("3pedals:site-section")||""}catch(_){}
-  const initialSection=allowedSections.includes(urlSection)?(urlSection||"home"):(allowedSections.includes(savedSection)?savedSection:"home");
+  // A fresh visit to the home URL must always open Home, not a previously
+  // selected section such as Contact Us restored from session storage.
+  const initialSection=allowedSections.includes(urlSection)?(urlSection||"home"):"home";
+  try{sessionStorage.setItem("3pedals:site-section",initialSection)}catch(_){}
   show(initialSection,{updateUrl:false,scroll:false});
 }catch(_){}
 
