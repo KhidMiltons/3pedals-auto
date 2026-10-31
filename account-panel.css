@@ -521,3 +521,26 @@
 @media(prefers-reduced-motion:reduce){
   #accDlg #accBody .account-promotions-page #startPromotion{transition:none!important}
 }
+
+
+/* Buyer workspace and saved-vehicle controls */
+.account-card-save-wrap{display:flex;justify-content:flex-end;padding:0 14px 13px}
+.account-card-save{border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.075);color:inherit;border-radius:999px;padding:8px 13px;font:inherit;font-size:12px;cursor:pointer;transition:background .18s ease,border-color .18s ease}
+.account-card-save:hover,.account-card-save[aria-pressed="true"]{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.38)}
+.account-card-save:disabled{opacity:.55;cursor:wait}
+.account-buyer-workspace{padding:clamp(16px,2.2vw,24px)}
+.account-buyer-workspace h4{margin:22px 0 12px;font-size:14px;letter-spacing:.02em}
+.account-saved-vehicles-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.account-saved-vehicle{display:grid;grid-template-columns:minmax(105px,38%) minmax(0,1fr);overflow:hidden;border:1px solid rgba(255,255,255,.13);border-radius:16px;background:rgba(255,255,255,.055);min-width:0}
+.account-saved-vehicle-image{display:block;min-height:132px;background:rgba(255,255,255,.06);color:inherit;text-decoration:none}
+.account-saved-vehicle-image img{display:block;width:100%;height:100%;min-height:132px;object-fit:cover}
+.account-saved-vehicle-image span{display:grid;place-items:center;height:100%;font-size:11px;letter-spacing:.12em;opacity:.65}
+.account-saved-vehicle-info{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:12px;min-width:0}
+.account-saved-vehicle-info strong{font-size:13px;line-height:1.4}
+.account-saved-vehicle-info>b{font-size:14px}
+.account-saved-vehicle-info small{font-size:11px;opacity:.72}
+.account-saved-vehicle-info>div{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:auto;padding-top:8px}
+.account-saved-vehicle-info a,.account-saved-vehicle-info button{font:inherit;font-size:11px;color:inherit}
+.account-saved-vehicle-info button{border:0;background:none;text-decoration:underline;cursor:pointer;opacity:.75;padding:3px}
+@media(max-width:760px){.account-saved-vehicles-grid{grid-template-columns:1fr}.account-saved-vehicle{grid-template-columns:112px minmax(0,1fr)}.account-saved-vehicle-image,.account-saved-vehicle-image img{min-height:118px}}
+@media(prefers-reduced-motion:reduce){.account-card-save{transition:none}}
