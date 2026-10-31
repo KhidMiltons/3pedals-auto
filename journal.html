@@ -296,7 +296,27 @@ document.addEventListener('keydown',event=>{if(lightbox.hidden)return;if(event.k
 }
 const ld={"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","headline":title,"description":seoDescription,"inLanguage":"en-KE","isAccessibleForFree":true,"mainEntityOfPage":{"@type":"WebPage","@id":canonical},"articleSection":String(p.category||"Automotive Journal"),"author":{"@type":"Organization","name":"3 Pedals Auto KE","url":"https://3pedalsauto.co.ke/"},"publisher":{"@type":"Organization","name":"3 Pedals Auto KE","url":"https://3pedalsauto.co.ke/","logo":{"@type":"ImageObject","url":"https://3pedalsauto.co.ke/favicon.svg"}},...(date?{"datePublished":date}:{}),...(modifiedDate?{"dateModified":modifiedDate}:{}),...(cover?{"image":[cover.url]}:{})},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://3pedalsauto.co.ke/"},{"@type":"ListItem","position":2,"name":"3 Pedals Journal","item":"https://3pedalsauto.co.ke/journal.html"},{"@type":"ListItem","position":3,"name":title,"item":canonical}]}]};let json=document.getElementById('articleStructuredData');if(!json){json=document.createElement('script');json.id='articleStructuredData';json.type='application/ld+json';document.head.append(json)}json.textContent=JSON.stringify(ld)}
 function renderIndex(items){document.title='3 Pedals Journal | 3 Pedals Auto KE';document.getElementById('canonicalUrl').href=new URL('journal.html',location.href).href;document.getElementById('article').innerHTML='<span class="eyebrow">3 Pedals Auto KE · Journal</span><h1>Stories for people who love cars.</h1><p class="meta">Public automotive stories, buying advice, ownership notes, and workshop knowledge.</p><div class="journal-list">'+items.map(p=>{const image=mediaFor(p).find(m=>m.is_cover||m.cover)||mediaFor(p)[0],url='journal.html?slug='+encodeURIComponent(storySlug(p.title))+'&id='+encodeURIComponent(p.id);return '<a class="story-card" href="'+esc(url)+'">'+(image?'<img src="'+esc(image.url)+'" alt="'+esc(p.title)+'" loading="lazy">':'')+'<div><span class="eyebrow">'+esc(p.category||'Automotive Journal')+'</span><h2>'+esc(p.title)+'</h2><p>'+esc(p.description||'Read the full story.')+'</p></div></a>'}).join('')+'</div>';meta('meta[name="description"]','Read public automotive stories, buying advice and ownership features from 3 Pedals Auto KE.')}
-async function load(){if(!sb){notFound('Journal is unavailable right now. Please try again later.');return}if(!articleId){const {data,error}=await sb.from('projects').select('*').eq('published',true).eq('type','article').order('created_at',{ascending:false});if(error){console.error(error);notFound('Journal is unavailable right now. Please try again later.');return}renderIndex(data||[]);return}const {data,error}=await sb.from('projects').select('*').eq('id',articleId).eq('published',true).eq('type','article').maybeSingle();if(error){console.error(error);notFound('Journal is unavailable right now. Please try again later.');return}if(!data||!data.body){notFound('This article is not available or has not been published.');return}render(data)}load().catch(error=>{console.error(error);notFound('We could not load this story. Please refresh and try again.')});
+const JOURNAL_CACHE_PREFIX='3pedals:journal:v2:';
+function readJournalCache(key){try{const saved=JSON.parse(localStorage.getItem(key)||sessionStorage.getItem(key)||'null');return saved&&Date.now()-saved.at<15*60*1000?saved.data:null}catch(_){return null}}
+function writeJournalCache(key,data){try{const value=JSON.stringify({at:Date.now(),data});localStorage.setItem(key,value);sessionStorage.setItem(key,value)}catch(_){}}
+async function load(){
+ if(!sb){notFound('Journal is unavailable right now. Please try again later.');return}
+ const cacheKey=JOURNAL_CACHE_PREFIX+(articleId?'article:'+articleId:'index');
+ const cached=readJournalCache(cacheKey);
+ if(cached){if(articleId){if(cached.body)render(cached)}else if(Array.isArray(cached))renderIndex(cached)}
+ const request=articleId
+  ?sb.from('projects').select('*').eq('id',articleId).eq('published',true).eq('type','article').maybeSingle()
+  :sb.from('projects').select('*').eq('published',true).eq('type','article').order('created_at',{ascending:false});
+ const {data,error}=await request;
+ if(error){console.error(error);if(!cached)notFound('Journal is unavailable right now. Please try again later.');return}
+ if(articleId){
+  if(!data||!data.body){if(!cached)notFound('This article is not available or has not been published.');return}
+  writeJournalCache(cacheKey,data);render(data);
+ }else{
+  const rows=data||[];writeJournalCache(cacheKey,rows);renderIndex(rows);
+ }
+}
+load().catch(error=>{console.error(error);notFound('We could not load this story. Please refresh and try again.')});
 </script>
 
 <style id="site-wide-mobile-glass-status-area">
