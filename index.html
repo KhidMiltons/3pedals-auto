@@ -3767,6 +3767,38 @@ body>header,header.site-header,.site-header,header{
 @media(prefers-reduced-motion:reduce){#accDlg *,#accDlg *:before,#accDlg *:after{animation:none!important;transition:none!important}}
 </style>
 
+
+<style id="account-header-horizontal-fix">
+/* Keep the account brand on one horizontal line; isolate it from inherited text rules. */
+#accDlg .account-dialog-head{display:grid!important;grid-template-columns:42px minmax(0,1fr) 62px 42px!important;align-items:center!important;min-width:0!important}
+#accDlg .account-dialog-head .account-brand-title,
+#accDlg .account-dialog-head h2.account-brand-title{
+  display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;
+  align-items:center!important;justify-content:flex-start!important;gap:9px!important;
+  width:100%!important;min-width:0!important;max-width:100%!important;
+  writing-mode:horizontal-tb!important;text-orientation:mixed!important;
+  white-space:nowrap!important;word-break:normal!important;overflow-wrap:normal!important;
+  transform:none!important;letter-spacing:normal!important;
+}
+#accDlg .account-dialog-head .account-brand-title img{display:block!important;flex:0 0 30px!important}
+#accDlg .account-dialog-head .account-brand-title span{
+  display:block!important;flex:0 1 auto!important;min-width:0!important;
+  writing-mode:horizontal-tb!important;text-orientation:mixed!important;
+  white-space:nowrap!important;word-break:keep-all!important;overflow-wrap:normal!important;
+  line-height:1.2!important;
+}
+@media(max-width:760px){
+ #accDlg .account-dialog-head{grid-template-columns:38px minmax(0,1fr) 54px 38px!important}
+ #accDlg .account-dialog-head .account-brand-title{gap:6px!important}
+ #accDlg .account-dialog-head .account-brand-title img{flex-basis:26px!important;width:26px!important;height:26px!important}
+ #accDlg .account-dialog-head .account-brand-title span{font-size:clamp(12px,3.6vw,16px)!important}
+}
+@media(max-width:390px){
+ #accDlg .account-dialog-head{grid-template-columns:34px minmax(0,1fr) 48px 34px!important}
+ #accDlg .account-dialog-head .account-brand-title span{font-size:12px!important}
+}
+</style>
+
 </body>
 </html>
 
