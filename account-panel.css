@@ -251,3 +251,126 @@
   #accDlg #accBody .account-activity-item{grid-template-columns:8px minmax(0,1fr)!important;gap:8px!important}
   #accDlg #accBody .account-activity-item time{grid-column:2!important}
 }
+
+
+/* Stage 2 refinement: clearer workspace navigation and vehicle management. */
+#accDlg nav#accountMenu.account-sidebar>button[data-page="overview"]::before{
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8'%3E%3Cpath d='m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z'/%3E%3C/svg%3E")
+}
+#accDlg nav#accountMenu.account-sidebar>button[data-page="settings"]::before{
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8'%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3Cpath d='M19.4 15a8 8 0 0 0 0-6l1.3-1-2-3.4-1.6.7a8 8 0 0 0-5.2-1.5L11.4 2h-4l-.5 1.8a8 8 0 0 0-2.6 1.5l-1.6-.7-2 3.4L2 9a8 8 0 0 0 0 6l-1.3 1 2 3.4 1.6-.7a8 8 0 0 0 2.6 1.5l.5 1.8h4l.5-1.8a8 8 0 0 0 2.6-1.5l1.6.7 2-3.4z' transform='translate(2 0) scale(.9)'/%3E%3C/svg%3E")
+}
+#accDlg nav#accountMenu.account-sidebar>button:focus-visible{
+  outline:2px solid rgba(255,255,255,.62)!important;outline-offset:2px!important
+}
+#accDlg #accBody .account-page:not(.account-overview){display:block!important}
+#accDlg #accBody .account-page:not(.account-overview)[hidden]{display:none!important}
+#accDlg #accBody .seller-dashboard{gap:14px!important;margin:0!important}
+#accDlg #accBody .seller-dashboard>.account-tools{
+  margin:0!important;padding:19px!important;border:1px solid var(--ad-line)!important;
+  border-radius:16px!important;background:rgba(255,255,255,.045)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035)!important
+}
+#accDlg #accBody .seller-dashboard>.account-tools>h3{
+  margin:0 0 7px!important;font-size:16px!important;letter-spacing:-.02em!important
+}
+#accDlg #accBody .seller-dashboard>.account-tools>h4{
+  margin:13px 0 6px!important;font-size:13px!important
+}
+#accDlg #accBody .seller-dashboard .stats{gap:9px!important;margin:13px 0!important}
+#accDlg #accBody .seller-dashboard .stats>div{
+  min-height:74px!important;padding:12px!important;border:1px solid rgba(255,255,255,.105)!important;
+  border-radius:12px!important;background:rgba(255,255,255,.045)!important
+}
+#accDlg #accBody .seller-dashboard .stats b{font-size:19px!important;line-height:1.2!important}
+#accDlg #accBody .seller-dashboard .stats span{font-size:10px!important;line-height:1.4!important}
+#accDlg #accBody .seller-listing-filters{
+  display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  gap:7px 12px!important;margin:12px 0!important
+}
+#accDlg #accBody .seller-listing-filters label{margin:0!important;font-size:10px!important;color:var(--ad-muted)!important}
+#accDlg #accBody .seller-listing-filters input,
+#accDlg #accBody .seller-listing-filters select{
+  width:100%!important;min-width:0!important;min-height:41px!important;padding:9px 11px!important;font-size:11px!important
+}
+#accDlg #accBody .seller-listing{
+  display:grid!important;grid-template-columns:112px minmax(0,1fr) auto!important;
+  gap:14px!important;align-items:center!important;padding:13px!important;margin:9px 0!important;
+  border:1px solid rgba(255,255,255,.11)!important;border-radius:13px!important;
+  background:rgba(255,255,255,.035)!important;transition:background .18s,border-color .18s,transform .18s!important
+}
+#accDlg #accBody .seller-listing:hover{
+  background:rgba(255,255,255,.075)!important;border-color:rgba(255,255,255,.22)!important;
+  transform:translateY(-1px)!important
+}
+#accDlg #accBody .seller-listing-photo{
+  display:block!important;width:112px!important;height:78px!important;object-fit:cover!important;
+  border:1px solid rgba(255,255,255,.12)!important;border-radius:9px!important;background:rgba(255,255,255,.05)!important
+}
+#accDlg #accBody .seller-listing-main{display:grid!important;gap:6px!important;min-width:0!important}
+#accDlg #accBody .seller-listing-main>strong{font-size:13px!important;line-height:1.35!important;overflow-wrap:anywhere!important}
+#accDlg #accBody .seller-listing-main>.meta{font-size:10px!important;line-height:1.55!important;overflow-wrap:anywhere!important}
+#accDlg #accBody .seller-listing .st{
+  display:inline-flex!important;align-items:center!important;padding:3px 7px!important;
+  border:1px solid rgba(255,255,255,.15)!important;border-radius:999px!important;
+  background:rgba(255,255,255,.075)!important;color:rgba(255,255,255,.86)!important;
+  font-size:9px!important;font-weight:650!important;white-space:nowrap!important
+}
+#accDlg #accBody .seller-listing-actions{
+  display:flex!important;align-items:center!important;justify-content:flex-end!important;
+  gap:6px!important;flex-wrap:wrap!important;max-width:240px!important
+}
+#accDlg #accBody .seller-listing-actions .btn{
+  min-height:34px!important;padding:7px 10px!important;border:1px solid rgba(255,255,255,.14)!important;
+  border-radius:8px!important;background:rgba(255,255,255,.055)!important;color:#f4f7fa!important;
+  box-shadow:none!important;font-size:10px!important
+}
+#accDlg #accBody .seller-listing-actions .btn:hover{
+  background:rgba(255,255,255,.13)!important;border-color:rgba(255,255,255,.25)!important
+}
+#accDlg #accBody .seller-listing-actions .btn[data-del]{
+  color:rgba(255,205,205,.85)!important;border-color:rgba(255,150,150,.17)!important
+}
+#accDlg #accBody .seller-listing-filters~p.meta{font-size:10px!important;margin:5px 0 9px!important}
+#accDlg #accBody .seller-dashboard .account-tools .dashboard-welcome{
+  padding:13px!important;border:1px solid var(--ad-line)!important;border-radius:12px!important;
+  background:rgba(255,255,255,.045)!important;font-size:11px!important
+}
+#accDlg #accBody .account-settings-tabs{
+  display:flex!important;gap:6px!important;flex-wrap:wrap!important;margin:12px 0 16px!important;
+  padding-bottom:10px!important;border-bottom:1px solid var(--ad-line)!important
+}
+#accDlg #accBody .account-settings-tabs button{
+  min-height:35px!important;padding:8px 12px!important;border:1px solid transparent!important;
+  border-radius:9px!important;background:transparent!important;color:var(--ad-muted)!important;
+  font-size:10px!important;transition:background .18s,border-color .18s,color .18s!important
+}
+#accDlg #accBody .account-settings-tabs button.active,
+#accDlg #accBody .account-settings-tabs button[aria-selected="true"]{
+  background:rgba(255,255,255,.105)!important;border-color:var(--ad-line)!important;color:#fff!important
+}
+#accDlg #accBody .settings-section{padding:15px!important;border:1px solid rgba(255,255,255,.10)!important;border-radius:13px!important;background:rgba(255,255,255,.03)!important}
+#accDlg #accBody .settings-section h4{margin:0 0 6px!important;font-size:14px!important}
+#accDlg #accBody .settings-section>.meta{font-size:10px!important}
+#accDlg #accBody .account-overview-stats>button:focus-visible,
+#accDlg #accBody .account-quick-panel>button:focus-visible{
+  outline:2px solid rgba(255,255,255,.65)!important;outline-offset:3px!important
+}
+@media(max-width:900px){
+  #accDlg #accBody .seller-listing{grid-template-columns:92px minmax(0,1fr)!important;gap:11px!important}
+  #accDlg #accBody .seller-listing-photo{width:92px!important;height:68px!important}
+  #accDlg #accBody .seller-listing-actions{grid-column:1/-1!important;justify-content:flex-start!important;max-width:none!important;padding-top:2px!important}
+}
+@media(max-width:600px){
+  #accDlg #accBody .seller-listing-filters{grid-template-columns:minmax(0,1fr)!important;gap:6px!important}
+  #accDlg #accBody .seller-listing{grid-template-columns:76px minmax(0,1fr)!important;padding:10px!important;gap:10px!important}
+  #accDlg #accBody .seller-listing-photo{width:76px!important;height:62px!important}
+  #accDlg #accBody .seller-listing-main>strong{font-size:12px!important}
+  #accDlg #accBody .seller-listing-actions{gap:6px!important}
+  #accDlg #accBody .seller-listing-actions .btn{flex:1 1 auto!important;min-width:82px!important}
+  #accDlg #accBody .seller-dashboard>.account-tools{padding:14px!important}
+  #accDlg #accBody .seller-dashboard .stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(prefers-reduced-motion:reduce){
+  #accDlg #accBody .seller-listing,#accDlg #accBody .seller-listing-actions .btn{transition:none!important}
+}
