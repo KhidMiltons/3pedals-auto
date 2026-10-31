@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&family=Sora:wght@400;500;600;700;800&display=swap");
+
 /* Site-wide glassmorphism layer: preserves the existing graphite + champagne-gold identity. */
 :root {
   --glass-surface: rgba(19, 20, 23, .68);
@@ -818,3 +820,43 @@ header,body>.header,body>header{
 /* Consistent modern typography across pages using the shared theme. */
 html body,html body button,html body input,html body select,html body textarea{font-family:Manrope,Inter,system-ui,-apple-system,"Segoe UI",sans-serif!important}
 html body :is(h1,h2,h3,h4,h5,h6){font-family:Manrope,Inter,system-ui,-apple-system,"Segoe UI",sans-serif!important;font-weight:650!important;letter-spacing:-.025em!important;line-height:1.2!important}
+
+
+/* Official 3 Pedals Auto KE typography: Sora + Manrope, with Playfair Display for editorial accents. */
+html body,
+html body button,html body input,html body select,html body textarea{
+  font-family:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif!important;
+  font-synthesis:none;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+html body :is(h1,h2,h3,h4,h5,h6){
+  font-family:"Sora","Manrope",system-ui,sans-serif!important;
+  font-weight:600!important;
+  letter-spacing:-.035em!important;
+  line-height:1.18!important;
+}
+html body :is(h1){font-weight:700!important;letter-spacing:-.045em!important}
+html body :is(h2,h3){font-weight:600!important}
+html body :is(p,li,label,small,.description,.muted,.meta,.subtitle,.section-subtitle,.eyebrow,.lead){
+  font-family:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif!important;
+}
+html body :is(.brand,.logo,.brand-name,.site-brand,.wordmark,header .brand,header .logo){
+  font-family:"Sora",system-ui,sans-serif!important;
+  font-weight:700!important;
+  letter-spacing:-.035em!important;
+}
+html body :is(button,.btn,a.button,.back,.nav a,.nav button,nav a,nav button){
+  font-family:"Manrope",system-ui,sans-serif!important;
+  font-weight:600!important;
+}
+html body :is(.price,.amount,.vehicle-price,[data-price]){
+  font-family:"Manrope",system-ui,sans-serif!important;
+  font-weight:700!important;
+  font-variant-numeric:tabular-nums;
+}
+html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){
+  font-family:"Playfair Display",Georgia,serif!important;
+  font-weight:600!important;
+  letter-spacing:-.02em!important;
+}
