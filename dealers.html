@@ -888,3 +888,38 @@ html body :is(button,.btn,a.button,.back,nav a,nav button){font-family:"Manrope"
 html body :is(.price,.amount,.vehicle-price,[data-price]){font-family:"Manrope",system-ui,sans-serif!important;font-weight:700!important;font-variant-numeric:tabular-nums}
 html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){font-family:"Playfair Display",Georgia,serif!important;font-weight:600!important;letter-spacing:-.02em!important}
 </style>
+
+<style id="dealers-mobile-search-side-by-side">
+@media(max-width:520px){
+  html body .tools{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:9px!important;
+    align-items:stretch!important;
+  }
+  html body .tools .search-label{
+    grid-column:1/-1!important;
+  }
+  html body .tools input,
+  html body .tools select,
+  html body .tools .back{
+    grid-column:auto!important;
+    width:100%!important;
+    min-width:0!important;
+    min-height:44px!important;
+    box-sizing:border-box!important;
+    padding:9px 10px!important;
+    font-size:12px!important;
+  }
+  html body .tools input{
+    grid-column:1/-1!important;
+  }
+  html body .tools .back{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    white-space:nowrap!important;
+  }
+}
+</style>
+
