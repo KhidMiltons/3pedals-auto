@@ -715,7 +715,7 @@ async function init(){
  try{const saved=JSON.parse(localStorage.getItem(YARD_CACHE_KEY)||sessionStorage.getItem(YARD_CACHE_KEY)||'null');if(saved&&Array.isArray(saved.rows)&&Date.now()-saved.at<3*60*1000)cachedRows=saved.rows}catch(_){}
  let data=cachedRows,error=null;
  const refreshApprovedRows=()=>sb.from('listings').select('*').eq('status','approved').order('created_at',{ascending:false}).then(result=>{
-  if(result.error){console.warn('Yard inventory background refresh failed:',result.error);return}
+  if(result.error){console.warn('Yard inventory background refresh failed:',result.error);return result}
   try{const value=JSON.stringify({at:Date.now(),rows:result.data||[]});localStorage.setItem(YARD_CACHE_KEY,value);sessionStorage.setItem(YARD_CACHE_KEY,value)}catch(_){}
   if(!cachedRows)data=result.data||[];
   return result;
