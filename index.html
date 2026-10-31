@@ -3695,6 +3695,48 @@ body>header,header.site-header,.site-header,header{
 }
 </style>
 
+<style id="site-header-content-grid-alignment">
+/* Shared page frame: header shell and primary content frame use the same measured width and centered gutters. */
+html body>header,
+html body>main.wrap,
+html body>main:not(.wrap){
+  box-sizing:border-box!important;
+  width:min(calc(100% - 48px),1180px)!important;
+  max-width:1180px!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+html body>header>.wrap,
+html body>header>.headin,
+html body>header>.head,
+html body>header>.wrap.headin{
+  box-sizing:border-box!important;
+  width:100%!important;
+  max-width:none!important;
+  margin-left:0!important;
+  margin-right:0!important;
+}
+html body>main.wrap,
+html body>main:not(.wrap){
+  padding-left:0!important;
+  padding-right:0!important;
+}
+@media(max-width:760px){
+  html body>header,
+  html body>main.wrap,
+  html body>main:not(.wrap){
+    width:calc(100% - 32px)!important;
+    max-width:none!important;
+  }
+  html body>header>.wrap,
+  html body>header>.headin,
+  html body>header>.head,
+  html body>header>.wrap.headin{
+    width:100%!important;
+    max-width:none!important;
+  }
+}
+</style>
 </body>
 </html>
 
@@ -3843,31 +3885,7 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){f
 
 
 <style id="homepage-content-header-width-alignment">
-/* Use one identical outer container for the Home header and every Home content card.
-   The main wrapper has no inner gutter, so card edges align with the header shell itself. */
-html body>header,
-html body>main.wrap{
-  box-sizing:border-box!important;
-  width:min(calc(100% - 80px),1392px)!important;
-  max-width:1392px!important;
-  margin-left:auto!important;
-  margin-right:auto!important;
-}
-html body>header>.wrap{
-  box-sizing:border-box!important;
-  width:100%!important;
-  max-width:none!important;
-  margin-left:auto!important;
-  margin-right:auto!important;
-  padding-left:24px!important;
-  padding-right:24px!important;
-}
-html body>main.wrap{
-  margin-top:24px!important;
-  padding-left:0!important;
-  padding-right:0!important;
-}
-/* Remove the hero's older independent width so every Home card shares the container edges. */
+/* Home content columns fill the same shared frame as the site header. */
 html body>main.wrap>#home,
 html body>main.wrap>#home>.home-with-quote,
 html body>main.wrap>#home>.home-with-quote>div,
@@ -3879,26 +3897,5 @@ html body>main.wrap>#home .project-intro{
   width:100%!important;
   max-width:100%!important;
 }
-html body>main.wrap>#home .hero{
-  margin-left:0!important;
-  margin-right:0!important;
-}
-@media(max-width:760px){
-  html body>header,
-  html body>main.wrap{
-    width:calc(100% - 44px)!important;
-    max-width:none!important;
-  }
-  html body>header>.wrap{
-    width:100%!important;
-    max-width:none!important;
-    padding-left:12px!important;
-    padding-right:12px!important;
-  }
-  html body>main.wrap{
-    margin-top:16px!important;
-    padding-left:0!important;
-    padding-right:0!important;
-  }
-}
+html body>main.wrap>#home .hero{margin-left:0!important;margin-right:0!important}
 </style>
