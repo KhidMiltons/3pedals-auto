@@ -461,6 +461,43 @@ header.head{
 }
 </style>
 
+<script id="3pedals-site-media-performance">
+(()=>{
+ const apply=(root,initial=false)=>{
+  const images=[];
+  if(root.nodeType===1&&root.matches('img'))images.push(root);
+  root.querySelectorAll?.('img').forEach(img=>images.push(img));
+  let visible=0;
+  images.forEach(img=>{
+   if(img.width===1||img.height===1||img.style.display==='none')return;
+   if(!img.hasAttribute('decoding'))img.decoding='async';
+   if(!img.hasAttribute('loading')){
+    img.loading=initial&&visible<2?'eager':'lazy';
+    if(initial&&visible<2&&!img.hasAttribute('fetchpriority'))img.fetchPriority='high';
+   }
+   if(img.loading==='lazy'&&!img.hasAttribute('fetchpriority'))img.fetchPriority='low';
+   visible++;
+  });
+  const videos=[];
+  if(root.nodeType===1&&root.matches('video'))videos.push(root);
+  root.querySelectorAll?.('video').forEach(video=>videos.push(video));
+  videos.forEach(video=>{
+   if(!video.hasAttribute('preload'))video.preload='none';
+   if(!video.hasAttribute('playsinline'))video.setAttribute('playsinline','');
+   if(!video.hasAttribute('loading'))video.setAttribute('loading','lazy');
+  });
+ };
+ try{apply(document,true)}catch(_){}
+ let queue=[],scheduled=false;
+ const flush=()=>{scheduled=false;const nodes=queue;queue=[];nodes.forEach(node=>{try{apply(node)}catch(_){}})};
+ if(window.MutationObserver&&document.body){
+  new MutationObserver(records=>{
+   records.forEach(record=>record.addedNodes.forEach(node=>{if(node.nodeType===1)queue.push(node)}));
+   if(queue.length&&!scheduled){scheduled=true;requestAnimationFrame(flush)}
+  }).observe(document.body,{childList:true,subtree:true});
+ }
+})();
+</script>
 </body>
 </html>
 
