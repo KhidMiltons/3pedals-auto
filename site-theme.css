@@ -948,7 +948,7 @@ html body :is(.intro,.hero,.page-intro,.section-intro) :is(h1,h2){
 /* Restore the original floating-header footprint; spacing rules apply to page content, not the header. */
 html body>header:not(.head){
   box-sizing:border-box!important;
-  width:min(calc(100% - 32px),1440px)!important;
+  width:min(calc(100% - 56px),1440px)!important;
   max-width:1440px!important;
   margin-left:auto!important;
   margin-right:auto!important;
