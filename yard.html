@@ -709,8 +709,21 @@ function normalizeYardName(name){return String(name||'').trim().replace(/\s+(?:k
 async function init(){
  if(!wanted&&!wantedSlug&&!wantedDealer){document.getElementById('yardName').textContent='Car yard';document.getElementById('countText').textContent='No yard selected';document.getElementById('grid').innerHTML='<div class="panel empty">Choose a yard from the vehicle listings to see its inventory.</div>';return}
  if(!sb||/^PASTE_/.test(CFG.key)){document.getElementById('yardName').textContent=wanted||wantedSlug;document.getElementById('grid').innerHTML='<div class="panel empty">The live database connection is not configured.</div>';return}
- // Select the actual rows instead of naming optional columns that may not exist in this Supabase schema.
- const {data,error}=await sb.from('listings').select('*').eq('status','approved').order('created_at',{ascending:false});
+ // Reuse recently loaded approved inventory immediately, then refresh it in the background.
+ const YARD_CACHE_KEY='3pedals:yard-approved:v2';
+ let cachedRows=null;
+ try{const saved=JSON.parse(localStorage.getItem(YARD_CACHE_KEY)||sessionStorage.getItem(YARD_CACHE_KEY)||'null');if(saved&&Array.isArray(saved.rows)&&Date.now()-saved.at<3*60*1000)cachedRows=saved.rows}catch(_){}
+ let data=cachedRows,error=null;
+ const refreshApprovedRows=()=>sb.from('listings').select('*').eq('status','approved').order('created_at',{ascending:false}).then(result=>{
+  if(result.error){console.warn('Yard inventory background refresh failed:',result.error);return}
+  try{const value=JSON.stringify({at:Date.now(),rows:result.data||[]});localStorage.setItem(YARD_CACHE_KEY,value);sessionStorage.setItem(YARD_CACHE_KEY,value)}catch(_){}
+  if(!cachedRows)data=result.data||[];
+  return result;
+ });
+ if(cachedRows){refreshApprovedRows()}
+ else{
+  const result=await refreshApprovedRows();data=result?.data||data;error=result?.error||null;
+ }
  if(error){document.getElementById('yardName').textContent=wanted||wantedSlug;document.getElementById('countText').textContent='Inventory unavailable';document.getElementById('grid').innerHTML='<div class="panel empty">We could not load this yard right now. Please try again.</div>';return}
  const key=normalizeYardName(wanted),slugKey=String(wantedSlug||'').toLowerCase(),dealerKey=normalizeYardName(wantedDealer);
  const rows=(data||[]).filter(r=>yardType(r)==='yard'&&(wantedDealer?(normalizeYardName(yardNameFor(r))===dealerKey||String(r.seller_slug||'').toLowerCase()===slugKey):wantedSlug?(String(r.seller_slug||'').toLowerCase()===slugKey||(!r.seller_slug&&normalizeYardName(yardNameFor(r))===normalizeYardName(wantedSlug))):normalizeYardName(yardNameFor(r))===key));
