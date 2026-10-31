@@ -1187,11 +1187,12 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 #publicWhatsappFab{width:56px!important;height:56px!important;min-width:56px!important;right:18px!important;bottom:calc(18px + env(safe-area-inset-bottom,0px))!important;padding:0!important;color:rgba(235,207,133,.9)!important;border:0!important;outline:0!important;box-shadow:none!important;background:transparent!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;z-index:20}
 #publicWhatsappFab svg{width:40px!important;height:40px!important}
 #adminOpen,#accAdmin{cursor:pointer!important;background:transparent!important}
-/* The floating WhatsApp and header admin icons are not displayed on non-home sections. */
-body:has(#home[hidden]) #publicWhatsappFab,
-body:has(#home[hidden]) #adminWrap{display:none!important}
-/* Keep the duplicate admin shortcut out of the account console. */
-#accAdmin{display:none!important}
+/* Admin access appears only in the signed-in administrator account panel. */
+.account-admin-tools{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin:18px 0!important;padding:18px!important;border:1px solid rgba(255,255,255,.13)!important;border-radius:16px!important;background:rgba(255,255,255,.035)!important}
+.account-admin-tools h3{margin:0 0 5px!important}.account-admin-tools p{margin:0;max-width:620px}
+.account-admin-button{display:inline-flex!important;align-items:center;gap:9px;white-space:nowrap}
+.account-admin-button svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+body:has(#home[hidden]) #publicWhatsappFab{display:none!important}
 @media(max-width:600px){#publicWhatsappHero{width:52px!important;height:52px!important;min-width:52px!important}#publicWhatsappFab{width:54px!important;height:54px!important;min-width:54px!important}#publicWhatsappFab svg{width:38px!important;height:38px!important}}
 @media(prefers-reduced-motion:reduce){.glass-icon-btn{transition:none!important}}
 </style>
@@ -1289,7 +1290,6 @@ alt=""
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-<div class="auth-left" id="adminWrap" hidden><button class="glass-icon-btn admin-glass-icon" id="adminOpen" aria-label="Open admin panel" title="Admin panel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 6v5c0 4.6-2.9 7.8-7 10-4.1-2.2-7-5.4-7-10V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg></button></div>
 <header><div class="wrap">
   <div class="logo" style="cursor:pointer" onclick="window.location.assign('/')" role="button" tabindex="0" aria-label="Reload homepage" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.location.assign('/')}">3 Pedals Auto KE</div>
   <div class="account-pill" aria-label="Account"><span id="accountText">Not signed in</span><button id="accountOpen" aria-label="Open account" title="Account"></button></div>
@@ -1631,7 +1631,6 @@ async function loadSession(){
 function refreshAccountUI(){
   $("accountText").textContent=me?`Signed in as ${(profile&&profile.name)||me?.user_metadata?.name||me?.user_metadata?.full_name||me.email}`:"Not signed in";
   $("accountOpen").textContent="";
-  $("adminWrap").hidden=!(profile&&profile.is_admin);
 }
 let sellerRegistrationMode=false,sellerSlugEdited=false;
  function slugifySellerName(value){return String(value||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,48).replace(/-+$/g,"")}
@@ -1893,6 +1892,7 @@ async function openAccount(options={}){
       <div class="profile-actions"><label class="btn ghost" style="display:inline-flex;align-items:center;cursor:pointer;margin:0">Upload / change ${isYard?"dealer logo":"picture"}<input id="accPhoto" type="file" accept="image/*" hidden></label>${avatar?'<button class="btn ghost" type="button" id="accRemovePhoto">Remove picture</button>':""}</div>${isYard?'<p class="meta">This image appears beside your dealer name and on your yard profile.</p>':""}
     </div>
   </div>
+  ${profile&&profile.is_admin?`<section class="account-tools account-admin-tools"><div><h3>Administration</h3><p class="meta">Manage vehicle approvals, garage bookings, website contact details and published content.</p></div><button class="btn ghost account-admin-button" type="button" id="accAdmin"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 6v5c0 4.6-2.9 7.8-7 10-4.1-2.2-7-5.4-7-10V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg><span>Open Admin Dashboard</span></button></section>`:""}
   <div class="profile-grid"><div><label for="accName">Full name</label><input id="accName" value="${esc(name)}" autocomplete="name"></div><div><label for="accPhone">Phone number</label><input id="accPhone" value="${esc(phone)}" type="tel" autocomplete="tel"></div><div><label for="accType">Account type</label><select id="accType"><option value="private" ${accountType()==="private"?"selected":""}>Private seller</option><option value="yard" ${isYard?"selected":""}>Car yard / dealer</option></select></div></div>
   ${isYard?`<section class="account-tools dealer-account-editor"><h3>Dealer information</h3><p class="meta">Manage the public information shown on your dealer profile and vehicle listings. Changes apply to your existing listings too.</p><div class="profile-grid"><div><label for="accDealerName">Dealer / business name</label><input id="accDealerName" value="${esc(yardProfile.yard_name||yardProfile.seller_name||me.user_metadata?.dealer_name||name)}"></div><div><label for="accDealerContact">Contact person</label><input id="accDealerContact" value="${esc(yardProfile.contact||me.user_metadata?.dealer_contact||"")}"></div><div><label for="accDealerLocation">Location / address</label><input id="accDealerLocation" value="${esc(yardProfile.yard_location||yardProfile.location||me.user_metadata?.dealer_location||"")}"></div><div><label for="accDealerPhone">Dealer phone</label><input id="accDealerPhone" type="tel" value="${esc(yardProfile.seller_phone||yardProfile.phone||me.user_metadata?.dealer_phone||phone)}"></div><div><label for="accDealerEmail">Dealer email</label><input id="accDealerEmail" type="email" value="${esc(yardProfile.seller_email||yardProfile.email||me.user_metadata?.dealer_email||me.email||"")}"></div><div><label for="accDealerWhatsApp">WhatsApp number</label><input id="accDealerWhatsApp" type="tel" value="${esc(yardProfile.whatsapp||me.user_metadata?.dealer_whatsapp||yardProfile.seller_phone||phone)}"></div><div><label for="accDealerWeb">Website / social link</label><input id="accDealerWeb" type="url" value="${esc(yardProfile.yard_web||yardProfile.web||me.user_metadata?.dealer_website||"")}" placeholder="https://example.com"></div></div></section>`:""}
   <p id="accProfileErr" class="meta" style="color:var(--err)"></p><div class="acts"><button class="btn" id="accSaveProfile">Save profile changes</button></div>
@@ -1904,7 +1904,7 @@ async function openAccount(options={}){
    </div>
   <div class="acts" id="garageBookingAction" style="margin-top:16px"><a class="btn alt" href="/garage?section=book">Book a garage service</a></div><h3 style="margin-top:18px">My garage bookings and service tickets</h3>${B.map(x=>`<div class="svc"><div><b>${esc(x.service)}</b><span class="meta">Ticket ${esc(x.ref)} · ${esc(x.date)}${x.time_slot?" · "+esc(x.time_slot):""} · ${esc(x.car||"")}</span><span class="meta">Progress: ${esc(String(x.service_status||x.status).replaceAll("_"," "))}</span></div><span class="st">${esc(x.status)}</span></div>`).join("")||'<p class="meta">No bookings yet.</p>'}
   <section class="danger-zone"><h3>Delete account</h3><p class="meta">Permanently remove your account, listings, and bookings. This cannot be undone.</p><button class="btn ghost" id="accDeleteAccount" type="button">Permanently delete account</button></section>
-  <div class="acts" style="margin-top:18px">${profile&&profile.is_admin?'<button class="btn glass-icon-btn admin-glass-icon" id="accAdmin" aria-label="Open admin panel" title="Admin panel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 6v5c0 4.6-2.9 7.8-7 10-4.1-2.2-7-5.4-7-10V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg></button>':""}<button class="btn ghost" id="accOut">Sign out</button><button class="btn ghost" id="accClose">Close</button></div>`;
+  <div class="acts" style="margin-top:18px"><button class="btn ghost" id="accOut">Sign out</button><button class="btn ghost" id="accClose">Close</button></div>`;
   const dashboard=box.querySelector(".seller-dashboard"),profileCard=box.querySelector(".profile-card"),profileGrid=box.querySelector(".profile-grid"),profileError=$("accProfileErr"),profileActions=$("accSaveProfile")?.parentElement,loginDetails=Array.from(box.children).find(node=>node.classList.contains("account-tools")),menu=$("accountMenu");
   const accountOwnerId=me.id;
   const refreshPromotionHistory=async()=>{
@@ -2338,7 +2338,7 @@ function bindProjectForm(existing){
   $("projectForm")?.addEventListener("submit",()=>saveProject(existing));
   $("projectCancel")?.addEventListener("click",()=>openAdmin());
 }
-$("adminOpen").onclick=()=>{window.location.href="/admin.html"};$('adminClose').onclick=()=>$("adminDlg").close();
+$('adminClose').onclick=()=>$("adminDlg").close();
 $("adminPanel").onclick=async e=>{
   const b=e.target.closest("[data-a]");if(!b)return;
   const id=b.dataset.id,a=b.dataset.a;
@@ -3820,4 +3820,11 @@ html body header #nav button.nav-contact[aria-selected="true"]:hover{
   color:inherit!important;
   outline:none!important;
 }
+</style>
+
+<style id="modern-standard-typography-and-account-admin">
+html body,html body button,html body input,html body select,html body textarea{font-family:Manrope,Inter,system-ui,-apple-system,"Segoe UI",sans-serif!important}
+html body :is(h1,h2,h3,h4,h5,h6){font-family:Manrope,Inter,system-ui,-apple-system,"Segoe UI",sans-serif!important;font-weight:650!important;letter-spacing:-.025em!important;line-height:1.2!important}
+html body .logo,html body .brand,html body .account-brand-title{font-family:Manrope,Inter,system-ui,-apple-system,"Segoe UI",sans-serif!important;font-weight:750!important;letter-spacing:-.025em!important}
+@media(max-width:600px){.account-admin-tools{align-items:stretch!important}.account-admin-button{width:100%;justify-content:center}}
 </style>
