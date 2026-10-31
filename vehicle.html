@@ -646,3 +646,39 @@ html body>header .back:hover{
   html body>header .back{transition:none!important}
 }
 </style>
+
+
+<style id="dealer-vehicle-card-glass-hover">
+/* Frosted-glass surfaces and restrained hover response for dealer vehicle detail cards. */
+html body :is(.gallery,.info,.state,.seller,.specs,.spec,.related-card,.vehicle-card,.vehicle-details,.details,.info-card,.spec-card){
+  background-color:rgba(29,32,36,.48)!important;
+  background-image:linear-gradient(145deg,rgba(255,255,255,.13),rgba(255,255,255,.045))!important;
+  border-color:rgba(255,255,255,.18)!important;
+  box-shadow:0 14px 38px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.10)!important;
+  -webkit-backdrop-filter:blur(22px) saturate(145%)!important;
+  backdrop-filter:blur(22px) saturate(145%)!important;
+  transition:transform .42s cubic-bezier(.22,1,.36,1),border-color .3s ease,box-shadow .35s ease,background-color .3s ease!important;
+}
+html body :is(.gallery,.info,.state,.seller,.related-card,.vehicle-card,.vehicle-details,.details,.info-card):hover,
+html body :is(.gallery,.info,.state,.seller,.related-card,.vehicle-card,.vehicle-details,.details,.info-card):focus-within{
+  border-color:rgba(255,255,255,.32)!important;
+  box-shadow:0 22px 52px rgba(0,0,0,.32),0 0 24px rgba(255,255,255,.055),inset 0 1px 0 rgba(255,255,255,.15)!important;
+}
+html body .spec:hover{
+  background-color:rgba(255,255,255,.11)!important;
+  border-color:rgba(255,255,255,.28)!important;
+}
+@media(hover:hover) and (pointer:fine){
+  html body :is(.gallery,.info,.state,.seller,.related-card,.vehicle-card,.vehicle-details,.details,.info-card):hover{
+    transform:translateY(-4px)!important;
+  }
+}
+@media(max-width:760px){
+  html body :is(.gallery,.info,.state,.seller,.related-card,.vehicle-card,.vehicle-details,.details,.info-card):hover{
+    transform:none!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  html body :is(.gallery,.info,.state,.seller,.specs,.spec,.related-card,.vehicle-card,.vehicle-details,.details,.info-card){transition:none!important}
+}
+</style>
