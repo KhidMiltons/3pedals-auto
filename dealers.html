@@ -191,6 +191,23 @@ html body h1,html body h2,html body h3,html body .logo,html body .brand{font-fam
 html body > header .logo,html body > header .brand{font-family:"Playfair Display",Georgia,serif!important;font-size:27px!important;font-weight:700!important;letter-spacing:.03em!important;text-transform:uppercase!important}
 html body > header nav a,html body > header nav button,html body > header .headnav a,html body > header .headnav button,html body > header .back{font-family:Manrope,system-ui,sans-serif!important;font-size:14px!important;font-weight:400!important;letter-spacing:0!important}
 </style>
+<style id="dealers-header-back-position-final">
+/* Keep the dealer-directory Back button aligned inside the floating glass header. */
+html body>header.head{width:min(1160px,calc(100% - 48px))!important;margin:20px auto 12px!important}
+html body>header.head>.wrap.headin{
+ position:relative!important;width:100%!important;max-width:none!important;min-height:80px!important;
+ padding:10px 28px!important;display:flex!important;align-items:center!important;
+ justify-content:space-between!important;gap:16px!important
+}
+html body>header.head>.wrap.headin>.brand{margin:0 auto 0 0!important;flex:0 1 auto!important}
+html body>header.head>.wrap.headin>.back{
+ position:static!important;inset:auto!important;margin:0 0 0 auto!important;flex:0 0 auto!important;transform:none!important
+}
+@media(max-width:800px){
+ html body>header.head{width:calc(100% - 24px)!important;margin:12px auto!important}
+ html body>header.head>.wrap.headin{min-height:68px!important;padding:8px 12px!important;gap:10px!important}
+}
+</style>
 </head>
 <body>
 <div id="dealers-blurred-wallpaper" aria-hidden="true"></div>
