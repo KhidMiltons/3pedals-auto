@@ -1009,3 +1009,29 @@ html body>header .logo{
   html body>header .logo{font-size:18px!important}
 }
 </style>
+
+
+<style id="fleet-desktop-header-lighter-glass-mobile-compact-brand">
+/* Fleet: lighter header glass on desktop; compact Garage wordmark on mobile. */
+@media(min-width:801px){
+  html body>header{
+    -webkit-backdrop-filter:blur(3px) saturate(118%)!important;
+    backdrop-filter:blur(3px) saturate(118%)!important;
+    background-color:rgba(15,17,20,.12)!important;
+  }
+}
+@media(max-width:800px){
+  html body>header .logo{
+    font-size:clamp(15px,4.1vw,18px)!important;
+    letter-spacing:0!important;
+    line-height:1.05!important;
+    max-width:calc(100vw - 125px)!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+  }
+}
+@media(max-width:380px){
+  html body>header .logo{font-size:15px!important;max-width:calc(100vw - 116px)!important}
+}
+</style>
