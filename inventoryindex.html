@@ -557,3 +557,56 @@ header .back:hover{transform:translateY(-2px);background:rgba(255,255,255,.10)!i
 }
 </style>
 
+
+
+<style id="inventory-home-header-match-garage-final">
+/* Match the framed translucent Home/Garage header without changing inventory controls. */
+html body>header{
+  position:relative!important;top:auto!important;z-index:1000!important;
+  width:min(1160px,calc(100% - 108px))!important;
+  margin:52px auto 10px!important;min-height:82px!important;padding:0!important;
+  border:1px solid rgba(255,255,255,.20)!important;border-radius:28px!important;
+  background:rgba(24,26,29,.22)!important;
+  box-shadow:0 12px 34px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.12)!important;
+  -webkit-backdrop-filter:blur(0)!important;backdrop-filter:blur(0)!important;
+}
+html body>header>.wrap{
+  box-sizing:border-box!important;width:100%!important;max-width:none!important;
+  min-height:80px!important;margin:0!important;padding:10px 14px 10px 62px!important;
+  display:flex!important;align-items:center!important;justify-content:space-between!important;
+  gap:18px!important;background:transparent!important;border:0!important;box-shadow:none!important;
+}
+html body>header .logo{
+  display:inline-flex!important;align-items:center!important;width:max-content!important;max-width:100%!important;
+  min-height:52px!important;padding:4px 10px!important;
+  border:1px solid rgba(255,255,255,.22)!important;border-radius:16px!important;
+  font-family:"Playfair Display",Georgia,serif!important;font-size:clamp(24px,2.55vw,34px)!important;
+  line-height:1!important;font-weight:700!important;letter-spacing:.015em!important;
+  text-transform:uppercase!important;color:#e5d3a0!important;white-space:nowrap!important;
+  background:rgba(255,255,255,.025)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.08)!important;
+}
+html body>header .back{
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  min-height:42px!important;padding:9px 15px!important;
+  border:1px solid rgba(255,255,255,.20)!important;border-radius:12px!important;
+  background:rgba(255,255,255,.045)!important;color:rgba(245,245,243,.9)!important;
+  font:600 14px Manrope,system-ui,sans-serif!important;text-decoration:none!important;
+  box-shadow:none!important;transition:transform .3s ease,background .3s ease,border-color .3s ease!important;
+}
+html body>header .back:hover{
+  transform:translateY(-2px)!important;background:rgba(255,255,255,.10)!important;
+  border-color:rgba(255,255,255,.30)!important;color:#fff!important;
+}
+@media(max-width:800px){
+  html body>header{width:calc(100% - 24px)!important;margin:12px auto 12px!important;min-height:76px!important;border-radius:24px!important}
+  html body>header>.wrap{min-height:74px!important;padding:9px 12px!important;gap:8px!important}
+  html body>header .logo{min-height:46px!important;padding:4px 9px!important;font-size:clamp(17px,4.5vw,22px)!important;letter-spacing:0!important}
+  html body>header .back{min-height:40px!important;padding:8px 12px!important;font-size:13px!important}
+}
+@media(max-width:380px){
+  html body>header .logo{font-size:16px!important;padding:4px 7px!important}
+  html body>header>.wrap{gap:6px!important}
+  html body>header .back{padding:7px 9px!important;font-size:12px!important}
+}
+@media(prefers-reduced-motion:reduce){html body>header .back{transition:none!important;transform:none!important}}
+</style>
