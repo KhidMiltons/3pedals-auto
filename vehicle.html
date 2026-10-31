@@ -341,7 +341,7 @@ alt=""
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-<header><div class="wrap head"><a class="logo" href="/">3 Pedals Auto KE</a><nav class="vehicle-header-nav" aria-label="Main navigation"><a class="back" href="/dealers.html">← Back to Dealers</a><a href="/">Home</a><a href="/inventory.html">Cars for Sale</a></nav></div></header>
+<header><div class="wrap head"><a class="logo" href="/">3 Pedals Auto KE</a><nav class="vehicle-header-nav" aria-label="Main navigation"><a class="back" id="vehicleBackLink" href="/dealers.html">← Back to Dealers</a><a href="/">Home</a><a href="/inventory.html">Cars for Sale</a></nav></div></header>
 <main class="wrap">
   <div id="app" class="state">Loading vehicle…</div>
 </main>
@@ -354,6 +354,11 @@ const $=id=>document.getElementById(id);
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt=n=>Number(n||0).toLocaleString('en-KE');
 const qs=new URLSearchParams(location.search);const id=qs.get('id');
+(function restoreDealerReturnLink(){
+  const link=document.getElementById("vehicleBackLink"),requested=qs.get("return_to");
+  if(!link||!requested)return;
+  try{const target=new URL(requested,location.origin);if(target.origin!==location.origin||target.pathname!=="/yard.html")return;link.href=target.pathname+target.search+target.hash;link.textContent="← Back to dealer";link.setAttribute("aria-label","Return to this dealer's vehicle collection")}catch(_){}
+})();
 function waNumber(v){return String(v||'').replace(/[^\d]/g,'').replace(/^0/,'254');}
 function vehicleTitle(r){return `${r.year||''} ${r.make||''} ${r.model||''}`.replace(/\s+/g,' ').trim()}
 function setMeta(key,content,property=false){
