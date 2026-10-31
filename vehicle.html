@@ -792,3 +792,20 @@ html body>main.wrap{padding-top:46px!important}
 }
 @media(prefers-reduced-motion:reduce){html body>header .vehicle-header-nav a{transition:none!important}}
 </style>
+
+<style id="vehicle-header-align-details-card">
+/* Align the header's outer edges with the full vehicle details content grid. */
+html body>header{
+  width:min(1084px,calc(100% - 36px))!important;
+  max-width:1084px!important;
+  box-sizing:border-box!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+@media(max-width:800px){
+  html body>header{width:calc(100% - 36px)!important;max-width:none!important}
+}
+@media(max-width:430px){
+  html body>header{width:calc(100% - 36px)!important}
+}
+</style>
