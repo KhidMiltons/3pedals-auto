@@ -1415,6 +1415,39 @@ fbq('track', 'PageView');
   #accDlg *,#accDlg *:before,#accDlg *:after{animation:none!important;transition:none!important}
 }
 </style>
+
+<style id="account-dashboard-responsive-controls">
+/* Desktop: permanent glass sidebar; no hamburger control. */
+@media (min-width:761px){
+  #accDlg .account-dialog-head{
+    grid-template-columns:minmax(0,1fr) 64px 40px!important;
+  }
+  #accDlg .account-dialog-head>#accMenuToggle{display:none!important}
+  #accDlg .account-dialog-head h2.account-brand-title{
+    grid-column:1!important;grid-row:1!important;
+  }
+  #accDlg .account-dialog-head>#accHomeTop{grid-column:2!important;grid-row:1!important}
+  #accDlg .account-dialog-head>#accCloseTop{grid-column:3!important;grid-row:1!important}
+  #accDlg nav#accountMenu.account-sidebar{display:flex!important;visibility:visible!important}
+}
+/* Mobile only: show the menu icon and keep the navigation collapsible. */
+@media (max-width:760px){
+  #accDlg .account-dialog-head{
+    grid-template-columns:38px minmax(0,1fr) 58px 38px!important;
+  }
+  #accDlg .account-dialog-head>#accMenuToggle{
+    display:grid!important;grid-column:1!important;grid-row:1!important;
+    place-items:center!important;font-size:0!important;line-height:1!important;
+  }
+  #accDlg .account-dialog-head>#accMenuToggle::before{
+    content:"";display:block;width:18px;height:14px;
+    background:linear-gradient(to bottom,currentColor 0 2px,transparent 2px 6px,currentColor 6px 8px,transparent 8px 12px,currentColor 12px 14px);
+  }
+  #accDlg .account-dialog-head h2.account-brand-title{grid-column:2!important;grid-row:1!important}
+  #accDlg .account-dialog-head>#accHomeTop{grid-column:3!important;grid-row:1!important}
+  #accDlg .account-dialog-head>#accCloseTop{grid-column:4!important;grid-row:1!important}
+}
+</style>
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
