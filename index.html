@@ -3843,13 +3843,22 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){f
 
 
 <style id="homepage-content-header-width-alignment">
-/* Keep the homepage content column and its outer card grids aligned with the header. */
+/* Align the homepage header and main content edge-to-edge at identical widths. */
+html body>header{
+  box-sizing:border-box!important;
+  width:min(calc(100% - 48px),1180px)!important;
+  max-width:1180px!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
 html body>main.wrap{
   box-sizing:border-box!important;
   width:min(calc(100% - 48px),1180px)!important;
   max-width:1180px!important;
   margin-left:auto!important;
   margin-right:auto!important;
+  padding-left:0!important;
+  padding-right:0!important;
 }
 html body>main.wrap>section,
 html body>main.wrap>section>.wrap,
@@ -3858,6 +3867,7 @@ html body>main.wrap>section>.container{
   box-sizing:border-box!important;
 }
 @media(max-width:760px){
+  html body>header,
   html body>main.wrap{
     width:calc(100% - 20px)!important;
     max-width:none!important;
