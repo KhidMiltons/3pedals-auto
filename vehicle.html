@@ -494,7 +494,7 @@ async function load(){
     const timeout=new Promise((_,reject)=>setTimeout(()=>reject(new Error('Vehicle request timed out')),15000));
     const {data:r,error}=await Promise.race([request,timeout]);
     if(error){console.error('Vehicle lookup failed:',error);if(!renderedFromCache)app.innerHTML='<h2>Could not load this vehicle</h2><p class="desc">The vehicle details could not be retrieved. Please refresh the page or return to Buy Car and try again.</p><a class="btn gold" href="/inventory">Browse available cars</a>';else loadRelated(cached).catch(()=>{});return}
-    if(!r){try{sessionStorage.removeItem(cacheKey)}catch(_){}app.innerHTML='<h2>Vehicle unavailable</h2><p class="desc">This vehicle may have been sold, removed, or is no longer available on the website.</p><a class="btn gold" href="/inventory">Browse cars</a>';return}
+    if(!r){try{localStorage.removeItem(cacheKey);sessionStorage.removeItem(cacheKey)}catch(_){}app.innerHTML='<h2>Vehicle unavailable</h2><p class="desc">This vehicle may have been sold, removed, or is no longer available on the website.</p><a class="btn gold" href="/inventory">Browse cars</a>';return}
     render(r);try{const value=JSON.stringify({at:Date.now(),row:r});localStorage.setItem(cacheKey,value);sessionStorage.setItem(cacheKey,value)}catch(_){}
     loadRelated(r).catch(error=>console.warn('Related vehicles could not be loaded:',error));
   }catch(error){
