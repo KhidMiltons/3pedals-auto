@@ -169,3 +169,14 @@
 @media(prefers-reduced-motion:reduce){
   #accDlg.account-dashboard-dialog * ,#accDlg.account-dashboard-dialog *::before,#accDlg.account-dashboard-dialog *::after{animation:none!important;transition:none!important}
 }
+
+/* Ensure the account dashboard is always layered above the marketplace. */
+#accDlg.account-dashboard-dialog[open]{
+  position:fixed!important;z-index:2147483000!important;display:grid!important;
+  isolation:isolate!important;pointer-events:auto!important;visibility:visible!important;opacity:1!important;
+}
+#accDlg.account-dashboard-dialog[open]::backdrop{
+  background:rgba(4,8,12,.68)!important;
+  -webkit-backdrop-filter:blur(7px) saturate(115%)!important;
+  backdrop-filter:blur(7px) saturate(115%)!important;
+}
