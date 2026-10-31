@@ -3843,13 +3843,20 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){f
 
 
 <style id="homepage-content-header-width-alignment">
-/* Align the homepage header and main content edge-to-edge at identical widths. */
+/* Align the header's inner content edges with the homepage vehicle-card grid. */
 html body>header{
   box-sizing:border-box!important;
   width:min(calc(100% - 48px),1180px)!important;
   max-width:1180px!important;
   margin-left:auto!important;
   margin-right:auto!important;
+}
+html body>header>.wrap{
+  box-sizing:border-box!important;
+  width:100%!important;
+  max-width:none!important;
+  padding-left:0!important;
+  padding-right:0!important;
 }
 html body>main.wrap{
   box-sizing:border-box!important;
