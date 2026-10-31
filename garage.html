@@ -619,7 +619,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <button class="tile" id="inspTile"><h3>Pre-purchase inspection</h3><span class="meta">Get a car checked before you buy</span></button>
     <a class="tile" id="cTile" href="/"><h3>Cars for sale</h3><span class="meta">Browse 3 Pedals Auto KE listings</span></a>
   </div>
-  <div class="panel contact"><h2>Visit or contact the garage</h2>
+  <div id="garageContactCard" class="contact"><h2>Visit or contact the garage</h2>
     <div class="svc"><div><b>WhatsApp</b><span class="meta">Fastest way to reach us</span></div><a id="garageWhatsappContact" href="https://wa.me/254791961807" target="_blank" rel="noopener">+254 791 961 807</a></div>
     <div class="svc"><div><b>Email</b><span class="meta">Appointments and enquiries</span></div><a id="garageEmailContact" href="mailto:miltonangwenyi@gmail.com">miltonangwenyi@gmail.com</a></div>
     <div class="svc"><div><b>Postal address</b><span class="meta">Send letters and documents here</span></div><span id="garageAddressContact">P.O. Box 462-00516</span></div>
@@ -2665,55 +2665,33 @@ html body header nav#garageSectionNav button[data-tab="home"][aria-selected="tru
 }
 </style>
 
-<style id="garage-contact-glass-and-modern-type">
-/* Match the Home page's Manrope typography and make the Garage contact panel visibly frosted. */
-html body,html body button,html body input,html body select,html body textarea{
+<style id="garage-contact-modern-type">
+/* Keep the Garage typography aligned with the Home page. */
+html body,html body button,html body input,html body select,html body textarea,
+html body :is(h1,h2,h3,h4,h5,h6),
+html body #garageContactCard :is(a,span,b){
   font-family:Manrope,Inter,system-ui,-apple-system,"Segoe UI",sans-serif!important;
 }
-html body :is(h1,h2,h3,h4,h5,h6){
-  font-family:Manrope,Inter,system-ui,-apple-system,"Segoe UI",sans-serif!important;
-  font-weight:650!important;letter-spacing:-.025em!important;line-height:1.2!important;
-}
-html body>header .logo,html body>header .brand{
-  font-family:Manrope,Inter,system-ui,-apple-system,"Segoe UI",sans-serif!important;
-  font-weight:750!important;letter-spacing:-.025em!important;text-transform:none!important;
-}
-html body #home .panel.contact{
-  position:relative!important;isolation:isolate!important;overflow:hidden!important;
-  padding:clamp(20px,3vw,30px)!important;
-  border:1px solid rgba(255,255,255,.20)!important;border-radius:22px!important;
-  background:linear-gradient(135deg,rgba(255,255,255,.13),rgba(255,255,255,.035) 55%,rgba(255,255,255,.075)),rgba(18,20,23,.25)!important;
-  box-shadow:0 18px 48px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.16)!important;
-  -webkit-backdrop-filter:blur(30px) saturate(165%)!important;
-  backdrop-filter:blur(30px) saturate(165%)!important;
-}
-html body #home .panel.contact .svc,
-html body #home .panel.contact .svc:last-child,
-html body #home .panel.contact .svc+.svc,
-html body #home .panel.contact .svc::before,
-html body #home .panel.contact .svc::after{
-  border:0!important;border-top:0!important;border-bottom:0!important;
-  box-shadow:none!important;background-image:none!important;
-}
-html body #home .panel.contact .svc{
-  display:flex!important;align-items:center!important;justify-content:space-between!important;
-  gap:14px!important;padding:15px 0!important;
-}
-html body #home .panel.contact .svc a,
-html body #home .panel.contact .svc span,
-html body #home .panel.contact .svc b{
-  font-family:Manrope,Inter,system-ui,-apple-system,"Segoe UI",sans-serif!important;
-}
+html body :is(h1,h2,h3,h4,h5,h6){font-weight:650!important;letter-spacing:-.025em!important;line-height:1.2!important}
+html body>header .logo,html body>header .brand{font-family:Manrope,Inter,system-ui,-apple-system,"Segoe UI",sans-serif!important;font-weight:750!important;letter-spacing:-.025em!important;text-transform:none!important}
 </style>
 
-<style id="garage-visit-contact-card-background-removed">
-/* Remove the fill from the Visit or contact the garage card only. */
-html body #home .panel.contact{
-  background:transparent!important;
-  background-color:transparent!important;
-  background-image:none!important;
-  -webkit-backdrop-filter:none!important;
-  backdrop-filter:none!important;
-  box-shadow:none!important;
+<style id="garage-visit-contact-plain-final">
+/* This is intentionally plain content, not a card/panel. Keep this exact appearance after reload. */
+html body #home #garageContactCard,
+html body #home #garageContactCard.contact{
+  display:block!important;position:static!important;isolation:auto!important;overflow:visible!important;
+  width:100%!important;max-width:none!important;margin:0 0 40px!important;padding:0!important;
+  background:transparent!important;background-color:transparent!important;background-image:none!important;
+  border:0!important;border-radius:0!important;outline:0!important;box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+html body #home #garageContactCard::before,
+html body #home #garageContactCard::after{content:none!important;display:none!important}
+html body #home #garageContactCard .svc,
+html body #home #garageContactCard .svc:last-child{
+  display:flex!important;align-items:center!important;justify-content:space-between!important;
+  gap:14px!important;padding:15px 0!important;
+  background:transparent!important;border:0!important;box-shadow:none!important;
 }
 </style>
