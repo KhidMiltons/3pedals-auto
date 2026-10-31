@@ -2594,3 +2594,44 @@ html body>header nav#garageSectionNav button:hover{color:#fff!important;backgrou
  html body>header .account-pill,html body>header #accountOpen,html body>header .garage-nav-toggle{width:36px!important;height:36px!important}
 }
 </style>
+
+<style id="garage-mobile-account-menu-adjacent-final">
+/* Keep the Garage mobile hamburger immediately beside the account control. */
+@media (max-width:800px){
+  html body>header>.wrap{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) 40px 40px!important;
+    grid-template-rows:minmax(64px,auto)!important;
+    grid-template-areas:none!important;
+    align-items:center!important;
+    column-gap:8px!important;
+  }
+  html body>header>.wrap>.logo{
+    grid-column:1!important;grid-row:1!important;justify-self:start!important;
+    min-width:0!important;
+  }
+  html body>header>.wrap>.account-pill{
+    grid-area:auto!important;grid-column:2!important;grid-row:1!important;
+    justify-self:center!important;align-self:center!important;
+    width:40px!important;height:40px!important;margin:0!important;
+  }
+  html body>header>.wrap>#accountOpen{
+    width:38px!important;height:38px!important;
+  }
+  html body>header>.wrap>#garageNavToggle{
+    grid-area:auto!important;grid-column:3!important;grid-row:1!important;
+    justify-self:center!important;align-self:center!important;
+    display:flex!important;width:40px!important;height:40px!important;
+    min-width:40px!important;margin:0!important;
+  }
+  html body>header>.wrap>#garageSectionNav{
+    grid-area:auto!important;position:absolute!important;
+    top:calc(100% + 8px)!important;right:0!important;left:auto!important;
+  }
+}
+@media(max-width:380px){
+  html body>header>.wrap{grid-template-columns:minmax(0,1fr) 36px 36px!important;column-gap:6px!important}
+  html body>header>.wrap>.account-pill,
+  html body>header>.wrap>#garageNavToggle{width:36px!important;height:36px!important;min-width:36px!important}
+}
+</style>
