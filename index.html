@@ -1262,6 +1262,20 @@ fbq('track', 'PageView');
 @media(max-width:760px){#about.about-page{padding-top:18px}#about .about-intro{text-align:left;margin-bottom:20px}#about .about-intro>p{margin-left:0}#about .about-story-grid,#about .about-values{grid-template-columns:1fr}#about .about-glass-card{padding:22px}#about .about-values{gap:10px}#about .about-value-card{padding:18px 20px}#about .about-signoff{text-align:left}}
 </style>
 
+
+<style id="contact-page-professional-intro">
+/* Text-led contact introduction with no decorative image. */
+#contact .contact-intro-card{position:relative;overflow:hidden;margin:30px 0 24px;padding:clamp(26px,5vw,54px);border:1px solid rgba(255,255,255,.18);border-radius:22px;background:rgba(20,22,25,.28)!important;box-shadow:0 16px 42px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.07);backdrop-filter:blur(24px) saturate(145%);-webkit-backdrop-filter:blur(24px) saturate(145%)}
+#contact .contact-intro-card:before,#contact .contact-intro-card:after{content:none!important;display:none!important}
+#contact .contact-intro-copy{position:relative;z-index:1;max-width:850px}
+#contact .contact-intro-copy h1{max-width:14em;margin:10px 0 14px;font-size:clamp(34px,5.5vw,58px);line-height:1.08;letter-spacing:-.035em}
+#contact .contact-intro-copy>p{max-width:720px;color:rgba(255,255,255,.78);line-height:1.75}
+#contact .contact-specialties{display:flex;flex-wrap:wrap;gap:9px;margin:22px 0}
+#contact .contact-specialties span{padding:8px 12px;border:1px solid rgba(255,255,255,.16);border-radius:999px;background:rgba(255,255,255,.045);color:rgba(255,255,255,.88);font-size:12px;font-weight:650}
+#contact .contact-intro-note{margin-top:18px;font-size:14px}
+#nav .nav-contact,#nav .nav-contact[aria-selected="true"]{background:transparent!important;background-color:transparent!important;box-shadow:none!important;border-color:transparent!important}
+#nav .nav-contact[aria-selected="true"]{color:#d9bd7d!important;opacity:1}
+</style>
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
@@ -1285,7 +1299,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <button type="button" role="tab" data-tab="about" aria-selected="false">About Us</button>
     <a class="navlink" href="/inventory.html">Buy a car</a>
     <a class="navlink" href="/garage.html">3 Pedals Garage</a>
-    <a class="navlink" href="/dealers.html">Locations</a>
+    <a class="navlink" href="/dealers.html">Dealers</a>
     <button type="button" role="tab" data-tab="contact" aria-selected="false" class="nav-contact">Contact Us</button>
   </nav>
 </div></header>
@@ -1427,7 +1441,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="about-signoff"><span>3 PEDALS AUTO KE</span><p>Automotive excellence reimagined, for those who appreciate the drive.</p></div>
 </section>
 
-<section id="contact" hidden><div class="hero"><span class="eyebrow">CONTACT US</span><h1>Let’s talk about your car.</h1><p>Choose the channel that works best for you. For the fastest response, message us on WhatsApp.</p></div><div class="contact-grid"><a class="contact-card" id="publicWhatsapp" href="https://wa.me/254750495841" target="_blank" rel="noopener"><span>💬 WHATSAPP</span><strong>Message us</strong><small>Fastest way to reach us</small></a><a class="contact-card" id="publicEmailLink" href="mailto:3pedalsautoke@gmail.com"><span>✉️ EMAIL</span><strong id="publicEmail">3pedalsautoke@gmail.com</strong><small>Appointments and enquiries</small></a><div class="contact-card"><span>📍 ADDRESS</span><strong id="publicAddress">P.O. Box 462-00516</strong><small>3 Pedals Auto KE</small></div><a class="contact-card social-card" id="publicInstagram" href="https://instagram.com/3pedalsauto" target="_blank" rel="noopener"><span>📸 INSTAGRAM</span><strong>Instagram</strong><small>Open Instagram</small></a><a class="contact-card social-card" id="publicFacebook" href="https://facebook.com/3pedalsauto" target="_blank" rel="noopener"><span>📘 FACEBOOK</span><strong>Facebook</strong><small>Open Facebook</small></a><a class="contact-card social-card" id="publicTwitter" href="https://twitter.com/3pedalsauto" target="_blank" rel="noopener"><span>🐦 X / TWITTER</span><strong>X / Twitter</strong><small>Open X / Twitter</small></a><a class="contact-card social-card" id="publicTiktok" href="https://tiktok.com/@3pedalsauto" target="_blank" rel="noopener"><span>🎵 TIKTOK</span><strong>@3pedalsauto</strong><small>Open TikTok</small></a></div></section>
+<section id="contact" hidden><div class="contact-intro-card"><div class="contact-intro-copy"><span class="eyebrow">3 PEDALS AUTO KE · CONTACT</span><h1>Let’s move your automotive plans forward.</h1><p>Whether you are buying or selling a vehicle, looking for a trusted inspection, or need professional workshop support, our team is ready to help. Tell us what you need and we will guide you to the right next step.</p><div class="contact-specialties"><span>Vehicle sales &amp; sourcing</span><span>Pre-purchase inspections</span><span>Servicing &amp; repairs</span></div><p class="contact-intro-note">For the quickest response, contact us on WhatsApp. For detailed enquiries and appointments, you can also reach us by email.</p></div></div><div class="contact-grid"><a class="contact-card" id="publicWhatsapp" href="https://wa.me/254750495841" target="_blank" rel="noopener"><span>💬 WHATSAPP</span><strong>Message us</strong><small>Fastest way to reach us</small></a><a class="contact-card" id="publicEmailLink" href="mailto:3pedalsautoke@gmail.com"><span>✉️ EMAIL</span><strong id="publicEmail">3pedalsautoke@gmail.com</strong><small>Appointments and enquiries</small></a><div class="contact-card"><span>📍 ADDRESS</span><strong id="publicAddress">P.O. Box 462-00516</strong><small>3 Pedals Auto KE</small></div><a class="contact-card social-card" id="publicInstagram" href="https://instagram.com/3pedalsauto" target="_blank" rel="noopener"><span>📸 INSTAGRAM</span><strong>Instagram</strong><small>Open Instagram</small></a><a class="contact-card social-card" id="publicFacebook" href="https://facebook.com/3pedalsauto" target="_blank" rel="noopener"><span>📘 FACEBOOK</span><strong>Facebook</strong><small>Open Facebook</small></a><a class="contact-card social-card" id="publicTwitter" href="https://twitter.com/3pedalsauto" target="_blank" rel="noopener"><span>🐦 X / TWITTER</span><strong>X / Twitter</strong><small>Open X / Twitter</small></a><a class="contact-card social-card" id="publicTiktok" href="https://tiktok.com/@3pedalsauto" target="_blank" rel="noopener"><span>🎵 TIKTOK</span><strong>@3pedalsauto</strong><small>Open TikTok</small></a></div></section>
 
 </main>
 
