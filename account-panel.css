@@ -574,3 +574,40 @@
 .seller-garage-content .seller-listing-actions .btn{font-size:10px;padding:7px 10px}
 @media(max-width:760px){.account-dashboard-main .seller-garage-card{grid-template-columns:1fr}.seller-garage-media,.seller-garage-media .seller-listing-photo,.seller-garage-photo-placeholder{min-height:180px;height:180px}.seller-garage-content{padding:13px}.seller-garage-heading h4{font-size:15px}.seller-garage-price{font-size:12px}}
 @media(prefers-reduced-motion:reduce){.account-dashboard-main .seller-garage-card{transition:none}}
+
+
+/* Unified dark glass finish across every account-dashboard panel and card. */
+#accDlg.account-dashboard-dialog .account-sidebar,
+#accDlg.account-dashboard-dialog .account-dashboard-main,
+#accDlg #accBody .profile-card,#accDlg #accBody .account-tools,#accDlg #accBody .account-page,
+#accDlg #accBody .account-settings,#accDlg #accBody .account-stat,#accDlg #accBody .profile-grid>div,
+#accDlg #accBody .svc,#accDlg #accBody .seller-summary-card,#accDlg #accBody .seller-dashboard>.account-tools,
+#accDlg #accBody .account-overview-panel,#accDlg #accBody .account-bookings-page>#garageBookingAction,
+#accDlg #accBody .account-bookings-page>.account-booking-item,
+#accDlg #accBody .account-promotions-page .promotion-history-item,#accDlg #accBody .account-saved-vehicle,
+#accDlg #accBody .seller-listing,#accDlg #accBody .seller-garage-card,#accDlg #accBody .promotion-package,
+#accDlg #accBody .account-overview-stats>button{
+  background-color:rgba(13,18,24,.34)!important;background-image:none!important;
+  border-color:rgba(255,255,255,.12)!important;
+  box-shadow:0 12px 30px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.055)!important;
+  -webkit-backdrop-filter:blur(22px) saturate(140%)!important;backdrop-filter:blur(22px) saturate(140%)!important
+}
+#accDlg #accBody .seller-garage-card:hover,#accDlg #accBody .seller-listing:hover,
+#accDlg #accBody .account-saved-vehicle:hover,#accDlg #accBody .account-overview-stats>button:hover{
+  background-color:rgba(20,26,33,.44)!important;border-color:rgba(255,255,255,.20)!important;
+  box-shadow:0 16px 36px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.075)!important
+}
+#accDlg #accBody .seller-garage-promotion,#accDlg #accBody .seller-garage-promotion.is-empty,
+#accDlg #accBody .account-member-chip,#accDlg #accBody .account-overview-stat-icon,
+#accDlg #accBody .account-promotions-page .promotion-status-badge,
+#accDlg #accBody .account-bookings-page>.account-booking-item>.st{
+  background-color:rgba(13,18,24,.30)!important;background-image:none!important;
+  border-color:rgba(255,255,255,.11)!important;
+  -webkit-backdrop-filter:blur(16px) saturate(135%)!important;backdrop-filter:blur(16px) saturate(135%)!important
+}
+#accDlg #accBody .seller-garage-media,#accDlg #accBody .seller-garage-photo-placeholder,
+#accDlg #accBody .account-saved-vehicle-image{background-color:rgba(13,18,24,.28)!important}
+@media(max-width:760px){#accDlg.account-dashboard-dialog .account-sidebar{
+  background:rgba(13,18,24,.78)!important;-webkit-backdrop-filter:blur(26px) saturate(145%)!important;
+  backdrop-filter:blur(26px) saturate(145%)!important
+}}
