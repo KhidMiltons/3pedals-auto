@@ -9,9 +9,9 @@
   padding:0!important;overflow:hidden!important;display:grid!important;
   grid-template-columns:258px minmax(0,1fr)!important;grid-template-rows:minmax(0,1fr)!important;
   gap:0!important;border:1px solid rgba(255,255,255,.19)!important;border-radius:25px!important;
-  color:var(--ad-text)!important;background:rgba(12,17,22,.40)!important;
+  color:var(--ad-text)!important;background:rgba(18,18,22,.45)!important;
   box-shadow:0 30px 100px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.10)!important;
-  -webkit-backdrop-filter:blur(28px) saturate(135%)!important;backdrop-filter:blur(28px) saturate(135%)!important;
+  -webkit-backdrop-filter:blur(32px) saturate(125%)!important;backdrop-filter:blur(32px) saturate(125%)!important;
   isolation:isolate
 }
 #accDlg.account-dashboard-dialog::backdrop{
@@ -26,9 +26,8 @@
   overflow-y:auto!important;overflow-x:hidden!important;box-sizing:border-box!important;
   margin:0!important;padding:25px 17px 18px!important;border:0!important;
   border-right:0!important;border-radius:0!important;
-  background:rgba(18,18,22,.45)!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.12),inset 1px 0 0 rgba(255,255,255,.05),8px 0 32px rgba(0,0,0,.35)!important;
-  -webkit-backdrop-filter:blur(32px) saturate(125%)!important;backdrop-filter:blur(32px) saturate(125%)!important;
+  background:transparent!important;box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
   scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.2) transparent
 }
 #accDlg.account-dashboard-dialog>.account-sidebar[hidden]{display:flex!important}
@@ -99,7 +98,7 @@
   grid-column:2!important;grid-row:1!important;display:flex!important;flex-direction:column!important;
   min-width:0!important;min-height:0!important;width:100%!important;height:100%!important;max-height:none!important;
   box-sizing:border-box!important;overflow:hidden!important;padding:26px 31px 24px!important;
-  background:rgba(255,255,255,.008)!important;border:0!important;border-radius:0!important
+  background:transparent!important;border:0!important;border-radius:0!important
 }
 #accDlg .account-dialog-head{position:relative!important;top:auto!important;z-index:3!important;display:grid!important;
   grid-template-columns:minmax(0,1fr) 66px 40px!important;align-items:center!important;gap:11px!important;
