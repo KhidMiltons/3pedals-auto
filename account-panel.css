@@ -801,3 +801,64 @@
     background-position:center center!important;
   }
 }
+
+
+/* Restore refined borders on the content surfaces INSIDE dashboard cards.
+   A previous blanket transparent-border rule also erased these inner outlines. */
+#accDlg.account-dashboard-dialog #accBody :is(
+  .profile-card,.account-tools,.account-page,.account-settings,.account-stat,
+  .profile-grid>div,.svc,.seller-summary-card,.account-overview-panel,
+  .account-bookings-page>#garageBookingAction,.account-bookings-page>.account-booking-item,
+  .account-promotions-page .promotion-history-item,.account-saved-vehicle,
+  .seller-listing,.seller-garage-card,.promotion-package,.account-buyer-workspace
+) :is(
+  .account-settings-inner,.account-tools>section,.account-page>section,
+  .account-field,.form-group,.field,.seller-garage-promotion,
+  .account-member-chip,.account-overview-stat-icon,.promotion-status-badge,
+  .account-booking-item>.st,.seller-listing-actions>.btn,
+  input,select,textarea
+){
+  border:1px solid rgba(255,255,255,.14)!important;
+  border-radius:11px!important;
+  outline-color:rgba(255,255,255,.22)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.045)!important;
+}
+#accDlg.account-dashboard-dialog #accBody :is(
+  .profile-card,.account-tools,.account-page,.account-settings,.account-stat,
+  .profile-grid>div,.svc,.seller-summary-card,.account-overview-panel,
+  .account-bookings-page>#garageBookingAction,.account-bookings-page>.account-booking-item,
+  .account-promotions-page .promotion-history-item,.account-saved-vehicle,
+  .seller-listing,.seller-garage-card,.promotion-package,.account-buyer-workspace
+) :is(input,select,textarea){
+  background:rgba(5,10,15,.24)!important;
+  color:inherit!important;
+}
+#accDlg.account-dashboard-dialog #accBody :is(
+  .profile-card,.account-tools,.account-page,.account-settings,.account-stat,
+  .profile-grid>div,.svc,.seller-summary-card,.account-overview-panel,
+  .account-bookings-page>#garageBookingAction,.account-bookings-page>.account-booking-item,
+  .account-promotions-page .promotion-history-item,.account-saved-vehicle,
+  .seller-listing,.seller-garage-card,.promotion-package,.account-buyer-workspace
+) :is(
+  .account-settings-inner,.account-tools>section,.account-page>section,
+  .account-field,.form-group,.field,.seller-garage-promotion,
+  .account-member-chip,.account-overview-stat-icon,.promotion-status-badge,
+  .account-booking-item>.st,.seller-listing-actions>.btn
+):hover{
+  border-color:rgba(255,255,255,.24)!important;
+}
+@media(max-width:760px){
+  #accDlg.account-dashboard-dialog #accBody :is(
+    .profile-card,.account-tools,.account-page,.account-settings,.account-stat,
+    .profile-grid>div,.svc,.seller-summary-card,.account-overview-panel,
+    .account-bookings-page>#garageBookingAction,.account-bookings-page>.account-booking-item,
+    .account-promotions-page .promotion-history-item,.account-saved-vehicle,
+    .seller-listing,.seller-garage-card,.promotion-package,.account-buyer-workspace
+  ) :is(
+    .account-settings-inner,.account-tools>section,.account-page>section,
+    .account-field,.form-group,.field,.seller-garage-promotion,
+    .account-member-chip,.account-overview-stat-icon,.promotion-status-badge,
+    .account-booking-item>.st,.seller-listing-actions>.btn,
+    input,select,textarea
+  ){border-radius:9px!important}
+}
