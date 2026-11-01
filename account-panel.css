@@ -1019,3 +1019,174 @@
     box-shadow:0 16px 38px rgba(0,0,0,.22)!important;
   }
 }
+
+
+/* 2026-11-01 — refined continuous glass system for the complete account workspace. */
+#accDlg.account-dashboard-dialog[open]{
+  background:rgba(17,20,24,.38)!important;
+  -webkit-backdrop-filter:blur(34px) saturate(135%)!important;
+  backdrop-filter:blur(34px) saturate(135%)!important;
+}
+#accDlg.account-dashboard-dialog[open]>.account-sidebar,
+#accDlg.account-dashboard-dialog[open]>.account-dashboard-main,
+#accDlg.account-dashboard-dialog[open] .account-dashboard-main,
+#accDlg.account-dashboard-dialog[open] .account-dialog-head{
+  background:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+  box-shadow:none!important;
+}
+/* Sidebar layout: calm spacing, consistent typography and no divider seam. */
+#accDlg.account-dashboard-dialog[open]>.account-sidebar{
+  padding:26px 19px 20px!important;
+  gap:0!important;
+  border:0!important;
+  box-shadow:inset -1px 0 0 rgba(255,255,255,.035)!important;
+}
+#accDlg .account-sidebar-brand{
+  display:flex!important;align-items:center!important;gap:12px!important;
+  padding:5px 9px 22px!important;margin:0 0 15px!important;
+  border:0!important;
+}
+#accDlg .account-sidebar-brand img{
+  width:38px!important;height:38px!important;flex:0 0 38px!important;
+  border:1px solid rgba(255,255,255,.18)!important;border-radius:12px!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 5px 16px rgba(0,0,0,.16)!important;
+}
+#accDlg .account-sidebar-brand strong{
+  font:750 11px/1.2 Manrope,system-ui,sans-serif!important;
+  letter-spacing:.17em!important;color:rgba(255,255,255,.94)!important;
+}
+#accDlg .account-sidebar-brand span{
+  font:650 9px/1.3 Manrope,system-ui,sans-serif!important;
+  letter-spacing:.14em!important;color:rgba(255,255,255,.48)!important;
+}
+#accDlg .seller-nav-identity{
+  padding:13px 13px 14px!important;margin:0 0 14px!important;
+  border:1px solid rgba(255,255,255,.075)!important;border-radius:15px!important;
+  background:rgba(255,255,255,.045)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 8px 20px rgba(0,0,0,.08)!important;
+}
+#accDlg .seller-nav-identity small,
+#accDlg .seller-nav-label{
+  font:750 9px/1.35 Manrope,system-ui,sans-serif!important;
+  letter-spacing:.15em!important;color:rgba(255,255,255,.43)!important;
+}
+#accDlg .seller-nav-identity strong{
+  color:rgba(255,255,255,.94)!important;font-size:14px!important;font-weight:700!important;
+}
+#accDlg .seller-mode-switch{
+  padding:4px!important;margin:0 0 13px!important;gap:4px!important;
+  border:1px solid rgba(255,255,255,.075)!important;border-radius:13px!important;
+  background:rgba(0,0,0,.16)!important;
+  box-shadow:inset 0 1px 2px rgba(0,0,0,.16)!important;
+}
+#accDlg .seller-mode-switch button{
+  min-height:35px!important;border:0!important;border-radius:9px!important;
+  background:transparent!important;color:rgba(255,255,255,.55)!important;
+  font:650 11px/1 Manrope,system-ui,sans-serif!important;
+  transition:background .2s ease,color .2s ease,box-shadow .2s ease!important;
+}
+#accDlg .seller-mode-switch button.selected,
+#accDlg .seller-mode-switch button[aria-current="page"]{
+  color:#fff!important;background:rgba(255,255,255,.12)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.17),0 3px 9px rgba(0,0,0,.13)!important;
+}
+#accDlg .seller-nav-label{padding:15px 10px 7px!important}
+#accDlg nav#accountMenu.account-sidebar>button{
+  display:flex!important;align-items:center!important;gap:10px!important;
+  min-height:42px!important;width:100%!important;padding:0 12px!important;
+  margin:2px 0!important;border:1px solid transparent!important;border-radius:11px!important;
+  background:transparent!important;color:rgba(255,255,255,.64)!important;
+  text-align:left!important;font:600 12px/1.3 Manrope,system-ui,sans-serif!important;
+  transition:background .2s ease,border-color .2s ease,color .2s ease,transform .2s ease,box-shadow .2s ease!important;
+}
+#accDlg nav#accountMenu.account-sidebar>button:hover{
+  background:rgba(255,255,255,.065)!important;border-color:rgba(255,255,255,.055)!important;
+  color:rgba(255,255,255,.94)!important;transform:translateX(2px)!important;
+}
+#accDlg nav#accountMenu.account-sidebar>button.active,
+#accDlg nav#accountMenu.account-sidebar>button[aria-current="page"]{
+  background:rgba(255,255,255,.105)!important;border-color:rgba(255,255,255,.085)!important;
+  color:#fff!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.10),0 5px 14px rgba(0,0,0,.09)!important;
+}
+#accDlg nav#accountMenu.account-sidebar>button:focus-visible{
+  outline:2px solid rgba(255,255,255,.52)!important;outline-offset:2px!important;
+}
+#accDlg .account-sidebar-footer{
+  margin-top:auto!important;padding-top:15px!important;
+  border-top:1px solid rgba(255,255,255,.075)!important;
+}
+#accDlg .account-sidebar-footer button{
+  width:100%!important;min-height:40px!important;padding:0 12px!important;
+  border:1px solid transparent!important;border-radius:11px!important;
+  background:rgba(255,255,255,.025)!important;color:rgba(255,220,220,.78)!important;
+  text-align:left!important;transition:background .2s ease,color .2s ease!important;
+}
+#accDlg .account-sidebar-footer button:hover{
+  background:rgba(255,105,105,.09)!important;color:#fff!important;
+}
+/* Shared glass language for cards, panels, summaries, tiles and nested controls. */
+#accDlg.account-dashboard-dialog[open] #accBody :is(
+  .profile-card,.account-tools,.account-page,.account-settings,.account-stat,
+  .profile-grid>div,.svc,.seller-summary-card,.account-overview-panel,
+  .account-overview-stats>button,.account-bookings-page>#garageBookingAction,
+  .account-bookings-page>.account-booking-item,.account-promotions-page .promotion-history-item,
+  .account-saved-vehicle,.seller-listing,.seller-garage-card,.promotion-package,
+  .account-buyer-workspace,.dashboard-welcome,.account-page .card,
+  .account-tools>.panel,.account-tools>section,.account-page .stats>div,.stat,
+  .account-settings-inner,.account-field,.form-group,.field,.seller-garage-promotion,
+  .account-member-chip,.promotion-status-badge,.account-booking-item>.st,
+  .seller-listing-actions>.btn,.account-tools>section>div,.account-page>section
+){
+  border:1px solid rgba(255,255,255,.075)!important;
+  background:rgba(255,255,255,.045)!important;background-image:none!important;
+  -webkit-backdrop-filter:blur(18px) saturate(125%)!important;
+  backdrop-filter:blur(18px) saturate(125%)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 8px 24px rgba(0,0,0,.10)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody :is(
+  .account-settings-inner,.account-field,.form-group,.field,
+  .seller-garage-promotion,.account-member-chip,.promotion-status-badge,
+  .account-booking-item>.st,.seller-listing-actions>.btn,
+  .account-tools>section>div,.account-page>section
+){
+  background:rgba(255,255,255,.032)!important;
+  border-color:rgba(255,255,255,.055)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.065)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody :is(input,select,textarea){
+  border:1px solid rgba(255,255,255,.09)!important;border-radius:12px!important;
+  background:rgba(0,0,0,.19)!important;color:rgba(255,255,255,.92)!important;
+  box-shadow:inset 0 1px 2px rgba(0,0,0,.16),0 1px 0 rgba(255,255,255,.035)!important;
+  -webkit-backdrop-filter:blur(16px)!important;backdrop-filter:blur(16px)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody :is(input,select,textarea):focus{
+  outline:1px solid rgba(255,255,255,.32)!important;outline-offset:1px!important;
+}
+#accDlg.account-dashboard-dialog[open] .account-dialog-head :is(button){
+  border:1px solid rgba(255,255,255,.085)!important;border-radius:11px!important;
+  background:rgba(255,255,255,.055)!important;color:rgba(255,255,255,.88)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08)!important;
+  transition:background .2s ease,border-color .2s ease,transform .2s ease!important;
+}
+#accDlg.account-dashboard-dialog[open] .account-dialog-head :is(button):hover{
+  background:rgba(255,255,255,.11)!important;border-color:rgba(255,255,255,.15)!important;
+  transform:translateY(-1px)!important;
+}
+@media(max-width:760px){
+  #accDlg.account-dashboard-dialog[open]>.account-sidebar{
+    padding:18px 16px!important;border:1px solid rgba(255,255,255,.10)!important;
+    border-radius:18px!important;background:rgba(17,20,24,.78)!important;
+    -webkit-backdrop-filter:blur(30px) saturate(135%)!important;
+    backdrop-filter:blur(30px) saturate(135%)!important;
+    box-shadow:0 18px 42px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.10)!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  #accDlg nav#accountMenu.account-sidebar>button,
+  #accDlg .seller-mode-switch button,
+  #accDlg .account-dialog-head button{transition:none!important}
+}
