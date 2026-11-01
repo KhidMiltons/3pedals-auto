@@ -2085,7 +2085,19 @@ async function openAccount(options={}){
   // During a reload restoration, keep the page concealed until the account UI
   // has finished rendering the requested section below.
   try{sessionStorage.setItem("3pedals:account-open","1");sessionStorage.setItem("3pedals:account-page",requestedAccountPage)}catch(_){};
-  const hasCachedAccount=!!box.querySelector(".account-pages");
+  let hasCachedAccount=!!box.querySelector(".account-pages");
+  // On a browser refresh, restore the last safe account snapshot before waiting
+  // for Supabase. This keeps the workspace visible while fresh records load.
+  if(!hasCachedAccount&&options.restore){
+    try{
+      const snapshot=sessionStorage.getItem("3pedals:account-view-cache");
+      if(snapshot&&snapshot.includes('class="account-pages"')){
+        box.innerHTML=snapshot;
+        hasCachedAccount=!!box.querySelector(".account-pages");
+        if(hasCachedAccount)showSellerAccountPage(requestedAccountPage,null,{updateHistory:false,scroll:false});
+      }
+    }catch(error){console.warn("Account view cache could not be restored:",error)}
+  }
   if(!hasCachedAccount){
     box.innerHTML=`<div class="account-fast-loading" role="status" aria-live="polite">
       <div class="account-fast-loading-head"><span class="account-fast-avatar"></span><span class="account-fast-lines"><i></i><i></i></span></div>
@@ -2093,8 +2105,6 @@ async function openAccount(options={}){
       <div class="account-fast-loading-card"><i></i><i></i><i></i></div>
       <p class="meta">Opening your account…</p>
     </div>`;
-  }else{
-    // Keep the existing view visible while fresh data loads; no spinner or status banner.
   }
   // If this account has already been rendered, show it immediately and refresh quietly.
   // The refresh path below updates the visible panel when fresh database data arrives.
@@ -2110,7 +2120,10 @@ async function openAccount(options={}){
     accountResults=await pending;
   }
   if(!accountResults)accountResults=await fetchAccountData(me.id);
-  if(!accountResults){accountResults=await fetchAccountData(me.id)}
+  if(!accountResults)accountResults=await fetchAccountData(me.id);
+  // Ignore late responses from older opens/refreshes so they cannot overwrite
+  // a newer account view or a recently selected page.
+  if(renderVersion!==accountRenderVersion||!d.open)return;
   const [l,b,sales,promos,packages,prefs,analyticsPromise]=accountResults;
   if(l.error){box.innerHTML=`<p class="meta" role="alert">We couldn't load your listings: ${esc(l.error.message)}. Please check the marketplace security SQL has been installed.</p><button class="btn ghost" id="accCloseLoadError" type="button">Close</button>`;$("accCloseLoadError").onclick=()=>d.close();return}
   const L=l.data||[],B=b.data||[],S=sales.data||[],PK=packages.data||[],sellerSettings=prefs.data||{},yardProfile=L.find(x=>String(x.seller_type||"").toLowerCase()==="yard"||String(x.yard_name||"").trim())||{},historyClearedAt=sellerSettings.promotion_history_cleared_at?new Date(sellerSettings.promotion_history_cleared_at).getTime():0,PM=(promos.data||[]).filter(p=>!historyClearedAt||new Date(p.created_at||p.starts_at||0).getTime()>historyClearedAt),reminderDays=Number(sellerSettings.repost_reminder_days)||14,reminderCutoff=Date.now()-reminderDays*86400000,reminders=L.filter(x=>x.status==="approved"&&new Date(x.reposted_at||x.updated_at||x.created_at||0).getTime()<=reminderCutoff),label={pending:"Waiting for approval",approved:"Live",rejected:"Not approved",sold:"Sold"},avatar=profileAvatarUrl(),name=profileName(),phone=profilePhone(),isYard=accountType()==="yard"||!!Object.keys(yardProfile).length,reportedSales=S.reduce((sum,x)=>sum+Number(x.reported_sale_price||0),0),averageReportedSale=S.length?reportedSales/S.length:0,formatStatus=value=>String(value||"pending").replaceAll("_"," ").replace(/^\w/,letter=>letter.toUpperCase());
