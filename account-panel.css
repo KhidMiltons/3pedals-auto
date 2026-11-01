@@ -862,3 +862,33 @@
     input,select,textarea
   ){border-radius:9px!important}
 }
+
+
+/* 2026-11-01 — borderless layered glass treatment for account cards and their inner content. */
+#accDlg.account-dashboard-dialog[open] #accBody :is(.profile-card,.account-tools,.account-page,.account-settings,.account-stat,.profile-grid>div,.svc,.seller-summary-card,.account-overview-panel,.account-overview-stats>button,.account-bookings-page>#garageBookingAction,.account-bookings-page>.account-booking-item,.account-promotions-page .promotion-history-item,.account-saved-vehicle,.seller-listing,.seller-garage-card,.promotion-package,.account-buyer-workspace,.dashboard-welcome,.account-page .card,.account-tools>.panel,.account-tools>section,.account-page .stats>div,.stat){
+ border:0!important;background:rgba(255,255,255,.08)!important;
+ -webkit-backdrop-filter:blur(25px) saturate(125%)!important;backdrop-filter:blur(25px) saturate(125%)!important;
+ border-radius:24px!important;
+ box-shadow:inset 0 1px 1px rgba(255,255,255,.2),0 1px 3px rgba(0,0,0,.1),0 20px 40px rgba(0,0,0,.25)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody :is(.profile-card,.account-tools,.account-page,.account-settings,.account-stat,.profile-grid>div,.svc,.seller-summary-card,.account-overview-panel,.account-overview-stats>button,.account-bookings-page>#garageBookingAction,.account-bookings-page>.account-booking-item,.account-promotions-page .promotion-history-item,.account-saved-vehicle,.seller-listing,.seller-garage-card,.promotion-package,.account-buyer-workspace,.dashboard-welcome,.account-page .card,.account-tools>.panel,.account-tools>section,.account-page .stats>div,.stat):hover{
+ border:0!important;background:rgba(255,255,255,.105)!important;
+ box-shadow:inset 0 1px 1px rgba(255,255,255,.23),0 1px 3px rgba(0,0,0,.12),0 22px 44px rgba(0,0,0,.28)!important;
+ transform:translateY(-1px);
+}
+#accDlg.account-dashboard-dialog[open] #accBody :is(.account-settings-inner,.account-field,.form-group,.field,.seller-garage-promotion,.account-member-chip,.promotion-status-badge,.account-booking-item>.st,.seller-listing-actions>.btn,.account-tools>section>div,.account-page>section){
+ border:0!important;background:rgba(255,255,255,.055)!important;
+ -webkit-backdrop-filter:blur(25px) saturate(120%)!important;backdrop-filter:blur(25px) saturate(120%)!important;
+ border-radius:18px!important;
+ box-shadow:inset 0 1px 1px rgba(255,255,255,.16),0 1px 3px rgba(0,0,0,.08),0 12px 28px rgba(0,0,0,.18)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody :is(input,select,textarea){
+ border:0!important;background:rgba(0,0,0,.22)!important;border-radius:12px!important;
+ box-shadow:inset 0 1px 1px rgba(255,255,255,.12),0 1px 3px rgba(0,0,0,.1)!important;
+ -webkit-backdrop-filter:blur(25px)!important;backdrop-filter:blur(25px)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody :is(input,select,textarea):focus{outline:1px solid rgba(255,255,255,.28)!important;outline-offset:1px!important}
+@media(max-width:760px){
+ #accDlg.account-dashboard-dialog[open] #accBody :is(.profile-card,.account-tools,.account-page,.account-settings,.account-stat,.profile-grid>div,.svc,.seller-summary-card,.account-overview-panel,.account-overview-stats>button,.account-bookings-page>#garageBookingAction,.account-bookings-page>.account-booking-item,.account-promotions-page .promotion-history-item,.account-saved-vehicle,.seller-listing,.seller-garage-card,.promotion-package,.account-buyer-workspace,.dashboard-welcome,.account-page .card,.account-tools>.panel,.account-tools>section,.account-page .stats>div,.stat){border-radius:19px!important}
+ #accDlg.account-dashboard-dialog[open] #accBody :is(.account-settings-inner,.account-field,.form-group,.field,.seller-garage-promotion,.account-member-chip,.promotion-status-badge,.account-booking-item>.st,.seller-listing-actions>.btn,.account-tools>section>div,.account-page>section){border-radius:15px!important}
+}
