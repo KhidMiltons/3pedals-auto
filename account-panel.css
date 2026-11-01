@@ -745,3 +745,59 @@
   #accDlg{inset:0!important;width:100vw!important;height:100dvh!important;max-width:none!important;max-height:100dvh!important;border:0!important;border-radius:0!important}
   #accDlg>.in{height:100dvh!important;max-height:100dvh!important}
 }
+
+
+/* 2026-11-01 — full-screen photographic account workspace */
+#accDlg.account-dashboard-dialog[open]{
+  inset:1.25vh 1.25vw!important;
+  width:97.5vw!important;max-width:none!important;
+  height:97.5vh!important;max-height:97.5vh!important;
+  border-radius:25px!important;
+  background-color:rgba(9,14,19,.24)!important;
+  background-image:
+    linear-gradient(115deg,rgba(5,10,15,.46),rgba(8,13,18,.28) 48%,rgba(5,10,15,.42)),
+    url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=2200&q=82")!important;
+  background-position:center center!important;
+  background-size:cover!important;
+  background-repeat:no-repeat!important;
+  border:1px solid rgba(255,255,255,.19)!important;
+  box-shadow:0 34px 110px rgba(0,0,0,.50),inset 0 1px 0 rgba(255,255,255,.12)!important;
+}
+#accDlg.account-dashboard-dialog[open]>.in{
+  position:relative!important;z-index:1!important;
+  background:transparent!important;
+}
+#accDlg.account-dashboard-dialog[open]>.account-sidebar{
+  background:linear-gradient(180deg,rgba(9,15,21,.38),rgba(9,15,21,.24))!important;
+  -webkit-backdrop-filter:blur(18px) saturate(130%)!important;
+  backdrop-filter:blur(18px) saturate(130%)!important;
+  border-right:1px solid rgba(255,255,255,.16)!important;
+}
+#accDlg.account-dashboard-dialog[open] .account-dashboard-main{
+  background:rgba(8,13,18,.13)!important;
+  -webkit-backdrop-filter:blur(8px) saturate(115%)!important;
+  backdrop-filter:blur(8px) saturate(115%)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody :is(.profile-card,.account-tools,.account-page,.account-settings,.account-stat,
+.profile-grid>div,.svc,.seller-summary-card,.account-overview-panel,.account-overview-stats>button,
+.account-bookings-page>#garageBookingAction,.account-bookings-page>.account-booking-item,
+.account-promotions-page .promotion-history-item,.account-saved-vehicle,.seller-listing,
+.seller-garage-card,.promotion-package,.account-buyer-workspace){
+  background:linear-gradient(135deg,rgba(255,255,255,.105),rgba(255,255,255,.035)),rgba(7,12,17,.30)!important;
+  border-color:rgba(255,255,255,.16)!important;
+  box-shadow:0 18px 46px rgba(0,0,0,.24),inset 0 1px rgba(255,255,255,.09)!important;
+  -webkit-backdrop-filter:blur(16px) saturate(130%)!important;
+  backdrop-filter:blur(16px) saturate(130%)!important;
+}
+#accDlg.account-dashboard-dialog[open] .account-dialog-head{
+  background:rgba(8,13,18,.30)!important;
+  -webkit-backdrop-filter:blur(20px) saturate(135%)!important;
+  backdrop-filter:blur(20px) saturate(135%)!important;
+}
+@media(max-width:760px){
+  #accDlg.account-dashboard-dialog[open]{
+    inset:0!important;width:100vw!important;height:100dvh!important;
+    max-width:none!important;max-height:100dvh!important;border-radius:0!important;
+    background-position:center center!important;
+  }
+}
