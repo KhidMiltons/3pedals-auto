@@ -2124,7 +2124,23 @@ async function openAccount(options={}){
   </div>
   ${profile&&profile.is_admin?`<section class="account-tools account-admin-tools"><div><h3>Administration</h3><p class="meta">Manage vehicle approvals, garage bookings, website contact details and published content.</p></div><button class="btn ghost account-admin-button" type="button" id="accAdmin"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 6v5c0 4.6-2.9 7.8-7 10-4.1-2.2-7-5.4-7-10V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg><span>Open Admin Dashboard</span></button></section>`:""}
   <div class="profile-grid"><div><label for="accName">Full name</label><input id="accName" value="${esc(name)}" autocomplete="name"></div><div><label for="accPhone">Phone number</label><input id="accPhone" value="${esc(phone)}" type="tel" autocomplete="tel"></div><div><label for="accType">Account type</label><select id="accType"><option value="private" ${accountType()==="private"?"selected":""}>Private seller</option><option value="yard" ${isYard?"selected":""}>Car yard / dealer</option></select></div></div>
-  ${isYard?`<section class="account-tools dealer-account-editor"><h3>Dealer information</h3><p class="meta">Manage the public information shown on your dealer profile and vehicle listings. Changes apply to your existing listings too.</p><div class="profile-grid"><div><label for="accDealerName">Dealer / business name</label><input id="accDealerName" value="${esc(yardProfile.yard_name||yardProfile.seller_name||me.user_metadata?.dealer_name||name)}"></div><div><label for="accDealerContact">Contact person</label><input id="accDealerContact" value="${esc(yardProfile.contact||me.user_metadata?.dealer_contact||"")}"></div><div><label for="accDealerLocation">Location / address</label><input id="accDealerLocation" value="${esc(yardProfile.yard_location||yardProfile.location||me.user_metadata?.dealer_location||"")}"></div><div><label for="accDealerPhone">Dealer phone</label><input id="accDealerPhone" type="tel" value="${esc(yardProfile.seller_phone||yardProfile.phone||me.user_metadata?.dealer_phone||phone)}"></div><div><label for="accDealerEmail">Dealer email</label><input id="accDealerEmail" type="email" value="${esc(yardProfile.seller_email||yardProfile.email||me.user_metadata?.dealer_email||me.email||"")}"></div><div><label for="accDealerWhatsApp">WhatsApp number</label><input id="accDealerWhatsApp" type="tel" value="${esc(yardProfile.whatsapp||me.user_metadata?.dealer_whatsapp||yardProfile.seller_phone||phone)}"></div><div><label for="accDealerWeb">Website / social link</label><input id="accDealerWeb" type="url" value="${esc(yardProfile.yard_web||yardProfile.web||me.user_metadata?.dealer_website||"")}" placeholder="https://example.com"></div><div class="dealer-save-row"><button class="btn" type="button" data-save-dealer-info>Save dealer information</button><span class="meta">Save to publish these details on your dealer profile and listings.</span></div></section>`:""}
+  \${isYard?\`<section class="account-tools dealer-account-editor">
+    <div class="dealer-editor-heading"><div><p class="account-eyebrow">PUBLIC BUSINESS DETAILS</p><h3>Dealer information</h3><p class="meta">Keep your yard identity and buyer contact details clear and up to date.</p></div><span class="dealer-profile-status">Business profile</span></div>
+    <div class="dealer-editor-section"><h4>Business identity</h4><div class="profile-grid dealer-fields-grid">
+      <div class="dealer-field-wide"><label for="accDealerName">Dealer / business name</label><input id="accDealerName" value="\${esc(yardProfile.yard_name||yardProfile.seller_name||me.user_metadata?.dealer_name||name)}"></div>
+      <div><label for="accDealerContact">Contact person</label><input id="accDealerContact" value="\${esc(yardProfile.contact||me.user_metadata?.dealer_contact||"")}"></div>
+      <div><label for="accDealerLocation">Location / address</label><input id="accDealerLocation" value="\${esc(yardProfile.yard_location||yardProfile.location||me.user_metadata?.dealer_location||"")}"></div>
+    </div></div>
+    <div class="dealer-editor-section"><h4>Contact details</h4><div class="profile-grid dealer-fields-grid">
+      <div><label for="accDealerPhone">Dealer phone</label><input id="accDealerPhone" type="tel" value="\${esc(yardProfile.seller_phone||yardProfile.phone||me.user_metadata?.dealer_phone||phone)}"></div>
+      <div><label for="accDealerEmail">Dealer email</label><input id="accDealerEmail" type="email" value="\${esc(yardProfile.seller_email||yardProfile.email||me.user_metadata?.dealer_email||me.email||"")}"></div>
+      <div><label for="accDealerWhatsApp">WhatsApp number</label><input id="accDealerWhatsApp" type="tel" value="\${esc(yardProfile.whatsapp||me.user_metadata?.dealer_whatsapp||yardProfile.seller_phone||phone)}"></div>
+    </div></div>
+    <div class="dealer-editor-section"><h4>Online presence</h4><div class="profile-grid dealer-fields-grid">
+      <div class="dealer-field-wide"><label for="accDealerWeb">Website / social link</label><input id="accDealerWeb" type="url" value="\${esc(yardProfile.yard_web||yardProfile.web||me.user_metadata?.dealer_website||"")}" placeholder="https://example.com"></div>
+    </div></div>
+    <div class="dealer-save-row"><button class="btn" type="button" data-save-dealer-info>Save dealer information</button><span class="meta">Your saved details appear on your dealer profile and vehicle listings.</span></div>
+  </section>\`:""}
   <p id="accProfileErr" class="meta" style="color:var(--err)"></p><div class="acts"><button class="btn" id="accSaveProfile">Save profile changes</button></div>
   <section class="account-tools"><h3>Login details</h3><div class="field-row"><div><label for="accEmail">Email address</label><input id="accEmail" type="email" value="${esc(me.email||"")}" autocomplete="email"></div><button class="btn ghost" id="accUpdateEmail" type="button">Change email</button></div><div class="field-row"><div><label for="accPassword">New password</label><input id="accPassword" type="password" minlength="8" autocomplete="new-password" placeholder="At least 8 characters"></div><button class="btn ghost" id="accUpdatePassword" type="button">Change password</button></div><p class="meta">Email changes require confirmation from your inbox.</p></section>
    <div class="seller-dashboard">
@@ -2190,6 +2206,18 @@ async function openAccount(options={}){
         <button type="button" data-overview-page="bookings"><span class="account-overview-stat-icon">▦</span><span class="account-overview-stat-label">Garage bookings</span><strong>${B.length}</strong><small>Booking records</small></button>
         <button type="button" data-overview-page="dashboard"><span class="account-overview-stat-icon">↗</span><span class="account-overview-stat-label">Reported sales</span><strong>${S.length}</strong><small>Seller-reported transactions</small></button>
       </div>
+      \${isYard?\`<section class="account-overview-panel dealer-overview-card">
+        <div class="dealer-overview-identity">\${avatar?\`<img src="\${esc(avatar)}" alt="Dealer logo">\`:\`<span class="dealer-overview-monogram">\${esc(initialsFor(yardProfile.yard_name||yardProfile.seller_name||me.user_metadata?.dealer_name||name,me.email))}</span>\`}
+          <div><p class="account-eyebrow">YOUR DEALERSHIP</p><h4>\${esc(yardProfile.yard_name||yardProfile.seller_name||me.user_metadata?.dealer_name||name||"Dealer profile")}</h4><span>\${esc(yardProfile.yard_location||yardProfile.location||me.user_metadata?.dealer_location||"Add your business location in Profile")}</span></div>
+          <button type="button" data-overview-page="settings" data-account-tab="business">Edit profile</button>
+        </div>
+        <div class="dealer-overview-details">
+          <div><small>PHONE</small><strong>\${esc(yardProfile.seller_phone||yardProfile.phone||me.user_metadata?.dealer_phone||phone||"Not added")}</strong></div>
+          <div><small>EMAIL</small><strong>\${esc(yardProfile.seller_email||yardProfile.email||me.user_metadata?.dealer_email||me.email||"Not added")}</strong></div>
+          <div><small>WHATSAPP</small><strong>\${esc(yardProfile.whatsapp||me.user_metadata?.dealer_whatsapp||yardProfile.seller_phone||phone||"Not added")}</strong></div>
+          <div><small>WEBSITE</small><strong>\${esc(yardProfile.yard_web||yardProfile.web||me.user_metadata?.dealer_website||"Not added")}</strong></div>
+        </div>
+      </section>\`:""}
       <div class="account-overview-lower">
         <section class="account-overview-panel account-activity-panel"><div class="account-overview-panel-head"><div><p class="account-eyebrow">KEEP UP TO DATE</p><h4>Recent activity</h4></div><button type="button" data-overview-page="activity">View all</button></div><div class="account-activity-list">${activityMarkup}</div></section>
         <section class="account-overview-panel account-quick-panel"><p class="account-eyebrow">QUICK ACTIONS</p><h4>What would you like to do?</h4><button type="button" data-overview-page="listings"><span>＋</span><span><strong>Manage my vehicles</strong><small>Update photos, prices and listing status</small></span><b>›</b></button><button type="button" data-overview-page="promotions"><span>✧</span><span><strong>Promote a vehicle</strong><small>Give an approved listing more visibility</small></span><b>›</b></button><button type="button" data-overview-page="bookings"><span>▦</span><span><strong>View garage bookings</strong><small>Review service requests and appointments</small></span><b>›</b></button><button type="button" data-overview-buying><span>⌕</span><span><strong>Browse vehicles</strong><small>Explore the 3 Pedals marketplace</small></span><b>›</b></button></section>
@@ -4229,3 +4257,33 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){f
 </style>
 </body>
 </html>
+
+<style id="dealer-profile-layout-refinement">
+#accDlg #accBody .dealer-account-editor{padding:22px!important;display:grid!important;gap:20px!important}
+#accDlg #accBody .dealer-editor-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.09)}
+#accDlg #accBody .dealer-editor-heading h3{margin:4px 0 5px!important}
+#accDlg #accBody .dealer-editor-heading .meta{margin:0!important;max-width:560px}
+#accDlg #accBody .dealer-profile-status{flex:0 0 auto;padding:7px 10px;border:1px solid rgba(255,255,255,.09);border-radius:999px;background:rgba(255,255,255,.035);font-size:10px;color:rgba(255,255,255,.68)}
+#accDlg #accBody .dealer-editor-section{display:grid;gap:12px}
+#accDlg #accBody .dealer-editor-section>h4{margin:0!important;font-size:12px!important;font-weight:650!important;letter-spacing:.04em;color:rgba(255,255,255,.82)}
+#accDlg #accBody .dealer-fields-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px 18px!important;margin:0!important}
+#accDlg #accBody .dealer-fields-grid>div{min-width:0}
+#accDlg #accBody .dealer-fields-grid .dealer-field-wide{grid-column:1/-1}
+#accDlg #accBody .dealer-fields-grid label{display:block;margin:0 0 7px!important;font-size:11px!important;color:rgba(255,255,255,.66)!important}
+#accDlg #accBody .dealer-fields-grid input{width:100%!important;min-width:0!important;min-height:43px!important}
+#accDlg #accBody .dealer-save-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding-top:15px;border-top:1px solid rgba(255,255,255,.08)}
+#accDlg #accBody .dealer-save-row .meta{margin:0!important}
+#accDlg #accBody .dealer-overview-card{padding:19px!important;display:grid!important;gap:16px!important}
+#accDlg #accBody .dealer-overview-identity{display:flex;align-items:center;gap:14px;min-width:0}
+#accDlg #accBody .dealer-overview-identity>img,#accDlg #accBody .dealer-overview-monogram{width:54px;height:54px;flex:0 0 54px;border-radius:14px;object-fit:cover;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.045)}
+#accDlg #accBody .dealer-overview-monogram{display:grid;place-items:center;font-size:16px;font-weight:650;color:rgba(255,255,255,.85)}
+#accDlg #accBody .dealer-overview-identity>div{min-width:0;flex:1}
+#accDlg #accBody .dealer-overview-identity h4{margin:3px 0 4px!important;font-size:16px!important}
+#accDlg #accBody .dealer-overview-identity>div>span{font-size:12px;color:rgba(255,255,255,.62)}
+#accDlg #accBody .dealer-overview-identity>button{flex:0 0 auto;border:1px solid rgba(255,255,255,.10);border-radius:10px;padding:8px 11px;background:rgba(255,255,255,.045);color:inherit;font-size:11px}
+#accDlg #accBody .dealer-overview-details{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;padding-top:14px;border-top:1px solid rgba(255,255,255,.08)}
+#accDlg #accBody .dealer-overview-details>div{min-width:0;display:grid;gap:5px}
+#accDlg #accBody .dealer-overview-details small{font-size:9px;letter-spacing:.12em;color:rgba(255,255,255,.48)}
+#accDlg #accBody .dealer-overview-details strong{font-size:12px;font-weight:550;color:rgba(255,255,255,.84);overflow-wrap:anywhere}
+@media(max-width:760px){#accDlg #accBody .dealer-account-editor{padding:16px!important}#accDlg #accBody .dealer-fields-grid{grid-template-columns:minmax(0,1fr)!important;gap:12px!important}#accDlg #accBody .dealer-fields-grid .dealer-field-wide{grid-column:auto}#accDlg #accBody .dealer-overview-identity{align-items:flex-start;flex-wrap:wrap}#accDlg #accBody .dealer-overview-identity>div{flex:1 1 calc(100% - 70px)}#accDlg #accBody .dealer-overview-identity>button{margin-left:68px}#accDlg #accBody .dealer-overview-details{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+</style>
