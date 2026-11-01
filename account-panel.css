@@ -892,3 +892,43 @@
  #accDlg.account-dashboard-dialog[open] #accBody :is(.profile-card,.account-tools,.account-page,.account-settings,.account-stat,.profile-grid>div,.svc,.seller-summary-card,.account-overview-panel,.account-overview-stats>button,.account-bookings-page>#garageBookingAction,.account-bookings-page>.account-booking-item,.account-promotions-page .promotion-history-item,.account-saved-vehicle,.seller-listing,.seller-garage-card,.promotion-package,.account-buyer-workspace,.dashboard-welcome,.account-page .card,.account-tools>.panel,.account-tools>section,.account-page .stats>div,.stat){border-radius:19px!important}
  #accDlg.account-dashboard-dialog[open] #accBody :is(.account-settings-inner,.account-field,.form-group,.field,.seller-garage-promotion,.account-member-chip,.promotion-status-badge,.account-booking-item>.st,.seller-listing-actions>.btn,.account-tools>section>div,.account-page>section){border-radius:15px!important}
 }
+
+
+/* 2026-11-01 — unified dark borderless glass surfaces, matching the account sidebar. */
+/* Sidebar: retain its deep charcoal tone, remove the hard divider, and use light/shadow for depth. */
+#accDlg.account-dashboard-dialog[open]>.account-sidebar{
+  border:0!important;border-right:0!important;
+  background:rgba(7,11,15,.48)!important;
+  -webkit-backdrop-filter:blur(25px) saturate(125%)!important;
+  backdrop-filter:blur(25px) saturate(125%)!important;
+  box-shadow:inset -1px 0 0 rgba(255,255,255,.045),inset 0 1px 1px rgba(255,255,255,.10),0 1px 3px rgba(0,0,0,.12),0 20px 40px rgba(0,0,0,.22)!important;
+}
+/* Carry the same dark glass tone through the dashboard, cards and nested surfaces. */
+#accDlg.account-dashboard-dialog[open] .account-dashboard-main{
+  background:rgba(5,9,13,.24)!important;
+  -webkit-backdrop-filter:blur(12px) saturate(120%)!important;
+  backdrop-filter:blur(12px) saturate(120%)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody :is(.profile-card,.account-tools,.account-page,.account-settings,.account-stat,.profile-grid>div,.svc,.seller-summary-card,.account-overview-panel,.account-overview-stats>button,.account-bookings-page>#garageBookingAction,.account-bookings-page>.account-booking-item,.account-promotions-page .promotion-history-item,.account-saved-vehicle,.seller-listing,.seller-garage-card,.promotion-package,.account-buyer-workspace,.dashboard-welcome,.account-page .card,.account-tools>.panel,.account-tools>section,.account-page .stats>div,.stat){
+  background:rgba(7,11,15,.43)!important;
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.13),0 1px 3px rgba(0,0,0,.12),0 20px 40px rgba(0,0,0,.28)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody :is(.account-settings-inner,.account-field,.form-group,.field,.seller-garage-promotion,.account-member-chip,.promotion-status-badge,.account-booking-item>.st,.seller-listing-actions>.btn,.account-tools>section>div,.account-page>section){
+  background:rgba(5,9,13,.34)!important;
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.10),0 1px 3px rgba(0,0,0,.10),0 12px 28px rgba(0,0,0,.20)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody :is(input,select,textarea){
+  background:rgba(2,5,8,.48)!important;
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.09),0 1px 3px rgba(0,0,0,.12)!important;
+}
+#accDlg.account-dashboard-dialog[open] .account-dialog-head{
+  background:rgba(5,9,13,.42)!important;
+  border:0!important;
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.12),0 12px 30px rgba(0,0,0,.22)!important;
+}
+@media(max-width:760px){
+  #accDlg.account-dashboard-dialog[open]>.account-sidebar{
+    background:rgba(7,11,15,.88)!important;
+    box-shadow:inset 0 1px 1px rgba(255,255,255,.10),0 20px 40px rgba(0,0,0,.35)!important;
+  }
+}
