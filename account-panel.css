@@ -975,3 +975,47 @@
     box-shadow:inset 0 1px 1px rgba(255,255,255,.10),0 20px 40px rgba(0,0,0,.35)!important;
   }
 }
+
+/* Final account workspace surface override: one continuous glass pane, no column seam. */
+#accDlg.account-dashboard-dialog[open]{
+  background:rgba(18,18,22,.45)!important;
+  background-image:none!important;
+  -webkit-backdrop-filter:blur(32px) saturate(125%)!important;
+  backdrop-filter:blur(32px) saturate(125%)!important;
+}
+#accDlg.account-dashboard-dialog[open]>.account-sidebar,
+#accDlg.account-dashboard-dialog[open]>.account-dashboard-main,
+#accDlg.account-dashboard-dialog[open] .account-dialog-head,
+#accDlg.account-dashboard-dialog[open] .account-dashboard-main{
+  background:transparent!important;
+  background-image:none!important;
+  border-left:0!important;border-right:0!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+  box-shadow:none!important;
+}
+#accDlg.account-dashboard-dialog[open]>.account-sidebar{
+  border:0!important;outline:0!important;
+}
+#accDlg.account-dashboard-dialog[open] .account-dialog-head{
+  border:0!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody :is(.profile-card,.account-tools,.account-page,.account-settings,.account-stat,.profile-grid>div,.svc,.seller-summary-card,.account-overview-panel,.account-overview-stats>button,.account-bookings-page>#garageBookingAction,.account-bookings-page>.account-booking-item,.account-promotions-page .promotion-history-item,.account-saved-vehicle,.seller-listing,.seller-garage-card,.promotion-package,.account-buyer-workspace,.dashboard-welcome,.account-page .card,.account-tools>.panel,.account-tools>section,.account-page .stats>div,.stat){
+  background:rgba(255,255,255,.045)!important;
+  background-image:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 8px 22px rgba(0,0,0,.10)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody :is(.account-settings-inner,.account-field,.form-group,.field,.seller-garage-promotion,.account-member-chip,.promotion-status-badge,.account-booking-item>.st,.seller-listing-actions>.btn,.account-tools>section>div,.account-page>section){
+  background:rgba(255,255,255,.035)!important;
+  background-image:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07)!important;
+}
+@media(max-width:760px){
+  #accDlg.account-dashboard-dialog[open]>.account-sidebar{
+    background:rgba(18,18,22,.45)!important;
+    -webkit-backdrop-filter:blur(32px) saturate(125%)!important;
+    backdrop-filter:blur(32px) saturate(125%)!important;
+    box-shadow:0 16px 38px rgba(0,0,0,.22)!important;
+  }
+}
