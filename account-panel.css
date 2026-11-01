@@ -9,13 +9,13 @@
   padding:0!important;overflow:hidden!important;display:grid!important;
   grid-template-columns:258px minmax(0,1fr)!important;grid-template-rows:minmax(0,1fr)!important;
   gap:0!important;border:1px solid rgba(255,255,255,.19)!important;border-radius:25px!important;
-  color:var(--ad-text)!important;background:rgba(17,23,29,.76)!important;
+  color:var(--ad-text)!important;background:rgba(12,17,22,.40)!important;
   box-shadow:0 30px 100px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.10)!important;
   -webkit-backdrop-filter:blur(28px) saturate(135%)!important;backdrop-filter:blur(28px) saturate(135%)!important;
   isolation:isolate
 }
 #accDlg.account-dashboard-dialog::backdrop{
-  background:rgba(4,8,12,.58)!important;
+  background:rgba(4,8,12,.30)!important;
   -webkit-backdrop-filter:blur(5px) saturate(110%)!important;backdrop-filter:blur(5px) saturate(110%)!important
 }
 #accDlg.account-dashboard-dialog>.account-sidebar{
@@ -26,7 +26,7 @@
   overflow-y:auto!important;overflow-x:hidden!important;box-sizing:border-box!important;
   margin:0!important;padding:25px 17px 18px!important;border:0!important;
   border-right:1px solid var(--ad-line)!important;border-radius:0!important;
-  background:linear-gradient(155deg,rgba(255,255,255,.095),rgba(255,255,255,.035) 58%,rgba(0,0,0,.13))!important;
+  background:linear-gradient(155deg,rgba(255,255,255,.065),rgba(255,255,255,.018) 58%,rgba(0,0,0,.09))!important;
   box-shadow:none!important;-webkit-backdrop-filter:blur(20px) saturate(125%)!important;backdrop-filter:blur(20px) saturate(125%)!important;
   scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.2) transparent
 }
@@ -72,7 +72,7 @@
   grid-column:2!important;grid-row:1!important;display:flex!important;flex-direction:column!important;
   min-width:0!important;min-height:0!important;width:100%!important;height:100%!important;max-height:none!important;
   box-sizing:border-box!important;overflow:hidden!important;padding:26px 31px 24px!important;
-  background:rgba(255,255,255,.018)!important;border:0!important;border-radius:0!important
+  background:rgba(255,255,255,.008)!important;border:0!important;border-radius:0!important
 }
 #accDlg .account-dialog-head{position:relative!important;top:auto!important;z-index:3!important;display:grid!important;
   grid-template-columns:minmax(0,1fr) 66px 40px!important;align-items:center!important;gap:11px!important;
@@ -176,7 +176,7 @@
   isolation:isolate!important;pointer-events:auto!important;visibility:visible!important;opacity:1!important;
 }
 #accDlg.account-dashboard-dialog[open]::backdrop{
-  background:rgba(4,8,12,.68)!important;
+  background:rgba(4,8,12,.34)!important;
   -webkit-backdrop-filter:blur(7px) saturate(115%)!important;
   backdrop-filter:blur(7px) saturate(115%)!important;
 }
