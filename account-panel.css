@@ -611,3 +611,22 @@
   background:rgba(13,18,24,.78)!important;-webkit-backdrop-filter:blur(26px) saturate(145%)!important;
   backdrop-filter:blur(26px) saturate(145%)!important
 }}
+
+
+/* Remove visible divider and outline lines throughout the account panel.
+   Keep the existing glass surfaces, blur, spacing and outer depth shadows. */
+#accDlg.account-dashboard-dialog *,
+#accDlg.account-dashboard-dialog *::before,
+#accDlg.account-dashboard-dialog *::after,
+#accDlg #accBody *,
+#accDlg #accBody *::before,
+#accDlg #accBody *::after{
+  border-color:transparent!important;
+  outline-color:transparent!important;
+}
+#accDlg.account-dashboard-dialog hr,
+#accDlg #accBody hr{
+  opacity:0!important;
+  border:0!important;
+  background:transparent!important;
+}
