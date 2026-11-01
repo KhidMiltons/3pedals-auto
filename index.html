@@ -2124,20 +2124,20 @@ async function openAccount(options={}){
   </div>
   ${profile&&profile.is_admin?`<section class="account-tools account-admin-tools"><div><h3>Administration</h3><p class="meta">Manage vehicle approvals, garage bookings, website contact details and published content.</p></div><button class="btn ghost account-admin-button" type="button" id="accAdmin"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 6v5c0 4.6-2.9 7.8-7 10-4.1-2.2-7-5.4-7-10V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg><span>Open Admin Dashboard</span></button></section>`:""}
   <div class="profile-grid"><div><label for="accName">Full name</label><input id="accName" value="${esc(name)}" autocomplete="name"></div><div><label for="accPhone">Phone number</label><input id="accPhone" value="${esc(phone)}" type="tel" autocomplete="tel"></div><div><label for="accType">Account type</label><select id="accType"><option value="private" ${accountType()==="private"?"selected":""}>Private seller</option><option value="yard" ${isYard?"selected":""}>Car yard / dealer</option></select></div></div>
-  \${isYard?\`<section class="account-tools dealer-account-editor">
+  ${isYard?\`<section class="account-tools dealer-account-editor">
     <div class="dealer-editor-heading"><div><p class="account-eyebrow">PUBLIC BUSINESS DETAILS</p><h3>Dealer information</h3><p class="meta">Keep your yard identity and buyer contact details clear and up to date.</p></div><span class="dealer-profile-status">Business profile</span></div>
     <div class="dealer-editor-section"><h4>Business identity</h4><div class="profile-grid dealer-fields-grid">
-      <div class="dealer-field-wide"><label for="accDealerName">Dealer / business name</label><input id="accDealerName" value="\${esc(yardProfile.yard_name||yardProfile.seller_name||me.user_metadata?.dealer_name||name)}"></div>
-      <div><label for="accDealerContact">Contact person</label><input id="accDealerContact" value="\${esc(yardProfile.contact||me.user_metadata?.dealer_contact||"")}"></div>
-      <div><label for="accDealerLocation">Location / address</label><input id="accDealerLocation" value="\${esc(yardProfile.yard_location||yardProfile.location||me.user_metadata?.dealer_location||"")}"></div>
+      <div class="dealer-field-wide"><label for="accDealerName">Dealer / business name</label><input id="accDealerName" value="${esc(yardProfile.yard_name||yardProfile.seller_name||me.user_metadata?.dealer_name||name)}"></div>
+      <div><label for="accDealerContact">Contact person</label><input id="accDealerContact" value="${esc(yardProfile.contact||me.user_metadata?.dealer_contact||"")}"></div>
+      <div><label for="accDealerLocation">Location / address</label><input id="accDealerLocation" value="${esc(yardProfile.yard_location||yardProfile.location||me.user_metadata?.dealer_location||"")}"></div>
     </div></div>
     <div class="dealer-editor-section"><h4>Contact details</h4><div class="profile-grid dealer-fields-grid">
-      <div><label for="accDealerPhone">Dealer phone</label><input id="accDealerPhone" type="tel" value="\${esc(yardProfile.seller_phone||yardProfile.phone||me.user_metadata?.dealer_phone||phone)}"></div>
-      <div><label for="accDealerEmail">Dealer email</label><input id="accDealerEmail" type="email" value="\${esc(yardProfile.seller_email||yardProfile.email||me.user_metadata?.dealer_email||me.email||"")}"></div>
-      <div><label for="accDealerWhatsApp">WhatsApp number</label><input id="accDealerWhatsApp" type="tel" value="\${esc(yardProfile.whatsapp||me.user_metadata?.dealer_whatsapp||yardProfile.seller_phone||phone)}"></div>
+      <div><label for="accDealerPhone">Dealer phone</label><input id="accDealerPhone" type="tel" value="${esc(yardProfile.seller_phone||yardProfile.phone||me.user_metadata?.dealer_phone||phone)}"></div>
+      <div><label for="accDealerEmail">Dealer email</label><input id="accDealerEmail" type="email" value="${esc(yardProfile.seller_email||yardProfile.email||me.user_metadata?.dealer_email||me.email||"")}"></div>
+      <div><label for="accDealerWhatsApp">WhatsApp number</label><input id="accDealerWhatsApp" type="tel" value="${esc(yardProfile.whatsapp||me.user_metadata?.dealer_whatsapp||yardProfile.seller_phone||phone)}"></div>
     </div></div>
     <div class="dealer-editor-section"><h4>Online presence</h4><div class="profile-grid dealer-fields-grid">
-      <div class="dealer-field-wide"><label for="accDealerWeb">Website / social link</label><input id="accDealerWeb" type="url" value="\${esc(yardProfile.yard_web||yardProfile.web||me.user_metadata?.dealer_website||"")}" placeholder="https://example.com"></div>
+      <div class="dealer-field-wide"><label for="accDealerWeb">Website / social link</label><input id="accDealerWeb" type="url" value="${esc(yardProfile.yard_web||yardProfile.web||me.user_metadata?.dealer_website||"")}" placeholder="https://example.com"></div>
     </div></div>
     <div class="dealer-save-row"><button class="btn" type="button" data-save-dealer-info>Save dealer information</button><span class="meta">Your saved details appear on your dealer profile and vehicle listings.</span></div>
   </section>\`:""}
@@ -2206,16 +2206,16 @@ async function openAccount(options={}){
         <button type="button" data-overview-page="bookings"><span class="account-overview-stat-icon">▦</span><span class="account-overview-stat-label">Garage bookings</span><strong>${B.length}</strong><small>Booking records</small></button>
         <button type="button" data-overview-page="dashboard"><span class="account-overview-stat-icon">↗</span><span class="account-overview-stat-label">Reported sales</span><strong>${S.length}</strong><small>Seller-reported transactions</small></button>
       </div>
-      \${isYard?\`<section class="account-overview-panel dealer-overview-card">
-        <div class="dealer-overview-identity">\${avatar?\`<img src="\${esc(avatar)}" alt="Dealer logo">\`:\`<span class="dealer-overview-monogram">\${esc(initialsFor(yardProfile.yard_name||yardProfile.seller_name||me.user_metadata?.dealer_name||name,me.email))}</span>\`}
-          <div><p class="account-eyebrow">YOUR DEALERSHIP</p><h4>\${esc(yardProfile.yard_name||yardProfile.seller_name||me.user_metadata?.dealer_name||name||"Dealer profile")}</h4><span>\${esc(yardProfile.yard_location||yardProfile.location||me.user_metadata?.dealer_location||"Add your business location in Profile")}</span></div>
+      ${isYard?\`<section class="account-overview-panel dealer-overview-card">
+        <div class="dealer-overview-identity">${avatar?\`<img src="${esc(avatar)}" alt="Dealer logo">\`:\`<span class="dealer-overview-monogram">${esc(initialsFor(yardProfile.yard_name||yardProfile.seller_name||me.user_metadata?.dealer_name||name,me.email))}</span>\`}
+          <div><p class="account-eyebrow">YOUR DEALERSHIP</p><h4>${esc(yardProfile.yard_name||yardProfile.seller_name||me.user_metadata?.dealer_name||name||"Dealer profile")}</h4><span>${esc(yardProfile.yard_location||yardProfile.location||me.user_metadata?.dealer_location||"Add your business location in Profile")}</span></div>
           <button type="button" data-overview-page="settings" data-account-tab="business">Edit profile</button>
         </div>
         <div class="dealer-overview-details">
-          <div><small>PHONE</small><strong>\${esc(yardProfile.seller_phone||yardProfile.phone||me.user_metadata?.dealer_phone||phone||"Not added")}</strong></div>
-          <div><small>EMAIL</small><strong>\${esc(yardProfile.seller_email||yardProfile.email||me.user_metadata?.dealer_email||me.email||"Not added")}</strong></div>
-          <div><small>WHATSAPP</small><strong>\${esc(yardProfile.whatsapp||me.user_metadata?.dealer_whatsapp||yardProfile.seller_phone||phone||"Not added")}</strong></div>
-          <div><small>WEBSITE</small><strong>\${esc(yardProfile.yard_web||yardProfile.web||me.user_metadata?.dealer_website||"Not added")}</strong></div>
+          <div><small>PHONE</small><strong>${esc(yardProfile.seller_phone||yardProfile.phone||me.user_metadata?.dealer_phone||phone||"Not added")}</strong></div>
+          <div><small>EMAIL</small><strong>${esc(yardProfile.seller_email||yardProfile.email||me.user_metadata?.dealer_email||me.email||"Not added")}</strong></div>
+          <div><small>WHATSAPP</small><strong>${esc(yardProfile.whatsapp||me.user_metadata?.dealer_whatsapp||yardProfile.seller_phone||phone||"Not added")}</strong></div>
+          <div><small>WEBSITE</small><strong>${esc(yardProfile.yard_web||yardProfile.web||me.user_metadata?.dealer_website||"Not added")}</strong></div>
         </div>
       </section>\`:""}
       <div class="account-overview-lower">
