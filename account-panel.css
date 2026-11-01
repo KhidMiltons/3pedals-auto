@@ -544,3 +544,33 @@
 .account-saved-vehicle-info button{border:0;background:none;text-decoration:underline;cursor:pointer;opacity:.75;padding:3px}
 @media(max-width:760px){.account-saved-vehicles-grid{grid-template-columns:1fr}.account-saved-vehicle{grid-template-columns:112px minmax(0,1fr)}.account-saved-vehicle-image,.account-saved-vehicle-image img{min-height:118px}}
 @media(prefers-reduced-motion:reduce){.account-card-save{transition:none}}
+
+/* Premium seller garage cards */
+.account-dashboard-main .seller-garage-card{display:grid;grid-template-columns:minmax(210px,31%) minmax(0,1fr);gap:0;overflow:hidden;padding:0;border:1px solid var(--account-line,rgba(255,255,255,.13));border-radius:18px;background:rgba(255,255,255,.035);box-shadow:0 8px 28px rgba(0,0,0,.12);transition:border-color .2s ease,transform .2s ease,background .2s ease}
+.account-dashboard-main .seller-garage-card:hover{border-color:rgba(212,160,23,.35);background:rgba(255,255,255,.055);transform:translateY(-2px)}
+.seller-garage-media{position:relative;min-height:190px;overflow:hidden;background:rgba(255,255,255,.035)}
+.seller-garage-media .seller-listing-photo{display:block;width:100%;height:100%;min-height:190px;object-fit:cover}
+.seller-garage-photo-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;min-height:190px;font-size:12px;letter-spacing:.16em;opacity:.55}
+.seller-garage-photo-placeholder span{font-size:9px;letter-spacing:.22em;margin-top:5px}
+.seller-garage-status{position:absolute;left:12px;top:12px;padding:5px 9px;border:1px solid rgba(255,255,255,.2);border-radius:999px;background:rgba(15,15,15,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);font-size:10px;line-height:1.4;letter-spacing:.02em}
+.seller-garage-status.status-approved{color:#bde8c5;border-color:rgba(120,210,145,.3)}
+.seller-garage-status.status-pending{color:#f1d69a;border-color:rgba(241,214,154,.3)}
+.seller-garage-status.status-rejected{color:#f0aaa4;border-color:rgba(240,170,164,.3)}
+.seller-garage-status.status-sold{color:#d6d6d6}
+.seller-garage-content{display:flex;flex-direction:column;gap:13px;min-width:0;padding:16px}
+.seller-garage-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.seller-garage-eyebrow{display:block;margin-bottom:5px;font-size:9px;letter-spacing:.15em;opacity:.58}
+.seller-garage-heading h4{margin:0;font-size:16px;line-height:1.35;font-weight:650}
+.seller-garage-price{flex:0 0 auto;font-size:13px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.seller-garage-meta{display:flex;flex-wrap:wrap;gap:7px 13px;font-size:10px;opacity:.68}
+.seller-garage-promotion{display:flex;align-items:center;gap:9px;padding:9px 11px;border:1px solid rgba(255,255,255,.09);border-radius:10px;background:rgba(255,255,255,.025)}
+.seller-garage-promotion>div{display:flex;flex-direction:column;gap:2px;min-width:0}
+.seller-garage-promotion strong{font-size:10px;font-weight:600}
+.seller-garage-promotion span{font-size:10px;opacity:.65}
+.seller-garage-promotion-dot{width:7px;height:7px;flex:0 0 7px;border-radius:50%;background:#858585}
+.seller-garage-promotion-dot.is-active{background:#75c98a;box-shadow:0 0 0 3px rgba(117,201,138,.12)}
+.seller-garage-promotion.is-empty{padding:7px 10px;border-style:dashed}
+.seller-garage-content .seller-listing-actions{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin-top:auto;padding-top:2px}
+.seller-garage-content .seller-listing-actions .btn{font-size:10px;padding:7px 10px}
+@media(max-width:760px){.account-dashboard-main .seller-garage-card{grid-template-columns:1fr}.seller-garage-media,.seller-garage-media .seller-listing-photo,.seller-garage-photo-placeholder{min-height:180px;height:180px}.seller-garage-content{padding:13px}.seller-garage-heading h4{font-size:15px}.seller-garage-price{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.account-dashboard-main .seller-garage-card{transition:none}}
