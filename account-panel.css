@@ -1350,3 +1350,54 @@
 @media(prefers-reduced-motion:reduce){
   #accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats>button{transition:none!important}
 }
+
+/* 2026-11-04 — final visual correction requested: login-style dealer inputs,
+   and remove every bright hover layer from Overview metric buttons. */
+#accDlg.account-dashboard-dialog[open] #accBody .dealer-account-editor .dealer-fields-grid input,
+#accDlg.account-dashboard-dialog[open] #accBody .dealer-account-editor .dealer-fields-grid input:hover,
+#accDlg.account-dashboard-dialog[open] #accBody .dealer-account-editor .dealer-fields-grid input:focus{
+  appearance:none!important;-webkit-appearance:none!important;
+  display:block!important;box-sizing:border-box!important;width:100%!important;
+  min-width:0!important;min-height:42px!important;padding:9px 11px!important;
+  border:1px solid rgba(255,255,255,.20)!important;border-radius:10px!important;
+  background:rgba(4,8,12,.28)!important;color:#f5f7fa!important;
+  font:inherit!important;font-size:15px!important;line-height:1.35!important;
+  box-shadow:none!important;outline:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .dealer-account-editor .dealer-fields-grid input::placeholder{
+  color:rgba(239,244,249,.42)!important;opacity:1!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .dealer-account-editor .dealer-fields-grid input:focus{
+  outline:2px solid rgba(255,255,255,.20)!important;outline-offset:1px!important;
+  border-color:rgba(255,255,255,.35)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats>button,
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats>button:hover,
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats>button:focus,
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats>button:focus-visible,
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats>button:active{
+  background:rgba(7,12,17,.82)!important;background-color:rgba(7,12,17,.82)!important;
+  background-image:none!important;border:1px solid rgba(255,255,255,.075)!important;
+  color:rgba(255,255,255,.94)!important;
+  box-shadow:0 8px 22px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.025)!important;
+  filter:none!important;opacity:1!important;transform:none!important;
+  -webkit-backdrop-filter:blur(16px) saturate(115%)!important;
+  backdrop-filter:blur(16px) saturate(115%)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats>button:hover,
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats>button:focus-visible{
+  background:rgba(12,18,25,.90)!important;background-color:rgba(12,18,25,.90)!important;
+  border-color:rgba(255,255,255,.10)!important;
+  box-shadow:0 9px 24px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.035)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats>button::before,
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats>button::after{
+  content:none!important;display:none!important;opacity:0!important;background:none!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats>button :is(span,strong,small){
+  color:rgba(255,255,255,.92)!important;text-shadow:none!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats>button small{
+  color:rgba(222,231,240,.62)!important;
+}
