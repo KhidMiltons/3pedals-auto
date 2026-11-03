@@ -4268,6 +4268,62 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){f
 #accDlg #accBody .seller-listing-actions [data-view],#accDlg #accBody .seller-listing-actions [data-del]{flex:0 0 auto!important}
 @media(max-width:600px){#accDlg #accBody .seller-analytics-table th,#accDlg #accBody .seller-analytics-table td{padding:10px 11px!important;font-size:12px!important}#accDlg #accBody .seller-listing-actions{gap:6px!important}#accDlg #accBody .seller-listing-actions .btn{min-height:36px!important;padding:8px 10px!important;font-size:11px!important}}
 </style>
+
+<style id="dealer-form-grid-and-dashboard-hover-fix">
+/* Keep the Overview metric cards dark and legible on hover/focus. */
+#accDlg #accBody .account-overview-stats>button,
+#accDlg #accBody .account-overview-stats>button:hover,
+#accDlg #accBody .account-overview-stats>button:focus-visible{
+  background:rgba(255,255,255,.035)!important;
+  color:inherit!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 8px 24px rgba(0,0,0,.12)!important;
+  border-color:rgba(255,255,255,.07)!important;
+  transition:background .18s ease,border-color .18s ease,box-shadow .18s ease,transform .18s ease!important;
+}
+#accDlg #accBody .account-overview-stats>button:hover,
+#accDlg #accBody .account-overview-stats>button:focus-visible{
+  background:rgba(255,255,255,.055)!important;
+  border-color:rgba(255,255,255,.10)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 10px 26px rgba(0,0,0,.16)!important;
+}
+#accDlg #accBody .account-overview-stats>button:active{transform:translateY(0)!important;background:rgba(255,255,255,.045)!important}
+/* Dealer fields use a true two-column grid with labels and controls sharing the same track. */
+#accDlg #accBody .dealer-account-editor{box-sizing:border-box!important;width:100%!important;min-width:0!important}
+#accDlg #accBody .dealer-fields-grid{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  align-items:start!important;
+  column-gap:18px!important;
+  row-gap:14px!important;
+  width:100%!important;
+  margin:0!important;
+}
+#accDlg #accBody .dealer-fields-grid>div{
+  display:flex!important;flex-direction:column!important;align-items:stretch!important;
+  width:100%!important;min-width:0!important;margin:0!important;padding:0!important;
+}
+#accDlg #accBody .dealer-fields-grid>div.dealer-field-wide{grid-column:1/-1!important}
+#accDlg #accBody .dealer-fields-grid label{
+  display:block!important;position:static!important;width:100%!important;
+  margin:0 0 7px!important;padding:0!important;text-align:left!important;
+  line-height:1.35!important;transform:none!important;
+}
+#accDlg #accBody .dealer-fields-grid input{
+  display:block!important;box-sizing:border-box!important;width:100%!important;
+  max-width:100%!important;min-width:0!important;margin:0!important;
+}
+#accDlg #accBody .dealer-editor-section{gap:12px!important}
+#accDlg #accBody .dealer-editor-section>h4{margin:0!important}
+#accDlg #accBody .dealer-editor-section+.dealer-editor-section{margin-top:0!important}
+@media(max-width:680px){
+  #accDlg #accBody .dealer-fields-grid{grid-template-columns:minmax(0,1fr)!important;row-gap:12px!important}
+  #accDlg #accBody .dealer-fields-grid>div.dealer-field-wide{grid-column:1!important}
+  #accDlg #accBody .dealer-account-editor{padding:16px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  #accDlg #accBody .account-overview-stats>button{transition:none!important}
+}
+</style>
 </body>
 </html>
 
