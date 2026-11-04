@@ -12,7 +12,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <base target="_top">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
-<link rel="stylesheet" href="/account-panel.css?v=20261104-rebuild-2">
+<link rel="stylesheet" href="/account-panel.css?v=20261104-glassy-v2-1">
 <link rel="preload" as="image" href="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72" fetchpriority="high">
 <link rel="preconnect" href="https://dlejmelyeaaxcvelvzia.supabase.co" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -1857,6 +1857,12 @@ async function openAccount(options={}){
       ...S.filter(x=>x.created_at).map(x=>({time:x.created_at,title:"Sale reported",detail:"KES "+fmt(x.reported_sale_price||0),kind:"sale"}))
     ].filter(item=>Number.isFinite(new Date(item.time).getTime())).sort((a,b)=>new Date(b.time)-new Date(a.time));
     const activityItems=allActivityItems.slice(0,6);
+    const trendMonths=Array.from({length:6},(_,offset)=>{const date=new Date();date.setDate(1);date.setMonth(date.getMonth()-(5-offset));const key=`${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,"0")}`;const count=L.filter(item=>{if(!item.created_at)return false;const created=new Date(item.created_at);return Number.isFinite(created.getTime())&&`${created.getFullYear()}-${String(created.getMonth()+1).padStart(2,"0")}`===key}).length;return {label:date.toLocaleDateString("en-KE",{month:"short"}),count}});
+    const trendPeak=Math.max(1,...trendMonths.map(item=>item.count));
+    const trendBars=trendMonths.map(item=>`<div class="account-trend-column" title="${item.label}: ${item.count} listings"><span style="--bar-height:${Math.max(7,item.count/trendPeak*100)}%"></span><small>${esc(item.label)}</small></div>`).join("");
+    const healthItems=[{label:"Live",value:listingStatusCounts.approved||0},{label:"In review",value:listingStatusCounts.pending||0},{label:"Other",value:Math.max(0,L.length-(listingStatusCounts.approved||0)-(listingStatusCounts.pending||0))}];
+    const healthTotal=Math.max(1,...healthItems.map(item=>item.value));
+    const healthMarkup=healthItems.map(item=>`<div class="account-health-row"><span>${esc(item.label)}</span><div><i style="--health-width:${item.value/healthTotal*100}%"></i></div><strong>${item.value}</strong></div>`).join("");
     const activityMarkup=activityItems.length?activityItems.map(item=>`<article class="account-activity-item"><span class="account-activity-dot ${esc(item.kind)}"></span><div><strong>${esc(item.title)}</strong><p>${esc(item.detail)}</p></div><time datetime="${esc(item.time)}">${esc(new Date(item.time).toLocaleDateString("en-KE",{day:"numeric",month:"short",year:"numeric"}))}</time></article>`).join(""):'<p class="account-overview-empty">Your recent account activity will appear here.</p>';
     const firstName=name?name.split(/\s+/)[0]:"there";
     overview.innerHTML=`<div class="account-overview-heading"><div><p class="account-eyebrow">YOUR 3 PEDALS WORKSPACE</p><h3>Welcome back, ${esc(firstName)}</h3><p>Here’s what’s happening with your garage today.</p></div><span class="account-member-chip"><span></span> Account active</span></div>
@@ -1865,6 +1871,10 @@ async function openAccount(options={}){
         <button type="button" data-overview-page="promotions"><span class="account-overview-stat-icon">✧</span><span class="account-overview-stat-label">Active promotions</span><strong>${activePromotionCount}</strong><small>Across your vehicle listings</small></button>
         <button type="button" data-overview-page="bookings"><span class="account-overview-stat-icon">▦</span><span class="account-overview-stat-label">Garage bookings</span><strong>${B.length}</strong><small>Booking records</small></button>
         <button type="button" data-overview-page="dashboard"><span class="account-overview-stat-icon">↗</span><span class="account-overview-stat-label">Reported sales</span><strong>${S.length}</strong><small>Seller-reported transactions</small></button>
+      </div>
+      <div class="account-overview-visuals">
+        <section class="account-overview-panel account-trend-panel"><div class="account-overview-panel-head"><div><p class="account-eyebrow">MARKETPLACE MOMENTUM</p><h4>Listing activity</h4><span class="account-panel-caption">Vehicles added over the last six months</span></div><strong class="account-chart-total">${L.length}</strong></div><div class="account-trend-chart">${trendBars}</div></section>
+        <section class="account-overview-panel account-health-panel"><div class="account-overview-panel-head"><div><p class="account-eyebrow">INVENTORY SNAPSHOT</p><h4>Listing health</h4><span class="account-panel-caption">Current status of your vehicles</span></div></div><div class="account-health-list">${healthMarkup}</div><div class="account-health-foot"><span>Total vehicles</span><strong>${L.length}</strong></div></section>
       </div>
       ${isYard?`<section class="account-overview-panel dealer-overview-card">
         <div class="dealer-overview-identity">${avatar?`<img src="${esc(avatar)}" alt="Dealer logo">`:`<span class="dealer-overview-monogram">${esc(initialsFor(yardProfile.yard_name||yardProfile.seller_name||me.user_metadata?.dealer_name||name,me.email))}</span>`}
