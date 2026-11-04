@@ -1380,14 +1380,15 @@ try{
 }catch(_){}
 
 let accountDataPrefetch=null,accountDataPrefetchUserId=null,accountRenderVersion=0,promotionHistoryRefreshTimer=null;
-let savedVehicleIds=new Set(),savedVehicleRows=[],savedVehiclesLoadedFor=null;
+let savedVehicleIds=new Set(),savedVehicleRows=[],savedVehiclesLoadedFor=null,savedVehiclesLoadError="";
 async function loadSavedVehicles(){
-  if(!sb||!me){savedVehicleIds=new Set();savedVehicleRows=[];savedVehiclesLoadedFor=null;return []}
+  if(!sb||!me){savedVehicleIds=new Set();savedVehicleRows=[];savedVehiclesLoadedFor=null;savedVehiclesLoadError="";return []}
   if(savedVehiclesLoadedFor===me.id)return savedVehicleRows;
   const userId=me.id;
-  const {data,error}=await sb.from("saved_vehicles").select("listing_id,created_at,listing:listings(id,make,model,year,price,km,fuel,photos,status)").order("created_at",{ascending:false});
-  if(error){console.warn("Saved vehicles could not be loaded:",error);return []}
+  const {data,error}=await sb.from("saved_vehicles").select("listing_id,created_at,listing:listings(id,make,model,year,price,km,fuel,photos,status)").eq("user_id",userId).order("created_at",{ascending:false});
+  if(error){savedVehiclesLoadError=error.message||"Saved vehicles could not be loaded.";console.warn("Saved vehicles could not be loaded:",error);return []}
   if(me?.id!==userId)return [];
+  savedVehiclesLoadError="";
   savedVehicleRows=(data||[]).filter(row=>row.listing&&String(row.listing.status||"").toLowerCase()==="approved");
   savedVehicleIds=new Set((data||[]).map(row=>String(row.listing_id)));
   savedVehiclesLoadedFor=userId;return savedVehicleRows;
@@ -1405,7 +1406,7 @@ async function toggleSavedVehicle(id,button){
 }
 function renderSavedVehicles(){
   const target=$("savedVehiclesGrid");if(!target)return;
-  if(!savedVehicleRows.length){target.innerHTML='<div class="account-overview-empty">No saved vehicles yet. Browse the marketplace and save cars to keep them here.</div>';return}
+  if(!savedVehicleRows.length){target.innerHTML=savedVehiclesLoadError?`<div class="account-overview-empty" role="alert">${esc(savedVehiclesLoadError)} <button type="button" data-retry-saved>Try again</button></div>`:'<div class="account-overview-empty">No saved vehicles yet. Browse the marketplace and save cars to keep them here.</div>';target.querySelector("[data-retry-saved]")?.addEventListener("click",async event=>{const control=event.currentTarget;control.disabled=true;control.textContent="Loading…";savedVehiclesLoadedFor=null;await loadSavedVehicles();renderSavedVehicles()});return}
   target.innerHTML=savedVehicleRows.map(row=>{const v=row.listing;if(!v)return "";const title=[v.year,v.make,v.model].filter(Boolean).join(" ");const photo=Array.isArray(v.photos)?v.photos[0]:"";return '<article class="account-saved-vehicle"><a href="vehicle.html?id='+encodeURIComponent(v.id)+'" class="account-saved-vehicle-image">'+(photo?'<img src="'+esc(photo)+'" alt="'+esc(title)+'" loading="lazy">':'<span>3 PEDALS</span>')+'</a><div class="account-saved-vehicle-info"><strong>'+esc(title)+'</strong><b>KES '+fmt(v.price)+'</b><small>'+fmt(v.km||0)+' km · '+esc(v.fuel||"Fuel not specified")+'</small><div><a href="vehicle.html?id='+encodeURIComponent(v.id)+'">View vehicle</a><button type="button" data-save-vehicle="'+esc(v.id)+'" aria-pressed="true">Remove saved</button></div></div></article>'}).join("");
   target.querySelectorAll("[data-save-vehicle]").forEach(button=>button.onclick=()=>toggleSavedVehicle(button.dataset.saveVehicle,button));
 }
