@@ -65,10 +65,9 @@ jobs:
                       self.external = False
                       self.current = []
 
-          html = Path("index.html").read_text(encoding="utf-8")
           parser = InlineScripts()
-          parser.feed(html)
-          assert parser.scripts, "No inline scripts were found in index.html"
+          parser.feed(Path("index.html").read_text(encoding="utf-8"))
+          assert parser.scripts, "No inline scripts found in index.html"
           assert any(src.startswith("account-panel.js?") for src in parser.external_scripts), "account-panel.js is not linked"
           with tempfile.TemporaryDirectory() as temp:
               for index, script in enumerate(parser.scripts):
@@ -85,19 +84,16 @@ jobs:
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          import re
 
           html = Path("index.html").read_text(encoding="utf-8")
           css = Path("account-panel.css").read_text(encoding="utf-8")
-          links = re.findall(r'<link\\s+rel=["\\']stylesheet["\\']\\s+href=["\\'][^"\\']*account-panel\\.css[^"\\']*["\\']', html, re.I)
+          links = [line for line in html.splitlines() if '<link rel="stylesheet"' in line and "account-panel.css" in line]
           assert len(links) == 1, f"Expected one account-panel.css link, found {len(links)}"
-          assert "account-panel.css?v=" in links[0], "Dashboard stylesheet is missing a cache-busting version"
+          assert "account-panel.css?v=20261104-glassy-v2-3" in links[0], "Unexpected dashboard CSS cache version"
           assert "dlejmelyeaaxcvelvzia.supabase.co" in html, "Expected Supabase project URL was not found"
-          assert "account-panel.css?v=20261104-glassy-v2-3" in html, "Unexpected dashboard CSS version"
-          stripped = re.sub(r"/\\*.*?\\*/", "", css, flags=re.S)
-          stripped = re.sub(r'"(?:\\\\.|[^"\\\\])*"|\'(?:\\\\.|[^\'\\\\])*\'', "", stripped)
+          assert css.count("{") == css.count("}"), "Unbalanced CSS braces"
           depth = 0
-          for offset, char in enumerate(stripped):
+          for offset, char in enumerate(css):
               if char == "{":
                   depth += 1
               elif char == "}":
