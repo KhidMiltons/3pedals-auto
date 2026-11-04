@@ -39,6 +39,7 @@ jobs:
                   super().__init__()
                   self.in_script = False
                   self.external = False
+                  self.is_javascript = False
                   self.current = []
                   self.scripts = []
                   self.external_scripts = []
@@ -49,20 +50,23 @@ jobs:
                   attrs = dict(attrs)
                   self.in_script = True
                   self.external = bool(attrs.get("src"))
+                  script_type = (attrs.get("type") or "").lower()
+                  self.is_javascript = not script_type or script_type in ("text/javascript", "application/javascript", "module")
                   if self.external:
                       self.external_scripts.append(attrs["src"])
                   self.current = []
 
               def handle_data(self, data):
-                  if self.in_script and not self.external:
+                  if self.in_script and not self.external and self.is_javascript:
                       self.current.append(data)
 
               def handle_endtag(self, tag):
                   if tag.lower() == "script" and self.in_script:
-                      if not self.external:
+                      if not self.external and self.is_javascript:
                           self.scripts.append("".join(self.current))
                       self.in_script = False
                       self.external = False
+                      self.is_javascript = False
                       self.current = []
 
           parser = InlineScripts()
