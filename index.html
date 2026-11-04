@@ -1697,7 +1697,7 @@ function showSellerAccountPage(selected,button,options={}){
   if(["dashboard","listings"].includes(selected)&&dashboard){
     pages.querySelectorAll(".account-page").forEach(page=>page.hidden=page!==dashboard);
     const sections=dashboard.querySelectorAll(":scope > .account-tools");
-    sections.forEach((section,index)=>section.hidden=selected!=="dashboard"&&((selected==="listings"&&index!==1)||(selected==="promotions"&&index!==2)));
+    sections.forEach((section,index)=>section.hidden=selected!=="dashboard"&&selected==="listings"&&index!==1);
   }else{
     const target=pages.querySelector(`#accountPage-${selected}`);if(!target)return;
     pages.querySelectorAll(".account-page").forEach(page=>page.hidden=page!==target);
