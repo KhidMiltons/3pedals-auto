@@ -18,11 +18,14 @@
           <button type="button" class="selected" aria-current="page">Selling</button>
         </div>
         <div class="seller-nav-label">WORKSPACE</div>
-        <button type="button" data-page="dashboard">Overview</button>
+        <button type="button" data-page="overview">Overview</button>
         <div class="seller-nav-label">MANAGE</div>
+        <button type="button" data-page="buying">Buying workspace</button>
+        <button type="button" data-page="dashboard">Insights</button>
         <button type="button" data-page="listings">My Listings</button>
         <button type="button" data-page="promotions">Promotions</button>
         <button type="button" data-page="bookings">Garage Bookings</button>
+        <button type="button" data-page="activity">Activity centre</button>
         <div class="seller-nav-label">PERSONAL</div>
         <button type="button" data-page="settings" data-account-tab="business">Profile</button>
         <button type="button" data-page="settings" data-account-tab="account">Settings</button>
