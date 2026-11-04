@@ -1,4 +1,4 @@
-/* 3 Pedals Auto KE — rebuilt account dashboard shell.
+/* 3 Pedals Auto KE — Glass Dashboard V2 shell.
    The marketplace's existing authentication, data and action handlers remain in index.html. */
 (() => {
   "use strict";
@@ -6,7 +6,7 @@
   if (!mount) return;
   if (mount.parentElement !== document.body) document.body.appendChild(mount);
   mount.innerHTML = `
-    <dialog id="accDlg" class="account-dashboard-dialog" aria-label="3 Pedals account dashboard">
+    <dialog id="accDlg" class="account-dashboard-dialog" aria-label="3 Pedals Auto KE Glass Dashboard">
       <nav id="accountMenu" class="account-sidebar" aria-label="Account navigation" hidden>
         <a class="account-sidebar-brand" href="/" aria-label="3 Pedals Auto KE home">
           <img src="favicon.svg" alt="">
