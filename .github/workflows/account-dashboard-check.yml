@@ -93,7 +93,7 @@ jobs:
           css = Path("account-panel.css").read_text(encoding="utf-8")
           links = [line for line in html.splitlines() if '<link rel="stylesheet"' in line and "account-panel.css" in line]
           assert len(links) == 1, f"Expected one account-panel.css link, found {len(links)}"
-          assert "account-panel.css?v=20261104-glassy-v2-3" in links[0], "Unexpected dashboard CSS cache version"
+          assert "account-panel.css?v=20261105-glassy-v2-4" in links[0], "Unexpected dashboard CSS cache version"
           assert "dlejmelyeaaxcvelvzia.supabase.co" in html, "Expected Supabase project URL was not found"
           assert css.count("{") == css.count("}"), "Unbalanced CSS braces"
           depth = 0
