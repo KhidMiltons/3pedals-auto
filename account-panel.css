@@ -37,7 +37,7 @@
 #accDlg .seller-mode-switch button.selected,#accDlg .seller-mode-switch button[aria-current="page"]{background:rgba(255,255,255,.65);color:var(--v2-ink);box-shadow:0 2px 8px rgba(65,45,27,.08)}
 #accDlg .seller-nav-label{padding:13px 10px 5px}
 #accDlg nav#accountMenu>button{display:flex;align-items:center;gap:9px;min-height:39px;width:100%;padding:9px 11px;margin:0;border:1px solid transparent;border-radius:10px;background:transparent;color:rgba(48,40,32,.72);text-align:left;font:650 11px/1.35 Manrope,system-ui,sans-serif;box-shadow:none;transition:background .16s,color .16s,transform .16s}
-#accDlg nav#accountMenu>button::before{content:"";width:7px;height:7px;flex:0 0 7px;border-radius:3px;background:rgba(78,62,46,.28)}
+#accDlg nav#accountMenu>button::before{content:"◫";display:grid;place-items:center;width:17px;height:17px;flex:0 0 17px;border-radius:5px;background:rgba(255,255,255,.34);color:rgba(78,62,46,.72);font:700 12px/1 Manrope,system-ui}
 #accDlg nav#accountMenu>button[data-page="overview"]::before{border-radius:50%}
 #accDlg nav#accountMenu>button[data-page="listings"]::before{border-radius:2px}
 #accDlg nav#accountMenu>button[data-page="promotions"]::before{transform:rotate(45deg);border-radius:1px}
@@ -164,3 +164,40 @@
 }
 @media(max-width:390px){#accDlg #accBody .account-overview-stats>button strong{font-size:23px}#accDlg h2.account-brand-title{font-size:12px}}
 @media(prefers-reduced-motion:reduce){#accDlg *{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+#accDlg nav#accountMenu>button[data-page="overview"]::before{content:"⌂"}
+#accDlg nav#accountMenu>button[data-page="buying"]::before{content:"⌕"}
+#accDlg nav#accountMenu>button[data-page="dashboard"]::before{content:"◷"}
+#accDlg nav#accountMenu>button[data-page="listings"]::before{content:"▤"}
+#accDlg nav#accountMenu>button[data-page="promotions"]::before{content:"✧"}
+#accDlg nav#accountMenu>button[data-page="bookings"]::before{content:"▦"}
+#accDlg nav#accountMenu>button[data-page="activity"]::before{content:"↗"}
+#accDlg nav#accountMenu>button[data-page="settings"]::before{content:"⚙"}
+#accDlg nav#accountMenu>button[data-seller-signup]::before{content:"＋"}
+#accDlg nav#accountMenu>button[data-signout]::before{content:"↪"}
+#accDlg #accBody .account-activity-page-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:16px}
+#accDlg #accBody .account-activity-page-head h3{margin:0 0 4px;font:750 21px/1.2 Manrope,system-ui;letter-spacing:-.03em}
+#accDlg #accBody .account-activity-page-head p{margin:0;font-size:10px}
+#accDlg #accBody .account-activity-page-head>span{padding:7px 10px;border-radius:99px;background:rgba(255,255,255,.42);font:700 10px Manrope,system-ui}
+#accDlg #accBody .account-tools{margin:0 0 13px;padding:17px!important}
+#accDlg #accBody .account-tools h3,#accDlg #accBody .account-tools h4{margin-top:0}
+#accDlg #accBody .account-tools .field-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px;align-items:end}
+#accDlg #accBody .account-tools label{display:block;margin:0 0 5px;font-size:10px;color:var(--v2-muted)}
+#accDlg #accBody .account-tools input,#accDlg #accBody .account-tools select,#accDlg #accBody .account-tools textarea{width:100%;min-height:40px;padding:9px 11px}
+#accDlg #accBody .account-tools button{border-radius:9px}
+#accDlg #accBody .account-saved-vehicles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:12px}
+#accDlg #accBody .account-saved-vehicle,#accDlg #accBody .seller-listing{min-width:0;padding:12px;border:1px solid rgba(255,255,255,.42);border-radius:14px;background:rgba(248,242,233,.48);box-shadow:0 7px 20px rgba(63,45,28,.07)}
+#accDlg #accBody .seller-listing{display:grid;grid-template-columns:76px minmax(0,1fr) auto;align-items:center;gap:12px}
+#accDlg #accBody .seller-listing-photo{width:76px;height:58px;object-fit:cover;border-radius:9px}
+#accDlg #accBody .seller-listing :is(strong,h4){font-size:11px}
+#accDlg #accBody .account-full-activity .account-activity-list{padding:0 3px}
+#accDlg #accBody .account-booking-item{padding:14px;margin:0 0 10px}
+#accDlg #accBody .account-bookings-heading{margin:14px 0 9px;font-size:15px}
+#accDlg #accBody .account-fast-loading{min-height:220px;display:grid;place-content:center;justify-items:center;color:var(--v2-ink)}
+#accDlg #accBody .account-fast-loading :is(p,span){color:var(--v2-muted)}
+@media(max-width:760px){
+ #accDlg #accBody .account-activity-page-head{align-items:flex-start}
+ #accDlg #accBody .seller-listing{grid-template-columns:64px minmax(0,1fr);gap:9px}
+ #accDlg #accBody .seller-listing-photo{width:64px;height:54px}
+ #accDlg #accBody .account-tools .field-row{grid-template-columns:minmax(0,1fr)}
+}
