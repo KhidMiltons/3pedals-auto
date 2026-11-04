@@ -1,5 +1,7 @@
 /* 3 Pedals Auto KE — clean account dashboard design system.
    One source of truth; no stacked override layers. */
+#accDlg.account-dashboard-dialog:not([open]){display:none!important}
+#accDlg.account-dashboard-dialog[open]{display:grid!important}
 #accDlg.account-dashboard-dialog{
   --ad-bg:rgba(16,20,24,.88);--ad-panel:rgba(255,255,255,.045);--ad-panel-hover:rgba(255,255,255,.075);
   --ad-line:rgba(255,255,255,.10);--ad-text:#f4f5f6;--ad-muted:rgba(235,239,242,.62);
@@ -69,3 +71,21 @@
  #accDlg #accBody :is(.profile-card,.account-tools,.account-page,.account-settings){padding:14px}
 }
 @media(prefers-reduced-motion:reduce){#accDlg *{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+/* Settings sections retained from the previous workspace, restyled for the new smoked-glass system. */
+#accDlg #accBody .account-settings-inner{display:block;min-width:0}
+#accDlg #accBody .account-settings-tabs{position:sticky;top:0;z-index:4;display:flex;flex-wrap:wrap;gap:7px;padding:10px 0 13px;margin:0 0 14px;background:rgba(16,20,24,.94);border-bottom:1px solid var(--ad-line)}
+#accDlg #accBody .account-settings-tabs button{min-height:38px;padding:8px 13px;border:1px solid var(--ad-line);border-radius:9px;background:rgba(255,255,255,.035);color:var(--ad-muted);font:600 11px Manrope,system-ui;transition:background .15s,color .15s}
+#accDlg #accBody .account-settings-tabs button.active{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.18);color:#fff;box-shadow:none}
+#accDlg #accBody .settings-section{padding:clamp(15px,2vw,22px);border:1px solid var(--ad-line);border-radius:13px;background:var(--ad-panel);box-shadow:0 6px 18px rgba(0,0,0,.10)}
+#accDlg #accBody .settings-section>h4{margin:0 0 6px;font-size:16px}
+#accDlg #accBody .settings-section>.account-tools{padding:0;border:0;background:transparent;box-shadow:none;backdrop-filter:none}
+#accDlg #accBody .profile-card{display:flex;align-items:center;gap:16px}
+#accDlg #accBody .profile-avatar{width:64px;height:64px;flex:0 0 64px;display:grid;place-items:center;overflow:hidden;border:1px solid var(--ad-line);border-radius:50%;background:rgba(255,255,255,.07);font-size:20px;font-weight:700}
+#accDlg #accBody .profile-avatar img{width:100%;height:100%;object-fit:cover}
+#accDlg #accBody .profile-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 14px;margin:15px 0}
+#accDlg #accBody .profile-grid>div{min-width:0}
+#accDlg #accBody .profile-grid label{margin:0 0 6px;font-size:11px;color:var(--ad-muted)}
+#accDlg #accBody .profile-grid input,#accDlg #accBody .profile-grid select{min-height:42px}
+#accDlg #accBody .settings-section .acts{display:flex;gap:9px;flex-wrap:wrap}
+@media(max-width:600px){#accDlg #accBody .account-settings-tabs{overflow-x:auto;flex-wrap:nowrap}#accDlg #accBody .account-settings-tabs button{flex:0 0 auto}#accDlg #accBody .profile-card{align-items:flex-start;gap:11px}#accDlg #accBody .profile-avatar{width:54px;height:54px;flex-basis:54px}#accDlg #accBody .profile-grid{grid-template-columns:minmax(0,1fr)}}
