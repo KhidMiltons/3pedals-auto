@@ -1712,7 +1712,7 @@ function showSellerAccountPage(selected,button,options={}){
       sessionStorage.setItem("3pedals:account-view-cache",snapshot.innerHTML);
     }
   }catch(_){}
-  const active=button||$("accountMenu").querySelector(`[data-page="${selected}"]`);$("accountMenu").querySelectorAll("[data-page]").forEach(item=>item.classList.toggle("active",item===active));closeAccountMenu();$("accBody").scrollTo({top:0,behavior:options.scroll===false?"auto":"smooth"});
+  const active=button||$("accountMenu").querySelector(`[data-page="${selected}"]`);$("accountMenu").querySelectorAll("[data-page]").forEach(item=>{const isActive=item===active;item.classList.toggle("active",isActive);if(isActive)item.setAttribute("aria-current","page");else item.removeAttribute("aria-current")});closeAccountMenu();$("accBody").scrollTo({top:0,behavior:options.scroll===false?"auto":"smooth"});
 }
 $("accountMenu").addEventListener("click",event=>{const button=event.target.closest("[data-page]");if(!button)return;showSellerAccountPage(button.dataset.page,button);if(button.dataset.accountTab){requestAnimationFrame(()=>{const tab=$("accBody").querySelector(`[data-settings-tab="${button.dataset.accountTab}"]`);tab?.click()})}if(button.dataset.accountFocus==="sales"){requestAnimationFrame(()=>{const target=$("accBody").querySelector("#sellerSummary .stats");if(target)target.scrollIntoView({behavior:"smooth",block:"center"})})}});
 const accountDialog=$("accDlg");
