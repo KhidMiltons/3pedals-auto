@@ -201,3 +201,177 @@
  #accDlg #accBody .seller-listing-photo{width:64px;height:54px}
  #accDlg #accBody .account-tools .field-row{grid-template-columns:minmax(0,1fr)}
 }
+
+
+/* V2 workspace pages — consistent warm glass treatment beyond Overview */
+#accDlg.account-dashboard-dialog[open] #accBody .account-page{
+  min-width:0;display:block;padding:0!important;background:transparent!important;
+  border:0!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-page[hidden],
+#accDlg.account-dashboard-dialog[open] #accBody [data-settings-section][hidden]{display:none!important}
+#accDlg.account-dashboard-dialog[open] #accBody .account-page>h3,
+#accDlg.account-dashboard-dialog[open] #accBody .account-page>.account-tools>h3{
+  margin:2px 0 15px;font:750 clamp(20px,2vw,27px)/1.2 Manrope,system-ui,sans-serif;
+  letter-spacing:-.035em;color:var(--v2-ink)
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-page>.account-tools{
+  min-width:0;margin:0 0 13px!important;padding:clamp(14px,2vw,20px)!important;
+  border:1px solid rgba(255,255,255,.42)!important;border-radius:17px!important;
+  background:rgba(248,242,233,.48)!important;
+  box-shadow:0 9px 26px rgba(63,45,28,.075),inset 0 1px rgba(255,255,255,.34)!important;
+  -webkit-backdrop-filter:blur(18px) saturate(125%)!important;backdrop-filter:blur(18px) saturate(125%)!important
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-page .account-tools>h3,
+#accDlg.account-dashboard-dialog[open] #accBody .account-page .account-tools>h4{
+  color:var(--v2-ink);font:750 14px/1.35 Manrope,system-ui,sans-serif;letter-spacing:-.015em
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-page .meta,
+#accDlg.account-dashboard-dialog[open] #accBody .account-page p.meta{color:var(--v2-muted)}
+#accDlg.account-dashboard-dialog[open] #accBody .account-page .btn{
+  min-height:37px;padding:9px 13px;border-radius:10px;font:700 10px/1.2 Manrope,system-ui,sans-serif;
+  transition:background .18s ease,transform .18s ease,box-shadow .18s ease
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-page .btn:not(:disabled):hover{
+  transform:translateY(-1px);filter:none;box-shadow:0 5px 13px rgba(115,77,48,.12)
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-page .btn.ghost{
+  color:var(--v2-ink)!important;background:rgba(255,252,247,.34)!important;
+  border:1px solid rgba(100,78,57,.15)!important
+}
+
+/* Listings: searchable inventory rows, readable actions and status */
+#accDlg.account-dashboard-dialog[open] #accBody .seller-listing-filters{
+  display:grid;grid-template-columns:minmax(0,1.4fr) minmax(150px,.8fr);
+  align-items:end;gap:7px 12px;margin:12px 0 10px
+}
+#accDlg.account-dashboard-dialog[open] #accBody .seller-listing-filters label{margin:0 0 4px;font-size:10px;color:var(--v2-muted)}
+#accDlg.account-dashboard-dialog[open] #accBody .seller-listing-filters input,
+#accDlg.account-dashboard-dialog[open] #accBody .seller-listing-filters select{min-width:0;min-height:40px}
+#accDlg.account-dashboard-dialog[open] #accBody .seller-listing[data-seller-listing]{
+  display:grid;grid-template-columns:118px minmax(0,1fr);align-items:stretch;gap:14px;
+  margin:10px 0;padding:12px!important;border:1px solid rgba(255,255,255,.45)!important;
+  border-radius:15px!important;background:rgba(255,252,247,.32)!important;
+  box-shadow:0 6px 18px rgba(63,45,28,.055),inset 0 1px rgba(255,255,255,.3)!important;
+  transition:background .18s ease,box-shadow .18s ease,transform .18s ease
+}
+#accDlg.account-dashboard-dialog[open] #accBody .seller-listing[data-seller-listing]:hover{
+  background:rgba(255,252,247,.42)!important;box-shadow:0 9px 22px rgba(63,45,28,.08),inset 0 1px rgba(255,255,255,.38)!important;transform:translateY(-1px)
+}
+#accDlg.account-dashboard-dialog[open] #accBody .seller-garage-media{position:relative;min-width:0;min-height:100px;overflow:hidden;border-radius:11px;background:rgba(100,78,57,.08)}
+#accDlg.account-dashboard-dialog[open] #accBody .seller-garage-media .seller-listing-photo,
+#accDlg.account-dashboard-dialog[open] #accBody .seller-garage-media img{display:block;width:100%;height:100%;min-height:100px;object-fit:cover;border-radius:11px}
+#accDlg.account-dashboard-dialog[open] #accBody .seller-garage-status{position:absolute;left:7px;bottom:7px;padding:5px 7px;border-radius:99px;background:rgba(255,252,247,.88);color:#594b3e;font:800 8px Manrope,system-ui;letter-spacing:.035em}
+#accDlg.account-dashboard-dialog[open] #accBody .seller-garage-content{display:grid;align-content:start;gap:9px;min-width:0}
+#accDlg.account-dashboard-dialog[open] #accBody .seller-garage-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;min-width:0}
+#accDlg.account-dashboard-dialog[open] #accBody .seller-garage-heading h4{margin:3px 0 0;font:750 13px/1.3 Manrope,system-ui;overflow-wrap:anywhere}
+#accDlg.account-dashboard-dialog[open] #accBody .seller-garage-eyebrow{font:800 8px Manrope,system-ui;letter-spacing:.12em;color:var(--v2-muted)}
+#accDlg.account-dashboard-dialog[open] #accBody .seller-garage-price{flex:0 0 auto;font:800 12px Manrope,system-ui;color:var(--v2-accent)}
+#accDlg.account-dashboard-dialog[open] #accBody .seller-garage-meta{display:flex;flex-wrap:wrap;gap:6px 12px;color:var(--v2-muted);font-size:9px}
+#accDlg.account-dashboard-dialog[open] #accBody .seller-garage-promotion{display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:9px;background:rgba(184,117,62,.07);font-size:9px}
+#accDlg.account-dashboard-dialog[open] #accBody .seller-garage-promotion>div{display:grid;gap:2px}
+#accDlg.account-dashboard-dialog[open] #accBody .seller-garage-promotion strong{font-size:9px}
+#accDlg.account-dashboard-dialog[open] #accBody .seller-garage-promotion span{color:var(--v2-muted)}
+#accDlg.account-dashboard-dialog[open] #accBody .seller-garage-promotion-dot{width:7px;height:7px;flex:0 0 7px;border-radius:50%;background:#b4a08c}
+#accDlg.account-dashboard-dialog[open] #accBody .seller-garage-promotion-dot.is-active{background:#668b5e;box-shadow:0 0 0 3px rgba(102,139,94,.12)}
+#accDlg.account-dashboard-dialog[open] #accBody .seller-listing-actions{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:1px}
+#accDlg.account-dashboard-dialog[open] #accBody .seller-listing-actions .btn{min-height:31px;padding:7px 10px;font-size:9px}
+#accDlg.account-dashboard-dialog[open] #accBody .seller-listing[hidden]{display:none!important}
+#accDlg.account-dashboard-dialog[open] #accBody #sellerListingCount{margin:4px 0 9px;font-size:10px}
+
+/* Promotions: package chooser and payment journey */
+#accDlg.account-dashboard-dialog[open] #accBody .account-promotions-page .promotion-package-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:9px;margin:12px 0 17px
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-promotions-page .promotion-package{
+  display:grid;align-content:start;gap:7px;min-width:0;padding:13px;border:1px solid rgba(255,255,255,.48)!important;
+  border-radius:13px;background:rgba(255,252,247,.36)!important;box-shadow:inset 0 1px rgba(255,255,255,.32)!important
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-promotions-page .promotion-package strong{font:750 11px Manrope,system-ui;color:var(--v2-ink)}
+#accDlg.account-dashboard-dialog[open] #accBody .account-promotions-page .promotion-package>span,
+#accDlg.account-dashboard-dialog[open] #accBody .account-promotions-page .promotion-package small{font-size:9px;color:var(--v2-muted)}
+#accDlg.account-dashboard-dialog[open] #accBody .account-promotions-page .promotion-package b{font:800 16px Manrope,system-ui;color:var(--v2-accent)}
+#accDlg.account-dashboard-dialog[open] #accBody .account-promotions-page label{margin:11px 0 5px;font-size:10px;color:var(--v2-muted)}
+#accDlg.account-dashboard-dialog[open] #accBody .account-promotions-page :is(input,select){min-height:42px}
+#accDlg.account-dashboard-dialog[open] #accBody .promotion-history-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:20px 0 8px;padding-top:14px;border-top:1px solid rgba(82,64,46,.12)}
+#accDlg.account-dashboard-dialog[open] #accBody .promotion-history-head h4{margin:0;font:750 13px Manrope,system-ui}
+#accDlg.account-dashboard-dialog[open] #accBody .promotion-history-item{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:7px 0;padding:11px 12px;border:1px solid rgba(255,255,255,.4);border-radius:12px;background:rgba(255,252,247,.28)}
+#accDlg.account-dashboard-dialog[open] #accBody .promotion-history-item>div{display:grid;gap:4px;min-width:0}
+#accDlg.account-dashboard-dialog[open] #accBody .promotion-history-item b{font-size:10px}
+#accDlg.account-dashboard-dialog[open] #accBody .promotion-history-item .meta{font-size:9px;overflow-wrap:anywhere}
+#accDlg.account-dashboard-dialog[open] #accBody .promotion-status-badge{flex:0 0 auto;padding:6px 8px;border-radius:99px;background:rgba(184,117,62,.09);color:var(--v2-accent);font-size:8px}
+
+/* Garage bookings, buying and activity */
+#accDlg.account-dashboard-dialog[open] #accBody .account-bookings-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:16px 0 9px}
+#accDlg.account-dashboard-dialog[open] #accBody .account-bookings-head h3,
+#accDlg.account-dashboard-dialog[open] #accBody .account-bookings-heading{margin:0;font:750 14px Manrope,system-ui;color:var(--v2-ink)}
+#accDlg.account-dashboard-dialog[open] #accBody .account-booking-item{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;margin:8px 0!important;padding:13px!important;
+  border:1px solid rgba(255,255,255,.42)!important;border-radius:13px!important;background:rgba(255,252,247,.34)!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.30)!important
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-booking-item>div{display:grid;gap:4px;min-width:0}
+#accDlg.account-dashboard-dialog[open] #accBody .account-booking-item b{font-size:11px}
+#accDlg.account-dashboard-dialog[open] #accBody .account-booking-item .meta{font-size:9px;overflow-wrap:anywhere}
+#accDlg.account-dashboard-dialog[open] #accBody .account-booking-item .st{flex:0 0 auto;padding:6px 8px;border-radius:99px;background:rgba(102,139,94,.10);color:#55764d;font:750 9px Manrope,system-ui}
+#accDlg.account-dashboard-dialog[open] #accBody .account-buyer-workspace .account-saved-vehicle{
+  overflow:hidden;padding:0!important;border:1px solid rgba(255,255,255,.48)!important;border-radius:14px!important;background:rgba(255,252,247,.38)!important
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-saved-vehicle-image{display:block;height:130px;background:rgba(100,78,57,.08)}
+#accDlg.account-dashboard-dialog[open] #accBody .account-saved-vehicle-image img{width:100%;height:100%;object-fit:cover}
+#accDlg.account-dashboard-dialog[open] #accBody .account-saved-vehicle-info{display:grid;gap:6px;padding:11px}
+#accDlg.account-dashboard-dialog[open] #accBody .account-saved-vehicle-info strong{font:750 11px Manrope,system-ui}
+#accDlg.account-dashboard-dialog[open] #accBody .account-saved-vehicle-info>b{font:800 13px Manrope,system-ui;color:var(--v2-accent)}
+#accDlg.account-dashboard-dialog[open] #accBody .account-saved-vehicle-info small{font-size:9px;color:var(--v2-muted)}
+#accDlg.account-dashboard-dialog[open] #accBody .account-saved-vehicle-info>div{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px}
+#accDlg.account-dashboard-dialog[open] #accBody .account-saved-vehicle-info a,
+#accDlg.account-dashboard-dialog[open] #accBody .account-saved-vehicle-info button{font:700 9px Manrope,system-ui;color:var(--v2-accent)}
+#accDlg.account-dashboard-dialog[open] #accBody .account-full-activity .account-activity-item{
+  grid-template-columns:9px minmax(0,1fr) minmax(90px,auto);gap:12px;padding:13px 2px;border-bottom:1px solid rgba(82,64,46,.10)
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-full-activity .account-activity-item strong{font:750 11px Manrope,system-ui}
+#accDlg.account-dashboard-dialog[open] #accBody .account-full-activity .account-activity-item p{font-size:10px}
+#accDlg.account-dashboard-dialog[open] #accBody .account-full-activity .account-activity-item time{font-size:9px;text-align:right;white-space:nowrap}
+
+/* Insights tables and profile controls */
+#accDlg.account-dashboard-dialog[open] #accBody .seller-analytics-table{
+  width:100%;border-collapse:separate;border-spacing:0;margin:12px 0 8px;overflow:hidden;
+  border:1px solid rgba(100,78,57,.12);border-radius:12px;background:rgba(255,252,247,.25);
+  font:600 10px Manrope,system-ui
+}
+#accDlg.account-dashboard-dialog[open] #accBody .seller-analytics-table th,
+#accDlg.account-dashboard-dialog[open] #accBody .seller-analytics-table td{padding:10px 12px;border-bottom:1px solid rgba(82,64,46,.09)}
+#accDlg.account-dashboard-dialog[open] #accBody .seller-analytics-table tr:last-child th,
+#accDlg.account-dashboard-dialog[open] #accBody .seller-analytics-table tr:last-child td{border-bottom:0}
+#accDlg.account-dashboard-dialog[open] #accBody .seller-analytics-table th{color:var(--v2-muted);font-weight:650;text-align:left}
+#accDlg.account-dashboard-dialog[open] #accBody .seller-analytics-table td{color:var(--v2-ink);font-weight:800;text-align:right;font-variant-numeric:tabular-nums}
+#accDlg.account-dashboard-dialog[open] #accBody .danger-zone{margin-top:16px;padding:15px;border:1px solid rgba(169,82,67,.22);border-radius:14px;background:rgba(169,82,67,.045)}
+#accDlg.account-dashboard-dialog[open] #accBody .danger-zone h3{font:750 13px Manrope,system-ui;color:#a85b4e}
+#accDlg.account-dashboard-dialog[open] #accBody .account-page .check-row{display:flex;align-items:center;gap:9px;margin:10px 0;font-size:10px}
+#accDlg.account-dashboard-dialog[open] #accBody .account-page .check-row input{width:16px;min-height:16px;flex:0 0 16px}
+#accDlg.account-dashboard-dialog[open] #accBody .account-page .settings-section .account-tools{margin:0!important}
+#accDlg.account-dashboard-dialog[open] #accBody .account-page .settings-section .account-tools label{margin-top:10px}
+
+/* Responsive page layouts: preserve readable actions without horizontal overflow */
+@media(max-width:760px){
+ #accDlg.account-dashboard-dialog[open] #accBody .seller-listing-filters{grid-template-columns:minmax(0,1fr) minmax(110px,.8fr);gap:7px}
+ #accDlg.account-dashboard-dialog[open] #accBody .seller-listing[data-seller-listing]{grid-template-columns:76px minmax(0,1fr);gap:10px;padding:9px!important}
+ #accDlg.account-dashboard-dialog[open] #accBody .seller-garage-media,
+ #accDlg.account-dashboard-dialog[open] #accBody .seller-garage-media .seller-listing-photo,
+ #accDlg.account-dashboard-dialog[open] #accBody .seller-garage-media img{min-height:76px;height:100%}
+ #accDlg.account-dashboard-dialog[open] #accBody .seller-garage-heading{display:grid;gap:4px}
+ #accDlg.account-dashboard-dialog[open] #accBody .seller-listing-actions{grid-column:1/-1}
+ #accDlg.account-dashboard-dialog[open] #accBody .promotion-history-item,
+ #accDlg.account-dashboard-dialog[open] #accBody .account-booking-item{align-items:flex-start}
+ #accDlg.account-dashboard-dialog[open] #accBody .account-full-activity .account-activity-item{grid-template-columns:8px minmax(0,1fr);gap:9px}
+ #accDlg.account-dashboard-dialog[open] #accBody .account-full-activity .account-activity-item time{grid-column:2;text-align:left}
+}
+@media(max-width:420px){
+ #accDlg.account-dashboard-dialog[open] #accBody .seller-listing-filters{grid-template-columns:minmax(0,1fr)}
+ #accDlg.account-dashboard-dialog[open] #accBody .seller-listing[data-seller-listing]{grid-template-columns:64px minmax(0,1fr)}
+ #accDlg.account-dashboard-dialog[open] #accBody .seller-garage-media,
+ #accDlg.account-dashboard-dialog[open] #accBody .seller-garage-media .seller-listing-photo,
+ #accDlg.account-dashboard-dialog[open] #accBody .seller-garage-media img{min-height:64px}
+ #accDlg.account-dashboard-dialog[open] #accBody .account-activity-page-head{flex-wrap:wrap}
+ #accDlg.account-dashboard-dialog[open] #accBody .account-bookings-head{align-items:flex-start;flex-wrap:wrap}
+}
