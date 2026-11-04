@@ -22,7 +22,7 @@
  border:0!important;border-right:1px solid rgba(255,255,255,.25)!important;border-radius:0!important;
  box-shadow:inset -1px 0 rgba(90,68,47,.05)!important;backdrop-filter:none!important
 }
-#accDlg>.account-sidebar[hidden]{display:flex!important}
+#accDlg>.account-sidebar[hidden]{display:none!important}
 #accDlg .account-sidebar-brand{display:flex;align-items:center;gap:10px;padding:4px 8px 19px;margin-bottom:8px;color:var(--v2-ink);text-decoration:none;border-bottom:1px solid rgba(90,68,47,.12)}
 #accDlg .account-sidebar-brand img{width:35px;height:35px;object-fit:cover;border-radius:10px;box-shadow:0 3px 9px rgba(54,39,25,.14)}
 #accDlg .account-sidebar-brand span,#accDlg .account-sidebar-brand>div{display:grid;gap:4px;min-width:0}
