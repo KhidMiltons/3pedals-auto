@@ -89,3 +89,10 @@
 #accDlg #accBody .profile-grid input,#accDlg #accBody .profile-grid select{min-height:42px}
 #accDlg #accBody .settings-section .acts{display:flex;gap:9px;flex-wrap:wrap}
 @media(max-width:600px){#accDlg #accBody .account-settings-tabs{overflow-x:auto;flex-wrap:nowrap}#accDlg #accBody .account-settings-tabs button{flex:0 0 auto}#accDlg #accBody .profile-card{align-items:flex-start;gap:11px}#accDlg #accBody .profile-avatar{width:54px;height:54px;flex-basis:54px}#accDlg #accBody .profile-grid{grid-template-columns:minmax(0,1fr)}}
+
+/* The authenticated menu is populated by the existing account renderer. */
+#accDlg .account-sidebar-brand>div{display:grid;gap:4px;min-width:0}
+#accDlg .account-sidebar-brand>div>strong{font:750 11px/1.2 Manrope,system-ui,sans-serif;letter-spacing:.15em;color:#f4f5f6}
+#accDlg .account-sidebar-brand>div>span{display:block;font:600 9px/1.2 Manrope,system-ui,sans-serif;letter-spacing:.13em;color:var(--ad-muted)}
+#accDlg .seller-nav-brand{display:flex;align-items:center;gap:8px;min-width:0}
+#accDlg .seller-nav-brand img{width:25px;height:25px;flex:0 0 25px;object-fit:cover;border-radius:7px}
