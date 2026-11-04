@@ -811,30 +811,6 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 </style>
 <link rel="stylesheet" href="site-theme.css">
 
-<style id="account-settings-polish">
-#accDlg .account-page#accountPage-settings>h3{font-size:clamp(27px,3vw,36px);letter-spacing:-.025em;margin:4px 0 8px}
-#accDlg .account-settings-inner{display:block!important}
-#accDlg .account-settings-tabs{position:sticky;top:0;z-index:4;gap:8px;padding:12px 0 14px;margin:0 0 14px;background:var(--bg);border-bottom:1px solid var(--line)}
-#accDlg .account-settings-tabs button{min-height:40px;padding:9px 15px;border-radius:10px;font-weight:700;transition:background .18s ease,border-color .18s ease,transform .18s ease}
-#accDlg .account-settings-tabs button:hover{transform:translateY(-1px)}
-#accDlg .account-settings-tabs button.active{background:var(--gold);color:#171717;border-color:var(--gold);box-shadow:0 5px 15px rgba(180,139,34,.16)}
-#accDlg .settings-section{padding:clamp(16px,2.4vw,26px);border:1px solid var(--line);border-radius:18px;background:var(--surface);box-shadow:var(--shadow-sm);animation:accountSettingsEnter .22s ease-out}
-#accDlg .settings-section>h4{font-size:19px;margin:0 0 5px}
-#accDlg .settings-section>.account-tools{padding:0;border:0;background:transparent;box-shadow:none}
-#accDlg .profile-card{display:flex;align-items:center;gap:18px;padding:18px;border:1px solid var(--line);border-radius:15px;background:var(--surface-2)}
-#accDlg .profile-avatar{width:76px;height:76px;flex:0 0 76px;border-radius:50%;overflow:hidden;display:grid;place-items:center;background:var(--bg);border:2px solid var(--gold);font-size:23px;font-weight:800}
-#accDlg .profile-avatar img{width:100%;height:100%;object-fit:cover}
-#accDlg .profile-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 16px;margin:18px 0}
-#accDlg .profile-grid>div{min-width:0}
-#accDlg .profile-grid label{margin-top:8px}
-#accDlg .profile-grid input,#accDlg .profile-grid select,#accDlg .settings-section input:not([type=checkbox]),#accDlg .settings-section textarea{min-height:44px;border-radius:10px}
-#accDlg #accSaveProfile{min-width:190px}
-#accDlg .settings-section .acts{display:flex;gap:10px;flex-wrap:wrap}
-#accDlg .settings-section [data-preference-status]{margin-top:10px}
-@keyframes accountSettingsEnter{from{opacity:.65;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:600px){#accDlg .profile-card{align-items:flex-start;gap:12px;padding:14px}#accDlg .profile-avatar{width:58px;height:58px;flex-basis:58px}#accDlg .profile-grid{grid-template-columns:1fr}#accDlg .account-settings-tabs{overflow-x:auto;flex-wrap:nowrap}#accDlg .account-settings-tabs button{flex:0 0 auto}}
-@media(prefers-reduced-motion:reduce){#accDlg .settings-section{animation:none!important}}
-</style>
 <style id="mobile-inventory-featured-tag-fix">
 @media(max-width:560px){
   /* Compact mobile listing details and reserve clear space for the featured badge. */
