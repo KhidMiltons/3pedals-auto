@@ -375,3 +375,46 @@
  #accDlg.account-dashboard-dialog[open] #accBody .account-activity-page-head{flex-wrap:wrap}
  #accDlg.account-dashboard-dialog[open] #accBody .account-bookings-head{align-items:flex-start;flex-wrap:wrap}
 }
+
+
+/* V2 refinement: warm, low-contrast hover states (avoid the bright white flash). */
+#accDlg nav#accountMenu>button:hover,
+#accDlg nav#accountMenu>button:focus-visible,
+#accDlg nav#accountMenu>button.active,
+#accDlg nav#accountMenu>button[aria-current="page"]{
+  background:rgba(184,117,62,.10)!important;
+  box-shadow:inset 2px 0 rgba(184,117,62,.62),0 3px 10px rgba(68,49,30,.045)!important;
+}
+#accDlg .account-dialog-head button:hover,
+#accDlg .account-dialog-head button:focus-visible{
+  background:rgba(184,117,62,.12)!important;
+  border-color:rgba(184,117,62,.22)!important;
+}
+#accDlg #accBody .account-overview-stats>button:hover,
+#accDlg #accBody .account-overview-stats>button:focus-visible{
+  background:rgba(184,117,62,.095)!important;
+  box-shadow:0 8px 20px rgba(63,45,28,.075),inset 0 1px rgba(255,255,255,.25)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .seller-listing[data-seller-listing]:hover{
+  background:rgba(184,117,62,.085)!important;
+  box-shadow:0 8px 20px rgba(63,45,28,.07),inset 0 1px rgba(255,255,255,.22)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-page .btn:not(:disabled):hover{
+  background:rgba(184,117,62,.12)!important;
+  border-color:rgba(184,117,62,.24)!important;
+  color:var(--v2-ink)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-page .btn:not(.ghost):not(:disabled):hover{
+  background:linear-gradient(135deg,#b77b4d,#995d35)!important;
+  color:#fff!important;
+}
+#accDlg #accBody .seller-listing-metrics{
+  display:block;margin-top:3px;padding-top:7px;
+  border-top:1px solid rgba(100,78,57,.10);
+  color:var(--v2-muted);font:600 9px/1.4 Manrope,system-ui,sans-serif;
+}
+#accDlg #accBody .account-settings-tabs button:hover,
+#accDlg #accBody .settings-section button:not(.btn):hover{
+  background:rgba(184,117,62,.10)!important;
+  border-color:rgba(184,117,62,.22)!important;
+}
