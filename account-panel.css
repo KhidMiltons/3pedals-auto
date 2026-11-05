@@ -694,3 +694,57 @@
   box-shadow:0 10px 28px rgba(0,0,0,.14),inset 0 1px rgba(255,255,255,.045)!important;
   transform:none!important;filter:none!important;
 }
+
+
+/* V3.0: one shared horizontal grid for the account header and every dashboard page. */
+#accDlg>.account-dashboard-main{
+  --account-content-gutter:clamp(14px,2.1vw,28px);
+  padding:18px var(--account-content-gutter) 17px!important;
+}
+#accDlg .account-dialog-head,
+#accDlg #accBody{
+  width:100%!important;max-width:none!important;
+  margin-left:0!important;margin-right:0!important;
+  padding-left:0!important;padding-right:0!important;
+  box-sizing:border-box!important;
+}
+#accDlg .account-dialog-head{
+  display:flex!important;align-items:center!important;
+  min-height:52px!important;margin-top:0!important;
+  margin-bottom:17px!important;
+}
+#accDlg #accBody .account-pages,
+#accDlg #accBody .account-page,
+#accDlg #accBody .account-settings-inner{
+  width:100%!important;max-width:none!important;
+  margin-left:0!important;margin-right:0!important;
+  box-sizing:border-box!important;
+}
+#accDlg #accBody .account-overview-heading,
+#accDlg #accBody .account-overview-stats,
+#accDlg #accBody .account-overview-visuals,
+#accDlg #accBody .account-overview-lower,
+#accDlg #accBody .dealer-overview-card{
+  width:100%!important;max-width:none!important;
+  margin-left:0!important;margin-right:0!important;
+  box-sizing:border-box!important;
+}
+#accDlg #accBody .account-overview-stats,
+#accDlg #accBody .account-overview-visuals,
+#accDlg #accBody .account-overview-lower{
+  gap:14px!important;
+}
+#accDlg #accBody :is(.profile-card,.account-tools,.account-page,.account-settings,
+.account-stat,.profile-grid>div,.svc,.seller-summary-card,.account-overview-panel,
+.account-overview-stats>button,.account-booking-item,.account-saved-vehicle,
+.seller-listing,.seller-garage-card,.promotion-package,.account-buyer-workspace,
+.dashboard-welcome,.settings-section){
+  box-sizing:border-box!important;min-width:0!important;
+}
+@media(max-width:760px){
+  #accDlg>.account-dashboard-main{--account-content-gutter:12px;padding:12px var(--account-content-gutter)!important}
+  #accDlg .account-dialog-head{margin-bottom:14px!important}
+  #accDlg #accBody .account-overview-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  #accDlg #accBody .account-overview-visuals,
+  #accDlg #accBody .account-overview-lower{grid-template-columns:minmax(0,1fr)!important}
+}
