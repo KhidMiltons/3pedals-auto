@@ -583,3 +583,47 @@
 #accDlg #accBody .account-page .btn:not(.ghost):not(:disabled):hover{
   background:linear-gradient(135deg,#b77b4d,#995d35)!important;color:#fff!important;
 }
+
+
+/* V2.8: account header follows the site's home-header glass treatment. */
+#accDlg .account-dialog-head{
+  display:flex!important;align-items:center!important;gap:10px!important;
+  min-height:52px!important;width:100%!important;box-sizing:border-box!important;
+  margin:0 0 17px!important;padding:9px 12px!important;
+  border:1px solid rgba(255,255,255,.12)!important;border-radius:16px!important;
+  background:rgba(20,22,25,.34)!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.035)!important;
+  -webkit-backdrop-filter:blur(18px) saturate(115%)!important;
+  backdrop-filter:blur(18px) saturate(115%)!important;
+}
+#accDlg h2.account-brand-title{
+  display:flex!important;align-items:center!important;gap:10px!important;
+  flex:1 1 auto!important;min-width:0!important;margin:0!important;
+  color:#f3eee7!important;font:750 17px/1.2 Manrope,system-ui,sans-serif!important;
+}
+#accDlg .account-brand-icon{
+  width:30px!important;height:30px!important;flex:0 0 30px!important;
+  border-radius:9px!important;object-fit:cover!important;
+}
+#accDlg .account-dialog-head button{
+  display:grid!important;place-items:center!important;flex:0 0 auto!important;
+  min-width:38px!important;width:38px!important;height:36px!important;
+  padding:0!important;border:1px solid rgba(255,255,255,.12)!important;
+  border-radius:11px!important;background:rgba(255,255,255,.055)!important;
+  color:#f3eee7!important;box-shadow:none!important;
+}
+#accDlg #accHomeTop{width:auto!important;min-width:58px!important;padding:0 12px!important}
+#accDlg #accCloseTop{font-size:19px!important}
+#accDlg .account-dialog-head button:hover,
+#accDlg .account-dialog-head button:focus-visible{
+  background:rgba(255,255,255,.08)!important;border-color:rgba(255,255,255,.16)!important;
+  box-shadow:none!important;transform:none!important;
+}
+@media(max-width:760px){
+ #accDlg>.account-dashboard-main{padding:12px!important}
+ #accDlg .account-dialog-head{min-height:48px!important;padding:7px 9px!important;border-radius:13px!important}
+ #accDlg h2.account-brand-title{font-size:14px!important;gap:7px!important}
+ #accDlg .account-brand-icon{width:26px!important;height:26px!important;flex-basis:26px!important}
+ #accDlg .account-dialog-head button{width:34px!important;min-width:34px!important;height:33px!important;border-radius:9px!important}
+ #accDlg #accHomeTop{min-width:48px!important;padding:0 8px!important}
+}
