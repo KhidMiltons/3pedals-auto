@@ -627,3 +627,70 @@
  #accDlg .account-dialog-head button{width:34px!important;min-width:34px!important;height:33px!important;border-radius:9px!important}
  #accDlg #accHomeTop{min-width:48px!important;padding:0 8px!important}
 }
+
+
+/* V2.9: full-width content alignment + legible home-site glass treatment. */
+#accDlg>.account-dashboard-main{padding:18px 18px 17px!important}
+#accDlg .account-dialog-head{
+  width:100%!important;align-self:stretch!important;box-sizing:border-box!important;
+  margin-left:0!important;margin-right:0!important;
+}
+#accDlg #accBody{
+  width:100%!important;box-sizing:border-box!important;
+  padding-left:0!important;padding-right:0!important;
+}
+#accDlg #accBody :is(.profile-card,.account-tools,.account-page,.account-settings,
+.account-stat,.profile-grid>div,.svc,.seller-summary-card,.account-overview-panel,
+.account-overview-stats>button,.account-bookings-page>#garageBookingAction,
+.account-booking-item,.account-saved-vehicle,.seller-listing,.seller-garage-card,
+.promotion-package,.account-buyer-workspace,.dashboard-welcome,.settings-section){
+  background:rgba(24,27,30,.34)!important;
+  border:1px solid rgba(255,255,255,.11)!important;
+  border-radius:18px!important;
+  box-shadow:0 10px 28px rgba(0,0,0,.14),inset 0 1px rgba(255,255,255,.045)!important;
+  -webkit-backdrop-filter:blur(20px) saturate(125%)!important;
+  backdrop-filter:blur(20px) saturate(125%)!important;
+}
+#accDlg #accBody :is(h1,h2,h3,h4,strong,b,label,
+.account-overview-stat-label,.account-panel-caption,.account-activity-item strong,
+.account-quick-panel>button strong,.dealer-overview-details strong){
+  color:#f4f0e9!important;text-shadow:0 1px 2px rgba(0,0,0,.18)!important;
+}
+#accDlg #accBody :is(p,small,.meta,.muted,.description,.subtitle,
+.account-overview-stats>button small,.account-activity-item p,
+.account-activity-item time,.account-health-row>span,.account-trend-column small){
+  color:rgba(244,240,233,.72)!important;
+}
+#accDlg #accBody :is(.account-overview-stat-icon,.account-quick-panel>button>span:first-child,
+.account-chart-total){
+  background:rgba(184,117,62,.17)!important;color:#e0b58d!important;
+}
+#accDlg #accBody .account-trend-chart{
+  border-bottom-color:rgba(255,255,255,.12)!important;
+  background:repeating-linear-gradient(to bottom,transparent 0,transparent 33px,rgba(255,255,255,.045) 34px,transparent 35px)!important;
+}
+#accDlg #accBody :is(.account-activity-item,.account-quick-panel>button,
+.account-health-foot,.account-activity-item:last-child){
+  border-color:rgba(255,255,255,.10)!important;
+}
+#accDlg #accBody .account-health-row>div{background:rgba(255,255,255,.10)!important}
+#accDlg #accBody .dealer-overview-details>div{background:rgba(255,255,255,.045)!important}
+#accDlg #accBody input,#accDlg #accBody select,#accDlg #accBody textarea{
+  background:rgba(15,17,19,.34)!important;color:#f4f0e9!important;
+  border-color:rgba(255,255,255,.13)!important;
+}
+#accDlg #accBody input::placeholder,#accDlg #accBody textarea::placeholder{
+  color:rgba(244,240,233,.48)!important;
+}
+#accDlg #accBody .btn.ghost{
+  background:rgba(255,255,255,.06)!important;color:#f4f0e9!important;
+  border-color:rgba(255,255,255,.12)!important;
+}
+#accDlg #accBody :is(.profile-card,.account-tools,.account-stat,.profile-grid>div,.svc,
+.seller-summary-card,.account-overview-panel,.account-overview-stats>button,
+.account-booking-item,.account-saved-vehicle,.seller-listing,.seller-garage-card,
+.promotion-package,.account-buyer-workspace,.dashboard-welcome,.settings-section):hover{
+  background:rgba(24,27,30,.34)!important;border-color:rgba(255,255,255,.11)!important;
+  box-shadow:0 10px 28px rgba(0,0,0,.14),inset 0 1px rgba(255,255,255,.045)!important;
+  transform:none!important;filter:none!important;
+}
