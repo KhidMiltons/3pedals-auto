@@ -503,3 +503,83 @@
   background-color:rgba(100,78,57,.07)!important;
   border-color:rgba(100,78,57,.12)!important;box-shadow:none!important;filter:none!important;
 }
+
+
+/* V2.7: remove the pale/white surface treatment from the account panel.
+   Keep the site's background image visible through neutral, dark glass. */
+#accDlg.account-dashboard-dialog[open]{
+  background:rgba(20,22,25,.34)!important;
+  border-color:rgba(255,255,255,.10)!important;
+  box-shadow:0 28px 90px rgba(0,0,0,.28)!important;
+  -webkit-backdrop-filter:blur(18px) saturate(110%)!important;
+  backdrop-filter:blur(18px) saturate(110%)!important;
+}
+#accDlg>.account-sidebar{
+  background:rgba(18,20,23,.28)!important;
+  border-right:1px solid rgba(255,255,255,.08)!important;
+  box-shadow:none!important;
+}
+#accDlg>.account-dashboard-main,
+#accDlg .account-dialog-head{background:transparent!important}
+#accDlg .account-dialog-head::after{background:rgba(255,255,255,.09)!important}
+#accDlg .account-dialog-head button,
+#accDlg #accBody .account-member-chip,
+#accDlg .seller-mode-switch button.selected,
+#accDlg .seller-mode-switch button[aria-current="page"],
+#accDlg #accBody .account-settings-tabs button,
+#accDlg #accBody .account-settings-tabs button.active,
+#accDlg #accBody .dealer-overview-identity button,
+#accDlg #accBody .account-page .btn.ghost{
+  background:rgba(255,255,255,.055)!important;
+  border-color:rgba(255,255,255,.10)!important;
+  box-shadow:none!important;
+}
+#accDlg #accBody :is(.profile-card,.account-tools,.account-page,.account-settings,
+.account-stat,.profile-grid>div,.svc,.seller-summary-card,.account-overview-panel,
+.account-overview-stats>button,.account-bookings-page>#garageBookingAction,
+.account-booking-item,.account-saved-vehicle,.seller-listing,.seller-garage-card,
+.promotion-package,.account-buyer-workspace,.dashboard-welcome,.settings-section){
+  background:rgba(20,22,25,.22)!important;
+  border-color:rgba(255,255,255,.08)!important;
+  box-shadow:0 8px 24px rgba(0,0,0,.10)!important;
+  -webkit-backdrop-filter:blur(16px) saturate(110%)!important;
+  backdrop-filter:blur(16px) saturate(110%)!important;
+}
+#accDlg #accBody input,#accDlg #accBody select,#accDlg #accBody textarea,
+#accDlg #accBody .btn.ghost{
+  background:rgba(18,20,23,.24)!important;
+  border-color:rgba(255,255,255,.10)!important;
+  box-shadow:none!important;
+}
+#accDlg #accBody input::placeholder,#accDlg #accBody textarea::placeholder{
+  color:rgba(255,255,255,.48)!important;
+}
+#accDlg #accBody :is(h1,h2,h3,h4,strong,b,label),
+#accDlg h2.account-brand-title,
+#accDlg .account-sidebar-brand strong,
+#accDlg .seller-nav-identity strong{color:#f3eee7!important}
+#accDlg #accBody :is(p,small,.meta,.muted,.description,.subtitle),
+#accDlg .seller-nav-identity>span{color:rgba(243,238,231,.66)!important}
+#accDlg nav#accountMenu>button{color:rgba(243,238,231,.72)!important}
+#accDlg nav#accountMenu>button::before{background:rgba(255,255,255,.06)!important;color:rgba(243,238,231,.62)!important}
+#accDlg nav#accountMenu>button:hover,
+#accDlg nav#accountMenu>button:focus-visible,
+#accDlg nav#accountMenu>button.active,
+#accDlg nav#accountMenu>button[aria-current="page"]{
+  background:rgba(184,117,62,.08)!important;
+  box-shadow:inset 2px 0 rgba(184,117,62,.38)!important;
+}
+#accDlg .account-dialog-head button:hover,
+#accDlg .account-dialog-head button:focus-visible,
+#accDlg #accBody :is(.profile-card,.account-tools,.account-stat,.profile-grid>div,.svc,
+.seller-summary-card,.account-overview-panel,.account-overview-stats>button,
+.account-booking-item,.account-saved-vehicle,.seller-listing,.seller-garage-card,
+.promotion-package,.account-buyer-workspace,.dashboard-welcome,.settings-section):hover{
+  background:rgba(255,255,255,.025)!important;
+  box-shadow:0 8px 24px rgba(0,0,0,.10)!important;
+  border-color:rgba(255,255,255,.08)!important;
+  transform:none!important;filter:none!important;
+}
+#accDlg #accBody .account-page .btn:not(.ghost):not(:disabled):hover{
+  background:linear-gradient(135deg,#b77b4d,#995d35)!important;color:#fff!important;
+}
