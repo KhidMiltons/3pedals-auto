@@ -447,3 +447,59 @@
 #accDlg #accBody .settings-section button:not(.btn):hover{
   background-color:rgba(184,117,62,.065)!important;
 }
+
+
+/* V2.6: align dashboard header to the content grid and eliminate white hover states. */
+#accDlg>.account-dashboard-main{padding:18px 18px 17px!important}
+#accDlg .account-dialog-head{
+  width:100%!important;box-sizing:border-box!important;
+  margin:0 0 17px!important;padding:0 0 14px!important;
+  border-bottom:0!important;
+}
+#accDlg .account-dialog-head::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:1px;
+  background:rgba(90,68,47,.10);pointer-events:none;
+}
+#accDlg .account-dialog-head{position:relative!important}
+#accDlg #accBody{padding-left:0!important;padding-right:0!important}
+#accDlg #accBody :is(.profile-card,.account-tools,.account-stat,.profile-grid>div,.svc,
+.seller-summary-card,.account-overview-panel,.account-overview-stats>button,
+.account-bookings-page>#garageBookingAction,.account-booking-item,.account-saved-vehicle,
+.seller-listing,.seller-garage-card,.promotion-package,.account-buyer-workspace,
+.dashboard-welcome,.settings-section){
+  border-color:rgba(100,78,57,.12)!important;
+  box-shadow:0 7px 20px rgba(63,45,28,.055),inset 0 1px rgba(255,255,255,.10)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody :is(
+.profile-card,.account-tools,.account-stat,.profile-grid>div,.svc,.seller-summary-card,
+.account-overview-panel,.account-overview-stats>button,.account-booking-item,
+.account-saved-vehicle,.seller-listing,.seller-garage-card,.promotion-package,
+.account-buyer-workspace,.dashboard-welcome,.settings-section
+):hover{
+  background:rgba(248,242,233,.43)!important;
+  box-shadow:0 7px 20px rgba(63,45,28,.055),inset 0 1px rgba(255,255,255,.10)!important;
+  filter:none!important;transform:none!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats>button:hover,
+#accDlg.account-dashboard-dialog[open] #accBody .seller-listing[data-seller-listing]:hover{
+  background:rgba(248,242,233,.43)!important;
+  box-shadow:0 7px 20px rgba(63,45,28,.055),inset 0 1px rgba(255,255,255,.10)!important;
+  transform:none!important;
+}
+#accDlg .account-dialog-head button:hover,
+#accDlg .account-dialog-head button:focus-visible{
+  background:rgba(100,78,57,.08)!important;border-color:rgba(100,78,57,.12)!important;
+}
+#accDlg nav#accountMenu>button:hover,
+#accDlg nav#accountMenu>button:focus-visible,
+#accDlg nav#accountMenu>button.active,
+#accDlg nav#accountMenu>button[aria-current="page"]{
+  background:rgba(100,78,57,.07)!important;
+  box-shadow:inset 2px 0 rgba(184,117,62,.45)!important;
+}
+#accDlg #accBody .account-page .btn:not(:disabled):hover,
+#accDlg #accBody .account-settings-tabs button:hover,
+#accDlg #accBody .settings-section button:not(.btn):hover{
+  background-color:rgba(100,78,57,.07)!important;
+  border-color:rgba(100,78,57,.12)!important;box-shadow:none!important;filter:none!important;
+}
