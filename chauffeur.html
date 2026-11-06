@@ -240,19 +240,9 @@ a{color:inherit}
 </style>
 </head>
 <body>
-<header><div class="wrap">
-  <div class="logo" role="button" tabindex="0" aria-label="Reload homepage" onclick="window.location.assign('/')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.location.assign('/')}">3 Pedals Auto KE</div>
-  <div class="account-pill" aria-label="Account"><span id="chauffeurAccountText">Not signed in</span><button id="chauffeurAccountOpen" type="button" aria-label="Open account" title="Account"></button></div>
-  <button class="nav-toggle" id="chauffeurNavToggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="chauffeurNav"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
-  <nav id="chauffeurNav" aria-label="Main navigation">
-    <a class="navlink" href="/">Home</a>
-    <a class="navlink" href="/#about">About Us</a>
-    <a class="navlink" href="/inventory.html">Buy a car</a>
-    <a class="navlink" href="/garage.html">3 Pedals Garage</a>
-    <a class="navlink active" href="/chauffeur.html" aria-current="page">Chauffeur Hire</a>
-    <a class="navlink" href="/dealers.html">Dealers</a>
-    <a class="navlink" href="/#contact">Contact Us</a>
-  </nav>
+<header class="head"><div class="wrap headin">
+  <a class="brand" href="/" aria-label="3 Pedals Auto KE home">3 Pedals Auto KE</a>
+  <a class="back" href="/" aria-label="Return to the 3 Pedals Auto KE home page">← Home</a>
 </div></header>
 <div class="shell">
 <section class="hero"><div class="eyebrow">ARRIVE WITH CONFIDENCE</div><h1>Every journey,<br>beautifully driven.</h1><p>Book a chauffeur-driven vehicle for city travel, business, airport transfers and longer journeys. Choose your vehicle and preferred hire arrangement; our team will review your request and confirm the price before payment.</p></section>
@@ -398,5 +388,42 @@ html body>header .nav-toggle svg{width:20px!important;height:20px!important}
 }
 @media(max-width:380px){html body>header>.wrap{grid-template-columns:minmax(0,1fr) 38px 38px!important;gap:6px!important}html body>header .account-pill button,html body>header .nav-toggle{width:38px!important;height:38px!important;min-width:38px!important}html body>header .logo{font-size:18px!important}}
 @media(prefers-reduced-motion:reduce){html body>header #chauffeurNav a.navlink,html body>header .account-pill,html body>header .account-pill button{transition:none!important;transform:none!important}}
+</style>
+
+<style id="dealers-header-style-match">
+/* Chauffeur Hire header: copy the Dealers page's final header shell and controls. */
+html body>header.head{
+ position:sticky!important;top:0!important;z-index:1000!important;
+ box-sizing:border-box!important;width:calc(100% - 24px)!important;max-width:1160px!important;
+ min-height:76px!important;margin:12px auto 12px!important;padding:0!important;
+ display:block!important;border:0!important;border-left:1px solid rgba(255,255,255,.18)!important;
+ border-right:1px solid rgba(255,255,255,.18)!important;border-radius:16px!important;
+ background:transparent!important;background-color:transparent!important;background-image:none!important;
+ box-shadow:none!important;-webkit-backdrop-filter:blur(18px) saturate(120%)!important;
+ backdrop-filter:blur(18px) saturate(120%)!important;
+}
+html body>header.head>.wrap.headin{
+ box-sizing:border-box!important;width:100%!important;max-width:none!important;min-height:74px!important;
+ margin:0 auto!important;padding:9px 12px!important;display:flex!important;align-items:center!important;
+ justify-content:space-between!important;gap:8px!important;background:transparent!important;border:0!important;box-shadow:none!important;
+}
+html body>header.head .brand{
+ display:inline-flex!important;align-items:center!important;width:max-content!important;max-width:100%!important;
+ min-height:46px!important;padding:4px 9px!important;border:1px solid rgba(255,255,255,.22)!important;
+ border-radius:16px!important;background:rgba(255,255,255,.025)!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.08)!important;text-decoration:none!important;
+ color:#e5d3a0!important;font-family:"Sora",system-ui,sans-serif!important;font-size:clamp(17px,4.5vw,22px)!important;
+ font-weight:700!important;letter-spacing:-.035em!important;line-height:1!important;text-transform:none!important;white-space:nowrap!important;
+}
+html body>header.head .back{
+ display:inline-flex!important;align-items:center!important;justify-content:center!important;
+ min-height:38px!important;padding:7px 11px!important;border:1px solid rgba(255,255,255,.20)!important;
+ border-radius:12px!important;background:rgba(255,255,255,.045)!important;color:#f5f5f3!important;
+ font:600 12px/1.2 Manrope,system-ui,sans-serif!important;text-decoration:none!important;white-space:nowrap!important;
+ box-shadow:none!important;transition:transform .3s ease,background .3s ease,border-color .3s ease,color .3s ease!important;
+}
+html body>header.head .back:hover{transform:translateY(-2px)!important;background:rgba(255,255,255,.10)!important;border-color:rgba(255,255,255,.32)!important;color:#fff!important}
+@media(max-width:520px){html body>header.head{width:calc(100% - 24px)!important;min-height:76px!important;margin:12px auto!important}html body>header.head>.wrap.headin{min-height:74px!important;padding:9px 12px!important}html body>header.head .brand{font-size:clamp(17px,4.5vw,22px)!important}html body>header.head .back{min-height:38px!important;padding:7px 11px!important;font-size:12px!important}}
+@media(prefers-reduced-motion:reduce){html body>header.head .back{transition:none!important}}
 </style>
 </body></html>
