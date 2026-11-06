@@ -195,84 +195,122 @@ a{color:inherit}
 
 
 
-/* Match the Home page masthead structure and glass navigation */
-.chauffeur-home-header{
+/* Exact Home-screen header styling — shared dimensions, glass treatment and navigation behaviour */
+body>header{
   position:sticky!important;top:0!important;z-index:1000!important;
-  width:100%!important;min-height:0!important;margin:0!important;padding:0!important;
-  display:block!important;border:0!important;border-bottom:1px solid rgba(227,179,65,.18)!important;
-  border-radius:0!important;background:rgba(8,10,13,.78)!important;
-  box-shadow:0 8px 30px rgba(0,0,0,.22)!important;
-  -webkit-backdrop-filter:blur(18px) saturate(140%)!important;
-  backdrop-filter:blur(18px) saturate(140%)!important;
+  display:block!important;width:min(calc(100% - 32px),1440px)!important;
+  margin:18px auto 0!important;padding:0!important;
+  color:#f3f0e8!important;
+  background:rgba(15,16,18,.56)!important;
+  border:1px solid rgba(255,255,255,.12)!important;
+  border-bottom:1px solid rgba(215,189,131,.22)!important;
+  border-radius:22px!important;
+  box-shadow:0 18px 55px rgba(0,0,0,.26),inset 0 1px rgba(255,255,255,.12)!important;
+  -webkit-backdrop-filter:blur(24px) saturate(145%)!important;
+  backdrop-filter:blur(24px) saturate(145%)!important;
 }
-.home-header-wrap{
-  width:min(1180px,100%);min-height:76px;margin:0 auto;padding:10px 24px;
-  display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"brand account nav";
-  align-items:center;gap:18px;
+body>header>.wrap{
+  width:100%;max-width:1180px;min-height:76px;margin:0 auto;padding:10px 24px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
 }
-.chauffeur-home-header .brand{
-  grid-area:brand;display:block;font:700 30px/1.1 'Playfair Display',Georgia,serif!important;
-  color:#e3b341!important;letter-spacing:.055em;text-transform:uppercase;white-space:nowrap;
+body>header .logo{
+  position:relative;display:block;cursor:pointer;user-select:none;
+  color:#d0bc8d!important;font:700 27px/1.12 'Playfair Display',Georgia,serif!important;
+  letter-spacing:.03em;text-transform:uppercase;white-space:nowrap;
+  transition:transform .45s cubic-bezier(.22,1,.36,1),text-shadow .35s ease;
 }
-.chauffeur-home-header .account-pill{
-  grid-area:account;justify-self:end;display:flex;align-items:center;margin-left:auto;padding:4px;
-  border:1px solid rgba(255,255,255,.13);border-radius:15px;
-  background:linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.035));
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 8px 24px rgba(0,0,0,.18);
-  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+body>header .logo:after{
+  content:"";position:absolute;left:0;right:25%;bottom:-5px;height:1px;
+  background:linear-gradient(90deg,#b7a06a,transparent);transform:scaleX(.45);
+  transform-origin:left;opacity:.65;transition:transform .45s cubic-bezier(.22,1,.36,1);
 }
-.chauffeur-home-header .account-pill span{display:none}
-.chauffeur-home-header .account-pill button{
+body>header .logo:hover{transform:translateY(-1px) scale(1.025);text-shadow:0 0 22px rgba(227,179,65,.22)}
+body>header .logo:hover:after{transform:scaleX(1)}
+body>header .account-pill{
+  display:inline-flex;align-items:center;gap:8px;margin-left:auto;padding:4px;
+  color:#e3b341!important;font-size:13px;border:1px solid rgba(255,255,255,.11);
+  border-radius:16px;background:rgba(255,255,255,.045)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 8px 22px rgba(0,0,0,.13)!important;
+  -webkit-backdrop-filter:blur(16px) saturate(145%);backdrop-filter:blur(16px) saturate(145%);
+}
+body>header .account-pill button{
   width:42px;height:42px;display:grid;place-items:center;padding:0;
-  border:1px solid rgba(227,179,65,.28);border-radius:11px;background:rgba(255,255,255,.045);
-  color:#e3b341;cursor:pointer;
+  color:#c9b784!important;border:1px solid rgba(183,160,106,.25);
+  border-radius:11px;background:rgba(255,255,255,.035);cursor:pointer;
 }
-.chauffeur-home-header .account-pill button:before{
+body>header .account-pill button:before{
   content:"";width:18px;height:18px;display:block;background:currentColor;
   mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='8' r='4' fill='none' stroke='black' stroke-width='2'/%3E%3Cpath d='M4 21c.8-4.1 3.4-6 8-6s7.2 1.9 8 6' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat;
 }
-.chauffeur-home-header nav{
-  grid-area:nav;display:flex;align-items:center;gap:3px;padding:4px;
-  background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.11);
-  border-radius:14px;box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 8px 24px rgba(0,0,0,.16);
-  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+body>header .account-pill button:hover{background:rgba(183,160,106,.09)!important;box-shadow:0 10px 24px rgba(183,160,106,.11)!important}
+body>header .nav-toggle{
+  display:none;align-items:center;justify-content:center;width:42px;height:42px;min-width:42px;
+  padding:0;border:1px solid rgba(227,179,65,.3);border-radius:12px;
+  background:rgba(255,255,255,.055);color:#f3f0e8;cursor:pointer;
 }
-.chauffeur-home-header nav a.navlink{
-  min-height:42px;display:inline-flex;align-items:center;justify-content:center;padding:9px 12px;
-  border-radius:12px;border:1px solid transparent;background:transparent;color:#d7d9de!important;
-  font-size:13px;font-weight:600;letter-spacing:.01em;line-height:1;white-space:nowrap;text-decoration:none;
-  transition:background .32s ease,border-color .32s ease,color .32s ease,transform .32s ease;
+body>header .nav-toggle svg{width:20px;height:20px}
+body>header nav{
+  display:flex;align-items:center;gap:4px;padding:4px;
+  background:rgba(255,255,255,.045)!important;border:1px solid rgba(255,255,255,.085)!important;
+  border-radius:14px;box-shadow:inset 0 1px 0 rgba(255,255,255,.055),0 10px 28px rgba(0,0,0,.14)!important;
+  -webkit-backdrop-filter:blur(16px) saturate(145%);backdrop-filter:blur(16px) saturate(145%);
 }
-.chauffeur-home-header nav a.navlink:hover{
-  background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.10);color:#fff!important;transform:translateY(-2px);
+body>header nav a.navlink{
+  display:inline-flex;align-items:center;justify-content:center;min-height:42px;
+  padding:9px 12px;border:1px solid transparent;border-radius:10px;
+  color:#c9c8c4!important;background:transparent!important;text-decoration:none;
+  font-size:13px;font-weight:600;line-height:1;white-space:nowrap;
+  transition:background .25s,border-color .25s,color .25s,transform .25s;
 }
-.chauffeur-home-header nav a.navlink.active{
-  background:linear-gradient(180deg,#e7bd57,#d4a017);color:#111!important;
-  box-shadow:0 5px 16px rgba(215,169,40,.24);
+body>header nav a.navlink:hover{
+  background:rgba(255,255,255,.075)!important;color:#f4f2ec!important;
+  border-color:rgba(255,255,255,.08)!important;transform:translateY(-1px);
 }
-.chauffeur-home-header .nav-toggle{
-  display:none;grid-area:nav-toggle;width:44px;height:44px;align-items:center;justify-content:center;
-  border:1px solid rgba(227,179,65,.3);border-radius:12px;background:rgba(255,255,255,.055);color:#fff;
+body>header nav a.navlink.active{
+  background:linear-gradient(180deg,#c6b27f,#a9925f)!important;color:#171717!important;
+  box-shadow:0 5px 18px rgba(183,160,106,.18)!important;
 }
-.chauffeur-home-header .nav-toggle svg{width:20px;height:20px}
-@media(max-width:1100px){
-  .home-header-wrap{grid-template-columns:auto 1fr auto;grid-template-areas:"brand account nav-toggle";gap:12px}
-  .chauffeur-home-header .nav-toggle{display:inline-flex;justify-self:end}
-  .chauffeur-home-header nav{
-    position:absolute;top:calc(100% + 10px);right:16px;z-index:1001;
-    display:flex;flex-direction:column;align-items:stretch;width:min(300px,calc(100vw - 32px));
-    padding:8px;background:rgba(18,19,21,.95);border-color:rgba(227,179,65,.42);
-    box-shadow:0 18px 44px rgba(0,0,0,.72),inset 0 1px 0 rgba(255,255,255,.1);
-    -webkit-backdrop-filter:blur(30px) saturate(135%);backdrop-filter:blur(30px) saturate(135%);
-    opacity:0;visibility:hidden;transform:translateY(-8px) scale(.98);transform-origin:top right;
-    transition:opacity .2s ease,transform .2s ease,visibility .2s ease;
+@media(max-width:980px){
+  body>header{width:calc(100% - 20px)!important;margin:10px auto 0!important;border-radius:16px!important}
+  body>header>.wrap{
+    position:relative;display:grid;grid-template-columns:minmax(0,1fr) 42px 42px;
+    grid-template-areas:"brand account nav-toggle";align-items:center;gap:8px;
+    padding:10px 12px!important;
   }
-  .chauffeur-home-header nav.is-open{opacity:1;visibility:visible;transform:translateY(0) scale(1)}
-  .chauffeur-home-header nav a.navlink{width:100%;justify-content:flex-start;padding:12px 14px;min-height:44px}
+  body>header .logo{grid-area:brand;font-size:clamp(18px,5.5vw,23px)!important;line-height:1.12;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+  body>header .account-pill{grid-area:account;justify-self:end;margin:0;padding:2px!important}
+  body>header .account-pill span{display:none}
+  body>header .account-pill button,body>header .nav-toggle{width:40px!important;height:40px!important;min-width:40px!important;justify-self:end}
+  body>header .nav-toggle{grid-area:nav-toggle;display:inline-flex;margin:0}
+  body>header nav{
+    position:absolute!important;z-index:1001;isolation:isolate;top:calc(100% + 8px)!important;
+    right:12px!important;left:auto!important;display:flex;flex-direction:column;align-items:stretch;
+    gap:3px!important;width:min(280px,calc(100vw - 32px))!important;max-width:calc(100vw - 32px)!important;
+    max-height:min(72dvh,440px);overflow-x:hidden!important;overflow-y:auto!important;
+    padding:7px!important;margin:0!important;
+    background:rgba(18,19,21,.93)!important;border:1px solid rgba(227,179,65,.42)!important;
+    border-radius:16px;box-shadow:0 18px 44px rgba(0,0,0,.72),inset 0 1px 0 rgba(255,255,255,.1);
+    -webkit-backdrop-filter:blur(30px) saturate(135%);backdrop-filter:blur(30px) saturate(135%);
+    opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-8px) scale(.98);
+    transform-origin:top right;transition:opacity .2s ease,transform .2s ease,visibility .2s ease;
+  }
+  body>header nav.is-open{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0) scale(1)}
+  body>header nav a.navlink{
+    width:100%;min-height:40px;justify-content:flex-start;padding:9px 11px!important;
+    color:#f3f0e8!important;text-align:left;font-size:13px!important;
+  }
 }
 @media(max-width:600px){
-  .home-header-wrap{min-height:66px;padding:8px 16px;gap:9px}
-  .chauffeur-home-header .brand{font-size:23px!important;letter-spacing:.035em}
+  body>header>.wrap{grid-template-columns:minmax(0,1fr) 40px 40px;gap:8px;padding:8px 12px!important}
+  body>header .logo{font-size:clamp(18px,5.5vw,23px)!important}
+  body>header .account-pill button,body>header .nav-toggle{width:40px!important;height:40px!important;min-width:40px!important}
+  body>header nav{top:calc(100% + 6px)!important;right:10px!important;width:min(184px,calc(100vw - 76px))!important;max-width:min(184px,calc(100vw - 76px))!important;max-height:min(60dvh,340px)!important;padding:5px!important;gap:2px!important;border-radius:12px!important;background:rgba(22,23,25,.34)!important;-webkit-backdrop-filter:blur(32px) saturate(165%)!important;backdrop-filter:blur(32px) saturate(165%)!important;border-color:rgba(255,255,255,.2)!important}
+  body>header nav a.navlink{min-height:32px!important;padding:5px 8px!important;font-size:12px!important;line-height:1.2!important;border-radius:8px!important}
+}
+@media(max-width:380px){
+  body>header>.wrap{grid-template-columns:minmax(0,1fr) 38px 38px!important;gap:6px!important}
+  body>header .account-pill button,body>header .nav-toggle{width:38px!important;height:38px!important;min-width:38px!important}
+  body>header .logo{font-size:18px!important}
 }
 
 /* Compact horizontal Chauffeur introduction card */
@@ -320,10 +358,10 @@ a{color:inherit}
 </style>
 </head>
 <body>
-<header class="topbar chauffeur-home-header">
-  <div class="home-header-wrap">
-    <a href="/" class="brand" aria-label="3 Pedals Auto KE home">3 PEDALS AUTO KE</a>
-    <div class="account-pill" aria-label="Account"><span>Account</span><button id="chauffeurAccountOpen" type="button" aria-label="Go to chauffeur account and booking" title="Account"></button></div>
+<header>
+  <div class="wrap">
+    <a class="logo" href="/" aria-label="3 Pedals Auto KE home">3 Pedals Auto KE</a>
+    <div class="account-pill" aria-label="Account"><span>Not signed in</span><button id="chauffeurAccountOpen" type="button" aria-label="Go to chauffeur account and booking" title="Account"></button></div>
     <button class="nav-toggle" id="chauffeurNavToggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="chauffeurNav"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
     <nav id="chauffeurNav" aria-label="Main navigation">
       <a class="navlink" href="/">Home</a>
@@ -428,4 +466,29 @@ $('requestForm').onsubmit=async e=>{e.preventDefault();hide('bookingNotice');con
 })();
 </script>
 
+<script id="chauffeur-home-header-interactions">
+(()=>{
+ const toggle=document.getElementById('chauffeurNavToggle');
+ const nav=document.getElementById('chauffeurNav');
+ const account=document.getElementById('chauffeurAccountOpen');
+ if(toggle&&nav&&!toggle.dataset.bound){
+  toggle.dataset.bound='1';
+  const close=()=>{nav.classList.remove('is-open');toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Open navigation')};
+  toggle.addEventListener('click',event=>{
+   event.preventDefault();event.stopPropagation();
+   const open=!nav.classList.contains('is-open');
+   nav.classList.toggle('is-open',open);
+   toggle.setAttribute('aria-expanded',String(open));
+   toggle.setAttribute('aria-label',open?'Close navigation':'Open navigation');
+  });
+  document.addEventListener('click',event=>{if(!event.target.closest('#chauffeurNav')&&!event.target.closest('#chauffeurNavToggle'))close()});
+  document.addEventListener('keydown',event=>{if(event.key==='Escape')close()});
+  nav.querySelectorAll('a').forEach(link=>link.addEventListener('click',close));
+ }
+ if(account&&!account.dataset.bound){
+  account.dataset.bound='1';
+  account.addEventListener('click',()=>document.getElementById('booking')?.scrollIntoView({behavior:'smooth',block:'start'}));
+ }
+})();
+</script>
 </body></html>
