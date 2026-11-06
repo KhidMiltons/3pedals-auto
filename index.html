@@ -1053,7 +1053,7 @@ fbq('track', 'PageView');
 </script>
 <!-- End Meta Pixel Code -->
 
-<link rel="stylesheet" href="/dashboard-glass.css?v=20261106-dark-glass-v312">
+<link rel="stylesheet" href="/dashboard-glass.css?v=20261106-dark-glass-v313">
 
 <style id="about-glass-redesign">
 /* About page: text-led content only; the site's existing blurred automotive wallpaper remains visible. */
@@ -3617,6 +3617,92 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){f
 }
 @media(max-width:680px){#accDlg.account-dashboard-dialog[open] #accBody .dealer-account-editor .dealer-fields-grid{grid-template-columns:minmax(0,1fr)!important;gap:12px!important}#accDlg.account-dashboard-dialog[open] #accBody .dealer-account-editor .dealer-fields-grid>div.dealer-field-wide{grid-column:1!important}}
 </style>
+
+<style id="account-dark-glass-final-refinement">
+/* Final account-panel override: no pale/white dashboard washes. */
+#accDlg.account-dashboard-dialog[open]>.account-dashboard-main,
+#accDlg.account-dashboard-dialog[open]>.in,
+#accDlg.account-dashboard-dialog[open] #accBody,
+#accDlg.account-dashboard-dialog[open] #accBody .account-pages,
+#accDlg.account-dashboard-dialog[open] #accBody .account-page,
+#accDlg.account-dashboard-dialog[open] #accBody .account-settings,
+#accDlg.account-dashboard-dialog[open] #accBody .account-settings-inner,
+#accDlg.account-dashboard-dialog[open] #accBody .account-tools,
+#accDlg.account-dashboard-dialog[open] #accBody .account-tools>section,
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-heading,
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-visuals,
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-lower,
+#accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-card {
+  color:#f4f0e9!important;
+  background:rgba(9,12,15,.20)!important;
+  background-color:rgba(9,12,15,.20)!important;
+  background-image:none!important;
+  border-color:rgba(255,255,255,.09)!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:blur(24px) saturate(130%)!important;
+  backdrop-filter:blur(24px) saturate(130%)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody :is(
+  .profile-card,.account-stat,.profile-grid>div,.svc,.seller-summary-card,
+  .account-overview-panel,.account-overview-stats>button,.account-booking-item,
+  .account-saved-vehicle,.seller-listing,.seller-garage-card,.promotion-package,
+  .account-buyer-workspace,.dashboard-welcome,.settings-section,
+  .account-quick-panel>button,.panel,.card,.seller-card,.dashboard-card,
+  .dealer-overview-details>div
+) {
+  color:#f4f0e9!important;
+  background:rgba(20,23,26,.34)!important;
+  background-color:rgba(20,23,26,.34)!important;
+  background-image:none!important;
+  border:1px solid rgba(255,255,255,.09)!important;
+  border-radius:18px!important;
+  box-shadow:0 10px 28px rgba(0,0,0,.16),inset 0 1px rgba(255,255,255,.025)!important;
+  -webkit-backdrop-filter:blur(20px) saturate(125%)!important;
+  backdrop-filter:blur(20px) saturate(125%)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody :is(
+  .profile-card,.account-stat,.profile-grid>div,.svc,.seller-summary-card,
+  .account-overview-panel,.account-overview-stats>button,.account-booking-item,
+  .account-saved-vehicle,.seller-listing,.seller-garage-card,.promotion-package,
+  .account-buyer-workspace,.dashboard-welcome,.settings-section,
+  .account-quick-panel>button,.panel,.card,.seller-card,.dashboard-card,
+  .dealer-overview-details>div
+):hover,
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats>button:focus-visible {
+  background:rgba(27,29,31,.42)!important;
+  background-color:rgba(27,29,31,.42)!important;
+  background-image:none!important;
+  border-color:rgba(205,174,103,.22)!important;
+  box-shadow:0 12px 30px rgba(0,0,0,.20),inset 0 1px rgba(255,255,255,.035)!important;
+  transform:translateY(-1px)!important;
+  filter:none!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody :is(input,select,textarea),
+#accDlg.account-dashboard-dialog[open] #accBody .account-settings-tabs button,
+#accDlg.account-dashboard-dialog[open] #accBody .account-member-chip,
+#accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-identity button,
+#accDlg.account-dashboard-dialog[open] #accBody .account-page .btn.ghost {
+  color:#f4f0e9!important;
+  background:rgba(10,13,16,.42)!important;
+  background-color:rgba(10,13,16,.42)!important;
+  background-image:none!important;
+  border-color:rgba(255,255,255,.12)!important;
+  box-shadow:none!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody :is(h1,h2,h3,h4,h5,h6,strong,b,label,th) {
+  color:#f7f2e8!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody :is(p,li,td,small,.meta,.muted,.description,.subtitle) {
+  color:rgba(244,240,233,.78)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody :is(.account-overview-stats>button)::before,
+#accDlg.account-dashboard-dialog[open] #accBody :is(.account-overview-stats>button)::after {
+  background:none!important;
+  background-image:none!important;
+  box-shadow:none!important;
+}
+</style>
+
 </html>
 
 <style id="dealer-profile-layout-refinement">
