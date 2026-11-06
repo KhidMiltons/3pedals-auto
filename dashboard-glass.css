@@ -534,3 +534,131 @@ body>header .nav-toggle{grid-area:nav-toggle!important}
 #accDlg #accBody :is(td,th){
   border-color:rgba(210,190,150,.12)!important;
 }
+
+
+/* V3.6: definitive dark-glass override for legacy light dashboard rules. */
+#accDlg{
+  color:#f2eee6!important;
+  background:rgba(13,16,18,.48)!important;
+  border:1px solid rgba(210,190,150,.18)!important;
+  box-shadow:0 28px 90px rgba(0,0,0,.42)!important;
+  -webkit-backdrop-filter:blur(30px) saturate(135%)!important;
+  backdrop-filter:blur(30px) saturate(135%)!important;
+}
+#accDlg>.in{
+  background:rgba(13,16,18,.24)!important;
+  border:0!important;
+}
+#accDlg #accountMenu.dashboard-shortcuts,
+#accDlg nav#accountMenu.dashboard-shortcuts[hidden]{
+  color:#eee9df!important;
+  background:rgba(14,17,19,.58)!important;
+  border-right:1px solid rgba(210,190,150,.16)!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:blur(26px) saturate(130%)!important;
+  backdrop-filter:blur(26px) saturate(130%)!important;
+}
+#accDlg .seller-nav-identity small,
+#accDlg .seller-nav-label{color:#b7ad99!important}
+#accDlg .seller-nav-identity strong{color:#f2eee6!important}
+#accDlg .seller-mode-switch{
+  background:rgba(8,10,12,.48)!important;
+  border:1px solid rgba(210,190,150,.18)!important;
+  box-shadow:none!important;
+}
+#accDlg .seller-mode-switch button{color:#d7d0c4!important;background:transparent!important}
+#accDlg .seller-mode-switch button.selected{
+  color:#f5ead0!important;background:rgba(210,190,150,.16)!important;
+  border:1px solid rgba(210,190,150,.24)!important;box-shadow:none!important;
+}
+#accDlg #accountMenu.dashboard-shortcuts button{
+  color:#d8d3ca!important;background:transparent!important;
+  border:1px solid transparent!important;box-shadow:none!important;
+}
+#accDlg #accountMenu.dashboard-shortcuts button:hover,
+#accDlg #accountMenu.dashboard-shortcuts button.active,
+#accDlg #accountMenu.dashboard-shortcuts button[aria-current="page"]{
+  color:#f4e6c6!important;background:rgba(210,190,150,.12)!important;
+  border-color:rgba(210,190,150,.22)!important;box-shadow:none!important;
+}
+#accDlg .account-dialog-head{
+  background:rgba(15,16,18,.56)!important;
+  border:1px solid rgba(255,255,255,.12)!important;
+  border-radius:22px!important;
+}
+#accDlg .account-dialog-head>#accMenuToggle,
+#accDlg .account-dialog-head>#accHomeTop,
+#accDlg .account-dialog-head>#accCloseTop{
+  color:#eee8dc!important;background:rgba(255,255,255,.045)!important;
+  border:1px solid rgba(210,190,150,.20)!important;
+  box-shadow:0 5px 16px rgba(0,0,0,.18)!important;
+}
+#accDlg .account-dialog-head>#accMenuToggle:hover,
+#accDlg .account-dialog-head>#accHomeTop:hover,
+#accDlg .account-dialog-head>#accCloseTop:hover{
+  color:#f7e8c5!important;background:rgba(210,190,150,.10)!important;
+  border-color:rgba(210,190,150,.34)!important;
+}
+#accDlg #accBody :is(.account-settings,.dashboard-welcome,.profile-card,.seller-listing,
+.account-page .card,.account-tools>.panel,.account-tools>section,.account-page,
+.account-tools,.account-stat,.profile-grid>div,.svc,.seller-summary-card,
+.account-overview-panel,.account-overview-stats>button,.account-booking-item,
+.account-saved-vehicle,.seller-garage-card,.promotion-package,
+.account-buyer-workspace,.settings-section,.account-quick-panel>button,
+.panel,.card){
+  color:#f2eee6!important;
+  background-color:rgba(16,19,21,.64)!important;
+  background-image:none!important;
+  border:1px solid rgba(210,190,150,.18)!important;
+  border-radius:18px!important;
+  box-shadow:0 12px 32px rgba(0,0,0,.24)!important;
+  -webkit-backdrop-filter:blur(22px) saturate(130%)!important;
+  backdrop-filter:blur(22px) saturate(130%)!important;
+}
+#accDlg #accBody :is(.account-settings,.dashboard-welcome,.profile-card,.seller-listing,
+.account-page .card,.account-tools>.panel,.account-tools>section,.account-page,
+.account-tools,.account-stat,.profile-grid>div,.svc,.seller-summary-card,
+.account-overview-panel,.account-overview-stats>button,.account-booking-item,
+.account-saved-vehicle,.seller-garage-card,.promotion-package,
+.account-buyer-workspace,.settings-section,.account-quick-panel>button,
+.panel,.card)::before,
+#accDlg #accBody :is(.account-settings,.dashboard-welcome,.profile-card,.seller-listing,
+.account-page .card,.account-tools>.panel,.account-tools>section,.account-page,
+.account-tools,.account-stat,.profile-grid>div,.svc,.seller-summary-card,
+.account-overview-panel,.account-overview-stats>button,.account-booking-item,
+.account-saved-vehicle,.seller-garage-card,.promotion-package,
+.account-buyer-workspace,.settings-section,.account-quick-panel>button,
+.panel,.card)::after{
+  background-image:none!important;
+  box-shadow:none!important;
+}
+#accDlg #accBody :is(.account-settings,.dashboard-welcome,.profile-card,.seller-listing,
+.account-page .card,.account-tools>.panel,.account-tools>section,.account-page,
+.account-tools,.account-stat,.profile-grid>div,.svc,.seller-summary-card,
+.account-overview-panel,.account-overview-stats>button,.account-booking-item,
+.account-saved-vehicle,.seller-garage-card,.promotion-package,
+.account-buyer-workspace,.settings-section,.account-quick-panel>button,
+.panel,.card):hover{
+  background-color:rgba(25,27,29,.72)!important;
+  background-image:none!important;
+  border-color:rgba(210,190,150,.32)!important;
+  box-shadow:0 14px 34px rgba(0,0,0,.28)!important;
+}
+#accDlg #accBody :is(h1,h2,h3,h4,h5,h6,strong,b,th){color:#f7f2e8!important}
+#accDlg #accBody :is(p,li,td,label,legend,summary){color:#e3ded4!important}
+#accDlg #accBody :is(small,.meta,.muted,.description,.subtitle,
+.account-panel-caption,.account-eyebrow,.account-activity-item time){color:#c2bbae!important;opacity:1!important}
+#accDlg #accBody :is(input,select,textarea){
+  color:#f2eee6!important;background:rgba(9,12,14,.70)!important;
+  background-image:none!important;border:1px solid rgba(210,190,150,.20)!important;
+  box-shadow:none!important;
+}
+#accDlg #accBody :is(button,.btn,a.button){
+  color:#f0eadf!important;background:rgba(35,38,40,.82)!important;
+  background-image:none!important;border:1px solid rgba(210,190,150,.22)!important;
+  box-shadow:0 5px 14px rgba(0,0,0,.18)!important;
+}
+#accDlg #accBody :is(button,.btn,a.button):hover{
+  color:#f7e8c5!important;background:rgba(55,49,39,.78)!important;
+  background-image:none!important;border-color:rgba(210,190,150,.38)!important;
+}
