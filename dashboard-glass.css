@@ -662,3 +662,58 @@ body>header .nav-toggle{grid-area:nav-toggle!important}
   color:#f7e8c5!important;background:rgba(55,49,39,.78)!important;
   background-image:none!important;border-color:rgba(210,190,150,.38)!important;
 }
+
+
+/* V3.7: match the homepage tile glass recipe exactly; no gradient overlays. */
+#accDlg #accBody :is(.profile-card,.account-tools,.account-page,.account-settings,
+.account-stat,.profile-grid>div,.svc,.seller-summary-card,.account-overview-panel,
+.account-overview-stats>button,.account-booking-item,.account-saved-vehicle,
+.seller-listing,.seller-garage-card,.promotion-package,.account-buyer-workspace,
+.dashboard-welcome,.settings-section,.account-quick-panel>button,
+.panel,.card,.seller-card,.dashboard-card){
+  background:rgba(19,20,23,.36)!important;
+  background-image:none!important;
+  border:1px solid rgba(255,255,255,.20)!important;
+  box-shadow:0 12px 34px rgba(0,0,0,.16),inset 0 1px rgba(255,255,255,.07)!important;
+  -webkit-backdrop-filter:blur(22px) saturate(135%)!important;
+  backdrop-filter:blur(22px) saturate(135%)!important;
+  color:#f5f1e8!important;
+}
+#accDlg #accBody :is(.profile-card,.account-tools,.account-stat,.svc,
+.seller-summary-card,.account-overview-panel,.account-overview-stats>button,
+.account-booking-item,.account-saved-vehicle,.seller-listing,.seller-garage-card,
+.promotion-package,.account-buyer-workspace,.dashboard-welcome,.settings-section,
+.account-quick-panel>button,.panel,.card,.seller-card,.dashboard-card):hover{
+  background:rgba(37,38,41,.48)!important;
+  background-image:none!important;
+  border-color:rgba(221,192,160,.48)!important;
+  box-shadow:0 12px 34px rgba(0,0,0,.16),inset 0 1px rgba(255,255,255,.07)!important;
+}
+#accDlg #accBody :is(.profile-card,.account-tools,.account-page,.account-settings,
+.account-stat,.profile-grid>div,.svc,.seller-summary-card,.account-overview-panel,
+.account-overview-stats>button,.account-booking-item,.account-saved-vehicle,
+.seller-listing,.seller-garage-card,.promotion-package,.account-buyer-workspace,
+.dashboard-welcome,.settings-section,.account-quick-panel>button,
+.panel,.card,.seller-card,.dashboard-card)::before,
+#accDlg #accBody :is(.profile-card,.account-tools,.account-page,.account-settings,
+.account-stat,.profile-grid>div,.svc,.seller-summary-card,.account-overview-panel,
+.account-overview-stats>button,.account-booking-item,.account-saved-vehicle,
+.seller-listing,.seller-garage-card,.promotion-package,.account-buyer-workspace,
+.dashboard-welcome,.settings-section,.account-quick-panel>button,
+.panel,.card,.seller-card,.dashboard-card)::after{
+  background:none!important;background-image:none!important;box-shadow:none!important;
+}
+#accDlg>.in{background:transparent!important}
+#accDlg #accountMenu.dashboard-shortcuts,
+#accDlg nav#accountMenu.dashboard-shortcuts[hidden]{
+  background:rgba(22,23,26,.58)!important;
+  background-image:none!important;
+  border-right:1px solid rgba(211,185,125,.16)!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:blur(20px) saturate(145%)!important;
+  backdrop-filter:blur(20px) saturate(145%)!important;
+}
+#accDlg #accBody :is(h1,h2,h3,h4,h5,h6,strong,b,th){color:#f7f2e8!important}
+#accDlg #accBody :is(p,li,td,label,legend,summary){color:#e3ded4!important}
+#accDlg #accBody :is(small,.meta,.muted,.description,.subtitle,
+.account-panel-caption,.account-eyebrow,.account-activity-item time){color:#c2bbae!important;opacity:1!important}
