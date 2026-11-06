@@ -1021,3 +1021,84 @@ body>header .nav-toggle{grid-area:nav-toggle!important}
     backdrop-filter:blur(20px) saturate(140%)!important;
   }
 }
+
+
+/* V3.12: remove the legacy pale dashboard skin; preserve readable content over dark glass. */
+#accDlg #accBody,
+#accDlg #accBody .account-pages,
+#accDlg #accBody .account-page,
+#accDlg #accBody .account-settings,
+#accDlg #accBody .account-settings-inner,
+#accDlg #accBody .account-settings-tabs,
+#accDlg #accBody .account-tools,
+#accDlg #accBody .account-tools>section,
+#accDlg #accBody .account-overview-heading,
+#accDlg #accBody .account-overview-visuals,
+#accDlg #accBody .account-overview-lower,
+#accDlg #accBody .dealer-overview-card,
+#accDlg #accBody .dealer-overview-details,
+#accDlg #accBody .account-activity-page-head{
+  color:#f4f0e9!important;
+  background:rgba(9,12,15,.22)!important;
+  background-color:rgba(9,12,15,.22)!important;
+  background-image:none!important;
+  border-color:rgba(255,255,255,.10)!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:blur(28px) saturate(145%)!important;
+  backdrop-filter:blur(28px) saturate(145%)!important;
+}
+#accDlg #accBody :is(.profile-card,.account-stat,.profile-grid>div,.svc,
+.seller-summary-card,.account-overview-panel,.account-overview-stats>button,
+.account-booking-item,.account-saved-vehicle,.seller-listing,.seller-garage-card,
+.promotion-package,.account-buyer-workspace,.dashboard-welcome,.settings-section,
+.account-quick-panel>button,.panel,.card,.seller-card,.dashboard-card,
+.dealer-overview-details>div){
+  color:#f4f0e9!important;
+  background:rgba(9,12,15,.38)!important;
+  background-color:rgba(9,12,15,.38)!important;
+  background-image:none!important;
+  border:1px solid rgba(255,255,255,.11)!important;
+  box-shadow:0 10px 28px rgba(0,0,0,.14)!important;
+  -webkit-backdrop-filter:blur(28px) saturate(145%)!important;
+  backdrop-filter:blur(28px) saturate(145%)!important;
+}
+#accDlg #accBody :is(.profile-card,.account-stat,.profile-grid>div,.svc,
+.seller-summary-card,.account-overview-panel,.account-overview-stats>button,
+.account-booking-item,.account-saved-vehicle,.seller-listing,.seller-garage-card,
+.promotion-package,.account-buyer-workspace,.dashboard-welcome,.settings-section,
+.account-quick-panel>button,.panel,.card,.seller-card,.dashboard-card,
+.dealer-overview-details>div):hover{
+  background:rgba(12,15,18,.44)!important;
+  background-color:rgba(12,15,18,.44)!important;
+  background-image:none!important;
+  border-color:rgba(255,255,255,.15)!important;
+  box-shadow:0 12px 32px rgba(0,0,0,.19)!important;
+}
+#accDlg #accBody :is(input,select,textarea),
+#accDlg #accBody .account-settings-tabs button,
+#accDlg #accBody .account-member-chip,
+#accDlg #accBody .dealer-overview-identity button,
+#accDlg #accBody .account-page .btn.ghost{
+  color:#f4f0e9!important;
+  background:rgba(9,12,15,.42)!important;
+  background-color:rgba(9,12,15,.42)!important;
+  background-image:none!important;
+  border-color:rgba(255,255,255,.13)!important;
+  box-shadow:none!important;
+}
+#accDlg #accBody :is(h1,h2,h3,h4,h5,h6,strong,b,label,th){color:#f7f2e8!important}
+#accDlg #accBody :is(p,li,td,small,.meta,.muted,.description,.subtitle,
+.account-panel-caption,.account-eyebrow,.account-activity-item time,
+.account-overview-stat-label,.account-trend-column small){color:rgba(244,240,233,.78)!important}
+#accDlg #accBody :is(.profile-card,.account-stat,.profile-grid>div,.svc,
+.seller-summary-card,.account-overview-panel,.account-overview-stats>button,
+.account-booking-item,.account-saved-vehicle,.seller-listing,.seller-garage-card,
+.promotion-package,.account-buyer-workspace,.dashboard-welcome,.settings-section,
+.account-quick-panel>button,.panel,.card,.seller-card,.dashboard-card)::before,
+#accDlg #accBody :is(.profile-card,.account-stat,.profile-grid>div,.svc,
+.seller-summary-card,.account-overview-panel,.account-overview-stats>button,
+.account-booking-item,.account-saved-vehicle,.seller-listing,.seller-garage-card,
+.promotion-package,.account-buyer-workspace,.dashboard-welcome,.settings-section,
+.account-quick-panel>button,.panel,.card,.seller-card,.dashboard-card)::after{
+  background:none!important;background-image:none!important;box-shadow:none!important;
+}
