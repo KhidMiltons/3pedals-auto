@@ -194,6 +194,87 @@ a{color:inherit}
 }
 
 
+
+/* Match the Home page masthead structure and glass navigation */
+.chauffeur-home-header{
+  position:sticky!important;top:0!important;z-index:1000!important;
+  width:100%!important;min-height:0!important;margin:0!important;padding:0!important;
+  display:block!important;border:0!important;border-bottom:1px solid rgba(227,179,65,.18)!important;
+  border-radius:0!important;background:rgba(8,10,13,.78)!important;
+  box-shadow:0 8px 30px rgba(0,0,0,.22)!important;
+  -webkit-backdrop-filter:blur(18px) saturate(140%)!important;
+  backdrop-filter:blur(18px) saturate(140%)!important;
+}
+.home-header-wrap{
+  width:min(1180px,100%);min-height:76px;margin:0 auto;padding:10px 24px;
+  display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"brand account nav";
+  align-items:center;gap:18px;
+}
+.chauffeur-home-header .brand{
+  grid-area:brand;display:block;font:700 30px/1.1 'Playfair Display',Georgia,serif!important;
+  color:#e3b341!important;letter-spacing:.055em;text-transform:uppercase;white-space:nowrap;
+}
+.chauffeur-home-header .account-pill{
+  grid-area:account;justify-self:end;display:flex;align-items:center;margin-left:auto;padding:4px;
+  border:1px solid rgba(255,255,255,.13);border-radius:15px;
+  background:linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.035));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 8px 24px rgba(0,0,0,.18);
+  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+}
+.chauffeur-home-header .account-pill span{display:none}
+.chauffeur-home-header .account-pill button{
+  width:42px;height:42px;display:grid;place-items:center;padding:0;
+  border:1px solid rgba(227,179,65,.28);border-radius:11px;background:rgba(255,255,255,.045);
+  color:#e3b341;cursor:pointer;
+}
+.chauffeur-home-header .account-pill button:before{
+  content:"";width:18px;height:18px;display:block;background:currentColor;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='8' r='4' fill='none' stroke='black' stroke-width='2'/%3E%3Cpath d='M4 21c.8-4.1 3.4-6 8-6s7.2 1.9 8 6' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+.chauffeur-home-header nav{
+  grid-area:nav;display:flex;align-items:center;gap:3px;padding:4px;
+  background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.11);
+  border-radius:14px;box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 8px 24px rgba(0,0,0,.16);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+}
+.chauffeur-home-header nav a.navlink{
+  min-height:42px;display:inline-flex;align-items:center;justify-content:center;padding:9px 12px;
+  border-radius:12px;border:1px solid transparent;background:transparent;color:#d7d9de!important;
+  font-size:13px;font-weight:600;letter-spacing:.01em;line-height:1;white-space:nowrap;text-decoration:none;
+  transition:background .32s ease,border-color .32s ease,color .32s ease,transform .32s ease;
+}
+.chauffeur-home-header nav a.navlink:hover{
+  background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.10);color:#fff!important;transform:translateY(-2px);
+}
+.chauffeur-home-header nav a.navlink.active{
+  background:linear-gradient(180deg,#e7bd57,#d4a017);color:#111!important;
+  box-shadow:0 5px 16px rgba(215,169,40,.24);
+}
+.chauffeur-home-header .nav-toggle{
+  display:none;grid-area:nav-toggle;width:44px;height:44px;align-items:center;justify-content:center;
+  border:1px solid rgba(227,179,65,.3);border-radius:12px;background:rgba(255,255,255,.055);color:#fff;
+}
+.chauffeur-home-header .nav-toggle svg{width:20px;height:20px}
+@media(max-width:1100px){
+  .home-header-wrap{grid-template-columns:auto 1fr auto;grid-template-areas:"brand account nav-toggle";gap:12px}
+  .chauffeur-home-header .nav-toggle{display:inline-flex;justify-self:end}
+  .chauffeur-home-header nav{
+    position:absolute;top:calc(100% + 10px);right:16px;z-index:1001;
+    display:flex;flex-direction:column;align-items:stretch;width:min(300px,calc(100vw - 32px));
+    padding:8px;background:rgba(18,19,21,.95);border-color:rgba(227,179,65,.42);
+    box-shadow:0 18px 44px rgba(0,0,0,.72),inset 0 1px 0 rgba(255,255,255,.1);
+    -webkit-backdrop-filter:blur(30px) saturate(135%);backdrop-filter:blur(30px) saturate(135%);
+    opacity:0;visibility:hidden;transform:translateY(-8px) scale(.98);transform-origin:top right;
+    transition:opacity .2s ease,transform .2s ease,visibility .2s ease;
+  }
+  .chauffeur-home-header nav.is-open{opacity:1;visibility:visible;transform:translateY(0) scale(1)}
+  .chauffeur-home-header nav a.navlink{width:100%;justify-content:flex-start;padding:12px 14px;min-height:44px}
+}
+@media(max-width:600px){
+  .home-header-wrap{min-height:66px;padding:8px 16px;gap:9px}
+  .chauffeur-home-header .brand{font-size:23px!important;letter-spacing:.035em}
+}
+
 /* Compact horizontal Chauffeur introduction card */
 .hero{
   width:100%!important;
@@ -239,8 +320,23 @@ a{color:inherit}
 </style>
 </head>
 <body>
+<header class="topbar chauffeur-home-header">
+  <div class="home-header-wrap">
+    <a href="/" class="brand" aria-label="3 Pedals Auto KE home">3 PEDALS AUTO KE</a>
+    <div class="account-pill" aria-label="Account"><span>Account</span><button id="chauffeurAccountOpen" type="button" aria-label="Go to chauffeur account and booking" title="Account"></button></div>
+    <button class="nav-toggle" id="chauffeurNavToggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="chauffeurNav"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    <nav id="chauffeurNav" aria-label="Main navigation">
+      <a class="navlink" href="/">Home</a>
+      <a class="navlink" href="/#about">About Us</a>
+      <a class="navlink" href="/inventory.html">Buy a car</a>
+      <a class="navlink" href="/garage.html">3 Pedals Garage</a>
+      <a class="navlink active" href="/chauffeur.html" aria-current="page">Chauffeur Hire</a>
+      <a class="navlink" href="/dealers.html">Dealers</a>
+      <a class="navlink" href="/#contact">Contact Us</a>
+    </nav>
+  </div>
+</header>
 <div class="shell">
-<header class="topbar"><a href="/" class="brand" style="text-decoration:none">3 PEDALS AUTO KE<span>CHAUFFEUR HIRE</span></a><a href="/">← Back to 3 Pedals Auto KE</a></header>
 <section class="hero"><div class="eyebrow">ARRIVE WITH CONFIDENCE</div><h1>Every journey,<br>beautifully driven.</h1><p>Book a chauffeur-driven vehicle for city travel, business, airport transfers and longer journeys. Choose your vehicle and preferred hire arrangement; our team will review your request and confirm the price before payment.</p></section>
 <section><div class="eyebrow">THE INITIAL FLEET</div><div class="fleet" id="fleet"><article class="glass vehicle"><div class="vehicle-art">STANDARD · MAZDA 2</div><h2>Mazda 2</h2><p>Comfortable, efficient travel for everyday city journeys and individual trips.</p><span class="tag">Standard</span></article><article class="glass vehicle"><div class="vehicle-art">SUV · TOYOTA PRADO</div><h2>Toyota Prado</h2><p>Extra space and a refined ride for executive travel, family journeys and longer routes.</p><span class="tag">SUV</span></article></div></section>
 <section class="glass booking" id="booking">
@@ -306,4 +402,30 @@ $('bookingRows').onclick=async e=>{const btn=e.target.closest('[data-chauffeur-p
 $('requestForm').onsubmit=async e=>{e.preventDefault();hide('bookingNotice');const btn=$('submitRequest');btn.disabled=true;btn.textContent='Submitting…';try{const start=new Date($('startAt').value),end=$('endAt').value?new Date($('endAt').value):null;if(!Number.isFinite(start.getTime())||start.getTime()<=Date.now())throw Error('Choose a future pickup date and time.');if(end&&end<=start)throw Error('The end time must be after the pickup time.');const method=$('pricingMethod').value,dist=$('distance').value;const payload={user_id:currentUser.id,vehicle_id:$('vehicleId').value,customer_name:$('customerName').value.trim(),customer_phone:$('customerPhone').value.trim(),pickup_location:$('pickup').value.trim(),destination:$('destination').value.trim(),start_at:start.toISOString(),end_at:end?end.toISOString():null,pricing_method:method,estimated_distance_km:dist?Number(dist):null,customer_notes:$('notes').value.trim(),whatsapp_opt_in:$('whatsappOptIn').checked};const {data,error}=await sb.from('chauffeur_bookings').insert(payload).select('booking_ref').single();if(error)throw error;notice('bookingNotice','Request '+data.booking_ref+' submitted. It is pending review; no payment has been taken. We will share the confirmed quote and M-Pesa instructions after approval.','success');$('requestForm').reset();$('startAt').min=localInputDate(new Date(Date.now()+60000));await loadBookings()}catch(e){notice('bookingNotice',e.message||'Could not submit your request.','error')}finally{btn.disabled=false;btn.textContent='Submit booking request'}};
 (async()=>{if(!sb){notice('authNotice','The booking service is not configured. Please contact 3 Pedals Auto KE.','error');return}try{const min=localInputDate(new Date(Date.now()+60000));$('startAt').min=min;$('endAt').min=min;$('startAt').addEventListener('change',()=>{$('endAt').min=$('startAt').value||min;if($('endAt').value&&$('endAt').value<=$('startAt').value)$('endAt').value=''});await loadVehicles();updateEstimate();await syncSession();sb.auth.onAuthStateChange(()=>setTimeout(()=>syncSession().catch(console.error),0))}catch(e){notice('bookingNotice','Could not load the chauffeur service: '+e.message,'error')}})();
 </script>
+
+<script>
+(()=>{
+ const toggle=document.getElementById('chauffeurNavToggle');
+ const nav=document.getElementById('chauffeurNav');
+ const account=document.getElementById('chauffeurAccountOpen');
+ if(toggle&&nav){
+   toggle.addEventListener('click',()=>{
+     const open=nav.classList.toggle('is-open');
+     toggle.setAttribute('aria-expanded',String(open));
+     toggle.setAttribute('aria-label',open?'Close navigation':'Open navigation');
+   });
+   document.addEventListener('click',e=>{
+     if(!nav.contains(e.target)&&!toggle.contains(e.target)){
+       nav.classList.remove('is-open');
+       toggle.setAttribute('aria-expanded','false');
+       toggle.setAttribute('aria-label','Open navigation');
+     }
+   });
+ }
+ if(account) account.addEventListener('click',()=>{
+   document.getElementById('booking')?.scrollIntoView({behavior:'smooth',block:'start'});
+ });
+})();
+</script>
+
 </body></html>
