@@ -426,4 +426,29 @@ html body>header.head .back:hover{transform:translateY(-2px)!important;backgroun
 @media(max-width:520px){html body>header.head{width:calc(100% - 24px)!important;min-height:76px!important;margin:12px auto!important}html body>header.head>.wrap.headin{min-height:74px!important;padding:9px 12px!important}html body>header.head .brand{font-size:clamp(17px,4.5vw,22px)!important}html body>header.head .back{min-height:38px!important;padding:7px 11px!important;font-size:12px!important}}
 @media(prefers-reduced-motion:reduce){html body>header.head .back{transition:none!important}}
 </style>
+
+<style id="chauffeur-intro-compact-final">
+/* Reduce the introduction card's vertical footprint while preserving its split layout. */
+html body .hero{
+  margin:7px 0 10px!important;
+  padding:8px 18px!important;
+  column-gap:24px!important;
+  row-gap:0!important;
+  border-radius:16px!important;
+}
+html body .hero .eyebrow{font-size:10px!important;line-height:1.2!important;letter-spacing:.14em!important}
+html body .hero h1{
+  font-size:clamp(25px,2.8vw,33px)!important;
+  line-height:1.02!important;
+  margin:2px 0 0!important;
+}
+html body .hero h1:after{width:58px!important;height:2px!important;margin-top:5px!important}
+html body .hero p{font-size:11.5px!important;line-height:1.35!important}
+@media(max-width:700px){
+  html body .hero{margin:7px 0 9px!important;padding:9px 12px!important}
+  html body .hero h1{font-size:clamp(25px,7vw,31px)!important;line-height:1.04!important;margin:3px 0 5px!important}
+  html body .hero h1:after{margin-top:5px!important}
+  html body .hero p{font-size:11px!important;line-height:1.35!important}
+}
+</style>
 </body></html>
