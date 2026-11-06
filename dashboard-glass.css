@@ -860,3 +860,73 @@ body>header .nav-toggle{grid-area:nav-toggle!important}
     backdrop-filter:blur(18px) saturate(135%)!important;
   }
 }
+
+
+/* V3.10: remove the remaining light dashboard shell and navigation surfaces. */
+#accDlg,#accDlg[open],#accDlg[open]>.in,#accDlg>.in,#accDlg #accBody,
+#accDlg #accBody>.account-pages,#accDlg .account-pages,
+#accDlg .account-page,#accDlg .account-tools,#accDlg .account-settings-inner,
+#accDlg .account-settings,#accDlg .account-dialog-head,
+#accDlg #accountMenu,#accDlg #accountMenu.dashboard-shortcuts{
+  color:#f5f1e8!important;
+  background-color:rgba(13,16,19,.22)!important;
+  background-image:none!important;
+  border-color:rgba(255,255,255,.12)!important;
+  box-shadow:none!important;
+}
+#accDlg #accBody,
+#accDlg #accBody>.account-pages,
+#accDlg .account-pages,
+#accDlg .account-page,
+#accDlg .account-tools,
+#accDlg .account-settings-inner{
+  -webkit-backdrop-filter:blur(28px) saturate(145%)!important;
+  backdrop-filter:blur(28px) saturate(145%)!important;
+}
+#accDlg #accountMenu.dashboard-shortcuts{
+  background:rgba(9,12,15,.38)!important;
+  border-right:1px solid rgba(255,255,255,.11)!important;
+}
+#accDlg .seller-nav-identity,
+#accDlg .seller-mode-switch,
+#accDlg .seller-mode-switch button,
+#accDlg .seller-nav-label,
+#accDlg #accountMenu.dashboard-shortcuts button,
+#accDlg .account-dialog-head :is(button,a){
+  color:#eee9df!important;
+  background:rgba(255,255,255,.025)!important;
+  background-image:none!important;
+  border-color:rgba(255,255,255,.11)!important;
+  box-shadow:none!important;
+}
+#accDlg #accountMenu.dashboard-shortcuts button:hover,
+#accDlg #accountMenu.dashboard-shortcuts button.active,
+#accDlg #accountMenu.dashboard-shortcuts button[aria-current="page"]{
+  color:#f7e8c5!important;
+  background:rgba(255,255,255,.075)!important;
+  border-color:rgba(255,255,255,.18)!important;
+}
+#accDlg #accBody :is(.profile-card,.account-tools,.account-page,.account-settings,
+.account-stat,.profile-grid>div,.svc,.seller-summary-card,.account-overview-panel,
+.account-overview-stats>button,.account-booking-item,.account-saved-vehicle,
+.seller-listing,.seller-garage-card,.promotion-package,.account-buyer-workspace,
+.dashboard-welcome,.settings-section,.account-quick-panel>button,
+.panel,.card,.seller-card,.dashboard-card,.account-tools>section){
+  background:rgba(20,22,25,.28)!important;
+  background-color:rgba(20,22,25,.28)!important;
+  background-image:none!important;
+}
+#accDlg #accBody :is(.profile-card,.account-tools,.account-page,.account-settings,
+.account-stat,.profile-grid>div,.svc,.seller-summary-card,.account-overview-panel,
+.account-overview-stats>button,.account-booking-item,.account-saved-vehicle,
+.seller-listing,.seller-garage-card,.promotion-package,.account-buyer-workspace,
+.dashboard-welcome,.settings-section,.account-quick-panel>button,
+.panel,.card,.seller-card,.dashboard-card,.account-tools>section)::before,
+#accDlg #accBody :is(.profile-card,.account-tools,.account-page,.account-settings,
+.account-stat,.profile-grid>div,.svc,.seller-summary-card,.account-overview-panel,
+.account-overview-stats>button,.account-booking-item,.account-saved-vehicle,
+.seller-listing,.seller-garage-card,.promotion-package,.account-buyer-workspace,
+.dashboard-welcome,.settings-section,.account-quick-panel>button,
+.panel,.card,.seller-card,.dashboard-card,.account-tools>section)::after{
+  background:none!important;background-image:none!important;
+}
