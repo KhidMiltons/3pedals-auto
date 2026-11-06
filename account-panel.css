@@ -748,3 +748,127 @@
   #accDlg #accBody .account-overview-visuals,
   #accDlg #accBody .account-overview-lower{grid-template-columns:minmax(0,1fr)!important}
 }
+
+
+/* V3.15: balanced dashboard card grids, consistent inner spacing and readable text. */
+#accDlg.account-dashboard-dialog[open] #accBody :is(
+  .account-overview-panel,.account-overview-stats>button,
+  .profile-card,.account-stat,.profile-grid>div,.svc,
+  .seller-summary-card,.account-booking-item,.account-saved-vehicle,
+  .seller-listing,.seller-garage-card,.promotion-package,
+  .account-buyer-workspace,.dashboard-welcome,.settings-section,
+  .account-quick-panel>button,.panel,.card,.seller-card,.dashboard-card,
+  .dealer-overview-card
+){
+  box-sizing:border-box!important;
+  min-width:0!important;
+  padding:clamp(16px,1.8vw,22px)!important;
+  text-align:left;
+}
+#accDlg.account-dashboard-dialog[open] #accBody :is(
+  .account-overview-stats>button,.account-quick-panel>button
+){
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:flex-start!important;
+  gap:9px!important;
+  min-height:112px!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody :is(
+  .profile-card,.account-stat,.profile-grid>div,.svc,
+  .seller-summary-card,.account-booking-item,.account-saved-vehicle,
+  .seller-listing,.seller-garage-card,.promotion-package,
+  .account-overview-panel,.account-buyer-workspace,.dashboard-welcome,
+  .settings-section,.account-quick-panel>button,.panel,.card,
+  .seller-card,.dashboard-card,.dealer-overview-card
+)>*{
+  min-width:0!important;
+  max-width:100%;
+  overflow-wrap:anywhere;
+}
+#accDlg.account-dashboard-dialog[open] #accBody :is(
+  .profile-card,.account-stat,.profile-grid>div,.svc,
+  .seller-summary-card,.account-booking-item,.account-saved-vehicle,
+  .seller-listing,.seller-garage-card,.promotion-package,
+  .account-overview-panel,.account-buyer-workspace,.dashboard-welcome,
+  .settings-section,.account-quick-panel>button,.panel,.card,
+  .seller-card,.dashboard-card,.dealer-overview-card
+) :is(h1,h2,h3,h4,h5,p,small,label,strong,span){
+  max-width:100%;
+  overflow-wrap:anywhere;
+  word-break:normal;
+}
+#accDlg.account-dashboard-dialog[open] #accBody :is(
+  .account-overview-stats,.account-overview-visuals,
+  .account-overview-lower,.profile-grid,.dealer-overview-details
+){
+  display:grid!important;
+  width:100%!important;
+  max-width:none!important;
+  grid-auto-flow:row;
+  align-items:stretch!important;
+  justify-items:stretch!important;
+  gap:14px!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats{
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody :is(
+  .account-overview-visuals,.account-overview-lower,.profile-grid
+){
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-details{
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-details>div{
+  box-sizing:border-box!important;
+  min-width:0!important;
+  padding:12px!important;
+  border-radius:12px!important;
+  overflow-wrap:anywhere!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody :is(
+  .account-activity-item,.account-health-row,.account-trend-column
+){
+  min-width:0!important;
+  overflow-wrap:anywhere!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody :is(
+  input,select,textarea
+){
+  box-sizing:border-box!important;
+  max-width:100%!important;
+  min-width:0!important;
+}
+@media(max-width:900px){
+  #accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  #accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-details{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+}
+@media(max-width:680px){
+  #accDlg.account-dashboard-dialog[open] #accBody :is(
+    .account-overview-visuals,.account-overview-lower,.profile-grid
+  ){
+    grid-template-columns:minmax(0,1fr)!important;
+    gap:12px!important;
+  }
+  #accDlg.account-dashboard-dialog[open] #accBody :is(
+    .account-overview-panel,.account-overview-stats>button,
+    .profile-card,.account-stat,.profile-grid>div,.svc,
+    .seller-summary-card,.account-booking-item,.account-saved-vehicle,
+    .seller-listing,.seller-garage-card,.promotion-package,
+    .account-buyer-workspace,.dashboard-welcome,.settings-section,
+    .account-quick-panel>button,.panel,.card,.seller-card,
+    .dashboard-card,.dealer-overview-card
+  ){
+    padding:14px!important;
+  }
+  #accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats{
+    gap:10px!important;
+  }
+}
