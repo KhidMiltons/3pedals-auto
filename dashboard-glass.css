@@ -209,3 +209,36 @@ body>header .nav-toggle{grid-area:nav-toggle!important}
   #accDlg .account-dialog-head>#accHomeTop{width:43px!important;height:34px!important;min-height:34px!important;font-size:10px!important}
 }
 @media(prefers-reduced-motion:reduce){#accDlg *,#accDlg *::before,#accDlg *::after{transition:none!important;animation:none!important}}
+
+
+/* V3.1: desktop account header mirrors the intended home header; menu toggle is phone-only. */
+@media (min-width:761px){
+  #accDlg .account-dialog-head>#accMenuToggle{display:none!important}
+  #accDlg .account-dialog-head{
+    display:flex!important;align-items:center!important;gap:10px!important;
+    min-height:56px!important;padding:10px 16px!important;
+    background:rgba(13,13,13,.82)!important;
+    border:0!important;border-bottom:3px solid #d4a017!important;
+    border-radius:12px!important;
+    box-shadow:0 8px 24px rgba(0,0,0,.18)!important;
+    -webkit-backdrop-filter:blur(18px) saturate(135%)!important;
+    backdrop-filter:blur(18px) saturate(135%)!important;
+  }
+  #accDlg h2.account-brand-title{color:#e3b341!important}
+  #accDlg .account-dialog-head>#accHomeTop,
+  #accDlg .account-dialog-head>#accCloseTop{
+    background:rgba(255,255,255,.055)!important;
+    border:1px solid rgba(255,255,255,.14)!important;
+    color:#f5f1e8!important;
+  }
+}
+@media (max-width:760px){
+  #accDlg .account-dialog-head{
+    background:rgba(13,13,13,.78)!important;
+    border:0!important;border-bottom:2px solid #d4a017!important;
+    border-radius:12px!important;
+    -webkit-backdrop-filter:blur(18px) saturate(135%)!important;
+    backdrop-filter:blur(18px) saturate(135%)!important;
+  }
+  #accDlg h2.account-brand-title{color:#e3b341!important}
+}
