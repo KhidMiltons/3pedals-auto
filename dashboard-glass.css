@@ -242,3 +242,78 @@ body>header .nav-toggle{grid-area:nav-toggle!important}
   }
   #accDlg h2.account-brand-title{color:#e3b341!important}
 }
+
+
+/* V3.2: carry the intended home-screen typography and card language throughout the account workspace. */
+#accDlg,
+#accDlg button,#accDlg input,#accDlg select,#accDlg textarea{
+  font-family:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif!important;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+#accDlg :is(h1,h2,h3,h4,h5,h6,.account-brand-title,
+.account-overview-heading h1,.account-overview-heading h2,
+.account-overview-panel h3,.account-overview-panel h4,
+.account-page-title,.seller-nav-identity strong){
+  font-family:"Sora","Manrope",system-ui,sans-serif!important;
+  font-weight:650!important;
+  letter-spacing:-.035em!important;
+  line-height:1.2!important;
+}
+#accDlg #accBody :is(h1){font-size:clamp(25px,2.5vw,34px)!important;font-weight:700!important;letter-spacing:-.045em!important}
+#accDlg #accBody :is(h2){font-size:clamp(19px,1.8vw,24px)!important}
+#accDlg #accBody :is(h3){font-size:16px!important}
+#accDlg #accBody :is(h4){font-size:14px!important}
+#accDlg #accBody :is(p,li,label,small,.meta,.muted,.description,.subtitle,
+.account-panel-caption,.account-eyebrow,.account-activity-item time){
+  font-family:"Manrope",system-ui,sans-serif!important;
+  line-height:1.55!important;
+}
+#accDlg #accBody{font-size:14px!important;line-height:1.55!important}
+#accDlg #accBody :is(.profile-card,.account-tools,.account-page,.account-settings,
+.account-stat,.profile-grid>div,.svc,.seller-summary-card,.account-overview-panel,
+.account-overview-stats>button,.account-booking-item,.account-saved-vehicle,
+.seller-listing,.seller-garage-card,.promotion-package,.account-buyer-workspace,
+.dashboard-welcome,.settings-section,.account-quick-panel>button){
+  background:rgba(19,20,23,.36)!important;
+  border:1px solid rgba(255,255,255,.20)!important;
+  border-radius:18px!important;
+  box-shadow:0 12px 34px rgba(0,0,0,.16),inset 0 1px rgba(255,255,255,.07)!important;
+  -webkit-backdrop-filter:blur(22px) saturate(135%)!important;
+  backdrop-filter:blur(22px) saturate(135%)!important;
+}
+#accDlg #accBody :is(.profile-card,.account-tools,.account-stat,.profile-grid>div,.svc,
+.seller-summary-card,.account-overview-panel,.account-overview-stats>button,
+.account-booking-item,.account-saved-vehicle,.seller-listing,.seller-garage-card,
+.promotion-package,.account-buyer-workspace,.dashboard-welcome,.settings-section,
+.account-quick-panel>button):hover{
+  background:rgba(37,38,41,.48)!important;
+  border-color:rgba(221,192,160,.48)!important;
+  box-shadow:0 16px 38px rgba(0,0,0,.20),inset 0 1px rgba(255,255,255,.08)!important;
+}
+#accDlg #accBody :is(.account-overview-stat-label,.account-quick-panel>button strong,
+.account-overview-panel h3,.account-overview-panel h4,.account-page h2,.account-page h3){
+  font-family:"Sora","Manrope",system-ui,sans-serif!important;
+  letter-spacing:-.025em!important;
+}
+#accDlg #accBody :is(button,.btn,a.button){
+  font-family:"Manrope",system-ui,sans-serif!important;
+  font-size:13px!important;font-weight:650!important;letter-spacing:-.01em!important;
+}
+#accDlg #accBody input,#accDlg #accBody select,#accDlg #accBody textarea{
+  font-family:"Manrope",system-ui,sans-serif!important;font-size:13px!important;
+  border-radius:12px!important;
+}
+@media(max-width:760px){
+  #accDlg #accBody{font-size:13px!important}
+  #accDlg #accBody :is(h1){font-size:25px!important}
+  #accDlg #accBody :is(h2){font-size:19px!important}
+  #accDlg #accBody :is(h3){font-size:15px!important}
+  #accDlg #accBody :is(.profile-card,.account-tools,.account-page,.account-settings,
+  .account-stat,.profile-grid>div,.svc,.seller-summary-card,.account-overview-panel,
+  .account-overview-stats>button,.account-booking-item,.account-saved-vehicle,
+  .seller-listing,.seller-garage-card,.promotion-package,.account-buyer-workspace,
+  .dashboard-welcome,.settings-section,.account-quick-panel>button){
+    border-radius:15px!important;
+  }
+}
