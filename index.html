@@ -1162,7 +1162,8 @@ body:has(#home[hidden]) #publicWhatsappFab{display:none!important}
 }
 </style>
 <style id="privacy-legal-links">
-.legal-footer-links{display:inline-flex;gap:6px;flex-wrap:wrap;align-items:center}.legal-footer-links a,.account-legal-preferences a{color:var(--gold,#d7bd83);text-decoration:underline;text-underline-offset:3px}.legal-footer-links button{border:0;background:none;color:inherit;text-decoration:underline;text-underline-offset:3px;cursor:pointer;font:inherit;padding:0}.account-legal-preferences{margin:16px 0;padding:16px;border-radius:12px;background:rgba(255,255,255,.035)}.account-legal-preferences h4{margin:0 0 6px}.account-legal-preferences p{margin:8px 0}
+.legal-footer-links{display:inline-flex;gap:6px;flex-wrap:wrap;align-items:center}.legal-footer-links a,.account-legal-preferences a{color:var(--gold,#d7bd83);text-decoration:underline;text-underline-offset:3px}.legal-footer-links button{border:0;background:none;color:inherit;text-decoration:underline;text-underline-offset:3px;cursor:pointer;font:inherit;padding:0}.account-subscription-note{margin:16px 0;padding:16px;border-radius:12px;background:rgba(255,255,255,.035)}.account-subscription-note h4{margin:0 0 6px}.account-subscription-note p{margin:8px 0}
+.account-legal-preferences{margin:16px 0;padding:16px;border-radius:12px;background:rgba(255,255,255,.035)}.account-legal-preferences h4{margin:0 0 6px}.account-legal-preferences p{margin:8px 0}
 @media(max-width:600px){.legal-footer-links{display:flex;margin-top:8px}}
 </style>
 </head>
@@ -1358,6 +1359,17 @@ const fmt=n=>Number(n).toLocaleString("en-US");
 // Database connection. Fill in config.js (see SETUP.md). Without it the site runs in demo mode with sample cars.
 const CFG=window.SB_CONFIG||{};
 const sb=(CFG.url&&!/^PASTE/.test(CFG.url)&&window.supabase)?window.supabase.createClient(CFG.url,CFG.key):null;
+async function persistPrivacyConsent(choice){
+  if(!sb||!me?.id||!["accepted","rejected"].includes(choice))return;
+  const allowed=choice==="accepted";
+  const {error}=await sb.from("privacy_consents").upsert({
+    user_id:me.id,analytics_allowed:allowed,marketing_allowed:allowed,
+    policy_version:"2026-11-07",updated_at:new Date().toISOString()
+  },{onConflict:"user_id"});
+  if(error)console.warn("Privacy preference sync failed; this browser's choice remains active.",error);
+}
+window.addEventListener("3pedals:consent-changed",event=>persistPrivacyConsent(event.detail?.choice));
+
 let me=null,profile=null,sellerPreferences={};
 const colors=["#111111","#8a6508","#2a2a2a","#a67c00","#1c1c1c","#6b5206","#3b3b3b","#7d5a00"];
 const HOUSE={type:"yard",name:"3 Pedals Auto KE",contact:"",location:"P.O. Box 462-00516",phone:"+254750495841",email:"3pedalsautoke@gmail.com",web:"",whatsapp:"254750495841"};
@@ -1560,6 +1572,7 @@ async function loadSession(){
   }else{accountDataPrefetch=null;accountDataPrefetchUserId=null}
   refreshAccountUI();
   if(me){
+    const consentChoice=window.ThreePedalsConsent?.getChoice?.();if(consentChoice)persistPrivacyConsent(consentChoice).catch(error=>console.warn("Privacy preference sync failed:",error));
     try{
       if(sessionStorage.getItem("3pedals:account-open")==="1"){
         const savedPage=restoreAccountPage||sessionStorage.getItem("3pedals:account-page")||"settings";
@@ -1587,6 +1600,7 @@ window.sellerSignupActive=false;let sellerSlugEdited=false;
    $("authDlg").classList.toggle("seller-registration",window.sellerSignupActive);
    $("authProfileDetails").hidden=(login||recovery)&&!window.sellerSignupActive;$("authProfileDetails").open=sellerSignup;$("authSellerUrlWrap").hidden=!sellerSignup;
    $("authTitle").textContent=recovery?"Choose a new password":login?(window.sellerSignupActive?"Seller log in":"Welcome back"):(window.sellerSignupActive?"Become a seller":"Create your account");
+   $("authLegal").innerHTML=login?"By signing in, you acknowledge our <a href=\"/privacy.html\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a> and agree to our <a href=\"/terms.html\" target=\"_blank\" rel=\"noopener\">Terms of Service</a>.":"By creating an account, you confirm you meet the minimum age requirement and agree to our <a href=\"/terms.html\" target=\"_blank\" rel=\"noopener\">Terms of Service</a> and acknowledge our <a href=\"/privacy.html\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a>.";
    $("authIntro").textContent=recovery?"Set a new password for your account.":login?"Sign in to manage your listings, promotions and bookings.":window.sellerSignupActive?"Create your seller profile and a public URL for your vehicle collection.":"One account for buying and selling with 3 Pedals Auto KE.";
    $("authSubmit").textContent=recovery?"Save new password":login?"Log in":window.sellerSignupActive?"Create seller account":"Create account";$("authPassword").autocomplete=login?"current-password":"new-password";
    $("authDobField").hidden=login||recovery||sellerSignup;$("authDob").required=!(login||recovery||sellerSignup);$("authNameField").hidden=login||recovery;$("authPhoneField").hidden=login||recovery||sellerSignup;$("authEmailField").hidden=recovery||sellerSignup;$("authPasswordField").hidden=sellerSignup;$("authConfirmField").hidden=login||sellerSignup;$("authTypeWrap").hidden=login||recovery;$("authTypeHint").hidden=login||recovery;updateAuthTypeHint();
@@ -1924,7 +1938,7 @@ async function openAccount(options={}){
     const vehicleSettings=makeSettingsSection("vehicles","New vehicle defaults","Choose the starting stock type used in the Sell a car listing form.",`<label for="prefStockMode">Preferred stock mode</label><select id="prefStockMode"><option value="any">No preference</option><option value="local">Kenya stock</option><option value="import">Import</option></select><p class="meta">New listings start with this selection. You can change it for each vehicle.</p>`);
     const paperworkSettings=makeSettingsSection("paperwork","Paperwork rules","Apply your saved preferences when preparing vehicle documents.",`<label for="prefBankDetails">Bank details for documents</label><textarea id="prefBankDetails" rows="4" placeholder="Bank, account name and payment details"></textarea><label class="check-row"><input id="prefPrintLogo" type="checkbox"> Print your logo on documents</label><label class="check-row"><input id="prefRequireEngine" type="checkbox"> Require engine number in checklist</label><label class="check-row"><input id="prefRequireRegistration" type="checkbox"> Require registration number in checklist</label><label class="check-row"><input id="prefRequireLogbook" type="checkbox"> Require logbook check</label><label class="check-row"><input id="prefRequireSupplierDocs" type="checkbox"> Require supplier ID/PIN check for consignment stock</label><p class="meta">These settings prefill and mark required checks in the printable vehicle documents.</p>`);
     const reminderSettings=makeSettingsSection("reminders","Listing reminders","See overdue listings in Marketing and reset the reminder date after reposting.",`<label for="prefReminderDays">Repost reminder interval (days)</label><input id="prefReminderDays" type="number" min="1" max="365" value="14"><p class="meta">Reminders appear in your seller dashboard when a live listing has not been updated within this interval.</p>`);
-    const accountSettings=document.createElement("section");accountSettings.className="settings-section";accountSettings.dataset.settingsSection="account";accountSettings.hidden=true;accountSettings.innerHTML='<h4>Login and account</h4><p class="meta">Manage the email and password used to sign in.</p><div class="account-legal-preferences"><h4>Privacy and legal</h4><p class="meta">Read how 3 Pedals Auto KE uses and protects your information.</p><p><a href="/privacy.html" target="_blank" rel="noopener">Privacy Policy</a> · <a href="/terms.html" target="_blank" rel="noopener">Terms of Service</a></p><button class="btn ghost" type="button" id="accCookiePreferences">Change cookie preferences</button><p class="meta">Optional analytics and advertising tags load only if you accept them. Essential account, security and payment services remain active.</p></div>';
+    const accountSettings=document.createElement("section");accountSettings.className="settings-section";accountSettings.dataset.settingsSection="account";accountSettings.hidden=true;accountSettings.innerHTML='<h4>Login and account</h4><p class="meta">Manage the email and password used to sign in.</p><div class="account-subscription-note"><h4>Subscriptions</h4><p class="meta">Recurring subscriptions and automatic renewals are not currently offered on this site. Vehicle promotions and chauffeur payments are one-time M-Pesa transactions; their price and service period are shown before payment. There is no subscription renewal date or recurring charge to cancel.</p></div><div class="account-legal-preferences"><h4>Privacy and legal</h4><p class="meta">Read how 3 Pedals Auto KE uses and protects your information.</p><p><a href="/privacy.html" target="_blank" rel="noopener">Privacy Policy</a> · <a href="/terms.html" target="_blank" rel="noopener">Terms of Service</a></p><button class="btn ghost" type="button" id="accCookiePreferences">Change cookie preferences</button><p class="meta">Optional analytics and advertising tags load only if you accept them. Essential account, security and payment services remain active.</p></div>';
     [loginDetails,deleteZone].filter(Boolean).forEach(node=>accountSettings.append(node));
     settingsInner.append(settingsTabs,businessSettings,vehicleSettings,paperworkSettings,reminderSettings,accountSettings);
     accountSettings.querySelector("#accCookiePreferences").onclick=()=>window.ThreePedalsConsent?.open();
