@@ -978,7 +978,7 @@ const adminFmtDate=v=>v?new Date(v).toLocaleString("en-KE",{dateStyle:"medium",t
 const adminEsc=v=>esc(v==null?"":String(v));
 async function loadAdminInsights(){
  const [listings,events,sales,promos,chauffeur]=await Promise.all([
-  sb.from("listings").select("id,make,model,year,status,price,created_at,seller_name,seller_type").order("created_at",{ascending:false}).limit(1000),
+  sb.from("listings").select("id,make,model,year,status,price,created_at,reposted_at,seller_name,seller_type").order("created_at",{ascending:false}).limit(1000),
   sb.from("seller_listing_analytics").select("listing_id,event_type,created_at").order("created_at",{ascending:false}).limit(5000),
   sb.from("seller_sales").select("listing_id,reported_sale_price,created_at").order("created_at",{ascending:false}).limit(1000),
   sb.from("listing_promotions").select("id,amount,payment_status,created_at").order("created_at",{ascending:false}).limit(1000),
@@ -1009,7 +1009,7 @@ async function loadAdminInsights(){
  const counts={};ev.forEach(x=>{if(x.listing_id)counts[x.listing_id]=(counts[x.listing_id]||0)+1});
  const top=ls.map(x=>({...x,engagement:counts[x.id]||0})).sort((a,b)=>b.engagement-a.engagement).slice(0,8);
  $("insTopListings").innerHTML=top.length?'<div class="admin-table-wrap"><table class="admin-data-table"><thead><tr><th>Vehicle</th><th>Seller type</th><th>Status</th><th>Engagement</th></tr></thead><tbody>'+top.map(x=>'<tr><td>'+adminEsc([x.year,x.make,x.model].filter(Boolean).join(" "))+'</td><td>'+adminEsc(x.seller_type||"private")+'</td><td>'+adminEsc(x.status)+'</td><td>'+x.engagement+'</td></tr>').join("")+'</tbody></table></div>':'<div class="empty">No listing engagement is recorded yet.</div>';
- const now=Date.now(),approved=ls.filter(x=>String(x.status||"").toLowerCase()==="approved").map(x=>({...x,ageDays:Math.max(0,Math.floor((now-new Date(x.created_at).getTime())/86400000)),engagement:counts[x.id]||0}));
+ const now=Date.now(),approved=ls.filter(x=>String(x.status||"").toLowerCase()==="approved").map(x=>({...x,ageDays:Math.max(0,Math.floor((now-new Date(x.reposted_at||x.created_at).getTime())/86400000)),engagement:counts[x.id]||0}));
  const ageBuckets=[{label:"0–7 days",count:approved.filter(x=>x.ageDays<=7).length},{label:"8–30 days",count:approved.filter(x=>x.ageDays>7&&x.ageDays<=30).length},{label:"31–60 days",count:approved.filter(x=>x.ageDays>30&&x.ageDays<=60).length},{label:"Over 60 days",count:approved.filter(x=>x.ageDays>60).length}];
  const ageing=approved.filter(x=>x.ageDays>30).sort((a,b)=>b.ageDays-a.ageDays).slice(0,8);
  $("insInventory").innerHTML='<div class="overview-revenue">'+ageBuckets.map(x=>'<div><strong>'+x.count+'</strong><span>'+x.label+'</span></div>').join("")+'</div>'+(ageing.length?'<div class="admin-table-wrap"><table class="admin-data-table"><thead><tr><th>Vehicle</th><th>Age</th><th>Engagement</th></tr></thead><tbody>'+ageing.map(x=>'<tr><td>'+adminEsc([x.year,x.make,x.model].filter(Boolean).join(" "))+'</td><td>'+x.ageDays+' days</td><td>'+x.engagement+'</td></tr>').join("")+'</tbody></table></div>':'<p class="meta">No approved listings are older than 30 days.</p>');
