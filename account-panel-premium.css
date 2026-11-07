@@ -646,3 +646,97 @@ body:has(#accDlg[open])::after {
     scrollbar-width: none;
   }
 }
+
+
+/* 2026-11-07 — overview hierarchy: transparent layout canvas, independent dashboard cards. */
+#accDlg #accBody > .workspace-v2 {
+  box-sizing: border-box !important;
+  display: grid !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  gap: 15px !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  filter: none !important;
+}
+
+/* The welcome banner is an individual card, aligned to the exact grid edges below. */
+#accDlg #accBody .workspace-v2-hero {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 19px 20px !important;
+  border: 1px solid rgba(255,255,255,.085) !important;
+  border-radius: 12px !important;
+  background: rgba(24,27,29,.82) !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+#accDlg #accBody .workspace-v2-hero-actions { min-width: 0 !important; }
+
+/* Each metric and content block owns its own dark surface. */
+#accDlg #accBody .workspace-v2-metric,
+#accDlg #accBody .workspace-v2-card {
+  box-sizing: border-box !important;
+  min-width: 0 !important;
+  border: 1px solid rgba(255,255,255,.085) !important;
+  border-radius: 12px !important;
+  background: #181b1d !important;
+  background-color: #181b1d !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+#accDlg #accBody .workspace-v2-metric {
+  padding: 15px 16px !important;
+}
+#accDlg #accBody .workspace-v2-card {
+  padding: 18px !important;
+}
+#accDlg #accBody .workspace-v2-metric::after {
+  display: none !important;
+}
+#accDlg #accBody .workspace-v2-metric:hover,
+#accDlg #accBody .workspace-v2-metric:focus-visible {
+  background: #1d2225 !important;
+  border-color: rgba(230,189,114,.28) !important;
+  box-shadow: none !important;
+  transform: translateY(-1px);
+}
+#accDlg #accBody .workspace-v2-main-grid,
+#accDlg #accBody .workspace-v2-metric-grid {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+}
+#accDlg #accBody .workspace-v2-main-grid { gap: 13px !important; }
+#accDlg #accBody .workspace-v2-metric-grid { gap: 10px !important; }
+#accDlg #accBody .workspace-v2-footer {
+  margin: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+@media (max-width:760px) {
+  #accDlg #accBody > .workspace-v2 { gap: 12px !important; }
+  #accDlg #accBody .workspace-v2-hero {
+    align-items: flex-start !important;
+    padding: 15px !important;
+    gap: 12px !important;
+  }
+  #accDlg #accBody .workspace-v2-main-grid { gap: 10px !important; }
+  #accDlg #accBody .workspace-v2-card { padding: 15px !important; }
+}
