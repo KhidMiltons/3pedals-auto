@@ -811,7 +811,44 @@ $("bookingList").addEventListener("click",e=>{const b=e.target.closest("[data-pr
 $("garageBookingSearch")?.addEventListener("input",e=>{garageBookingSearch=e.target.value.trim();loadAdminBookings()});$("garageBookingStatus")?.addEventListener("change",e=>{garageBookingStatus=e.target.value;loadAdminBookings()});$("garageBookingDate")?.addEventListener("change",e=>{garageBookingDate=e.target.value;loadAdminBookings()});
 $("chauffeurBookingSearch")?.addEventListener("input",e=>{chauffeurBookingSearch=e.target.value.trim();loadChauffeurBookings()});$("chauffeurBookingStatus")?.addEventListener("change",e=>{chauffeurBookingStatus=e.target.value;loadChauffeurBookings()});$("chauffeurBookingDate")?.addEventListener("change",e=>{chauffeurBookingDate=e.target.value;loadChauffeurBookings()});
 $("clearCompletedBookings").onclick=async()=>{const {data,error:readError}=await sb.from("bookings").select("id,status,service_status").order("created_at",{ascending:false});if(readError){showNotice("Could not check completed bookings: "+readError.message,"err");return}const completed=(data||[]).filter(x=>String(x.status||"").toLowerCase()==="done"||String(x.service_status||"").toLowerCase()==="completed");if(!completed.length){showNotice("There are no completed bookings to clear.","ok");await loadAdminBookings();return}const ids=completed.map(x=>x.id);if(!confirm(`Permanently clear ${ids.length} completed booking${ids.length===1?"":"s"} and their service history? Active and cancelled bookings will be kept.`))return;const {error}=await sb.from("bookings").delete().in("id",ids);if(error){showNotice("Could not clear completed booking history: "+error.message+" Check that admin_about_booking_history.sql was run on this project's database.","err");return}showNotice(`${ids.length} completed booking${ids.length===1?"":"s"} and associated service history cleared.`,"ok");await loadAdminBookings()};
-$("bookingList").onchange=async e=>{const s=e.target.closest("[data-booking-status]"),a=e.target.closest("[data-booking-mechanic]"),p=e.target.closest("[data-service-progress]");if(!s&&!a&&!p)return;const el=s||a||p,id=s?s.dataset.bookingStatus:a?a.dataset.bookingMechanic:p.dataset.serviceProgress,payload=s?(s.value==="done"?{status:"done",service_status:"completed"}:s.value==="cancelled"?{status:"cancelled",service_status:"cancelled"}:{status:s.value}):a?{mechanic_id:a.value||null}:p.value==="completed"?{service_status:"completed",status:"done"}:p.value==="cancelled"?{service_status:"cancelled",status:"cancelled"}:{service_status:p.value};el.disabled=true;const {error}=await sb.from("bookings").update(payload).eq("id",id);el.disabled=false;if(error){showNotice("Could not update booking: "+error.message,"err");await loadAdminBookings();return}if(mechanicControl)await recordAdminAudit("assign_mechanic","garage_booking",id,"Mechanic assignment updated for "+(previous?.ref||"garage booking"));if(progressControl)await recordAdminAudit("update_service_progress","garage_booking",id,"Service progress changed to "+progressControl.value+" for "+(previous?.ref||"garage booking"));if(statusControl)await recordAdminAudit("update_booking_status","garage_booking",id,"Garage booking status changed to "+statusControl.value+" for "+(previous?.ref||"garage booking"));showNotice(statusControl?"Booking status updated.":mechanicControl?"Mechanic assignment saved.":"Service progress saved. Customer history has been updated.","ok");await loadAdminBookings();await loadAdminOverview()};
+$("bookingList").onchange=async e=>{
+ const statusControl=e.target.closest("[data-booking-status]");
+ const mechanicControl=e.target.closest("[data-booking-mechanic]");
+ const progressControl=e.target.closest("[data-service-progress]");
+ if(!statusControl&&!mechanicControl&&!progressControl)return;
+ const control=statusControl||mechanicControl||progressControl;
+ const id=statusControl?statusControl.dataset.bookingStatus:mechanicControl?mechanicControl.dataset.bookingMechanic:progressControl.dataset.serviceProgress;
+ const previous=adminBookingRows.find(x=>String(x.id)===String(id));
+ if(!previous)return;
+ control.disabled=true;
+ try{
+  let payload;
+  if(statusControl)payload=statusControl.value==="done"?{status:"done",service_status:"completed"}:statusControl.value==="cancelled"?{status:"cancelled",service_status:"cancelled"}:{status:statusControl.value};
+  else if(progressControl)payload=progressControl.value==="completed"?{service_status:"completed",status:"done"}:progressControl.value==="cancelled"?{service_status:"cancelled",status:"cancelled"}:{service_status:progressControl.value};
+  else{
+   const mechanicId=mechanicControl.value||null;
+   if(mechanicId){
+    const mechanic=mechanicItems.find(m=>String(m.id)===String(mechanicId));
+    if(!mechanic||mechanic.active===false)throw new Error("Choose an active mechanic.");
+    if(previous.date&&previous.time_slot){
+     const {data:rows,error}=await sb.from("bookings").select("id,ref,status,service_status").eq("mechanic_id",mechanicId).eq("date",previous.date).eq("time_slot",previous.time_slot).neq("id",id);
+     if(error)throw error;
+     const conflict=(rows||[]).find(x=>!["done","cancelled"].includes(String(x.status||"").toLowerCase())&&!["completed","cancelled"].includes(String(x.service_status||"").toLowerCase()));
+     if(conflict)throw new Error("This mechanic already has another active job in that date and time slot ("+(conflict.ref||"booking")+").");
+    }
+   }
+   payload={mechanic_id:mechanicId};
+  }
+  const {error}=await sb.from("bookings").update(payload).eq("id",id);
+  if(error)throw error;
+  if(mechanicControl)await recordAdminAudit("assign_mechanic","garage_booking",id,"Mechanic assignment updated for "+(previous.ref||"garage booking"));
+  if(progressControl)await recordAdminAudit("update_service_progress","garage_booking",id,"Service progress changed to "+progressControl.value+" for "+(previous.ref||"garage booking"));
+  if(statusControl)await recordAdminAudit("update_booking_status","garage_booking",id,"Garage booking status changed to "+statusControl.value+" for "+(previous.ref||"garage booking"));
+  showNotice(statusControl?"Booking status updated.":mechanicControl?"Mechanic assignment saved.":"Service progress saved. Customer history has been updated.","ok");
+  await loadAdminBookings();await loadAdminOverview();
+ }catch(error){showNotice("Could not update garage booking: "+error.message,"err");await loadAdminBookings()}
+ finally{control.disabled=false}
+};
 function setupBookingAlerts(){
  if(!bookingChannel){bookingChannel=sb.channel("garage-booking-admin-alerts").on("postgres_changes",{event:"INSERT",schema:"public",table:"bookings"},payload=>{const row=payload.new||{};if(row.id&&!seenBookingIds.has(String(row.id))){seenBookingIds.add(String(row.id));$("newBookingBadge").textContent=" · NEW";showNotice(`New garage request: ${row.service||"Service booking"}${row.name?" from "+row.name:""}. Open Garage bookings to review it.`,"ok")}loadAdminBookings();loadRequestsInbox();loadAdminOverview()}).subscribe()}
  if(!window.garageBookingUpdateChannel){window.garageBookingUpdateChannel=sb.channel("garage-booking-progress-live").on("postgres_changes",{event:"UPDATE",schema:"public",table:"bookings"},payload=>{const row=payload.new||{};showNotice("Garage booking updated"+(row.ref?" · "+row.ref:"")+". Customer service history is refreshed.","ok");loadAdminBookings();loadRequestsInbox();loadAdminOverview()}).subscribe()}
