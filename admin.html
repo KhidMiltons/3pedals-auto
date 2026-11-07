@@ -219,6 +219,24 @@ body:has(#app) .badge.draft{color:#f1c28c!important}
  body:has(#app) .panel-title button{width:100%}
 }
 @media(prefers-reduced-motion:reduce){body:has(#app) *{transition:none!important;animation:none!important}}
+
+/* Keep the admin header on exactly the same outer grid as dashboard cards. */
+body:has(#app) #app.wrap{display:block!important;width:min(100% - 40px,1440px)!important;max-width:1440px!important}
+body:has(#app) #app > .top,
+body:has(#app) #app > .stats,
+body:has(#app) #app > .attention-panel,
+body:has(#app) #app > .tabs.admin-tabs,
+body:has(#app) #app > section{
+  width:100%!important;max-width:none!important;min-width:0!important;
+  margin-left:0!important;margin-right:0!important;box-sizing:border-box!important;
+}
+body:has(#app) #app > .top{align-self:stretch!important}
+@media(max-width:900px){
+  body:has(#app) #app.wrap{width:calc(100% - 28px)!important}
+}
+@media(max-width:600px){
+  body:has(#app) #app.wrap{width:calc(100% - 20px)!important}
+}
 </style>
 </head>
 <body>
