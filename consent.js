@@ -76,7 +76,7 @@
     title.textContent = "Your privacy choices";
     title.style.cssText = "margin:0 0 8px;font:600 22px/1.2 Manrope,system-ui,sans-serif;color:#f7f4ed";
     const copy = document.createElement("p");
-    copy.textContent = "Essential storage keeps sign-in, security, preferences and payments working. Optional Google Tag Manager analytics and the Meta advertising pixel stay off unless you choose Accept. We do not currently detect a session-replay provider. You can change this choice later in Account Settings.";
+    copy.textContent = "Essential storage keeps sign-in, security, preferences and payments working. Optional Google Analytics 4 (through Google Tag Manager) and the Meta advertising pixel stay off unless you choose Accept. We do not currently detect a session-replay provider. You can change this choice later in Account Settings.";
     copy.style.cssText = "margin:0 0 14px;color:#c7c0b2";
     const links = document.createElement("p");
     links.style.cssText = "margin:0 0 14px";
