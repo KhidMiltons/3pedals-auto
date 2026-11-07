@@ -1544,12 +1544,12 @@ let sellerRegistrationMode=false,sellerSlugEdited=false;
  }
  // Expose the same auth entry point/state for account-panel and recovery handlers.
  window.openAuth=openAuth;
- window.get3PedalsAuthMode=()=>authMode;
+ window.get3PedalsAuthMode=()=>window.authMode;
  $("accountOpen").onclick=()=>me?openAccount():openAuth("register");
 $("accountTile").onclick=()=>me?openAccount():openAuth("register");
 $("authCloseTop").onclick=()=>$("authDlg").close();
 $("authCloseBack").onclick=()=>$("authDlg").close();
-$("authSwitch").onclick=()=>openAuth(window.window.authMode==="login"?"register":"login","",{seller:sellerRegistrationMode});
+$("authSwitch").onclick=()=>openAuth(window.authMode==="login"?"register":"login","",{seller:sellerRegistrationMode});
  $("authName").addEventListener("input",()=>{if(sellerRegistrationMode&&!sellerSlugEdited){$("authSellerSlug").value=slugifySellerName($("authName").value);refreshSellerUrlPreview()}});$("authSellerSlug").addEventListener("input",()=>{sellerSlugEdited=true;refreshSellerUrlPreview()});
 $("authName").addEventListener("input",()=>{if(sellerRegistrationMode&&!sellerSlugEdited){$("authSellerSlug").value=slugifySellerName($("authName").value);refreshSellerUrlPreview()}});$("authSellerSlug").addEventListener("input",()=>{sellerSlugEdited=true;refreshSellerUrlPreview()});
  document.querySelectorAll('input[name="accountType"]').forEach(r=>r.onchange=updateAuthTypeHint);
@@ -3085,7 +3085,7 @@ input,select,textarea{background:rgba(255,255,255,.055)!important}
    button.addEventListener('click',event=>{
      event.preventDefault();
      event.stopPropagation();
-     const mode=typeof authMode!=='undefined'?authMode:'register';
+     const mode=window.authMode||'register';
      const seller=typeof sellerRegistrationMode!=='undefined'&&!!sellerRegistrationMode;
      if(typeof openAuth==='function')openAuth(mode==='login'?'register':'login','',{seller});
      else {const error=document.getElementById('authErr');if(error)error.textContent='Sign-in form is still loading. Refresh the page and try again.'}
@@ -3143,7 +3143,7 @@ footer::before,footer::after,body>footer::before,body>footer::after{border:0!imp
    event.preventDefault();
    event.stopImmediatePropagation();
    try{
-    const current=typeof authMode!=='undefined'?authMode:'register';
+    const current=window.authMode||'register';
     const next=current==='login'?'register':'login';
     if(typeof openAuth!=='function')throw new Error('The sign-in form has not initialized. Refresh the page and try again.');
     const seller=typeof sellerRegistrationMode!=='undefined'&&!!sellerRegistrationMode;
