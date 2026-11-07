@@ -330,3 +330,94 @@ body:has(#accDlg[open])::after {
   body:has(#accDlg[open])::before,
   body:has(#accDlg[open])::after { filter: none; }
 }
+
+/* 2026-11-07 — flat settings canvas and consistent form field rhythm.
+   Keep the outer account dashboard as the only glass surface. */
+#accDlg #accBody {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+#accDlg #accBody #accountPage-settings,
+#accDlg #accBody #accountPage-settings .account-settings-inner,
+#accDlg #accBody #accountPage-settings .settings-section,
+#accDlg #accBody #accountPage-settings .profile-card,
+#accDlg #accBody #accountPage-settings .profile-grid,
+#accDlg #accBody #accountPage-settings .dealer-account-editor,
+#accDlg #accBody #accountPage-settings .dealer-editor-section,
+#accDlg #accBody #accountPage-settings .dealer-fields-grid,
+#accDlg #accBody #accountPage-settings .account-tools,
+#accDlg #accBody #accountPage-settings .account-legal-preferences,
+#accDlg #accBody #accountPage-settings .account-subscription-note {
+  border: 0 !important;
+  outline: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+#accDlg #accBody #accountPage-settings .profile-card {
+  border-bottom: 0 !important;
+  padding-bottom: 10px !important;
+}
+#accDlg #accBody #accountPage-settings .account-settings-tabs {
+  border-bottom: 0 !important;
+}
+
+/* Each form row is a clean vertical label/control pair. */
+#accDlg #accBody #accountPage-settings .profile-grid > div,
+#accDlg #accBody #accountPage-settings .dealer-fields-grid > div {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  min-width: 0 !important;
+  gap: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+#accDlg #accBody #accountPage-settings label {
+  display: block !important;
+  position: static !important;
+  width: 100% !important;
+  margin: 0 0 8px !important;
+  padding: 0 !important;
+  line-height: 1.4 !important;
+  text-align: left !important;
+  transform: none !important;
+}
+#accDlg #accBody #accountPage-settings .profile-grid input,
+#accDlg #accBody #accountPage-settings .profile-grid select,
+#accDlg #accBody #accountPage-settings .profile-grid textarea,
+#accDlg #accBody #accountPage-settings .dealer-fields-grid input,
+#accDlg #accBody #accountPage-settings .dealer-fields-grid select,
+#accDlg #accBody #accountPage-settings .dealer-fields-grid textarea {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+}
+#accDlg #accBody #accountPage-settings .profile-grid,
+#accDlg #accBody #accountPage-settings .dealer-fields-grid {
+  align-items: start !important;
+  row-gap: 18px !important;
+  column-gap: 18px !important;
+}
+@media (max-width:760px) {
+  #accDlg #accBody #accountPage-settings .profile-grid,
+  #accDlg #accBody #accountPage-settings .dealer-fields-grid {
+    row-gap: 15px !important;
+    column-gap: 12px !important;
+  }
+}
