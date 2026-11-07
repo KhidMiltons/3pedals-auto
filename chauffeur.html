@@ -313,7 +313,7 @@ function localInputDate(d){const p=n=>String(n).padStart(2,'0');return d.getFull
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function setAuthMode(register){$('authNameWrap').hidden=!register;$('authPhoneWrap').hidden=!register;$('showRegister').hidden=register;$('showLogin').hidden=!register;$('signInBtn').textContent=register?'Create account':'Sign in'}
 async function loadVehicles(){
- const {data,error}=await sb.from('chauffeur_vehicles').select('id,category,display_name,description,passenger_capacity,hourly_rate,daily_rate,per_km_rate,airport_transfer_rate,half_day_rate,full_day_rate').eq('is_active',true).order('category');
+ const {data,error}=await sb.from('chauffeur_vehicles').select('id,category,display_name,description,photo_url,passenger_capacity,hourly_rate,daily_rate,per_km_rate,airport_transfer_rate,half_day_rate,full_day_rate').eq('is_active',true).order('category');
  if(error)throw error;
  vehicles=data||[];
  $('vehicleId').innerHTML=vehicles.map(v=>'<option value="'+esc(v.id)+'">'+esc(v.display_name)+' · '+esc(v.passenger_capacity)+' seats</option>').join('');
@@ -325,7 +325,7 @@ async function loadVehicles(){
   const photo=suv?'vehicle-photo-suv':'vehicle-photo-sedan';
   const type=suv?'SUV · EXTRA SPACE':'CITY & EXECUTIVE COMFORT';
   const description=v.description|| (suv?'A spacious option for family journeys, executive travel and longer routes.':'A comfortable option for everyday city journeys and individual trips.');
-  const capacity=v.passenger_capacity?'<li>Up to '+esc(v.passenger_capacity)+' passengers</li>':'<li>Capacity confirmed on request</li>';return '<article class="glass vehicle"><div class="vehicle-photo '+photo+'" role="img" aria-label="'+esc(v.display_name)+' chauffeur vehicle"></div><div class="vehicle-copy"><span class="tag">'+type+'</span><h2>'+esc(v.display_name)+'</h2><p>'+esc(description)+'</p><ul class="vehicle-facts">'+capacity+'<li>Chauffeur-driven</li><li>Availability confirmed on request</li></ul><button class="vehicle-select" type="button" data-select-vehicle-id="'+esc(v.id)+'">Select this vehicle <span aria-hidden="true">→</span></button></div></article>';
+  const capacity=v.passenger_capacity?'<li>Up to '+esc(v.passenger_capacity)+' passengers</li>':'<li>Capacity confirmed on request</li>';return '<article class="glass vehicle"><div class="vehicle-photo '+photo+'" '+(v.photo_url?'style="background-image:url(&quot;'+esc(v.photo_url)+'&quot;)"':'')+' role="img" aria-label="'+esc(v.display_name)+' chauffeur vehicle"></div><div class="vehicle-copy"><span class="tag">'+type+'</span><h2>'+esc(v.display_name)+'</h2><p>'+esc(description)+'</p><ul class="vehicle-facts">'+capacity+'<li>Chauffeur-driven</li><li>Availability confirmed on request</li></ul><button class="vehicle-select" type="button" data-select-vehicle-id="'+esc(v.id)+'">Select this vehicle <span aria-hidden="true">→</span></button></div></article>';
  }).join('');
  fleet.querySelectorAll('[data-select-vehicle-id]').forEach(button=>button.addEventListener('click',()=>{
   $('vehicleId').value=button.dataset.selectVehicleId;updateEstimate();
