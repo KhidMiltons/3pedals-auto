@@ -12,7 +12,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <base target="_top">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
-<link rel="stylesheet" href="/account-panel.css?v=20261107-dashboard-clean-v317">
+<link rel="stylesheet" href="/account-panel.css?v=20261107-workspace-v318">
 <link rel="preload" as="image" href="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72" fetchpriority="high">
 <link rel="preconnect" href="https://dlejmelyeaaxcvelvzia.supabase.co" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -1957,41 +1957,93 @@ async function openAccount(options={}){
       ...S.filter(x=>x.created_at).map(x=>({time:x.created_at,title:"Sale reported",detail:"KES "+fmt(x.reported_sale_price||0),kind:"sale"}))
     ].filter(item=>Number.isFinite(new Date(item.time).getTime())).sort((a,b)=>new Date(b.time)-new Date(a.time));
     const activityItems=allActivityItems.slice(0,6);
-    const trendMonths=Array.from({length:6},(_,offset)=>{const date=new Date();date.setDate(1);date.setMonth(date.getMonth()-(5-offset));const key=`${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,"0")}`;const count=L.filter(item=>{if(!item.created_at)return false;const created=new Date(item.created_at);return Number.isFinite(created.getTime())&&`${created.getFullYear()}-${String(created.getMonth()+1).padStart(2,"0")}`===key}).length;return {label:date.toLocaleDateString("en-KE",{month:"short"}),count}});
-    const trendPeak=Math.max(1,...trendMonths.map(item=>item.count));
-    const trendBars=trendMonths.map(item=>`<div class="account-trend-column" title="${item.label}: ${item.count} listings"><span style="--bar-height:${Math.max(7,item.count/trendPeak*100)}%"></span><small>${esc(item.label)}</small></div>`).join("");
-    const healthItems=[{label:"Live",value:listingStatusCounts.approved||0},{label:"In review",value:listingStatusCounts.pending||0},{label:"Other",value:Math.max(0,L.length-(listingStatusCounts.approved||0)-(listingStatusCounts.pending||0))}];
-    const healthTotal=Math.max(1,...healthItems.map(item=>item.value));
-    const healthMarkup=healthItems.map(item=>`<div class="account-health-row"><span>${esc(item.label)}</span><div><i style="--health-width:${item.value/healthTotal*100}%"></i></div><strong>${item.value}</strong></div>`).join("");
     const activityMarkup=activityItems.length?activityItems.map(item=>`<article class="account-activity-item"><span class="account-activity-dot ${esc(item.kind)}"></span><div><strong>${esc(item.title)}</strong><p>${esc(item.detail)}</p></div><time datetime="${esc(item.time)}">${esc(new Date(item.time).toLocaleDateString("en-KE",{day:"numeric",month:"short",year:"numeric"}))}</time></article>`).join(""):'<p class="account-overview-empty">Your recent account activity will appear here.</p>';
     const firstName=name?name.split(/\s+/)[0]:"there";
-    overview.innerHTML=`<div class="account-overview-heading"><div><p class="account-eyebrow">YOUR 3 PEDALS WORKSPACE</p><h3>Welcome back, ${esc(firstName)}</h3><p>Here’s what’s happening with your garage today.</p></div><span class="account-member-chip"><span></span> Account active</span></div>
-      <div class="account-overview-stats">
-        <button type="button" data-overview-page="listings"><span class="account-overview-stat-icon">▧</span><span class="account-overview-stat-label">My listings</span><strong>${L.length}</strong><small>${listingStatusCounts.approved||0} live · ${listingStatusCounts.pending||0} awaiting review</small></button>
-        <button type="button" data-overview-page="promotions"><span class="account-overview-stat-icon">✧</span><span class="account-overview-stat-label">Active promotions</span><strong>${activePromotionCount}</strong><small>Across your vehicle listings</small></button>
-        <button type="button" data-overview-page="bookings"><span class="account-overview-stat-icon">▦</span><span class="account-overview-stat-label">Garage bookings</span><strong>${B.length}</strong><small>Booking records</small></button>
-        <button type="button" data-overview-page="dashboard"><span class="account-overview-stat-icon">↗</span><span class="account-overview-stat-label">Reported sales</span><strong>${S.length}</strong><small>Seller-reported transactions</small></button>
-      </div>
-      <div class="account-overview-visuals">
-        <section class="account-overview-panel account-trend-panel"><div class="account-overview-panel-head"><div><p class="account-eyebrow">MARKETPLACE MOMENTUM</p><h4>Listing activity</h4><span class="account-panel-caption">Vehicles added over the last six months</span></div><strong class="account-chart-total">${L.length}</strong></div><div class="account-trend-chart">${trendBars}</div></section>
-        <section class="account-overview-panel account-health-panel"><div class="account-overview-panel-head"><div><p class="account-eyebrow">INVENTORY SNAPSHOT</p><h4>Listing health</h4><span class="account-panel-caption">Current status of your vehicles</span></div></div><div class="account-health-list">${healthMarkup}</div><div class="account-health-foot"><span>Total vehicles</span><strong>${L.length}</strong></div></section>
-      </div>
-      ${isYard?`<section class="account-overview-panel dealer-overview-card">
-        <div class="dealer-overview-identity">${avatar?`<img src="${esc(avatar)}" alt="Dealer logo">`:`<span class="dealer-overview-monogram">${esc(initialsFor(yardProfile.yard_name||yardProfile.seller_name||me.user_metadata?.dealer_name||name,me.email))}</span>`}
-          <div><p class="account-eyebrow">YOUR DEALERSHIP</p><h4>${esc(yardProfile.yard_name||yardProfile.seller_name||me.user_metadata?.dealer_name||name||"Dealer profile")}</h4><span>${esc(yardProfile.yard_location||yardProfile.location||me.user_metadata?.dealer_location||"Add your business location in Profile")}</span></div>
-          <button type="button" data-overview-page="settings" data-account-tab="business">Edit profile</button>
+    overview.innerHTML=`<main class="workspace-v2">
+      <header class="workspace-v2-hero">
+        <div class="workspace-v2-welcome">
+          <p class="workspace-v2-kicker">3 PEDALS AUTO KE <span></span> ACCOUNT WORKSPACE</p>
+          <h3>Welcome back, ${esc(firstName)}.</h3>
+          <p>Your vehicles, marketplace activity and garage services — together in one place.</p>
         </div>
-        <div class="dealer-overview-details">
+        <div class="workspace-v2-hero-actions">
+          <span class="workspace-v2-status"><i></i> Account active</span>
+          <button type="button" data-overview-buying>Explore inventory <b>↗</b></button>
+        </div>
+      </header>
+
+      <section class="workspace-v2-metric-grid" aria-label="Account summary">
+        <button type="button" class="workspace-v2-metric" data-overview-page="listings">
+          <span class="workspace-v2-metric-top"><span>YOUR INVENTORY</span><i>01</i></span>
+          <strong>${L.length}</strong>
+          <span class="workspace-v2-metric-bottom">Vehicles listed <b>↗</b></span>
+        </button>
+        <button type="button" class="workspace-v2-metric" data-overview-page="listings">
+          <span class="workspace-v2-metric-top"><span>LIVE ON MARKETPLACE</span><i>02</i></span>
+          <strong>${listingStatusCounts.approved||0}</strong>
+          <span class="workspace-v2-metric-bottom">Approved listings <b>↗</b></span>
+        </button>
+        <button type="button" class="workspace-v2-metric" data-overview-page="promotions">
+          <span class="workspace-v2-metric-top"><span>VISIBILITY</span><i>03</i></span>
+          <strong>${activePromotionCount}</strong>
+          <span class="workspace-v2-metric-bottom">Active promotions <b>↗</b></span>
+        </button>
+        <button type="button" class="workspace-v2-metric" data-overview-page="dashboard">
+          <span class="workspace-v2-metric-top"><span>SALES RECORD</span><i>04</i></span>
+          <strong>${S.length}</strong>
+          <span class="workspace-v2-metric-bottom">Reported sales <b>↗</b></span>
+        </button>
+      </section>
+
+      <section class="workspace-v2-main-grid">
+        <article class="workspace-v2-card workspace-v2-inventory">
+          <div class="workspace-v2-card-heading">
+            <div><p class="workspace-v2-kicker">INVENTORY OVERVIEW</p><h4>Your vehicle activity</h4></div>
+            <button type="button" data-overview-page="listings">Manage listings <b>↗</b></button>
+          </div>
+          <div class="workspace-v2-inventory-total"><strong>${L.length}</strong><span>total vehicles in your account</span></div>
+          <div class="workspace-v2-progress"><i style="--workspace-progress:${L.length?Math.round((listingStatusCounts.approved||0)/L.length*100):0}%"></i></div>
+          <div class="workspace-v2-status-list">
+            <div><span><i class="live"></i> Live listings</span><strong>${listingStatusCounts.approved||0}</strong></div>
+            <div><span><i class="review"></i> Awaiting review</span><strong>${listingStatusCounts.pending||0}</strong></div>
+            <div><span><i class="other"></i> Other statuses</span><strong>${Math.max(0,L.length-(listingStatusCounts.approved||0)-(listingStatusCounts.pending||0))}</strong></div>
+          </div>
+        </article>
+
+        <article class="workspace-v2-card workspace-v2-shortcuts">
+          <div class="workspace-v2-card-heading">
+            <div><p class="workspace-v2-kicker">WORKSPACE</p><h4>Quick access</h4></div>
+          </div>
+          <button type="button" data-overview-page="listings"><span class="workspace-v2-shortcut-index">01</span><span><strong>My listings</strong><small>Manage vehicles, photos and prices</small></span><b>↗</b></button>
+          <button type="button" data-overview-page="promotions"><span class="workspace-v2-shortcut-index">02</span><span><strong>Promotions</strong><small>Manage vehicle visibility</small></span><b>↗</b></button>
+          <button type="button" data-overview-page="bookings"><span class="workspace-v2-shortcut-index">03</span><span><strong>Garage bookings</strong><small>Review service requests</small></span><b>↗</b></button>
+          <button type="button" data-overview-page="buying"><span class="workspace-v2-shortcut-index">04</span><span><strong>Saved vehicles</strong><small>Return to vehicles you saved</small></span><b>↗</b></button>
+        </article>
+      </section>
+
+      ${isYard?`<section class="workspace-v2-card workspace-v2-dealer">
+        <div class="workspace-v2-card-heading">
+          <div><p class="workspace-v2-kicker">BUSINESS PROFILE</p><h4>Your dealership</h4></div>
+          <button type="button" data-overview-page="settings" data-account-tab="business">Edit details <b>↗</b></button>
+        </div>
+        <div class="workspace-v2-dealer-content">
+          ${avatar?`<img src="${esc(avatar)}" alt="Dealership logo">`:`<span class="workspace-v2-dealer-monogram">${esc(initialsFor(yardProfile.yard_name||yardProfile.seller_name||me.user_metadata?.dealer_name||name,me.email))}</span>`}
+          <div class="workspace-v2-dealer-name"><strong>${esc(yardProfile.yard_name||yardProfile.seller_name||me.user_metadata?.dealer_name||name||"Dealer profile")}</strong><span>${esc(yardProfile.yard_location||yardProfile.location||me.user_metadata?.dealer_location||"Add your business location in Profile")}</span></div>
           <div><small>PHONE</small><strong>${esc(yardProfile.seller_phone||yardProfile.phone||me.user_metadata?.dealer_phone||phone||"Not added")}</strong></div>
           <div><small>EMAIL</small><strong>${esc(yardProfile.seller_email||yardProfile.email||me.user_metadata?.dealer_email||me.email||"Not added")}</strong></div>
-          <div><small>WHATSAPP</small><strong>${esc(yardProfile.whatsapp||me.user_metadata?.dealer_whatsapp||yardProfile.seller_phone||phone||"Not added")}</strong></div>
           <div><small>WEBSITE</small><strong>${esc(yardProfile.yard_web||yardProfile.web||me.user_metadata?.dealer_website||"Not added")}</strong></div>
         </div>
-      </section>`:""}
-      <div class="account-overview-lower">
-        <section class="account-overview-panel account-activity-panel"><div class="account-overview-panel-head"><div><p class="account-eyebrow">KEEP UP TO DATE</p><h4>Recent activity</h4></div><button type="button" data-overview-page="activity">View all</button></div><div class="account-activity-list">${activityMarkup}</div></section>
-        <section class="account-overview-panel account-quick-panel"><p class="account-eyebrow">QUICK ACTIONS</p><h4>What would you like to do?</h4><button type="button" data-overview-page="listings"><span>＋</span><span><strong>Manage my vehicles</strong><small>Update photos, prices and listing status</small></span><b>›</b></button><button type="button" data-overview-page="promotions"><span>✧</span><span><strong>Promote a vehicle</strong><small>Give an approved listing more visibility</small></span><b>›</b></button><button type="button" data-overview-page="bookings"><span>▦</span><span><strong>View garage bookings</strong><small>Review service requests and appointments</small></span><b>›</b></button><button type="button" data-overview-buying><span>⌕</span><span><strong>Browse vehicles</strong><small>Explore the 3 Pedals marketplace</small></span><b>›</b></button></section>
-      </div>`;
+      </section>`: ""}
+
+      <section class="workspace-v2-card workspace-v2-activity">
+        <div class="workspace-v2-card-heading">
+          <div><p class="workspace-v2-kicker">LATEST UPDATES</p><h4>Recent account activity</h4></div>
+          <button type="button" data-overview-page="activity">Full activity <b>↗</b></button>
+        </div>
+        <div class="workspace-v2-activity-list">${activityMarkup}</div>
+      </section>
+      <footer class="workspace-v2-footer"><span>3 PEDALS AUTO KE</span><span>Automotive excellence, in one workspace.</span></footer>
+    </main>`;
     const makePage=(id,node)=>{const page=document.createElement("section");page.className="account-page";page.id=`accountPage-${id}`;page.hidden=true;if(node)page.append(node);return page};
     const activityPage=makePage("activity"),buyingPage=makePage("buying");
     buyingPage.innerHTML='<section class="account-tools account-buyer-workspace"><div class="account-activity-page-head"><div><p class="account-eyebrow">YOUR MARKETPLACE</p><h3>Buying workspace</h3><p class="meta">Keep track of vehicles you are considering.</p></div><a class="btn ghost" href="#buy" data-browse-buying>Browse vehicles</a></div><h4>Saved vehicles</h4><div id="savedVehiclesGrid" class="account-saved-vehicles-grid"><p class="meta">Loading your saved vehicles…</p></div></section>';
@@ -4064,6 +4116,123 @@ html body #accDlg.account-dashboard-dialog[open] #accBody :is(input,select,texta
  #accDlg.account-dashboard-dialog[open] #accBody .account-overview-lower{grid-template-columns:minmax(0,1fr)!important;gap:11px!important}
 }
 @media(max-width:420px){#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats{grid-template-columns:minmax(0,1fr)!important}}
+
+
+/* Workspace v2: new overview composition; old overview cards are no longer rendered. */
+html body #accDlg.account-dashboard-dialog[open] #accBody .workspace-v2{
+ display:flex!important;flex-direction:column!important;gap:16px!important;
+ width:100%!important;max-width:100%!important;min-width:0!important;
+ margin:0!important;padding:0!important;color:#f3f0e8!important;
+ background:transparent!important;background-image:none!important;border:0!important;box-shadow:none!important;
+}
+html body #accDlg.account-dashboard-dialog[open] #accBody .workspace-v2 *{
+ box-sizing:border-box!important;min-width:0!important;
+ -webkit-backdrop-filter:none!important;backdrop-filter:none!important;filter:none!important;
+}
+html body #accDlg.account-dashboard-dialog[open] #accBody .workspace-v2-hero{
+ display:flex!important;align-items:flex-end!important;justify-content:space-between!important;
+ gap:20px!important;width:100%!important;padding:10px 2px 8px!important;
+ background:transparent!important;border:0!important;box-shadow:none!important;
+}
+.workspace-v2-kicker{margin:0 0 9px!important;color:rgba(220,190,133,.88)!important;font-size:10px!important;font-weight:700!important;letter-spacing:.17em!important;line-height:1.4!important}
+.workspace-v2-kicker span{display:inline-block;width:4px;height:4px;margin:0 7px 2px;border-radius:50%;background:#c6a36b}
+.workspace-v2-welcome h3{margin:0!important;color:#f5f1e9!important;font-size:clamp(25px,3vw,35px)!important;font-weight:600!important;letter-spacing:-.035em!important;line-height:1.12!important}
+.workspace-v2-welcome>p:last-child{margin:9px 0 0!important;color:rgba(235,232,224,.66)!important;font-size:13px!important;line-height:1.55!important}
+.workspace-v2-hero-actions{display:flex!important;align-items:center!important;gap:14px!important;flex-wrap:wrap!important}
+.workspace-v2-status{display:inline-flex!important;align-items:center!important;gap:7px!important;color:rgba(235,232,224,.68)!important;font-size:11px!important;white-space:nowrap!important}
+.workspace-v2-status i{width:7px;height:7px;border-radius:50%;background:#8eae8d;box-shadow:0 0 8px rgba(142,174,141,.25)}
+.workspace-v2-hero-actions>button,.workspace-v2-card-heading>button{
+ display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:9px!important;
+ min-height:38px!important;padding:0 14px!important;border:1px solid rgba(207,174,119,.20)!important;
+ border-radius:999px!important;background:rgba(188,151,91,.10)!important;color:#e5c895!important;
+ font-size:11px!important;font-weight:600!important;cursor:pointer!important;box-shadow:none!important;
+}
+.workspace-v2-hero-actions>button:hover,.workspace-v2-card-heading>button:hover{background:rgba(188,151,91,.17)!important;transform:none!important}
+.workspace-v2-metric-grid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:12px!important;width:100%!important}
+.workspace-v2-metric{
+ display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:13px!important;
+ min-height:130px!important;width:100%!important;margin:0!important;padding:16px!important;text-align:left!important;
+ border:0!important;border-radius:15px!important;background:rgba(13,19,24,.58)!important;
+ color:#f1eee7!important;box-shadow:inset 0 1px rgba(255,255,255,.035),0 8px 24px rgba(0,0,0,.13)!important;
+ cursor:pointer!important;transition:background-color .14s ease!important;
+}
+.workspace-v2-metric:hover{background:rgba(22,29,35,.68)!important;transform:none!important;box-shadow:inset 0 1px rgba(255,255,255,.045),0 8px 24px rgba(0,0,0,.16)!important}
+.workspace-v2-metric-top,.workspace-v2-metric-bottom{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:8px!important}
+.workspace-v2-metric-top{color:rgba(229,224,214,.58)!important;font-size:9px!important;font-weight:700!important;letter-spacing:.12em!important}
+.workspace-v2-metric-top i{font-style:normal!important;color:rgba(215,181,125,.58)!important;font-size:10px!important}
+.workspace-v2-metric>strong{color:#f5f0e7!important;font-size:31px!important;font-weight:500!important;line-height:1!important;letter-spacing:-.04em!important}
+.workspace-v2-metric-bottom{margin-top:auto!important;color:rgba(232,228,219,.72)!important;font-size:11px!important}
+.workspace-v2-metric-bottom b,.workspace-v2-card-heading button b{color:#d7b77f!important;font-size:14px!important;font-weight:400!important}
+.workspace-v2-main-grid{display:grid!important;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr)!important;align-items:stretch!important;gap:12px!important;width:100%!important}
+.workspace-v2-card{
+ min-width:0!important;width:100%!important;padding:18px!important;border:0!important;border-radius:16px!important;
+ background:rgba(12,18,23,.54)!important;background-image:none!important;
+ box-shadow:inset 0 1px rgba(255,255,255,.035),0 8px 26px rgba(0,0,0,.12)!important;color:#f1eee7!important;
+}
+.workspace-v2-card-heading{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;margin:0 0 18px!important}
+.workspace-v2-card-heading .workspace-v2-kicker{margin-bottom:5px!important}
+.workspace-v2-card-heading h4{margin:0!important;color:#f2eee6!important;font-size:16px!important;font-weight:550!important;letter-spacing:-.02em!important}
+.workspace-v2-card-heading>button{min-height:32px!important;padding:0 11px!important;background:rgba(255,255,255,.035)!important;border-color:rgba(255,255,255,.07)!important;color:rgba(238,231,218,.8)!important;font-size:10px!important}
+.workspace-v2-inventory-total{display:flex!important;align-items:baseline!important;gap:10px!important;margin:4px 0 13px!important}
+.workspace-v2-inventory-total strong{color:#f5f0e7!important;font-size:35px!important;font-weight:500!important;letter-spacing:-.04em!important}
+.workspace-v2-inventory-total span{color:rgba(232,228,219,.57)!important;font-size:11px!important}
+.workspace-v2-progress{height:5px!important;overflow:hidden!important;border-radius:99px!important;background:rgba(255,255,255,.07)!important}
+.workspace-v2-progress i{display:block!important;width:var(--workspace-progress,0%)!important;height:100%!important;border-radius:99px!important;background:linear-gradient(90deg,#9c7a49,#d5b982)!important}
+.workspace-v2-status-list{display:grid!important;gap:12px!important;margin-top:18px!important}
+.workspace-v2-status-list>div{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;color:rgba(235,231,222,.72)!important;font-size:11px!important}
+.workspace-v2-status-list>div>span{display:flex!important;align-items:center!important;gap:9px!important}
+.workspace-v2-status-list i{width:7px;height:7px;border-radius:50%;background:#a7b99b}
+.workspace-v2-status-list i.review{background:#c9a56f}.workspace-v2-status-list i.other{background:#78818a}
+.workspace-v2-status-list strong{color:#f2eee6!important;font-size:12px!important;font-weight:600!important}
+.workspace-v2-shortcuts{display:flex!important;flex-direction:column!important;gap:0!important}
+.workspace-v2-shortcuts .workspace-v2-card-heading{margin-bottom:8px!important}
+.workspace-v2-shortcuts>button{
+ display:grid!important;grid-template-columns:28px minmax(0,1fr) 16px!important;align-items:center!important;gap:10px!important;
+ width:100%!important;min-height:56px!important;padding:8px 0!important;margin:0!important;text-align:left!important;
+ border:0!important;border-bottom:1px solid rgba(255,255,255,.055)!important;border-radius:0!important;
+ background:transparent!important;color:#eee9df!important;box-shadow:none!important;cursor:pointer!important
+}
+.workspace-v2-shortcuts>button:last-child{border-bottom:0!important}
+.workspace-v2-shortcuts>button:hover{background:transparent!important;transform:none!important}
+.workspace-v2-shortcut-index{color:rgba(211,177,121,.76)!important;font-size:10px!important;letter-spacing:.06em!important}
+.workspace-v2-shortcuts>button>span:nth-child(2){display:flex!important;flex-direction:column!important;gap:4px!important}
+.workspace-v2-shortcuts>button strong{color:#f1ede5!important;font-size:12px!important;font-weight:550!important}
+.workspace-v2-shortcuts>button small{color:rgba(230,225,215,.54)!important;font-size:10px!important}
+.workspace-v2-shortcuts>button>b{color:#d0ae78!important;font-size:14px!important;font-weight:400!important}
+.workspace-v2-dealer-content{display:grid!important;grid-template-columns:minmax(0,1.5fr) repeat(3,minmax(0,1fr))!important;align-items:center!important;gap:14px!important}
+.workspace-v2-dealer-content>img,.workspace-v2-dealer-monogram{width:42px!important;height:42px!important;object-fit:cover!important;border-radius:12px!important}
+.workspace-v2-dealer-monogram{display:grid!important;place-items:center!important;background:rgba(205,170,113,.12)!important;color:#dfc18f!important;font-size:13px!important}
+.workspace-v2-dealer-name{display:flex!important;flex-direction:column!important;gap:5px!important}
+.workspace-v2-dealer-name strong,.workspace-v2-dealer-content>div>strong{color:#f0ece4!important;font-size:11px!important;overflow-wrap:anywhere!important}
+.workspace-v2-dealer-name span{color:rgba(231,226,216,.57)!important;font-size:10px!important}
+.workspace-v2-dealer-content>div>small{display:block!important;margin-bottom:5px!important;color:rgba(216,181,124,.70)!important;font-size:8px!important;letter-spacing:.12em!important}
+.workspace-v2-activity-list{display:grid!important;gap:0!important}
+.workspace-v2-activity-list .account-activity-item{display:grid!important;grid-template-columns:8px minmax(0,1fr) auto!important;align-items:center!important;gap:12px!important;padding:12px 0!important;border:0!important;border-bottom:1px solid rgba(255,255,255,.055)!important;background:transparent!important;box-shadow:none!important}
+.workspace-v2-activity-list .account-activity-item:last-child{border-bottom:0!important}
+.workspace-v2-activity-list .account-activity-item strong{color:#f0ece4!important;font-size:11px!important}
+.workspace-v2-activity-list .account-activity-item p{margin:4px 0 0!important;color:rgba(230,225,215,.56)!important;font-size:10px!important}
+.workspace-v2-activity-list .account-activity-item time{color:rgba(220,213,201,.48)!important;font-size:9px!important;white-space:nowrap!important}
+.workspace-v2-activity-list .account-activity-dot{width:7px!important;height:7px!important}
+.workspace-v2-activity-list .account-overview-empty{margin:0!important;color:rgba(230,225,215,.58)!important;font-size:11px!important}
+.workspace-v2-footer{display:flex!important;justify-content:space-between!important;gap:12px!important;padding:3px 2px 8px!important;color:rgba(221,214,201,.36)!important;font-size:9px!important;letter-spacing:.08em!important}
+@media(max-width:1050px){
+ .workspace-v2-metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .workspace-v2-main-grid{grid-template-columns:minmax(0,1fr)!important}
+ .workspace-v2-dealer-content{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:760px){
+ html body #accDlg.account-dashboard-dialog[open] #accBody .workspace-v2{gap:12px!important}
+ .workspace-v2-hero{align-items:flex-start!important;flex-direction:column!important;gap:13px!important}
+ .workspace-v2-hero-actions{width:100%!important;justify-content:space-between!important}
+ .workspace-v2-metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
+ .workspace-v2-metric{min-height:116px!important;padding:13px!important}
+ .workspace-v2-card{padding:15px!important}
+ .workspace-v2-dealer-content{grid-template-columns:minmax(0,1fr)!important;gap:13px!important}
+ .workspace-v2-activity-list .account-activity-item{grid-template-columns:8px minmax(0,1fr)!important}
+ .workspace-v2-activity-list .account-activity-item time{grid-column:2!important}
+ .workspace-v2-footer{flex-direction:column!important;gap:5px!important}
+}
+@media(max-width:380px){.workspace-v2-metric-grid{grid-template-columns:minmax(0,1fr)!important}}
 
 </style>
 
