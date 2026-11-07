@@ -1621,8 +1621,8 @@ window.sellerSignupActive=false;let sellerSlugEdited=false;
  // Expose the same auth entry point/state for account-panel and recovery handlers.
  window.openAuth=openAuth;
  window.get3PedalsAuthMode=()=>window.authMode;
- $("accountOpen").onclick=()=>me?openAccount():openAuth("register");
-$("accountTile").onclick=()=>me?openAccount():openAuth("register");
+ $("accountOpen").onclick=()=>me?openAccount():openAuth("login");
+$("accountTile").onclick=()=>me?openAccount():openAuth("login");
 $("authCloseTop").onclick=()=>$("authDlg").close();
 $("authCloseBack").onclick=()=>$("authDlg").close();
 $("authSwitch").onclick=()=>openAuth(window.authMode==="login"?"register":"login","",{seller:window.sellerSignupActive});
