@@ -34,7 +34,7 @@
       </nav>
       <section class="account-dashboard-main">
         <header class="account-dialog-head">
-          <button id="accMenuToggle" type="button" aria-label="Open account menu" aria-expanded="false" aria-controls="accountMenu" onclick="window.toggleAccountMenu(event)">☰</button>
+          <button id="accMenuToggle" type="button" aria-label="Open account menu" aria-expanded="false" aria-controls="accountMenu" >☰</button>
           <h2 class="account-brand-title"><img src="favicon.svg" alt="" class="account-brand-icon"><span>3 Pedals Auto KE</span></h2>
           <button id="accHomeTop" type="button" aria-label="Return to homepage" title="Return to homepage">Home</button>
           <button id="accCloseTop" type="button" aria-label="Close account" title="Close account">×</button>
