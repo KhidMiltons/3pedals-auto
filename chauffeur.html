@@ -4,6 +4,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Chauffeur Hire | 3 Pedals Auto KE</title>
 <meta name="description" content="Request premium chauffeur-driven travel with 3 Pedals Auto KE. Explore available vehicles, choose your hire arrangement and receive a confirmed quotation before payment.">
+<script src="/consent.js?v=20261107-1"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/site-theme.css?v=20261107-premium-system">
@@ -266,7 +267,7 @@ a{color:inherit}
 </div></section>
 <section class="glass booking" id="booking">
 <h2>Request a chauffeur</h2><p class="sub">Submit your request first. We will review vehicle availability and send you the confirmed quote. Payment is only requested after approval.</p>
-<div id="authPanel"><div class="price-note">Sign in with your existing 3 Pedals account, or create an account to submit and track your booking requests.</div><div class="auth"><div class="field"><label for="authEmail">Email address</label><input id="authEmail" type="email" autocomplete="email" placeholder="you@example.com"></div><div class="field"><label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="current-password" placeholder="At least 8 characters"></div><div class="field" id="authNameWrap" hidden><label for="authName">Full name</label><input id="authName" autocomplete="name"></div><div class="field" id="authPhoneWrap" hidden><label for="authPhone">Phone number</label><input id="authPhone" type="tel" autocomplete="tel"></div></div><div class="actions"><button class="btn" id="signInBtn" type="button">Sign in</button><button class="ghost" id="showRegister" type="button">Create account</button><button class="ghost" id="showLogin" type="button" hidden>Back to sign in</button></div><div class="notice" id="authNotice" role="status"></div></div>
+<div id="authPanel"><div class="price-note">Sign in with your existing 3 Pedals account, or create an account to submit and track your booking requests.</div><div class="auth"><div class="field" id="authDobWrap" hidden><label for="authDob">Date of birth</label><input id="authDob" type="date" autocomplete="bday"><p class="hint">You must be at least 13 years old to create an account.</p></div><div class="field"><label for="authEmail">Email address</label><input id="authEmail" type="email" autocomplete="email" placeholder="you@example.com"></div><div class="field"><label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="current-password" placeholder="At least 8 characters"></div><div class="field" id="authNameWrap" hidden><label for="authName">Full name</label><input id="authName" autocomplete="name"></div><div class="field" id="authPhoneWrap" hidden><label for="authPhone">Phone number</label><input id="authPhone" type="tel" autocomplete="tel"></div></div><div class="actions"><button class="btn" id="signInBtn" type="button">Sign in</button><button class="ghost" id="showRegister" type="button">Create account</button><button class="ghost" id="showLogin" type="button" hidden>Back to sign in</button></div><p class="hint" id="authLegal">By creating an account, you confirm you are at least 13 and agree to our <a href="/terms.html" target="_blank" rel="noopener">Terms of Service</a> and acknowledge our <a href="/privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</p><div class="notice" id="authNotice" role="status"></div></div>
 <form id="requestForm" hidden>
 <div class="grid">
 <div class="field"><label for="vehicleId">Vehicle</label><select id="vehicleId" required></select></div>
@@ -301,7 +302,7 @@ a{color:inherit}
 <details><summary>When will I receive my chauffeur's details?</summary><p>Chauffeur assignment details are shared after the booking has been approved and the team has assigned a driver.</p></details>
 <details><summary>Can I change or cancel a request?</summary><p>Please contact 3 Pedals Auto KE with your booking reference as soon as possible. Any change depends on availability and the booking status.</p></details>
 <details><summary>Will I receive updates on WhatsApp?</summary><p>You can optionally consent to WhatsApp booking updates when submitting your request. You can leave the box unticked and still submit your request.</p></details>
-</div></section><footer class="foot">3 Pedals Auto KE · Chauffeur Hire · Prices in KES</footer>
+</div></section><footer class="foot">3 Pedals Auto KE · Chauffeur Hire · Prices in KES<br><a href="/privacy.html">Privacy Policy</a> · <a href="/terms.html">Terms of Service</a> · <button type="button" class="ghost" onclick="window.ThreePedalsConsent?.open()">Cookie preferences</button></footer>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="/config.js"></script>
 <script>
@@ -311,7 +312,7 @@ function notice(id,msg,type){const el=$(id);el.textContent=msg;el.className='not
 function hide(id){$(id).className='notice'}
 function localInputDate(d){const p=n=>String(n).padStart(2,'0');return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+'T'+p(d.getHours())+':'+p(d.getMinutes())}
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function setAuthMode(register){$('authNameWrap').hidden=!register;$('authPhoneWrap').hidden=!register;$('showRegister').hidden=register;$('showLogin').hidden=!register;$('signInBtn').textContent=register?'Create account':'Sign in'}
+function setAuthMode(register){$('authDobWrap').hidden=!register;$('authDob').required=register;$('authNameWrap').hidden=!register;$('authPhoneWrap').hidden=!register;$('showRegister').hidden=register;$('showLogin').hidden=!register;$('signInBtn').textContent=register?'Create account':'Sign in';$('authLegal').textContent=register?'By creating an account, you confirm you are at least 13 and agree to our Terms of Service and acknowledge our Privacy Policy.':'By signing in, you acknowledge our Privacy Policy and agree to our Terms of Service.'}
 async function loadVehicles(){
  const {data,error}=await sb.from('chauffeur_vehicles').select('id,category,display_name,description,photo_url,passenger_capacity,hourly_rate,daily_rate,per_km_rate,airport_transfer_rate,half_day_rate,full_day_rate').eq('is_active',true).order('category');
  if(error)throw error;
@@ -347,7 +348,14 @@ async function loadBookings(){
  }).join(''):'<p class="hint">You have not submitted a chauffeur request yet.</p>';
  if(adminMode)await loadAdmin();
 }
-async function syncSession(){const {data:{user}}=await sb.auth.getUser();currentUser=user;$('authPanel').hidden=!!user;$('requestForm').hidden=!user;if(user){const {data:p}=await sb.from('profiles').select('name,phone,is_admin').eq('id',user.id).maybeSingle();$('customerName').value=p?.name||user.user_metadata?.name||user.user_metadata?.full_name||'';$('customerPhone').value=p?.phone||user.user_metadata?.phone||'';adminMode=!!p?.is_admin;$('chauffeurAdmin').hidden=!adminMode;await loadBookings() }else{$('myBookings').hidden=true;$('chauffeurAdmin').hidden=true;adminMode=false}}
+async function persistChauffeurConsent(choice){
+ if(!sb||!currentUser?.id||!['accepted','rejected'].includes(choice))return;
+ const allowed=choice==='accepted';
+ const {error}=await sb.from('privacy_consents').upsert({user_id:currentUser.id,analytics_allowed:allowed,marketing_allowed:allowed,policy_version:'2026-11-07',updated_at:new Date().toISOString()},{onConflict:'user_id'});
+ if(error)console.warn('Privacy preference sync failed.',error);
+}
+window.addEventListener('3pedals:consent-changed',event=>persistChauffeurConsent(event.detail?.choice));
+async function syncSession(){const {data:{user}}=await sb.auth.getUser();currentUser=user;if(user){const choice=window.ThreePedalsConsent?.getChoice?.();if(choice)persistChauffeurConsent(choice).catch(()=>{});}$('authPanel').hidden=!!user;$('requestForm').hidden=!user;if(user){const {data:p}=await sb.from('profiles').select('name,phone,is_admin').eq('id',user.id).maybeSingle();$('customerName').value=p?.name||user.user_metadata?.name||user.user_metadata?.full_name||'';$('customerPhone').value=p?.phone||user.user_metadata?.phone||'';adminMode=!!p?.is_admin;$('chauffeurAdmin').hidden=!adminMode;await loadBookings() }else{$('myBookings').hidden=true;$('chauffeurAdmin').hidden=true;adminMode=false}}
 
 async function loadAdmin(){
  const [{data:bookings,error:bErr},{data:drivers,error:dErr},{data:cancels,error:cErr}]=await Promise.all([
@@ -437,7 +445,7 @@ document.querySelector('[data-custom-journey]')?.addEventListener('click',()=>{
  $('booking').scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=> $('notes').focus(),350);
 });
 $('showRegister').onclick=()=>setAuthMode(true);$('showLogin').onclick=()=>setAuthMode(false);
-$('signInBtn').onclick=async()=>{hide('authNotice');const email=$('authEmail').value.trim(),password=$('authPassword').value;if(!email||!password){notice('authNotice','Enter your email and password.','error');return}try{if(!$('authNameWrap').hidden){const name=$('authName').value.trim(),phone=$('authPhone').value.trim();if(!name||!phone)throw Error('Enter your name and phone number.');const {data,error}=await sb.auth.signUp({email,password,options:{data:{name,phone,account_type:'private'},emailRedirectTo:'https://3pedalsauto.co.ke/'}});if(error)throw error;if(!data.session){notice('authNotice','Account created. Confirm your email, then return here and sign in.','success');return}}else{const {error}=await sb.auth.signInWithPassword({email,password});if(error)throw error}await syncSession()}catch(e){notice('authNotice',e.message||'Could not authenticate.','error')}};
+$('signInBtn').onclick=async()=>{hide('authNotice');const email=$('authEmail').value.trim(),password=$('authPassword').value;if(!email||!password){notice('authNotice','Enter your email and password.','error');return}try{if(!$('authNameWrap').hidden){const name=$('authName').value.trim(),phone=$('authPhone').value.trim(),dobValue=$('authDob').value;if(!dobValue)throw Error('Enter your date of birth before creating an account.');const dob=new Date(dobValue+'T00:00:00'),today=new Date(),cutoff=new Date(today.getFullYear()-13,today.getMonth(),today.getDate());if(!Number.isFinite(dob.getTime())||dob>today)throw Error('Enter a valid date of birth.');if(dob>cutoff)throw Error('You must be at least 13 years old to create a 3 Pedals Auto KE account.');if(!name||!phone)throw Error('Enter your name and phone number.');const {data,error}=await sb.auth.signUp({email,password,options:{data:{name,phone,account_type:'private',date_of_birth:dobValue},emailRedirectTo:'https://3pedalsauto.co.ke/'}});if(error)throw error;if(!data.session){notice('authNotice','Account created. Confirm your email, then return here and sign in.','success');return}}else{const {error}=await sb.auth.signInWithPassword({email,password});if(error)throw error}await syncSession()}catch(e){notice('authNotice',e.message||'Could not authenticate.','error')}};
 $('signOutBtn').onclick=async()=>{await sb.auth.signOut();currentUser=null;await syncSession()};
 $('refreshMyBookings').onclick=()=>loadBookings().catch(e=>notice('bookingNotice',e.message,'error'));
 ['vehicleId','pricingMethod','startAt','endAt','distance'].forEach(id=>$(id).addEventListener('input',updateEstimate));
