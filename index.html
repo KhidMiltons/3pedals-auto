@@ -2024,30 +2024,33 @@ async function openAccount(options={}){
         </div>
         <div class="workspace-v2-hero-actions">
           <span class="workspace-v2-status"><i></i> Account active</span>
-          <button type="button" data-overview-buying>Explore inventory <b>↗</b></button>
+          <div class="workspace-v2-primary-actions">
+            <button type="button" class="workspace-v2-action-secondary" data-overview-page="listings">Manage listings <b>↗</b></button>
+            <button type="button" data-overview-buying>Explore inventory <b>↗</b></button>
+          </div>
         </div>
       </header>
 
       <section class="workspace-v2-metric-grid" aria-label="Account summary">
         <button type="button" class="workspace-v2-metric" data-overview-page="listings">
-          <span class="workspace-v2-metric-top"><span>YOUR INVENTORY</span><i>01</i></span>
+          <span class="workspace-v2-metric-top"><span>MY LISTINGS</span><i>01</i></span>
           <strong>${L.length}</strong>
-          <span class="workspace-v2-metric-bottom">Vehicles listed <b>↗</b></span>
-        </button>
-        <button type="button" class="workspace-v2-metric" data-overview-page="listings">
-          <span class="workspace-v2-metric-top"><span>LIVE ON MARKETPLACE</span><i>02</i></span>
-          <strong>${listingStatusCounts.approved||0}</strong>
-          <span class="workspace-v2-metric-bottom">Approved listings <b>↗</b></span>
+          <span class="workspace-v2-metric-bottom">Vehicles in your account <b>↗</b></span>
         </button>
         <button type="button" class="workspace-v2-metric" data-overview-page="promotions">
-          <span class="workspace-v2-metric-top"><span>VISIBILITY</span><i>03</i></span>
+          <span class="workspace-v2-metric-top"><span>ACTIVE PROMOTIONS</span><i>02</i></span>
           <strong>${activePromotionCount}</strong>
-          <span class="workspace-v2-metric-bottom">Active promotions <b>↗</b></span>
+          <span class="workspace-v2-metric-bottom">Visibility campaigns <b>↗</b></span>
         </button>
-        <button type="button" class="workspace-v2-metric" data-overview-page="dashboard">
-          <span class="workspace-v2-metric-top"><span>SALES RECORD</span><i>04</i></span>
-          <strong>${S.length}</strong>
-          <span class="workspace-v2-metric-bottom">Reported sales <b>↗</b></span>
+        <button type="button" class="workspace-v2-metric" data-overview-page="buying">
+          <span class="workspace-v2-metric-top"><span>SAVED VEHICLES</span><i>03</i></span>
+          <strong>${savedVehicleRows.length}</strong>
+          <span class="workspace-v2-metric-bottom">Vehicles on your shortlist <b>↗</b></span>
+        </button>
+        <button type="button" class="workspace-v2-metric" data-overview-page="bookings">
+          <span class="workspace-v2-metric-top"><span>GARAGE BOOKINGS</span><i>04</i></span>
+          <strong>${B.length}</strong>
+          <span class="workspace-v2-metric-bottom">Service requests recorded <b>↗</b></span>
         </button>
       </section>
 
