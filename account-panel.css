@@ -872,3 +872,260 @@
     gap:10px!important;
   }
 }
+
+
+/* V3.16 — Account overview refinement: clearer hierarchy, balanced cards and dark glass. */
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-heading{
+  display:flex!important;align-items:flex-end!important;justify-content:space-between!important;
+  gap:18px!important;width:100%!important;margin:0 0 20px!important;padding:4px 2px 2px!important;
+  background:transparent!important;border:0!important;box-shadow:none!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-heading>div{min-width:0}
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-heading .account-eyebrow{
+  margin:0 0 8px!important;color:rgba(216,184,132,.92)!important;
+  font:800 9px/1.3 Manrope,system-ui,sans-serif!important;letter-spacing:.18em!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-heading h3{
+  margin:0 0 6px!important;color:#f7f3ec!important;
+  font:700 clamp(22px,2.2vw,30px)/1.14 Sora,Manrope,system-ui,sans-serif!important;
+  letter-spacing:-.045em!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-heading>div>p:last-child{
+  margin:0!important;color:rgba(241,238,231,.66)!important;font-size:12px!important;line-height:1.6!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-member-chip{
+  display:inline-flex!important;align-items:center!important;gap:8px!important;flex:0 0 auto!important;
+  padding:8px 12px!important;border-radius:999px!important;
+  color:rgba(244,240,233,.84)!important;background:rgba(9,13,17,.36)!important;
+  border:1px solid rgba(255,255,255,.11)!important;font:650 10px Manrope,system-ui,sans-serif!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-member-chip>span{
+  width:7px!important;height:7px!important;border-radius:50%!important;
+  background:#9dbb91!important;box-shadow:0 0 0 3px rgba(157,187,145,.12)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats{
+  display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:12px!important;width:100%!important;margin:0 0 14px!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats>button{
+  position:relative!important;display:grid!important;grid-template-columns:34px minmax(0,1fr)!important;
+  grid-template-rows:auto auto auto!important;align-items:center!important;justify-items:start!important;
+  gap:4px 10px!important;min-width:0!important;min-height:126px!important;padding:16px!important;
+  overflow:hidden!important;text-align:left!important;border-radius:17px!important;
+  color:#f4f0e9!important;background:rgba(8,13,18,.48)!important;
+  background-image:none!important;border:1px solid rgba(255,255,255,.105)!important;
+  box-shadow:0 10px 28px rgba(0,0,0,.14),inset 0 1px rgba(255,255,255,.035)!important;
+  -webkit-backdrop-filter:blur(24px) saturate(135%)!important;backdrop-filter:blur(24px) saturate(135%)!important;
+  transition:transform .18s ease,border-color .18s ease,background .18s ease!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats>button::after{
+  content:"";position:absolute;left:0;top:14px;bottom:14px;width:2px;border-radius:3px;
+  background:linear-gradient(180deg,rgba(216,184,132,.85),rgba(216,184,132,.08));
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats>button:hover{
+  transform:translateY(-2px)!important;background:rgba(13,19,25,.62)!important;
+  border-color:rgba(216,184,132,.28)!important;box-shadow:0 14px 32px rgba(0,0,0,.20)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stat-icon{
+  grid-column:1;grid-row:1 / span 2;display:grid!important;place-items:center!important;
+  width:34px!important;height:34px!important;border-radius:11px!important;
+  color:#dfc49a!important;background:rgba(194,155,101,.12)!important;
+  border:1px solid rgba(216,184,132,.16)!important;font-size:16px!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stat-label{
+  grid-column:2;grid-row:1;color:rgba(244,240,233,.66)!important;
+  font:700 10px/1.35 Manrope,system-ui,sans-serif!important;letter-spacing:.025em!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats>button strong{
+  grid-column:2;grid-row:2;color:#f7f1e6!important;
+  font:750 clamp(23px,2.3vw,29px)/1 Sora,Manrope,system-ui,sans-serif!important;
+  letter-spacing:-.045em!important;font-variant-numeric:tabular-nums!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats>button small{
+  grid-column:1 / -1;grid-row:3;margin-top:7px!important;
+  color:rgba(238,234,226,.52)!important;font:500 9px/1.45 Manrope,system-ui,sans-serif!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-visuals{
+  display:grid!important;grid-template-columns:minmax(0,1.25fr) minmax(260px,.85fr)!important;
+  align-items:stretch!important;gap:14px!important;width:100%!important;margin:0 0 14px!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-panel{
+  min-width:0!important;padding:18px!important;border-radius:18px!important;
+  color:#f4f0e9!important;background:rgba(8,13,18,.46)!important;
+  background-color:rgba(8,13,18,.46)!important;background-image:none!important;
+  border:1px solid rgba(255,255,255,.105)!important;
+  box-shadow:0 12px 30px rgba(0,0,0,.15),inset 0 1px rgba(255,255,255,.035)!important;
+  -webkit-backdrop-filter:blur(24px) saturate(135%)!important;backdrop-filter:blur(24px) saturate(135%)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-panel-head{
+  display:flex!important;align-items:flex-start!important;justify-content:space-between!important;gap:12px!important;
+  margin:0 0 16px!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-panel-head h4,
+#accDlg.account-dashboard-dialog[open] #accBody .account-quick-panel>h4{
+  margin:2px 0 5px!important;color:#f4f0e9!important;
+  font:650 14px/1.3 Sora,Manrope,system-ui,sans-serif!important;letter-spacing:-.02em!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-panel-head .account-eyebrow,
+#accDlg.account-dashboard-dialog[open] #accBody .account-quick-panel>.account-eyebrow{
+  margin:0 0 5px!important;color:rgba(216,184,132,.82)!important;
+  font:800 8px/1.3 Manrope,system-ui,sans-serif!important;letter-spacing:.16em!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-panel-caption{
+  color:rgba(239,235,227,.52)!important;font:500 10px/1.5 Manrope,system-ui,sans-serif!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-chart-total{
+  display:grid!important;place-items:center!important;min-width:38px!important;height:38px!important;
+  padding:0 8px!important;border-radius:12px!important;color:#e2c89f!important;
+  background:rgba(194,155,101,.10)!important;border:1px solid rgba(216,184,132,.15)!important;
+  font:750 15px Sora,Manrope,system-ui,sans-serif!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-trend-chart{
+  display:flex!important;align-items:flex-end!important;justify-content:space-around!important;
+  gap:clamp(7px,1.2vw,16px)!important;min-height:145px!important;padding:12px 8px 2px!important;
+  border-bottom:1px solid rgba(255,255,255,.12)!important;
+  background:repeating-linear-gradient(to bottom,transparent 0,transparent 35px,rgba(255,255,255,.045) 36px,transparent 37px)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-trend-chart>*{min-width:0!important}
+#accDlg.account-dashboard-dialog[open] #accBody .account-health-list{display:grid!important;gap:13px!important}
+#accDlg.account-dashboard-dialog[open] #accBody .account-health-row{
+  display:grid!important;grid-template-columns:minmax(66px,.7fr) minmax(0,1.5fr) 25px!important;
+  align-items:center!important;gap:10px!important;color:rgba(242,238,230,.72)!important;
+  font:600 10px Manrope,system-ui,sans-serif!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-health-row>div{
+  height:6px!important;overflow:hidden!important;border-radius:999px!important;background:rgba(255,255,255,.08)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-health-row>div>i{
+  display:block!important;width:var(--health-width)!important;height:100%!important;border-radius:inherit!important;
+  background:linear-gradient(90deg,#9d774d,#d8bd8e)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-health-row>strong{
+  color:#f4ead9!important;text-align:right!important;font:700 11px Sora,Manrope,system-ui,sans-serif!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-health-foot{
+  display:flex!important;justify-content:space-between!important;gap:12px!important;
+  margin:16px 0 0!important;padding:12px 0 0!important;
+  border-top:1px solid rgba(255,255,255,.09)!important;
+  color:rgba(242,238,230,.58)!important;font:600 10px Manrope,system-ui,sans-serif!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-health-foot strong{color:#f4ead9!important}
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-lower{
+  display:grid!important;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr)!important;
+  align-items:stretch!important;gap:14px!important;width:100%!important;margin:0!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-activity-list{display:grid!important;gap:0!important}
+#accDlg.account-dashboard-dialog[open] #accBody .account-activity-item{
+  display:grid!important;grid-template-columns:8px minmax(0,1fr) auto!important;
+  align-items:start!important;gap:11px!important;padding:12px 0!important;
+  border-bottom:1px solid rgba(255,255,255,.075)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-activity-item:last-child{border-bottom:0!important}
+#accDlg.account-dashboard-dialog[open] #accBody .account-activity-item>div{min-width:0!important}
+#accDlg.account-dashboard-dialog[open] #accBody .account-activity-item strong{
+  display:block!important;margin:0 0 4px!important;color:#f2eee6!important;font:650 11px/1.4 Manrope,system-ui,sans-serif!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-activity-item p{
+  margin:0!important;color:rgba(239,235,227,.57)!important;font:500 10px/1.5 Manrope,system-ui,sans-serif!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-activity-item time{
+  color:rgba(239,235,227,.43)!important;font:500 9px/1.4 Manrope,system-ui,sans-serif!important;white-space:nowrap!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-activity-dot{
+  width:7px!important;height:7px!important;margin-top:4px!important;border-radius:50%!important;
+  background:#c6a16d!important;box-shadow:0 0 0 3px rgba(198,161,109,.12)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-quick-panel>button{
+  display:grid!important;grid-template-columns:32px minmax(0,1fr) 12px!important;
+  align-items:center!important;gap:11px!important;width:100%!important;min-height:54px!important;
+  padding:9px 2px!important;margin:0!important;text-align:left!important;
+  border:0!important;border-bottom:1px solid rgba(255,255,255,.075)!important;border-radius:0!important;
+  color:#f2eee6!important;background:transparent!important;box-shadow:none!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-quick-panel>button:last-child{border-bottom:0!important}
+#accDlg.account-dashboard-dialog[open] #accBody .account-quick-panel>button>span:first-child{
+  display:grid!important;place-items:center!important;width:31px!important;height:31px!important;
+  border-radius:10px!important;color:#ddc397!important;background:rgba(194,155,101,.10)!important;
+  border:1px solid rgba(216,184,132,.13)!important;font-size:15px!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-quick-panel>button>span:nth-child(2){display:grid!important;gap:3px!important;min-width:0!important}
+#accDlg.account-dashboard-dialog[open] #accBody .account-quick-panel>button strong{
+  color:#f4f0e9!important;font:650 10px/1.35 Manrope,system-ui,sans-serif!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-quick-panel>button small{
+  color:rgba(239,235,227,.49)!important;font:500 9px/1.4 Manrope,system-ui,sans-serif!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-quick-panel>button>b{
+  color:rgba(216,184,132,.78)!important;font-size:17px!important;font-weight:500!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-quick-panel>button:hover{
+  background:rgba(255,255,255,.035)!important;transform:none!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-card{
+  display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:17px!important;
+  margin:0 0 14px!important;padding:18px!important;border-radius:18px!important;
+  color:#f4f0e9!important;background:rgba(8,13,18,.46)!important;
+  border:1px solid rgba(255,255,255,.105)!important;box-shadow:0 12px 30px rgba(0,0,0,.15)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-identity{
+  display:flex!important;align-items:center!important;gap:13px!important;min-width:0!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-identity>img,
+#accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-monogram{
+  width:48px!important;height:48px!important;flex:0 0 48px!important;border-radius:14px!important;
+  object-fit:cover!important;border:1px solid rgba(216,184,132,.22)!important;
+  background:rgba(194,155,101,.12)!important;color:#e3c99f!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-identity>div{min-width:0!important;flex:1 1 auto!important}
+#accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-identity h4{
+  margin:2px 0 4px!important;color:#f5f0e8!important;font:650 14px/1.3 Sora,Manrope,system-ui,sans-serif!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-identity>div>span{
+  color:rgba(239,235,227,.55)!important;font:500 10px/1.4 Manrope,system-ui,sans-serif!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-identity>button{
+  flex:0 0 auto!important;padding:8px 12px!important;border-radius:10px!important;
+  color:#e3c99f!important;background:rgba(194,155,101,.10)!important;
+  border:1px solid rgba(216,184,132,.18)!important;font:650 10px Manrope,system-ui,sans-serif!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-details{
+  display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:10px!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-details>div{
+  min-width:0!important;padding:12px!important;border-radius:12px!important;
+  background:rgba(255,255,255,.035)!important;border:1px solid rgba(255,255,255,.065)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-details small{
+  display:block!important;margin:0 0 6px!important;color:rgba(216,184,132,.72)!important;
+  font:800 8px Manrope,system-ui,sans-serif!important;letter-spacing:.12em!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-details strong{
+  display:block!important;color:rgba(245,241,233,.88)!important;
+  font:600 10px/1.45 Manrope,system-ui,sans-serif!important;overflow-wrap:anywhere!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-empty{
+  margin:0!important;padding:16px 0!important;color:rgba(239,235,227,.5)!important;
+  font:500 10px/1.6 Manrope,system-ui,sans-serif!important;
+}
+@media(max-width:1050px){
+  #accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  #accDlg.account-dashboard-dialog[open] #accBody .account-overview-visuals{grid-template-columns:minmax(0,1fr)!important}
+  #accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-details{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:760px){
+  #accDlg.account-dashboard-dialog[open] #accBody .account-overview-heading{align-items:flex-start!important;flex-direction:column!important;gap:10px!important;margin-bottom:15px!important}
+  #accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats{gap:9px!important}
+  #accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats>button{min-height:112px!important;padding:13px!important}
+  #accDlg.account-dashboard-dialog[open] #accBody .account-overview-lower{grid-template-columns:minmax(0,1fr)!important}
+  #accDlg.account-dashboard-dialog[open] #accBody .account-overview-panel,
+  #accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-card{padding:15px!important}
+  #accDlg.account-dashboard-dialog[open] #accBody .account-activity-item{grid-template-columns:8px minmax(0,1fr)!important}
+  #accDlg.account-dashboard-dialog[open] #accBody .account-activity-item time{grid-column:2!important;margin-top:2px!important}
+}
+@media(max-width:420px){
+  #accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats>button{grid-template-columns:28px minmax(0,1fr)!important;gap:4px 8px!important}
+  #accDlg.account-dashboard-dialog[open] #accBody .account-overview-stat-icon{width:28px!important;height:28px!important}
+  #accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-details{grid-template-columns:minmax(0,1fr)!important}
+  #accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-identity{flex-wrap:wrap!important}
+  #accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-identity>button{margin-left:61px!important}
+}
