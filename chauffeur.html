@@ -355,7 +355,7 @@ async function persistChauffeurConsent(choice){
  if(error)console.warn('Privacy preference sync failed.',error);
 }
 window.addEventListener('3pedals:consent-changed',event=>persistChauffeurConsent(event.detail?.choice));
-async function syncSession(){const {data:{user}}=await sb.auth.getUser();currentUser=user;if(user){const choice=window.ThreePedalsConsent?.getChoice?.();if(choice)persistChauffeurConsent(choice).catch(()=>{});}$('authPanel').hidden=!!user;$('requestForm').hidden=!user;if(user){const {data:p}=await sb.from('profiles').select('name,phone,is_admin').eq('id',user.id).maybeSingle();$('customerName').value=p?.name||user.user_metadata?.name||user.user_metadata?.full_name||'';$('customerPhone').value=p?.phone||user.user_metadata?.phone||'';adminMode=!!p?.is_admin;$('chauffeurAdmin').hidden=!adminMode;await loadBookings() }else{$('myBookings').hidden=true;$('chauffeurAdmin').hidden=true;adminMode=false}}
+async function syncSession(){const {data:{user}}=await sb.auth.getUser();currentUser=user;if(user){const choice=window.ThreePedalsConsent?.getChoice?.()||'rejected';persistChauffeurConsent(choice).catch(()=>{});}$('authPanel').hidden=!!user;$('requestForm').hidden=!user;if(user){const {data:p}=await sb.from('profiles').select('name,phone,is_admin').eq('id',user.id).maybeSingle();$('customerName').value=p?.name||user.user_metadata?.name||user.user_metadata?.full_name||'';$('customerPhone').value=p?.phone||user.user_metadata?.phone||'';adminMode=!!p?.is_admin;$('chauffeurAdmin').hidden=!adminMode;await loadBookings() }else{$('myBookings').hidden=true;$('chauffeurAdmin').hidden=true;adminMode=false}}
 
 async function loadAdmin(){
  const [{data:bookings,error:bErr},{data:drivers,error:dErr},{data:cancels,error:cErr}]=await Promise.all([
