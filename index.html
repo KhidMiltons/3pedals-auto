@@ -455,6 +455,34 @@ footer{color:var(--mute)!important}
 .card:hover .card-reveal{opacity:1;transform:translateX(3px)}
 .yard-badge{z-index:3;box-shadow:0 6px 18px rgba(0,0,0,.18)}
 @media(min-width:1400px){#grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:16px!important}.card .body{padding:14px}.card h3{font-size:18px}.card .price{font-size:20px}.card .tag{font-size:11px;padding:4px 8px}}
+
+/* Remove the separate pale glass sheet behind the account dashboard */
+html body dialog#accDlg.account-dashboard-dialog[open]{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+  filter:none!important;
+}
+html body dialog#accDlg.account-dashboard-dialog[open]::before,
+html body dialog#accDlg.account-dashboard-dialog[open]::after{
+  content:none!important;
+  display:none!important;
+  background:none!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+}
+html body dialog#accDlg.account-dashboard-dialog[open]>.account-dashboard-main{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  box-shadow:none!important;
+}
+
 </style>
 
 <style id="auto-quote-rail">
