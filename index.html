@@ -1,13 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-M8B39FNW');</script>
-<!-- End Google Tag Manager -->
+<script src="/consent.js?v=20261107-1"></script>
 <meta charset="utf-8">
 <base target="_top">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -1011,19 +1005,7 @@ body:has(#home[hidden]) #publicWhatsappFab{display:none!important}
   }
 }
 </style>
-<!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;
-s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)
-}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1474861414573206');
-fbq('track', 'PageView');
-</script>
-<!-- End Meta Pixel Code -->
+<!-- Optional Meta Pixel is loaded by consent.js only after explicit acceptance. -->
 
 <link rel="stylesheet" href="/dashboard-glass.css?v=20261107-account-dark-glass-v316">
 
@@ -1178,6 +1160,10 @@ fbq('track', 'PageView');
   html body>header>.wrap>button#navToggle.nav-toggle{width:38px!important;height:38px!important;min-width:38px!important}
   html body>header>.wrap>.logo{font-size:clamp(16px,4.6vw,19px)!important}
 }
+</style>
+<style id="privacy-legal-links">
+.legal-footer-links{display:inline-flex;gap:6px;flex-wrap:wrap;align-items:center}.legal-footer-links a,.account-legal-preferences a{color:var(--gold,#d7bd83);text-decoration:underline;text-underline-offset:3px}.legal-footer-links button{border:0;background:none;color:inherit;text-decoration:underline;text-underline-offset:3px;cursor:pointer;font:inherit;padding:0}.account-legal-preferences{margin:16px 0;padding:16px;border-radius:12px;background:rgba(255,255,255,.035)}.account-legal-preferences h4{margin:0 0 6px}.account-legal-preferences p{margin:8px 0}
+@media(max-width:600px){.legal-footer-links{display:flex;margin-top:8px}}
 </style>
 </head>
 <body>
@@ -1349,13 +1335,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 </main>
 
-<footer><div class="wrap"><span id="footerBrand">3 Pedals Auto KE</span> · <span id="footerNote">Prices in KES.</span></div></footer>
+<footer><div class="wrap"><span id="footerBrand">3 Pedals Auto KE</span> · <span id="footerNote">Prices in KES.</span><span class="legal-footer-links"> · <a href="/privacy.html">Privacy Policy</a> · <a href="/terms.html">Terms of Service</a> · <button type="button" onclick="window.ThreePedalsConsent?.open()">Cookie preferences</button></span></div></footer>
 
 <a class="fab glass-icon-btn" id="publicWhatsappFab" href="https://wa.me/254750495841?text=Hello%203%20Pedals%20Auto%20KE" target="_blank" rel="noopener" aria-label="Chat on WhatsApp" title="Chat on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.8a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.4-4.9A8.4 8.4 0 1 1 20.5 11.8Z"/><path d="M8.4 7.7c.2-.5.4-.5.7-.5h.5c.2 0 .4.1.5.4l.8 1.8c.1.2.1.4-.1.6l-.6.7c-.2.2-.2.4 0 .7.5.8 1.2 1.5 2.1 2 .2.1.4.1.6-.1l.8-.9c.2-.2.4-.2.6-.1l1.7.8c.3.1.4.3.4.5 0 .4-.2 1.1-.7 1.5-.5.5-1.2.7-2 .5-1-.2-2.3-.8-3.5-1.9-1.4-1.2-2.3-2.7-2.5-3.8-.2-.9.1-1.5.7-2.2Z"/></svg></a>
 
 <dialog id="dlg" aria-label="Car details"></dialog>
 <dialog id="journalPhotoViewer" class="journal-photo-viewer" aria-label="Journal photo viewer"><button type="button" class="journal-photo-close" id="journalPhotoClose" aria-label="Close photo viewer">×</button><span class="journal-photo-count" id="journalViewerCount"></span><button type="button" class="journal-photo-step journal-photo-prev" id="journalViewerPrev" aria-label="Previous photo">‹</button><figure><img id="journalViewerImage" alt=""><figcaption id="journalViewerCaption"></figcaption></figure><button type="button" class="journal-photo-step journal-photo-next" id="journalViewerNext" aria-label="Next photo">›</button></dialog>
-<dialog id="authDlg" class="authbox"><div class="in"><button class="auth-close" id="authCloseTop" type="button" aria-label="Close sign in or sign up">×</button><div class="auth-brand"><span class="auth-brand-mark" aria-hidden="true"><img src="favicon.svg" alt=""></span><span>3 Pedals Auto KE</span></div><h2 id="authTitle">Create your account</h2><p class="meta auth-intro" id="authIntro">One account for buying and selling with 3 Pedals Auto KE.</p><div class="auth-fields"><details class="auth-optional" id="authProfileDetails"><summary>Profile details <span class="meta">(optional)</span></summary><div class="auth-optional-inner"><div id="authNameField"><label for="authName">Your name</label><input id="authName" autocomplete="name"></div><div id="authPhoneField"><label for="authPhone">Phone number</label><input id="authPhone" type="tel" autocomplete="tel"></div><fieldset class="seg" id="authTypeWrap"><legend>Account type</legend><label><input type="radio" name="accountType" value="private" checked> Private Seller</label><label><input type="radio" name="accountType" value="yard"> Organization / dealership</label></fieldset><p id="authTypeHint" class="meta">Private seller accounts are for individuals selling their own vehicles.</p></div></details><div id="authSellerUrlWrap" hidden><label for="authSellerSlug">Your 3 Pedals Auto URL</label><input id="authSellerSlug" autocomplete="off" autocapitalize="none" spellcheck="false"><small class="meta">Lowercase letters, numbers, and hyphens only. Suggested from your name; you can edit it.</small><p class="meta" id="authSellerUrlPreview" aria-live="polite"></p></div><div id="authEmailField"><label for="authEmail">Email</label><input id="authEmail" type="email" autocomplete="email"></div><div id="authPasswordField"><label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="new-password"></div><div id="authConfirmField"><label for="authConfirmPassword">Confirm password</label><input id="authConfirmPassword" type="password" autocomplete="new-password"><small class="meta">At least 8 characters.</small></div><button class="auth-forgot" id="authForgot" type="button" hidden>Forgot password?</button></div><p id="authErr" class="meta" style="color:var(--err)" role="status" aria-live="polite"></p><div class="auth-actions"><button class="btn" id="authSubmit">Create account</button></div><div class="auth-divider" id="authDivider" aria-hidden="true">or</div><button class="btn google-btn" id="authGoogle" type="button"><span class="google-mark" aria-hidden="true">G</span> Continue with Google</button><p class="auth-legal meta" id="authLegal">By continuing, you agree to use 3 Pedals Auto KE responsibly.</p><p class="switch" id="authSwitchRow"><span id="authSwitchText">Already have an account?</span> <button id="authSwitch" type="button">Log in</button></p><button class="auth-back" id="authCloseBack" type="button">‹ Back to marketplace</button></div></dialog>
+<dialog id="authDlg" class="authbox"><div class="in"><button class="auth-close" id="authCloseTop" type="button" aria-label="Close sign in or sign up">×</button><div class="auth-brand"><span class="auth-brand-mark" aria-hidden="true"><img src="favicon.svg" alt=""></span><span>3 Pedals Auto KE</span></div><h2 id="authTitle">Create your account</h2><p class="meta auth-intro" id="authIntro">One account for buying and selling with 3 Pedals Auto KE.</p><div class="auth-fields"><div id="authDobField"><label for="authDob">Date of birth</label><input id="authDob" type="date" autocomplete="bday" required><small class="meta">You must be at least 13 years old to create an account.</small></div><details class="auth-optional" id="authProfileDetails"><summary>Profile details <span class="meta">(optional)</span></summary><div class="auth-optional-inner"><div id="authNameField"><label for="authName">Your name</label><input id="authName" autocomplete="name"></div><div id="authPhoneField"><label for="authPhone">Phone number</label><input id="authPhone" type="tel" autocomplete="tel"></div><fieldset class="seg" id="authTypeWrap"><legend>Account type</legend><label><input type="radio" name="accountType" value="private" checked> Private Seller</label><label><input type="radio" name="accountType" value="yard"> Organization / dealership</label></fieldset><p id="authTypeHint" class="meta">Private seller accounts are for individuals selling their own vehicles.</p></div></details><div id="authSellerUrlWrap" hidden><label for="authSellerSlug">Your 3 Pedals Auto URL</label><input id="authSellerSlug" autocomplete="off" autocapitalize="none" spellcheck="false"><small class="meta">Lowercase letters, numbers, and hyphens only. Suggested from your name; you can edit it.</small><p class="meta" id="authSellerUrlPreview" aria-live="polite"></p></div><div id="authEmailField"><label for="authEmail">Email</label><input id="authEmail" type="email" autocomplete="email"></div><div id="authPasswordField"><label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="new-password"></div><div id="authConfirmField"><label for="authConfirmPassword">Confirm password</label><input id="authConfirmPassword" type="password" autocomplete="new-password"><small class="meta">At least 8 characters.</small></div><button class="auth-forgot" id="authForgot" type="button" hidden>Forgot password?</button></div><p id="authErr" class="meta" style="color:var(--err)" role="status" aria-live="polite"></p><div class="auth-actions"><button class="btn" id="authSubmit">Create account</button></div><div class="auth-divider" id="authDivider" aria-hidden="true">or</div><button class="btn google-btn" id="authGoogle" type="button"><span class="google-mark" aria-hidden="true">G</span> Continue with Google</button><p class="auth-legal meta" id="authLegal">By creating an account, you confirm you meet the minimum age requirement and agree to our <a href="/terms.html" target="_blank" rel="noopener">Terms of Service</a> and acknowledge our <a href="/privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</p><p class="switch" id="authSwitchRow"><span id="authSwitchText">Already have an account?</span> <button id="authSwitch" type="button">Log in</button></p><button class="auth-back" id="authCloseBack" type="button">‹ Back to marketplace</button></div></dialog>
 <dialog id="adminDlg" class="authbox wide"><div class="in"><h2>Admin panel</h2><div id="adminPanel"></div><div class="acts" style="margin-top:16px"><button class="btn ghost" id="adminClose">Close</button></div></div></dialog>
 <div id="accountPanelMount"></div>
 <script id="global-auth-mode-compatibility">
@@ -1603,8 +1589,8 @@ window.sellerSignupActive=false;let sellerSlugEdited=false;
    $("authTitle").textContent=recovery?"Choose a new password":login?(window.sellerSignupActive?"Seller log in":"Welcome back"):(window.sellerSignupActive?"Become a seller":"Create your account");
    $("authIntro").textContent=recovery?"Set a new password for your account.":login?"Sign in to manage your listings, promotions and bookings.":window.sellerSignupActive?"Create your seller profile and a public URL for your vehicle collection.":"One account for buying and selling with 3 Pedals Auto KE.";
    $("authSubmit").textContent=recovery?"Save new password":login?"Log in":window.sellerSignupActive?"Create seller account":"Create account";$("authPassword").autocomplete=login?"current-password":"new-password";
-   $("authNameField").hidden=login||recovery;$("authPhoneField").hidden=login||recovery||sellerSignup;$("authEmailField").hidden=recovery||sellerSignup;$("authPasswordField").hidden=sellerSignup;$("authConfirmField").hidden=login||sellerSignup;$("authTypeWrap").hidden=login||recovery;$("authTypeHint").hidden=login||recovery;updateAuthTypeHint();
-   $("authForgot").hidden=!login||window.sellerSignupActive;$("authGoogle").hidden=recovery||window.sellerSignupActive;$("authDivider").hidden=recovery||window.sellerSignupActive;$("authSwitchRow").hidden=recovery||window.sellerSignupActive;$("authLegal").hidden=recovery;
+   $("authDobField").hidden=login||recovery||sellerSignup;$("authDob").required=!(login||recovery||sellerSignup);$("authNameField").hidden=login||recovery;$("authPhoneField").hidden=login||recovery||sellerSignup;$("authEmailField").hidden=recovery||sellerSignup;$("authPasswordField").hidden=sellerSignup;$("authConfirmField").hidden=login||sellerSignup;$("authTypeWrap").hidden=login||recovery;$("authTypeHint").hidden=login||recovery;updateAuthTypeHint();
+   $("authForgot").hidden=!login||window.sellerSignupActive;$("authGoogle").hidden=!login||window.sellerSignupActive;$("authDivider").hidden=!login||window.sellerSignupActive;$("authSwitchRow").hidden=recovery||window.sellerSignupActive;$("authLegal").hidden=recovery;
    $("authSwitchText").textContent=login?"Need an account?":"Already have an account?";$("authSwitch").textContent=login?"Create one":"Log in";
    if(sellerSignup){if(!sellerSlugEdited)$("authSellerSlug").value=slugifySellerName($("authName").value);refreshSellerUrlPreview()}
    $("authErr").textContent=msg;$("authDlg").showModal();
@@ -1662,13 +1648,18 @@ $("authSubmit").onclick=async()=>{
   }
   if(!email||!pass){err.textContent="Email and password are required.";return}
   if(window.authMode==="register"){
+    const dobValue=$("authDob").value;
+    if(!dobValue){err.textContent="Enter your date of birth before creating an account.";return}
+    const dob=new Date(dobValue+"T00:00:00");const today=new Date();const cutoff=new Date(today.getFullYear()-13,today.getMonth(),today.getDate());
+    if(!Number.isFinite(dob.getTime())||dob>today){err.textContent="Enter a valid date of birth.";return}
+    if(dob>cutoff){err.textContent="You must be at least 13 years old to create a 3 Pedals Auto KE account.";return}
     if(!name){err.textContent="Enter your name.";return}
     if(pass.length<8){err.textContent="Use a password of at least 8 characters.";return}
     if(pass!==confirmPass){err.textContent="The passwords do not match.";return}     if(window.sellerSignupActive){const slug=$("authSellerSlug").value.trim();if(!slug||!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)||slug.length<3){err.textContent="Enter a seller URL with at least 3 lowercase letters or numbers; hyphens are allowed.";return}const {data:existing,error:lookupError}=await sb.from("listings").select("id").eq("seller_slug",slug).limit(1);if(lookupError){err.textContent="Seller URL checks need the updated seller schema. Run seller_type_schema.sql in Supabase, then try again.";return}if(existing?.length){err.textContent="That seller URL is already in use. Please choose another.";return}}
   }
   b.disabled=true;err.textContent=window.authMode==="register"?"Creating your account…":"Signing you in…";
   try{
-    const signupData={name,phone,account_type:type};
+    const signupData={name,phone,account_type:type,date_of_birth:$("authDob").value};
     const res=window.authMode==="register"
       ?await sb.auth.signUp({email,password:pass,options:{data:signupData,emailRedirectTo:"https://3pedalsauto.co.ke/"}})
       :await sb.auth.signInWithPassword({email,password:pass});
@@ -1933,9 +1924,10 @@ async function openAccount(options={}){
     const vehicleSettings=makeSettingsSection("vehicles","New vehicle defaults","Choose the starting stock type used in the Sell a car listing form.",`<label for="prefStockMode">Preferred stock mode</label><select id="prefStockMode"><option value="any">No preference</option><option value="local">Kenya stock</option><option value="import">Import</option></select><p class="meta">New listings start with this selection. You can change it for each vehicle.</p>`);
     const paperworkSettings=makeSettingsSection("paperwork","Paperwork rules","Apply your saved preferences when preparing vehicle documents.",`<label for="prefBankDetails">Bank details for documents</label><textarea id="prefBankDetails" rows="4" placeholder="Bank, account name and payment details"></textarea><label class="check-row"><input id="prefPrintLogo" type="checkbox"> Print your logo on documents</label><label class="check-row"><input id="prefRequireEngine" type="checkbox"> Require engine number in checklist</label><label class="check-row"><input id="prefRequireRegistration" type="checkbox"> Require registration number in checklist</label><label class="check-row"><input id="prefRequireLogbook" type="checkbox"> Require logbook check</label><label class="check-row"><input id="prefRequireSupplierDocs" type="checkbox"> Require supplier ID/PIN check for consignment stock</label><p class="meta">These settings prefill and mark required checks in the printable vehicle documents.</p>`);
     const reminderSettings=makeSettingsSection("reminders","Listing reminders","See overdue listings in Marketing and reset the reminder date after reposting.",`<label for="prefReminderDays">Repost reminder interval (days)</label><input id="prefReminderDays" type="number" min="1" max="365" value="14"><p class="meta">Reminders appear in your seller dashboard when a live listing has not been updated within this interval.</p>`);
-    const accountSettings=document.createElement("section");accountSettings.className="settings-section";accountSettings.dataset.settingsSection="account";accountSettings.hidden=true;accountSettings.innerHTML='<h4>Login and account</h4><p class="meta">Manage the email and password used to sign in.</p>';
+    const accountSettings=document.createElement("section");accountSettings.className="settings-section";accountSettings.dataset.settingsSection="account";accountSettings.hidden=true;accountSettings.innerHTML='<h4>Login and account</h4><p class="meta">Manage the email and password used to sign in.</p><div class="account-legal-preferences"><h4>Privacy and legal</h4><p class="meta">Read how 3 Pedals Auto KE uses and protects your information.</p><p><a href="/privacy.html" target="_blank" rel="noopener">Privacy Policy</a> · <a href="/terms.html" target="_blank" rel="noopener">Terms of Service</a></p><button class="btn ghost" type="button" id="accCookiePreferences">Change cookie preferences</button><p class="meta">Optional analytics and advertising tags load only if you accept them. Essential account, security and payment services remain active.</p></div>';
     [loginDetails,deleteZone].filter(Boolean).forEach(node=>accountSettings.append(node));
     settingsInner.append(settingsTabs,businessSettings,vehicleSettings,paperworkSettings,reminderSettings,accountSettings);
+    accountSettings.querySelector("#accCookiePreferences").onclick=()=>window.ThreePedalsConsent?.open();
     settingsTabs.querySelectorAll("[data-settings-tab]").forEach(tab=>tab.onclick=()=>{const key=tab.dataset.settingsTab;settingsTabs.querySelectorAll("button").forEach(item=>item.classList.toggle("active",item===tab));settingsInner.querySelectorAll("[data-settings-section]").forEach(section=>section.hidden=section.dataset.settingsSection!==key)});
     settingsInner.querySelector("#prefStockMode").value=sellerSettings.preferred_stock_mode||"any";settingsInner.querySelector("#prefBankDetails").value=sellerSettings.bank_details||"";settingsInner.querySelector("#prefPrintLogo").checked=sellerSettings.print_logo_on_documents!==false;settingsInner.querySelector("#prefRequireEngine").checked=!!sellerSettings.require_engine_number;settingsInner.querySelector("#prefRequireRegistration").checked=sellerSettings.require_registration_number!==false;settingsInner.querySelector("#prefRequireLogbook").checked=sellerSettings.require_logbook!==false;settingsInner.querySelector("#prefRequireSupplierDocs").checked=!!sellerSettings.require_supplier_documents;settingsInner.querySelector("#prefReminderDays").value=Number(sellerSettings.repost_reminder_days)||14;
     settingsInner.querySelectorAll("[data-save-preferences]").forEach(button=>button.onclick=async()=>{const key=button.dataset.savePreferences,status=settingsInner.querySelector(`[data-preference-status="${key}"]`);button.disabled=true;status.textContent="Saving…";const values={seller_id:me.id,preferred_stock_mode:$("prefStockMode").value,bank_details:$("prefBankDetails").value,print_logo_on_documents:$("prefPrintLogo").checked,require_engine_number:$("prefRequireEngine").checked,require_registration_number:$("prefRequireRegistration").checked,require_logbook:$("prefRequireLogbook").checked,require_supplier_documents:$("prefRequireSupplierDocs").checked,repost_reminder_days:Math.max(1,Math.min(365,Number($("prefReminderDays").value)||14)),updated_at:new Date().toISOString()};try{const {error}=await sb.from("seller_settings").upsert(values,{onConflict:"seller_id"});if(error)throw error;sellerPreferences=values;status.textContent="Saved."}catch(error){status.textContent=error.message?.includes("seller_settings")?"Settings storage is not installed yet. Run outputs/seller_account_settings.sql in Supabase SQL Editor.":`Could not save settings: ${error.message||"Please try again."}`}finally{button.disabled=false}});
@@ -2862,26 +2854,29 @@ loadSiteSettings();
 #sellerEditListingDialog #editListingPhotos:disabled{opacity:.6}
 </style>
 <script id="3pedals-analytics-events">
-window.dataLayer = window.dataLayer || [];
-window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
 window.track3PedalsEvent = function(name, params) {
-  window.gtag('event', name, Object.assign({page_location: window.location.href, page_path: window.location.pathname}, params || {}));
+  if (!window.ThreePedalsConsent?.hasConsent()) return;
+  const payload = Object.assign({page_location: window.location.href, page_path: window.location.pathname}, params || {});
+  if (typeof window.gtag === "function") window.gtag("event", name, payload);
+  if (typeof window.fbq === "function") window.fbq("trackCustom", name, payload);
 };
-document.addEventListener('click', function(event) {
-  const link = event.target.closest && event.target.closest('a[href]');
+document.addEventListener("click", function(event) {
+  if (!window.ThreePedalsConsent?.hasConsent()) return;
+  const link = event.target.closest && event.target.closest("a[href]");
   if (!link) return;
-  const href = link.href || '';
+  const href = link.href || "";
   if (/wa\.me|api\.whatsapp\.com|whatsapp\.com/i.test(href)) {
-    window.track3PedalsEvent('whatsapp_click', {link_url: href, link_text: (link.innerText || link.getAttribute('aria-label') || 'WhatsApp').trim().slice(0, 100)});
+    window.track3PedalsEvent("whatsapp_click", {link_url: href, link_text: (link.innerText || link.getAttribute("aria-label") || "WhatsApp").trim().slice(0, 100)});
   }
 });
 (function(){
+  if (!window.ThreePedalsConsent?.hasConsent()) return;
   const path = window.location.pathname.toLowerCase();
-  if (path.endsWith('/dealers.html') || path === '/dealers' || path.endsWith('/yard.html')) {
-    window.track3PedalsEvent('dealer_page_view', {page_type: path.endsWith('/yard.html') ? 'yard_profile' : 'dealer_directory'});
+  if (path.endsWith("/dealers.html") || path === "/dealers" || path.endsWith("/yard.html")) {
+    window.track3PedalsEvent("dealer_page_view", {page_type: path.endsWith("/yard.html") ? "yard_profile" : "dealer_directory"});
   }
-  if (path.endsWith('/garage.html') || path === '/garage' || path.endsWith('/garage/')) {
-    window.track3PedalsEvent('garage_page_view', {page_type: 'garage'});
+  if (path.endsWith("/garage.html") || path === "/garage" || path.endsWith("/garage/")) {
+    window.track3PedalsEvent("garage_page_view", {page_type: "garage"});
   }
 })();
 </script>
