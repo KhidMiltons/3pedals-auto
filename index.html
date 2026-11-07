@@ -1123,13 +1123,13 @@ fbq('track', 'PageView');
   body>header .wrap{
     display:grid!important;
     grid-template-columns:minmax(0,1fr) auto auto!important;
-    grid-template-areas:"nav brand account"!important;
+    grid-template-areas:"brand nav account"!important;
     align-items:center!important;
     column-gap:22px!important;
   }
-  body>header .wrap>.logo{grid-area:brand!important;justify-self:end!important;white-space:nowrap!important}
+  body>header .wrap>.logo{grid-area:brand!important;justify-self:start!important;white-space:nowrap!important}
   body>header .wrap>.account-pill{grid-area:account!important;justify-self:end!important;margin-left:0!important}
-  body>header .wrap>nav{grid-area:nav!important;justify-self:start!important;min-width:0!important;display:flex!important;flex-wrap:nowrap!important;gap:2px!important}
+  body>header .wrap>nav{grid-area:nav!important;justify-self:end!important;min-width:0!important;display:flex!important;flex-wrap:nowrap!important;gap:2px!important}
   body>header .wrap>nav button,body>header .wrap>nav a.navlink{white-space:nowrap!important;padding-left:10px!important;padding-right:10px!important}
 }
 @media(min-width:981px) and (max-width:1180px){
