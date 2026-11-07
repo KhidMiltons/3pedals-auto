@@ -387,6 +387,17 @@
   #accDlg #accBody .account-admin-tools{align-items:flex-start;flex-direction:column}
   #accDlg #accBody .account-admin-button{width:100%;justify-content:center}
   #accDlg #accBody .seller-analytics-table th,#accDlg #accBody .seller-analytics-table td{padding:10px 11px;font-size:11px}
+  #accDlg #accBody .workspace-v2{gap:11px}
+  #accDlg #accBody .workspace-v2-hero{align-items:flex-start;flex-direction:column;gap:11px}
+  #accDlg #accBody .workspace-v2-hero-actions{width:100%;justify-content:space-between}
+  #accDlg #accBody .workspace-v2-metric-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  #accDlg #accBody .workspace-v2-metric{min-height:104px;padding:12px}
+  #accDlg #accBody .workspace-v2-main-grid{grid-template-columns:minmax(0,1fr);gap:9px}
+  #accDlg #accBody .workspace-v2-card{padding:14px}
+  #accDlg #accBody .workspace-v2-dealer-content{grid-template-columns:minmax(0,1fr);gap:11px}
+  #accDlg #accBody .workspace-v2-activity-list .account-activity-item{grid-template-columns:8px minmax(0,1fr)}
+  #accDlg #accBody .workspace-v2-activity-list .account-activity-item time{grid-column:2}
+  #accDlg #accBody .workspace-v2-footer{flex-direction:column;gap:4px}
 }
 @media(max-width:420px){
   #accDlg #accBody .account-overview-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
