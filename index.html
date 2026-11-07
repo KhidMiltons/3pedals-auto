@@ -3999,5 +3999,71 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){f
 }
 @media(max-width:420px){#accDlg.account-dashboard-dialog #accBody .account-overview-stats{grid-template-columns:minmax(0,1fr)!important}}
 @media(prefers-reduced-motion:reduce){#accDlg.account-dashboard-dialog *{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+
+/* Final precedence layer: wrappers stay transparent; only content cards get a dark fill. */
+html body #accDlg.account-dashboard-dialog[open] #accBody *,
+html body #accDlg.account-dashboard-dialog[open] #accBody *::before,
+html body #accDlg.account-dashboard-dialog[open] #accBody *::after{
+ -webkit-backdrop-filter:none!important;backdrop-filter:none!important;filter:none!important
+}
+html body #accDlg.account-dashboard-dialog[open] #accBody :is(
+ .account-page,.account-pages,.account-tools,.account-settings,.account-settings-inner,
+ .account-overview-heading,.account-overview-visuals,.account-overview-lower,
+ .account-activity-list,.account-health-panel,.account-quick-panel,
+ .dealer-account-editor,.dealer-editor-section
+){
+ width:100%!important;max-width:100%!important;min-width:0!important;
+ background:transparent!important;background-color:transparent!important;background-image:none!important;
+ border:0!important;box-shadow:none!important
+}
+html body #accDlg.account-dashboard-dialog[open] #accBody :is(
+ .account-overview-panel,.account-overview-stats>button,.profile-card,.account-stat,
+ .profile-grid>div,.svc,.seller-summary-card,.account-booking-item,.account-saved-vehicle,
+ .seller-listing,.seller-garage-card,.promotion-package,.account-buyer-workspace,
+ .dashboard-welcome,.settings-section,.panel,.card,.seller-card,.dashboard-card,
+ .dealer-overview-card,.dealer-overview-details>div
+){
+ color:#f2f0eb!important;background:rgba(15,20,25,.42)!important;
+ background-color:rgba(15,20,25,.42)!important;background-image:none!important;
+ border:0!important;border-radius:16px!important;
+ box-shadow:inset 0 1px rgba(255,255,255,.025),0 6px 18px rgba(0,0,0,.10)!important;
+ transform:none!important;transition:background-color .12s ease!important
+}
+html body #accDlg.account-dashboard-dialog[open] #accBody :is(
+ .account-overview-panel,.account-overview-stats>button,.profile-card,.account-stat,
+ .profile-grid>div,.svc,.seller-summary-card,.account-booking-item,.account-saved-vehicle,
+ .seller-listing,.seller-garage-card,.promotion-package,.account-buyer-workspace,
+ .dashboard-welcome,.settings-section,.panel,.card,.seller-card,.dashboard-card,
+ .dealer-overview-card,.dealer-overview-details>div
+):hover{
+ background:rgba(19,25,31,.50)!important;background-color:rgba(19,25,31,.50)!important;
+ border:0!important;box-shadow:0 7px 20px rgba(0,0,0,.12)!important;transform:none!important
+}
+html body #accDlg.account-dashboard-dialog[open] #accBody :is(h1,h2,h3,h4,h5,h6,strong,b,label,th){color:#f4f1ea!important}
+html body #accDlg.account-dashboard-dialog[open] #accBody :is(p,li,td,small,.meta,.muted,.description,.subtitle){color:rgba(235,233,226,.74)!important}
+html body #accDlg.account-dashboard-dialog[open] #accBody :is(input,select,textarea){
+ color:#f2f0eb!important;background:rgba(7,11,15,.58)!important;background-color:rgba(7,11,15,.58)!important;
+ background-image:none!important;border:1px solid rgba(255,255,255,.10)!important;box-shadow:none!important
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats{
+ display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:12px!important;width:100%!important
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-visuals{
+ display:grid!important;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr)!important;gap:12px!important;width:100%!important
+}
+#accDlg.account-dashboard-dialog[open] #accBody .account-overview-lower{
+ display:grid!important;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr)!important;gap:12px!important;width:100%!important
+}
+@media(max-width:1050px){
+ #accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ #accDlg.account-dashboard-dialog[open] #accBody .account-overview-visuals{grid-template-columns:minmax(0,1fr)!important}
+}
+@media(max-width:760px){
+ #accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
+ #accDlg.account-dashboard-dialog[open] #accBody .account-overview-visuals,
+ #accDlg.account-dashboard-dialog[open] #accBody .account-overview-lower{grid-template-columns:minmax(0,1fr)!important;gap:11px!important}
+}
+@media(max-width:420px){#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats{grid-template-columns:minmax(0,1fr)!important}}
+
 </style>
 
