@@ -193,11 +193,73 @@ $("refresh").onclick=async()=>{
 document.querySelectorAll("[data-filter]").forEach(b=>b.onclick=()=>{filter=b.dataset.filter;document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x===b));render()});
 $("listingSearch").addEventListener("input",render);$("clearListingSearch").addEventListener("click",()=>{$("listingSearch").value="";render()});
 
-let chauffeurRows=[],chauffeurDrivers=[];
+let chauffeurRows=[],chauffeurDrivers=[],chauffeurFleetRows=[];
+function renderChauffeurFleet(){
+ const box=$("chauffeurFleetAdmin");if(!box)return;
+ const categories=[...new Set(chauffeurFleetRows.map(v=>String(v.category||"").trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+ const categoryOptions=categories.map(c=>'<option value="'+esc(c)+'"></option>').join("");
+ const rateFields=[["hourly_rate","Hourly rate"],["daily_rate","Daily rate"],["per_km_rate","Per kilometre"],["airport_transfer_rate","Airport transfer"],["half_day_rate","Half-day package"],["full_day_rate","Full-day package"]];
+ const categoryCards=categories.length?categories.map(c=>'<option value="'+esc(c)+'">'+esc(c)+'</option>').join(""):'<option value="">No categories yet</option>';
+ box.innerHTML=
+ '<div class="panel-title"><div><span class="meta">FLEET MANAGEMENT</span><h2>Chauffeur vehicles</h2><p class="meta">Add vehicles, manage categories, photos, availability and all hire rates. Changes are published to the Chauffeur Hire page.</p></div><button class="primary" type="button" id="newChauffeurVehicle">+ Add vehicle</button></div>'+
+ '<form id="chauffeurVehicleForm" class="editor section-hidden" style="margin-bottom:18px"><input id="chauffeurVehicleId" type="hidden">'+
+ '<div class="editor-grid">'+
+ '<div><label for="chauffeurVehicleMake">Make and model</label><input id="chauffeurVehicleMake" maxlength="160" required placeholder="e.g. Toyota Land Cruiser Prado"></div>'+
+ '<div><label for="chauffeurVehicleName">Public display name</label><input id="chauffeurVehicleName" maxlength="160" required placeholder="e.g. Toyota Prado TX"></div>'+
+ '<div><label for="chauffeurVehicleCategory">Vehicle category</label><input id="chauffeurVehicleCategory" list="chauffeurCategoryOptions" maxlength="80" required placeholder="e.g. SUV / Executive"><datalist id="chauffeurCategoryOptions">'+categoryOptions+'</datalist></div>'+
+ '<div><label for="chauffeurVehicleCapacity">Passenger capacity</label><input id="chauffeurVehicleCapacity" type="number" min="1" max="60" step="1" value="4" required></div>'+
+ '<div class="full"><label for="chauffeurVehicleDescription">Description shown to customers</label><textarea id="chauffeurVehicleDescription" maxlength="1000" rows="3" placeholder="Describe the vehicle and its best use."></textarea></div>'+
+ '<div class="full"><label for="chauffeurVehiclePhoto">Vehicle photo (JPEG, up to 10 MB)</label><input id="chauffeurVehiclePhoto" type="file" accept="image/jpeg"><span class="meta" id="chauffeurVehiclePhotoNote">Choose a clear vehicle photo. Leave blank to keep the current photo.</span><div id="chauffeurVehiclePhotoPreview" class="media-current"></div></div>'+
+ rateFields.map(([key,label])=>'<div><label for="chauffeur-'+key+'">'+label+' · KES</label><input id="chauffeur-'+key+'" type="number" min="0" step="1" placeholder="Not set"></div>').join("")+
+ '</div><label style="display:flex;gap:9px;align-items:center;margin-top:12px"><input id="chauffeurVehicleActive" type="checkbox" checked> Visible on the public Chauffeur Hire page</label>'+
+ '<p id="chauffeurVehicleError" class="notice err hidden"></p><div class="editor-actions"><button class="primary" id="saveChauffeurVehicle" type="submit">Save vehicle</button><button class="ghost" id="cancelChauffeurVehicle" type="button">Cancel</button></div></form>'+
+ '<div class="editor" style="margin-bottom:16px"><div class="panel-title" style="margin-top:0"><div><span class="meta">CATEGORY MANAGEMENT</span><h3>Vehicle categories</h3><p class="meta">Categories are created when you add a vehicle. Rename a category here to update every vehicle assigned to it.</p></div></div>'+
+ '<div class="editor-grid"><div><label for="chauffeurCategoryCurrent">Existing category</label><select id="chauffeurCategoryCurrent">'+categoryCards+'</select></div><div><label for="chauffeurCategoryRename">New category name</label><input id="chauffeurCategoryRename" maxlength="80" placeholder="Enter the new category name"></div></div><div class="editor-actions"><button class="ghost" type="button" id="renameChauffeurCategory" '+(categories.length?'':'disabled')+'>Rename category</button></div></div>'+
+ '<div class="panel-title"><div><span class="meta">FLEET INVENTORY</span><h3>Existing vehicles ('+chauffeurFleetRows.length+')</h3></div></div>'+
+ (chauffeurFleetRows.length?chauffeurFleetRows.map(v=>'<article class="listing" style="padding:14px;margin-bottom:12px"><div class="summary" style="padding:0;align-items:center"><div style="display:flex;gap:13px;align-items:center;min-width:0">'+(v.photo_url?'<img src="'+esc(v.photo_url)+'" alt="" style="width:104px;height:76px;object-fit:cover;border-radius:10px;background:#222">':'<div style="width:104px;height:76px;border-radius:10px;background:rgba(255,255,255,.06);display:grid;place-items:center;color:var(--muted);font-size:11px">No photo</div>')+'<div class="vehicle"><h3>'+esc(v.display_name)+'</h3><div class="meta">'+esc(v.make_model)+' · '+esc(v.category)+' · '+Number(v.passenger_capacity||0)+' seats</div><div class="meta">'+(v.is_active?'Visible to customers':'Hidden from customers')+'</div></div></div><div class="actions"><button class="ghost" type="button" data-chauffeur-edit="'+esc(v.id)+'">Edit details &amp; rates</button><button class="ghost" type="button" data-chauffeur-toggle="'+esc(v.id)+'">'+(v.is_active?'Hide':'Publish')+'</button><button class="danger" type="button" data-chauffeur-delete="'+esc(v.id)+'">Delete</button></div></div></article>').join(""):'<div class="empty">No chauffeur vehicles yet. Add your first vehicle above.</div>');
+}
+function resetChauffeurVehicleForm(){
+ const form=$("chauffeurVehicleForm");if(!form)return;form.reset();$("chauffeurVehicleId").value="";$("chauffeurVehicleCapacity").value="4";$("chauffeurVehicleActive").checked=true;$("saveChauffeurVehicle").textContent="Save vehicle";$("chauffeurVehiclePhotoNote").textContent="Choose a clear vehicle photo. Leave blank to keep the current photo.";$("chauffeurVehiclePhotoPreview").innerHTML="";form.classList.add("section-hidden");$("chauffeurVehicleError").classList.add("hidden");
+}
+async function saveChauffeurPhoto(file,id){
+ if(!file)return null;
+ if(file.type!=="image/jpeg")throw new Error("Please upload a JPEG photo. The current car-photos bucket accepts JPEG images.");
+ if(file.size>10*1024*1024)throw new Error("The photo must be 10 MB or smaller.");
+ const path=adminUserId+"/chauffeur-fleet/"+id+".jpg";
+ const {error}=await sb.storage.from("car-photos").upload(path,file,{cacheControl:"3600",upsert:true,contentType:"image/jpeg"});
+ if(error)throw error;
+ return sb.storage.from("car-photos").getPublicUrl(path).data.publicUrl;
+}
+
 function resetChauffeurDriverForm(){
  $("chauffeurDriverForm").reset();$("chauffeurDriverId").value="";$("chauffeurDriverActive").checked=true;
  $("saveChauffeurDriver").textContent="Save driver";$("chauffeurDriverForm").classList.add("section-hidden");
 }
+$("newChauffeurVehicle")?.addEventListener("click",()=>{$("chauffeurVehicleForm").reset();$("chauffeurVehicleId").value="";$("chauffeurVehicleCapacity").value="4";$("chauffeurVehicleActive").checked=true;$("saveChauffeurVehicle").textContent="Add vehicle";$("chauffeurVehiclePhotoPreview").innerHTML="";$("chauffeurVehicleForm").classList.remove("section-hidden");$("chauffeurVehicleForm").scrollIntoView({behavior:"smooth",block:"center"})});
+$("cancelChauffeurVehicle")?.addEventListener("click",resetChauffeurVehicleForm);
+$("chauffeurVehiclePhoto")?.addEventListener("change",()=>{const file=$("chauffeurVehiclePhoto").files[0];$("chauffeurVehiclePhotoPreview").innerHTML=file?'<span class="meta">'+esc(file.name)+' · '+(file.size/1048576).toFixed(1)+' MB</span>':""});
+$("chauffeurVehicleForm")?.addEventListener("submit",async e=>{
+ e.preventDefault();const id=$("chauffeurVehicleId").value||crypto.randomUUID(),file=$("chauffeurVehiclePhoto").files[0],old=chauffeurFleetRows.find(v=>v.id===id);
+ const rates={};for(const key of ["hourly_rate","daily_rate","per_km_rate","airport_transfer_rate","half_day_rate","full_day_rate"]){const raw=$("chauffeur-"+key).value;rates[key]=raw===""?null:Number(raw);if(raw!==""&&(!Number.isFinite(rates[key])||rates[key]<0)){showNotice("Enter valid non-negative KES rates.","err");return}}
+ const payload={slug:$("chauffeurVehicleMake").value.trim().toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,""),category:$("chauffeurVehicleCategory").value.trim(),make_model:$("chauffeurVehicleMake").value.trim(),display_name:$("chauffeurVehicleName").value.trim(),description:$("chauffeurVehicleDescription").value.trim(),passenger_capacity:Number($("chauffeurVehicleCapacity").value),is_active:$("chauffeurVehicleActive").checked,updated_at:new Date().toISOString(),...rates};
+ if(!payload.category||!payload.make_model||!payload.display_name||!Number.isInteger(payload.passenger_capacity)||payload.passenger_capacity<1){showNotice("Complete the vehicle name, category and passenger capacity.","err");return}
+ const btn=$("saveChauffeurVehicle"),errBox=$("chauffeurVehicleError");btn.disabled=true;errBox.classList.add("hidden");
+ try{
+  if(file)payload.photo_url=await saveChauffeurPhoto(file,id);else if(old?.photo_url)payload.photo_url=old.photo_url;
+  const result=old?await sb.from("chauffeur_vehicles").update(payload).eq("id",id):await sb.from("chauffeur_vehicles").insert({id,...payload});
+  if(result.error)throw result.error;
+  showNotice(old?"Chauffeur vehicle updated and published.":"Chauffeur vehicle added to the fleet.","ok");resetChauffeurVehicleForm();await loadChauffeurBookings();
+ }catch(error){errBox.textContent="Could not save vehicle: "+(error?.message||error);errBox.classList.remove("hidden");}
+ finally{btn.disabled=false}
+});
+$("chauffeurFleetAdmin")?.addEventListener("click",async e=>{
+ const edit=e.target.closest("[data-chauffeur-edit]"),toggle=e.target.closest("[data-chauffeur-toggle]"),del=e.target.closest("[data-chauffeur-delete]"),rename=e.target.closest("#renameChauffeurCategory");
+ if(rename){const from=$("chauffeurCategoryCurrent").value,to=$("chauffeurCategoryRename").value.trim();if(!from||!to){showNotice("Choose a category and enter its new name.","err");return}if(from===to){showNotice("That is already the category name.","err");return}if(!confirm('Rename "'+from+'" to "'+to+'" for all vehicles in this category?'))return;const {error}=await sb.from("chauffeur_vehicles").update({category:to,updated_at:new Date().toISOString()}).eq("category",from);if(error){showNotice("Could not rename category: "+error.message,"err");return}showNotice("Vehicle category renamed.","ok");await loadChauffeurBookings();return}
+ if(edit){const v=chauffeurFleetRows.find(x=>x.id===edit.dataset.chauffeurEdit);if(!v)return;$("chauffeurVehicleId").value=v.id;$("chauffeurVehicleMake").value=v.make_model||"";$("chauffeurVehicleName").value=v.display_name||"";$("chauffeurVehicleCategory").value=v.category||"";$("chauffeurVehicleCapacity").value=v.passenger_capacity||4;$("chauffeurVehicleDescription").value=v.description||"";$("chauffeurVehicleActive").checked=!!v.is_active;for(const key of ["hourly_rate","daily_rate","per_km_rate","airport_transfer_rate","half_day_rate","full_day_rate"])$("chauffeur-"+key).value=v[key]??"";$("chauffeurVehiclePhoto").value="";$("chauffeurVehiclePhotoNote").textContent=v.photo_url?"Current photo retained unless you choose a replacement.":"No current photo saved."; $("chauffeurVehiclePhotoPreview").innerHTML=v.photo_url?'<img src="'+esc(v.photo_url)+'" alt="Current vehicle photo">':"";$("saveChauffeurVehicle").textContent="Update vehicle";$("chauffeurVehicleError").classList.add("hidden");$("chauffeurVehicleForm").classList.remove("section-hidden");$("chauffeurVehicleForm").scrollIntoView({behavior:"smooth",block:"center"});return}
+ if(toggle){const v=chauffeurFleetRows.find(x=>x.id===toggle.dataset.chauffeurToggle);if(!v)return;const {error}=await sb.from("chauffeur_vehicles").update({is_active:!v.is_active,updated_at:new Date().toISOString()}).eq("id",v.id);if(error){showNotice("Could not change vehicle visibility: "+error.message,"err");return}showNotice(v.is_active?"Vehicle hidden from customers.":"Vehicle published on Chauffeur Hire.","ok");await loadChauffeurBookings();return}
+ if(del){const v=chauffeurFleetRows.find(x=>x.id===del.dataset.chauffeurDelete);if(!v)return;if(!confirm('Delete "'+v.display_name+'"? Existing bookings will be preserved; vehicles with bookings will be hidden instead of permanently deleted.'))return;del.disabled=true;const {data:linked,error:checkError}=await sb.from("chauffeur_bookings").select("id").eq("vehicle_id",v.id).limit(1);if(checkError){showNotice("Could not check vehicle booking history: "+checkError.message,"err");del.disabled=false;return}if(linked?.length){const {error}=await sb.from("chauffeur_vehicles").update({is_active:false,updated_at:new Date().toISOString()}).eq("id",v.id);if(error){showNotice("Could not hide vehicle: "+error.message,"err");del.disabled=false;return}showNotice("This vehicle has booking history, so it was hidden instead of permanently deleted.","ok")}else{const {error}=await sb.from("chauffeur_vehicles").delete().eq("id",v.id);if(error){showNotice("Could not delete vehicle: "+error.message,"err");del.disabled=false;return}showNotice("Vehicle deleted from the fleet.","ok")}await loadChauffeurBookings()}
+});
+$("chauffeurVehicleForm")?.addEventListener("keydown",e=>{if(e.key==="Escape")resetChauffeurVehicleForm()});
 $("newChauffeurDriver")?.addEventListener("click",()=>{$("chauffeurDriverForm").reset();$("chauffeurDriverId").value="";$("chauffeurDriverActive").checked=true;$("saveChauffeurDriver").textContent="Save driver";$("chauffeurDriverForm").classList.remove("section-hidden");$("chauffeurDriverForm").scrollIntoView({behavior:"smooth",block:"center"})});
 $("cancelChauffeurDriver")?.addEventListener("click",resetChauffeurDriverForm);
 $("chauffeurDriverList")?.addEventListener("click",async e=>{
@@ -231,7 +293,10 @@ async function loadChauffeurBookings(){
  if(fleetBox){
   const {data:cars,error:carError}=await sb.from("chauffeur_vehicles").select("*").order("category").order("display_name");
   if(carError){fleetBox.innerHTML='<div class="notice err">Could not load chauffeur fleet: '+esc(carError.message)+'</div>'}
-  else fleetBox.innerHTML='<div class="panel-title"><div><span class="meta">FLEET &amp; PRICING</span><h2>Vehicle rates</h2><p class="meta">Set KES rates for each hire method. Leave a rate blank if it does not apply to that vehicle.</p></div></div>'+(cars||[]).map(v=>'<form class="editor chauffeur-rate-form" data-chauffeur-rate="'+esc(v.id)+'" style="margin-bottom:12px"><h3>'+esc(v.display_name)+'</h3><div class="editor-grid">'+[['hourly_rate','Hourly rate'],['daily_rate','Daily rate'],['per_km_rate','Per kilometre'],['airport_transfer_rate','Airport transfer'],['half_day_rate','Half-day package'],['full_day_rate','Full-day package']].map(([key,label])=>'<div><label>'+label+' · KES</label><input type="number" min="0" step="1" name="'+key+'" value="'+(v[key]??'')+'" placeholder="Not set"></div>').join('')+'</div><div class="editor-actions"><button class="primary" type="submit">Save '+esc(v.make_model)+' rates</button><span class="meta">'+(v.is_active?'Active fleet vehicle':'Hidden from customers')+'</span></div></form>').join("");
+  else{
+   chauffeurFleetRows=cars||[];
+   renderChauffeurFleet();
+  }
  }
  box.innerHTML='<div class="empty">Loading chauffeur requests…</div>';
  const {data,error}=await sb.from("chauffeur_bookings").select("*,chauffeur_vehicles(display_name,category)").order("created_at",{ascending:false});
@@ -249,8 +314,8 @@ $("refreshChauffeur")?.addEventListener("click",loadChauffeurBookings);
 
 $("chauffeurFleetAdmin")?.addEventListener("submit",async e=>{
  const form=e.target.closest("[data-chauffeur-rate]");if(!form)return;e.preventDefault();
- const values=Object.fromEntries(new FormData(form).entries());
- const payload={};for(const key of ["hourly_rate","daily_rate","per_km_rate","airport_transfer_rate","half_day_rate","full_day_rate"])payload[key]=values[key]===""?null:Number(values[key]);
+ const values=Object.fromEntries(new FormData(form).entries()),payload={};
+ for(const key of ["hourly_rate","daily_rate","per_km_rate","airport_transfer_rate","half_day_rate","full_day_rate"])payload[key]=values[key]===""?null:Number(values[key]);
  const btn=form.querySelector("button[type=submit]");btn.disabled=true;
  const {error}=await sb.from("chauffeur_vehicles").update({...payload,updated_at:new Date().toISOString()}).eq("id",form.dataset.chauffeurRate);
  btn.disabled=false;if(error){showNotice("Could not save chauffeur rates: "+error.message,"err");return}
