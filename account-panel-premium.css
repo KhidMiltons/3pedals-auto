@@ -898,3 +898,307 @@ body:has(#accDlg[open])::after {
     padding-right: 14px !important;
   }
 }
+
+
+/* 2026-11-07 — unified, borderless account-settings layout.
+   One shared content inset controls the title, tabs, section headings and fields.
+   Nested profile/dealer wrappers remain transparent and do not create extra panels. */
+#accDlg #accBody #accountPage-settings {
+  --settings-inset: clamp(18px, 2.5vw, 32px);
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 var(--settings-inset) 28px !important;
+  color: #f4f1eb !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+#accDlg #accBody #accountPage-settings :is(
+  .account-settings-inner,
+  .settings-section,
+  .profile-card,
+  .profile-grid,
+  .dealer-account-editor,
+  .dealer-editor-section,
+  .dealer-fields-grid,
+  .account-tools,
+  .account-subscription-note,
+  .account-legal-preferences
+) {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  color: inherit !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+/* The page title, tab strip and all section content share one left/right grid. */
+#accDlg #accBody #accountPage-settings > h3 {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  margin: 0 0 18px !important;
+  padding: 22px 0 0 !important;
+  color: #fff !important;
+  line-height: 1.2 !important;
+}
+#accDlg #accBody #accountPage-settings .account-settings-inner {
+  padding: 0 !important;
+}
+#accDlg #accBody #accountPage-settings .account-settings-tabs {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  flex-wrap: nowrap !important;
+  gap: 8px !important;
+  width: 100% !important;
+  margin: 0 0 24px !important;
+  padding: 0 0 12px !important;
+  overflow-x: auto !important;
+  border: 0 !important;
+  background: transparent !important;
+  scrollbar-width: none;
+}
+#accDlg #accBody #accountPage-settings .account-settings-tabs::-webkit-scrollbar {
+  display: none;
+}
+#accDlg #accBody #accountPage-settings .account-settings-tabs button {
+  flex: 0 0 auto !important;
+  min-height: 40px !important;
+  margin: 0 !important;
+  padding: 9px 15px !important;
+  white-space: nowrap !important;
+}
+
+/* Section headings sit on the same vertical guide as the tabs and form controls. */
+#accDlg #accBody #accountPage-settings .settings-section {
+  margin: 0 !important;
+  padding: 0 0 24px !important;
+}
+#accDlg #accBody #accountPage-settings .settings-section > h4,
+#accDlg #accBody #accountPage-settings .dealer-editor-section > h4 {
+  margin: 0 0 8px !important;
+  padding: 0 !important;
+  color: #fff !important;
+  line-height: 1.35 !important;
+}
+#accDlg #accBody #accountPage-settings .settings-section > p.meta {
+  margin: 0 0 18px !important;
+  padding: 0 !important;
+  line-height: 1.55 !important;
+  color: rgba(246,243,237,.62) !important;
+}
+
+/* Profile summary is a layout row, not a bordered or tinted sub-panel. */
+#accDlg #accBody #accountPage-settings .profile-card {
+  display: grid !important;
+  grid-template-columns: 64px minmax(0,1fr) !important;
+  align-items: center !important;
+  gap: 16px !important;
+  margin: 16px 0 20px !important;
+  padding: 0 !important;
+}
+#accDlg #accBody #accountPage-settings .profile-card > div:not(.profile-avatar) {
+  min-width: 0 !important;
+  padding: 0 !important;
+}
+#accDlg #accBody #accountPage-settings .profile-actions {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  margin: 12px 0 0 !important;
+  padding: 0 !important;
+}
+#accDlg #accBody #accountPage-settings .profile-actions > :is(label,button) {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 40px !important;
+  margin: 0 !important;
+  padding: 9px 14px !important;
+  line-height: 1.35 !important;
+}
+#accDlg #accBody #accountPage-settings .profile-card > p,
+#accDlg #accBody #accountPage-settings #accProfileErr {
+  grid-column: 1 / -1 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Dealer information and business editor wrappers remain flat on the page canvas. */
+#accDlg #accBody #accountPage-settings .dealer-account-editor {
+  margin: 18px 0 0 !important;
+  padding: 0 !important;
+}
+#accDlg #accBody #accountPage-settings .dealer-editor-section {
+  margin: 18px 0 0 !important;
+  padding: 0 !important;
+}
+#accDlg #accBody #accountPage-settings .dealer-editor-heading {
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+  gap: 14px !important;
+  margin: 0 0 16px !important;
+  padding: 0 !important;
+}
+#accDlg #accBody #accountPage-settings .dealer-editor-heading h3 {
+  margin: 0 0 6px !important;
+  padding: 0 !important;
+  color: #fff !important;
+}
+#accDlg #accBody #accountPage-settings .dealer-fields-grid,
+#accDlg #accBody #accountPage-settings .profile-grid {
+  display: grid !important;
+  align-items: start !important;
+  gap: 16px !important;
+  margin: 16px 0 20px !important;
+  padding: 0 !important;
+}
+#accDlg #accBody #accountPage-settings :is(.profile-grid,.dealer-fields-grid) > div {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 0 !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Labels are outside controls; fields have a consistent, padded hit area. */
+#accDlg #accBody #accountPage-settings label {
+  display: block !important;
+  position: static !important;
+  width: 100% !important;
+  height: auto !important;
+  margin: 0 0 8px !important;
+  padding: 0 1px !important;
+  color: rgba(246,243,237,.68) !important;
+  line-height: 1.45 !important;
+  text-align: left !important;
+  transform: none !important;
+}
+#accDlg #accBody #accountPage-settings :is(
+  .profile-grid,
+  .dealer-fields-grid,
+  .account-tools
+) :is(input:not([type="checkbox"]):not([type="radio"]),select,textarea) {
+  display: block !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  min-height: 48px !important;
+  height: 48px !important;
+  margin: 0 !important;
+  padding: 0 16px !important;
+  border-radius: 10px !important;
+  line-height: 1.35 !important;
+  color: #f6f3ed !important;
+  background: rgba(0,0,0,.24) !important;
+  background-image: none !important;
+  border: 1px solid rgba(255,255,255,.10) !important;
+  box-shadow: inset 0 1px 4px rgba(0,0,0,.14) !important;
+}
+#accDlg #accBody #accountPage-settings :is(.profile-grid,.dealer-fields-grid,.account-tools) textarea {
+  height: auto !important;
+  min-height: 112px !important;
+  padding: 13px 16px !important;
+  line-height: 1.55 !important;
+}
+#accDlg #accBody #accountPage-settings select {
+  padding-right: 40px !important;
+}
+#accDlg #accBody #accountPage-settings :is(input,select,textarea):focus-visible {
+  outline: none !important;
+  border-color: rgba(230,189,114,.58) !important;
+  box-shadow: 0 0 0 3px rgba(230,189,114,.09),inset 0 1px 4px rgba(0,0,0,.14) !important;
+}
+#accDlg #accBody #accountPage-settings .account-tools {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+#accDlg #accBody #accountPage-settings .account-tools > label {
+  margin-top: 14px !important;
+}
+#accDlg #accBody #accountPage-settings .account-tools :is(p.meta,small.meta) {
+  margin: 8px 1px 14px !important;
+  line-height: 1.55 !important;
+}
+#accDlg #accBody #accountPage-settings :is(.account-subscription-note,.account-legal-preferences) {
+  margin: 18px 0 0 !important;
+  padding: 0 !important;
+}
+#accDlg #accBody #accountPage-settings .dealer-save-row {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  margin: 20px 0 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+}
+#accDlg #accBody #accountPage-settings .dealer-save-row button,
+#accDlg #accBody #accountPage-settings button[data-save-dealer-info] {
+  margin: 0 !important;
+}
+@media (max-width:760px) {
+  #accDlg #accBody #accountPage-settings {
+    --settings-inset: 16px;
+    padding-bottom: 22px !important;
+  }
+  #accDlg #accBody #accountPage-settings > h3 {
+    padding-top: 18px !important;
+    margin-bottom: 16px !important;
+  }
+  #accDlg #accBody #accountPage-settings .account-settings-tabs {
+    gap: 6px !important;
+    margin-bottom: 20px !important;
+  }
+  #accDlg #accBody #accountPage-settings .account-settings-tabs button {
+    min-height: 38px !important;
+    padding: 8px 12px !important;
+  }
+  #accDlg #accBody #accountPage-settings .profile-card {
+    grid-template-columns: 56px minmax(0,1fr) !important;
+    align-items: start !important;
+    gap: 12px !important;
+  }
+  #accDlg #accBody #accountPage-settings .profile-avatar {
+    width: 56px !important;
+    height: 56px !important;
+  }
+  #accDlg #accBody #accountPage-settings .profile-actions {
+    gap: 8px !important;
+    margin-top: 10px !important;
+  }
+  #accDlg #accBody #accountPage-settings :is(.profile-grid,.dealer-fields-grid) {
+    grid-template-columns: minmax(0,1fr) !important;
+    gap: 14px !important;
+  }
+  #accDlg #accBody #accountPage-settings .dealer-editor-heading {
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+}
