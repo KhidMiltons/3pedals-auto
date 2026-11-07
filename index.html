@@ -707,16 +707,6 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 @media(max-width:700px){
  #nav,#nav.is-open,#accountMenu.dashboard-shortcuts{background:rgba(22,23,25,.2)!important;backdrop-filter:blur(34px) saturate(175%)!important;-webkit-backdrop-filter:blur(34px) saturate(175%)!important}
 }
-</style><style id="mobile-open-menus-transparency-final">
-@media(max-width:700px){
- #nav.is-open{background:rgba(22,23,25,.14)!important;backdrop-filter:blur(38px) saturate(180%)!important;-webkit-backdrop-filter:blur(38px) saturate(180%)!important}
- #accDlg nav#accountMenu.dashboard-shortcuts.menu-open:not([hidden]){background:rgba(22,23,25,.14)!important;backdrop-filter:blur(38px) saturate(180%)!important;-webkit-backdrop-filter:blur(38px) saturate(180%)!important}
-}
-</style><style id="mobile-strong-glass-blur-final">
-@media(max-width:700px){
- #nav.is-open{background:rgba(22,23,25,.28)!important;backdrop-filter:blur(48px) saturate(165%)!important;-webkit-backdrop-filter:blur(48px) saturate(165%)!important}
- #accDlg nav#accountMenu.dashboard-shortcuts.menu-open:not([hidden]){background:rgba(22,23,25,.28)!important;backdrop-filter:blur(48px) saturate(165%)!important;-webkit-backdrop-filter:blur(48px) saturate(165%)!important}
-}
 </style><style id="mobile-auth-dialog-compact">
 @media(max-width:600px){
  #authDlg{box-sizing:border-box;width:min(440px,calc(100vw - 24px))!important;max-width:calc(100vw - 24px)!important;max-height:calc(100dvh - 16px)!important;margin:auto!important;overflow:hidden!important;border-radius:16px!important}
@@ -3285,7 +3275,7 @@ header,body>header,.site-header,.navbar,.nav-shell,.nav-wrap,#nav,
 .card,.panel,.contact-card,.journal-intro,.journal-card,.project-intro,.project-card,
 .project-public-empty,.vehicle-card,.listing,.dealer,.featured-panel,.promotion-package,
 .dashboard-card,.contact-form,.filter-panel,.search-panel,.stat,.service-card,.booking-card,
-.garage-card,#autoQuoteRail,.authbox,.modal,.drawer,dialog{
+.garage-card,#autoQuoteRail,.authbox,.modal,.drawer,#dlg,.journal-photo-viewer{
  background-color:rgba(24,24,25,.24)!important;
  border:1px solid rgba(255,255,255,.22)!important;
  box-shadow:0 14px 38px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.16)!important;
@@ -3611,34 +3601,6 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){f
 
 </html>
 
-<style id="dealer-profile-layout-refinement">
-#accDlg #accBody .dealer-account-editor{padding:22px!important;display:grid!important;gap:20px!important}
-#accDlg #accBody .dealer-editor-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.09)}
-#accDlg #accBody .dealer-editor-heading h3{margin:4px 0 5px!important}
-#accDlg #accBody .dealer-editor-heading .meta{margin:0!important;max-width:560px}
-#accDlg #accBody .dealer-profile-status{flex:0 0 auto;padding:7px 10px;border:1px solid rgba(255,255,255,.09);border-radius:999px;background:rgba(255,255,255,.035);font-size:10px;color:rgba(255,255,255,.68)}
-#accDlg #accBody .dealer-editor-section{display:grid;gap:12px}
-#accDlg #accBody .dealer-editor-section>h4{margin:0!important;font-size:12px!important;font-weight:650!important;letter-spacing:.04em;color:rgba(255,255,255,.82)}
-#accDlg #accBody .dealer-fields-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px 18px!important;margin:0!important}
-#accDlg #accBody .dealer-fields-grid>div{min-width:0}
-#accDlg #accBody .dealer-fields-grid .dealer-field-wide{grid-column:1/-1}
-#accDlg #accBody .dealer-fields-grid label{display:block;margin:0 0 7px!important;font-size:11px!important;color:rgba(255,255,255,.66)!important}
-#accDlg #accBody .dealer-fields-grid input{width:100%!important;min-width:0!important;min-height:43px!important}
-#accDlg #accBody .dealer-save-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding-top:15px;border-top:1px solid rgba(255,255,255,.08)}
-#accDlg #accBody .dealer-save-row .meta{margin:0!important}
-#accDlg #accBody .dealer-overview-card{padding:19px!important;display:grid!important;gap:16px!important}
-#accDlg #accBody .dealer-overview-identity{display:flex;align-items:center;gap:14px;min-width:0}
-#accDlg #accBody .dealer-overview-identity>img,#accDlg #accBody .dealer-overview-monogram{width:54px;height:54px;flex:0 0 54px;border-radius:14px;object-fit:cover;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.045)}
-#accDlg #accBody .dealer-overview-monogram{display:grid;place-items:center;font-size:16px;font-weight:650;color:rgba(255,255,255,.85)}
-#accDlg #accBody .dealer-overview-identity>div{min-width:0;flex:1}
-#accDlg #accBody .dealer-overview-identity h4{margin:3px 0 4px!important;font-size:16px!important}
-#accDlg #accBody .dealer-overview-identity>div>span{font-size:12px;color:rgba(255,255,255,.62)}
-#accDlg #accBody .dealer-overview-identity>button{flex:0 0 auto;border:1px solid rgba(255,255,255,.10);border-radius:10px;padding:8px 11px;background:rgba(255,255,255,.045);color:inherit;font-size:11px}
-#accDlg #accBody .dealer-overview-details{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;padding-top:14px;border-top:1px solid rgba(255,255,255,.08)}
-#accDlg #accBody .dealer-overview-details>div{min-width:0;display:grid;gap:5px}
-#accDlg #accBody .dealer-overview-details small{font-size:9px;letter-spacing:.12em;color:rgba(255,255,255,.48)}
-#accDlg #accBody .dealer-overview-details strong{font-size:12px;font-weight:550;color:rgba(255,255,255,.84);overflow-wrap:anywhere}
-@media(max-width:760px){#accDlg #accBody .dealer-account-editor{padding:16px!important}#accDlg #accBody .dealer-fields-grid{grid-template-columns:minmax(0,1fr)!important;gap:12px!important}#accDlg #accBody .dealer-fields-grid .dealer-field-wide{grid-column:auto}#accDlg #accBody .dealer-overview-identity{align-items:flex-start;flex-wrap:wrap}#accDlg #accBody .dealer-overview-identity>div{flex:1 1 calc(100% - 70px)}#accDlg #accBody .dealer-overview-identity>button{margin-left:68px}#accDlg #accBody .dealer-overview-details{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
-</style>
+
 
 
