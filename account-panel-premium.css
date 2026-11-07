@@ -740,3 +740,161 @@ body:has(#accDlg[open])::after {
   #accDlg #accBody .workspace-v2-main-grid { gap: 10px !important; }
   #accDlg #accBody .workspace-v2-card { padding: 15px !important; }
 }
+
+
+/* 2026-11-07 — account form spacing: consistent field rhythm and safe inner padding.
+   Scoped to account settings so listing, booking and payment forms remain untouched. */
+#accDlg #accBody #accountPage-settings .settings-section {
+  box-sizing: border-box !important;
+  padding: 18px !important;
+  border-radius: 14px !important;
+}
+#accDlg #accBody #accountPage-settings .settings-section > h4 {
+  margin: 0 0 7px !important;
+}
+#accDlg #accBody #accountPage-settings .settings-section > .meta {
+  margin: 0 0 18px !important;
+  line-height: 1.55 !important;
+}
+#accDlg #accBody #accountPage-settings .profile-card {
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 16px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  margin: 0 0 18px !important;
+  padding: 16px !important;
+  border-radius: 12px !important;
+}
+#accDlg #accBody #accountPage-settings .profile-card > div:not(.profile-avatar) {
+  min-width: 0 !important;
+}
+#accDlg #accBody #accountPage-settings .profile-actions {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 10px !important;
+  margin-top: 12px !important;
+}
+#accDlg #accBody #accountPage-settings .profile-actions > label,
+#accDlg #accBody #accountPage-settings .profile-actions > button {
+  box-sizing: border-box !important;
+  min-height: 40px !important;
+  margin: 0 !important;
+  padding: 10px 14px !important;
+  line-height: 1.35 !important;
+}
+#accDlg #accBody #accountPage-settings .profile-card > p,
+#accDlg #accBody #accountPage-settings #accProfileErr {
+  flex-basis: 100% !important;
+  margin: 0 !important;
+  line-height: 1.5 !important;
+}
+#accDlg #accBody #accountPage-settings :is(.profile-grid,.dealer-fields-grid) {
+  align-items: start !important;
+  gap: 16px !important;
+  margin-top: 16px !important;
+}
+#accDlg #accBody #accountPage-settings :is(.profile-grid,.dealer-fields-grid) > div {
+  box-sizing: border-box !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+}
+#accDlg #accBody #accountPage-settings :is(.profile-grid,.dealer-fields-grid) label,
+#accDlg #accBody #accountPage-settings .account-tools > label,
+#accDlg #accBody #accountPage-settings .account-tools .field-row label {
+  display: block !important;
+  margin: 0 0 8px !important;
+  padding: 0 2px !important;
+  line-height: 1.45 !important;
+}
+#accDlg #accBody #accountPage-settings :is(.profile-grid,.dealer-fields-grid) :is(input:not([type="checkbox"]):not([type="radio"]),select,textarea),
+#accDlg #accBody #accountPage-settings .account-tools :is(input:not([type="checkbox"]):not([type="radio"]),select,textarea) {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 48px !important;
+  height: 48px !important;
+  padding: 0 16px !important;
+  border-radius: 10px !important;
+  line-height: 1.35 !important;
+}
+#accDlg #accBody #accountPage-settings :is(.profile-grid,.dealer-fields-grid) textarea,
+#accDlg #accBody #accountPage-settings .account-tools textarea {
+  height: auto !important;
+  min-height: 112px !important;
+  padding: 13px 16px !important;
+  line-height: 1.55 !important;
+}
+#accDlg #accBody #accountPage-settings select {
+  padding-right: 42px !important;
+}
+#accDlg #accBody #accountPage-settings .dealer-account-editor,
+#accDlg #accBody #accountPage-settings .dealer-editor-section {
+  box-sizing: border-box !important;
+  min-width: 0 !important;
+  padding: 16px !important;
+  border-radius: 12px !important;
+}
+#accDlg #accBody #accountPage-settings .dealer-editor-section + .dealer-editor-section {
+  margin-top: 14px !important;
+}
+#accDlg #accBody #accountPage-settings .dealer-editor-heading {
+  gap: 12px !important;
+  margin-bottom: 16px !important;
+}
+#accDlg #accBody #accountPage-settings .account-tools {
+  box-sizing: border-box !important;
+  min-width: 0 !important;
+  padding: 16px !important;
+  border-radius: 12px !important;
+}
+#accDlg #accBody #accountPage-settings .account-tools > :is(label,input,select,textarea) {
+  max-width: 100% !important;
+}
+#accDlg #accBody #accountPage-settings .account-tools > label + :is(input,select,textarea) {
+  margin-top: 0 !important;
+}
+#accDlg #accBody #accountPage-settings .account-tools :is(p.meta,small.meta) {
+  display: block !important;
+  margin: 8px 2px 14px !important;
+  line-height: 1.55 !important;
+}
+#accDlg #accBody #accountPage-settings .account-subscription-note,
+#accDlg #accBody #accountPage-settings .account-legal-preferences {
+  box-sizing: border-box !important;
+  padding: 16px !important;
+  border-radius: 12px !important;
+}
+#accDlg #accBody #accountPage-settings :is(button,.btn) {
+  min-height: 40px;
+}
+@media (max-width:760px) {
+  #accDlg #accBody #accountPage-settings .settings-section,
+  #accDlg #accBody #accountPage-settings .account-tools,
+  #accDlg #accBody #accountPage-settings .dealer-account-editor,
+  #accDlg #accBody #accountPage-settings .dealer-editor-section {
+    padding: 14px !important;
+  }
+  #accDlg #accBody #accountPage-settings .profile-card {
+    align-items: flex-start !important;
+    gap: 12px !important;
+    padding: 14px !important;
+  }
+  #accDlg #accBody #accountPage-settings .profile-actions {
+    gap: 8px !important;
+    margin-top: 10px !important;
+  }
+  #accDlg #accBody #accountPage-settings :is(.profile-grid,.dealer-fields-grid) {
+    gap: 14px !important;
+  }
+  #accDlg #accBody #accountPage-settings :is(.profile-grid,.dealer-fields-grid) :is(input,select,textarea),
+  #accDlg #accBody #accountPage-settings .account-tools :is(input,select,textarea) {
+    min-height: 48px !important;
+    height: 48px !important;
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+}
