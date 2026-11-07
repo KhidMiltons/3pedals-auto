@@ -251,12 +251,12 @@ a{color:inherit}
 <div class="fleet" id="fleet" aria-live="polite"><p class="fleet-footnote">Loading available chauffeur vehicles…</p></div><p class="fleet-footnote">Vehicle availability and passenger capacity are confirmed by our team when reviewing your request.</p>
 </section>
 <section class="chauffeur-services" aria-labelledby="servicesTitle"><div class="eyebrow">TRAVEL YOUR WAY</div><h2 class="section-title" id="servicesTitle">Choose your hire arrangement.</h2><p class="section-intro">From a quick airport pickup to a full day on the move, tell us what your journey requires.</p><div class="service-grid">
-<article class="service-card"><div class="service-icon" aria-hidden="true">◷</div><h3>Hourly hire</h3><p>Flexible city travel, appointments and multiple stops within your booked time.</p></article>
-<article class="service-card"><div class="service-icon" aria-hidden="true">◫</div><h3>Half-day hire</h3><p>Convenient coverage for a busy morning or afternoon itinerary.</p></article>
-<article class="service-card"><div class="service-icon" aria-hidden="true">◴</div><h3>Full-day hire</h3><p>A dedicated vehicle for business, family plans and a full day of travel.</p></article>
-<article class="service-card"><div class="service-icon" aria-hidden="true">✈</div><h3>Airport transfers</h3><p>Pre-arranged airport pickup and drop-off with your journey details confirmed in advance.</p></article>
-<article class="service-card"><div class="service-icon" aria-hidden="true">↗</div><h3>Distance-based journeys</h3><p>Request an inter-town or longer-distance trip and share the route for a tailored quote.</p></article>
-<article class="service-card"><div class="service-icon" aria-hidden="true">◎</div><h3>Custom journeys</h3><p>Need return travel, extra stops or a special arrangement? Add the details to your request.</p></article>
+<article class="service-card"><div class="service-icon" aria-hidden="true">◷</div><h3>Hourly hire</h3><p>Flexible city travel, appointments and multiple stops within your booked time.</p><button class="service-select" type="button" data-pricing-method="hourly">Choose hourly hire →</button></article>
+<article class="service-card"><div class="service-icon" aria-hidden="true">◫</div><h3>Half-day hire</h3><p>Convenient coverage for a busy morning or afternoon itinerary.</p><button class="service-select" type="button" data-pricing-method="half_day">Choose half-day →</button></article>
+<article class="service-card"><div class="service-icon" aria-hidden="true">◴</div><h3>Full-day hire</h3><p>A dedicated vehicle for business, family plans and a full day of travel.</p><button class="service-select" type="button" data-pricing-method="full_day">Choose full-day →</button></article>
+<article class="service-card"><div class="service-icon" aria-hidden="true">✈</div><h3>Airport transfers</h3><p>Pre-arranged airport pickup and drop-off with your journey details confirmed in advance.</p><button class="service-select" type="button" data-pricing-method="airport_transfer">Choose airport transfer →</button></article>
+<article class="service-card"><div class="service-icon" aria-hidden="true">↗</div><h3>Distance-based journeys</h3><p>Request an inter-town or longer-distance trip and share the route for a tailored quote.</p><button class="service-select" type="button" data-pricing-method="distance">Choose distance-based →</button></article>
+<article class="service-card"><div class="service-icon" aria-hidden="true">◎</div><h3>Custom journeys</h3><p>Need return travel, extra stops or a special arrangement? Add the details to your request.</p><button class="service-select" type="button" data-custom-journey>Describe your journey →</button></article>
 </div></section>
 <section class="chauffeur-assurance"><div class="assurance-copy"><div class="eyebrow">THE 3 PEDALS STANDARD</div><h2 class="section-title">Thoughtful travel, from pickup to arrival.</h2><p class="section-intro">A considered chauffeur experience with clear communication at every step.</p></div><div class="assurance-grid">
 <article><span>01</span><h3>Professional service</h3><p>Chauffeur assignment and trip details are confirmed with you before travel.</p></article><article><span>02</span><h3>Comfort-led vehicles</h3><p>Choose a vehicle suited to your passengers, luggage and journey.</p></article><article><span>03</span><h3>Flexible arrangements</h3><p>Hourly, daily, airport and distance-based requests are available for review.</p></article><article><span>04</span><h3>Clear confirmation</h3><p>We review your request and confirm the quotation before asking for payment.</p></article>
@@ -321,7 +321,7 @@ async function loadVehicles(){
   const photo=suv?'vehicle-photo-suv':'vehicle-photo-sedan';
   const type=suv?'SUV · EXTRA SPACE':'CITY & EXECUTIVE COMFORT';
   const description=v.description|| (suv?'A spacious option for family journeys, executive travel and longer routes.':'A comfortable option for everyday city journeys and individual trips.');
-  return '<article class="glass vehicle"><div class="vehicle-photo '+photo+'" role="img" aria-label="'+esc(v.display_name)+' chauffeur vehicle"></div><div class="vehicle-copy"><span class="tag">'+type+'</span><h2>'+esc(v.display_name)+'</h2><p>'+esc(description)+'</p><ul class="vehicle-facts"><li>Up to '+esc(v.passenger_capacity)+' passengers</li><li>Chauffeur-driven</li><li>Availability confirmed on request</li></ul><button class="vehicle-select" type="button" data-select-vehicle-id="'+esc(v.id)+'">Select this vehicle <span aria-hidden="true">→</span></button></div></article>';
+  const capacity=v.passenger_capacity?'<li>Up to '+esc(v.passenger_capacity)+' passengers</li>':'<li>Capacity confirmed on request</li>';return '<article class="glass vehicle"><div class="vehicle-photo '+photo+'" role="img" aria-label="'+esc(v.display_name)+' chauffeur vehicle"></div><div class="vehicle-copy"><span class="tag">'+type+'</span><h2>'+esc(v.display_name)+'</h2><p>'+esc(description)+'</p><ul class="vehicle-facts">'+capacity+'<li>Chauffeur-driven</li><li>Availability confirmed on request</li></ul><button class="vehicle-select" type="button" data-select-vehicle-id="'+esc(v.id)+'">Select this vehicle <span aria-hidden="true">→</span></button></div></article>';
  }).join('');
  fleet.querySelectorAll('[data-select-vehicle-id]').forEach(button=>button.addEventListener('click',()=>{
   $('vehicleId').value=button.dataset.selectVehicleId;updateEstimate();
@@ -361,6 +361,12 @@ function updateTripSummary(){
 
 ['pickup','destination','startAt','passengers','luggage'].forEach(id=>$(id)?.addEventListener('input',updateTripSummary));
 ['pickup','destination','startAt','passengers','luggage'].forEach(id=>$(id)?.addEventListener('change',updateTripSummary));
+document.querySelectorAll('[data-pricing-method]').forEach(button=>button.addEventListener('click',()=>{
+ $('pricingMethod').value=button.dataset.pricingMethod;updateEstimate();$('booking').scrollIntoView({behavior:'smooth',block:'start'});
+}));
+document.querySelector('[data-custom-journey]')?.addEventListener('click',()=>{
+ $('booking').scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=> $('notes').focus(),350);
+});
 $('showRegister').onclick=()=>setAuthMode(true);$('showLogin').onclick=()=>setAuthMode(false);
 $('signInBtn').onclick=async()=>{hide('authNotice');const email=$('authEmail').value.trim(),password=$('authPassword').value;if(!email||!password){notice('authNotice','Enter your email and password.','error');return}try{if(!$('authNameWrap').hidden){const name=$('authName').value.trim(),phone=$('authPhone').value.trim();if(!name||!phone)throw Error('Enter your name and phone number.');const {data,error}=await sb.auth.signUp({email,password,options:{data:{name,phone,account_type:'private'},emailRedirectTo:'https://3pedalsauto.co.ke/'}});if(error)throw error;if(!data.session){notice('authNotice','Account created. Confirm your email, then return here and sign in.','success');return}}else{const {error}=await sb.auth.signInWithPassword({email,password});if(error)throw error}await syncSession()}catch(e){notice('authNotice',e.message||'Could not authenticate.','error')}};
 $('signOutBtn').onclick=async()=>{await sb.auth.signOut();currentUser=null;await syncSession()};
@@ -574,5 +580,9 @@ html body .hero p{
 @media(max-width:800px){.section-heading{display:block}.section-intro{margin-top:10px!important}.service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.chauffeur-assurance{grid-template-columns:1fr;gap:18px}.steps-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.trip-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.chauffeur-fleet-section,.chauffeur-services,.chauffeur-assurance,.chauffeur-steps,.chauffeur-faq{margin:27px 0 32px}.fleet{grid-template-columns:1fr}.vehicle-photo{height:190px}.service-grid{grid-template-columns:1fr}.service-card{padding:16px}.chauffeur-assurance{padding:17px}.assurance-grid{grid-template-columns:1fr}.steps-grid{grid-template-columns:1fr}.trip-summary{padding:13px}.trip-summary-grid{grid-template-columns:1fr 1fr}.section-title{font-size:29px!important}.section-heading{margin-top:26px}}
 @media(hover:hover) and (pointer:fine){.service-card,.assurance-grid article,.steps-grid article{transition:transform .3s,border-color .3s,background .3s}.service-card:hover,.assurance-grid article:hover,.steps-grid article:hover{transform:translateY(-3px);border-color:rgba(183,160,106,.32);background:rgba(255,255,255,.045)}}
+.service-select{display:block;margin-top:13px;padding:10px 0 0;border:0;border-top:1px solid rgba(255,255,255,.09);background:none;color:#ddc994;font:700 11px Manrope,sans-serif;text-align:left;cursor:pointer}
+.service-select:hover{color:#fff}
+.service-card{display:flex;flex-direction:column;align-items:flex-start}
+.service-card p{flex:1}
 </style>
 </body></html>
