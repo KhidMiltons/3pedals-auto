@@ -1,0 +1,332 @@
+/* 3 Pedals Auto KE — Account panel premium glass refinement.
+   Scoped to the account dialog; preserves all existing account markup and handlers. */
+:root {
+  --acc-glass-accent: #e6bd72;
+  --acc-glass-accent-soft: rgba(230,189,114,.16);
+  --acc-glass-text: #f6f3ed;
+  --acc-glass-muted: rgba(246,243,237,.62);
+  --acc-glass-line: rgba(255,255,255,.085);
+}
+
+/* Two ambient light sources behind the dashboard, not on top of its content. */
+body:has(#accDlg[open]) { isolation: isolate; }
+body:has(#accDlg[open])::before,
+body:has(#accDlg[open])::after {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  pointer-events: none;
+  width: min(52vw, 680px);
+  height: min(52vw, 680px);
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: .34;
+  transform: translateZ(0);
+}
+body:has(#accDlg[open])::before {
+  top: -22%;
+  left: -16%;
+  background: radial-gradient(circle, rgba(32,164,190,.34) 0%, rgba(32,164,190,.13) 34%, transparent 72%);
+}
+body:has(#accDlg[open])::after {
+  right: -17%;
+  bottom: -26%;
+  background: radial-gradient(circle, rgba(137,91,190,.30) 0%, rgba(137,91,190,.12) 36%, transparent 73%);
+}
+
+/* A single dark glass surface: no nested contrasting slabs. */
+#accDlg.account-dashboard-dialog[open] {
+  color: var(--acc-glass-text) !important;
+}
+#accDlg.account-dashboard-dialog[open] > .account-dashboard-main {
+  min-width: 0 !important;
+  margin: 12px 12px 12px 0 !important;
+  padding: clamp(18px,2.2vw,30px) clamp(16px,2.4vw,34px) 20px !important;
+  border: 1px solid var(--acc-glass-line) !important;
+  border-radius: 22px !important;
+  background: rgba(25,25,25,.45) !important;
+  background-image: linear-gradient(145deg,rgba(255,255,255,.035),transparent 48%) !important;
+  box-shadow: 0 22px 64px rgba(0,0,0,.22), inset 0 1px rgba(255,255,255,.055) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(125%) !important;
+  backdrop-filter: blur(12px) saturate(125%) !important;
+}
+#accDlg .account-dialog-head {
+  border-bottom: 1px solid rgba(255,255,255,.075) !important;
+}
+#accDlg h2.account-brand-title { color: #fff !important; }
+#accDlg .account-dialog-head button {
+  background: rgba(255,255,255,.045) !important;
+  border: 1px solid rgba(255,255,255,.10) !important;
+  transition: background .18s ease,border-color .18s ease,transform .18s ease !important;
+}
+#accDlg .account-dialog-head button:hover {
+  background: rgba(230,189,114,.10) !important;
+  border-color: rgba(230,189,114,.32) !important;
+  transform: translateY(-1px);
+}
+
+/* The scroll region is the one primary content glass plane. */
+#accDlg #accBody {
+  padding: 0 2px 24px 0 !important;
+  border: 1px solid rgba(255,255,255,.075) !important;
+  border-radius: 18px !important;
+  background: rgba(25,25,25,.32) !important;
+  box-shadow: inset 0 1px rgba(255,255,255,.035) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(120%) !important;
+  backdrop-filter: blur(12px) saturate(120%) !important;
+}
+#accDlg #accBody > * { padding-left: clamp(14px,2vw,24px); padding-right: clamp(14px,2vw,24px); }
+#accDlg #accBody .account-page > h3 {
+  padding-top: 22px !important;
+  color: #fff !important;
+  font-size: clamp(23px,2.1vw,30px) !important;
+  letter-spacing: -.035em !important;
+}
+
+/* Profile and dealer sections float directly on the unified glass surface. */
+#accDlg #accBody #accountPage-settings .account-settings-inner,
+#accDlg #accBody #accountPage-settings .settings-section,
+#accDlg #accBody #accountPage-settings .profile-card,
+#accDlg #accBody #accountPage-settings .account-tools,
+#accDlg #accBody #accountPage-settings .dealer-account-editor,
+#accDlg #accBody #accountPage-settings .dealer-editor-section,
+#accDlg #accBody #accountPage-settings .account-subscription-note,
+#accDlg #accBody #accountPage-settings .account-legal-preferences,
+#accDlg #accBody #accountPage-settings .profile-grid,
+#accDlg #accBody #accountPage-settings .dealer-fields-grid {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+#accDlg #accBody #accountPage-settings .settings-section {
+  margin: 0 !important;
+  padding: 8px 0 22px !important;
+}
+#accDlg #accBody #accountPage-settings .settings-section > h4,
+#accDlg #accBody #accountPage-settings .dealer-editor-section > h4 {
+  margin: 18px 0 12px !important;
+  color: #fff !important;
+  font-size: 15px !important;
+  font-weight: 750 !important;
+  letter-spacing: -.015em;
+}
+#accDlg #accBody #accountPage-settings .settings-section > p.meta,
+#accDlg #accBody #accountPage-settings .dealer-editor-heading .meta {
+  color: var(--acc-glass-muted) !important;
+}
+#accDlg #accBody #accountPage-settings .profile-card {
+  display: grid !important;
+  grid-template-columns: 72px minmax(0,1fr) !important;
+  gap: 16px !important;
+  align-items: center !important;
+  margin: 12px 0 18px !important;
+  padding: 8px 0 18px !important;
+  border-bottom: 1px solid rgba(255,255,255,.075) !important;
+}
+#accDlg #accBody #accountPage-settings .dealer-account-editor {
+  margin: 20px 0 0 !important;
+  padding: 0 !important;
+}
+#accDlg #accBody #accountPage-settings .dealer-editor-section {
+  margin: 12px 0 0 !important;
+  padding: 8px 0 0 !important;
+}
+#accDlg #accBody #accountPage-settings .dealer-editor-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 0 14px;
+}
+#accDlg #accBody #accountPage-settings .dealer-editor-heading h3 {
+  margin: 3px 0 6px !important;
+  color: #fff !important;
+  font-size: clamp(19px,1.8vw,24px) !important;
+}
+#accDlg #accBody #accountPage-settings .dealer-profile-status {
+  flex: 0 0 auto;
+  padding: 7px 11px;
+  border: 1px solid rgba(230,189,114,.22);
+  border-radius: 999px;
+  background: rgba(230,189,114,.075);
+  color: #f0d39b;
+  font-size: 10px;
+  font-weight: 750;
+}
+
+/* Inputs: quiet inset glass with a clear amber focus glow. */
+#accDlg #accBody :is(input,select,textarea) {
+  min-width: 0 !important;
+  min-height: 44px !important;
+  padding: 11px 13px !important;
+  color: #f7f4ee !important;
+  background: rgba(0,0,0,.25) !important;
+  background-image: none !important;
+  border: 1px solid rgba(255,255,255,.105) !important;
+  border-radius: 11px !important;
+  box-shadow: inset 0 1px 5px rgba(0,0,0,.14) !important;
+  transition: border-color .18s ease,background .18s ease,box-shadow .18s ease !important;
+}
+#accDlg #accBody :is(input,select,textarea)::placeholder {
+  color: rgba(246,243,237,.38) !important;
+}
+#accDlg #accBody :is(input,select,textarea):hover {
+  border-color: rgba(255,255,255,.18) !important;
+}
+#accDlg #accBody :is(input,select,textarea):focus,
+#accDlg #accBody :is(input,select,textarea):focus-visible {
+  outline: none !important;
+  background: rgba(0,0,0,.34) !important;
+  border-color: rgba(230,189,114,.62) !important;
+  box-shadow: 0 0 0 3px rgba(230,189,114,.10),0 0 22px rgba(230,189,114,.09),inset 0 1px 5px rgba(0,0,0,.16) !important;
+}
+#accDlg #accBody label {
+  margin: 0 0 7px !important;
+  color: rgba(246,243,237,.64) !important;
+  font-size: 11px !important;
+  font-weight: 650 !important;
+  letter-spacing: .01em;
+}
+#accDlg #accBody .profile-grid,
+#accDlg #accBody .dealer-fields-grid {
+  gap: 14px 16px !important;
+  margin: 15px 0 !important;
+}
+
+/* Tabs, upload controls, save actions and pills. */
+#accDlg #accBody .account-settings-tabs {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  padding: 0 0 14px !important;
+  margin: 0 0 8px !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(255,255,255,.075) !important;
+}
+#accDlg #accBody .account-settings-tabs button,
+#accDlg #accBody .profile-actions button,
+#accDlg #accBody .dealer-save-row button,
+#accDlg #accBody .settings-section button,
+#accDlg #accBody button[data-save-dealer-info] {
+  min-height: 38px !important;
+  padding: 9px 14px !important;
+  border: 1px solid rgba(255,255,255,.12) !important;
+  border-radius: 999px !important;
+  background: linear-gradient(135deg,rgba(255,255,255,.085),rgba(255,255,255,.025)) !important;
+  color: rgba(246,243,237,.86) !important;
+  box-shadow: inset 0 1px rgba(255,255,255,.055) !important;
+  transition: background .18s ease,border-color .18s ease,color .18s ease,transform .18s ease,box-shadow .18s ease !important;
+}
+#accDlg #accBody .account-settings-tabs button.active,
+#accDlg #accBody .account-settings-tabs button[aria-selected="true"] {
+  color: #ffe6b3 !important;
+  background: linear-gradient(135deg,rgba(230,189,114,.20),rgba(230,189,114,.075)) !important;
+  border-color: rgba(230,189,114,.42) !important;
+  box-shadow: inset 0 1px rgba(255,255,255,.09),0 5px 18px rgba(0,0,0,.12) !important;
+}
+#accDlg #accBody .account-settings-tabs button:hover,
+#accDlg #accBody .profile-actions button:hover,
+#accDlg #accBody .dealer-save-row button:hover,
+#accDlg #accBody .settings-section button:hover {
+  color: #fff !important;
+  background: linear-gradient(135deg,rgba(230,189,114,.18),rgba(255,255,255,.055)) !important;
+  border-color: rgba(230,189,114,.35) !important;
+  transform: translateY(-1px);
+}
+#accDlg #accBody .dealer-save-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin: 22px 0 4px !important;
+  padding: 16px 0 0 !important;
+  border: 0 !important;
+}
+#accDlg #accBody .dealer-save-row button,
+#accDlg #accBody button[data-save-dealer-info] {
+  color: #191713 !important;
+  background: linear-gradient(135deg,#f0d49b,#c69a54) !important;
+  border-color: rgba(255,231,184,.45) !important;
+  box-shadow: 0 8px 22px rgba(0,0,0,.17),inset 0 1px rgba(255,255,255,.35) !important;
+}
+#accDlg #accBody .dealer-save-row button:hover,
+#accDlg #accBody button[data-save-dealer-info]:hover {
+  color: #111 !important;
+  background: linear-gradient(135deg,#ffe4ad,#d4aa68) !important;
+  box-shadow: 0 10px 26px rgba(0,0,0,.22),0 0 18px rgba(230,189,114,.10) !important;
+}
+#accDlg #accBody .btn {
+  border-radius: 10px !important;
+}
+#accDlg #accBody .btn.ghost {
+  background: rgba(255,255,255,.045) !important;
+  border: 1px solid rgba(255,255,255,.12) !important;
+  color: #f3eee4 !important;
+}
+
+/* Mobile layout: retain the same single-glass hierarchy without overflow. */
+@media (max-width:760px) {
+  #accDlg.account-dashboard-dialog[open] > .account-dashboard-main {
+    margin: 0 !important;
+    padding: 14px 12px 12px !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: rgba(25,25,25,.30) !important;
+    -webkit-backdrop-filter: blur(10px) saturate(120%) !important;
+    backdrop-filter: blur(10px) saturate(120%) !important;
+  }
+  #accDlg #accBody {
+    border-radius: 15px !important;
+    padding-bottom: 18px !important;
+  }
+  #accDlg #accBody .account-page > h3 { padding-top: 18px !important; }
+  #accDlg #accBody .profile-grid,
+  #accDlg #accBody .dealer-fields-grid {
+    grid-template-columns: minmax(0,1fr) !important;
+    gap: 12px !important;
+  }
+  #accDlg #accBody #accountPage-settings .profile-card {
+    grid-template-columns: 60px minmax(0,1fr) !important;
+    gap: 12px !important;
+  }
+  #accDlg #accBody #accountPage-settings .profile-avatar {
+    width: 60px !important;
+    height: 60px !important;
+  }
+  #accDlg #accBody #accountPage-settings .dealer-editor-heading {
+    flex-direction: column;
+    gap: 8px;
+  }
+  #accDlg #accBody .account-settings-tabs {
+    gap: 6px !important;
+    overflow-x: auto;
+    flex-wrap: nowrap !important;
+    scrollbar-width: none;
+  }
+  #accDlg #accBody .account-settings-tabs button {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+  #accDlg #accBody .dealer-save-row { align-items: flex-start; }
+  #accDlg #accBody .dealer-save-row button { width: 100%; }
+  body:has(#accDlg[open])::before,
+  body:has(#accDlg[open])::after {
+    width: 78vw;
+    height: 78vw;
+    filter: blur(72px);
+    opacity: .28;
+  }
+}
+@media (prefers-reduced-motion:reduce) {
+  #accDlg #accBody *,#accDlg .account-dialog-head button {
+    transition: none !important;
+    animation: none !important;
+  }
+  body:has(#accDlg[open])::before,
+  body:has(#accDlg[open])::after { filter: none; }
+}
