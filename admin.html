@@ -763,6 +763,7 @@ function setupBookingAlerts(){
   const watch=(name,table,event,handler)=>{const channel=sb.channel(name).on("postgres_changes",{event,schema:"public",table},handler).subscribe();window.adminRealtimeChannels.push(channel)};
   watch("chauffeur-admin-live","chauffeur_bookings","*",payload=>{const row=payload.new||{};showNotice("Chauffeur booking updated"+(row.booking_ref?" · "+row.booking_ref:"")+".","ok");loadChauffeurBookings();loadRequestsInbox();loadAdminOverview()});
   watch("contact-enquiry-live","contact_enquiries","INSERT",payload=>{const row=payload.new||{};showNotice("New website enquiry"+(row.name?" from "+row.name:"")+".","ok");loadRequestsInbox();loadAdminOverview()});
+  watch("chauffeur-cancellation-live","chauffeur_cancellation_requests","INSERT",()=>{showNotice("A chauffeur cancellation request needs review.","ok");loadRequestsInbox();loadChauffeurBookings();loadAdminOverview()});
   watch("listing-admin-live","listings","INSERT",()=>{showNotice("A new vehicle listing has been submitted for review.","ok");load();loadRequestsInbox();loadAdminOverview()});
   watch("promotion-payment-live","listing_promotions","UPDATE",payload=>{const row=payload.new||{};showNotice("Promotion payment status updated"+(row.status?" · "+row.status:"")+".","ok");loadAdminOverview()});
  }
