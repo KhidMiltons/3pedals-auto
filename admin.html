@@ -176,7 +176,8 @@ $("refresh").onclick=async()=>{
  refreshInProgress=true;const button=$("refresh"),original=button.textContent;button.disabled=true;button.textContent="Refreshing…";
  const scrollPosition=window.scrollY,activeElement=document.activeElement,activeId=activeElement?.id||"",listingSearchValue=$("listingSearch")?.value||"",activeSection=document.querySelector("[data-section].active")?.dataset.section||"listingsPanel";
  try{
-  if(activeSection==="requestsPanel"){await Promise.all([load(),loadAdminBookings(),loadChauffeurBookings()]);await loadRequestsInbox()}\n  else if(activeSection==="listingsPanel")await load();
+  if(activeSection==="requestsPanel"){await Promise.all([load(),loadAdminBookings(),loadChauffeurBookings()]);await loadRequestsInbox()}
+  else if(activeSection==="listingsPanel")await load();
   else if(activeSection==="bookingsPanel")await loadAdminBookings();
   else if(activeSection==="chauffeurPanel")await loadChauffeurBookings();
   else if(activeSection==="mechanicsPanel")await loadMechanics();
@@ -291,7 +292,8 @@ async function loadRequestsInbox(){
 }
 $("refreshRequests")?.addEventListener("click",async()=>{await Promise.all([load(),loadAdminBookings(),loadChauffeurBookings()]);await loadRequestsInbox()});
 function activateAdminSection(section){const valid=["requestsPanel","listingsPanel","bookingsPanel","chauffeurPanel","mechanicsPanel","journalPanel","projectsPanel","contactPanel"];if(!valid.includes(section))section="requestsPanel";document.querySelectorAll("[data-section]").forEach(b=>b.classList.toggle("active",b.dataset.section===section));valid.forEach(id=>$(id).classList.toggle("section-hidden",id!==section));if(section==="bookingsPanel")$("newBookingBadge").textContent="";if(section==="requestsPanel")loadRequestsInbox();return section}
-document.querySelectorAll("[data-section]").forEach(b=>b.onclick=()=>{const section=activateAdminSection(b.dataset.section);try{sessionStorage.setItem("adminActiveSection",section)}catch(e){}});\n$("requestsQueue")?.addEventListener("click",e=>{const btn=e.target.closest("[data-open-request]");if(!btn)return;const section=activateAdminSection(btn.dataset.openRequest);try{sessionStorage.setItem("adminActiveSection",section)}catch(_){}if(section==="listingsPanel"){filter="pending";document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x.dataset.filter==="pending"));render()}if(section==="bookingsPanel")loadAdminBookings();if(section==="chauffeurPanel")loadChauffeurBookings();});
+document.querySelectorAll("[data-section]").forEach(b=>b.onclick=()=>{const section=activateAdminSection(b.dataset.section);try{sessionStorage.setItem("adminActiveSection",section)}catch(e){}});
+$("requestsQueue")?.addEventListener("click",e=>{const btn=e.target.closest("[data-open-request]");if(!btn)return;const section=activateAdminSection(btn.dataset.openRequest);try{sessionStorage.setItem("adminActiveSection",section)}catch(_){}if(section==="listingsPanel"){filter="pending";document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x.dataset.filter==="pending"));render()}if(section==="bookingsPanel")loadAdminBookings();if(section==="chauffeurPanel")loadChauffeurBookings();});
 $("reviewPendingBtn").onclick=()=>{activateAdminSection("listingsPanel");filter="pending";document.querySelectorAll("[data-filter]").forEach(b=>b.classList.toggle("active",b.dataset.filter==="pending"));try{sessionStorage.setItem("adminActiveSection","listingsPanel")}catch(e){}render();$("listingsPanel").scrollIntoView({behavior:"auto",block:"start"})};
 $("openBookingsBtn").onclick=async()=>{activateAdminSection("bookingsPanel");try{sessionStorage.setItem("adminActiveSection","bookingsPanel")}catch(e){}await loadAdminBookings();$("bookingsPanel").scrollIntoView({behavior:"auto",block:"start"})};
 $("listings").onclick=async e=>{
