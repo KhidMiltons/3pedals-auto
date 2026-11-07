@@ -1445,6 +1445,8 @@ function prefetchAccountData(userId,sellerPrefsRequest=null){
   accountDataPrefetch=fetchAccountData(userId,sellerPrefsRequest).catch(error=>{console.warn("Account data prefetch failed; it will be loaded when opened.",error);return null});
 }
 let authMode="register";
+// Keep the current authentication mode available to independently loaded account UI handlers.
+window.authMode="register";
 function normalizeAccountType(value){return String(value||"").trim().toLowerCase()==="yard"?"yard":"private"}
 function accountType(){
   const metadataType=me?.user_metadata?.account_type;
@@ -1529,7 +1531,7 @@ let sellerRegistrationMode=false,sellerSlugEdited=false;
  function slugifySellerName(value){return String(value||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,48).replace(/-+$/g,"")}
  function refreshSellerUrlPreview(){const slug=$("authSellerSlug").value.trim();$("authSellerUrlPreview").textContent=slug?`${location.host||"3pedalsauto.co.ke"}/yard.html?slug=${slug}`:`${location.host||"3pedalsauto.co.ke"}/yard.html?slug=your-name`}
  function openAuth(mode="register",msg="",options={}){
-   sellerRegistrationMode=!!options.seller;authMode=mode;const login=mode==="login",recovery=mode==="recovery",sellerSignup=sellerRegistrationMode&&!login&&!recovery;
+   sellerRegistrationMode=!!options.seller;authMode=mode;window.authMode=mode;const login=mode==="login",recovery=mode==="recovery",sellerSignup=sellerRegistrationMode&&!login&&!recovery;
    if(!sb){msg=msg||"Sign-in is temporarily unavailable because the account service did not initialize. Refresh the page and try again.";console.error("3 Pedals account service is unavailable: Supabase client is not initialized.")}
    $("authDlg").classList.toggle("seller-registration",sellerRegistrationMode);
    $("authProfileDetails").hidden=(login||recovery)&&!sellerRegistrationMode;$("authProfileDetails").open=sellerSignup;$("authSellerUrlWrap").hidden=!sellerSignup;
@@ -1542,11 +1544,14 @@ let sellerRegistrationMode=false,sellerSlugEdited=false;
    if(sellerSignup){if(!sellerSlugEdited)$("authSellerSlug").value=slugifySellerName($("authName").value);refreshSellerUrlPreview()}
    $("authErr").textContent=msg;$("authDlg").showModal();
  }
+ // Expose the same auth entry point/state for account-panel and recovery handlers.
+ window.openAuth=openAuth;
+ window.get3PedalsAuthMode=()=>authMode;
  $("accountOpen").onclick=()=>me?openAccount():openAuth("register");
 $("accountTile").onclick=()=>me?openAccount():openAuth("register");
 $("authCloseTop").onclick=()=>$("authDlg").close();
 $("authCloseBack").onclick=()=>$("authDlg").close();
-$("authSwitch").onclick=()=>openAuth(authMode==="login"?"register":"login","",{seller:sellerRegistrationMode});
+$("authSwitch").onclick=()=>openAuth((window.authMode||authMode)==="login"?"register":"login","",{seller:sellerRegistrationMode});
  $("authName").addEventListener("input",()=>{if(sellerRegistrationMode&&!sellerSlugEdited){$("authSellerSlug").value=slugifySellerName($("authName").value);refreshSellerUrlPreview()}});$("authSellerSlug").addEventListener("input",()=>{sellerSlugEdited=true;refreshSellerUrlPreview()});
 $("authName").addEventListener("input",()=>{if(sellerRegistrationMode&&!sellerSlugEdited){$("authSellerSlug").value=slugifySellerName($("authName").value);refreshSellerUrlPreview()}});$("authSellerSlug").addEventListener("input",()=>{sellerSlugEdited=true;refreshSellerUrlPreview()});
  document.querySelectorAll('input[name="accountType"]').forEach(r=>r.onchange=updateAuthTypeHint);
