@@ -538,3 +538,111 @@ body:has(#accDlg[open])::after {
     padding: 10px 12px !important;
   }
 }
+
+
+/* 2026-11-07 — settings header alignment and isolated form labels.
+   Keep the settings title, tabs and form content on one shared content grid. */
+#accDlg #accBody #accountPage-settings,
+#accDlg #accBody #accountPage-settings .account-settings-inner {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+#accDlg #accBody #accountPage-settings > h3,
+#accDlg #accBody #accountPage-settings .account-settings-tabs,
+#accDlg #accBody #accountPage-settings .settings-section {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+#accDlg #accBody #accountPage-settings > h3 {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+#accDlg #accBody #accountPage-settings .account-settings-tabs {
+  justify-content: flex-start !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+#accDlg #accBody #accountPage-settings .settings-section {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* Labels are their own line above the control; controls never share label space. */
+#accDlg #accBody #accountPage-settings .profile-grid > div,
+#accDlg #accBody #accountPage-settings .dealer-fields-grid > div,
+#accDlg #accBody #accountPage-settings .account-tools .field-row > div,
+#accDlg #accBody #accountPage-settings .account-tools > div:has(> label + :is(input,select,textarea)) {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  gap: 0 !important;
+  min-width: 0 !important;
+}
+#accDlg #accBody #accountPage-settings label {
+  display: block !important;
+  position: static !important;
+  inset: auto !important;
+  float: none !important;
+  transform: none !important;
+  width: 100% !important;
+  height: auto !important;
+  margin: 0 0 8px !important;
+  padding: 0 !important;
+  line-height: 1.4 !important;
+  white-space: normal !important;
+  pointer-events: auto !important;
+}
+#accDlg #accBody #accountPage-settings :is(input:not([type="checkbox"]):not([type="radio"]),select,textarea) {
+  display: block !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  min-height: 46px !important;
+  height: 46px !important;
+  margin: 0 !important;
+  padding: 0 14px !important;
+  line-height: 1.25 !important;
+  vertical-align: middle !important;
+  font: inherit;
+}
+#accDlg #accBody #accountPage-settings textarea {
+  height: auto !important;
+  min-height: 104px !important;
+  padding: 12px 14px !important;
+  line-height: 1.5 !important;
+  resize: vertical;
+}
+#accDlg #accBody #accountPage-settings select {
+  padding-right: 36px !important;
+}
+#accDlg #accBody #accountPage-settings input[type="checkbox"],
+#accDlg #accBody #accountPage-settings input[type="radio"] {
+  width: auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+}
+@media (max-width:760px) {
+  #accDlg #accBody #accountPage-settings > h3,
+  #accDlg #accBody #accountPage-settings .account-settings-tabs,
+  #accDlg #accBody #accountPage-settings .settings-section {
+    width: 100% !important;
+  }
+  #accDlg #accBody #accountPage-settings .account-settings-tabs {
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    scrollbar-width: none;
+  }
+}
