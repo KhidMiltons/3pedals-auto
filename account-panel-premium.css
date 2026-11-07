@@ -1202,3 +1202,15 @@ body:has(#accDlg[open])::after {
     gap: 8px !important;
   }
 }
+
+
+/* 2026-11-07 — profile navigation scrolls naturally with the settings content. */
+#accDlg #accBody #accountPage-settings .account-settings-tabs {
+  position: static !important;
+  inset: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+  z-index: auto !important;
+  align-self: stretch !important;
+  transform: none !important;
+}
