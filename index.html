@@ -1371,7 +1371,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 /* Shared auth state is stored only on window to avoid lexical TDZ collisions. */
 window.authMode = window.authMode || "register";
 </script>
-<script src="account-panel.js?v=20261107-auth-scope-fix-1"></script>
+<script src="account-panel.js?v=20261107-startup-order-fix-2"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
@@ -1386,6 +1386,7 @@ const colors=["#111111","#8a6508","#2a2a2a","#a67c00","#1c1c1c","#6b5206","#3b3b
 const HOUSE={type:"yard",name:"3 Pedals Auto KE",contact:"",location:"P.O. Box 462-00516",phone:"+254750495841",email:"3pedalsautoke@gmail.com",web:"",whatsapp:"254750495841"};
 const ABOUT_DEFAULTS={about_title:"3 Pedals Auto KE",about_intro:"We bring vehicle sales, honest advice and professional garage services together under one automotive brand.",about_what_title:"What we do",about_what_body:"We help clients buy and sell vehicles while giving them access to servicing, repairs and pre-purchase inspections through 3 Pedals Garage.",about_focus_body:"Our focus is straightforward communication, careful vehicle checks and a professional experience from enquiry to ownership.",about_approach_title:"Our approach",about_transparent_title:"Transparent",about_transparent_body:"Clear information before you decide.",about_practical_title:"Practical",about_practical_body:"Advice based on the actual vehicle and your needs.",about_connected_title:"Connected",about_connected_body:"Sales and garage support in one place."};
 let siteSettings={contact_email:"3pedalsautoke@gmail.com",whatsapp_number:"254750495841",postal_address:"P.O. Box 462-00516",instagram_url:"https://instagram.com/3pedalsauto",facebook_url:"https://facebook.com/3pedalsauto",twitter_url:"https://twitter.com/3pedalsauto",tiktok_url:"https://tiktok.com/@3pedalsauto",footer_note:"Prices in KES.",footer_brand:"3 Pedals Auto KE",...ABOUT_DEFAULTS};
+const $=id=>document.getElementById(id);
 const aboutFieldId=key=>key.replace(/_([a-z])/g,(_,c)=>c.toUpperCase());
 function renderAboutSettings(){for(const [key,value] of Object.entries(ABOUT_DEFAULTS)){const el=$(aboutFieldId(key));if(el)el.textContent=siteSettings[key]||value}}
 const publicContactForm=$("publicContactForm");
@@ -1426,7 +1427,6 @@ let cars=[
 ].map((c,i)=>({...c,id:String(i),color:colors[i%colors.length],seller:HOUSE,photos:[]}));
 // Where the separate garage site lives. Change this if the garage is on another address.
 const GARAGE_URL="__TPA_GARAGE_URL__".indexOf("__")===0?"/garage":"__TPA_GARAGE_URL__";
-const $=id=>document.getElementById(id);
 const garageLink=$("gLink"),garageTile=$("gTile");if(garageLink)garageLink.href=GARAGE_URL;if(garageTile)garageTile.href=GARAGE_URL;
 
 // Tabs
