@@ -380,8 +380,10 @@ async function saveAdminBooking(id){
  if(quote!==null&&(!Number.isFinite(quote)||quote<0))throw Error('Enter a valid non-negative quote.');
  if(status==='approved_awaiting_payment'&&quote===null)throw Error('Enter the confirmed quote before approving this booking.');
  if(driverEl.value&&!driver)throw Error('Selected driver is not active or available.');
+ if(driver&&status!=='confirmed')throw Error('Assign the chauffeur after payment, when the booking is confirmed.');
+ if(driver&&(!old.start_at||!old.end_at))throw Error('Add an end date and time to the booking before assigning a chauffeur, so availability can be checked.');
  if(driver&&old.start_at&&old.end_at){
-  const {data:conflicts,error}=await sb.from('chauffeur_bookings').select('id,booking_ref,start_at,end_at').eq('driver_id',driver.id).in('status',['confirmed']).neq('id',id);
+  const {data:conflicts,error}=await sb.from('chauffeur_bookings').select('id,booking_ref,start_at,end_at').eq('driver_id',driver.id).in('status',['approved_awaiting_payment','confirmed']).neq('id',id);
   if(error)throw error;
   const start=new Date(old.start_at).getTime(),end=new Date(old.end_at).getTime();
   if(conflicts?.some(c=>c.end_at&&new Date(c.start_at).getTime()<end&&new Date(c.end_at).getTime()>start))throw Error('This driver already has an overlapping confirmed trip.');
