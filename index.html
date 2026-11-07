@@ -4234,5 +4234,105 @@ html body #accDlg.account-dashboard-dialog[open] #accBody .workspace-v2-hero{
 }
 @media(max-width:380px){.workspace-v2-metric-grid{grid-template-columns:minmax(0,1fr)!important}}
 
+
+/* Account workspace — aligned with the refined graphite admin dashboard */
+#accDlg.account-dashboard-dialog[open]{
+  color:#f2f0eb!important;background:rgba(15,16,17,.96)!important;
+  border:1px solid rgba(255,255,255,.09)!important;border-radius:18px!important;
+  box-shadow:0 22px 64px rgba(0,0,0,.42)!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+#accDlg.account-dashboard-dialog[open]::backdrop{background:rgba(5,6,7,.72)!important}
+#accDlg.account-dashboard-dialog[open]>.account-sidebar{
+  background:#171819!important;border-right:1px solid rgba(255,255,255,.075)!important;
+  box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+#accDlg.account-dashboard-dialog[open] .account-sidebar-brand,
+#accDlg.account-dashboard-dialog[open] .account-dialog-head{border-color:rgba(255,255,255,.08)!important}
+#accDlg.account-dashboard-dialog[open] .account-sidebar-brand,
+#accDlg.account-dashboard-dialog[open] .account-sidebar-brand strong,
+#accDlg.account-dashboard-dialog[open] .seller-nav-identity strong,
+#accDlg.account-dashboard-dialog[open] h2.account-brand-title{color:#f2f0eb!important}
+#accDlg.account-dashboard-dialog[open] .account-sidebar-brand small,
+#accDlg.account-dashboard-dialog[open] .seller-nav-identity small,
+#accDlg.account-dashboard-dialog[open] .seller-nav-label{color:rgba(235,232,224,.48)!important}
+#accDlg.account-dashboard-dialog[open] .seller-nav-identity>span{color:rgba(235,232,224,.62)!important}
+#accDlg.account-dashboard-dialog[open] .seller-mode-switch{background:#202122!important;border:1px solid rgba(255,255,255,.07)!important}
+#accDlg.account-dashboard-dialog[open] .seller-mode-switch button{color:rgba(235,232,224,.62)!important}
+#accDlg.account-dashboard-dialog[open] .seller-mode-switch button.selected,
+#accDlg.account-dashboard-dialog[open] .seller-mode-switch button[aria-current="page"]{background:#292a2b!important;color:#e3b341!important;box-shadow:none!important}
+#accDlg.account-dashboard-dialog[open] nav#accountMenu>button{
+  color:rgba(239,237,230,.72)!important;border-color:transparent!important;
+  background:transparent!important;box-shadow:none!important;transform:none!important;
+}
+#accDlg.account-dashboard-dialog[open] nav#accountMenu>button::before{background:rgba(255,255,255,.055)!important;color:#c8b47d!important}
+#accDlg.account-dashboard-dialog[open] nav#accountMenu>button:hover,
+#accDlg.account-dashboard-dialog[open] nav#accountMenu>button:focus-visible,
+#accDlg.account-dashboard-dialog[open] nav#accountMenu>button.active,
+#accDlg.account-dashboard-dialog[open] nav#accountMenu>button[aria-current="page"]{
+  background:rgba(227,179,65,.10)!important;color:#e3c57b!important;
+  box-shadow:none!important;transform:none!important;
+}
+#accDlg.account-dashboard-dialog[open] nav#accountMenu>button.active::before,
+#accDlg.account-dashboard-dialog[open] nav#accountMenu>button[aria-current="page"]::before{background:#e3b341!important;box-shadow:none!important}
+#accDlg.account-dashboard-dialog[open] .account-sidebar-footer{border-color:rgba(255,255,255,.08)!important}
+#accDlg.account-dashboard-dialog[open]>.account-dashboard-main{background:transparent!important}
+#accDlg.account-dashboard-dialog[open] .account-dialog-head button{
+  color:#f2f0eb!important;background:#202122!important;border:1px solid rgba(255,255,255,.08)!important;
+  box-shadow:none!important;
+}
+#accDlg.account-dashboard-dialog[open] .account-dialog-head button:hover{background:#292a2b!important}
+#accDlg.account-dashboard-dialog[open] #accBody,
+#accDlg.account-dashboard-dialog[open] #accBody .account-pages,
+#accDlg.account-dashboard-dialog[open] #accBody .account-page{color:#f2f0eb!important}
+#accDlg.account-dashboard-dialog[open] #accBody :is(.account-tools,.account-settings,.settings-section,.profile-card,.seller-listing,.account-page .card,.account-tools>.panel,.account-tools>section,.account-promotions-page,.account-bookings-page,.account-buyer-workspace,.account-activity-item,.account-booking-item,.promotion-package,.seller-garage-card,.dashboard-card,.panel,.card,.account-overview-panel,.dealer-overview-card){
+  background:#191a1b!important;background-color:#191a1b!important;background-image:none!important;
+  border:1px solid rgba(255,255,255,.065)!important;border-radius:14px!important;
+  box-shadow:0 5px 16px rgba(0,0,0,.12)!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;filter:none!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody :is(.account-tools,.account-settings,.settings-section,.profile-card,.seller-listing,.account-page .card,.account-tools>.panel,.account-tools>section,.account-promotions-page,.account-bookings-page,.account-buyer-workspace,.account-booking-item,.promotion-package,.seller-garage-card,.dashboard-card,.panel,.card):hover{
+  background:#1d1e1f!important;background-color:#1d1e1f!important;box-shadow:0 5px 16px rgba(0,0,0,.14)!important;transform:none!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody :is(h1,h2,h3,h4,h5,h6,strong,b,label,th){color:#f2f0eb!important}
+#accDlg.account-dashboard-dialog[open] #accBody :is(p,li,td,small,.meta,.muted,.description,.subtitle){color:rgba(235,232,224,.70)!important}
+#accDlg.account-dashboard-dialog[open] #accBody :is(input,select,textarea){
+  color:#f2f0eb!important;background:#111213!important;background-image:none!important;
+  border:1px solid rgba(255,255,255,.11)!important;box-shadow:none!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody :is(input,select,textarea):focus{border-color:rgba(227,179,65,.58)!important;box-shadow:0 0 0 2px rgba(227,179,65,.10)!important}
+#accDlg.account-dashboard-dialog[open] #accBody .workspace-v2-metric,
+#accDlg.account-dashboard-dialog[open] #accBody .workspace-v2-card{
+  background:#191a1b!important;background-color:#191a1b!important;border:1px solid rgba(255,255,255,.065)!important;
+  border-radius:14px!important;box-shadow:0 5px 16px rgba(0,0,0,.12)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .workspace-v2-metric:hover,
+#accDlg.account-dashboard-dialog[open] #accBody .workspace-v2-card:hover{
+  background:#1d1e1f!important;background-color:#1d1e1f!important;transform:none!important;
+  box-shadow:0 5px 16px rgba(0,0,0,.14)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .workspace-v2-welcome h3,
+#accDlg.account-dashboard-dialog[open] #accBody .workspace-v2-card-heading h4{
+  font-family:'Playfair Display',Georgia,serif!important;color:#f2f0eb!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .workspace-v2-kicker,
+#accDlg.account-dashboard-dialog[open] #accBody .workspace-v2-metric-top i,
+#accDlg.account-dashboard-dialog[open] #accBody .workspace-v2-shortcut-index{color:#e3b341!important}
+#accDlg.account-dashboard-dialog[open] #accBody .workspace-v2-metric>strong{color:#f2f0eb!important}
+#accDlg.account-dashboard-dialog[open] #accBody .workspace-v2-shortcuts>button{
+  background:transparent!important;border-color:rgba(255,255,255,.07)!important;color:#f2f0eb!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody .workspace-v2-shortcuts>button:hover{background:#202122!important;transform:none!important}
+#accDlg.account-dashboard-dialog[open] #accBody .workspace-v2-hero-actions>button,
+#accDlg.account-dashboard-dialog[open] #accBody .workspace-v2-card-heading>button{
+  color:#e3c57b!important;background:rgba(227,179,65,.09)!important;border-color:rgba(227,179,65,.20)!important;
+}
+#accDlg.account-dashboard-dialog[open] #accBody :is(button,a){transition:background-color .12s ease,border-color .12s ease,color .12s ease!important}
+#accDlg.account-dashboard-dialog[open] #accBody :is(button,a):hover{transform:none!important;filter:none!important}
+@media(max-width:760px){
+ #accDlg.account-dashboard-dialog[open]{inset:0!important;width:100vw!important;height:100dvh!important;max-height:100dvh!important;border-radius:0!important}
+ #accDlg.account-dashboard-dialog[open]>.account-sidebar{background:#171819!important}
+}
+
 </style>
 
