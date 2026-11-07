@@ -465,3 +465,77 @@
   #accDlg #accBody .workspace-v2-metric-top{font-size:7px}
   #accDlg #accBody .workspace-v2-metric>strong{font-size:24px}
 }
+
+
+/* Account workspace refinement — quieter hierarchy, clear actions and compact responsive cards. */
+#accDlg #accBody .workspace-v2{gap:17px;max-width:1600px;margin:0 auto}
+#accDlg #accBody .workspace-v2-hero{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;padding:5px 2px 15px;border-bottom:1px solid rgba(255,255,255,.055)}
+#accDlg #accBody .workspace-v2-welcome h3{font-size:clamp(28px,3vw,39px);line-height:1.08;letter-spacing:-.05em}
+#accDlg #accBody .workspace-v2-welcome>p:last-child{max-width:58ch;margin-top:9px;font-size:12px;line-height:1.65}
+#accDlg #accBody .workspace-v2-hero-actions{display:flex;align-items:flex-end;flex-direction:column;gap:12px;flex:0 0 auto}
+#accDlg #accBody .workspace-v2-primary-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+#accDlg #accBody .workspace-v2-primary-actions button{min-height:40px;padding:10px 14px;border:1px solid rgba(216,183,122,.28);border-radius:9px;background:#b18d55;color:#111416;font:750 10px Manrope,system-ui;cursor:pointer}
+#accDlg #accBody .workspace-v2-primary-actions button b{margin-left:8px}
+#accDlg #accBody .workspace-v2-primary-actions button.workspace-v2-action-secondary{background:rgba(255,255,255,.035);border-color:rgba(255,255,255,.10);color:var(--acc-text)}
+#accDlg #accBody .workspace-v2-primary-actions button:hover{filter:brightness(1.08)}
+#accDlg #accBody .workspace-v2-metric-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+#accDlg #accBody .workspace-v2-metric{min-width:0;min-height:116px;padding:14px 15px;gap:10px;border:0!important;border-radius:11px!important;background:rgba(25,30,33,.88)!important;box-shadow:inset 0 1px rgba(255,255,255,.035)!important;text-align:left;transition:background .16s ease,transform .16s ease}
+#accDlg #accBody .workspace-v2-metric:hover{background:rgba(34,40,43,.96)!important;transform:translateY(-2px)}
+#accDlg #accBody .workspace-v2-metric:focus-visible,#accDlg #accBody .workspace-v2-shortcuts>button:focus-visible{outline:2px solid rgba(216,183,122,.68);outline-offset:3px}
+#accDlg #accBody .workspace-v2-metric>strong{font-size:clamp(25px,2.5vw,32px);font-variant-numeric:tabular-nums;line-height:1}
+#accDlg #accBody .workspace-v2-metric-bottom{display:flex;align-items:center;justify-content:space-between;gap:6px;line-height:1.4}
+#accDlg #accBody .workspace-v2-main-grid{grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);gap:12px}
+#accDlg #accBody .workspace-v2-card{padding:17px 18px;border:0!important;border-radius:12px!important;background:rgba(23,28,31,.90)!important;box-shadow:inset 0 1px rgba(255,255,255,.035)!important}
+#accDlg #accBody .workspace-v2-card-heading{align-items:center;gap:12px}
+#accDlg #accBody .workspace-v2-card-heading h4{font-size:15px;letter-spacing:-.02em}
+#accDlg #accBody .workspace-v2-card-heading>button{flex:0 0 auto;min-height:34px;padding:7px 10px;border:1px solid rgba(255,255,255,.09);border-radius:8px;background:rgba(255,255,255,.035);color:var(--acc-text);font-size:10px}
+#accDlg #accBody .workspace-v2-card-heading>button:hover{border-color:rgba(216,183,122,.32);color:var(--acc-gold-strong)}
+#accDlg #accBody .workspace-v2-inventory-total strong{font-size:42px;letter-spacing:-.05em}
+#accDlg #accBody .workspace-v2-progress{overflow:hidden;border-radius:99px}
+#accDlg #accBody .workspace-v2-progress i{border-radius:inherit}
+#accDlg #accBody .workspace-v2-shortcuts>button{min-height:57px;padding:10px 2px}
+#accDlg #accBody .workspace-v2-shortcut-index{font-variant-numeric:tabular-nums}
+#accDlg #accBody .workspace-v2-shortcuts>button strong{font-size:11px}
+#accDlg #accBody .workspace-v2-shortcuts>button small{font-size:10px}
+#accDlg #accBody .workspace-v2-dealer-content{grid-template-columns:minmax(0,1.6fr) repeat(3,minmax(0,1fr));gap:18px}
+#accDlg #accBody .workspace-v2-dealer-name strong,#accDlg #accBody .workspace-v2-dealer-content>div>strong{font-size:11px;line-height:1.5}
+#accDlg #accBody .workspace-v2-activity-list .account-activity-item{grid-template-columns:8px minmax(0,1fr) auto;align-items:center;gap:11px;padding:12px 0}
+#accDlg #accBody .workspace-v2-activity-list .account-activity-item time{white-space:nowrap}
+#accDlg #accBody .workspace-v2-footer{font-size:9px;letter-spacing:.06em}
+#accDlg #accBody .account-page>h3{font-size:clamp(23px,2.2vw,29px);margin:3px 0 18px}
+#accDlg #accBody .account-tools,#accDlg #accBody .settings-section,#accDlg #accBody .profile-card{background:rgba(25,30,33,.90)!important;border:0!important;box-shadow:inset 0 1px rgba(255,255,255,.035)!important}
+#accDlg #accBody input,#accDlg #accBody select,#accDlg #accBody textarea{min-height:43px;border-radius:9px!important}
+#accDlg #accBody .btn{min-height:40px;border-radius:9px}
+#accDlg nav#accountMenu>button{min-height:43px;border-radius:9px;font-size:12px}
+#accDlg nav#accountMenu>button:hover{background:rgba(255,255,255,.045);color:#fff}
+@media(max-width:1100px){
+ #accDlg #accBody .workspace-v2-metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #accDlg #accBody .workspace-v2-main-grid{grid-template-columns:minmax(0,1fr) minmax(260px,.9fr)}
+ #accDlg #accBody .workspace-v2-dealer-content{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:760px){
+ #accDlg #accBody .workspace-v2{gap:13px}
+ #accDlg #accBody .workspace-v2-hero{align-items:flex-start;gap:14px;padding-bottom:13px}
+ #accDlg #accBody .workspace-v2-welcome h3{font-size:clamp(25px,7vw,31px)}
+ #accDlg #accBody .workspace-v2-welcome>p:last-child{font-size:11px}
+ #accDlg #accBody .workspace-v2-hero-actions{align-items:flex-start;width:100%;gap:9px}
+ #accDlg #accBody .workspace-v2-primary-actions{justify-content:flex-start;width:100%}
+ #accDlg #accBody .workspace-v2-primary-actions button{flex:1 1 auto}
+ #accDlg #accBody .workspace-v2-metric-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ #accDlg #accBody .workspace-v2-metric{min-height:104px;padding:12px}
+ #accDlg #accBody .workspace-v2-metric>strong{font-size:27px}
+ #accDlg #accBody .workspace-v2-main-grid{grid-template-columns:minmax(0,1fr);gap:9px}
+ #accDlg #accBody .workspace-v2-card{padding:14px}
+ #accDlg #accBody .workspace-v2-card-heading{align-items:flex-start}
+ #accDlg #accBody .workspace-v2-dealer-content{grid-template-columns:44px minmax(0,1fr);gap:10px}
+ #accDlg #accBody .workspace-v2-dealer-content>div:not(.workspace-v2-dealer-name){grid-column:2}
+ #accDlg #accBody .workspace-v2-activity-list .account-activity-item{grid-template-columns:8px minmax(0,1fr);gap:9px}
+ #accDlg #accBody .workspace-v2-activity-list .account-activity-item time{grid-column:2;white-space:normal}
+}
+@media(max-width:380px){
+ #accDlg #accBody .workspace-v2-metric{min-height:98px;padding:10px}
+ #accDlg #accBody .workspace-v2-metric-top{font-size:7px}
+ #accDlg #accBody .workspace-v2-metric>strong{font-size:24px}
+ #accDlg #accBody .workspace-v2-primary-actions button{padding:9px 10px;font-size:9px}
+}
+@media(prefers-reduced-motion:reduce){#accDlg #accBody .workspace-v2-metric{transition:none}}
