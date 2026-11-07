@@ -407,3 +407,61 @@
   #accDlg h2.account-brand-title{font-size:12px}
 }
 @media(prefers-reduced-motion:reduce){#accDlg *{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+
+/* Final dashboard refinement: calmer hierarchy, clearer grouping, responsive spacing. */
+#accDlg #accBody .workspace-v2{gap:15px}
+#accDlg #accBody .workspace-v2-hero{align-items:center;padding:3px 1px 7px}
+#accDlg #accBody .workspace-v2-welcome h3{font-size:clamp(27px,3.2vw,37px);letter-spacing:-.045em}
+#accDlg #accBody .workspace-v2-welcome>p:last-child{max-width:52ch;font-size:11px}
+#accDlg #accBody .workspace-v2-metric-grid{gap:11px}
+#accDlg #accBody .workspace-v2-metric{
+  position:relative;min-height:122px;padding:15px 16px;gap:14px;
+  background:linear-gradient(145deg,#1c2225 0%,#171b1e 100%)!important;
+  border:1px solid rgba(255,255,255,.075);border-radius:12px;
+}
+#accDlg #accBody .workspace-v2-metric::after{content:"";position:absolute;left:15px;right:15px;bottom:0;height:1px;background:linear-gradient(90deg,rgba(216,183,122,.48),transparent 78%);opacity:.55}
+#accDlg #accBody .workspace-v2-metric-top{font-size:8px;letter-spacing:.13em}
+#accDlg #accBody .workspace-v2-metric-top i{display:grid;place-items:center;width:23px;height:23px;border-radius:7px;background:rgba(216,183,122,.09);font-size:8px}
+#accDlg #accBody .workspace-v2-metric>strong{font-size:31px}
+#accDlg #accBody .workspace-v2-metric-bottom{font-size:9px}
+#accDlg #accBody .workspace-v2-main-grid{gap:13px}
+#accDlg #accBody .workspace-v2-card{
+  padding:18px;background:linear-gradient(145deg,#1c2124 0%,#171b1e 100%)!important;
+  border:1px solid rgba(255,255,255,.075);border-radius:13px
+}
+#accDlg #accBody .workspace-v2-card-heading{margin-bottom:16px}
+#accDlg #accBody .workspace-v2-card-heading h4{font-size:15px}
+#accDlg #accBody .workspace-v2-inventory-total{margin:6px 0 14px}
+#accDlg #accBody .workspace-v2-inventory-total strong{font-size:38px}
+#accDlg #accBody .workspace-v2-progress{height:6px;background:#2a3033}
+#accDlg #accBody .workspace-v2-status-list{gap:12px;margin-top:19px}
+#accDlg #accBody .workspace-v2-status-list>div{font-size:10px}
+#accDlg #accBody .workspace-v2-shortcuts>button{padding:12px 0}
+#accDlg #accBody .workspace-v2-shortcuts>button>span:first-child{display:grid;place-items:center;width:26px;height:26px;border-radius:8px;background:#292b28}
+#accDlg #accBody .workspace-v2-shortcuts>button strong{font-size:11px}
+#accDlg #accBody .workspace-v2-shortcuts>button small{font-size:9px;line-height:1.4}
+#accDlg #accBody .workspace-v2-dealer-content{gap:15px}
+#accDlg #accBody .workspace-v2-dealer-content>img,#accDlg #accBody .workspace-v2-dealer-monogram{width:44px;height:44px;border-radius:11px}
+#accDlg #accBody .workspace-v2-activity-list .account-activity-item{padding:13px 0}
+#accDlg #accBody .workspace-v2-footer{padding-top:7px;border-top:1px solid rgba(255,255,255,.055)}
+#accDlg #accBody .account-page>h3{margin-bottom:18px}
+#accDlg #accBody :is(.account-tools,.profile-card,.settings-section){border-radius:12px!important}
+@media(max-width:760px){
+  #accDlg #accBody .workspace-v2{gap:12px}
+  #accDlg #accBody .workspace-v2-hero{align-items:flex-start;padding:1px 0 3px}
+  #accDlg #accBody .workspace-v2-welcome h3{font-size:27px}
+  #accDlg #accBody .workspace-v2-welcome>p:last-child{font-size:10px}
+  #accDlg #accBody .workspace-v2-hero-actions{justify-content:flex-start;gap:10px}
+  #accDlg #accBody .workspace-v2-metric-grid{gap:8px}
+  #accDlg #accBody .workspace-v2-metric{min-height:106px;padding:12px}
+  #accDlg #accBody .workspace-v2-metric>strong{font-size:27px}
+  #accDlg #accBody .workspace-v2-card{padding:14px}
+  #accDlg #accBody .workspace-v2-dealer-content{grid-template-columns:44px minmax(0,1fr);gap:10px}
+  #accDlg #accBody .workspace-v2-dealer-content>div:not(.workspace-v2-dealer-name){grid-column:2}
+}
+@media(max-width:380px){
+  #accDlg #accBody .workspace-v2-metric{min-height:100px;padding:10px}
+  #accDlg #accBody .workspace-v2-metric-top{font-size:7px}
+  #accDlg #accBody .workspace-v2-metric>strong{font-size:24px}
+}
