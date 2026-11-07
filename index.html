@@ -1205,6 +1205,29 @@ body:has(#home[hidden]) #publicWhatsappFab{display:none!important}
 .account-legal-preferences{margin:16px 0;padding:16px;border-radius:12px;background:rgba(255,255,255,.035)}.account-legal-preferences h4{margin:0 0 6px}.account-legal-preferences p{margin:8px 0}
 @media(max-width:600px){.legal-footer-links{display:flex;margin-top:8px}}
 </style>
+<style id="account-inside-menu-final">
+@media(min-width:981px){
+ body>header>.wrap{grid-template-columns:auto minmax(0,1fr)!important;grid-template-areas:"brand nav"!important}
+ body>header #nav{justify-self:end!important;min-width:0!important}
+ body>header #nav>.account-pill{grid-area:auto!important;display:flex!important;align-items:center!important;margin:0 0 0 4px!important;padding:2px!important;flex:0 0 auto!important}
+ body>header #nav>.account-pill span{display:none!important}
+}
+@media(max-width:980px){
+ body>header>.wrap{display:grid!important;grid-template-columns:minmax(0,1fr) 42px!important;grid-template-areas:"brand nav-toggle"!important;align-items:center!important;column-gap:8px!important;row-gap:0!important;position:relative!important}
+ body>header>.wrap>.logo{grid-area:brand!important;justify-self:start!important;min-width:0!important;max-width:100%!important;overflow:hidden!important;white-space:nowrap!important;text-overflow:ellipsis!important}
+ body>header>.wrap>button#navToggle.nav-toggle{grid-area:nav-toggle!important;justify-self:end!important;display:inline-flex!important;width:40px!important;height:40px!important;min-width:40px!important;margin:0!important;position:relative!important;inset:auto!important}
+ body>header #nav{left:auto!important;right:10px!important;top:calc(100% + 8px)!important;width:min(300px,calc(100vw - 32px))!important;max-width:calc(100vw - 32px)!important;align-items:stretch!important}
+ body>header #nav>.account-pill{order:-1!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;width:100%!important;min-height:48px!important;margin:0 0 5px!important;padding:5px 8px 5px 13px!important;border:1px solid rgba(227,179,65,.28)!important;border-radius:12px!important;background:rgba(255,255,255,.045)!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+ body>header #nav>.account-pill span{display:inline!important;color:#f3f0e8!important;font-size:14px!important;font-weight:650!important}
+ body>header #nav>.account-pill button{display:grid!important;place-items:center!important;flex:0 0 40px!important;width:40px!important;height:40px!important;min-width:40px!important;margin:0!important;padding:0!important;border-radius:10px!important}
+}
+@media(max-width:420px){
+ body>header>.wrap{grid-template-columns:minmax(0,1fr) 38px!important;column-gap:6px!important}
+ body>header>.wrap>button#navToggle.nav-toggle{width:38px!important;height:38px!important;min-width:38px!important}
+ body>header #nav>.account-pill button{width:38px!important;height:38px!important;flex-basis:38px!important}
+ body>header>.wrap>.logo{font-size:clamp(16px,4.6vw,19px)!important}
+}
+</style>
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
