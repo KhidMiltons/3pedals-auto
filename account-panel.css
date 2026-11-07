@@ -247,7 +247,7 @@
 #accDlg #accBody .dealer-overview-details>div{min-width:0;padding:9px 10px;border-radius:8px;background:#202629!important}
 #accDlg #accBody .dealer-overview-details small{display:block;margin-bottom:4px;color:var(--acc-gold);font-size:8px;letter-spacing:.1em}
 #accDlg #accBody .dealer-overview-details strong{display:block;overflow-wrap:anywhere;font-size:10px}
-#accDlg #accBody .account-fast-loading{max-width:920px;margin:4px auto;padding:clamp(12px,3vw,28px);color:var(--acc-text)}
+#accDlg #accBody .account-fast-loading{max-width:920px;margin:4px auto;padding:clamp(12px,3vw,28px);color:var(--acc-text);background:transparent!important;background-color:transparent!important;background-image:none!important;border:0!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 #accDlg #accBody .account-fast-loading-head{display:flex;align-items:center;gap:15px;margin-bottom:24px}
 #accDlg #accBody .account-fast-avatar,#accDlg #accBody .account-fast-lines i,#accDlg #accBody .account-fast-loading-grid span,#accDlg #accBody .account-fast-loading-card i{display:block;background:#242a2d;border:1px solid var(--acc-line);animation:none}
 #accDlg #accBody .account-fast-avatar{width:64px;height:64px;border-radius:50%;flex:none}
