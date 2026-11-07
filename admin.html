@@ -4,6 +4,9 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="preconnect" href="https://dlejmelyeaaxcvelvzia.supabase.co" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <title>3 Pedals Auto KE — Admin Verification</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -1250,6 +1253,21 @@ body:has(#app) #app :focus-visible{outline:2px solid rgba(227,197,123,.8)!import
 body:has(#app) #app button:disabled{opacity:.48!important;filter:saturate(.65)}
 @media(max-width:760px){body:has(#app) #app .stat{min-height:96px!important;padding:14px!important}body:has(#app) #app .admin-tabs{overflow-x:auto;flex-wrap:nowrap!important;padding-bottom:10px!important;scrollbar-width:thin}body:has(#app) #app .admin-tabs .tab{flex:0 0 auto!important;white-space:nowrap!important}body:has(#app) #app .panel-title{align-items:flex-start!important;flex-direction:column!important}body:has(#app) #app .admin-table-wrap{border-radius:11px!important}}
 @media(prefers-reduced-motion:reduce){body:has(#app) #app *{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+</style>
+<style id="admin-task-centre-refinement">
+.admin-task-center{margin:0 0 20px;padding:20px;border-radius:18px}
+.admin-task-list{display:grid;gap:10px}
+.admin-task-row{display:grid;grid-template-columns:44px minmax(0,1fr) auto;align-items:center;gap:14px;padding:13px 15px;border-radius:14px;background:rgba(255,255,255,.035);transition:background .2s ease,transform .2s ease}
+.admin-task-row:hover{background:rgba(227,195,123,.075);transform:translateY(-1px)}
+.admin-task-count{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:rgba(227,179,65,.13);color:var(--gold);font-weight:800;font-variant-numeric:tabular-nums}
+.admin-task-copy{min-width:0;display:grid;gap:3px}
+.admin-task-copy strong{font-size:14px;color:var(--ink)}
+.admin-task-copy span{font-size:12px;color:var(--muted)}
+.admin-task-row .ghost{white-space:nowrap}
+.admin-task-center .overview-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:14px}
+.admin-task-center .overview-card-head h2{margin:4px 0}
+.admin-task-center .overview-card-head p{margin:0}
+@media(max-width:620px){.admin-task-center{padding:15px}.admin-task-row{grid-template-columns:38px minmax(0,1fr);gap:10px;padding:12px}.admin-task-count{width:36px;height:36px}.admin-task-row .ghost{grid-column:2;justify-self:start}.admin-task-center .overview-card-head{flex-direction:column}}
 </style>
 </body>
 </html>
