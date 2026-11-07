@@ -421,3 +421,120 @@ body:has(#accDlg[open])::after {
     column-gap: 12px !important;
   }
 }
+
+/* 2026-11-07 — flatten seller workspace navigation to match the settings canvas.
+   The sidebar remains the single glass surface; its groups and links do not become cards. */
+#accDlg #accountMenu.dashboard-shortcuts,
+#accDlg nav#accountMenu.dashboard-shortcuts {
+  border: 0 !important;
+  outline: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+#accDlg #accountMenu .account-sidebar-brand,
+#accDlg #accountMenu .seller-nav-identity,
+#accDlg #accountMenu .seller-mode-switch,
+#accDlg #accountMenu .seller-nav-label,
+#accDlg #accountMenu .account-sidebar-footer {
+  border: 0 !important;
+  outline: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+#accDlg #accountMenu .seller-nav-identity {
+  margin: 0 0 12px !important;
+  padding: 12px 10px 14px !important;
+}
+#accDlg #accountMenu .seller-mode-switch {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin: 4px 0 16px !important;
+  padding: 0 !important;
+}
+#accDlg #accountMenu .seller-mode-switch button {
+  flex: 1 1 0 !important;
+  min-height: 34px !important;
+  padding: 8px 12px !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+#accDlg #accountMenu .seller-mode-switch button.selected,
+#accDlg #accountMenu .seller-mode-switch button[aria-current="page"] {
+  color: #ffe6b3 !important;
+  background: rgba(230,189,114,.13) !important;
+  box-shadow: none !important;
+}
+#accDlg #accountMenu .seller-nav-label {
+  display: block !important;
+  margin: 18px 0 6px !important;
+  padding: 0 10px !important;
+  color: rgba(246,243,237,.48) !important;
+  font-size: 10px !important;
+  line-height: 1.5 !important;
+  font-weight: 750 !important;
+  letter-spacing: .14em !important;
+}
+#accDlg #accountMenu > button:not(.seller-mode-switch button),
+#accDlg #accountMenu > button[data-page],
+#accDlg #accountMenu > button[data-seller-signup],
+#accDlg #accountMenu .account-sidebar-footer button {
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  min-height: 40px !important;
+  margin: 2px 0 !important;
+  padding: 10px 12px !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  outline: 0 !important;
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  color: rgba(246,243,237,.76) !important;
+  text-align: left !important;
+  transition: color .16s ease,background .16s ease !important;
+}
+#accDlg #accountMenu > button[data-page]:hover,
+#accDlg #accountMenu > button[data-seller-signup]:hover,
+#accDlg #accountMenu > button[data-page]:focus-visible,
+#accDlg #accountMenu > button[data-seller-signup]:focus-visible,
+#accDlg #accountMenu > button[data-page].active,
+#accDlg #accountMenu > button[data-page][aria-current="page"] {
+  border: 0 !important;
+  outline: 0 !important;
+  color: #ffe6b3 !important;
+  background: rgba(230,189,114,.105) !important;
+  box-shadow: none !important;
+}
+#accDlg #accountMenu .account-sidebar-footer {
+  margin-top: auto !important;
+  padding: 16px 0 0 !important;
+}
+#accDlg #accountMenu .account-sidebar-footer button {
+  color: rgba(246,243,237,.64) !important;
+}
+#accDlg #accountMenu .account-sidebar-footer button:hover,
+#accDlg #accountMenu .account-sidebar-footer button:focus-visible {
+  color: #ffe6b3 !important;
+  background: rgba(230,189,114,.09) !important;
+}
+@media (max-width:760px) {
+  #accDlg #accountMenu .seller-nav-label { margin-top: 14px !important; }
+  #accDlg #accountMenu > button[data-page],
+  #accDlg #accountMenu > button[data-seller-signup],
+  #accDlg #accountMenu .account-sidebar-footer button {
+    min-height: 42px !important;
+    padding: 10px 12px !important;
+  }
+}
