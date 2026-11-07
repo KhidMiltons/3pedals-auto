@@ -1569,7 +1569,7 @@ async function loadSession(){
   }else{accountDataPrefetch=null;accountDataPrefetchUserId=null}
   refreshAccountUI();
   if(me){
-    const consentChoice=window.ThreePedalsConsent?.getChoice?.();if(consentChoice)persistPrivacyConsent(consentChoice).catch(error=>console.warn("Privacy preference sync failed:",error));
+    const consentChoice=window.ThreePedalsConsent?.getChoice?.()||"rejected";persistPrivacyConsent(consentChoice).catch(error=>console.warn("Privacy preference sync failed:",error));
     try{
       if(sessionStorage.getItem("3pedals:account-open")==="1"){
         const savedPage=restoreAccountPage||sessionStorage.getItem("3pedals:account-page")||"settings";
