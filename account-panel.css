@@ -623,3 +623,82 @@
   #accDlg #accBody .workspace-v2-metric,
   #accDlg #accBody :is(.workspace-v2-primary-actions button,.workspace-v2-card-heading>button){transition:none!important}
 }
+
+/* Profile workspace: remove layered card/overlay treatments; keep the content directly on the dashboard glass. */
+#accDlg #accBody #accountPage-settings,
+#accDlg #accBody #accountPage-settings .account-settings-inner,
+#accDlg #accBody #accountPage-settings .settings-section,
+#accDlg #accBody #accountPage-settings .profile-card,
+#accDlg #accBody #accountPage-settings .account-tools,
+#accDlg #accBody #accountPage-settings .dealer-account-editor,
+#accDlg #accBody #accountPage-settings .dealer-editor-section,
+#accDlg #accBody #accountPage-settings .account-subscription-note,
+#accDlg #accBody #accountPage-settings .account-legal-preferences{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+}
+#accDlg #accBody #accountPage-settings .profile-card{
+  display:grid;
+  grid-template-columns:88px minmax(0,1fr);
+  align-items:center;
+  gap:17px;
+  margin:8px 0 22px!important;
+  padding:8px 0 18px!important;
+  border-radius:0!important;
+  border-bottom:1px solid rgba(255,255,255,.10)!important;
+}
+#accDlg #accBody #accountPage-settings .account-tools{
+  margin:20px 0 0!important;
+  padding:18px 0 0!important;
+  border-top:1px solid rgba(255,255,255,.10)!important;
+}
+#accDlg #accBody #accountPage-settings .dealer-account-editor{
+  margin:22px 0 0!important;
+  padding:0!important;
+}
+#accDlg #accBody #accountPage-settings .dealer-editor-section{
+  margin:16px 0 0!important;
+  padding:14px 0 0!important;
+  border-top:1px solid rgba(255,255,255,.08)!important;
+  border-radius:0!important;
+}
+#accDlg #accBody #accountPage-settings .account-settings-tabs{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+}
+#accDlg #accBody #accountPage-settings :is(.profile-grid,.dealer-fields-grid){
+  background:transparent!important;
+}
+#accDlg #accBody #accountPage-settings :is(input,select,textarea){
+  background:rgba(10,13,15,.30)!important;
+  border:1px solid rgba(255,255,255,.13)!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+}
+#accDlg #accBody #accountPage-settings :is(input,select,textarea):focus{
+  background:rgba(10,13,15,.42)!important;
+  border-color:rgba(216,183,122,.48)!important;
+  box-shadow:0 0 0 2px rgba(216,183,122,.08)!important;
+}
+#accDlg #accBody #accountPage-settings .profile-avatar{
+  background:rgba(10,13,15,.22)!important;
+  box-shadow:none!important;
+}
+@media(max-width:760px){
+  #accDlg #accBody #accountPage-settings .profile-card{
+    grid-template-columns:64px minmax(0,1fr);
+    gap:12px;
+    padding:6px 0 15px!important;
+  }
+  #accDlg #accBody #accountPage-settings .profile-avatar{width:64px;height:64px}
+}
