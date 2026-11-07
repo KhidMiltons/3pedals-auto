@@ -1116,6 +1116,63 @@ fbq('track', 'PageView');
 #accBody .account-bookings-head{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;margin-top:18px!important}#accBody .account-bookings-head h3{margin:0!important}#accBody .account-booking-row{align-items:flex-start!important}
 @media(max-width:560px){#accBody .seller-listing-filters{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:8px!important}#accBody .seller-listing-filters label{font-size:12px!important}#accBody .seller-listing-actions{gap:6px!important}#accBody .seller-listing-actions .btn{padding:8px 10px!important;font-size:12px!important}#accBody #sellerAnalyticsStats{grid-template-columns:1fr!important}#accBody #sellerAnalyticsStats>div:nth-child(odd){border-right:0!important}#accBody .account-bookings-head{align-items:flex-start!important;flex-wrap:wrap!important}}
 </style>
+
+<style id="home-header-left-nav-and-contact-grid-alignment">
+/* Keep the full brand name visible by giving the primary navigation the left side. */
+@media(min-width:981px){
+  body>header .wrap{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) auto auto!important;
+    grid-template-areas:"nav brand account"!important;
+    align-items:center!important;
+    column-gap:22px!important;
+  }
+  body>header .wrap>.logo{grid-area:brand!important;justify-self:end!important;white-space:nowrap!important}
+  body>header .wrap>.account-pill{grid-area:account!important;justify-self:end!important;margin-left:0!important}
+  body>header .wrap>nav{grid-area:nav!important;justify-self:start!important;min-width:0!important;display:flex!important;flex-wrap:nowrap!important;gap:2px!important}
+  body>header .wrap>nav button,body>header .wrap>nav a.navlink{white-space:nowrap!important;padding-left:10px!important;padding-right:10px!important}
+}
+@media(min-width:981px) and (max-width:1180px){
+  body>header .wrap{column-gap:12px!important}
+  body>header .wrap>.logo{font-size:25px!important;letter-spacing:.035em!important}
+  body>header .wrap>nav button,body>header .wrap>nav a.navlink{font-size:12px!important;padding-left:7px!important;padding-right:7px!important}
+}
+@media(max-width:980px){
+  body>header .wrap{
+    grid-template-columns:auto minmax(0,1fr) auto!important;
+    grid-template-areas:"nav-toggle brand account"!important;
+    gap:10px!important;
+  }
+  body>header .wrap>.logo{grid-area:brand!important;justify-self:center!important;text-align:center!important;white-space:nowrap!important;font-size:clamp(19px,3.1vw,25px)!important;letter-spacing:.025em!important}
+  body>header .wrap>.account-pill{grid-area:account!important;justify-self:end!important}
+  body>header .wrap>.nav-toggle{grid-area:nav-toggle!important;justify-self:start!important}
+}
+@media(max-width:420px){
+  body>header .wrap{column-gap:7px!important}
+  body>header .wrap>.logo{font-size:18px!important;letter-spacing:0!important}
+  body>header .wrap>.nav-toggle{padding:7px!important}
+  body>header .wrap>.account-pill button{width:38px!important;height:38px!important}
+}
+/* The enquiry form shares the introduction card's exact outer grid width. */
+#contact #publicContactForm{
+  box-sizing:border-box!important;
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+  margin:0 0 24px!important;
+  padding:clamp(22px,4vw,42px)!important;
+  border-radius:22px!important;
+  border:1px solid rgba(255,255,255,.16)!important;
+  background:rgba(20,22,25,.28)!important;
+  box-shadow:0 16px 42px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.06)!important;
+  -webkit-backdrop-filter:blur(24px) saturate(145%)!important;
+  backdrop-filter:blur(24px) saturate(145%)!important;
+}
+#contact #publicContactForm .contact-grid{width:100%!important;max-width:none!important}
+@media(max-width:600px){
+  #contact #publicContactForm{padding:20px!important}
+}
+</style>
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
