@@ -1444,8 +1444,6 @@ function prefetchAccountData(userId,sellerPrefsRequest=null){
   accountDataPrefetchUserId=userId;
   accountDataPrefetch=fetchAccountData(userId,sellerPrefsRequest).catch(error=>{console.warn("Account data prefetch failed; it will be loaded when opened.",error);return null});
 }
-let authMode="register";
-// Keep the current authentication mode available to independently loaded account UI handlers.
 window.authMode="register";
 function normalizeAccountType(value){return String(value||"").trim().toLowerCase()==="yard"?"yard":"private"}
 function accountType(){
@@ -1531,7 +1529,7 @@ let sellerRegistrationMode=false,sellerSlugEdited=false;
  function slugifySellerName(value){return String(value||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,48).replace(/-+$/g,"")}
  function refreshSellerUrlPreview(){const slug=$("authSellerSlug").value.trim();$("authSellerUrlPreview").textContent=slug?`${location.host||"3pedalsauto.co.ke"}/yard.html?slug=${slug}`:`${location.host||"3pedalsauto.co.ke"}/yard.html?slug=your-name`}
  function openAuth(mode="register",msg="",options={}){
-   sellerRegistrationMode=!!options.seller;authMode=mode;window.authMode=mode;const login=mode==="login",recovery=mode==="recovery",sellerSignup=sellerRegistrationMode&&!login&&!recovery;
+   sellerRegistrationMode=!!options.seller;window.authMode=mode;const login=mode==="login",recovery=mode==="recovery",sellerSignup=sellerRegistrationMode&&!login&&!recovery;
    if(!sb){msg=msg||"Sign-in is temporarily unavailable because the account service did not initialize. Refresh the page and try again.";console.error("3 Pedals account service is unavailable: Supabase client is not initialized.")}
    $("authDlg").classList.toggle("seller-registration",sellerRegistrationMode);
    $("authProfileDetails").hidden=(login||recovery)&&!sellerRegistrationMode;$("authProfileDetails").open=sellerSignup;$("authSellerUrlWrap").hidden=!sellerSignup;
@@ -1551,7 +1549,7 @@ let sellerRegistrationMode=false,sellerSlugEdited=false;
 $("accountTile").onclick=()=>me?openAccount():openAuth("register");
 $("authCloseTop").onclick=()=>$("authDlg").close();
 $("authCloseBack").onclick=()=>$("authDlg").close();
-$("authSwitch").onclick=()=>openAuth((window.authMode||authMode)==="login"?"register":"login","",{seller:sellerRegistrationMode});
+$("authSwitch").onclick=()=>openAuth(window.window.authMode==="login"?"register":"login","",{seller:sellerRegistrationMode});
  $("authName").addEventListener("input",()=>{if(sellerRegistrationMode&&!sellerSlugEdited){$("authSellerSlug").value=slugifySellerName($("authName").value);refreshSellerUrlPreview()}});$("authSellerSlug").addEventListener("input",()=>{sellerSlugEdited=true;refreshSellerUrlPreview()});
 $("authName").addEventListener("input",()=>{if(sellerRegistrationMode&&!sellerSlugEdited){$("authSellerSlug").value=slugifySellerName($("authName").value);refreshSellerUrlPreview()}});$("authSellerSlug").addEventListener("input",()=>{sellerSlugEdited=true;refreshSellerUrlPreview()});
  document.querySelectorAll('input[name="accountType"]').forEach(r=>r.onchange=updateAuthTypeHint);
@@ -1578,7 +1576,7 @@ $("authGoogle").onclick=async()=>{
 };
 $("authSubmit").onclick=async()=>{
   const email=$("authEmail").value.trim().toLowerCase(),pass=$("authPassword").value,name=$("authName").value.trim(),phone=$("authPhone").value.trim(),confirmPass=$("authConfirmPassword").value,type=document.querySelector('input[name="accountType"]:checked')?.value||"private",err=$("authErr"),b=$("authSubmit");
-  if(sellerRegistrationMode&&authMode==="register"){
+  if(sellerRegistrationMode&&window.authMode==="register"){
     if(!me){err.textContent="Sign in to your main account first, then create your seller profile.";return}
     const slug=$("authSellerSlug").value.trim();if(!name){err.textContent="Enter your seller or business name.";return}if(!slug||!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)||slug.length<3){err.textContent="Enter a seller URL with at least 3 lowercase letters or numbers; hyphens are allowed.";return}
     b.disabled=true;err.textContent="Checking seller URL…";
@@ -1586,7 +1584,7 @@ $("authSubmit").onclick=async()=>{
     catch(e){err.textContent=e.message||"We couldn't create the seller profile. Please try again."}
     finally{b.disabled=false}
     return;
-  }  if(authMode==="recovery"){
+  }  if(window.authMode==="recovery"){
     if(pass.length<8){err.textContent="Use a password of at least 8 characters.";return}
     if(pass!==confirmPass){err.textContent="The passwords do not match.";return}
     b.disabled=true;err.textContent="Saving your new password…";
@@ -1596,22 +1594,22 @@ $("authSubmit").onclick=async()=>{
     return;
   }
   if(!email||!pass){err.textContent="Email and password are required.";return}
-  if(authMode==="register"){
+  if(window.authMode==="register"){
     if(!name){err.textContent="Enter your name.";return}
     if(pass.length<8){err.textContent="Use a password of at least 8 characters.";return}
     if(pass!==confirmPass){err.textContent="The passwords do not match.";return}     if(sellerRegistrationMode){const slug=$("authSellerSlug").value.trim();if(!slug||!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)||slug.length<3){err.textContent="Enter a seller URL with at least 3 lowercase letters or numbers; hyphens are allowed.";return}const {data:existing,error:lookupError}=await sb.from("listings").select("id").eq("seller_slug",slug).limit(1);if(lookupError){err.textContent="Seller URL checks need the updated seller schema. Run seller_type_schema.sql in Supabase, then try again.";return}if(existing?.length){err.textContent="That seller URL is already in use. Please choose another.";return}}
   }
-  b.disabled=true;err.textContent=authMode==="register"?"Creating your account…":"Signing you in…";
+  b.disabled=true;err.textContent=window.authMode==="register"?"Creating your account…":"Signing you in…";
   try{
     const signupData={name,phone,account_type:type};
-    const res=authMode==="register"
+    const res=window.authMode==="register"
       ?await sb.auth.signUp({email,password:pass,options:{data:signupData,emailRedirectTo:"https://3pedalsauto.co.ke/"}})
       :await sb.auth.signInWithPassword({email,password:pass});
     if(res.error)throw res.error;
-    if(authMode==="register"||authMode==="login"){
-      try{window.track3PedalsEvent?.(authMode==="register"?"sign_up":"login",{method:"email",account_type:type})}catch(trackError){console.warn("Analytics event failed",trackError)}
+    if(window.authMode==="register"||window.authMode==="login"){
+      try{window.track3PedalsEvent?.(window.authMode==="register"?"sign_up":"login",{method:"email",account_type:type})}catch(trackError){console.warn("Analytics event failed",trackError)}
     }
-    if(authMode==="register"&&!res.data.session){
+    if(window.authMode==="register"&&!res.data.session){
       err.textContent="Account created. Check your email for a confirmation link, then return to 3pedalsauto.co.ke and log in.";
       return;
     }
@@ -3062,7 +3060,7 @@ input,select,textarea{background:rgba(255,255,255,.055)!important}
    event.preventDefault();
    event.stopImmediatePropagation();
    if(typeof openAuth==='function'){
-     const current=typeof authMode!=='undefined'?authMode:'register';
+     const current=window.authMode||'register';
      const seller=typeof sellerRegistrationMode!=='undefined'&&!!sellerRegistrationMode;
      openAuth(current==='login'?'register':'login','',{seller});
    }
