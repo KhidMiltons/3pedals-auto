@@ -1102,3 +1102,101 @@ body>header .nav-toggle{grid-area:nav-toggle!important}
 .account-quick-panel>button,.panel,.card,.seller-card,.dashboard-card)::after{
   background:none!important;background-image:none!important;box-shadow:none!important;
 }
+
+
+/* V3.16: unify the account shell with the dark-glass dashboard.
+   Overrides the earlier warm/pale shell surfaces without changing account logic. */
+#accDlg.account-dashboard-dialog,
+#accDlg.account-dashboard-dialog[open]{
+  color:#f4f0e9!important;
+  background:rgba(8,12,16,.34)!important;
+  background-color:rgba(8,12,16,.34)!important;
+  background-image:none!important;
+  border:1px solid rgba(255,255,255,.12)!important;
+  box-shadow:0 28px 90px rgba(0,0,0,.42),inset 0 1px rgba(255,255,255,.07)!important;
+  -webkit-backdrop-filter:blur(30px) saturate(140%)!important;
+  backdrop-filter:blur(30px) saturate(140%)!important;
+}
+#accDlg>.account-sidebar,
+#accDlg #accountMenu.dashboard-shortcuts,
+#accDlg nav#accountMenu.dashboard-shortcuts[hidden]{
+  color:#f4f0e9!important;
+  background:rgba(8,12,16,.38)!important;
+  background-color:rgba(8,12,16,.38)!important;
+  background-image:none!important;
+  border:0!important;
+  border-right:1px solid rgba(255,255,255,.09)!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:blur(30px) saturate(140%)!important;
+  backdrop-filter:blur(30px) saturate(140%)!important;
+}
+#accDlg>.account-dashboard-main,
+#accDlg .account-dialog-head{
+  color:#f4f0e9!important;
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border-color:rgba(255,255,255,.09)!important;
+  box-shadow:none!important;
+}
+#accDlg .account-sidebar-brand,
+#accDlg .seller-nav-identity strong,
+#accDlg .seller-nav-label,
+#accDlg .seller-nav-identity small,
+#accDlg h2.account-brand-title{
+  color:#f4f0e9!important;
+}
+#accDlg .account-sidebar-brand{border-color:rgba(255,255,255,.09)!important}
+#accDlg .seller-nav-identity small,
+#accDlg .seller-nav-label,
+#accDlg .seller-nav-identity>span{color:rgba(244,240,233,.58)!important}
+#accDlg nav#accountMenu>button,
+#accDlg #accountMenu.dashboard-shortcuts button{
+  color:rgba(244,240,233,.78)!important;
+  background:transparent!important;
+  border-color:transparent!important;
+  box-shadow:none!important;
+}
+#accDlg nav#accountMenu>button:hover,
+#accDlg nav#accountMenu>button:focus-visible,
+#accDlg nav#accountMenu>button.active,
+#accDlg nav#accountMenu>button[aria-current="page"],
+#accDlg #accountMenu.dashboard-shortcuts button:hover,
+#accDlg #accountMenu.dashboard-shortcuts button.active{
+  color:#fff!important;
+  background:rgba(255,255,255,.075)!important;
+  border-color:rgba(255,255,255,.08)!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.035)!important;
+  transform:none!important;
+}
+#accDlg .account-dialog-head button{
+  color:#f4f0e9!important;
+  background:rgba(255,255,255,.055)!important;
+  background-image:none!important;
+  border:1px solid rgba(255,255,255,.11)!important;
+  box-shadow:none!important;
+}
+#accDlg .account-dialog-head button:hover{
+  background:rgba(255,255,255,.10)!important;
+  border-color:rgba(255,255,255,.16)!important;
+}
+#accDlg .seller-mode-switch{
+  background:rgba(0,0,0,.20)!important;
+  border-color:rgba(255,255,255,.09)!important;
+}
+#accDlg .seller-mode-switch button{color:rgba(244,240,233,.70)!important}
+#accDlg .seller-mode-switch button.selected,
+#accDlg .seller-mode-switch button[aria-current="page"]{
+  color:#fff!important;
+  background:rgba(255,255,255,.10)!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.07)!important;
+}
+#accDlg .account-sidebar-footer{border-color:rgba(255,255,255,.09)!important}
+@media(max-width:760px){
+  #accDlg>.account-sidebar,
+  #accDlg #accountMenu.dashboard-shortcuts{
+    background:rgba(8,12,16,.72)!important;
+    border:1px solid rgba(255,255,255,.10)!important;
+    box-shadow:0 18px 50px rgba(0,0,0,.28)!important;
+  }
+}
