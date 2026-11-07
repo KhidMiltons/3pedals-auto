@@ -1,170 +1,46 @@
-/* 3 Pedals Auto KE — Glass Dashboard V2.
-   Rebuilt presentation layer. Existing account, auth, marketplace and Supabase actions remain in index.html. */
+/* 3 Pedals Auto KE — Account workspace, rebuilt as one clean system.
+   One transparent dialog shell, one graphite surface system, no nested glass/white overlays. */
+:root{
+  --acc-bg:#111416;--acc-panel:#191d20;--acc-panel-2:#1d2225;--acc-line:rgba(255,255,255,.085);
+  --acc-text:#f3f0e9;--acc-muted:rgba(235,232,224,.66);--acc-soft:rgba(235,232,224,.43);
+  --acc-gold:#d8b77a;--acc-gold-strong:#e2c58c;--acc-green:#91ad8d;--acc-red:#d68c7e;
+}
 #accDlg.account-dashboard-dialog:not([open]){display:none!important}
-#accDlg.account-dashboard-dialog[open]{display:grid!important}
-#accDlg.account-dashboard-dialog{
- --v2-ink:#302820;--v2-muted:rgba(48,40,32,.66);--v2-soft:rgba(255,250,242,.48);
- --v2-glass:rgba(239,229,215,.60);--v2-glass-strong:rgba(248,241,231,.72);
- --v2-stroke:rgba(255,255,255,.38);--v2-accent:#b8753e;--v2-accent-soft:rgba(184,117,62,.16);
- position:fixed!important;inset:3vh 2vw!important;margin:0!important;width:96vw!important;height:94vh!important;
- max-width:none!important;max-height:94vh!important;padding:0!important;overflow:hidden!important;
- display:grid!important;grid-template-columns:226px minmax(0,1fr)!important;
- color:var(--v2-ink)!important;background:rgba(229,216,199,.34)!important;
- border:1px solid rgba(255,255,255,.34)!important;border-radius:25px!important;
- box-shadow:0 28px 90px rgba(25,18,12,.32),inset 0 1px rgba(255,255,255,.42)!important;
- -webkit-backdrop-filter:blur(28px) saturate(145%)!important;backdrop-filter:blur(28px) saturate(145%)!important;isolation:isolate
+#accDlg.account-dashboard-dialog[open]{
+  position:fixed!important;inset:0!important;margin:0!important;padding:0!important;
+  display:grid!important;grid-template-columns:252px minmax(0,1fr)!important;
+  width:100vw!important;max-width:none!important;height:100dvh!important;max-height:100dvh!important;
+  overflow:hidden!important;box-sizing:border-box!important;
+  color:var(--acc-text)!important;background:transparent!important;background-color:transparent!important;background-image:none!important;
+  border:0!important;border-radius:0!important;box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;filter:none!important;isolation:isolate;
 }
-#accDlg::backdrop{background:rgba(18,14,11,.30)!important}
-#accDlg>.account-sidebar{
- grid-column:1;grid-row:1;display:flex!important;flex-direction:column!important;align-items:stretch!important;
- gap:4px!important;min-width:0!important;height:100%!important;overflow:auto!important;box-sizing:border-box!important;
- padding:22px 14px 16px!important;background:rgba(239,229,215,.34)!important;
- border:0!important;border-right:1px solid rgba(255,255,255,.25)!important;border-radius:0!important;
- box-shadow:inset -1px 0 rgba(90,68,47,.05)!important;backdrop-filter:none!important
+#accDlg.account-dashboard-dialog[open]::before,#accDlg.account-dashboard-dialog[open]::after{content:none!important;display:none!important}
+#accDlg.account-dashboard-dialog[open]::backdrop{background:rgba(3,5,7,.76)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+#accDlg.account-dashboard-dialog[open]>.account-sidebar{
+  grid-column:1;grid-row:1;position:relative!important;inset:auto!important;z-index:2;
+  display:flex!important;flex-direction:column!important;gap:0;min-width:0;min-height:0;height:100%;
+  overflow-y:auto;overflow-x:hidden;padding:23px 16px 17px!important;
+  color:var(--acc-text)!important;background:#14181b!important;background-image:none!important;
+  border:0!important;border-right:1px solid var(--acc-line)!important;border-radius:0!important;
+  box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;
 }
-#accDlg>.account-sidebar[hidden]{display:none!important}
-#accDlg .account-sidebar-brand{display:flex;align-items:center;gap:10px;padding:4px 8px 19px;margin-bottom:8px;color:var(--v2-ink);text-decoration:none;border-bottom:1px solid rgba(90,68,47,.12)}
-#accDlg .account-sidebar-brand img{width:35px;height:35px;object-fit:cover;border-radius:10px;box-shadow:0 3px 9px rgba(54,39,25,.14)}
+#accDlg.account-dashboard-dialog[open]>.account-sidebar[hidden]{display:flex!important}
+#accDlg .account-sidebar-brand{display:flex;align-items:center;gap:11px;padding:2px 8px 19px;margin:0 0 17px;color:var(--acc-text);text-decoration:none;border:0;border-bottom:1px solid var(--acc-line)}
+#accDlg .account-sidebar-brand img{width:34px;height:34px;object-fit:cover;border-radius:9px}
 #accDlg .account-sidebar-brand span,#accDlg .account-sidebar-brand>div{display:grid;gap:4px;min-width:0}
-#accDlg .account-sidebar-brand strong,#accDlg .account-sidebar-brand>div>strong{font:800 11px/1.2 Manrope,system-ui,sans-serif;letter-spacing:.15em;color:var(--v2-ink)}
-#accDlg .account-sidebar-brand small,#accDlg .account-sidebar-brand>div>span{font:700 9px/1.2 Manrope,system-ui,sans-serif;letter-spacing:.12em;color:var(--v2-muted)}
-#accDlg .seller-nav-identity{display:grid;gap:5px;padding:8px 9px 12px}
-#accDlg .seller-nav-identity small,#accDlg .seller-nav-label{font:800 9px/1.3 Manrope,system-ui,sans-serif;letter-spacing:.15em;color:rgba(65,52,40,.55)}
-#accDlg .seller-nav-identity strong{font:700 14px/1.3 Manrope,system-ui,sans-serif;color:var(--v2-ink)}
-#accDlg .seller-nav-identity>span{font-size:10px;color:var(--v2-muted);overflow-wrap:anywhere}
-#accDlg .seller-mode-switch{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;margin:3px 0 9px;background:rgba(92,69,47,.09);border:1px solid rgba(255,255,255,.24);border-radius:11px}
-#accDlg .seller-mode-switch button{min-height:33px;border:0;border-radius:8px;background:transparent;color:var(--v2-muted);font:700 11px Manrope,system-ui}
-#accDlg .seller-mode-switch button.selected,#accDlg .seller-mode-switch button[aria-current="page"]{background:rgba(255,255,255,.65);color:var(--v2-ink);box-shadow:0 2px 8px rgba(65,45,27,.08)}
-#accDlg .seller-nav-label{padding:13px 10px 5px}
-#accDlg nav#accountMenu>button{display:flex;align-items:center;gap:9px;min-height:39px;width:100%;padding:9px 11px;margin:0;border:1px solid transparent;border-radius:10px;background:transparent;color:rgba(48,40,32,.72);text-align:left;font:650 11px/1.35 Manrope,system-ui,sans-serif;box-shadow:none;transition:background .16s,color .16s,transform .16s}
-#accDlg nav#accountMenu>button::before{content:"◫";display:grid;place-items:center;width:17px;height:17px;flex:0 0 17px;border-radius:5px;background:rgba(255,255,255,.34);color:rgba(78,62,46,.72);font:700 12px/1 Manrope,system-ui}
-#accDlg nav#accountMenu>button[data-page="overview"]::before{border-radius:50%}
-#accDlg nav#accountMenu>button[data-page="listings"]::before{border-radius:2px}
-#accDlg nav#accountMenu>button[data-page="promotions"]::before{transform:rotate(45deg);border-radius:1px}
-#accDlg nav#accountMenu>button:hover,#accDlg nav#accountMenu>button:focus-visible,#accDlg nav#accountMenu>button.active,#accDlg nav#accountMenu>button[aria-current="page"]{background:rgba(255,255,255,.48);color:var(--v2-ink);outline:none;box-shadow:0 4px 13px rgba(68,49,30,.07);transform:translateX(1px)}
-#accDlg nav#accountMenu>button.active::before,#accDlg nav#accountMenu>button[aria-current="page"]::before{background:var(--v2-accent);box-shadow:0 0 0 3px rgba(184,117,62,.13)}
-#accDlg .account-sidebar-footer{margin-top:auto;padding-top:12px;border-top:1px solid rgba(90,68,47,.12)}
-#accDlg .account-sidebar-footer button{color:#80543b!important}
-#accDlg>.account-dashboard-main{grid-column:2;grid-row:1;display:flex;flex-direction:column;min-width:0;min-height:0;height:100%;box-sizing:border-box;overflow:hidden;padding:20px 25px 17px;background:transparent;border:0;border-radius:0}
-#accDlg .account-dialog-head{display:grid;grid-template-columns:minmax(0,1fr) 64px 38px;align-items:center;gap:9px;flex:0 0 auto;width:100%;margin:0 0 17px;padding:0 0 14px;background:transparent;border:0;border-bottom:1px solid rgba(90,68,47,.12);box-shadow:none}
-#accDlg #accMenuToggle{display:none}
-#accDlg h2.account-brand-title{grid-column:1;display:flex;align-items:center;gap:10px;min-width:0;margin:0;color:var(--v2-ink);font:750 17px/1.2 Manrope,system-ui,sans-serif;letter-spacing:-.025em}
-#accDlg .account-brand-icon{width:29px;height:29px;flex:0 0 29px;object-fit:cover;border-radius:9px}
-#accDlg .account-dialog-head button{display:grid;place-items:center;min-width:38px;width:38px;height:38px;padding:0;border:1px solid rgba(255,255,255,.42);border-radius:11px;background:rgba(255,250,243,.40);color:var(--v2-ink);box-shadow:0 3px 10px rgba(65,45,27,.06);font:700 12px Manrope,system-ui;transition:background .16s}
-#accDlg .account-dialog-head button:hover{background:rgba(255,255,255,.70)}
-#accDlg #accHomeTop{grid-column:2;width:64px;min-width:64px}
-#accDlg #accCloseTop{grid-column:3;font-size:21px}
-#accDlg #accBody{flex:1 1 auto;min-height:0;min-width:0;overflow:auto;overscroll-behavior:contain;padding:0 4px 18px 0;scrollbar-width:thin;scrollbar-color:rgba(84,65,47,.25) transparent;color:var(--v2-ink)}
-#accDlg #accBody :is(h1,h2,h3,h4,strong,b,label){color:var(--v2-ink)}
-#accDlg #accBody :is(p,small,.meta,.muted,.description,.subtitle){color:var(--v2-muted)}
-#accDlg #accBody :is(.profile-card,.account-tools,.account-page,.account-settings,.account-stat,.profile-grid>div,.svc,.seller-summary-card,.account-overview-panel,.account-overview-stats>button,.account-bookings-page>#garageBookingAction,.account-booking-item,.account-saved-vehicle,.seller-listing,.seller-garage-card,.promotion-package,.account-buyer-workspace,.dashboard-welcome){color:var(--v2-ink);background:rgba(248,242,233,.43);border:1px solid rgba(255,255,255,.40);border-radius:16px;box-shadow:0 9px 26px rgba(63,45,28,.08),inset 0 1px rgba(255,255,255,.42);-webkit-backdrop-filter:blur(17px) saturate(125%);backdrop-filter:blur(17px) saturate(125%)}
-#accDlg #accBody :is(.profile-card,.account-tools,.account-page,.account-settings){padding:18px}
-#accDlg #accBody input,#accDlg #accBody select,#accDlg #accBody textarea{box-sizing:border-box;max-width:100%;background:rgba(255,252,247,.56);border:1px solid rgba(100,78,57,.17);border-radius:10px;color:var(--v2-ink);box-shadow:inset 0 1px 2px rgba(63,45,28,.04)}
-#accDlg #accBody input::placeholder,#accDlg #accBody textarea::placeholder{color:rgba(67,54,42,.43)}
-#accDlg #accBody input:focus,#accDlg #accBody select:focus,#accDlg #accBody textarea:focus{outline:2px solid rgba(184,117,62,.25);outline-offset:1px}
-#accDlg #accBody .btn{border-radius:10px;box-shadow:none}
-#accDlg #accBody .btn:not(.ghost){background:linear-gradient(135deg,#c28a58,#a96839);border:1px solid rgba(255,255,255,.32);color:#fff}
-#accDlg #accBody .btn.ghost{background:rgba(255,252,247,.43);border:1px solid rgba(100,78,57,.16);color:var(--v2-ink)}
-#accDlg #accBody [hidden]{display:none!important}
-#accDlg #accBody .account-overview-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin:0 0 17px;padding:4px 2px 0}
-#accDlg #accBody .account-overview-heading h3{margin:3px 0 5px;font:750 clamp(21px,2vw,29px)/1.2 Manrope,system-ui,sans-serif;letter-spacing:-.04em}
-#accDlg #accBody .account-overview-heading>div>p:last-child{margin:0;font-size:12px}
-#accDlg #accBody .account-eyebrow{margin:0 0 6px;color:var(--v2-accent)!important;font:800 9px/1.25 Manrope,system-ui,sans-serif;letter-spacing:.16em}
-#accDlg #accBody .account-member-chip{display:inline-flex;align-items:center;gap:7px;padding:8px 11px;border:1px solid rgba(255,255,255,.45);border-radius:99px;background:rgba(255,255,255,.35);color:#4d684c;font:700 10px Manrope,system-ui;white-space:nowrap}
-#accDlg #accBody .account-member-chip>span{width:6px;height:6px;border-radius:50%;background:#648b5e;box-shadow:0 0 0 3px rgba(100,139,94,.13)}
-#accDlg #accBody .account-overview-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0 0 13px}
-#accDlg #accBody .account-overview-stats>button{display:grid;grid-template-columns:1fr auto;gap:6px 8px;min-width:0;min-height:118px;padding:15px;text-align:left;cursor:pointer;transition:background .16s,transform .16s}
-#accDlg #accBody .account-overview-stats>button:hover{background:rgba(255,255,255,.62);transform:translateY(-2px);filter:none}
-#accDlg #accBody .account-overview-stat-icon{grid-column:2;grid-row:1;display:grid;place-items:center;width:29px;height:29px;border-radius:9px;background:var(--v2-accent-soft);color:var(--v2-accent);font-size:15px}
-#accDlg #accBody .account-overview-stat-label{grid-column:1;grid-row:1;align-self:center;color:var(--v2-muted);font:700 10px Manrope,system-ui}
-#accDlg #accBody .account-overview-stats>button strong{grid-column:1/-1;font:800 26px/1 Manrope,system-ui;letter-spacing:-.04em}
-#accDlg #accBody .account-overview-stats>button small{grid-column:1/-1;font-size:9px;line-height:1.4}
-#accDlg #accBody .account-overview-visuals{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(240px,1fr);gap:12px;margin:0 0 13px}
-#accDlg #accBody .account-overview-visuals .account-overview-panel{min-width:0;padding:16px 17px}
-#accDlg #accBody .account-overview-panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
-#accDlg #accBody .account-overview-panel-head h4{margin:0;font:750 14px/1.3 Manrope,system-ui}
-#accDlg #accBody .account-panel-caption{display:block;margin-top:4px;color:var(--v2-muted);font-size:9px}
-#accDlg #accBody .account-chart-total{display:grid;place-items:center;min-width:34px;height:32px;padding:0 9px;border-radius:9px;background:var(--v2-accent-soft);color:var(--v2-accent);font:800 13px Manrope,system-ui}
-#accDlg #accBody .account-trend-chart{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));align-items:end;gap:12px;height:105px;margin-top:12px;padding:0 8px;border-bottom:1px solid rgba(82,64,46,.14);background:repeating-linear-gradient(to bottom,transparent 0,transparent 33px,rgba(82,64,46,.07) 34px,transparent 35px)}
-#accDlg #accBody .account-trend-column{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:6px;height:100%;min-width:0}
-#accDlg #accBody .account-trend-column>span{display:block;width:min(26px,70%);height:var(--bar-height);min-height:5px;border-radius:7px 7px 2px 2px;background:linear-gradient(180deg,#d49a68,#a96839);box-shadow:0 3px 8px rgba(157,97,54,.16)}
-#accDlg #accBody .account-trend-column small{font:700 9px Manrope,system-ui;color:var(--v2-muted)}
-#accDlg #accBody .account-health-list{display:grid;gap:14px;margin:20px 0 14px}
-#accDlg #accBody .account-health-row{display:grid;grid-template-columns:62px minmax(0,1fr) 25px;align-items:center;gap:9px;font:650 10px Manrope,system-ui}
-#accDlg #accBody .account-health-row>span{color:var(--v2-muted)}
-#accDlg #accBody .account-health-row>div{height:7px;overflow:hidden;border-radius:99px;background:rgba(91,70,50,.10)}
-#accDlg #accBody .account-health-row i{display:block;width:var(--health-width);height:100%;border-radius:99px;background:linear-gradient(90deg,#d4a174,#a96839)}
-#accDlg #accBody .account-health-row strong{text-align:right;font-size:10px}
-#accDlg #accBody .account-health-foot{display:flex;justify-content:space-between;padding-top:10px;border-top:1px solid rgba(82,64,46,.12);font-size:10px;color:var(--v2-muted)}
-#accDlg #accBody .account-overview-lower{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(250px,1fr);gap:12px}
-#accDlg #accBody .account-overview-lower .account-overview-panel{min-width:0;padding:16px}
-#accDlg #accBody .account-activity-item{display:grid;grid-template-columns:8px minmax(0,1fr) auto;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid rgba(82,64,46,.10)}
-#accDlg #accBody .account-activity-item:last-child{border-bottom:0}
-#accDlg #accBody .account-activity-item strong{font-size:10px}
-#accDlg #accBody .account-activity-item p{margin:3px 0 0;font-size:9px}
-#accDlg #accBody .account-activity-item time{font-size:9px;color:var(--v2-muted)}
-#accDlg #accBody .account-activity-dot{width:7px;height:7px;border-radius:50%;background:#b8753e}
-#accDlg #accBody .account-quick-panel>h4{margin:0 0 8px;font-size:14px}
-#accDlg #accBody .account-quick-panel>button{display:grid;grid-template-columns:30px minmax(0,1fr) 12px;align-items:center;gap:10px;width:100%;padding:10px 0;border:0;border-bottom:1px solid rgba(82,64,46,.10);background:transparent;text-align:left;color:var(--v2-ink)}
-#accDlg #accBody .account-quick-panel>button:last-child{border-bottom:0}
-#accDlg #accBody .account-quick-panel>button>span:first-child{display:grid;place-items:center;width:29px;height:29px;border-radius:9px;background:var(--v2-accent-soft);color:var(--v2-accent)}
-#accDlg #accBody .account-quick-panel>button strong{display:block;font-size:10px}
-#accDlg #accBody .account-quick-panel>button small{display:block;margin-top:3px;font-size:9px}
-#accDlg #accBody .account-quick-panel>button>b{color:var(--v2-muted)}
-#accDlg #accBody .dealer-overview-card{margin:0 0 13px;padding:15px}
-#accDlg #accBody .dealer-overview-identity{display:flex;align-items:center;gap:12px}
-#accDlg #accBody .dealer-overview-identity h4{margin:0 0 4px}
-#accDlg #accBody .dealer-overview-identity button{margin-left:auto;border:1px solid rgba(100,78,57,.16);border-radius:9px;padding:8px 11px;background:rgba(255,255,255,.42);color:var(--v2-ink);font-size:10px}
-#accDlg #accBody .dealer-overview-details{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:13px}
-#accDlg #accBody .dealer-overview-details>div{min-width:0;padding:9px 10px;border-radius:10px;background:rgba(255,255,255,.25)}
-#accDlg #accBody .dealer-overview-details small{display:block;margin-bottom:4px;font-size:8px;letter-spacing:.12em}
-#accDlg #accBody .dealer-overview-details strong{display:block;overflow-wrap:anywhere;font-size:10px}
-#accDlg #accBody .account-settings-inner{display:block;min-width:0}
-#accDlg #accBody .account-settings-tabs{position:sticky;top:0;z-index:4;display:flex;flex-wrap:wrap;gap:7px;padding:10px 0 13px;margin:0 0 14px;background:rgba(231,218,201,.92);border-bottom:1px solid rgba(90,68,47,.12)}
-#accDlg #accBody .account-settings-tabs button{min-height:37px;padding:8px 13px;border:1px solid rgba(100,78,57,.15);border-radius:10px;background:rgba(255,255,255,.32);color:var(--v2-muted);font:700 10px Manrope,system-ui}
-#accDlg #accBody .account-settings-tabs button.active{background:rgba(255,255,255,.70);border-color:rgba(184,117,62,.25);color:var(--v2-ink);box-shadow:0 3px 9px rgba(65,45,27,.06)}
-#accDlg #accBody .settings-section{padding:clamp(15px,2vw,22px);border:1px solid rgba(255,255,255,.4);border-radius:16px;background:rgba(248,242,233,.43);box-shadow:0 9px 26px rgba(63,45,28,.08)}
-#accDlg #accBody .settings-section>h4{margin:0 0 6px;font-size:16px}
-#accDlg #accBody .settings-section>.account-tools{padding:0;border:0;background:transparent;box-shadow:none;backdrop-filter:none}
-#accDlg #accBody .profile-card{display:flex;align-items:center;gap:16px}
-#accDlg #accBody .profile-avatar{width:64px;height:64px;flex:0 0 64px;display:grid;place-items:center;overflow:hidden;border:1px solid rgba(255,255,255,.48);border-radius:50%;background:rgba(255,255,255,.40);font-size:20px;font-weight:700}
-#accDlg #accBody .profile-avatar img{width:100%;height:100%;object-fit:cover}
-#accDlg #accBody .profile-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 14px;margin:15px 0}
-#accDlg #accBody .profile-grid>div{min-width:0}
-#accDlg #accBody .profile-grid label{margin:0 0 6px;font-size:10px;color:var(--v2-muted)}
-#accDlg #accBody .profile-grid input,#accDlg #accBody .profile-grid select{min-height:42px}
-#accDlg #accBody .settings-section .acts{display:flex;gap:9px;flex-wrap:wrap}
-@media(max-width:1050px){#accDlg.account-dashboard-dialog{grid-template-columns:204px minmax(0,1fr)!important}#accDlg>.account-dashboard-main{padding:18px 18px 14px}#accDlg #accBody .account-overview-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:760px){
- #accDlg.account-dashboard-dialog{inset:0!important;width:100vw!important;height:100dvh!important;max-width:none!important;max-height:100dvh!important;grid-template-columns:minmax(0,1fr)!important;border:0!important;border-radius:0!important}
- #accDlg>.account-dashboard-main{grid-column:1;grid-row:1;padding:12px 13px max(13px,env(safe-area-inset-bottom))}
- #accDlg .account-dialog-head{grid-template-columns:36px minmax(0,1fr) 54px 36px;gap:6px;margin-bottom:13px;padding-bottom:10px}
- #accDlg #accMenuToggle{display:grid;grid-column:1;grid-row:1;font-size:14px}
- #accDlg h2.account-brand-title{grid-column:2;font-size:clamp(12px,3.7vw,15px);gap:6px}
- #accDlg .account-brand-icon{width:24px;height:24px;flex-basis:24px}
- #accDlg #accHomeTop{grid-column:3;width:54px;min-width:54px}
- #accDlg #accCloseTop{grid-column:4}
- #accDlg nav#accountMenu.account-sidebar,#accDlg nav#accountMenu.account-sidebar[hidden]{position:fixed!important;inset:calc(56px + env(safe-area-inset-top)) auto auto 10px!important;z-index:1005!important;display:none!important;width:min(278px,calc(100vw - 20px))!important;height:auto!important;max-height:calc(100dvh - 76px)!important;padding:14px!important;border:1px solid rgba(255,255,255,.48)!important;border-radius:15px!important;background:rgba(235,223,208,.94)!important;box-shadow:0 18px 44px rgba(36,25,16,.25)!important;-webkit-backdrop-filter:blur(28px) saturate(140%)!important;backdrop-filter:blur(28px) saturate(140%)!important}
- #accDlg nav#accountMenu.account-sidebar.menu-open{display:flex!important}
- #accDlg #accBody{padding-right:0}
- #accDlg #accBody .account-overview-heading{display:block}
- #accDlg #accBody .account-member-chip{margin-top:10px}
- #accDlg #accBody .account-overview-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
- #accDlg #accBody .account-overview-stats>button{min-height:102px;padding:12px}
- #accDlg #accBody .account-overview-visuals,#accDlg #accBody .account-overview-lower{grid-template-columns:minmax(0,1fr)}
- #accDlg #accBody .account-overview-visuals .account-overview-panel,#accDlg #accBody .account-overview-lower .account-overview-panel{padding:14px}
- #accDlg #accBody .account-trend-chart{height:90px;gap:7px}
- #accDlg #accBody .dealer-overview-details{grid-template-columns:repeat(2,minmax(0,1fr))}
- #accDlg #accBody :is(.profile-card,.account-tools,.account-page,.account-settings){padding:14px}
- #accDlg #accBody .account-settings-tabs{overflow-x:auto;flex-wrap:nowrap}
- #accDlg #accBody .account-settings-tabs button{flex:0 0 auto}
- #accDlg #accBody .profile-card{align-items:flex-start;gap:11px}
- #accDlg #accBody .profile-avatar{width:54px;height:54px;flex-basis:54px}
- #accDlg #accBody .profile-grid{grid-template-columns:minmax(0,1fr)}
-}
-@media(max-width:390px){#accDlg #accBody .account-overview-stats>button strong{font-size:23px}#accDlg h2.account-brand-title{font-size:12px}}
-@media(prefers-reduced-motion:reduce){#accDlg *{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
-
+#accDlg .account-sidebar-brand strong{color:var(--acc-text);font:800 11px/1.2 Manrope,system-ui;letter-spacing:.15em}
+#accDlg .account-sidebar-brand small,#accDlg .account-sidebar-brand>div>span{color:var(--acc-soft);font:700 9px/1.2 Manrope,system-ui;letter-spacing:.12em}
+#accDlg .seller-nav-identity{display:grid;gap:6px;padding:5px 9px 15px}
+#accDlg .seller-nav-identity small,#accDlg .seller-nav-label{color:var(--acc-soft);font:800 9px/1.3 Manrope,system-ui;letter-spacing:.15em}
+#accDlg .seller-nav-identity strong{color:var(--acc-text);font:700 14px/1.35 Manrope,system-ui}
+#accDlg .seller-nav-identity>span{color:var(--acc-muted);font-size:10px;overflow-wrap:anywhere}
+#accDlg .seller-nav-label{padding:15px 10px 6px}
+#accDlg .seller-mode-switch{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;margin:0 0 8px;background:#1b2023;border:1px solid var(--acc-line);border-radius:10px}
+#accDlg .seller-mode-switch button{min-height:34px;padding:7px;border:0;border-radius:7px;background:transparent;color:var(--acc-muted);font:700 11px Manrope,system-ui;cursor:pointer}
+#accDlg .seller-mode-switch button.selected,#accDlg .seller-mode-switch button[aria-current="page"]{background:#292f32;color:var(--acc-gold-strong);box-shadow:none}
+#accDlg nav#accountMenu>button{display:flex;align-items:center;gap:10px;width:100%;min-height:40px;margin:1px 0;padding:9px 11px;border:1px solid transparent;border-radius:9px;background:transparent;color:rgba(240,237,229,.72);text-align:left;font:650 11px/1.35 Manrope,system-ui;cursor:pointer;box-shadow:none;transform:none;transition:background-color .14s,color .14s}
+#accDlg nav#accountMenu>button::before{content:"";display:grid;place-items:center;width:18px;height:18px;flex:0 0 18px;border-radius:5px;background:rgba(255,255,255,.055);color:var(--acc-gold);font:700 12px/1 Manrope,system-ui}
 #accDlg nav#accountMenu>button[data-page="overview"]::before{content:"⌂"}
 #accDlg nav#accountMenu>button[data-page="buying"]::before{content:"⌕"}
 #accDlg nav#accountMenu>button[data-page="dashboard"]::before{content:"◷"}
@@ -175,957 +51,276 @@
 #accDlg nav#accountMenu>button[data-page="settings"]::before{content:"⚙"}
 #accDlg nav#accountMenu>button[data-seller-signup]::before{content:"＋"}
 #accDlg nav#accountMenu>button[data-signout]::before{content:"↪"}
-#accDlg #accBody .account-activity-page-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:16px}
-#accDlg #accBody .account-activity-page-head h3{margin:0 0 4px;font:750 21px/1.2 Manrope,system-ui;letter-spacing:-.03em}
-#accDlg #accBody .account-activity-page-head p{margin:0;font-size:10px}
-#accDlg #accBody .account-activity-page-head>span{padding:7px 10px;border-radius:99px;background:rgba(255,255,255,.42);font:700 10px Manrope,system-ui}
-#accDlg #accBody .account-tools{margin:0 0 13px;padding:17px!important}
-#accDlg #accBody .account-tools h3,#accDlg #accBody .account-tools h4{margin-top:0}
-#accDlg #accBody .account-tools .field-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px;align-items:end}
-#accDlg #accBody .account-tools label{display:block;margin:0 0 5px;font-size:10px;color:var(--v2-muted)}
-#accDlg #accBody .account-tools input,#accDlg #accBody .account-tools select,#accDlg #accBody .account-tools textarea{width:100%;min-height:40px;padding:9px 11px}
-#accDlg #accBody .account-tools button{border-radius:9px}
-#accDlg #accBody .account-saved-vehicles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:12px}
-#accDlg #accBody .account-saved-vehicle,#accDlg #accBody .seller-listing{min-width:0;padding:12px;border:1px solid rgba(255,255,255,.42);border-radius:14px;background:rgba(248,242,233,.48);box-shadow:0 7px 20px rgba(63,45,28,.07)}
-#accDlg #accBody .seller-listing{display:grid;grid-template-columns:76px minmax(0,1fr) auto;align-items:center;gap:12px}
-#accDlg #accBody .seller-listing-photo{width:76px;height:58px;object-fit:cover;border-radius:9px}
-#accDlg #accBody .seller-listing :is(strong,h4){font-size:11px}
-#accDlg #accBody .account-full-activity .account-activity-list{padding:0 3px}
-#accDlg #accBody .account-booking-item{padding:14px;margin:0 0 10px}
-#accDlg #accBody .account-bookings-heading{margin:14px 0 9px;font-size:15px}
-#accDlg #accBody .account-fast-loading{min-height:220px;display:grid;place-content:center;justify-items:center;color:var(--v2-ink)}
-#accDlg #accBody .account-fast-loading :is(p,span){color:var(--v2-muted)}
-@media(max-width:760px){
- #accDlg #accBody .account-activity-page-head{align-items:flex-start}
- #accDlg #accBody .seller-listing{grid-template-columns:64px minmax(0,1fr);gap:9px}
- #accDlg #accBody .seller-listing-photo{width:64px;height:54px}
- #accDlg #accBody .account-tools .field-row{grid-template-columns:minmax(0,1fr)}
-}
-
-
-/* V2 workspace pages — consistent warm glass treatment beyond Overview */
-#accDlg.account-dashboard-dialog[open] #accBody .account-page{
-  min-width:0;display:block;padding:0!important;background:transparent!important;
-  border:0!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-page[hidden],
-#accDlg.account-dashboard-dialog[open] #accBody [data-settings-section][hidden]{display:none!important}
-#accDlg.account-dashboard-dialog[open] #accBody .account-page>h3,
-#accDlg.account-dashboard-dialog[open] #accBody .account-page>.account-tools>h3{
-  margin:2px 0 15px;font:750 clamp(20px,2vw,27px)/1.2 Manrope,system-ui,sans-serif;
-  letter-spacing:-.035em;color:var(--v2-ink)
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-page>.account-tools{
-  min-width:0;margin:0 0 13px!important;padding:clamp(14px,2vw,20px)!important;
-  border:1px solid rgba(255,255,255,.42)!important;border-radius:17px!important;
-  background:rgba(248,242,233,.48)!important;
-  box-shadow:0 9px 26px rgba(63,45,28,.075),inset 0 1px rgba(255,255,255,.34)!important;
-  -webkit-backdrop-filter:blur(18px) saturate(125%)!important;backdrop-filter:blur(18px) saturate(125%)!important
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-page .account-tools>h3,
-#accDlg.account-dashboard-dialog[open] #accBody .account-page .account-tools>h4{
-  color:var(--v2-ink);font:750 14px/1.35 Manrope,system-ui,sans-serif;letter-spacing:-.015em
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-page .meta,
-#accDlg.account-dashboard-dialog[open] #accBody .account-page p.meta{color:var(--v2-muted)}
-#accDlg.account-dashboard-dialog[open] #accBody .account-page .btn{
-  min-height:37px;padding:9px 13px;border-radius:10px;font:700 10px/1.2 Manrope,system-ui,sans-serif;
-  transition:background .18s ease,transform .18s ease,box-shadow .18s ease
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-page .btn:not(:disabled):hover{
-  transform:translateY(-1px);filter:none;box-shadow:0 5px 13px rgba(115,77,48,.12)
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-page .btn.ghost{
-  color:var(--v2-ink)!important;background:rgba(255,252,247,.34)!important;
-  border:1px solid rgba(100,78,57,.15)!important
-}
-
-/* Listings: searchable inventory rows, readable actions and status */
-#accDlg.account-dashboard-dialog[open] #accBody .seller-listing-filters{
-  display:grid;grid-template-columns:minmax(0,1.4fr) minmax(150px,.8fr);
-  align-items:end;gap:7px 12px;margin:12px 0 10px
-}
-#accDlg.account-dashboard-dialog[open] #accBody .seller-listing-filters label{margin:0 0 4px;font-size:10px;color:var(--v2-muted)}
-#accDlg.account-dashboard-dialog[open] #accBody .seller-listing-filters input,
-#accDlg.account-dashboard-dialog[open] #accBody .seller-listing-filters select{min-width:0;min-height:40px}
-#accDlg.account-dashboard-dialog[open] #accBody .seller-listing[data-seller-listing]{
-  display:grid;grid-template-columns:118px minmax(0,1fr);align-items:stretch;gap:14px;
-  margin:10px 0;padding:12px!important;border:1px solid rgba(255,255,255,.45)!important;
-  border-radius:15px!important;background:rgba(255,252,247,.32)!important;
-  box-shadow:0 6px 18px rgba(63,45,28,.055),inset 0 1px rgba(255,255,255,.3)!important;
-  transition:background .18s ease,box-shadow .18s ease,transform .18s ease
-}
-#accDlg.account-dashboard-dialog[open] #accBody .seller-listing[data-seller-listing]:hover{
-  background:rgba(255,252,247,.42)!important;box-shadow:0 9px 22px rgba(63,45,28,.08),inset 0 1px rgba(255,255,255,.38)!important;transform:translateY(-1px)
-}
-#accDlg.account-dashboard-dialog[open] #accBody .seller-garage-media{position:relative;min-width:0;min-height:100px;overflow:hidden;border-radius:11px;background:rgba(100,78,57,.08)}
-#accDlg.account-dashboard-dialog[open] #accBody .seller-garage-media .seller-listing-photo,
-#accDlg.account-dashboard-dialog[open] #accBody .seller-garage-media img{display:block;width:100%;height:100%;min-height:100px;object-fit:cover;border-radius:11px}
-#accDlg.account-dashboard-dialog[open] #accBody .seller-garage-status{position:absolute;left:7px;bottom:7px;padding:5px 7px;border-radius:99px;background:rgba(255,252,247,.88);color:#594b3e;font:800 8px Manrope,system-ui;letter-spacing:.035em}
-#accDlg.account-dashboard-dialog[open] #accBody .seller-garage-content{display:grid;align-content:start;gap:9px;min-width:0}
-#accDlg.account-dashboard-dialog[open] #accBody .seller-garage-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;min-width:0}
-#accDlg.account-dashboard-dialog[open] #accBody .seller-garage-heading h4{margin:3px 0 0;font:750 13px/1.3 Manrope,system-ui;overflow-wrap:anywhere}
-#accDlg.account-dashboard-dialog[open] #accBody .seller-garage-eyebrow{font:800 8px Manrope,system-ui;letter-spacing:.12em;color:var(--v2-muted)}
-#accDlg.account-dashboard-dialog[open] #accBody .seller-garage-price{flex:0 0 auto;font:800 12px Manrope,system-ui;color:var(--v2-accent)}
-#accDlg.account-dashboard-dialog[open] #accBody .seller-garage-meta{display:flex;flex-wrap:wrap;gap:6px 12px;color:var(--v2-muted);font-size:9px}
-#accDlg.account-dashboard-dialog[open] #accBody .seller-garage-promotion{display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:9px;background:rgba(184,117,62,.07);font-size:9px}
-#accDlg.account-dashboard-dialog[open] #accBody .seller-garage-promotion>div{display:grid;gap:2px}
-#accDlg.account-dashboard-dialog[open] #accBody .seller-garage-promotion strong{font-size:9px}
-#accDlg.account-dashboard-dialog[open] #accBody .seller-garage-promotion span{color:var(--v2-muted)}
-#accDlg.account-dashboard-dialog[open] #accBody .seller-garage-promotion-dot{width:7px;height:7px;flex:0 0 7px;border-radius:50%;background:#b4a08c}
-#accDlg.account-dashboard-dialog[open] #accBody .seller-garage-promotion-dot.is-active{background:#668b5e;box-shadow:0 0 0 3px rgba(102,139,94,.12)}
-#accDlg.account-dashboard-dialog[open] #accBody .seller-listing-actions{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:1px}
-#accDlg.account-dashboard-dialog[open] #accBody .seller-listing-actions .btn{min-height:31px;padding:7px 10px;font-size:9px}
-#accDlg.account-dashboard-dialog[open] #accBody .seller-listing[hidden]{display:none!important}
-#accDlg.account-dashboard-dialog[open] #accBody #sellerListingCount{margin:4px 0 9px;font-size:10px}
-
-/* Promotions: package chooser and payment journey */
-#accDlg.account-dashboard-dialog[open] #accBody .account-promotions-page .promotion-package-grid{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:9px;margin:12px 0 17px
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-promotions-page .promotion-package{
-  display:grid;align-content:start;gap:7px;min-width:0;padding:13px;border:1px solid rgba(255,255,255,.48)!important;
-  border-radius:13px;background:rgba(255,252,247,.36)!important;box-shadow:inset 0 1px rgba(255,255,255,.32)!important
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-promotions-page .promotion-package strong{font:750 11px Manrope,system-ui;color:var(--v2-ink)}
-#accDlg.account-dashboard-dialog[open] #accBody .account-promotions-page .promotion-package>span,
-#accDlg.account-dashboard-dialog[open] #accBody .account-promotions-page .promotion-package small{font-size:9px;color:var(--v2-muted)}
-#accDlg.account-dashboard-dialog[open] #accBody .account-promotions-page .promotion-package b{font:800 16px Manrope,system-ui;color:var(--v2-accent)}
-#accDlg.account-dashboard-dialog[open] #accBody .account-promotions-page label{margin:11px 0 5px;font-size:10px;color:var(--v2-muted)}
-#accDlg.account-dashboard-dialog[open] #accBody .account-promotions-page :is(input,select){min-height:42px}
-#accDlg.account-dashboard-dialog[open] #accBody .promotion-history-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:20px 0 8px;padding-top:14px;border-top:1px solid rgba(82,64,46,.12)}
-#accDlg.account-dashboard-dialog[open] #accBody .promotion-history-head h4{margin:0;font:750 13px Manrope,system-ui}
-#accDlg.account-dashboard-dialog[open] #accBody .promotion-history-item{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:7px 0;padding:11px 12px;border:1px solid rgba(255,255,255,.4);border-radius:12px;background:rgba(255,252,247,.28)}
-#accDlg.account-dashboard-dialog[open] #accBody .promotion-history-item>div{display:grid;gap:4px;min-width:0}
-#accDlg.account-dashboard-dialog[open] #accBody .promotion-history-item b{font-size:10px}
-#accDlg.account-dashboard-dialog[open] #accBody .promotion-history-item .meta{font-size:9px;overflow-wrap:anywhere}
-#accDlg.account-dashboard-dialog[open] #accBody .promotion-status-badge{flex:0 0 auto;padding:6px 8px;border-radius:99px;background:rgba(184,117,62,.09);color:var(--v2-accent);font-size:8px}
-
-/* Garage bookings, buying and activity */
-#accDlg.account-dashboard-dialog[open] #accBody .account-bookings-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:16px 0 9px}
-#accDlg.account-dashboard-dialog[open] #accBody .account-bookings-head h3,
-#accDlg.account-dashboard-dialog[open] #accBody .account-bookings-heading{margin:0;font:750 14px Manrope,system-ui;color:var(--v2-ink)}
-#accDlg.account-dashboard-dialog[open] #accBody .account-booking-item{
-  display:flex;align-items:center;justify-content:space-between;gap:12px;margin:8px 0!important;padding:13px!important;
-  border:1px solid rgba(255,255,255,.42)!important;border-radius:13px!important;background:rgba(255,252,247,.34)!important;
-  box-shadow:inset 0 1px rgba(255,255,255,.30)!important
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-booking-item>div{display:grid;gap:4px;min-width:0}
-#accDlg.account-dashboard-dialog[open] #accBody .account-booking-item b{font-size:11px}
-#accDlg.account-dashboard-dialog[open] #accBody .account-booking-item .meta{font-size:9px;overflow-wrap:anywhere}
-#accDlg.account-dashboard-dialog[open] #accBody .account-booking-item .st{flex:0 0 auto;padding:6px 8px;border-radius:99px;background:rgba(102,139,94,.10);color:#55764d;font:750 9px Manrope,system-ui}
-#accDlg.account-dashboard-dialog[open] #accBody .account-buyer-workspace .account-saved-vehicle{
-  overflow:hidden;padding:0!important;border:1px solid rgba(255,255,255,.48)!important;border-radius:14px!important;background:rgba(255,252,247,.38)!important
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-saved-vehicle-image{display:block;height:130px;background:rgba(100,78,57,.08)}
-#accDlg.account-dashboard-dialog[open] #accBody .account-saved-vehicle-image img{width:100%;height:100%;object-fit:cover}
-#accDlg.account-dashboard-dialog[open] #accBody .account-saved-vehicle-info{display:grid;gap:6px;padding:11px}
-#accDlg.account-dashboard-dialog[open] #accBody .account-saved-vehicle-info strong{font:750 11px Manrope,system-ui}
-#accDlg.account-dashboard-dialog[open] #accBody .account-saved-vehicle-info>b{font:800 13px Manrope,system-ui;color:var(--v2-accent)}
-#accDlg.account-dashboard-dialog[open] #accBody .account-saved-vehicle-info small{font-size:9px;color:var(--v2-muted)}
-#accDlg.account-dashboard-dialog[open] #accBody .account-saved-vehicle-info>div{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px}
-#accDlg.account-dashboard-dialog[open] #accBody .account-saved-vehicle-info a,
-#accDlg.account-dashboard-dialog[open] #accBody .account-saved-vehicle-info button{font:700 9px Manrope,system-ui;color:var(--v2-accent)}
-#accDlg.account-dashboard-dialog[open] #accBody .account-full-activity .account-activity-item{
-  grid-template-columns:9px minmax(0,1fr) minmax(90px,auto);gap:12px;padding:13px 2px;border-bottom:1px solid rgba(82,64,46,.10)
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-full-activity .account-activity-item strong{font:750 11px Manrope,system-ui}
-#accDlg.account-dashboard-dialog[open] #accBody .account-full-activity .account-activity-item p{font-size:10px}
-#accDlg.account-dashboard-dialog[open] #accBody .account-full-activity .account-activity-item time{font-size:9px;text-align:right;white-space:nowrap}
-
-/* Insights tables and profile controls */
-#accDlg.account-dashboard-dialog[open] #accBody .seller-analytics-table{
-  width:100%;border-collapse:separate;border-spacing:0;margin:12px 0 8px;overflow:hidden;
-  border:1px solid rgba(100,78,57,.12);border-radius:12px;background:rgba(255,252,247,.25);
-  font:600 10px Manrope,system-ui
-}
-#accDlg.account-dashboard-dialog[open] #accBody .seller-analytics-table th,
-#accDlg.account-dashboard-dialog[open] #accBody .seller-analytics-table td{padding:10px 12px;border-bottom:1px solid rgba(82,64,46,.09)}
-#accDlg.account-dashboard-dialog[open] #accBody .seller-analytics-table tr:last-child th,
-#accDlg.account-dashboard-dialog[open] #accBody .seller-analytics-table tr:last-child td{border-bottom:0}
-#accDlg.account-dashboard-dialog[open] #accBody .seller-analytics-table th{color:var(--v2-muted);font-weight:650;text-align:left}
-#accDlg.account-dashboard-dialog[open] #accBody .seller-analytics-table td{color:var(--v2-ink);font-weight:800;text-align:right;font-variant-numeric:tabular-nums}
-#accDlg.account-dashboard-dialog[open] #accBody .danger-zone{margin-top:16px;padding:15px;border:1px solid rgba(169,82,67,.22);border-radius:14px;background:rgba(169,82,67,.045)}
-#accDlg.account-dashboard-dialog[open] #accBody .danger-zone h3{font:750 13px Manrope,system-ui;color:#a85b4e}
-#accDlg.account-dashboard-dialog[open] #accBody .account-page .check-row{display:flex;align-items:center;gap:9px;margin:10px 0;font-size:10px}
-#accDlg.account-dashboard-dialog[open] #accBody .account-page .check-row input{width:16px;min-height:16px;flex:0 0 16px}
-#accDlg.account-dashboard-dialog[open] #accBody .account-page .settings-section .account-tools{margin:0!important}
-#accDlg.account-dashboard-dialog[open] #accBody .account-page .settings-section .account-tools label{margin-top:10px}
-
-/* Responsive page layouts: preserve readable actions without horizontal overflow */
-@media(max-width:760px){
- #accDlg.account-dashboard-dialog[open] #accBody .seller-listing-filters{grid-template-columns:minmax(0,1fr) minmax(110px,.8fr);gap:7px}
- #accDlg.account-dashboard-dialog[open] #accBody .seller-listing[data-seller-listing]{grid-template-columns:76px minmax(0,1fr);gap:10px;padding:9px!important}
- #accDlg.account-dashboard-dialog[open] #accBody .seller-garage-media,
- #accDlg.account-dashboard-dialog[open] #accBody .seller-garage-media .seller-listing-photo,
- #accDlg.account-dashboard-dialog[open] #accBody .seller-garage-media img{min-height:76px;height:100%}
- #accDlg.account-dashboard-dialog[open] #accBody .seller-garage-heading{display:grid;gap:4px}
- #accDlg.account-dashboard-dialog[open] #accBody .seller-listing-actions{grid-column:1/-1}
- #accDlg.account-dashboard-dialog[open] #accBody .promotion-history-item,
- #accDlg.account-dashboard-dialog[open] #accBody .account-booking-item{align-items:flex-start}
- #accDlg.account-dashboard-dialog[open] #accBody .account-full-activity .account-activity-item{grid-template-columns:8px minmax(0,1fr);gap:9px}
- #accDlg.account-dashboard-dialog[open] #accBody .account-full-activity .account-activity-item time{grid-column:2;text-align:left}
-}
-@media(max-width:420px){
- #accDlg.account-dashboard-dialog[open] #accBody .seller-listing-filters{grid-template-columns:minmax(0,1fr)}
- #accDlg.account-dashboard-dialog[open] #accBody .seller-listing[data-seller-listing]{grid-template-columns:64px minmax(0,1fr)}
- #accDlg.account-dashboard-dialog[open] #accBody .seller-garage-media,
- #accDlg.account-dashboard-dialog[open] #accBody .seller-garage-media .seller-listing-photo,
- #accDlg.account-dashboard-dialog[open] #accBody .seller-garage-media img{min-height:64px}
- #accDlg.account-dashboard-dialog[open] #accBody .account-activity-page-head{flex-wrap:wrap}
- #accDlg.account-dashboard-dialog[open] #accBody .account-bookings-head{align-items:flex-start;flex-wrap:wrap}
-}
-
-
-/* V2 refinement: warm, low-contrast hover states (avoid the bright white flash). */
-#accDlg nav#accountMenu>button:hover,
-#accDlg nav#accountMenu>button:focus-visible,
-#accDlg nav#accountMenu>button.active,
-#accDlg nav#accountMenu>button[aria-current="page"]{
-  background:rgba(184,117,62,.10)!important;
-  box-shadow:inset 2px 0 rgba(184,117,62,.62),0 3px 10px rgba(68,49,30,.045)!important;
-}
-#accDlg .account-dialog-head button:hover,
-#accDlg .account-dialog-head button:focus-visible{
-  background:rgba(184,117,62,.12)!important;
-  border-color:rgba(184,117,62,.22)!important;
-}
-#accDlg #accBody .account-overview-stats>button:hover,
-#accDlg #accBody .account-overview-stats>button:focus-visible{
-  background:rgba(184,117,62,.095)!important;
-  box-shadow:0 8px 20px rgba(63,45,28,.075),inset 0 1px rgba(255,255,255,.25)!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .seller-listing[data-seller-listing]:hover{
-  background:rgba(184,117,62,.085)!important;
-  box-shadow:0 8px 20px rgba(63,45,28,.07),inset 0 1px rgba(255,255,255,.22)!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-page .btn:not(:disabled):hover{
-  background:rgba(184,117,62,.12)!important;
-  border-color:rgba(184,117,62,.24)!important;
-  color:var(--v2-ink)!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-page .btn:not(.ghost):not(:disabled):hover{
-  background:linear-gradient(135deg,#b77b4d,#995d35)!important;
-  color:#fff!important;
-}
-#accDlg #accBody .seller-listing-metrics{
-  display:block;margin-top:3px;padding-top:7px;
-  border-top:1px solid rgba(100,78,57,.10);
-  color:var(--v2-muted);font:600 9px/1.4 Manrope,system-ui,sans-serif;
-}
-#accDlg #accBody .account-settings-tabs button:hover,
-#accDlg #accBody .settings-section button:not(.btn):hover{
-  background:rgba(184,117,62,.10)!important;
-  border-color:rgba(184,117,62,.22)!important;
-}
-
-
-/* V2.5: reduce the remaining pale hover wash; keep hover subtle and glassy. */
-#accDlg.account-dashboard-dialog[open] #accBody :is(
-  .profile-card,.account-tools,.account-stat,.profile-grid>div,.svc,
-  .seller-summary-card,.account-overview-panel,.account-booking-item,
-  .account-saved-vehicle,.promotion-package,.account-buyer-workspace,
-  .dashboard-welcome,.settings-section,.account-page>.account-tools
-):hover{
-  background-color:rgba(184,117,62,.045)!important;
-  box-shadow:0 7px 20px rgba(63,45,28,.065),inset 0 1px rgba(255,255,255,.16)!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats>button:hover,
-#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats>button:focus-visible{
-  background:rgba(184,117,62,.055)!important;
-  box-shadow:0 6px 16px rgba(63,45,28,.06),inset 0 1px rgba(255,255,255,.12)!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .seller-listing[data-seller-listing]:hover{
-  background:rgba(184,117,62,.045)!important;
-  box-shadow:0 7px 18px rgba(63,45,28,.06),inset 0 1px rgba(255,255,255,.12)!important;
-}
-#accDlg nav#accountMenu>button:hover,
-#accDlg nav#accountMenu>button:focus-visible,
-#accDlg .account-dialog-head button:hover,
-#accDlg .account-dialog-head button:focus-visible,
-#accDlg #accBody .account-settings-tabs button:hover,
-#accDlg #accBody .settings-section button:not(.btn):hover{
-  background-color:rgba(184,117,62,.065)!important;
-}
-
-
-/* V2.6: align dashboard header to the content grid and eliminate white hover states. */
-#accDlg>.account-dashboard-main{padding:18px 18px 17px!important}
-#accDlg .account-dialog-head{
-  width:100%!important;box-sizing:border-box!important;
-  margin:0 0 17px!important;padding:0 0 14px!important;
-  border-bottom:0!important;
-}
-#accDlg .account-dialog-head::after{
-  content:"";position:absolute;left:0;right:0;bottom:0;height:1px;
-  background:rgba(90,68,47,.10);pointer-events:none;
-}
-#accDlg .account-dialog-head{position:relative!important}
-#accDlg #accBody{padding-left:0!important;padding-right:0!important}
-#accDlg #accBody :is(.profile-card,.account-tools,.account-stat,.profile-grid>div,.svc,
-.seller-summary-card,.account-overview-panel,.account-overview-stats>button,
-.account-bookings-page>#garageBookingAction,.account-booking-item,.account-saved-vehicle,
-.seller-listing,.seller-garage-card,.promotion-package,.account-buyer-workspace,
-.dashboard-welcome,.settings-section){
-  border-color:rgba(100,78,57,.12)!important;
-  box-shadow:0 7px 20px rgba(63,45,28,.055),inset 0 1px rgba(255,255,255,.10)!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody :is(
-.profile-card,.account-tools,.account-stat,.profile-grid>div,.svc,.seller-summary-card,
-.account-overview-panel,.account-overview-stats>button,.account-booking-item,
-.account-saved-vehicle,.seller-listing,.seller-garage-card,.promotion-package,
-.account-buyer-workspace,.dashboard-welcome,.settings-section
-):hover{
-  background:rgba(248,242,233,.43)!important;
-  box-shadow:0 7px 20px rgba(63,45,28,.055),inset 0 1px rgba(255,255,255,.10)!important;
-  filter:none!important;transform:none!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats>button:hover,
-#accDlg.account-dashboard-dialog[open] #accBody .seller-listing[data-seller-listing]:hover{
-  background:rgba(248,242,233,.43)!important;
-  box-shadow:0 7px 20px rgba(63,45,28,.055),inset 0 1px rgba(255,255,255,.10)!important;
-  transform:none!important;
-}
-#accDlg .account-dialog-head button:hover,
-#accDlg .account-dialog-head button:focus-visible{
-  background:rgba(100,78,57,.08)!important;border-color:rgba(100,78,57,.12)!important;
-}
-#accDlg nav#accountMenu>button:hover,
-#accDlg nav#accountMenu>button:focus-visible,
-#accDlg nav#accountMenu>button.active,
-#accDlg nav#accountMenu>button[aria-current="page"]{
-  background:rgba(100,78,57,.07)!important;
-  box-shadow:inset 2px 0 rgba(184,117,62,.45)!important;
-}
-#accDlg #accBody .account-page .btn:not(:disabled):hover,
-#accDlg #accBody .account-settings-tabs button:hover,
-#accDlg #accBody .settings-section button:not(.btn):hover{
-  background-color:rgba(100,78,57,.07)!important;
-  border-color:rgba(100,78,57,.12)!important;box-shadow:none!important;filter:none!important;
-}
-
-
-/* V2.7: remove the pale/white surface treatment from the account panel.
-   Keep the site's background image visible through neutral, dark glass. */
-#accDlg.account-dashboard-dialog[open]{
-  background:rgba(20,22,25,.34)!important;
-  border-color:rgba(255,255,255,.10)!important;
-  box-shadow:0 28px 90px rgba(0,0,0,.28)!important;
-  -webkit-backdrop-filter:blur(18px) saturate(110%)!important;
-  backdrop-filter:blur(18px) saturate(110%)!important;
-}
-#accDlg>.account-sidebar{
-  background:rgba(18,20,23,.28)!important;
-  border-right:1px solid rgba(255,255,255,.08)!important;
-  box-shadow:none!important;
-}
-#accDlg>.account-dashboard-main,
-#accDlg .account-dialog-head{background:transparent!important}
-#accDlg .account-dialog-head::after{background:rgba(255,255,255,.09)!important}
-#accDlg .account-dialog-head button,
-#accDlg #accBody .account-member-chip,
-#accDlg .seller-mode-switch button.selected,
-#accDlg .seller-mode-switch button[aria-current="page"],
-#accDlg #accBody .account-settings-tabs button,
-#accDlg #accBody .account-settings-tabs button.active,
-#accDlg #accBody .dealer-overview-identity button,
-#accDlg #accBody .account-page .btn.ghost{
-  background:rgba(255,255,255,.055)!important;
-  border-color:rgba(255,255,255,.10)!important;
-  box-shadow:none!important;
-}
-#accDlg #accBody :is(.profile-card,.account-tools,.account-page,.account-settings,
-.account-stat,.profile-grid>div,.svc,.seller-summary-card,.account-overview-panel,
-.account-overview-stats>button,.account-bookings-page>#garageBookingAction,
-.account-booking-item,.account-saved-vehicle,.seller-listing,.seller-garage-card,
-.promotion-package,.account-buyer-workspace,.dashboard-welcome,.settings-section){
-  background:rgba(20,22,25,.22)!important;
-  border-color:rgba(255,255,255,.08)!important;
-  box-shadow:0 8px 24px rgba(0,0,0,.10)!important;
-  -webkit-backdrop-filter:blur(16px) saturate(110%)!important;
-  backdrop-filter:blur(16px) saturate(110%)!important;
-}
-#accDlg #accBody input,#accDlg #accBody select,#accDlg #accBody textarea,
-#accDlg #accBody .btn.ghost{
-  background:rgba(18,20,23,.24)!important;
-  border-color:rgba(255,255,255,.10)!important;
-  box-shadow:none!important;
-}
-#accDlg #accBody input::placeholder,#accDlg #accBody textarea::placeholder{
-  color:rgba(255,255,255,.48)!important;
-}
-#accDlg #accBody :is(h1,h2,h3,h4,strong,b,label),
-#accDlg h2.account-brand-title,
-#accDlg .account-sidebar-brand strong,
-#accDlg .seller-nav-identity strong{color:#f3eee7!important}
-#accDlg #accBody :is(p,small,.meta,.muted,.description,.subtitle),
-#accDlg .seller-nav-identity>span{color:rgba(243,238,231,.66)!important}
-#accDlg nav#accountMenu>button{color:rgba(243,238,231,.72)!important}
-#accDlg nav#accountMenu>button::before{background:rgba(255,255,255,.06)!important;color:rgba(243,238,231,.62)!important}
-#accDlg nav#accountMenu>button:hover,
-#accDlg nav#accountMenu>button:focus-visible,
-#accDlg nav#accountMenu>button.active,
-#accDlg nav#accountMenu>button[aria-current="page"]{
-  background:rgba(184,117,62,.08)!important;
-  box-shadow:inset 2px 0 rgba(184,117,62,.38)!important;
-}
-#accDlg .account-dialog-head button:hover,
-#accDlg .account-dialog-head button:focus-visible,
-#accDlg #accBody :is(.profile-card,.account-tools,.account-stat,.profile-grid>div,.svc,
-.seller-summary-card,.account-overview-panel,.account-overview-stats>button,
-.account-booking-item,.account-saved-vehicle,.seller-listing,.seller-garage-card,
-.promotion-package,.account-buyer-workspace,.dashboard-welcome,.settings-section):hover{
-  background:rgba(255,255,255,.025)!important;
-  box-shadow:0 8px 24px rgba(0,0,0,.10)!important;
-  border-color:rgba(255,255,255,.08)!important;
-  transform:none!important;filter:none!important;
-}
-#accDlg #accBody .account-page .btn:not(.ghost):not(:disabled):hover{
-  background:linear-gradient(135deg,#b77b4d,#995d35)!important;color:#fff!important;
-}
-
-
-/* V2.8: account header follows the site's home-header glass treatment. */
-#accDlg .account-dialog-head{
-  display:flex!important;align-items:center!important;gap:10px!important;
-  min-height:52px!important;width:100%!important;box-sizing:border-box!important;
-  margin:0 0 17px!important;padding:9px 12px!important;
-  border:1px solid rgba(255,255,255,.12)!important;border-radius:16px!important;
-  background:rgba(20,22,25,.34)!important;
-  box-shadow:inset 0 1px rgba(255,255,255,.035)!important;
-  -webkit-backdrop-filter:blur(18px) saturate(115%)!important;
-  backdrop-filter:blur(18px) saturate(115%)!important;
-}
-#accDlg h2.account-brand-title{
-  display:flex!important;align-items:center!important;gap:10px!important;
-  flex:1 1 auto!important;min-width:0!important;margin:0!important;
-  color:#f3eee7!important;font:750 17px/1.2 Manrope,system-ui,sans-serif!important;
-}
-#accDlg .account-brand-icon{
-  width:30px!important;height:30px!important;flex:0 0 30px!important;
-  border-radius:9px!important;object-fit:cover!important;
-}
-#accDlg .account-dialog-head button{
-  display:grid!important;place-items:center!important;flex:0 0 auto!important;
-  min-width:38px!important;width:38px!important;height:36px!important;
-  padding:0!important;border:1px solid rgba(255,255,255,.12)!important;
-  border-radius:11px!important;background:rgba(255,255,255,.055)!important;
-  color:#f3eee7!important;box-shadow:none!important;
-}
-#accDlg #accHomeTop{width:auto!important;min-width:58px!important;padding:0 12px!important}
-#accDlg #accCloseTop{font-size:19px!important}
-#accDlg .account-dialog-head button:hover,
-#accDlg .account-dialog-head button:focus-visible{
-  background:rgba(255,255,255,.08)!important;border-color:rgba(255,255,255,.16)!important;
-  box-shadow:none!important;transform:none!important;
-}
-@media(max-width:760px){
- #accDlg>.account-dashboard-main{padding:12px!important}
- #accDlg .account-dialog-head{min-height:48px!important;padding:7px 9px!important;border-radius:13px!important}
- #accDlg h2.account-brand-title{font-size:14px!important;gap:7px!important}
- #accDlg .account-brand-icon{width:26px!important;height:26px!important;flex-basis:26px!important}
- #accDlg .account-dialog-head button{width:34px!important;min-width:34px!important;height:33px!important;border-radius:9px!important}
- #accDlg #accHomeTop{min-width:48px!important;padding:0 8px!important}
-}
-
-
-/* V2.9: full-width content alignment + legible home-site glass treatment. */
-#accDlg>.account-dashboard-main{padding:18px 18px 17px!important}
-#accDlg .account-dialog-head{
-  width:100%!important;align-self:stretch!important;box-sizing:border-box!important;
-  margin-left:0!important;margin-right:0!important;
-}
-#accDlg #accBody{
-  width:100%!important;box-sizing:border-box!important;
-  padding-left:0!important;padding-right:0!important;
-}
-#accDlg #accBody :is(.profile-card,.account-tools,.account-page,.account-settings,
-.account-stat,.profile-grid>div,.svc,.seller-summary-card,.account-overview-panel,
-.account-overview-stats>button,.account-bookings-page>#garageBookingAction,
-.account-booking-item,.account-saved-vehicle,.seller-listing,.seller-garage-card,
-.promotion-package,.account-buyer-workspace,.dashboard-welcome,.settings-section){
-  background:rgba(24,27,30,.34)!important;
-  border:1px solid rgba(255,255,255,.11)!important;
-  border-radius:18px!important;
-  box-shadow:0 10px 28px rgba(0,0,0,.14),inset 0 1px rgba(255,255,255,.045)!important;
-  -webkit-backdrop-filter:blur(20px) saturate(125%)!important;
-  backdrop-filter:blur(20px) saturate(125%)!important;
-}
-#accDlg #accBody :is(h1,h2,h3,h4,strong,b,label,
-.account-overview-stat-label,.account-panel-caption,.account-activity-item strong,
-.account-quick-panel>button strong,.dealer-overview-details strong){
-  color:#f4f0e9!important;text-shadow:0 1px 2px rgba(0,0,0,.18)!important;
-}
-#accDlg #accBody :is(p,small,.meta,.muted,.description,.subtitle,
-.account-overview-stats>button small,.account-activity-item p,
-.account-activity-item time,.account-health-row>span,.account-trend-column small){
-  color:rgba(244,240,233,.72)!important;
-}
-#accDlg #accBody :is(.account-overview-stat-icon,.account-quick-panel>button>span:first-child,
-.account-chart-total){
-  background:rgba(184,117,62,.17)!important;color:#e0b58d!important;
-}
-#accDlg #accBody .account-trend-chart{
-  border-bottom-color:rgba(255,255,255,.12)!important;
-  background:repeating-linear-gradient(to bottom,transparent 0,transparent 33px,rgba(255,255,255,.045) 34px,transparent 35px)!important;
-}
-#accDlg #accBody :is(.account-activity-item,.account-quick-panel>button,
-.account-health-foot,.account-activity-item:last-child){
-  border-color:rgba(255,255,255,.10)!important;
-}
-#accDlg #accBody .account-health-row>div{background:rgba(255,255,255,.10)!important}
-#accDlg #accBody .dealer-overview-details>div{background:rgba(255,255,255,.045)!important}
-#accDlg #accBody input,#accDlg #accBody select,#accDlg #accBody textarea{
-  background:rgba(15,17,19,.34)!important;color:#f4f0e9!important;
-  border-color:rgba(255,255,255,.13)!important;
-}
-#accDlg #accBody input::placeholder,#accDlg #accBody textarea::placeholder{
-  color:rgba(244,240,233,.48)!important;
-}
-#accDlg #accBody .btn.ghost{
-  background:rgba(255,255,255,.06)!important;color:#f4f0e9!important;
-  border-color:rgba(255,255,255,.12)!important;
-}
-#accDlg #accBody :is(.profile-card,.account-tools,.account-stat,.profile-grid>div,.svc,
-.seller-summary-card,.account-overview-panel,.account-overview-stats>button,
-.account-booking-item,.account-saved-vehicle,.seller-listing,.seller-garage-card,
-.promotion-package,.account-buyer-workspace,.dashboard-welcome,.settings-section):hover{
-  background:rgba(24,27,30,.34)!important;border-color:rgba(255,255,255,.11)!important;
-  box-shadow:0 10px 28px rgba(0,0,0,.14),inset 0 1px rgba(255,255,255,.045)!important;
-  transform:none!important;filter:none!important;
-}
-
-
-/* V3.0: one shared horizontal grid for the account header and every dashboard page. */
+#accDlg nav#accountMenu>button:hover,#accDlg nav#accountMenu>button:focus-visible,
+#accDlg nav#accountMenu>button.active,#accDlg nav#accountMenu>button[aria-current="page"]{
+  color:#f6f1e7;background:#22282b;outline:none;box-shadow:inset 2px 0 var(--acc-gold);transform:none
+}
+#accDlg nav#accountMenu>button.active::before,#accDlg nav#accountMenu>button[aria-current="page"]::before{background:rgba(216,183,122,.13);color:var(--acc-gold-strong)}
+#accDlg .account-sidebar-footer{margin-top:auto;padding-top:13px;border:0;border-top:1px solid var(--acc-line)}
+#accDlg .account-sidebar-footer button{width:100%;padding:10px 11px;border:0;border-radius:9px;background:transparent;color:#d79a8d!important;text-align:left;font:700 11px Manrope,system-ui;cursor:pointer}
 #accDlg>.account-dashboard-main{
-  --account-content-gutter:clamp(14px,2.1vw,28px);
-  padding:18px var(--account-content-gutter) 17px!important;
+  grid-column:2;grid-row:1;display:flex;flex-direction:column;min-width:0;min-height:0;height:100%;
+  overflow:hidden;padding:22px clamp(18px,2.5vw,36px) 17px!important;
+  color:var(--acc-text)!important;background:transparent!important;background-image:none!important;
+  border:0!important;border-radius:0!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;
 }
-#accDlg .account-dialog-head,
-#accDlg #accBody{
-  width:100%!important;max-width:none!important;
-  margin-left:0!important;margin-right:0!important;
-  padding-left:0!important;padding-right:0!important;
-  box-sizing:border-box!important;
+#accDlg .account-dialog-head{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 66px 40px;align-items:center;gap:10px;flex:0 0 auto;width:100%;margin:0 0 19px;padding:0 0 15px;background:transparent!important;border:0!important;border-bottom:1px solid var(--acc-line)!important;border-radius:0!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+#accDlg h2.account-brand-title{grid-column:1;display:flex;align-items:center;gap:10px;min-width:0;margin:0;color:var(--acc-text);font:750 17px/1.2 Manrope,system-ui;letter-spacing:-.025em}
+#accDlg .account-brand-icon{width:29px;height:29px;flex:0 0 29px;object-fit:cover;border-radius:8px}
+#accDlg #accMenuToggle{display:none}
+#accDlg .account-dialog-head button{display:grid;place-items:center;min-width:40px;width:40px;height:40px;padding:0;border:1px solid var(--acc-line);border-radius:9px;background:#1b2023;color:var(--acc-text);box-shadow:none;font:700 12px Manrope,system-ui;cursor:pointer}
+#accDlg .account-dialog-head button:hover,#accDlg .account-dialog-head button:focus-visible{background:#252b2e;border-color:rgba(216,183,122,.28);outline:none}
+#accDlg #accHomeTop{grid-column:2;width:66px;min-width:66px}
+#accDlg #accCloseTop{grid-column:3;font-size:21px}
+#accDlg #accBody{flex:1 1 auto;min-height:0;min-width:0;overflow:auto;overscroll-behavior:contain;padding:0 2px 24px 0;scrollbar-width:thin;scrollbar-color:rgba(216,183,122,.24) transparent;color:var(--acc-text);background:transparent!important;background-image:none!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+#accDlg #accBody [hidden],#accDlg #accBody .account-page[hidden],#accDlg #accBody [data-settings-section][hidden]{display:none!important}
+#accDlg #accBody :is(h1,h2,h3,h4,h5,h6,strong,b,label,th){color:var(--acc-text)}
+#accDlg #accBody :is(p,li,td,small,.meta,.muted,.description,.subtitle){color:var(--acc-muted)}
+#accDlg #accBody .account-pages,#accDlg #accBody .account-page,#accDlg #accBody .account-settings-inner,
+#accDlg #accBody .account-overview-heading,#accDlg #accBody .account-overview-visuals,#accDlg #accBody .account-overview-lower{
+  width:100%;max-width:none;min-width:0;background:transparent!important;background-image:none!important;border:0!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important
 }
-#accDlg .account-dialog-head{
-  display:flex!important;align-items:center!important;
-  min-height:52px!important;margin-top:0!important;
-  margin-bottom:17px!important;
+#accDlg #accBody .account-page{display:block;overflow:visible;padding:0!important}
+#accDlg #accBody .account-page>h3{margin:2px 0 16px;font:700 clamp(21px,2vw,28px)/1.2 Manrope,system-ui;letter-spacing:-.035em}
+#accDlg #accBody :is(.account-tools,.profile-card,.account-overview-panel,.account-overview-stats>button,.account-booking-item,.account-saved-vehicle,.seller-listing,.seller-garage-card,.promotion-package,.account-buyer-workspace,.dashboard-welcome,.settings-section,.dealer-overview-card,.account-stat,.seller-summary-card,.svc,.account-page .card,.account-tools>.panel,.account-tools>section){
+  min-width:0;color:var(--acc-text);background:var(--acc-panel)!important;background-color:var(--acc-panel)!important;background-image:none!important;
+  border:1px solid var(--acc-line)!important;border-radius:13px!important;box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;filter:none!important
 }
-#accDlg #accBody .account-pages,
-#accDlg #accBody .account-page,
-#accDlg #accBody .account-settings-inner{
-  width:100%!important;max-width:none!important;
-  margin-left:0!important;margin-right:0!important;
-  box-sizing:border-box!important;
+#accDlg #accBody :is(.account-tools,.profile-card,.settings-section){padding:17px!important;margin:0 0 13px!important}
+#accDlg #accBody .account-tools h3,#accDlg #accBody .account-tools h4{margin:0 0 8px}
+#accDlg #accBody .account-tools h3{font-size:17px;line-height:1.3}
+#accDlg #accBody .account-tools h4{font-size:13px;line-height:1.35}
+#accDlg #accBody .account-tools .meta{font-size:11px;line-height:1.55}
+#accDlg #accBody .account-eyebrow{margin:0 0 6px;color:var(--acc-gold)!important;font:800 9px/1.3 Manrope,system-ui;letter-spacing:.15em}
+#accDlg #accBody input,#accDlg #accBody select,#accDlg #accBody textarea{
+  box-sizing:border-box;width:100%;max-width:100%;min-width:0;min-height:40px;padding:9px 11px;
+  color:var(--acc-text)!important;background:#101416!important;background-color:#101416!important;background-image:none!important;
+  border:1px solid rgba(255,255,255,.12)!important;border-radius:8px!important;box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important
 }
-#accDlg #accBody .account-overview-heading,
-#accDlg #accBody .account-overview-stats,
-#accDlg #accBody .account-overview-visuals,
-#accDlg #accBody .account-overview-lower,
-#accDlg #accBody .dealer-overview-card{
-  width:100%!important;max-width:none!important;
-  margin-left:0!important;margin-right:0!important;
-  box-sizing:border-box!important;
-}
-#accDlg #accBody .account-overview-stats,
-#accDlg #accBody .account-overview-visuals,
-#accDlg #accBody .account-overview-lower{
-  gap:14px!important;
-}
-#accDlg #accBody :is(.profile-card,.account-tools,.account-page,.account-settings,
-.account-stat,.profile-grid>div,.svc,.seller-summary-card,.account-overview-panel,
-.account-overview-stats>button,.account-booking-item,.account-saved-vehicle,
-.seller-listing,.seller-garage-card,.promotion-package,.account-buyer-workspace,
-.dashboard-welcome,.settings-section){
-  box-sizing:border-box!important;min-width:0!important;
+#accDlg #accBody input::placeholder,#accDlg #accBody textarea::placeholder{color:rgba(235,232,224,.36)}
+#accDlg #accBody input:focus,#accDlg #accBody select:focus,#accDlg #accBody textarea:focus{outline:2px solid rgba(216,183,122,.30);outline-offset:1px;border-color:rgba(216,183,122,.45)!important}
+#accDlg #accBody label{display:block;margin:0 0 6px;color:var(--acc-muted);font-size:10px;font-weight:650}
+#accDlg #accBody .btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:38px;padding:9px 13px;border:1px solid rgba(216,183,122,.28);border-radius:8px;background:#b18d55;color:#111416!important;font:750 10px Manrope,system-ui;line-height:1.2;box-shadow:none;cursor:pointer;text-decoration:none}
+#accDlg #accBody .btn:hover,#accDlg #accBody .btn:focus-visible{background:#c6a66e;border-color:rgba(216,183,122,.5);transform:none;filter:none;outline:none}
+#accDlg #accBody .btn.ghost{background:#202629!important;color:var(--acc-text)!important;border-color:var(--acc-line)!important}
+#accDlg #accBody .btn.ghost:hover{background:#293034!important}
+#accDlg #accBody button:disabled{opacity:.55;cursor:wait}
+#accDlg #accBody .acts{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:12px}
+#accDlg #accBody .field-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:end;margin:10px 0}
+#accDlg #accBody .profile-card{display:flex;align-items:center;gap:15px}
+#accDlg #accBody .profile-card h3{margin:0 0 4px}
+#accDlg #accBody .profile-avatar{display:grid;place-items:center;flex:0 0 60px;width:60px;height:60px;overflow:hidden;border:1px solid var(--acc-line);border-radius:50%;background:#252b2e;color:var(--acc-gold);font-size:18px;font-weight:750}
+#accDlg #accBody .profile-avatar img{width:100%;height:100%;object-fit:cover}
+#accDlg #accBody .profile-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}
+#accDlg #accBody .profile-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 14px;margin:15px 0}
+#accDlg #accBody .profile-grid>div{min-width:0;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important}
+#accDlg #accBody .profile-grid input,#accDlg #accBody .profile-grid select{min-height:41px}
+#accDlg #accBody .account-admin-tools{display:flex;align-items:center;justify-content:space-between;gap:14px}
+#accDlg #accBody .account-admin-tools h3{margin:0 0 4px}
+#accDlg #accBody .account-admin-tools .account-admin-button svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+#accDlg #accBody .dealer-account-editor{background:#191d20!important;background-image:none!important;box-shadow:none!important}
+#accDlg #accBody .dealer-editor-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:15px}
+#accDlg #accBody .dealer-editor-heading h3{margin:0 0 4px}
+#accDlg #accBody .dealer-profile-status{padding:6px 9px;border-radius:20px;background:#252b2e;color:var(--acc-gold);font-size:9px;white-space:nowrap}
+#accDlg #accBody .dealer-editor-section{display:grid;gap:12px;margin:15px 0}
+#accDlg #accBody .dealer-editor-section>h4{margin:0;padding-bottom:8px;border-bottom:1px solid var(--acc-line)}
+#accDlg #accBody .dealer-fields-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 16px;width:100%;margin:0;padding:0}
+#accDlg #accBody .dealer-fields-grid>div{display:flex;flex-direction:column;align-items:stretch;min-width:0;margin:0;padding:0}
+#accDlg #accBody .dealer-fields-grid>div.dealer-field-wide{grid-column:1/-1}
+#accDlg #accBody .dealer-save-row{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-top:14px;padding-top:13px;border-top:1px solid var(--acc-line)}
+#accDlg #accBody .seller-dashboard{display:grid;gap:13px}
+#accDlg #accBody .seller-dashboard>.account-tools{margin:0!important}
+#accDlg #accBody .seller-analytics-table{width:100%;margin:14px 0;border-collapse:collapse;table-layout:fixed;background:#14191c;border:1px solid var(--acc-line);border-radius:10px;overflow:hidden}
+#accDlg #accBody .seller-analytics-table tr+tr{border-top:1px solid var(--acc-line)}
+#accDlg #accBody .seller-analytics-table th,#accDlg #accBody .seller-analytics-table td{padding:10px 13px;text-align:left;vertical-align:middle;background:transparent}
+#accDlg #accBody .seller-analytics-table th{width:68%;color:var(--acc-muted);font-size:11px;font-weight:550}
+#accDlg #accBody .seller-analytics-table td{width:32%;text-align:right;color:var(--acc-text);font-size:12px;font-weight:750;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+#accDlg #accBody #sellerAnalyticsStats{display:none!important}
+#accDlg #accBody .seller-listing-filters{display:grid;grid-template-columns:minmax(0,1fr) minmax(150px,.75fr);gap:8px 12px;align-items:end;margin:12px 0}
+#accDlg #accBody .seller-listing-filters label{margin:0}
+#accDlg #accBody .seller-listing-filters label:first-of-type{grid-column:1;grid-row:1}
+#accDlg #accBody .seller-listing-filters input{grid-column:1;grid-row:2}
+#accDlg #accBody .seller-listing-filters label:last-of-type{grid-column:2;grid-row:1}
+#accDlg #accBody .seller-listing-filters select{grid-column:2;grid-row:2}
+#accDlg #accBody .seller-listing{display:grid;grid-template-columns:116px minmax(0,1fr);gap:13px;padding:12px;margin:10px 0}
+#accDlg #accBody .seller-garage-media{position:relative;min-width:0;min-height:86px;overflow:hidden;border-radius:9px;background:#111619}
+#accDlg #accBody .seller-listing-photo{display:block;width:100%;height:100%;min-height:86px;object-fit:cover;border-radius:9px}
+#accDlg #accBody .seller-garage-photo-placeholder{display:grid;place-content:center;height:100%;min-height:86px;color:var(--acc-gold);font-size:10px;font-weight:800;text-align:center;letter-spacing:.1em}
+#accDlg #accBody .seller-garage-photo-placeholder span{display:block;color:var(--acc-muted);font-size:8px}
+#accDlg #accBody .seller-garage-status{position:absolute;left:7px;bottom:7px;padding:5px 7px;border-radius:20px;background:#242b2e;color:var(--acc-text);font:750 8px Manrope,system-ui}
+#accDlg #accBody .seller-garage-status.status-approved{color:#a9c29d}
+#accDlg #accBody .seller-garage-status.status-pending{color:var(--acc-gold)}
+#accDlg #accBody .seller-garage-status.status-rejected{color:#e09a8d}
+#accDlg #accBody .seller-garage-content{display:grid;gap:9px;min-width:0}
+#accDlg #accBody .seller-garage-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+#accDlg #accBody .seller-garage-eyebrow{color:var(--acc-gold);font-size:8px;font-weight:750;letter-spacing:.12em}
+#accDlg #accBody .seller-garage-heading h4{margin:3px 0 0;font-size:13px;line-height:1.3}
+#accDlg #accBody .seller-garage-price{color:var(--acc-gold-strong);font-size:12px;white-space:nowrap}
+#accDlg #accBody .seller-garage-meta{display:flex;flex-wrap:wrap;gap:7px 13px;color:var(--acc-muted);font-size:9px}
+#accDlg #accBody .seller-garage-promotion{display:flex;align-items:center;gap:8px;padding:8px 9px;border-radius:8px;background:#202629;color:var(--acc-muted);font-size:9px}
+#accDlg #accBody .seller-garage-promotion>div{display:grid;gap:3px}
+#accDlg #accBody .seller-garage-promotion strong{color:var(--acc-text);font-size:9px}
+#accDlg #accBody .seller-garage-promotion-dot{width:7px;height:7px;flex:0 0 7px;border-radius:50%;background:#777f83}
+#accDlg #accBody .seller-garage-promotion-dot.is-active{background:#91ad8d}
+#accDlg #accBody .seller-listing-actions{display:flex;align-items:center;flex-wrap:wrap;gap:7px;min-width:0}
+#accDlg #accBody .seller-listing-actions .btn{min-height:34px;padding:7px 10px;font-size:9px}
+#accDlg #accBody .seller-listing-actions [data-view],#accDlg #accBody .seller-listing-actions [data-del]{flex:0 0 auto}
+#accDlg #accBody .promotion-package-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:12px 0}
+#accDlg #accBody .promotion-package{display:grid;gap:7px;padding:13px}
+#accDlg #accBody .promotion-package strong{font-size:12px}
+#accDlg #accBody .promotion-package b{color:var(--acc-gold);font-size:15px}
+#accDlg #accBody .promotion-package span,#accDlg #accBody .promotion-package small{color:var(--acc-muted);font-size:10px}
+#accDlg #accBody .promotion-history-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:16px 0 8px}
+#accDlg #accBody .promotion-history-head h4{margin:0}
+#accDlg #accBody .promotion-history-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 12px;margin:8px 0;background:#202629!important}
+#accDlg #accBody .promotion-history-item>div{display:grid;gap:4px}
+#accDlg #accBody .promotion-status-badge{flex:0 0 auto;padding:6px 8px;border-radius:20px;background:#2b2923;color:var(--acc-gold);font-size:8px}
+#accDlg #accBody .account-bookings-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:16px 0 9px}
+#accDlg #accBody .account-bookings-heading{margin:15px 0 9px;font-size:15px}
+#accDlg #accBody .account-booking-item{padding:13px;margin:0 0 10px;background:var(--acc-panel)!important}
+#accDlg #accBody .account-booking-item .st{padding:5px 8px;border-radius:20px;background:#29302b;color:#a8c69c;font:750 9px Manrope,system-ui}
+#accDlg #accBody .account-saved-vehicles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:12px}
+#accDlg #accBody .account-saved-vehicle{overflow:hidden;padding:11px}
+#accDlg #accBody .account-saved-vehicle-image{display:block;height:130px;overflow:hidden;background:#111619}
+#accDlg #accBody .account-saved-vehicle-image img{width:100%;height:100%;object-fit:cover}
+#accDlg #accBody .account-activity-page-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0 0 16px}
+#accDlg #accBody .account-activity-page-head h3{margin:0 0 4px;font-size:22px;letter-spacing:-.03em}
+#accDlg #accBody .account-activity-page-head p{margin:0;font-size:10px}
+#accDlg #accBody .account-activity-page-head>span{padding:7px 10px;border-radius:20px;background:#22282b;color:var(--acc-gold);font:700 10px Manrope,system-ui}
+#accDlg #accBody .account-activity-item{display:grid;grid-template-columns:8px minmax(0,1fr) auto;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--acc-line)}
+#accDlg #accBody .account-activity-item:last-child{border-bottom:0}
+#accDlg #accBody .account-activity-item strong{font-size:10px}
+#accDlg #accBody .account-activity-item p{margin:3px 0 0;font-size:9px}
+#accDlg #accBody .account-activity-item time{color:var(--acc-soft);font-size:9px}
+#accDlg #accBody .account-activity-dot{width:7px;height:7px;border-radius:50%;background:var(--acc-gold)}
+#accDlg #accBody .account-overview-empty{margin:0;color:var(--acc-muted);font-size:11px}
+#accDlg #accBody .account-settings-tabs{position:sticky;top:0;z-index:2;display:flex;flex-wrap:wrap;gap:7px;padding:8px 0 12px;margin:0 0 13px;background:transparent!important;border:0!important}
+#accDlg #accBody .account-settings-tabs button{min-height:36px;padding:8px 12px;border:1px solid var(--acc-line);border-radius:8px;background:#1c2225;color:var(--acc-muted);font:700 10px Manrope,system-ui}
+#accDlg #accBody .account-settings-tabs button.active{background:#2a2d2c;color:var(--acc-gold-strong);border-color:rgba(216,183,122,.25)}
+#accDlg #accBody .settings-section{padding:16px!important}
+#accDlg #accBody .settings-section>.account-tools{padding:0!important;margin:0!important;border:0!important;background:transparent!important;box-shadow:none!important}
+#accDlg #accBody .account-overview-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:15px;margin:0 0 16px;padding:2px 0}
+#accDlg #accBody .account-overview-heading h3{margin:3px 0 5px;font:700 clamp(21px,2vw,28px)/1.2 Manrope,system-ui;letter-spacing:-.035em}
+#accDlg #accBody .account-overview-heading>div>p:last-child{margin:0;font-size:12px}
+#accDlg #accBody .account-member-chip{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border:1px solid var(--acc-line);border-radius:20px;background:#202629;color:#a9c49e;font:700 10px Manrope,system-ui;white-space:nowrap}
+#accDlg #accBody .account-member-chip>span{width:6px;height:6px;border-radius:50%;background:#91ad8d}
+#accDlg #accBody .account-overview-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0 0 13px}
+#accDlg #accBody .account-overview-stats>button{display:grid;grid-template-columns:1fr auto;gap:7px 8px;min-width:0;min-height:112px;padding:14px;text-align:left;cursor:pointer;transition:background-color .14s,border-color .14s}
+#accDlg #accBody .account-overview-stats>button:hover,#accDlg #accBody .account-overview-stats>button:focus-visible{background:#202629!important;border-color:rgba(216,183,122,.23)!important;outline:none}
+#accDlg #accBody .account-overview-stat-icon{grid-column:2;grid-row:1;display:grid;place-items:center;width:28px;height:28px;border-radius:8px;background:#282b28;color:var(--acc-gold);font-size:14px}
+#accDlg #accBody .account-overview-stat-label{grid-column:1;grid-row:1;align-self:center;color:var(--acc-muted);font:700 9px Manrope,system-ui}
+#accDlg #accBody .account-overview-stats>button strong{grid-column:1/-1;font:750 25px/1 Manrope,system-ui;letter-spacing:-.04em}
+#accDlg #accBody .account-overview-stats>button small{grid-column:1/-1;color:var(--acc-muted);font-size:9px;line-height:1.4}
+#accDlg #accBody .account-overview-visuals{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(230px,1fr);gap:11px;margin:0 0 13px}
+#accDlg #accBody .account-overview-visuals .account-overview-panel{min-width:0;padding:15px}
+#accDlg #accBody .account-overview-panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+#accDlg #accBody .account-overview-panel-head h4{margin:0;font:700 14px/1.3 Manrope,system-ui}
+#accDlg #accBody .account-panel-caption{display:block;margin-top:4px;color:var(--acc-muted);font-size:9px}
+#accDlg #accBody .account-chart-total{display:grid;place-items:center;min-width:34px;height:31px;padding:0 9px;border-radius:8px;background:#292b28;color:var(--acc-gold);font:750 12px Manrope,system-ui}
+#accDlg #accBody .account-trend-chart{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));align-items:end;gap:10px;height:100px;margin-top:12px;padding:0 7px;border-bottom:1px solid var(--acc-line);background:repeating-linear-gradient(to bottom,transparent 0,transparent 33px,rgba(255,255,255,.035) 34px,transparent 35px)}
+#accDlg #accBody .account-trend-column{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:6px;height:100%;min-width:0}
+#accDlg #accBody .account-trend-column>span{display:block;width:min(25px,70%);height:var(--bar-height);min-height:5px;border-radius:5px 5px 1px 1px;background:#b18d55}
+#accDlg #accBody .account-trend-column small{color:var(--acc-muted);font:650 9px Manrope,system-ui}
+#accDlg #accBody .account-health-list{display:grid;gap:13px;margin:18px 0 13px}
+#accDlg #accBody .account-health-row{display:grid;grid-template-columns:62px minmax(0,1fr) 25px;align-items:center;gap:9px;font:650 10px Manrope,system-ui}
+#accDlg #accBody .account-health-row>span{color:var(--acc-muted)}
+#accDlg #accBody .account-health-row>div{height:6px;overflow:hidden;border-radius:10px;background:#2a3033}
+#accDlg #accBody .account-health-row i{display:block;width:var(--health-width);height:100%;border-radius:10px;background:#b18d55}
+#accDlg #accBody .account-health-row strong{text-align:right;font-size:10px}
+#accDlg #accBody .account-health-foot{display:flex;justify-content:space-between;padding-top:10px;border-top:1px solid var(--acc-line);font-size:10px;color:var(--acc-muted)}
+#accDlg #accBody .account-overview-lower{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(240px,1fr);gap:11px}
+#accDlg #accBody .account-overview-lower .account-overview-panel{min-width:0;padding:15px}
+#accDlg #accBody .account-quick-panel>h4{margin:0 0 8px;font-size:14px}
+#accDlg #accBody .account-quick-panel>button{display:grid;grid-template-columns:30px minmax(0,1fr) 12px;align-items:center;gap:10px;width:100%;padding:10px 0;border:0;border-bottom:1px solid var(--acc-line);border-radius:0;background:transparent!important;text-align:left;color:var(--acc-text);box-shadow:none!important}
+#accDlg #accBody .account-quick-panel>button:last-child{border-bottom:0}
+#accDlg #accBody .account-quick-panel>button>span:first-child{display:grid;place-items:center;width:28px;height:28px;border-radius:8px;background:#282b28;color:var(--acc-gold)}
+#accDlg #accBody .account-quick-panel>button strong{display:block;font-size:10px}
+#accDlg #accBody .account-quick-panel>button small{display:block;margin-top:3px;color:var(--acc-muted);font-size:9px}
+#accDlg #accBody .account-quick-panel>button>b{color:var(--acc-gold)}
+#accDlg #accBody .dealer-overview-card{padding:14px;margin:0 0 13px}
+#accDlg #accBody .dealer-overview-identity{display:flex;align-items:center;gap:11px}
+#accDlg #accBody .dealer-overview-identity h4{margin:0 0 4px}
+#accDlg #accBody .dealer-overview-identity button{margin-left:auto;padding:8px 10px;border:1px solid var(--acc-line);border-radius:8px;background:#22282b;color:var(--acc-text);font-size:10px}
+#accDlg #accBody .dealer-overview-details{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:12px}
+#accDlg #accBody .dealer-overview-details>div{min-width:0;padding:9px 10px;border-radius:8px;background:#202629!important}
+#accDlg #accBody .dealer-overview-details small{display:block;margin-bottom:4px;color:var(--acc-gold);font-size:8px;letter-spacing:.1em}
+#accDlg #accBody .dealer-overview-details strong{display:block;overflow-wrap:anywhere;font-size:10px}
+#accDlg #accBody .account-fast-loading{max-width:920px;margin:4px auto;padding:clamp(12px,3vw,28px);color:var(--acc-text)}
+#accDlg #accBody .account-fast-loading-head{display:flex;align-items:center;gap:15px;margin-bottom:24px}
+#accDlg #accBody .account-fast-avatar,#accDlg #accBody .account-fast-lines i,#accDlg #accBody .account-fast-loading-grid span,#accDlg #accBody .account-fast-loading-card i{display:block;background:#242a2d;border:1px solid var(--acc-line);animation:none}
+#accDlg #accBody .account-fast-avatar{width:64px;height:64px;border-radius:50%;flex:none}
+#accDlg #accBody .account-fast-lines{display:grid;gap:10px;flex:1}
+#accDlg #accBody .account-fast-lines i{height:12px;border-radius:8px;max-width:260px}
+#accDlg #accBody .account-fast-lines i+i{max-width:180px;height:9px}
+#accDlg #accBody .account-fast-loading-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:16px}
+#accDlg #accBody .account-fast-loading-grid span{height:88px;border-radius:10px}
+#accDlg #accBody .account-fast-loading-card{padding:18px;border:1px solid var(--acc-line);border-radius:12px;background:#191d20;display:grid;gap:14px}
+#accDlg #accBody .account-fast-loading-card i{height:14px;border-radius:7px}
+#accDlg #accBody .account-fast-loading-card i:nth-child(2){width:75%}
+#accDlg #accBody .account-fast-loading-card i:nth-child(3){width:48%}
+#accDlg #accBody .account-refresh-status{display:none!important}
+#accDlg.account-dashboard-dialog[open] :is(button,a){transition:background-color .14s,border-color .14s,color .14s}
+#accDlg.account-dashboard-dialog[open] :is(button,a):hover{transform:none!important;filter:none!important}
+#sellerEditListingDialog .account-dialog-head{display:flex;align-items:center;justify-content:space-between;gap:14px}
+#sellerEditListingDialog .account-dialog-head h2{flex:1;min-width:0;margin:0;text-align:left}
+#sellerEditListingDialog #sellerEditClose{flex:0 0 auto;min-width:80px;min-height:42px;display:inline-flex;align-items:center;justify-content:center;background:#171a1c!important;color:#fff!important;border:1px solid #b18d55!important;border-radius:9px;font-weight:700}
+#sellerEditListingDialog{max-width:min(760px,calc(100vw - 24px));max-height:calc(100dvh - 24px);overflow:auto}
+@media(max-width:1100px){
+  #accDlg.account-dashboard-dialog[open]{grid-template-columns:220px minmax(0,1fr)!important}
+  #accDlg>.account-dashboard-main{padding:18px 18px 14px!important}
+  #accDlg #accBody .account-overview-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media(max-width:760px){
-  #accDlg>.account-dashboard-main{--account-content-gutter:12px;padding:12px var(--account-content-gutter)!important}
-  #accDlg .account-dialog-head{margin-bottom:14px!important}
-  #accDlg #accBody .account-overview-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-  #accDlg #accBody .account-overview-visuals,
-  #accDlg #accBody .account-overview-lower{grid-template-columns:minmax(0,1fr)!important}
-}
-
-
-/* V3.15: balanced dashboard card grids, consistent inner spacing and readable text. */
-#accDlg.account-dashboard-dialog[open] #accBody :is(
-  .account-overview-panel,.account-overview-stats>button,
-  .profile-card,.account-stat,.profile-grid>div,.svc,
-  .seller-summary-card,.account-booking-item,.account-saved-vehicle,
-  .seller-listing,.seller-garage-card,.promotion-package,
-  .account-buyer-workspace,.dashboard-welcome,.settings-section,
-  .account-quick-panel>button,.panel,.card,.seller-card,.dashboard-card,
-  .dealer-overview-card
-){
-  box-sizing:border-box!important;
-  min-width:0!important;
-  padding:clamp(16px,1.8vw,22px)!important;
-  text-align:left;
-}
-#accDlg.account-dashboard-dialog[open] #accBody :is(
-  .account-overview-stats>button,.account-quick-panel>button
-){
-  display:flex!important;
-  flex-direction:column!important;
-  align-items:flex-start!important;
-  justify-content:flex-start!important;
-  gap:9px!important;
-  min-height:112px!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody :is(
-  .profile-card,.account-stat,.profile-grid>div,.svc,
-  .seller-summary-card,.account-booking-item,.account-saved-vehicle,
-  .seller-listing,.seller-garage-card,.promotion-package,
-  .account-overview-panel,.account-buyer-workspace,.dashboard-welcome,
-  .settings-section,.account-quick-panel>button,.panel,.card,
-  .seller-card,.dashboard-card,.dealer-overview-card
-)>*{
-  min-width:0!important;
-  max-width:100%;
-  overflow-wrap:anywhere;
-}
-#accDlg.account-dashboard-dialog[open] #accBody :is(
-  .profile-card,.account-stat,.profile-grid>div,.svc,
-  .seller-summary-card,.account-booking-item,.account-saved-vehicle,
-  .seller-listing,.seller-garage-card,.promotion-package,
-  .account-overview-panel,.account-buyer-workspace,.dashboard-welcome,
-  .settings-section,.account-quick-panel>button,.panel,.card,
-  .seller-card,.dashboard-card,.dealer-overview-card
-) :is(h1,h2,h3,h4,h5,p,small,label,strong,span){
-  max-width:100%;
-  overflow-wrap:anywhere;
-  word-break:normal;
-}
-#accDlg.account-dashboard-dialog[open] #accBody :is(
-  .account-overview-stats,.account-overview-visuals,
-  .account-overview-lower,.profile-grid,.dealer-overview-details
-){
-  display:grid!important;
-  width:100%!important;
-  max-width:none!important;
-  grid-auto-flow:row;
-  align-items:stretch!important;
-  justify-items:stretch!important;
-  gap:14px!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats{
-  grid-template-columns:repeat(4,minmax(0,1fr))!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody :is(
-  .account-overview-visuals,.account-overview-lower,.profile-grid
-){
-  grid-template-columns:repeat(2,minmax(0,1fr))!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-details{
-  grid-template-columns:repeat(4,minmax(0,1fr))!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-details>div{
-  box-sizing:border-box!important;
-  min-width:0!important;
-  padding:12px!important;
-  border-radius:12px!important;
-  overflow-wrap:anywhere!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody :is(
-  .account-activity-item,.account-health-row,.account-trend-column
-){
-  min-width:0!important;
-  overflow-wrap:anywhere!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody :is(
-  input,select,textarea
-){
-  box-sizing:border-box!important;
-  max-width:100%!important;
-  min-width:0!important;
-}
-@media(max-width:900px){
-  #accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats{
-    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  #accDlg.account-dashboard-dialog[open]{grid-template-columns:minmax(0,1fr)!important}
+  #accDlg.account-dashboard-dialog[open]>.account-sidebar{display:none!important}
+  #accDlg.account-dashboard-dialog[open]>.account-sidebar.menu-open{display:flex!important}
+  #accDlg.account-dashboard-dialog[open]>.account-dashboard-main{grid-column:1;grid-row:1;padding:12px 13px max(13px,env(safe-area-inset-bottom))!important}
+  #accDlg .account-dialog-head{grid-template-columns:38px minmax(0,1fr) 54px 38px;gap:6px;margin-bottom:13px;padding-bottom:11px}
+  #accDlg #accMenuToggle{display:grid;grid-column:1;grid-row:1}
+  #accDlg h2.account-brand-title{grid-column:2;font-size:clamp(12px,3.7vw,15px);gap:6px}
+  #accDlg .account-brand-icon{width:24px;height:24px;flex-basis:24px}
+  #accDlg #accHomeTop{grid-column:3;width:54px;min-width:54px}
+  #accDlg #accCloseTop{grid-column:4}
+  #accDlg nav#accountMenu.account-sidebar,#accDlg nav#accountMenu.account-sidebar[hidden]{
+    position:fixed!important;inset:calc(58px + env(safe-area-inset-top)) auto auto 10px!important;z-index:1005!important;
+    display:none!important;width:min(280px,calc(100vw - 20px))!important;height:auto!important;max-height:calc(100dvh - 76px)!important;
+    padding:14px!important;border:1px solid var(--acc-line)!important;border-radius:12px!important;
+    background:#151a1d!important;box-shadow:0 18px 42px rgba(0,0,0,.4)!important;
+    -webkit-backdrop-filter:none!important;backdrop-filter:none!important
   }
-  #accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-details{
-    grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  }
-}
-@media(max-width:680px){
-  #accDlg.account-dashboard-dialog[open] #accBody :is(
-    .account-overview-visuals,.account-overview-lower,.profile-grid
-  ){
-    grid-template-columns:minmax(0,1fr)!important;
-    gap:12px!important;
-  }
-  #accDlg.account-dashboard-dialog[open] #accBody :is(
-    .account-overview-panel,.account-overview-stats>button,
-    .profile-card,.account-stat,.profile-grid>div,.svc,
-    .seller-summary-card,.account-booking-item,.account-saved-vehicle,
-    .seller-listing,.seller-garage-card,.promotion-package,
-    .account-buyer-workspace,.dashboard-welcome,.settings-section,
-    .account-quick-panel>button,.panel,.card,.seller-card,
-    .dashboard-card,.dealer-overview-card
-  ){
-    padding:14px!important;
-  }
-  #accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats{
-    gap:10px!important;
-  }
-}
-
-
-/* V3.16 — Account overview refinement: clearer hierarchy, balanced cards and dark glass. */
-#accDlg.account-dashboard-dialog[open] #accBody .account-overview-heading{
-  display:flex!important;align-items:flex-end!important;justify-content:space-between!important;
-  gap:18px!important;width:100%!important;margin:0 0 20px!important;padding:4px 2px 2px!important;
-  background:transparent!important;border:0!important;box-shadow:none!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-overview-heading>div{min-width:0}
-#accDlg.account-dashboard-dialog[open] #accBody .account-overview-heading .account-eyebrow{
-  margin:0 0 8px!important;color:rgba(216,184,132,.92)!important;
-  font:800 9px/1.3 Manrope,system-ui,sans-serif!important;letter-spacing:.18em!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-overview-heading h3{
-  margin:0 0 6px!important;color:#f7f3ec!important;
-  font:700 clamp(22px,2.2vw,30px)/1.14 Sora,Manrope,system-ui,sans-serif!important;
-  letter-spacing:-.045em!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-overview-heading>div>p:last-child{
-  margin:0!important;color:rgba(241,238,231,.66)!important;font-size:12px!important;line-height:1.6!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-member-chip{
-  display:inline-flex!important;align-items:center!important;gap:8px!important;flex:0 0 auto!important;
-  padding:8px 12px!important;border-radius:999px!important;
-  color:rgba(244,240,233,.84)!important;background:rgba(9,13,17,.36)!important;
-  border:1px solid rgba(255,255,255,.11)!important;font:650 10px Manrope,system-ui,sans-serif!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-member-chip>span{
-  width:7px!important;height:7px!important;border-radius:50%!important;
-  background:#9dbb91!important;box-shadow:0 0 0 3px rgba(157,187,145,.12)!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats{
-  display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;
-  gap:12px!important;width:100%!important;margin:0 0 14px!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats>button{
-  position:relative!important;display:grid!important;grid-template-columns:34px minmax(0,1fr)!important;
-  grid-template-rows:auto auto auto!important;align-items:center!important;justify-items:start!important;
-  gap:4px 10px!important;min-width:0!important;min-height:126px!important;padding:16px!important;
-  overflow:hidden!important;text-align:left!important;border-radius:17px!important;
-  color:#f4f0e9!important;background:rgba(8,13,18,.48)!important;
-  background-image:none!important;border:1px solid rgba(255,255,255,.105)!important;
-  box-shadow:0 10px 28px rgba(0,0,0,.14),inset 0 1px rgba(255,255,255,.035)!important;
-  -webkit-backdrop-filter:blur(24px) saturate(135%)!important;backdrop-filter:blur(24px) saturate(135%)!important;
-  transition:transform .18s ease,border-color .18s ease,background .18s ease!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats>button::after{
-  content:"";position:absolute;left:0;top:14px;bottom:14px;width:2px;border-radius:3px;
-  background:linear-gradient(180deg,rgba(216,184,132,.85),rgba(216,184,132,.08));
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats>button:hover{
-  transform:translateY(-2px)!important;background:rgba(13,19,25,.62)!important;
-  border-color:rgba(216,184,132,.28)!important;box-shadow:0 14px 32px rgba(0,0,0,.20)!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stat-icon{
-  grid-column:1;grid-row:1 / span 2;display:grid!important;place-items:center!important;
-  width:34px!important;height:34px!important;border-radius:11px!important;
-  color:#dfc49a!important;background:rgba(194,155,101,.12)!important;
-  border:1px solid rgba(216,184,132,.16)!important;font-size:16px!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stat-label{
-  grid-column:2;grid-row:1;color:rgba(244,240,233,.66)!important;
-  font:700 10px/1.35 Manrope,system-ui,sans-serif!important;letter-spacing:.025em!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats>button strong{
-  grid-column:2;grid-row:2;color:#f7f1e6!important;
-  font:750 clamp(23px,2.3vw,29px)/1 Sora,Manrope,system-ui,sans-serif!important;
-  letter-spacing:-.045em!important;font-variant-numeric:tabular-nums!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats>button small{
-  grid-column:1 / -1;grid-row:3;margin-top:7px!important;
-  color:rgba(238,234,226,.52)!important;font:500 9px/1.45 Manrope,system-ui,sans-serif!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-overview-visuals{
-  display:grid!important;grid-template-columns:minmax(0,1.25fr) minmax(260px,.85fr)!important;
-  align-items:stretch!important;gap:14px!important;width:100%!important;margin:0 0 14px!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-overview-panel{
-  min-width:0!important;padding:18px!important;border-radius:18px!important;
-  color:#f4f0e9!important;background:rgba(8,13,18,.46)!important;
-  background-color:rgba(8,13,18,.46)!important;background-image:none!important;
-  border:1px solid rgba(255,255,255,.105)!important;
-  box-shadow:0 12px 30px rgba(0,0,0,.15),inset 0 1px rgba(255,255,255,.035)!important;
-  -webkit-backdrop-filter:blur(24px) saturate(135%)!important;backdrop-filter:blur(24px) saturate(135%)!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-overview-panel-head{
-  display:flex!important;align-items:flex-start!important;justify-content:space-between!important;gap:12px!important;
-  margin:0 0 16px!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-overview-panel-head h4,
-#accDlg.account-dashboard-dialog[open] #accBody .account-quick-panel>h4{
-  margin:2px 0 5px!important;color:#f4f0e9!important;
-  font:650 14px/1.3 Sora,Manrope,system-ui,sans-serif!important;letter-spacing:-.02em!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-overview-panel-head .account-eyebrow,
-#accDlg.account-dashboard-dialog[open] #accBody .account-quick-panel>.account-eyebrow{
-  margin:0 0 5px!important;color:rgba(216,184,132,.82)!important;
-  font:800 8px/1.3 Manrope,system-ui,sans-serif!important;letter-spacing:.16em!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-panel-caption{
-  color:rgba(239,235,227,.52)!important;font:500 10px/1.5 Manrope,system-ui,sans-serif!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-chart-total{
-  display:grid!important;place-items:center!important;min-width:38px!important;height:38px!important;
-  padding:0 8px!important;border-radius:12px!important;color:#e2c89f!important;
-  background:rgba(194,155,101,.10)!important;border:1px solid rgba(216,184,132,.15)!important;
-  font:750 15px Sora,Manrope,system-ui,sans-serif!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-trend-chart{
-  display:flex!important;align-items:flex-end!important;justify-content:space-around!important;
-  gap:clamp(7px,1.2vw,16px)!important;min-height:145px!important;padding:12px 8px 2px!important;
-  border-bottom:1px solid rgba(255,255,255,.12)!important;
-  background:repeating-linear-gradient(to bottom,transparent 0,transparent 35px,rgba(255,255,255,.045) 36px,transparent 37px)!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-trend-chart>*{min-width:0!important}
-#accDlg.account-dashboard-dialog[open] #accBody .account-health-list{display:grid!important;gap:13px!important}
-#accDlg.account-dashboard-dialog[open] #accBody .account-health-row{
-  display:grid!important;grid-template-columns:minmax(66px,.7fr) minmax(0,1.5fr) 25px!important;
-  align-items:center!important;gap:10px!important;color:rgba(242,238,230,.72)!important;
-  font:600 10px Manrope,system-ui,sans-serif!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-health-row>div{
-  height:6px!important;overflow:hidden!important;border-radius:999px!important;background:rgba(255,255,255,.08)!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-health-row>div>i{
-  display:block!important;width:var(--health-width)!important;height:100%!important;border-radius:inherit!important;
-  background:linear-gradient(90deg,#9d774d,#d8bd8e)!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-health-row>strong{
-  color:#f4ead9!important;text-align:right!important;font:700 11px Sora,Manrope,system-ui,sans-serif!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-health-foot{
-  display:flex!important;justify-content:space-between!important;gap:12px!important;
-  margin:16px 0 0!important;padding:12px 0 0!important;
-  border-top:1px solid rgba(255,255,255,.09)!important;
-  color:rgba(242,238,230,.58)!important;font:600 10px Manrope,system-ui,sans-serif!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-health-foot strong{color:#f4ead9!important}
-#accDlg.account-dashboard-dialog[open] #accBody .account-overview-lower{
-  display:grid!important;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr)!important;
-  align-items:stretch!important;gap:14px!important;width:100%!important;margin:0!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-activity-list{display:grid!important;gap:0!important}
-#accDlg.account-dashboard-dialog[open] #accBody .account-activity-item{
-  display:grid!important;grid-template-columns:8px minmax(0,1fr) auto!important;
-  align-items:start!important;gap:11px!important;padding:12px 0!important;
-  border-bottom:1px solid rgba(255,255,255,.075)!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-activity-item:last-child{border-bottom:0!important}
-#accDlg.account-dashboard-dialog[open] #accBody .account-activity-item>div{min-width:0!important}
-#accDlg.account-dashboard-dialog[open] #accBody .account-activity-item strong{
-  display:block!important;margin:0 0 4px!important;color:#f2eee6!important;font:650 11px/1.4 Manrope,system-ui,sans-serif!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-activity-item p{
-  margin:0!important;color:rgba(239,235,227,.57)!important;font:500 10px/1.5 Manrope,system-ui,sans-serif!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-activity-item time{
-  color:rgba(239,235,227,.43)!important;font:500 9px/1.4 Manrope,system-ui,sans-serif!important;white-space:nowrap!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-activity-dot{
-  width:7px!important;height:7px!important;margin-top:4px!important;border-radius:50%!important;
-  background:#c6a16d!important;box-shadow:0 0 0 3px rgba(198,161,109,.12)!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-quick-panel>button{
-  display:grid!important;grid-template-columns:32px minmax(0,1fr) 12px!important;
-  align-items:center!important;gap:11px!important;width:100%!important;min-height:54px!important;
-  padding:9px 2px!important;margin:0!important;text-align:left!important;
-  border:0!important;border-bottom:1px solid rgba(255,255,255,.075)!important;border-radius:0!important;
-  color:#f2eee6!important;background:transparent!important;box-shadow:none!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-quick-panel>button:last-child{border-bottom:0!important}
-#accDlg.account-dashboard-dialog[open] #accBody .account-quick-panel>button>span:first-child{
-  display:grid!important;place-items:center!important;width:31px!important;height:31px!important;
-  border-radius:10px!important;color:#ddc397!important;background:rgba(194,155,101,.10)!important;
-  border:1px solid rgba(216,184,132,.13)!important;font-size:15px!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-quick-panel>button>span:nth-child(2){display:grid!important;gap:3px!important;min-width:0!important}
-#accDlg.account-dashboard-dialog[open] #accBody .account-quick-panel>button strong{
-  color:#f4f0e9!important;font:650 10px/1.35 Manrope,system-ui,sans-serif!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-quick-panel>button small{
-  color:rgba(239,235,227,.49)!important;font:500 9px/1.4 Manrope,system-ui,sans-serif!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-quick-panel>button>b{
-  color:rgba(216,184,132,.78)!important;font-size:17px!important;font-weight:500!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-quick-panel>button:hover{
-  background:rgba(255,255,255,.035)!important;transform:none!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-card{
-  display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:17px!important;
-  margin:0 0 14px!important;padding:18px!important;border-radius:18px!important;
-  color:#f4f0e9!important;background:rgba(8,13,18,.46)!important;
-  border:1px solid rgba(255,255,255,.105)!important;box-shadow:0 12px 30px rgba(0,0,0,.15)!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-identity{
-  display:flex!important;align-items:center!important;gap:13px!important;min-width:0!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-identity>img,
-#accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-monogram{
-  width:48px!important;height:48px!important;flex:0 0 48px!important;border-radius:14px!important;
-  object-fit:cover!important;border:1px solid rgba(216,184,132,.22)!important;
-  background:rgba(194,155,101,.12)!important;color:#e3c99f!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-identity>div{min-width:0!important;flex:1 1 auto!important}
-#accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-identity h4{
-  margin:2px 0 4px!important;color:#f5f0e8!important;font:650 14px/1.3 Sora,Manrope,system-ui,sans-serif!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-identity>div>span{
-  color:rgba(239,235,227,.55)!important;font:500 10px/1.4 Manrope,system-ui,sans-serif!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-identity>button{
-  flex:0 0 auto!important;padding:8px 12px!important;border-radius:10px!important;
-  color:#e3c99f!important;background:rgba(194,155,101,.10)!important;
-  border:1px solid rgba(216,184,132,.18)!important;font:650 10px Manrope,system-ui,sans-serif!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-details{
-  display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:10px!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-details>div{
-  min-width:0!important;padding:12px!important;border-radius:12px!important;
-  background:rgba(255,255,255,.035)!important;border:1px solid rgba(255,255,255,.065)!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-details small{
-  display:block!important;margin:0 0 6px!important;color:rgba(216,184,132,.72)!important;
-  font:800 8px Manrope,system-ui,sans-serif!important;letter-spacing:.12em!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-details strong{
-  display:block!important;color:rgba(245,241,233,.88)!important;
-  font:600 10px/1.45 Manrope,system-ui,sans-serif!important;overflow-wrap:anywhere!important;
-}
-#accDlg.account-dashboard-dialog[open] #accBody .account-overview-empty{
-  margin:0!important;padding:16px 0!important;color:rgba(239,235,227,.5)!important;
-  font:500 10px/1.6 Manrope,system-ui,sans-serif!important;
-}
-@media(max-width:1050px){
-  #accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-  #accDlg.account-dashboard-dialog[open] #accBody .account-overview-visuals{grid-template-columns:minmax(0,1fr)!important}
-  #accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-details{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-}
-@media(max-width:760px){
-  #accDlg.account-dashboard-dialog[open] #accBody .account-overview-heading{align-items:flex-start!important;flex-direction:column!important;gap:10px!important;margin-bottom:15px!important}
-  #accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats{gap:9px!important}
-  #accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats>button{min-height:112px!important;padding:13px!important}
-  #accDlg.account-dashboard-dialog[open] #accBody .account-overview-lower{grid-template-columns:minmax(0,1fr)!important}
-  #accDlg.account-dashboard-dialog[open] #accBody .account-overview-panel,
-  #accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-card{padding:15px!important}
-  #accDlg.account-dashboard-dialog[open] #accBody .account-activity-item{grid-template-columns:8px minmax(0,1fr)!important}
-  #accDlg.account-dashboard-dialog[open] #accBody .account-activity-item time{grid-column:2!important;margin-top:2px!important}
+  #accDlg nav#accountMenu.account-sidebar.menu-open:not([hidden]){display:flex!important}
+  #accDlg #accBody{padding-right:0}
+  #accDlg #accBody .account-overview-heading{display:block}
+  #accDlg #accBody .account-member-chip{margin-top:10px}
+  #accDlg #accBody .account-overview-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  #accDlg #accBody .account-overview-stats>button{min-height:100px;padding:12px}
+  #accDlg #accBody .account-overview-visuals,#accDlg #accBody .account-overview-lower{grid-template-columns:minmax(0,1fr)}
+  #accDlg #accBody .account-overview-visuals .account-overview-panel,#accDlg #accBody .account-overview-lower .account-overview-panel{padding:13px}
+  #accDlg #accBody .dealer-overview-details{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #accDlg #accBody .profile-grid,#accDlg #accBody .dealer-fields-grid{grid-template-columns:minmax(0,1fr)}
+  #accDlg #accBody .dealer-fields-grid>div.dealer-field-wide{grid-column:1}
+  #accDlg #accBody .seller-listing{grid-template-columns:76px minmax(0,1fr);gap:10px}
+  #accDlg #accBody .seller-garage-heading{flex-direction:column;gap:4px}
+  #accDlg #accBody .seller-listing-actions{grid-column:1/-1}
+  #accDlg #accBody .field-row{grid-template-columns:minmax(0,1fr)}
+  #accDlg #accBody .account-settings-tabs{overflow-x:auto;flex-wrap:nowrap}
+  #accDlg #accBody .account-settings-tabs button{flex:0 0 auto}
+  #accDlg #accBody .account-activity-page-head{align-items:flex-start}
+  #accDlg #accBody .account-activity-item{grid-template-columns:8px minmax(0,1fr)}
+  #accDlg #accBody .account-activity-item time{grid-column:2}
+  #accDlg #accBody .profile-card{align-items:flex-start;gap:11px}
+  #accDlg #accBody .profile-avatar{width:54px;height:54px;flex-basis:54px}
+  #accDlg #accBody .account-admin-tools{align-items:flex-start;flex-direction:column}
+  #accDlg #accBody .account-admin-button{width:100%;justify-content:center}
+  #accDlg #accBody .seller-analytics-table th,#accDlg #accBody .seller-analytics-table td{padding:10px 11px;font-size:11px}
 }
 @media(max-width:420px){
-  #accDlg.account-dashboard-dialog[open] #accBody .account-overview-stats>button{grid-template-columns:28px minmax(0,1fr)!important;gap:4px 8px!important}
-  #accDlg.account-dashboard-dialog[open] #accBody .account-overview-stat-icon{width:28px!important;height:28px!important}
-  #accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-details{grid-template-columns:minmax(0,1fr)!important}
-  #accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-identity{flex-wrap:wrap!important}
-  #accDlg.account-dashboard-dialog[open] #accBody .dealer-overview-identity>button{margin-left:61px!important}
+  #accDlg #accBody .account-overview-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #accDlg #accBody .account-overview-stats>button strong{font-size:22px}
+  #accDlg #accBody .seller-listing{grid-template-columns:64px minmax(0,1fr)}
+  #accDlg #accBody .seller-listing-photo{min-height:70px}
+  #accDlg h2.account-brand-title{font-size:12px}
 }
+@media(prefers-reduced-motion:reduce){#accDlg *{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
