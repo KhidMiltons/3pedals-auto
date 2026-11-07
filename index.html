@@ -4334,5 +4334,61 @@ html body #accDlg.account-dashboard-dialog[open] #accBody .workspace-v2-hero{
  #accDlg.account-dashboard-dialog[open]>.account-sidebar{background:#171819!important}
 }
 
+
+/* Final account dashboard white-overlay removal: no pale fills, gradients or glass wash */
+html body #accDlg.account-dashboard-dialog[open]>.account-dashboard-main,
+html body #accDlg.account-dashboard-dialog[open] #accBody,
+html body #accDlg.account-dashboard-dialog[open] #accBody>.account-pages,
+html body #accDlg.account-dashboard-dialog[open] #accBody .account-page,
+html body #accDlg.account-dashboard-dialog[open] #accBody .workspace-v2{
+  background:transparent!important;background-color:transparent!important;background-image:none!important;
+  box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;filter:none!important;
+}
+html body #accDlg.account-dashboard-dialog[open] #accBody .workspace-v2 *{
+  background-image:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+  filter:none!important;text-shadow:none!important;
+}
+html body #accDlg.account-dashboard-dialog[open] #accBody .workspace-v2 :is(
+  .workspace-v2-metric,.workspace-v2-card,.workspace-v2-inventory,.workspace-v2-shortcuts,
+  .workspace-v2-dealer,.workspace-v2-activity
+){
+  background:#191a1b!important;background-color:#191a1b!important;
+  border:0!important;box-shadow:0 5px 16px rgba(0,0,0,.18)!important;
+}
+html body #accDlg.account-dashboard-dialog[open] #accBody .workspace-v2 :is(
+  .workspace-v2-metric:hover,.workspace-v2-card:hover,.workspace-v2-inventory:hover,
+  .workspace-v2-shortcuts:hover,.workspace-v2-dealer:hover,.workspace-v2-activity:hover
+){
+  background:#1c1d1e!important;background-color:#1c1d1e!important;
+  border:0!important;box-shadow:0 5px 16px rgba(0,0,0,.20)!important;transform:none!important;
+}
+html body #accDlg.account-dashboard-dialog[open] #accBody .workspace-v2-shortcuts>button,
+html body #accDlg.account-dashboard-dialog[open] #accBody .workspace-v2-activity-list .account-activity-item{
+  background:transparent!important;background-color:transparent!important;
+  border-top:0!important;border-left:0!important;border-right:0!important;
+}
+html body #accDlg.account-dashboard-dialog[open] #accBody .workspace-v2-shortcuts>button:hover{
+  background:rgba(255,255,255,.025)!important;background-color:rgba(255,255,255,.025)!important;
+}
+html body #accDlg.account-dashboard-dialog[open] #accBody .workspace-v2 :is(
+  .workspace-v2-hero,.workspace-v2-welcome,.workspace-v2-card-heading,
+  .workspace-v2-inventory-total,.workspace-v2-status-list,.workspace-v2-footer
+){
+  background:transparent!important;background-color:transparent!important;background-image:none!important;
+  box-shadow:none!important;border-color:rgba(255,255,255,.055)!important;
+}
+html body #accDlg.account-dashboard-dialog[open] #accBody .workspace-v2 :is(
+  h1,h2,h3,h4,h5,h6,strong,b
+){color:#f2f0eb!important}
+html body #accDlg.account-dashboard-dialog[open] #accBody .workspace-v2 :is(p,span,small,time){
+  color:rgba(235,232,224,.70)!important}
+html body #accDlg.account-dashboard-dialog[open] #accBody .workspace-v2 .workspace-v2-kicker,
+html body #accDlg.account-dashboard-dialog[open] #accBody .workspace-v2 .workspace-v2-shortcut-index{
+  color:#e3b341!important}
+html body #accDlg.account-dashboard-dialog[open] #accBody .workspace-v2 :is(.workspace-v2-hero-actions>button,.workspace-v2-card-heading>button){
+  background:rgba(227,179,65,.08)!important;background-color:rgba(227,179,65,.08)!important;
+  border:1px solid rgba(227,179,65,.18)!important;color:#e3c57b!important;box-shadow:none!important;
+}
+
 </style>
 
