@@ -1368,10 +1368,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <dialog id="adminDlg" class="authbox wide"><div class="in"><h2>Admin panel</h2><div id="adminPanel"></div><div class="acts" style="margin-top:16px"><button class="btn ghost" id="adminClose">Close</button></div></div></dialog>
 <div id="accountPanelMount"></div>
 <script id="global-auth-mode-compatibility">
-/* Define a real global binding before account scripts load. */
+/* Shared auth state is stored only on window to avoid lexical TDZ collisions. */
 window.authMode = window.authMode || "register";
 </script>
-<script src="account-panel.js?v=20261104-rebuild-3"></script>
+<script src="account-panel.js?v=20261107-auth-scope-fix-1"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
@@ -1601,19 +1601,19 @@ function refreshAccountUI(){
   $("accountText").textContent=me?`Signed in as ${(profile&&profile.name)||me?.user_metadata?.name||me?.user_metadata?.full_name||me.email}`:"Not signed in";
   $("accountOpen").textContent="";
 }
-window.sellerRegistrationMode=false;let sellerSlugEdited=false;
+window.sellerSignupActive=false;let sellerSlugEdited=false;
  function slugifySellerName(value){return String(value||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,48).replace(/-+$/g,"")}
  function refreshSellerUrlPreview(){const slug=$("authSellerSlug").value.trim();$("authSellerUrlPreview").textContent=slug?`${location.host||"3pedalsauto.co.ke"}/yard.html?slug=${slug}`:`${location.host||"3pedalsauto.co.ke"}/yard.html?slug=your-name`}
  function openAuth(mode="register",msg="",options={}){
-   window.sellerRegistrationMode=!!options.seller;window.authMode=mode;const login=mode==="login",recovery=mode==="recovery",sellerSignup=window.sellerRegistrationMode&&!login&&!recovery;
+   window.sellerSignupActive=!!options.seller;window.authMode=mode;const login=mode==="login",recovery=mode==="recovery",sellerSignup=window.sellerSignupActive&&!login&&!recovery;
    if(!sb){msg=msg||"Sign-in is temporarily unavailable because the account service did not initialize. Refresh the page and try again.";console.error("3 Pedals account service is unavailable: Supabase client is not initialized.")}
-   $("authDlg").classList.toggle("seller-registration",window.sellerRegistrationMode);
-   $("authProfileDetails").hidden=(login||recovery)&&!window.sellerRegistrationMode;$("authProfileDetails").open=sellerSignup;$("authSellerUrlWrap").hidden=!sellerSignup;
-   $("authTitle").textContent=recovery?"Choose a new password":login?(window.sellerRegistrationMode?"Seller log in":"Welcome back"):(window.sellerRegistrationMode?"Become a seller":"Create your account");
-   $("authIntro").textContent=recovery?"Set a new password for your account.":login?"Sign in to manage your listings, promotions and bookings.":window.sellerRegistrationMode?"Create your seller profile and a public URL for your vehicle collection.":"One account for buying and selling with 3 Pedals Auto KE.";
-   $("authSubmit").textContent=recovery?"Save new password":login?"Log in":window.sellerRegistrationMode?"Create seller account":"Create account";$("authPassword").autocomplete=login?"current-password":"new-password";
+   $("authDlg").classList.toggle("seller-registration",window.sellerSignupActive);
+   $("authProfileDetails").hidden=(login||recovery)&&!window.sellerSignupActive;$("authProfileDetails").open=sellerSignup;$("authSellerUrlWrap").hidden=!sellerSignup;
+   $("authTitle").textContent=recovery?"Choose a new password":login?(window.sellerSignupActive?"Seller log in":"Welcome back"):(window.sellerSignupActive?"Become a seller":"Create your account");
+   $("authIntro").textContent=recovery?"Set a new password for your account.":login?"Sign in to manage your listings, promotions and bookings.":window.sellerSignupActive?"Create your seller profile and a public URL for your vehicle collection.":"One account for buying and selling with 3 Pedals Auto KE.";
+   $("authSubmit").textContent=recovery?"Save new password":login?"Log in":window.sellerSignupActive?"Create seller account":"Create account";$("authPassword").autocomplete=login?"current-password":"new-password";
    $("authNameField").hidden=login||recovery;$("authPhoneField").hidden=login||recovery||sellerSignup;$("authEmailField").hidden=recovery||sellerSignup;$("authPasswordField").hidden=sellerSignup;$("authConfirmField").hidden=login||sellerSignup;$("authTypeWrap").hidden=login||recovery;$("authTypeHint").hidden=login||recovery;updateAuthTypeHint();
-   $("authForgot").hidden=!login||window.sellerRegistrationMode;$("authGoogle").hidden=recovery||window.sellerRegistrationMode;$("authDivider").hidden=recovery||window.sellerRegistrationMode;$("authSwitchRow").hidden=recovery||window.sellerRegistrationMode;$("authLegal").hidden=recovery;
+   $("authForgot").hidden=!login||window.sellerSignupActive;$("authGoogle").hidden=recovery||window.sellerSignupActive;$("authDivider").hidden=recovery||window.sellerSignupActive;$("authSwitchRow").hidden=recovery||window.sellerSignupActive;$("authLegal").hidden=recovery;
    $("authSwitchText").textContent=login?"Need an account?":"Already have an account?";$("authSwitch").textContent=login?"Create one":"Log in";
    if(sellerSignup){if(!sellerSlugEdited)$("authSellerSlug").value=slugifySellerName($("authName").value);refreshSellerUrlPreview()}
    $("authErr").textContent=msg;$("authDlg").showModal();
@@ -1625,9 +1625,9 @@ window.sellerRegistrationMode=false;let sellerSlugEdited=false;
 $("accountTile").onclick=()=>me?openAccount():openAuth("register");
 $("authCloseTop").onclick=()=>$("authDlg").close();
 $("authCloseBack").onclick=()=>$("authDlg").close();
-$("authSwitch").onclick=()=>openAuth(window.authMode==="login"?"register":"login","",{seller:window.sellerRegistrationMode});
- $("authName").addEventListener("input",()=>{if(window.sellerRegistrationMode&&!sellerSlugEdited){$("authSellerSlug").value=slugifySellerName($("authName").value);refreshSellerUrlPreview()}});$("authSellerSlug").addEventListener("input",()=>{sellerSlugEdited=true;refreshSellerUrlPreview()});
-$("authName").addEventListener("input",()=>{if(window.sellerRegistrationMode&&!sellerSlugEdited){$("authSellerSlug").value=slugifySellerName($("authName").value);refreshSellerUrlPreview()}});$("authSellerSlug").addEventListener("input",()=>{sellerSlugEdited=true;refreshSellerUrlPreview()});
+$("authSwitch").onclick=()=>openAuth(window.authMode==="login"?"register":"login","",{seller:window.sellerSignupActive});
+ $("authName").addEventListener("input",()=>{if(window.sellerSignupActive&&!sellerSlugEdited){$("authSellerSlug").value=slugifySellerName($("authName").value);refreshSellerUrlPreview()}});$("authSellerSlug").addEventListener("input",()=>{sellerSlugEdited=true;refreshSellerUrlPreview()});
+$("authName").addEventListener("input",()=>{if(window.sellerSignupActive&&!sellerSlugEdited){$("authSellerSlug").value=slugifySellerName($("authName").value);refreshSellerUrlPreview()}});$("authSellerSlug").addEventListener("input",()=>{sellerSlugEdited=true;refreshSellerUrlPreview()});
  document.querySelectorAll('input[name="accountType"]').forEach(r=>r.onchange=updateAuthTypeHint);
 $("authForgot").onclick=async()=>{
   const email=$("authEmail").value.trim().toLowerCase(),button=$("authForgot"),err=$("authErr");
@@ -1652,7 +1652,7 @@ $("authGoogle").onclick=async()=>{
 };
 $("authSubmit").onclick=async()=>{
   const email=$("authEmail").value.trim().toLowerCase(),pass=$("authPassword").value,name=$("authName").value.trim(),phone=$("authPhone").value.trim(),confirmPass=$("authConfirmPassword").value,type=document.querySelector('input[name="accountType"]:checked')?.value||"private",err=$("authErr"),b=$("authSubmit");
-  if(window.sellerRegistrationMode&&window.authMode==="register"){
+  if(window.sellerSignupActive&&window.authMode==="register"){
     if(!me){err.textContent="Sign in to your main account first, then create your seller profile.";return}
     const slug=$("authSellerSlug").value.trim();if(!name){err.textContent="Enter your seller or business name.";return}if(!slug||!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)||slug.length<3){err.textContent="Enter a seller URL with at least 3 lowercase letters or numbers; hyphens are allowed.";return}
     b.disabled=true;err.textContent="Checking seller URL…";
@@ -1673,7 +1673,7 @@ $("authSubmit").onclick=async()=>{
   if(window.authMode==="register"){
     if(!name){err.textContent="Enter your name.";return}
     if(pass.length<8){err.textContent="Use a password of at least 8 characters.";return}
-    if(pass!==confirmPass){err.textContent="The passwords do not match.";return}     if(window.sellerRegistrationMode){const slug=$("authSellerSlug").value.trim();if(!slug||!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)||slug.length<3){err.textContent="Enter a seller URL with at least 3 lowercase letters or numbers; hyphens are allowed.";return}const {data:existing,error:lookupError}=await sb.from("listings").select("id").eq("seller_slug",slug).limit(1);if(lookupError){err.textContent="Seller URL checks need the updated seller schema. Run seller_type_schema.sql in Supabase, then try again.";return}if(existing?.length){err.textContent="That seller URL is already in use. Please choose another.";return}}
+    if(pass!==confirmPass){err.textContent="The passwords do not match.";return}     if(window.sellerSignupActive){const slug=$("authSellerSlug").value.trim();if(!slug||!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)||slug.length<3){err.textContent="Enter a seller URL with at least 3 lowercase letters or numbers; hyphens are allowed.";return}const {data:existing,error:lookupError}=await sb.from("listings").select("id").eq("seller_slug",slug).limit(1);if(lookupError){err.textContent="Seller URL checks need the updated seller schema. Run seller_type_schema.sql in Supabase, then try again.";return}if(existing?.length){err.textContent="That seller URL is already in use. Please choose another.";return}}
   }
   b.disabled=true;err.textContent=window.authMode==="register"?"Creating your account…":"Signing you in…";
   try{
@@ -3137,7 +3137,7 @@ input,select,textarea{background:rgba(255,255,255,.055)!important}
    event.stopImmediatePropagation();
    if(typeof openAuth==='function'){
      const current=window.authMode||'register';
-     const seller=typeof window.sellerRegistrationMode!=='undefined'&&!!window.sellerRegistrationMode;
+     const seller=typeof window.sellerSignupActive!=='undefined'&&!!window.sellerSignupActive;
      openAuth(current==='login'?'register':'login','',{seller});
    }
  },true);
@@ -3162,7 +3162,7 @@ input,select,textarea{background:rgba(255,255,255,.055)!important}
      event.preventDefault();
      event.stopPropagation();
      const mode=window.authMode||'register';
-     const seller=typeof window.sellerRegistrationMode!=='undefined'&&!!window.sellerRegistrationMode;
+     const seller=typeof window.sellerSignupActive!=='undefined'&&!!window.sellerSignupActive;
      if(typeof openAuth==='function')openAuth(mode==='login'?'register':'login','',{seller});
      else {const error=document.getElementById('authErr');if(error)error.textContent='Sign-in form is still loading. Refresh the page and try again.'}
    });
@@ -3222,7 +3222,7 @@ footer::before,footer::after,body>footer::before,body>footer::after{border:0!imp
     const current=window.authMode||'register';
     const next=current==='login'?'register':'login';
     if(typeof openAuth!=='function')throw new Error('The sign-in form has not initialized. Refresh the page and try again.');
-    const seller=typeof window.sellerRegistrationMode!=='undefined'&&!!window.sellerRegistrationMode;
+    const seller=typeof window.sellerSignupActive!=='undefined'&&!!window.sellerSignupActive;
     openAuth(next,'',{seller});
     const dialog=document.getElementById('authDlg');
     if(dialog&&!dialog.open)dialog.showModal();
