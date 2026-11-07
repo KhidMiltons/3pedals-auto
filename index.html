@@ -1690,8 +1690,10 @@ $("authSubmit").onclick=async()=>{
       return;
     }
     $("authPassword").value="";$("authConfirmPassword").value="";
+    const shouldOpenAccount=window.authMode==="login";
     $("authDlg").close();
     await loadSession();
+    if(shouldOpenAccount&&me)await openAccount();
     if(location.hash==="#login"||location.hash==="#register")history.replaceState(null,"",location.pathname+location.search);
   }catch(error){
     console.error("3 Pedals authentication failed:",error);
@@ -3025,7 +3027,7 @@ body:after{background:linear-gradient(90deg,rgba(0,0,0,.10),transparent 48%,rgba
        await openAccount();
      }else{
        if(typeof openAuth!=='function')throw new Error('Sign-in code did not initialize. Please refresh the page.');
-       openAuth('register');
+       openAuth('login');
        const dlg=document.getElementById('authDlg');
        if(dlg&&!dlg.open)dlg.showModal();
      }
