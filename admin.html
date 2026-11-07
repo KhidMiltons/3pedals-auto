@@ -783,7 +783,7 @@ async function exportCombinedOperationsReport(){
   if(!garage.length&&!chauffeur.length){showNotice("There are no garage or chauffeur records to include in the operations report.","err");return}
   const headers=["Service type","Reference","Customer","Customer phone","Vehicle / service","Category","Pickup / location","Destination","Start / requested date","End / time slot","Booking status","Service progress","Payment status","Quoted amount KES","Final amount KES","Assigned staff","Staff phone","Customer notes / details","Created at"];
   const rows=[
-   ...garage.map(b=>["Garage · "+(b.request_type==="roadside"?"Roadside":"Workshop"),b.ref,b.name,b.phone,[b.car,b.service].filter(Boolean).join(" · "),"",b.location,"",b.date,b.time_slot,b.status,b.service_status,"","","",mechanicItems.find(m=>String(m.id)===String(b.mechanic_id))?.name||"Unassigned","","",b.details,b.created_at]),
+   ...garage.map(b=>["Garage · "+(b.request_type==="roadside"?"Roadside":"Workshop"),b.ref,b.name,b.phone,[b.car,b.service].filter(Boolean).join(" · "),"",b.location,"",b.date,b.time_slot,b.status,b.service_status,"","","",mechanicItems.find(m=>String(m.id)===String(b.mechanic_id))?.name||"Unassigned","",b.details,b.created_at]),
    ...chauffeur.map(b=>["Chauffeur hire",b.booking_ref,b.customer_name,b.customer_phone,b.chauffeur_vehicles?.display_name,b.chauffeur_vehicles?.category,b.pickup_location,b.destination,b.start_at,b.end_at,b.status,"",b.payment_status,b.quoted_amount,b.final_amount,b.assigned_driver_name,b.assigned_driver_phone,b.customer_notes,b.created_at])
   ];
   downloadBookingCsv("3pedals-combined-operations-"+new Date().toISOString().slice(0,10)+".csv",headers,rows);
