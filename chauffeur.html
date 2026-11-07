@@ -287,7 +287,8 @@ a{color:inherit}
 </div><div class="actions"><button class="btn" id="submitRequest" type="submit">Submit booking request</button><button class="ghost" id="signOutBtn" type="button">Sign out</button></div>
 </form>
 <div class="notice" id="bookingNotice" role="status"></div>
-<div class="account-box glass" id="myBookings" hidden><div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h3>Your chauffeur requests</h3><button class="ghost" id="refreshMyBookings" type="button">Refresh</button></div><div id="bookingRows"></div></div>
+<div class="account-box glass" id="myBookings" hidden><div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h3>Your chauffeur requests</h3><button class="ghost" id="refreshMyBookings" type="button">Refresh</button></div><div id="bookingRows"></div><div id="customerReviews"></div></div>
+<div class="account-box glass" id="chauffeurAdmin" hidden><div class="admin-head"><div><span class="eyebrow">OPERATIONS CONSOLE</span><h3>Chauffeur management</h3></div><button class="ghost" id="refreshAdmin" type="button">Refresh</button></div><div class="admin-stats" id="adminStats"></div><div class="admin-toolbar"><input id="adminSearch" placeholder="Search reference, customer or route"><select id="adminStatus"><option value="">All booking statuses</option><option value="pending_approval">Pending review</option><option value="approved_awaiting_payment">Awaiting payment</option><option value="confirmed">Confirmed</option><option value="declined">Declined</option><option value="completed">Completed</option><option value="cancelled">Cancelled</option></select></div><div id="adminBookings"></div><div class="admin-subsection"><h3>Driver roster</h3><div class="admin-driver-form"><input id="newDriverName" placeholder="Driver full name"><input id="newDriverPhone" placeholder="Driver phone"><input id="newDriverEmail" type="email" placeholder="Email (optional)"><button class="btn" id="addDriver" type="button">Add driver</button></div><div id="driverRows"></div></div><div class="admin-subsection"><h3>Cancellation requests</h3><div id="cancellationRows"></div></div><div class="admin-subsection"><h3>Trip calendar</h3><div id="tripCalendar"></div></div></div>
 </section>
 <section class="chauffeur-faq" aria-labelledby="faqTitle"><div class="eyebrow">GOOD TO KNOW</div><h2 class="section-title" id="faqTitle">A few helpful answers.</h2><div class="faq-list">
 <details><summary>When do I pay for my booking?</summary><p>You submit a request first. After our team reviews availability and approves it, we confirm the quotation and provide the M-Pesa payment option. No payment is taken when you submit the initial request.</p></details>
@@ -329,8 +330,21 @@ async function loadVehicles(){
   notice('bookingNotice',$('vehicleId').selectedOptions[0]?.textContent+' selected. Complete your journey details below.','success');
  }));
 }
-async function loadBookings(){const {data,error}=await sb.from('chauffeur_bookings').select('id,booking_ref,status,payment_status,start_at,quoted_amount,final_amount,currency,assigned_driver_name,assigned_driver_phone,chauffeur_vehicles(display_name)').order('created_at',{ascending:false});if(error)throw error;$('myBookings').hidden=false;$('bookingRows').innerHTML=(data||[]).length?(data||[]).map(b=>'<div class="booking-row"><span><strong>'+esc(b.booking_ref)+'</strong><br>'+esc(b.chauffeur_vehicles?.display_name||'Chauffeur hire')+' · '+new Date(b.start_at).toLocaleString('en-KE')+(b.assigned_driver_name?'<br><strong>Assigned chauffeur:</strong> '+esc(b.assigned_driver_name)+'<br><strong>Driver contact:</strong> '+esc(b.assigned_driver_phone||'Contact 3 Pedals Auto KE'):'')+(b.status==='approved_awaiting_payment'&&['pending','failed'].includes(b.payment_status)?'<br><button class="btn" type="button" data-chauffeur-pay="'+esc(b.id)+'">Pay by M-Pesa · KES '+Number(b.final_amount??b.quoted_amount??0).toLocaleString('en-KE')+'</button>':'')+'</span><span class="status">'+esc(b.status.replaceAll('_',' '))+'<br><small>'+esc(b.payment_status.replaceAll('_',' '))+'</small></span></div>').join(''):'<p class="hint">You have not submitted a chauffeur request yet.</p>'}
-async function syncSession(){const {data:{user}}=await sb.auth.getUser();currentUser=user;$('authPanel').hidden=!!user;$('requestForm').hidden=!user;if(user){const {data:p}=await sb.from('profiles').select('name,phone').eq('id',user.id).maybeSingle();$('customerName').value=p?.name||user.user_metadata?.name||user.user_metadata?.full_name||'';$('customerPhone').value=p?.phone||user.user_metadata?.phone||'';await loadBookings()}}
+let adminMode=false,adminBookings=[],adminDrivers=[];
+async function loadBookings(){
+ const {data,error}=await sb.from('chauffeur_bookings').select('id,booking_ref,status,payment_status,start_at,end_at,quoted_amount,final_amount,currency,assigned_driver_name,assigned_driver_phone,driver_id,customer_notes,customer_name,customer_phone,pickup_location,destination,pricing_method,whatsapp_opt_in,chauffeur_vehicles(display_name)').order('created_at',{ascending:false});
+ if(error)throw error;$('myBookings').hidden=false;
+ $('bookingRows').innerHTML=(data||[]).length?(data||[]).map(b=>{
+ const canCancel=['pending_approval','approved_awaiting_payment','confirmed'].includes(b.status);
+ const pay=b.status==='approved_awaiting_payment'&&['pending','failed'].includes(b.payment_status)?'<button class="btn" type="button" data-chauffeur-pay="'+esc(b.id)+'">Pay by M-Pesa · KES '+Number(b.final_amount??b.quoted_amount??0).toLocaleString('en-KE')+'</button>':'';
+ const driver=b.assigned_driver_name?'<br><strong>Assigned chauffeur:</strong> '+esc(b.assigned_driver_name)+' · '+esc(b.assigned_driver_phone||'Contact office'):'';
+ const cancel=canCancel?'<div class="customer-action"><input aria-label="Cancellation reason" data-cancel-reason="'+esc(b.id)+'" placeholder="Reason for cancellation (optional)"><button class="ghost" data-cancel-booking="'+esc(b.id)+'" type="button">Request cancellation</button></div>':'';
+ const review=b.status==='completed'?'<form class="review-form" data-review-booking="'+esc(b.id)+'"><select name="rating" required><option value="">Rate journey</option><option value="5">★★★★★ · Excellent</option><option value="4">★★★★ · Good</option><option value="3">★★★ · Average</option><option value="2">★★ · Poor</option><option value="1">★ · Very poor</option></select><input name="review" maxlength="1000" placeholder="Share feedback (optional)"><button class="ghost" type="submit">Submit review</button></form>':'';
+ return '<div class="booking-row"><span><strong>'+esc(b.booking_ref)+'</strong><br>'+esc(b.chauffeur_vehicles?.display_name||'Chauffeur hire')+' · '+new Date(b.start_at).toLocaleString('en-KE')+'<br>'+esc(b.pickup_location)+' → '+esc(b.destination)+driver+(b.mpesa_receipt_number?'<br>M-Pesa receipt: '+esc(b.mpesa_receipt_number):'')+pay+cancel+review+'</span><span class="status">'+esc(b.status.replaceAll('_',' '))+'<br><small>'+esc(b.payment_status.replaceAll('_',' '))+'</small></span></div>';
+ }).join(''):'<p class="hint">You have not submitted a chauffeur request yet.</p>';
+ if(adminMode)await loadAdmin();
+}
+async function syncSession(){const {data:{user}}=await sb.auth.getUser();currentUser=user;$('authPanel').hidden=!!user;$('requestForm').hidden=!user;if(user){const {data:p}=await sb.from('profiles').select('name,phone,is_admin').eq('id',user.id).maybeSingle();$('customerName').value=p?.name||user.user_metadata?.name||user.user_metadata?.full_name||'';$('customerPhone').value=p?.phone||user.user_metadata?.phone||'';adminMode=!!p?.is_admin;$('chauffeurAdmin').hidden=!adminMode;await loadBookings() }else{$('myBookings').hidden=true;$('chauffeurAdmin').hidden=true;adminMode=false}}
 
 function updateEstimate(){
  const car=vehicles.find(v=>v.id===$('vehicleId').value),method=$('pricingMethod').value;
@@ -584,5 +598,26 @@ html body .hero p{
 .service-select:hover{color:#fff}
 .service-card{display:flex;flex-direction:column;align-items:flex-start}
 .service-card p{flex:1}
+</style>
+<style id="chauffeur-customer-admin-upgrade">
+.admin-head,.admin-toolbar,.admin-driver-form{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.admin-head h3,.admin-subsection h3{margin:5px 0 12px;font:600 21px "Playfair Display",Georgia,serif}
+.admin-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:15px 0}
+.admin-stat{padding:13px;border-radius:12px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08)}
+.admin-stat strong{display:block;color:#e3cf9c;font-size:23px}.admin-stat span{font-size:10px;color:var(--chauffeur-muted)}
+.admin-toolbar{margin:14px 0}.admin-toolbar input{flex:1;min-width:180px}.admin-toolbar select{max-width:220px}
+.admin-booking{padding:15px 0;border-top:1px solid rgba(255,255,255,.10)}
+.admin-booking-top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.admin-booking p{margin:5px 0;color:var(--chauffeur-muted);font-size:11px;line-height:1.7}
+.admin-booking-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}
+.admin-booking-controls input,.admin-booking-controls select{min-width:0;min-height:40px;font-size:11px}
+.admin-booking-controls .actions{grid-column:1/-1;margin:0}
+.admin-subsection{margin-top:22px;padding-top:16px;border-top:1px solid rgba(255,255,255,.10)}
+.admin-driver-form input{flex:1;min-width:140px}
+.admin-row{padding:10px 0;border-top:1px solid rgba(255,255,255,.08);font-size:11px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.customer-action{margin-top:9px;display:flex;gap:8px;flex-wrap:wrap}
+.review-form{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.review-form select,.review-form input{max-width:170px}
+.calendar-day{padding:11px;margin:7px 0;border-left:2px solid #b7a06a;background:rgba(255,255,255,.035);border-radius:0 10px 10px 0}
+@media(max-width:650px){.admin-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.admin-booking-controls{grid-template-columns:1fr 1fr}.admin-booking-controls .actions{grid-column:1/-1}.admin-toolbar select{max-width:none;width:100%}}
 </style>
 </body></html>
