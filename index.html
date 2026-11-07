@@ -1922,7 +1922,6 @@ async function openAccount(options={}){
     accountResults=await pending;
   }
   if(!accountResults)accountResults=await fetchAccountData(me.id);
-  if(!accountResults)accountResults=await fetchAccountData(me.id);
   // Ignore late responses from older opens/refreshes so they cannot overwrite
   // a newer account view or a recently selected page.
   if(renderVersion!==accountRenderVersion||!d.open)return;
