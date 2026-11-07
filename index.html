@@ -1161,6 +1161,45 @@ body:has(#home[hidden]) #publicWhatsappFab{display:none!important}
   html body>header>.wrap>.logo{font-size:clamp(16px,4.6vw,19px)!important}
 }
 </style>
+<style id="mobile-account-inside-menu">
+/* Account access belongs inside the navigation drawer, not beside the menu trigger. */
+@media(min-width:981px){
+  html body>header>.wrap{grid-template-columns:auto minmax(0,1fr)!important;grid-template-areas:"brand nav"!important}
+  html body>header #nav{justify-self:end!important;min-width:0!important}
+  html body>header #nav>.account-pill{grid-area:auto!important;justify-self:auto!important;margin:0 0 0 4px!important;padding:2px!important;flex:0 0 auto!important}
+  html body>header #nav>.account-pill span{display:none!important}
+}
+@media(max-width:980px){
+  html body>header>.wrap{
+    display:grid!important;grid-template-columns:minmax(0,1fr) 42px!important;
+    grid-template-areas:"brand nav-toggle"!important;align-items:center!important;
+    column-gap:8px!important;row-gap:0!important;position:relative!important;
+  }
+  html body>header>.wrap>.logo{grid-area:brand!important;justify-self:start!important;min-width:0!important;max-width:100%!important;overflow:hidden!important;white-space:nowrap!important;text-overflow:ellipsis!important}
+  html body>header>.wrap>button#navToggle.nav-toggle{grid-area:nav-toggle!important;justify-self:end!important;display:inline-flex!important;width:40px!important;height:40px!important;min-width:40px!important;margin:0!important;position:relative!important;inset:auto!important}
+  html body>header #nav{
+    left:auto!important;right:10px!important;top:calc(100% + 8px)!important;
+    width:min(300px,calc(100vw - 32px))!important;max-width:calc(100vw - 32px)!important;
+    align-items:stretch!important;
+  }
+  html body>header #nav>.account-pill{
+    order:-1!important;display:flex!important;align-items:center!important;
+    justify-content:space-between!important;gap:12px!important;width:100%!important;
+    min-height:48px!important;margin:0 0 5px!important;padding:5px 8px 5px 13px!important;
+    border:1px solid rgba(227,179,65,.28)!important;border-radius:12px!important;
+    background:rgba(255,255,255,.045)!important;box-shadow:none!important;
+    -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+  }
+  html body>header #nav>.account-pill span{display:inline!important;color:#f3f0e8!important;font-size:14px!important;font-weight:650!important}
+  html body>header #nav>.account-pill button{display:grid!important;place-items:center!important;flex:0 0 40px!important;width:40px!important;height:40px!important;min-width:40px!important;margin:0!important;padding:0!important;border-radius:10px!important}
+}
+@media(max-width:420px){
+  html body>header>.wrap{grid-template-columns:minmax(0,1fr) 38px!important;column-gap:6px!important}
+  html body>header>.wrap>button#navToggle.nav-toggle{width:38px!important;height:38px!important;min-width:38px!important}
+  html body>header #nav>.account-pill button{width:38px!important;height:38px!important;flex-basis:38px!important}
+  html body>header>.wrap>.logo{font-size:clamp(16px,4.6vw,19px)!important}
+}
+</style>
 <style id="privacy-legal-links">
 .legal-footer-links{display:inline-flex;gap:6px;flex-wrap:wrap;align-items:center}.legal-footer-links a,.account-legal-preferences a{color:var(--gold,#d7bd83);text-decoration:underline;text-underline-offset:3px}.legal-footer-links button{border:0;background:none;color:inherit;text-decoration:underline;text-underline-offset:3px;cursor:pointer;font:inherit;padding:0}.account-subscription-note{margin:16px 0;padding:16px;border-radius:12px;background:rgba(255,255,255,.035)}.account-subscription-note h4{margin:0 0 6px}.account-subscription-note p{margin:8px 0}
 .account-legal-preferences{margin:16px 0;padding:16px;border-radius:12px;background:rgba(255,255,255,.035)}.account-legal-preferences h4{margin:0 0 6px}.account-legal-preferences p{margin:8px 0}
@@ -1178,9 +1217,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <header><div class="wrap">
   <div class="logo" style="cursor:pointer" onclick="window.location.assign('/')" role="button" tabindex="0" aria-label="Reload homepage" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.location.assign('/')}">3 Pedals Auto KE</div>
-  <div class="account-pill" aria-label="Account"><span id="accountText">Not signed in</span><button id="accountOpen" aria-label="Open account" title="Account"></button></div>
   <button class="nav-toggle" id="navToggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="nav"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
   <nav id="nav" aria-label="Main navigation">
+    <div class="account-pill" aria-label="Account"><span id="accountText">Not signed in</span><button id="accountOpen" aria-label="Open account" title="Account"></button></div>
     <button type="button" class="navlink" role="tab" data-tab="home" aria-selected="true" aria-label="Home">Home</button>
     <button type="button" role="tab" data-tab="about" aria-selected="false">About Us</button>
     <a class="navlink" href="/inventory.html">Buy a car</a>
