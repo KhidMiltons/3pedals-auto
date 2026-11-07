@@ -92,6 +92,134 @@ button:hover{transform:none}
 }
 </style>
 
+<style id="admin-dashboard-visual-refinement">
+/* Admin workspace: premium graphite glass, restrained champagne accents. */
+html:has(body #app){color-scheme:dark!important;background:#090a0c!important}
+body:has(#app){
+  color:#f4f0e8!important;
+  color-scheme:dark!important;
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  min-height:100vh;
+}
+body:has(#app)::before{opacity:.88;filter:saturate(.82) brightness(.76)}
+body:has(#app)::after{background:linear-gradient(180deg,rgba(5,7,9,.30),rgba(5,7,9,.48)),radial-gradient(ellipse at 78% 8%,rgba(211,185,125,.10),transparent 38%)!important}
+body:has(#app) #app.wrap{width:min(100% - 40px,1440px)!important;max-width:1440px!important;margin:0 auto!important;padding:26px 0 64px!important}
+body:has(#app) .top{
+  position:sticky!important;top:12px!important;z-index:30!important;
+  display:flex!important;align-items:center!important;justify-content:space-between!important;
+  gap:22px!important;margin:0 0 24px!important;padding:16px 20px!important;
+  background:rgba(13,16,19,.42)!important;border:1px solid rgba(255,255,255,.15)!important;
+  border-radius:20px!important;box-shadow:0 18px 48px rgba(0,0,0,.20)!important;
+  -webkit-backdrop-filter:blur(22px) saturate(140%)!important;backdrop-filter:blur(22px) saturate(140%)!important;
+}
+body:has(#app) .brand{
+  display:block!important;padding:0!important;margin:0!important;border:0!important;border-radius:0!important;
+  background:none!important;box-shadow:none!important;backdrop-filter:none!important;
+  color:#e7d3a2!important;font-size:clamp(22px,2.5vw,30px)!important;line-height:1.2!important;
+  letter-spacing:-.04em!important;
+}
+body:has(#app) .brand span{display:block!important;margin-top:5px!important;color:rgba(245,241,232,.66)!important;font-size:10px!important;letter-spacing:.13em!important;line-height:1.5!important}
+body:has(#app) .actions{gap:9px!important}
+body:has(#app) button{
+  min-height:40px;border-radius:11px!important;font-weight:650!important;letter-spacing:.005em;
+}
+body:has(#app) .top .actions button,body:has(#app) .ghost,body:has(#app) .tab{
+  background:rgba(12,15,18,.34)!important;color:#f3efe6!important;
+  border:1px solid rgba(255,255,255,.15)!important;box-shadow:none!important;
+}
+body:has(#app) .primary,body:has(#app) .tab.active{
+  color:#171716!important;background:linear-gradient(135deg,#ead8a8,#c5a568)!important;
+  border:1px solid rgba(238,215,158,.58)!important;box-shadow:0 7px 20px rgba(183,160,106,.12)!important;
+}
+body:has(#app) .danger,body:has(#app) .reject{background:rgba(112,35,35,.30)!important;color:#ffaaa0!important;border:1px solid rgba(255,138,122,.25)!important}
+body:has(#app) .approve{background:rgba(31,105,66,.25)!important;color:#a6e6bb!important;border:1px solid rgba(117,214,154,.22)!important}
+body:has(#app) button:hover{transform:translateY(-1px)!important;border-color:rgba(220,194,137,.38)!important;box-shadow:0 8px 22px rgba(0,0,0,.16)!important}
+body:has(#app) button:active{transform:translateY(0)!important}
+body:has(#app) .stats{gap:12px!important;margin:0 0 18px!important}
+body:has(#app) .stat,body:has(#app) .listing,body:has(#app) .notice,body:has(#app) .empty,
+body:has(#app) .attention-panel,body:has(#app) .editor,body:has(#app) .contact-form,
+body:has(#app) .article-item,body:has(#app) .project-item{
+  color:#f4f0e8!important;background:rgba(12,15,18,.40)!important;background-image:none!important;
+  border:1px solid rgba(255,255,255,.13)!important;border-radius:17px!important;
+  box-shadow:0 12px 34px rgba(0,0,0,.18)!important;
+  -webkit-backdrop-filter:blur(17px) saturate(135%)!important;backdrop-filter:blur(17px) saturate(135%)!important;
+}
+body:has(#app) .stat{min-height:112px!important;padding:19px!important}
+body:has(#app) .stat b{font:700 32px/1.05 "Sora",Manrope,sans-serif!important;color:#e3c987!important;letter-spacing:-.04em}
+body:has(#app) .stat span{color:rgba(245,241,232,.70)!important;font-size:12px!important;letter-spacing:.015em}
+body:has(#app) .stat:first-child{border-color:rgba(220,190,124,.28)!important}
+body:has(#app) .attention-panel{align-items:center!important;padding:17px 19px!important}
+body:has(#app) .attention-copy strong{color:#f5f0e5!important;font-size:14px!important}
+body:has(#app) .attention-copy span{color:rgba(245,241,232,.65)!important}
+body:has(#app) .attention-count{background:#dfc27d!important;color:#171717!important}
+body:has(#app) .tabs.admin-tabs{
+  display:flex!important;gap:8px!important;flex-wrap:nowrap!important;overflow-x:auto!important;
+  padding:7px!important;margin:0 0 25px!important;border:1px solid rgba(255,255,255,.11)!important;
+  border-radius:15px!important;background:rgba(10,13,16,.32)!important;
+  scrollbar-width:thin;scrollbar-color:rgba(211,185,125,.38) transparent;
+}
+body:has(#app) .tabs.admin-tabs .tab{flex:0 0 auto!important;min-height:42px!important;padding:10px 14px!important;white-space:nowrap!important}
+body:has(#app) .panel-title{align-items:flex-end!important;margin:18px 0 16px!important}
+body:has(#app) .panel-title h1,body:has(#app) .panel-title h2,body:has(#app) .panel-title h3,
+body:has(#app) #app section>h1{color:#f5f0e7!important;letter-spacing:-.045em!important}
+body:has(#app) .panel-title .meta,body:has(#app) .meta{color:rgba(239,233,220,.66)!important}
+body:has(#app) .listing{margin-bottom:13px!important;overflow:hidden}
+body:has(#app) .listing:hover,body:has(#app) .article-item:hover,body:has(#app) .project-item:hover{
+  border-color:rgba(220,194,137,.27)!important;box-shadow:0 15px 38px rgba(0,0,0,.22)!important;
+}
+body:has(#app) .summary{gap:16px!important;padding:17px!important}
+body:has(#app) .details{border-top:1px solid rgba(255,255,255,.10)!important}
+body:has(#app) .field{background:rgba(5,8,11,.30)!important;border:1px solid rgba(255,255,255,.10)!important;border-radius:11px!important;color:#f4f0e8!important}
+body:has(#app) .field strong{color:#d8c18a!important}
+body:has(#app) .status{background:rgba(255,255,255,.08)!important;color:#eee7d8!important}
+body:has(#app) .status.pending{background:rgba(181,137,42,.18)!important;color:#f0d58f!important}
+body:has(#app) .status.approved{background:rgba(48,132,81,.18)!important;color:#a7e3b8!important}
+body:has(#app) .status.rejected{background:rgba(156,57,57,.18)!important;color:#ffaaa0!important}
+body:has(#app) input,body:has(#app) textarea,body:has(#app) select{
+  color:#f5f1e8!important;background:rgba(7,10,13,.38)!important;
+  border:1px solid rgba(255,255,255,.15)!important;border-radius:11px!important;
+  box-shadow:none!important;min-height:42px;
+}
+body:has(#app) input::placeholder,body:has(#app) textarea::placeholder{color:rgba(235,230,219,.42)!important}
+body:has(#app) input:focus,body:has(#app) textarea:focus,body:has(#app) select:focus{
+  border-color:rgba(222,195,135,.58)!important;box-shadow:0 0 0 3px rgba(222,195,135,.10)!important;outline:0!important;
+}
+body:has(#app) label{color:rgba(239,233,220,.76)!important;font-size:11px!important;letter-spacing:.055em!important}
+body:has(#app) .notice.err{background:rgba(104,30,30,.28)!important;color:#ffb5aa!important}
+body:has(#app) .notice.ok{background:rgba(24,91,53,.25)!important;color:#afe7bf!important}
+body:has(#app) .empty{border-style:dashed!important;color:rgba(239,233,220,.62)!important;padding:34px!important}
+body:has(#app) .editor,body:has(#app) .contact-form{padding:20px!important}
+body:has(#app) .photos img{border:1px solid rgba(255,255,255,.13)!important;border-radius:10px!important}
+body:has(#app) .badge{background:rgba(211,185,125,.12)!important;border-color:rgba(211,185,125,.22)!important;color:#e7d3a2!important}
+body:has(#app) .badge.published{color:#a7e3b8!important}
+body:has(#app) .badge.draft{color:#f1c28c!important}
+@media(max-width:900px){
+ body:has(#app) #app.wrap{width:min(100% - 28px,1440px)!important;padding-top:17px!important}
+ body:has(#app) .top{position:relative!important;top:auto!important;flex-direction:column!important;align-items:stretch!important}
+ body:has(#app) .top .actions{width:100%!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important}
+ body:has(#app) .top .actions button{width:100%!important}
+ body:has(#app) .tabs.admin-tabs{margin-bottom:19px!important}
+}
+@media(max-width:600px){
+ body:has(#app) #app.wrap{width:calc(100% - 20px)!important;padding-top:10px!important}
+ body:has(#app) .top{padding:14px!important;border-radius:17px!important}
+ body:has(#app) .brand{font-size:22px!important}
+ body:has(#app) .brand span{font-size:9px!important;letter-spacing:.09em!important}
+ body:has(#app) .top .actions{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:7px!important}
+ body:has(#app) .top .actions button{padding:9px 7px!important;font-size:12px!important}
+ body:has(#app) .stats{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
+ body:has(#app) .stat{min-height:94px!important;padding:13px!important}
+ body:has(#app) .stat b{font-size:27px!important}
+ body:has(#app) .attention-panel{padding:14px!important}
+ body:has(#app) .editor,body:has(#app) .contact-form{padding:14px!important}
+ body:has(#app) .summary{padding:14px!important}
+ body:has(#app) .panel-title{align-items:flex-start!important;flex-direction:column!important}
+ body:has(#app) .panel-title button{width:100%}
+}
+@media(prefers-reduced-motion:reduce){body:has(#app) *{transition:none!important;animation:none!important}}
+</style>
 </head>
 <body>
 <div id="login" class="hidden"><div class="brand">3 Pedals Auto KE<span>Admin verification</span></div><h1>Sign in</h1><p class="meta">Only approved 3 Pedals Auto KE administrators can access vehicle verification.</p><label>Email</label><input id="email" type="email" autocomplete="username"><label>Password</label><input id="password" type="password" autocomplete="current-password"><p id="loginErr" class="notice err hidden"></p><button id="loginBtn" class="primary" style="width:100%;margin-top:15px">Sign in</button></div>
