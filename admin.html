@@ -348,7 +348,8 @@ $("refresh").onclick=async()=>{
  refreshInProgress=true;const button=$("refresh"),original=button.textContent;button.disabled=true;button.textContent="Refreshing…";
  const scrollPosition=window.scrollY,activeElement=document.activeElement,activeId=activeElement?.id||"",listingSearchValue=$("listingSearch")?.value||"",activeSection=document.querySelector("[data-section].active")?.dataset.section||"listingsPanel";
  try{
-  if(activeSection==="requestsPanel"){await Promise.all([load(),loadAdminBookings(),loadChauffeurBookings()]);await loadRequestsInbox()}
+  if(activeSection==="overviewPanel")await loadAdminOverview();
+  else if(activeSection==="requestsPanel"){await Promise.all([load(),loadAdminBookings(),loadChauffeurBookings()]);await loadRequestsInbox()}
   else if(activeSection==="listingsPanel")await load();
   else if(activeSection==="bookingsPanel")await loadAdminBookings();
   else if(activeSection==="chauffeurPanel")await loadChauffeurBookings();
