@@ -1169,10 +1169,7 @@ body:has(#home[hidden]) #publicWhatsappFab{display:none!important}
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=1474861414573206&ev=PageView&noscript=1"
-alt=""
-/></noscript>
+
 <!-- End Meta Pixel Code (noscript) -->
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M8B39FNW"
@@ -1600,7 +1597,7 @@ window.sellerSignupActive=false;let sellerSlugEdited=false;
    $("authDlg").classList.toggle("seller-registration",window.sellerSignupActive);
    $("authProfileDetails").hidden=(login||recovery)&&!window.sellerSignupActive;$("authProfileDetails").open=sellerSignup;$("authSellerUrlWrap").hidden=!sellerSignup;
    $("authTitle").textContent=recovery?"Choose a new password":login?(window.sellerSignupActive?"Seller log in":"Welcome back"):(window.sellerSignupActive?"Become a seller":"Create your account");
-   $("authLegal").innerHTML=login?"By signing in, you acknowledge our <a href=\"/privacy.html\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a> and agree to our <a href=\"/terms.html\" target=\"_blank\" rel=\"noopener\">Terms of Service</a>.":"By creating an account, you confirm you meet the minimum age requirement and agree to our <a href=\"/terms.html\" target=\"_blank\" rel=\"noopener\">Terms of Service</a> and acknowledge our <a href=\"/privacy.html\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a>.";
+   $("authLegal").innerHTML=login?"By signing in, you acknowledge our <a href=\"/privacy.html\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a> and agree to our <a href=\"/terms.html\" target=\"_blank\" rel=\"noopener\">Terms of Service</a>. Google sign-in is for existing accounts; new accounts must register with email to complete the age check.":"By creating an account, you confirm you meet the minimum age requirement and agree to our <a href=\"/terms.html\" target=\"_blank\" rel=\"noopener\">Terms of Service</a> and acknowledge our <a href=\"/privacy.html\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a>.";
    $("authIntro").textContent=recovery?"Set a new password for your account.":login?"Sign in to manage your listings, promotions and bookings.":window.sellerSignupActive?"Create your seller profile and a public URL for your vehicle collection.":"One account for buying and selling with 3 Pedals Auto KE.";
    $("authSubmit").textContent=recovery?"Save new password":login?"Log in":window.sellerSignupActive?"Create seller account":"Create account";$("authPassword").autocomplete=login?"current-password":"new-password";
    $("authDobField").hidden=login||recovery||sellerSignup;$("authDob").required=!(login||recovery||sellerSignup);$("authNameField").hidden=login||recovery;$("authPhoneField").hidden=login||recovery||sellerSignup;$("authEmailField").hidden=recovery||sellerSignup;$("authPasswordField").hidden=sellerSignup;$("authConfirmField").hidden=login||sellerSignup;$("authTypeWrap").hidden=login||recovery;$("authTypeHint").hidden=login||recovery;updateAuthTypeHint();
