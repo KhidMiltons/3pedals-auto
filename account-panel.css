@@ -702,3 +702,36 @@
   }
   #accDlg #accBody #accountPage-settings .profile-avatar{width:64px;height:64px}
 }
+
+
+/* Desktop profile cleanup: remove the extra stacked surfaces without changing mobile styling or form controls. */
+@media (min-width:761px){
+  #accDlg #accBody #accountPage-settings :is(.account-settings-inner,.settings-section,.profile-card,.account-tools,.dealer-account-editor,.dealer-editor-section,.account-subscription-note,.account-legal-preferences,.account-settings-tabs,.panel,.card){
+    background:transparent!important;background-color:transparent!important;background-image:none!important;
+    border-color:transparent!important;box-shadow:none!important;
+    -webkit-backdrop-filter:none!important;backdrop-filter:none!important;filter:none!important;
+  }
+  #accDlg #accBody #accountPage-settings :is(.settings-section,.account-tools,.dealer-account-editor,.dealer-editor-section) :is(.panel,.card){
+    background:transparent!important;border:0!important;box-shadow:none!important;
+  }
+}
+/* The overview welcome strip belongs to the scrolling content, never a pinned header. */
+#accDlg #accBody .workspace-v2-hero,
+#accDlg #accBody .workspace-v2-welcome,
+#accDlg #accBody .workspace-v2-kicker{
+  position:static!important;inset:auto!important;top:auto!important;transform:none!important;
+  z-index:auto!important;contain:none!important;
+}
+/* Make the mobile account menu trigger reliably tappable above the page content. */
+@media(max-width:760px){
+  #accDlg .account-dialog-head{position:relative!important;z-index:20!important}
+  #accDlg #accMenuToggle{
+    display:grid!important;visibility:visible!important;opacity:1!important;
+    position:relative!important;z-index:30!important;pointer-events:auto!important;
+    touch-action:manipulation!important;cursor:pointer!important;
+  }
+  #accDlg.account-dashboard-dialog[open]>.account-sidebar.menu-open{
+    display:flex!important;visibility:visible!important;opacity:1!important;
+    pointer-events:auto!important;z-index:10000!important;
+  }
+}
