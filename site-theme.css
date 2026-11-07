@@ -860,3 +860,261 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){
   font-weight:600!important;
   letter-spacing:-.02em!important;
 }
+
+
+/* ==========================================================
+   3 PEDALS AUTO KE — PREMIUM DESIGN SYSTEM / NOV 2026
+   Shared finishing layer. Preserves each page's existing
+   automotive wallpaper, layout, imagery and functionality.
+   ========================================================== */
+:root{
+  color-scheme:dark;
+  --p3-graphite:#111417;
+  --p3-graphite-soft:#191d21;
+  --p3-glass:rgba(13,17,21,.48);
+  --p3-glass-strong:rgba(10,13,16,.64);
+  --p3-glass-soft:rgba(255,255,255,.035);
+  --p3-champagne:#c9b784;
+  --p3-champagne-bright:#dfc995;
+  --p3-ivory:#f4f0e8;
+  --p3-muted:rgba(244,240,232,.70);
+  --p3-edge:rgba(255,255,255,.105);
+  --p3-edge-gold:rgba(201,183,132,.24);
+  --p3-shadow:0 16px 42px rgba(0,0,0,.24);
+  --p3-radius:18px;
+  --p3-radius-small:12px;
+  --p3-ease:cubic-bezier(.22,1,.36,1);
+}
+html{color-scheme:dark;scroll-behavior:smooth}
+html,body{max-width:100%;overscroll-behavior-x:none}
+html body{
+  color:var(--p3-ivory);
+  font-family:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif!important;
+  font-synthesis:none;
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+html body :is(h1,h2,h3,h4,h5,h6){
+  font-family:"Sora","Manrope",system-ui,sans-serif!important;
+  font-weight:600!important;
+  letter-spacing:-.035em!important;
+  line-height:1.18!important;
+  text-wrap:balance;
+}
+html body :is(p,li,label,small,.description,.muted,.meta,.subtitle,.section-subtitle,.eyebrow,.lead){
+  font-family:"Manrope",system-ui,sans-serif!important;
+  text-wrap:pretty;
+}
+html body :is(.brand,.logo,.brand-name,.site-brand,.wordmark){
+  font-family:"Sora",system-ui,sans-serif!important;
+  letter-spacing:-.035em!important;
+}
+html body :is(.price,.amount,.vehicle-price,[data-price],.stat-value,.metric-value){
+  font-variant-numeric:tabular-nums;
+  font-feature-settings:"tnum" 1;
+}
+
+/* Shared dark glass language — no pale/white card overlays. */
+html body :is(.card,.dealer,.stat,.panel,.listing,.vehicle-card,.story-card,
+.contact-card,.promotion-package,.article-item,.project-item,.tile,.profile-card,
+.feature-card,.service-card,.booking-card,.garage-card,.filter-panel,.search-panel,
+.featured-panel,.article-card,.journal-card,.notice,.empty,.attention-panel,
+.editor,.contact-form,.seller-card,.dashboard-card,.account-overview-panel){
+  color:var(--p3-ivory);
+  background-color:var(--p3-glass)!important;
+  background-image:none!important;
+  border-color:var(--p3-edge)!important;
+  border-radius:var(--p3-radius);
+  box-shadow:var(--p3-shadow),inset 0 1px rgba(255,255,255,.035)!important;
+  -webkit-backdrop-filter:blur(20px) saturate(132%);
+  backdrop-filter:blur(20px) saturate(132%);
+  transition:transform .28s var(--p3-ease),background-color .28s ease,
+    border-color .28s ease,box-shadow .28s ease!important;
+}
+html body :is(.card,.dealer,.listing,.vehicle-card,.story-card,.contact-card,
+.promotion-package,.article-item,.project-item,.tile,.profile-card,.feature-card,
+.service-card,.booking-card,.garage-card,.journal-card,.seller-card,.dashboard-card):hover{
+  background-color:rgba(17,21,25,.58)!important;
+  background-image:none!important;
+  border-color:var(--p3-edge-gold)!important;
+  box-shadow:0 21px 48px rgba(0,0,0,.30),inset 0 1px rgba(201,183,132,.07)!important;
+  transform:translateY(-2px);
+}
+/* Avoid decorative card hover on devices without a real hover pointer. */
+@media(hover:none){
+  html body :is(.card,.dealer,.listing,.vehicle-card,.story-card,.contact-card,
+  .promotion-package,.article-item,.project-item,.tile,.profile-card,.feature-card,
+  .service-card,.booking-card,.garage-card,.journal-card,.seller-card,.dashboard-card):hover{
+    transform:none;
+  }
+}
+
+/* Unified header glass while retaining the individual page's header geometry. */
+html body :is(header,.top,.header,.site-header,.main-header,.navbar){
+  -webkit-backdrop-filter:blur(22px) saturate(138%);
+  backdrop-filter:blur(22px) saturate(138%);
+}
+html body :is(header,.top,.header,.site-header,.main-header,.navbar) :is(a,button){
+  -webkit-tap-highlight-color:transparent;
+}
+html body :is(.eyebrow,.section-kicker,.overline,.label-kicker){
+  color:var(--p3-champagne)!important;
+}
+html body :is(.price,.vehicle-price,.amount,.brand,.logo,.arrow,.gold-text){
+  color:var(--p3-champagne)!important;
+}
+
+/* Consistent controls and restrained interactions; never flash white. */
+html body :is(button,.btn,a.button,.primary,.btn-primary,.button-primary,.gold-button){
+  font-family:"Manrope",system-ui,sans-serif!important;
+  font-weight:650;
+  -webkit-tap-highlight-color:transparent;
+  transition:transform .22s var(--p3-ease),background-color .22s ease,
+    border-color .22s ease,box-shadow .22s ease,filter .22s ease!important;
+}
+html body :is(button,.btn,a.button,.primary,.btn-primary,.button-primary,.gold-button):focus-visible,
+html body a:focus-visible{
+  outline:2px solid rgba(201,183,132,.78)!important;
+  outline-offset:3px;
+}
+html body :is(input,select,textarea,.input,.field){
+  color:var(--p3-ivory)!important;
+  background:rgba(8,12,15,.48)!important;
+  border-color:rgba(255,255,255,.13)!important;
+  border-radius:var(--p3-radius-small);
+  box-shadow:none;
+}
+html body :is(input,select,textarea,.input,.field)::placeholder{
+  color:rgba(244,240,232,.48)!important;
+}
+html body :is(input,select,textarea,.input,.field):focus{
+  border-color:rgba(201,183,132,.58)!important;
+  box-shadow:0 0 0 3px rgba(201,183,132,.10)!important;
+  outline:none!important;
+}
+html body select option{
+  color:#f4f0e8;
+  background:#171b1f;
+}
+
+/* Tables, labels and status chips share a quieter contrast system. */
+html body :is(th,thead){
+  color:rgba(244,240,232,.82)!important;
+}
+html body :is(td,tbody){
+  color:rgba(244,240,232,.88);
+}
+html body :is(.status,.badge,.chip,.tag,.yard-label,.pill){
+  box-shadow:none!important;
+}
+html body :is(footer,.site-footer){
+  color:rgba(244,240,232,.62);
+  border-color:rgba(201,183,132,.13);
+}
+html body img,html body video{
+  max-width:100%;
+}
+html body :is(.vehicle-card,.listing,.dealer,.story-card,.journal-card) img{
+  backface-visibility:hidden;
+}
+
+/* Account dashboard: match the transparent dark sidebar, not a white SaaS skin. */
+html body #accDlg,
+html body #accDlg[open],
+html body #accDlg>.in,
+html body #accDlg #accBody,
+html body #accDlg #accBody>.account-pages,
+html body #accDlg #accBody .account-pages,
+html body #accDlg #accBody .account-page,
+html body #accDlg #accBody .account-tools,
+html body #accDlg #accBody .account-settings,
+html body #accDlg #accBody .account-settings-inner,
+html body #accDlg .account-dialog-head,
+html body #accDlg #accountMenu.dashboard-shortcuts{
+  color:var(--p3-ivory)!important;
+  background-color:rgba(9,13,17,.28)!important;
+  background-image:none!important;
+  border-color:rgba(255,255,255,.10)!important;
+  box-shadow:none!important;
+}
+html body #accDlg #accBody :is(.profile-card,.account-stat,.profile-grid>div,
+.svc,.seller-summary-card,.account-overview-panel,.account-overview-stats>button,
+.account-booking-item,.account-saved-vehicle,.seller-listing,.seller-garage-card,
+.promotion-package,.account-buyer-workspace,.dashboard-welcome,.settings-section,
+.account-quick-panel>button,.panel,.card,.seller-card,.dashboard-card,
+.dealer-overview-details>div){
+  color:var(--p3-ivory)!important;
+  background:rgba(9,13,17,.40)!important;
+  background-image:none!important;
+  border-color:rgba(255,255,255,.105)!important;
+  box-shadow:0 12px 30px rgba(0,0,0,.17)!important;
+  -webkit-backdrop-filter:blur(24px) saturate(138%)!important;
+  backdrop-filter:blur(24px) saturate(138%)!important;
+}
+html body #accDlg #accBody :is(.profile-card,.account-stat,.svc,
+.account-overview-panel,.account-overview-stats>button,.account-booking-item,
+.account-saved-vehicle,.seller-listing,.seller-garage-card,.promotion-package,
+.dashboard-welcome,.account-quick-panel>button,.panel,.card,.seller-card,
+.dashboard-card):hover{
+  background:rgba(13,17,21,.52)!important;
+  border-color:rgba(201,183,132,.20)!important;
+  transform:translateY(-1px);
+}
+html body #accDlg #accBody :is(h1,h2,h3,h4,h5,h6,strong,b,label,th){
+  color:#f7f2e8!important;
+}
+html body #accDlg #accBody :is(p,li,td,small,.meta,.muted,.description,.subtitle){
+  color:rgba(244,240,233,.78)!important;
+}
+
+/* Admin workspace: premium graphite surfaces without changing data layouts. */
+html body:has(#app) .wrap{max-width:1480px}
+html body:has(#app) :is(.top,.stat,.listing,.notice,.empty,.attention-panel,
+.editor,.contact-form,.article-item,.project-item,.field,.panel,.card){
+  background-color:rgba(12,16,20,.46)!important;
+  background-image:none!important;
+  border-color:rgba(255,255,255,.11)!important;
+  box-shadow:0 13px 34px rgba(0,0,0,.20)!important;
+}
+html body:has(#app) :is(.tabs .tab,.ghost,.admin-listing-tools input){
+  color:var(--p3-ivory)!important;
+  background:rgba(10,14,18,.42)!important;
+  border-color:rgba(255,255,255,.13)!important;
+}
+html body:has(#app) .tabs .tab.active{
+  color:#f7e8c5!important;
+  background:rgba(201,183,132,.12)!important;
+  border-color:rgba(201,183,132,.30)!important;
+}
+
+/* Responsive polish: preserve existing grids, improve containment and legibility. */
+@media(max-width:760px){
+  html{scroll-behavior:auto}
+  html body{overflow-x:clip}
+  html body main.wrap{padding-bottom:32px}
+  html body :is(.card,.dealer,.stat,.panel,.listing,.vehicle-card,.story-card,
+  .contact-card,.promotion-package,.article-item,.project-item,.tile,.profile-card,
+  .feature-card,.service-card,.booking-card,.garage-card,.filter-panel,.search-panel,
+  .featured-panel,.article-card,.journal-card){
+    -webkit-backdrop-filter:blur(14px) saturate(125%);
+    backdrop-filter:blur(14px) saturate(125%);
+  }
+  html body :is(button,.btn,a.button){min-height:40px}
+  html body :is(input,select,textarea){font-size:16px!important}
+  html body #accDlg #accBody :is(.profile-card,.account-stat,.svc,
+  .account-overview-panel,.account-overview-stats>button,.account-booking-item,
+  .account-saved-vehicle,.seller-listing,.seller-garage-card,.promotion-package,
+  .dashboard-welcome,.panel,.card,.seller-card,.dashboard-card){
+    -webkit-backdrop-filter:blur(18px) saturate(130%)!important;
+    backdrop-filter:blur(18px) saturate(130%)!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  html body *,html body *::before,html body *::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+  }
+}
