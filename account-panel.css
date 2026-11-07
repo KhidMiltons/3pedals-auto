@@ -539,3 +539,87 @@
  #accDlg #accBody .workspace-v2-primary-actions button{padding:9px 10px;font-size:9px}
 }
 @media(prefers-reduced-motion:reduce){#accDlg #accBody .workspace-v2-metric{transition:none}}
+
+/* Admin-matched glass finish: translucent graphite surfaces, visible backdrop, no pale overlays. */
+#accDlg.account-dashboard-dialog[open]{
+  background:transparent!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+}
+#accDlg.account-dashboard-dialog[open]>.account-sidebar{
+  background:rgba(18,22,25,.28)!important;
+  background-image:none!important;
+  border-right:1px solid rgba(255,255,255,.13)!important;
+  box-shadow:inset -1px 0 rgba(255,255,255,.035)!important;
+  -webkit-backdrop-filter:blur(24px) saturate(125%)!important;
+  backdrop-filter:blur(24px) saturate(125%)!important;
+}
+#accDlg.account-dashboard-dialog[open]>.account-dashboard-main{
+  background:rgba(12,15,17,.20)!important;
+  background-image:none!important;
+  -webkit-backdrop-filter:blur(18px) saturate(120%)!important;
+  backdrop-filter:blur(18px) saturate(120%)!important;
+}
+#accDlg #accBody :is(.workspace-v2-metric,.workspace-v2-card,.account-tools,.settings-section,.profile-card,.account-page .panel,.account-page .account-settings){
+  background:rgba(24,24,25,.24)!important;
+  background-image:none!important;
+  border:1px solid rgba(255,255,255,.16)!important;
+  box-shadow:0 14px 38px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.12)!important;
+  -webkit-backdrop-filter:blur(24px) saturate(125%)!important;
+  backdrop-filter:blur(24px) saturate(125%)!important;
+}
+#accDlg #accBody .workspace-v2-metric{
+  border-radius:13px!important;
+  transition:transform .18s ease,border-color .18s ease,background-color .18s ease,box-shadow .18s ease!important;
+}
+#accDlg #accBody .workspace-v2-card{border-radius:15px!important}
+#accDlg #accBody .workspace-v2-metric:hover{
+  background:rgba(30,32,33,.32)!important;
+  border-color:rgba(216,183,122,.32)!important;
+  box-shadow:0 17px 42px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.14)!important;
+  transform:translateY(-2px);
+}
+#accDlg #accBody .workspace-v2-metric::after{opacity:.25!important}
+#accDlg #accBody :is(.workspace-v2-primary-actions button,.workspace-v2-card-heading>button){
+  transition:background-color .16s ease,border-color .16s ease,color .16s ease,transform .16s ease!important;
+}
+#accDlg #accBody .workspace-v2-primary-actions button.workspace-v2-action-secondary,
+#accDlg #accBody .workspace-v2-card-heading>button{
+  background:rgba(24,24,25,.22)!important;
+  border:1px solid rgba(255,255,255,.16)!important;
+  color:var(--acc-text)!important;
+  -webkit-backdrop-filter:blur(16px)!important;
+  backdrop-filter:blur(16px)!important;
+}
+#accDlg #accBody .workspace-v2-primary-actions button.workspace-v2-action-secondary:hover,
+#accDlg #accBody .workspace-v2-card-heading>button:hover{
+  background:rgba(216,183,122,.10)!important;
+  border-color:rgba(216,183,122,.36)!important;
+  color:var(--acc-gold-strong)!important;
+}
+#accDlg #accBody .workspace-v2-primary-actions button:not(.workspace-v2-action-secondary){
+  background:rgba(177,141,85,.88)!important;
+  border:1px solid rgba(226,197,143,.38)!important;
+  box-shadow:0 7px 20px rgba(0,0,0,.16),inset 0 1px rgba(255,255,255,.18)!important;
+}
+#accDlg #accBody .workspace-v2-primary-actions button:not(.workspace-v2-action-secondary):hover{
+  filter:brightness(1.04)!important;transform:translateY(-1px);
+}
+#accDlg nav#accountMenu>button:hover{
+  background:rgba(255,255,255,.055)!important;
+  color:#fff!important;
+}
+@media(max-width:760px){
+  #accDlg nav#accountMenu.account-sidebar,
+  #accDlg nav#accountMenu.account-sidebar[hidden]{
+    background:rgba(18,22,25,.32)!important;
+    border:1px solid rgba(255,255,255,.17)!important;
+    box-shadow:0 18px 42px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.12)!important;
+    -webkit-backdrop-filter:blur(28px) saturate(125%)!important;
+    backdrop-filter:blur(28px) saturate(125%)!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  #accDlg #accBody .workspace-v2-metric,
+  #accDlg #accBody :is(.workspace-v2-primary-actions button,.workspace-v2-card-heading>button){transition:none!important}
+}
