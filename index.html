@@ -1122,20 +1122,35 @@ fbq('track', 'PageView');
 @media(min-width:981px){
   body>header .wrap{
     display:grid!important;
-    grid-template-columns:minmax(0,1fr) auto auto!important;
+    grid-template-columns:max-content minmax(0,1fr) max-content!important;
     grid-template-areas:"brand nav account"!important;
     align-items:center!important;
-    column-gap:22px!important;
+    column-gap:clamp(12px,2vw,24px)!important;
+    width:100%!important;
+    max-width:1180px!important;
   }
-  body>header .wrap>.logo{grid-area:brand!important;justify-self:start!important;white-space:nowrap!important}
-  body>header .wrap>.account-pill{grid-area:account!important;justify-self:end!important;margin-left:0!important}
-  body>header .wrap>nav{grid-area:nav!important;justify-self:end!important;min-width:0!important;display:flex!important;flex-wrap:nowrap!important;gap:2px!important}
-  body>header .wrap>nav button,body>header .wrap>nav a.navlink{white-space:nowrap!important;padding-left:10px!important;padding-right:10px!important}
+  body>header .wrap>.logo{
+    grid-area:brand!important;justify-self:start!important;
+    display:block!important;flex:none!important;flex-shrink:0!important;
+    width:max-content!important;max-width:none!important;min-width:max-content!important;
+    white-space:nowrap!important;overflow:visible!important;text-overflow:clip!important;
+    font-size:clamp(21px,2.2vw,27px)!important;letter-spacing:.02em!important;
+  }
+  body>header .wrap>nav{
+    grid-area:nav!important;justify-self:end!important;min-width:0!important;
+    display:flex!important;flex-wrap:wrap!important;justify-content:flex-end!important;
+    gap:2px!important;overflow:visible!important;
+  }
+  body>header .wrap>nav button,body>header .wrap>nav a.navlink{
+    white-space:nowrap!important;padding-left:clamp(5px,.8vw,11px)!important;
+    padding-right:clamp(5px,.8vw,11px)!important;font-size:clamp(11px,1vw,14px)!important;
+  }
+  body>header .wrap>.account-pill{grid-area:account!important;justify-self:end!important;flex:none!important;white-space:nowrap!important;margin:0!important}
 }
-@media(min-width:981px) and (max-width:1180px){
-  body>header .wrap{column-gap:12px!important}
-  body>header .wrap>.logo{font-size:25px!important;letter-spacing:.035em!important}
-  body>header .wrap>nav button,body>header .wrap>nav a.navlink{font-size:12px!important;padding-left:7px!important;padding-right:7px!important}
+@media(min-width:981px) and (max-width:1120px){
+ body>header .wrap{column-gap:10px!important}
+ body>header .wrap>.logo{font-size:21px!important}
+ body>header .wrap>nav button,body>header .wrap>nav a.navlink{font-size:11px!important;padding-left:5px!important;padding-right:5px!important}
 }
 @media(max-width:980px){
   body>header .wrap{
@@ -1354,8 +1369,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div id="accountPanelMount"></div>
 <script id="global-auth-mode-compatibility">
 /* Define a real global binding before account scripts load. */
-var authMode = window.authMode || "register";
-window.authMode = authMode;
+window.authMode = window.authMode || "register";
 </script>
 <script src="account-panel.js?v=20261104-rebuild-3"></script>
 
@@ -1591,7 +1605,7 @@ let sellerRegistrationMode=false,sellerSlugEdited=false;
  function slugifySellerName(value){return String(value||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,48).replace(/-+$/g,"")}
  function refreshSellerUrlPreview(){const slug=$("authSellerSlug").value.trim();$("authSellerUrlPreview").textContent=slug?`${location.host||"3pedalsauto.co.ke"}/yard.html?slug=${slug}`:`${location.host||"3pedalsauto.co.ke"}/yard.html?slug=your-name`}
  function openAuth(mode="register",msg="",options={}){
-   sellerRegistrationMode=!!options.seller;authMode=mode;window.authMode=mode;const login=mode==="login",recovery=mode==="recovery",sellerSignup=sellerRegistrationMode&&!login&&!recovery;
+   sellerRegistrationMode=!!options.seller;window.authMode=mode;const login=mode==="login",recovery=mode==="recovery",sellerSignup=sellerRegistrationMode&&!login&&!recovery;
    if(!sb){msg=msg||"Sign-in is temporarily unavailable because the account service did not initialize. Refresh the page and try again.";console.error("3 Pedals account service is unavailable: Supabase client is not initialized.")}
    $("authDlg").classList.toggle("seller-registration",sellerRegistrationMode);
    $("authProfileDetails").hidden=(login||recovery)&&!sellerRegistrationMode;$("authProfileDetails").open=sellerSignup;$("authSellerUrlWrap").hidden=!sellerSignup;
