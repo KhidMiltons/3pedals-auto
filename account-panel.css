@@ -1696,3 +1696,14 @@
 #accDlg #accBody .account-page.account-promotions-page > .account-tools > h3:first-child {
   margin:0 0 16px!important;
 }
+
+
+/* Marketing: bring the content slightly closer to the left edge without changing its layout. */
+#accDlg #accBody .account-page.account-promotions-page > .account-tools{
+  padding-left:18px!important;
+}
+@media(max-width:760px){
+  #accDlg #accBody .account-page.account-promotions-page > .account-tools{
+    padding-left:12px!important;
+  }
+}
