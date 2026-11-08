@@ -1372,3 +1372,51 @@
   border-radius:0!important;
 }
 #accDlg #accBody .account-promotions-page>.account-tools>h3{margin:0 0 10px!important;}
+
+
+/* Administration tile: remove any nested card layer and give its copy safe inset spacing. */
+#accDlg #accBody .account-admin-tools,
+#accDlg #accBody .account-admin-tools::before,
+#accDlg #accBody .account-admin-tools::after,
+#accDlg #accBody .account-admin-tools>div,
+#accDlg #accBody .account-admin-tools>div::before,
+#accDlg #accBody .account-admin-tools>div::after{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+  filter:none!important;
+}
+#accDlg #accBody .account-admin-tools{
+  box-sizing:border-box!important;
+  width:100%!important;
+  padding:22px 26px!important;
+  gap:20px!important;
+}
+#accDlg #accBody .account-admin-tools>div{
+  min-width:0!important;
+  padding:0!important;
+  margin:0!important;
+  border-radius:0!important;
+}
+#accDlg #accBody .account-admin-tools>div h3{
+  margin:0 0 7px!important;
+}
+#accDlg #accBody .account-admin-tools>div p{
+  margin:0!important;
+  padding:0!important;
+  line-height:1.6!important;
+}
+@media(max-width:760px){
+  #accDlg #accBody .account-admin-tools{
+    padding:18px 20px!important;
+    gap:14px!important;
+  }
+  #accDlg #accBody .account-admin-tools>div{
+    width:100%!important;
+  }
+}
