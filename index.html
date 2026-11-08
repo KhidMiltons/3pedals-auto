@@ -6,7 +6,7 @@
 <base target="_top">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
-<link rel="stylesheet" href="/account-panel.css?v=20261108-marketing-lower-layer-2">
+<link rel="stylesheet" href="/account-panel.css?v=20261108-garage-toolbar-1">
 <link rel="preload" as="image" href="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=60" media="(max-width: 760px)" fetchpriority="high">
 <link rel="preload" as="image" href="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72" media="(min-width: 761px)" fetchpriority="high">
 <link rel="preconnect" href="https://dlejmelyeaaxcvelvzia.supabase.co" crossorigin>
@@ -1965,7 +1965,7 @@ async function openAccount(options={}){
     <section class="account-tools"><h3>Manage your listings</h3><div class="seller-listing-filters"><label for="sellerListingSearch">Search your vehicles</label><input id="sellerListingSearch" type="search" placeholder="Search make, model or year"><label for="sellerListingStatus">Filter by status</label><select id="sellerListingStatus"><option value="">All listings</option><option value="approved">Live</option><option value="pending">Waiting for approval</option><option value="rejected">Not approved</option><option value="sold">Sold</option></select></div><p class="meta" id="sellerListingCount" aria-live="polite"></p>${L.map(x=>{const promotion=PM.filter(p=>String(p.listing_id)===String(x.id)).sort((a,b)=>new Date(b.created_at||b.starts_at||0)-new Date(a.created_at||a.starts_at||0))[0],promotionActive=promotion&&String(promotion.status||"").toLowerCase()==="active",promotionExpiry=promotion?.ends_at||promotion?.expires_at;return `<article data-seller-listing data-listing-id="${esc(x.id)}" data-listing-status="${esc(x.status)}" data-listing-search="${esc((x.year+" "+x.make+" "+x.model).toLowerCase())}" class="seller-listing seller-garage-card"><div class="seller-garage-media">${(Array.isArray(x.photos)&&x.photos[0])?`<img class="seller-listing-photo" src="${esc(x.photos[0])}" alt="${esc(x.year+" "+x.make+" "+x.model)}" loading="lazy">`:`<div class="seller-garage-photo-placeholder">3 PEDALS <span>VEHICLE</span></div>`}<span class="seller-garage-status status-${esc(x.status||"pending")}">${esc(label[x.status]||formatStatus(x.status))}</span></div><div class="seller-garage-content"><div class="seller-garage-heading"><div><span class="seller-garage-eyebrow">${esc(x.stock_mode==="local"?"KENYA STOCK":x.stock_mode==="import"?"IMPORT":"VEHICLE LISTING")}</span><h4>${esc([x.year,x.make,x.model].filter(Boolean).join(" "))}</h4></div><strong class="seller-garage-price">KES ${fmt(x.price)}</strong></div><div class="seller-garage-meta"><span>${Array.isArray(x.photos)?x.photos.length:0} photos</span><span>${esc(x.km?`${fmt(x.km)} km`:"Mileage not set")}</span><span>${esc(x.fuel||"Fuel not set")}</span></div>${promotion?`<div class="seller-garage-promotion"><span class="seller-garage-promotion-dot ${promotionActive?"is-active":""}"></span><div><strong>${esc(promotion.package_name||"Promotion")}</strong><span>${promotionActive?"Active promotion":`Promotion · ${esc(formatStatus(promotion.status))}`}${promotionExpiry?` · Ends ${esc(new Date(promotionExpiry).toLocaleDateString())}`:""}</span></div></div>`:`<div class="seller-garage-promotion is-empty"><span>No active promotion</span></div>`}<div class="seller-listing-actions">${x.status==="approved"?`<button class="btn ghost" data-sold="${x.id}" data-title="${esc(x.year+" "+x.make+" "+x.model)}">Mark sold</button><button class="btn ghost" data-promote-listing="${x.id}">Promote</button>`:""}${x.status==="sold"?`<span class="meta">Reported sale: KES ${fmt(S.find(s=>String(s.listing_id)===String(x.id))?.reported_sale_price||0)}</span>`:""}${x.status!=="sold"?`<button class="btn ghost" data-edit="${esc(x.id)}">Edit listing</button>`:""}${["approved","sold"].includes(x.status)?`<button class="btn ghost" data-view="${x.id}">View</button>`:""}<button class="btn ghost" data-del="${x.id}">Delete</button></div></div></article>`}).join("")||'<p class="meta">You have no listings yet.</p>'}</section>
     <section class="account-tools"><h3>Marketing</h3><h4>Listing reminders</h4><p class="meta">Live listings with no repost activity for ${reminderDays} days or more. Mark one reposted after you refresh its photos or promotion.</p>${reminders.length?reminders.map(x=>`<div class="seller-listing"><div class="seller-listing-main"><strong>${esc(x.year+" "+x.make+" "+x.model)}</strong><span class="meta">Last updated ${esc(new Date(x.reposted_at||x.updated_at||x.created_at||0).toLocaleDateString())}</span></div><div class="seller-listing-actions"><button class="btn ghost" type="button" data-reposted="${esc(x.id)}">Mark reposted today</button></div></div>`).join(""):'<p class="meta">No listings are due for a repost reminder.</p>'}<p class="meta" id="reminderMessage" aria-live="polite"></p><h4>Paid promotions</h4><p class="meta">Choose an active listing and package. M-Pesa STK Push payments stay pending until the secure payment callback is verified.</p>${PK.length?`<div class="promotion-package-grid">${PK.map(p=>`<div class="promotion-package"><strong>${esc(p.name)}</strong><span>${esc(p.description||`${p.duration_days} days featured`)}</span><b>KES ${fmt(p.amount)}</b><small class="meta">${Number(p.duration_days)} days</small></div>`).join("")}</div><label for="promoListing">Vehicle to promote</label><select id="promoListing"><option value="">Choose a live vehicle</option>${L.filter(x=>x.status==="approved").map(x=>`<option value="${esc(x.id)}">${esc(x.year+" "+x.make+" "+x.model)}</option>`).join("")}</select><label for="promoPackage">Promotion package</label><select id="promoPackage"><option value="">Choose a package</option>${PK.map(p=>`<option value="${esc(p.id)}">${esc(p.name)} · KES ${fmt(p.amount)} / ${Number(p.duration_days)} days</option>`).join("")}</select><label for="promoPhone">M-Pesa phone number</label><input id="promoPhone" type="tel" autocomplete="tel" value="${esc(phone)}" placeholder="07XX XXX XXX"><button class="btn" type="button" id="startPromotion">Pay with M-Pesa</button><p class="meta" id="promotionMessage" aria-live="polite"></p>`:'<p class="meta">Promotion packages are not configured yet. Please check back later.</p>'}<div class="promotion-history-head"><h4>Promotion history</h4><button class="btn ghost" type="button" id="clearPromotionHistory">Clear history</button></div><div id="promotionHistoryList">${renderPromotionHistory(PM)}</div><p class="meta" id="promotionHistoryMessage" aria-live="polite"></p></section>
    </div>
-  <div class="account-bookings-head"><h3>My garage bookings and service tickets</h3></div><div class="acts" id="garageBookingAction"><a class="btn alt" href="/garage?section=book">Book a garage service</a><button class="btn ghost" type="button" id="clearMyCompletedBookings">Clear completed</button></div><div id="myGarageBookings">${B.map(x=>{const completed=String(x.status||"").toLowerCase()==="done"||String(x.service_status||"").toLowerCase()==="completed";return `<div class="svc account-booking-row" data-my-booking="${esc(x.id)}"><div><b>${esc(x.service||x.service_type||"Garage service")}</b><span class="meta">Ticket ${esc(x.ref||x.id)} · ${esc(x.date||"")}${x.time_slot?" · "+esc(x.time_slot):""} · ${esc(x.car||"")}</span><span class="meta">Progress: ${esc(String(x.service_status||x.status||"pending").replaceAll("_"," "))}</span></div><span class="st">${esc(completed?"Completed":x.status||"Pending")}</span></div>`}).join("")||'<p class="meta">No bookings yet.</p>'}</div>
+  <div class="account-bookings-toolbar"><div class="account-bookings-head"><h3>My garage bookings and service tickets</h3></div><div class="acts" id="garageBookingAction"><a class="btn alt" href="/garage?section=book">Book a garage service</a><button class="btn ghost" type="button" id="clearMyCompletedBookings">Clear completed</button></div></div><div id="myGarageBookings">${B.map(x=>{const completed=String(x.status||"").toLowerCase()==="done"||String(x.service_status||"").toLowerCase()==="completed";return `<div class="svc account-booking-row" data-my-booking="${esc(x.id)}"><div><b>${esc(x.service||x.service_type||"Garage service")}</b><span class="meta">Ticket ${esc(x.ref||x.id)} · ${esc(x.date||"")}${x.time_slot?" · "+esc(x.time_slot):""} · ${esc(x.car||"")}</span><span class="meta">Progress: ${esc(String(x.service_status||x.status||"pending").replaceAll("_"," "))}</span></div><span class="st">${esc(completed?"Completed":x.status||"Pending")}</span></div>`}).join("")||'<p class="meta">No bookings yet.</p>'}</div>
   <section class="danger-zone"><h3>Delete account</h3><p class="meta">Permanently remove your account, listings, and bookings. This cannot be undone.</p><button class="btn ghost" id="accDeleteAccount" type="button">Permanently delete account</button></section>
   <div class="acts" style="margin-top:18px"><button class="btn ghost" id="accOut">Sign out</button><button class="btn ghost" id="accClose">Close</button></div>`;
   const dashboard=box.querySelector(".seller-dashboard"),profileCard=box.querySelector(".profile-card"),profileGrid=box.querySelector(".profile-grid"),dealerEditor=box.querySelector(".dealer-account-editor"),profileError=$("accProfileErr"),profileActions=$("accSaveProfile")?.parentElement,loginDetails=Array.from(box.children).find(node=>node.classList.contains("account-tools")&&node.querySelector("h3")?.textContent.trim()==="Login details"),menu=$("accountMenu");
@@ -1987,7 +1987,7 @@ async function openAccount(options={}){
   promotionHistoryRefreshTimer=setInterval(()=>{if(!d.open||!me||me.id!==accountOwnerId){clearInterval(promotionHistoryRefreshTimer);promotionHistoryRefreshTimer=null;return}if(document.visibilityState!=="visible")return;refreshPromotionHistory().catch(error=>console.warn("Promotion history refresh failed:",error))},30000);
   if(dashboard){
     const dashboardSections=Array.from(dashboard.children),summary=dashboardSections[0],listings=dashboardSections[1],promotions=dashboardSections[2];
-    const deleteZone=box.querySelector(".danger-zone"),bookingAction=box.querySelector("#garageBookingAction"),bookingHeading=box.querySelector(".account-bookings-head");
+    const deleteZone=box.querySelector(".danger-zone"),bookingToolbar=box.querySelector(".account-bookings-toolbar");
     if(summary)summary.querySelector("h3").id="sellerSummary";if(listings)listings.querySelector("h3").id="sellerListings";if(promotions)promotions.querySelector("h3").id="sellerPromotions";
     const settings=document.createElement("section");settings.className="account-page";settings.id="accountPage-settings";settings.hidden=true;settings.innerHTML='<h3>Profile and account settings</h3><div class="account-settings-inner"></div>';
     const settingsInner=settings.querySelector(".account-settings-inner");
@@ -2110,9 +2110,9 @@ async function openAccount(options={}){
     buyingPage.innerHTML='<section class="account-tools account-buyer-workspace"><div class="account-activity-page-head"><div><p class="account-eyebrow">YOUR MARKETPLACE</p><h3>Buying workspace</h3><p class="meta">Keep track of vehicles you are considering.</p></div><a class="btn ghost" href="#buy" data-browse-buying>Browse vehicles</a></div><h4>Saved vehicles</h4><div id="savedVehiclesGrid" class="account-saved-vehicles-grid"><p class="meta">Loading your saved vehicles…</p></div></section>';
     activityPage.innerHTML=`<section class="account-tools account-full-activity"><div class="account-activity-page-head"><div><p class="account-eyebrow">YOUR ACCOUNT HISTORY</p><h3>Activity centre</h3><p class="meta">A chronological record of your marketplace and garage activity.</p></div><span>${allActivityItems.length} events</span></div><div class="account-activity-list">${allActivityItems.length?allActivityItems.map(item=>`<article class="account-activity-item"><span class="account-activity-dot ${esc(item.kind)}"></span><div><strong>${esc(item.title)}</strong><p>${esc(item.detail)}</p></div><time datetime="${esc(item.time)}">${esc(new Date(item.time).toLocaleString("en-KE",{day:"numeric",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"}))}</time></article>`).join(""):'<p class="account-overview-empty">Your recent account activity will appear here as you use the marketplace.</p>'}</div></section>`;
     const dashboardPage=makePage("dashboard"),promotionsPage=makePage("promotions"),bookingsPage=makePage("bookings");promotionsPage.classList.add("account-promotions-page");promotionsPage.append(promotions);dashboardPage.append(summary,listings);bookingsPage.classList.add("account-bookings-page");
-    if(bookingAction)bookingsPage.append(bookingAction);if(bookingHeading)bookingsPage.append(bookingHeading);
-    let bookingNode=bookingHeading?.nextElementSibling;while(bookingNode&&!bookingNode.querySelector("#accOut")){const next=bookingNode.nextElementSibling;bookingsPage.append(bookingNode);bookingNode=next}
-    bookingsPage.querySelectorAll(".svc").forEach(item=>item.classList.add("account-booking-item"));if(bookingHeading)bookingHeading.classList.add("account-bookings-heading");const pages=document.createElement("div");pages.className="account-pages";pages.append(overview,buyingPage,dashboardPage,promotionsPage,settings,bookingsPage,activityPage);overview.hidden=false;dashboardPage.hidden=true;settings.hidden=true;
+    if(bookingToolbar)bookingsPage.append(bookingToolbar);
+    let bookingNode=bookingToolbar?.nextElementSibling;while(bookingNode&&!bookingNode.querySelector("#accOut")){const next=bookingNode.nextElementSibling;bookingsPage.append(bookingNode);bookingNode=next}
+    bookingsPage.querySelectorAll(".svc").forEach(item=>item.classList.add("account-booking-item"));const pages=document.createElement("div");pages.className="account-pages";pages.append(overview,buyingPage,dashboardPage,promotionsPage,settings,bookingsPage,activityPage);overview.hidden=false;dashboardPage.hidden=true;settings.hidden=true;
     closeAccountMenu();menu.innerHTML=`<div class="account-sidebar-brand"><img src="favicon.svg" alt=""><div><strong>3 PEDALS</strong><span>AUTO KE · ACCOUNT</span></div></div><div class="seller-nav-identity"><small>SELLER ACCOUNT</small><strong class="seller-nav-brand"><img src="favicon.svg" alt="">${esc(name||me.email||"Seller")}</strong><span>${esc(me.email||"")}</span></div><div class="seller-mode-switch"><button type="button" data-buying>Buying</button><button type="button" class="selected" aria-current="page">Selling</button></div><div class="seller-nav-label">WORKSPACE</div><button type="button" class="active" data-page="overview" aria-current="page">Overview</button><button type="button" data-page="buying">Buying workspace</button><button type="button" data-page="dashboard">Insights</button><button type="button" data-page="listings">My listings</button><button type="button" data-page="promotions">Promotions${reminders.length?` · ${reminders.length} due`:""}</button><button type="button" data-page="bookings">Garage bookings</button><button type="button" data-page="activity">Activity centre</button><button type="button" data-seller-signup>Create seller account</button><div class="seller-nav-label">ACCOUNT</div><button type="button" data-page="settings" data-account-tab="business">Profile</button><button type="button" data-page="settings" data-account-tab="account">Settings</button><div class="account-sidebar-footer"><button type="button" data-signout>Log out</button></div>`;menu.hidden=window.matchMedia('(max-width:760px)').matches;$('accDlg').classList.remove('nav-collapsed');
     dashboard.remove();box.insertBefore(pages,box.firstChild);pages.querySelectorAll("[data-overview-page]").forEach(button=>button.addEventListener("click",()=>menu.querySelector(`[data-page="${button.dataset.overviewPage}"]`)?.click()));
     pages.querySelector("[data-browse-buying]")?.addEventListener("click",event=>{event.preventDefault();openCurrentInventory(true)});pages.querySelector("[data-overview-buying]")?.addEventListener("click",()=>openCurrentInventory(true));
@@ -3778,58 +3778,4 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){f
 }
 </style>
 
-<style id="garage-bookings-alignment-final">
-/* Consistent inner gutter: keep the heading, actions and booking rows clear of the enclosing card edge. */
-#accDlg #accBody .account-bookings-head{
-  display:flex!important;align-items:center!important;justify-content:flex-start!important;
-  width:100%!important;box-sizing:border-box!important;
-  margin:0 0 14px!important;padding:12px 34px 0!important;
-}
-#accDlg #accBody .account-bookings-head h3{
-  flex:1 1 auto!important;min-width:0!important;margin:0!important;padding:0!important;
-  font-size:clamp(15px,1.5vw,18px)!important;line-height:1.4!important;text-align:left!important;
-}
-#accDlg #accBody #garageBookingAction{
-  display:flex!important;align-items:center!important;justify-content:flex-end!important;
-  flex-wrap:nowrap!important;gap:12px!important;width:100%!important;box-sizing:border-box!important;
-  margin:0 0 22px!important;padding:0 34px!important;
-}
-#accDlg #accBody #garageBookingAction .btn,
-#accDlg #accBody #clearMyCompletedBookings{
-  display:inline-flex!important;flex:0 0 auto!important;align-items:center!important;justify-content:center!important;
-  min-height:40px!important;margin:0!important;padding:9px 16px!important;
-  line-height:1.2!important;text-align:center!important;white-space:nowrap!important;
-}
-#accDlg #accBody #myGarageBookings{
-  width:100%!important;min-width:0!important;box-sizing:border-box!important;padding:0 34px!important;
-}
-#accDlg #accBody #myGarageBookings .account-booking-row{
-  display:flex!important;align-items:center!important;justify-content:space-between!important;
-  gap:14px!important;width:100%!important;min-width:0!important;box-sizing:border-box!important;
-  margin:0 0 10px!important;padding:14px 18px!important;
-}
-#accDlg #accBody #myGarageBookings .account-booking-row>div{
-  display:grid!important;gap:5px!important;flex:1 1 auto!important;min-width:0!important;
-}
-#accDlg #accBody #myGarageBookings .account-booking-row .st{
-  flex:0 0 auto!important;margin:0!important;text-align:center!important;
-}
-#accDlg #accBody #myGarageBookings>p.meta{margin:0!important;padding:12px 0!important;text-align:left!important}
-@media(max-width:760px){
-  #accDlg #accBody .account-bookings-head{padding:10px 22px 0!important}
-  #accDlg #accBody #garageBookingAction{
-    justify-content:flex-end!important;gap:9px!important;padding:0 22px!important;margin-bottom:18px!important;
-  }
-  #accDlg #accBody #garageBookingAction .btn,
-  #accDlg #accBody #clearMyCompletedBookings{min-height:37px!important;padding:8px 12px!important;font-size:11px!important}
-  #accDlg #accBody #myGarageBookings{padding:0 22px!important}
-  #accDlg #accBody #myGarageBookings .account-booking-row{padding:12px 14px!important;gap:9px!important}
-}
-@media(max-width:380px){
-  #accDlg #accBody .account-bookings-head{padding-right:16px!important;padding-left:16px!important}
-  #accDlg #accBody #garageBookingAction{gap:7px!important;padding-right:16px!important;padding-left:16px!important}
-  #accDlg #accBody #garageBookingAction .btn,
-  #accDlg #accBody #clearMyCompletedBookings{padding:7px 9px!important;font-size:10px!important}
-  #accDlg #accBody #myGarageBookings{padding-right:16px!important;padding-left:16px!important}
-}
-</style>
+
