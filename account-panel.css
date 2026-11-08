@@ -1700,3 +1700,34 @@
 @media(max-width:760px){
   #accDlg #accBody .account-promotions-page > .account-tools {padding:18px 18px 20px!important}
 }
+
+
+/* Definitive Marketing cleanup: remove the original account-tools card surface
+   from the third dashboard section after it is moved into Promotions. */
+#accDlg #accBody .account-page.account-promotions-page,
+#accDlg #accBody .account-page.account-promotions-page > .account-tools,
+#accDlg #accBody .account-page.account-promotions-page > .account-tools.account-tools,
+#accDlg #accBody .account-page.account-promotions-page > .account-tools.seller-dashboard,
+#accDlg #accBody .account-page.account-promotions-page > .account-tools.seller-dashboard > .account-tools,
+#accDlg #accBody .account-page.account-promotions-page > .account-tools.seller-dashboard > section,
+#accDlg #accBody .account-page.account-promotions-page > .account-tools.seller-dashboard > div:not(.promotion-package-grid):not(.promotion-package):not(.promotion-history-item) {
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  border-color:transparent!important;
+  border-radius:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+  filter:none!important;
+}
+#accDlg #accBody .account-page.account-promotions-page > .account-tools {
+  display:block!important;
+  padding:20px 28px 24px!important;
+  margin:0!important;
+}
+#accDlg #accBody .account-page.account-promotions-page > .account-tools > h3:first-child {
+  margin:0 0 16px!important;
+}
