@@ -1322,3 +1322,23 @@
   padding:9px 13px!important;
   line-height:1.2!important;
 }
+
+
+/* Align empty-state messages with the left content edge in bookings and overview cards. */
+#accDlg #accBody #myGarageBookings>p.meta{
+  display:block!important;
+  width:100%!important;
+  box-sizing:border-box!important;
+  margin:0!important;
+  padding:0!important;
+  text-align:left!important;
+}
+#accDlg #accBody .workspace-v2-activity-list>.account-overview-empty,
+#accDlg #accBody .account-activity-list>.account-overview-empty{
+  display:block!important;
+  width:100%!important;
+  box-sizing:border-box!important;
+  margin:0!important;
+  padding:0!important;
+  text-align:left!important;
+}
