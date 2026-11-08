@@ -1232,3 +1232,43 @@
   background-image:none!important;
   box-shadow:none!important;
 }
+
+
+/* Insights dashboard: remove the outer section-card layers, keeping the
+   analytics table and individual vehicle listing cards intact. */
+#accDlg #accBody #accountPage-dashboard,
+#accDlg #accBody #accountPage-dashboard>.account-tools,
+#accDlg #accBody #accountPage-dashboard>.account-tools::before,
+#accDlg #accBody #accountPage-dashboard>.account-tools::after{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+  filter:none!important;
+}
+#accDlg #accBody #accountPage-dashboard{
+  box-sizing:border-box!important;
+  width:100%!important;
+  padding:8px 4px 24px!important;
+}
+#accDlg #accBody #accountPage-dashboard>.account-tools{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:0 0 22px!important;
+  padding:12px 4px 18px!important;
+  border-radius:0!important;
+}
+#accDlg #accBody #accountPage-dashboard>.account-tools>h3{
+  margin:0 0 10px!important;
+}
+#accDlg #accBody #accountPage-dashboard>.account-tools .seller-analytics-table{
+  margin-top:14px!important;
+}
+#accDlg #accBody #accountPage-dashboard>.account-tools .seller-listing-filters{
+  margin-top:14px!important;
+}
