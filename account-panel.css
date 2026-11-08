@@ -1573,3 +1573,42 @@
     padding-inline:12px!important;
   }
 }
+
+
+/* Marketing workspace: match the Overview card surface with one clean layer. */
+#accDlg #accBody .account-promotions-page{
+  box-sizing:border-box!important;width:100%!important;min-width:0!important;
+  padding:8px 4px 24px!important;background:transparent!important;
+}
+#accDlg #accBody .account-promotions-page>.account-tools{
+  display:block!important;box-sizing:border-box!important;width:100%!important;min-width:0!important;
+  margin:0 0 20px!important;padding:20px 22px 22px!important;
+  border:1px solid var(--acc-line,rgba(255,255,255,.12))!important;border-radius:13px!important;
+  background:#191d20!important;background-color:#191d20!important;background-image:none!important;
+  box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+  filter:none!important;color:var(--acc-text,#f2f0e9)!important;text-align:left!important;
+}
+#accDlg #accBody .account-promotions-page>.account-tools::before,
+#accDlg #accBody .account-promotions-page>.account-tools::after{content:none!important;display:none!important}
+#accDlg #accBody .account-promotions-page>.account-tools :is(section,.panel,.card,.account-tools,.account-page,.marketing-panel,.marketing-content){
+  background:transparent!important;background-color:transparent!important;background-image:none!important;
+  border:0!important;outline:0!important;box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;filter:none!important;border-radius:0!important;
+}
+#accDlg #accBody .account-promotions-page>.account-tools :is(h2,h3,h4,h5,p,label,.meta){
+  box-sizing:border-box!important;max-width:100%!important;padding-inline:0!important;text-align:left!important;
+}
+#accDlg #accBody .account-promotions-page>.account-tools>h3{margin:0 0 14px!important}
+#accDlg #accBody .account-promotions-page .promotion-package{
+  padding:14px!important;border:1px solid var(--acc-line,rgba(255,255,255,.12))!important;
+  border-radius:12px!important;background:#202629!important;box-shadow:none!important;
+}
+#accDlg #accBody .account-promotions-page .promotion-history-head{
+  margin-top:22px!important;padding-top:16px!important;
+  border-top:1px solid var(--acc-line,rgba(255,255,255,.12))!important;
+}
+@media(max-width:760px){
+  #accDlg #accBody .account-promotions-page{padding:6px 2px 18px!important}
+  #accDlg #accBody .account-promotions-page>.account-tools{padding:17px 16px 19px!important}
+  #accDlg #accBody .account-promotions-page .promotion-package{padding:13px!important}
+}
