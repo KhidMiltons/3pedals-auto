@@ -1272,3 +1272,29 @@
 #accDlg #accBody #accountPage-dashboard>.account-tools .seller-listing-filters{
   margin-top:14px!important;
 }
+
+
+/* Corrective Insights cleanup: the page-level wrappers and both dashboard
+   section surfaces are transparent; retain only the actual data components. */
+#accDlg #accBody #accountPage-dashboard,
+#accDlg #accBody #accountPage-dashboard>.account-tools,
+#accDlg #accBody #accountPage-dashboard>.account-tools.account-tools,
+#accDlg #accBody #accountPage-dashboard>.account-tools>section,
+#accDlg #accBody #accountPage-dashboard>.account-tools>.panel,
+#accDlg #accBody #accountPage-dashboard>.account-tools>.card{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+  filter:none!important;
+}
+#accDlg #accBody #accountPage-dashboard>.account-tools{
+  padding:10px 2px 18px!important;
+  margin:0 0 20px!important;
+  border-radius:0!important;
+}
+#accDlg #accountMenu [data-page="dashboard"]{background-color:initial}
