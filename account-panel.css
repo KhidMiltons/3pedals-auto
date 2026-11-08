@@ -1420,3 +1420,42 @@
     width:100%!important;
   }
 }
+
+
+/* Marketing panel: flatten any attached inner wrapper and keep its content comfortably inset. */
+#accDlg #accBody .account-promotions-page>.account-tools,
+#accDlg #accBody .account-promotions-page>.account-tools::before,
+#accDlg #accBody .account-promotions-page>.account-tools::after,
+#accDlg #accBody .account-promotions-page>.account-tools :is(section,.panel,.card,.account-tools,.account-page,.marketing-panel,.marketing-content),
+#accDlg #accBody .account-promotions-page>.account-tools :is(section,.panel,.card,.account-tools,.account-page,.marketing-panel,.marketing-content)::before,
+#accDlg #accBody .account-promotions-page>.account-tools :is(section,.panel,.card,.account-tools,.account-page,.marketing-panel,.marketing-content)::after{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+  filter:none!important;
+}
+#accDlg #accBody .account-promotions-page>.account-tools{
+  box-sizing:border-box!important;
+  width:100%!important;
+  padding:20px 26px 24px!important;
+  margin:0!important;
+  border-radius:0!important;
+  text-align:left!important;
+}
+#accDlg #accBody .account-promotions-page>.account-tools :is(section,.panel,.card,.account-tools,.account-page,.marketing-panel,.marketing-content){
+  box-sizing:border-box!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+  border-radius:0!important;
+}
+#accDlg #accBody .account-promotions-page>.account-tools :is(h2,h3,h4,p,label,.meta){text-align:left!important;}
+#accDlg #accBody .account-promotions-page>.account-tools>h3{margin:0 0 12px!important;}
+@media(max-width:760px){
+  #accDlg #accBody .account-promotions-page>.account-tools{padding:17px 19px 21px!important;}
+}
