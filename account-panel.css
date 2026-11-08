@@ -1989,3 +1989,39 @@
     padding:17px 18px 20px!important;
   }
 }
+
+
+/* Activity Centre: use the same clean graphite card surface as Garage Bookings. */
+#accDlg #accBody #accountPage-activity{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+#accDlg #accBody #accountPage-activity>.account-full-activity{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:24px!important;
+  color:var(--acc-text)!important;
+  background:var(--acc-panel)!important;
+  background-color:var(--acc-panel)!important;
+  background-image:none!important;
+  border:1px solid var(--acc-line)!important;
+  border-radius:13px!important;
+  outline:0!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+  filter:none!important;
+}
+#accDlg #accBody #accountPage-activity>.account-full-activity::before,
+#accDlg #accBody #accountPage-activity>.account-full-activity::after{
+  content:none!important;
+  display:none!important;
+}
+@media(max-width:760px){
+  #accDlg #accBody #accountPage-activity>.account-full-activity{
+    padding:18px!important;
+  }
+}
