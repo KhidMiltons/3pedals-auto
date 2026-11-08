@@ -961,3 +961,163 @@
 @media(prefers-reduced-motion:reduce){
   #accDlg #accBody *{transition:none!important;animation:none!important}
 }
+
+
+/* 2026-11-08 screenshot corrections: remove the pale settings slab and give
+   every section, control and action a deliberate inset from its glass edge. */
+#accDlg #accBody #accountPage-settings,
+#accDlg #accBody #accountPage-settings>.account-settings-inner,
+#accDlg #accBody #accountPage-settings .settings-section,
+#accDlg #accBody #accountPage-settings .settings-section>.account-tools,
+#accDlg #accBody #accountPage-settings .account-subscription-note,
+#accDlg #accBody #accountPage-settings .account-legal-preferences{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  box-shadow:none!important;
+  filter:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+}
+#accDlg #accBody #accountPage-settings{
+  box-sizing:border-box!important;
+  padding:18px 20px 28px!important;
+  border-radius:16px!important;
+}
+#accDlg #accBody #accountPage-settings>.account-page-title,
+#accDlg #accBody #accountPage-settings>h3{
+  margin:2px 0 16px!important;
+  padding:0 0 2px!important;
+}
+#accDlg #accBody #accountPage-settings .account-settings-inner{
+  box-sizing:border-box!important;
+  padding:0!important;
+}
+#accDlg #accBody #accountPage-settings .settings-section{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:12px 0 18px!important;
+  padding:10px 2px 18px!important;
+  border-radius:0!important;
+}
+#accDlg #accBody #accountPage-settings .settings-section>h4,
+#accDlg #accBody #accountPage-settings .settings-section>p{
+  margin-left:0!important;
+  margin-right:0!important;
+}
+#accDlg #accBody #accountPage-settings .profile-card{
+  box-sizing:border-box!important;
+  width:100%!important;
+  margin:12px 0 20px!important;
+  padding:14px 16px!important;
+  border:1px solid rgba(255,255,255,.085)!important;
+  border-radius:13px!important;
+  background:rgba(13,17,20,.20)!important;
+}
+#accDlg #accBody #accountPage-settings .profile-grid{
+  box-sizing:border-box!important;
+  width:100%!important;
+  margin:18px 0 20px!important;
+  gap:14px 16px!important;
+}
+#accDlg #accBody #accountPage-settings .profile-grid>div,
+#accDlg #accBody #accountPage-settings .dealer-fields-grid>div{
+  min-width:0!important;
+  padding:0!important;
+}
+#accDlg #accBody #accountPage-settings .dealer-account-editor{
+  box-sizing:border-box!important;
+  width:100%!important;
+  margin:20px 0 18px!important;
+  padding:18px 16px!important;
+  border:1px solid rgba(255,255,255,.085)!important;
+  border-radius:14px!important;
+  background:rgba(13,17,20,.20)!important;
+}
+#accDlg #accBody #accountPage-settings .dealer-editor-section{
+  box-sizing:border-box!important;
+  width:100%!important;
+  margin:16px 0!important;
+  padding:14px 0 4px!important;
+}
+#accDlg #accBody #accountPage-settings .dealer-fields-grid{
+  padding:4px 0 0!important;
+  gap:14px 16px!important;
+}
+#accDlg #accBody #accountPage-settings :is(input,select,textarea){
+  box-sizing:border-box!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+}
+#accDlg #accBody #accountPage-settings .profile-actions,
+#accDlg #accBody #accountPage-settings .acts,
+#accDlg #accBody #accountPage-settings .dealer-save-row{
+  gap:10px!important;
+  margin-top:14px!important;
+}
+#accDlg #accBody #accountPage-settings :is(button,.btn){
+  max-width:100%!important;
+  white-space:normal!important;
+  line-height:1.35!important;
+}
+#accDlg #accBody .account-admin-tools{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:18px 0 14px!important;
+  padding:18px 20px!important;
+  gap:18px!important;
+  border-radius:14px!important;
+}
+#accDlg #accBody .account-admin-tools>div{
+  min-width:0!important;
+  flex:1 1 auto!important;
+}
+#accDlg #accBody .account-admin-tools .account-admin-button{
+  flex:0 0 auto!important;
+  min-height:40px!important;
+  padding:10px 14px!important;
+  white-space:normal!important;
+}
+#accDlg #accBody .account-activity-item{
+  box-sizing:border-box!important;
+  min-width:0!important;
+  padding:14px 16px!important;
+  margin:0!important;
+  background:rgba(12,16,19,.20)!important;
+  border-bottom:1px solid rgba(255,255,255,.085)!important;
+}
+#accDlg #accBody .account-activity-item:first-child{
+  border-radius:10px 10px 0 0!important;
+}
+#accDlg #accBody .account-activity-item:last-child{
+  border-bottom:0!important;
+  border-radius:0 0 10px 10px!important;
+}
+#accDlg #accBody .account-activity-item>div{
+  min-width:0!important;
+  padding:1px 0!important;
+}
+#accDlg #accBody .account-activity-item time{
+  padding-left:10px!important;
+  text-align:right!important;
+  white-space:nowrap!important;
+}
+#accDlg #accBody .account-full-activity,
+#accDlg #accBody .account-admin-tools{
+  overflow:visible!important;
+}
+@media(max-width:760px){
+  #accDlg #accBody #accountPage-settings{padding:14px 12px 22px!important}
+  #accDlg #accBody #accountPage-settings .profile-card{padding:12px!important}
+  #accDlg #accBody #accountPage-settings .dealer-account-editor{padding:14px 12px!important}
+  #accDlg #accBody #accountPage-settings .profile-grid,
+  #accDlg #accBody #accountPage-settings .dealer-fields-grid{grid-template-columns:minmax(0,1fr)!important}
+  #accDlg #accBody .account-admin-tools{align-items:flex-start!important;flex-direction:column!important;padding:15px!important}
+  #accDlg #accBody .account-admin-tools .account-admin-button{width:100%!important}
+  #accDlg #accBody .account-activity-item{grid-template-columns:8px minmax(0,1fr)!important;gap:8px!important;padding:12px!important}
+  #accDlg #accBody .account-activity-item time{grid-column:2;padding:0!important;text-align:left!important}
+}
