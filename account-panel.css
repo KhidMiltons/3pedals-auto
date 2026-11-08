@@ -1121,3 +1121,88 @@
   #accDlg #accBody .account-activity-item{grid-template-columns:8px minmax(0,1fr)!important;gap:8px!important;padding:12px!important}
   #accDlg #accBody .account-activity-item time{grid-column:2;padding:0!important;text-align:left!important}
 }
+
+
+/* Buying workspace and administration: remove the extra nested glass panels. */
+#accDlg #accBody .account-buyer-workspace,
+#accDlg #accBody .account-buyer-workspace.account-tools,
+#accDlg #accBody .account-buyer-workspace>.account-activity-page-head{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+  filter:none!important;
+}
+#accDlg #accBody .account-buyer-workspace{
+  box-sizing:border-box!important;
+  width:100%!important;
+  margin:0 0 18px!important;
+  padding:8px 4px 16px!important;
+  border-radius:0!important;
+}
+#accDlg #accBody .account-buyer-workspace .account-activity-page-head{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:16px!important;
+  width:100%!important;
+  margin:0 0 22px!important;
+  padding:0 0 16px!important;
+  border-bottom:1px solid rgba(255,255,255,.08)!important;
+}
+#accDlg #accBody .account-buyer-workspace .account-activity-page-head>div{
+  min-width:0!important;
+}
+#accDlg #accBody .account-buyer-workspace .account-activity-page-head h3{
+  margin:0 0 6px!important;
+  font-size:clamp(21px,2vw,27px)!important;
+  line-height:1.2!important;
+}
+#accDlg #accBody .account-buyer-workspace .account-activity-page-head p{
+  margin:0!important;
+  font-size:12px!important;
+  line-height:1.55!important;
+}
+#accDlg #accBody .account-buyer-workspace .account-activity-page-head .account-eyebrow{
+  margin:0 0 7px!important;
+  color:var(--acc-gold)!important;
+  font-size:9px!important;
+  font-weight:800!important;
+  letter-spacing:.15em!important;
+}
+#accDlg #accBody .account-buyer-workspace .account-activity-page-head>[data-browse-buying],
+#accDlg #accBody .account-buyer-workspace .account-activity-page-head .btn{
+  flex:0 0 auto!important;
+  margin:0!important;
+}
+#accDlg #accBody .account-buyer-workspace>h4{
+  margin:0 0 12px!important;
+}
+#accDlg #accBody .account-admin-tools,
+#accDlg #accBody .account-admin-tools.account-tools{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+  filter:none!important;
+  padding:12px 4px!important;
+  border-radius:0!important;
+}
+@media(max-width:760px){
+  #accDlg #accBody .account-buyer-workspace{padding:6px 2px 14px!important}
+  #accDlg #accBody .account-buyer-workspace .account-activity-page-head{
+    align-items:flex-start!important;
+    flex-direction:column!important;
+    gap:12px!important;
+  }
+  #accDlg #accBody .account-buyer-workspace .account-activity-page-head>[data-browse-buying],
+  #accDlg #accBody .account-buyer-workspace .account-activity-page-head .btn{
+    width:100%!important;
+  }
+}
