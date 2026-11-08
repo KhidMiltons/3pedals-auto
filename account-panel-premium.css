@@ -1299,3 +1299,117 @@ body:has(#accDlg[open])::after {
     padding-right: 0 !important;
   }
 }
+
+
+/* 2026-11-08 — account pages use the header grid; booking rows are full-width content cards. */
+/* The account-pages and account-page elements are structural wrappers, not cards.
+   A later site-wide glass rule was giving both wrappers their own inset surfaces. */
+#accDlg #accBody {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  padding: 0 0 24px !important;
+}
+#accDlg #accBody .account-pages,
+#accDlg #accBody .account-page {
+  box-sizing: border-box !important;
+  display: block !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  outline: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  filter: none !important;
+}
+#accDlg #accBody .account-page > .account-tools,
+#accDlg #accBody .account-page > .workspace-v2-card,
+#accDlg #accBody .account-page > .account-booking-item {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+}
+
+/* Garage bookings: heading, action and every booking row follow the same
+   full-width grid as the account header. Individual rows retain a restrained
+   dark surface; the page itself has no nested glass panel. */
+#accDlg #accBody .account-bookings-page {
+  display: block !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+#accDlg #accBody .account-bookings-page #garageBookingAction {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  margin: 0 0 18px !important;
+  padding: 0 !important;
+}
+#accDlg #accBody .account-bookings-page .account-bookings-head {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: wrap !important;
+  gap: 12px !important;
+  width: 100% !important;
+  margin: 0 0 12px !important;
+  padding: 0 !important;
+}
+#accDlg #accBody .account-bookings-page .account-bookings-heading {
+  width: 100% !important;
+  margin: 0 0 12px !important;
+  padding: 0 !important;
+}
+#accDlg #accBody .account-bookings-page #myGarageBookings {
+  display: grid !important;
+  grid-template-columns: minmax(0,1fr) !important;
+  gap: 10px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+#accDlg #accBody .account-bookings-page .account-booking-item {
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 16px 18px !important;
+  border: 1px solid rgba(255,255,255,.075) !important;
+  border-radius: 12px !important;
+  background: rgba(24,27,29,.78) !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+#accDlg #accBody .account-bookings-page .account-booking-item > div {
+  display: grid !important;
+  gap: 5px !important;
+  min-width: 0 !important;
+}
+#accDlg #accBody .account-bookings-page .account-booking-item .meta {
+  overflow-wrap: anywhere !important;
+}
+@media (max-width:760px) {
+  #accDlg #accBody {
+    padding-bottom: 20px !important;
+  }
+  #accDlg #accBody .account-bookings-page .account-booking-item {
+    align-items: flex-start !important;
+    gap: 10px !important;
+    padding: 14px !important;
+  }
+}
