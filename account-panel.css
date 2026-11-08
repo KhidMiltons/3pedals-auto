@@ -1542,3 +1542,34 @@
   }
   #accDlg #accBody .account-admin-tools>div{padding-inline:2px!important;}
 }
+
+
+/* Marketing dashboard: final, higher-specificity content inset.
+   Apply spacing to the actual page content wrapper, not just selected text tags. */
+#accDlg #accBody #accountPage-promotions,
+#accDlg #accBody #accountPage-promotions .account-promotions-page,
+#accDlg #accBody .account-promotions-page{
+  box-sizing:border-box!important;
+  padding-inline:24px!important;
+}
+#accDlg #accBody #accountPage-promotions .account-promotions-page>.account-tools,
+#accDlg #accBody .account-promotions-page>.account-tools{
+  box-sizing:border-box!important;
+  padding-inline:24px!important;
+}
+#accDlg #accBody #accountPage-promotions .account-promotions-page>.account-tools > :not(.promotion-package-grid):not(.promotion-package):not(.promotion-history-item),
+#accDlg #accBody .account-promotions-page>.account-tools > :not(.promotion-package-grid):not(.promotion-package):not(.promotion-history-item){
+  box-sizing:border-box!important;
+  max-width:100%!important;
+}
+@media(max-width:760px){
+  #accDlg #accBody #accountPage-promotions,
+  #accDlg #accBody #accountPage-promotions .account-promotions-page,
+  #accDlg #accBody .account-promotions-page{
+    padding-inline:12px!important;
+  }
+  #accDlg #accBody #accountPage-promotions .account-promotions-page>.account-tools,
+  #accDlg #accBody .account-promotions-page>.account-tools{
+    padding-inline:12px!important;
+  }
+}
