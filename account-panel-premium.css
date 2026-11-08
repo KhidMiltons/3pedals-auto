@@ -1214,3 +1214,88 @@ body:has(#accDlg[open])::after {
   align-self: stretch !important;
   transform: none !important;
 }
+
+
+/* 2026-11-08 — unify account content and header grid edges. */
+/* The header divider and every dashboard card now share the same main-canvas edges. */
+#accDlg #accBody {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+#accDlg #accBody > :is(.account-pages,.account-page,.workspace-v2),
+#accDlg #accBody .account-page,
+#accDlg #accBody .workspace-v2,
+#accDlg #accBody .workspace-v2-main-grid,
+#accDlg #accBody .workspace-v2-metric-grid {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+#accDlg #accBody :is(.workspace-v2-hero,.workspace-v2-metric,.workspace-v2-card) {
+  box-sizing: border-box !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+
+/* Profile content starts at the same inset as the account header brand.
+   This removes the extra nested gutter that made the profile canvas look narrower. */
+#accDlg #accBody #accountPage-settings {
+  --settings-inset: 0px !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+#accDlg #accBody #accountPage-settings > h3,
+#accDlg #accBody #accountPage-settings .account-settings-tabs,
+#accDlg #accBody #accountPage-settings .settings-section,
+#accDlg #accBody #accountPage-settings .dealer-account-editor {
+  width: 100% !important;
+  max-width: none !important;
+  box-sizing: border-box !important;
+}
+#accDlg #accBody #accountPage-settings .account-settings-tabs {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+#accDlg #accBody #accountPage-settings :is(
+  .account-settings-inner,.settings-section,.profile-card,.dealer-account-editor,
+  .dealer-editor-section,.account-subscription-note,.account-legal-preferences
+) {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+#accDlg #accBody #accountPage-settings .settings-section,
+#accDlg #accBody #accountPage-settings .dealer-editor-section {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+#accDlg #accBody #accountPage-settings .profile-card {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+#accDlg #accBody #accountPage-settings .profile-actions {
+  margin-left: 0 !important;
+}
+@media (max-width:760px) {
+  #accDlg #accBody {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  #accDlg #accBody #accountPage-settings {
+    --settings-inset: 0px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
