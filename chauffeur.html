@@ -334,7 +334,7 @@ async function loadVehicles(){
   notice('bookingNotice',$('vehicleId').selectedOptions[0]?.textContent+' selected. Complete your journey details below.','success');
  }));
 }
-let adminMode=false,adminBookings=[],adminDrivers=[];
+let adminMode=false,adminBookings=[],adminDrivers=[],adminNotificationEvents=[];
 async function loadBookings(){
  const {data,error}=await sb.from('chauffeur_bookings').select('id,booking_ref,status,payment_status,start_at,end_at,quoted_amount,final_amount,currency,assigned_driver_name,assigned_driver_phone,driver_id,customer_notes,customer_name,customer_phone,pickup_location,destination,pricing_method,whatsapp_opt_in,chauffeur_vehicles(display_name)').order('created_at',{ascending:false});
  if(error)throw error;$('myBookings').hidden=false;
@@ -358,13 +358,14 @@ window.addEventListener('3pedals:consent-changed',event=>persistChauffeurConsent
 async function syncSession(){const {data:{user}}=await sb.auth.getUser();currentUser=user;if(user){const choice=window.ThreePedalsConsent?.getChoice?.()||'rejected';persistChauffeurConsent(choice).catch(()=>{});}$('authPanel').hidden=!!user;$('requestForm').hidden=!user;if(user){const {data:p}=await sb.from('profiles').select('name,phone,is_admin').eq('id',user.id).maybeSingle();$('customerName').value=p?.name||user.user_metadata?.name||user.user_metadata?.full_name||'';$('customerPhone').value=p?.phone||user.user_metadata?.phone||'';adminMode=!!p?.is_admin;$('chauffeurAdmin').hidden=!adminMode;await loadBookings() }else{$('myBookings').hidden=true;$('chauffeurAdmin').hidden=true;adminMode=false}}
 
 async function loadAdmin(){
- const [{data:bookings,error:bErr},{data:drivers,error:dErr},{data:cancels,error:cErr}]=await Promise.all([
+ const [{data:bookings,error:bErr},{data:drivers,error:dErr},{data:cancels,error:cErr},{data:waEvents,error:waErr}]=await Promise.all([
   sb.from('chauffeur_bookings').select('id,booking_ref,status,payment_status,start_at,end_at,quoted_amount,final_amount,customer_name,customer_phone,pickup_location,destination,pricing_method,whatsapp_opt_in,driver_id,assigned_driver_name,assigned_driver_phone,chauffeur_vehicles(display_name)').order('start_at',{ascending:true}),
   sb.from('chauffeur_drivers').select('id,full_name,phone,is_active,licence_expiry').order('full_name'),
-  sb.from('chauffeur_cancellation_requests').select('id,booking_id,reason,status,created_at,chauffeur_bookings(booking_ref,customer_name)').order('created_at',{ascending:false})
+  sb.from('chauffeur_cancellation_requests').select('id,booking_id,reason,status,created_at,chauffeur_bookings(booking_ref,customer_name)').order('created_at',{ascending:false}),
+  sb.from('chauffeur_notification_events').select('id,booking_id,event_key,delivery_status,error_message,provider_message_id,created_at').order('created_at',{ascending:false}).limit(200)
  ]);
- if(bErr)throw bErr;if(dErr)throw dErr;if(cErr)throw cErr;
- adminBookings=bookings||[];adminDrivers=drivers||[];
+ if(bErr)throw bErr;if(dErr)throw dErr;if(cErr)throw cErr;if(waErr)console.warn('Could not load WhatsApp event history:',waErr);
+ adminBookings=bookings||[];adminDrivers=drivers||[];adminNotificationEvents=waEvents||[];
  const pending=adminBookings.filter(b=>b.status==='pending_approval').length,awaiting=adminBookings.filter(b=>b.status==='approved_awaiting_payment').length,confirmed=adminBookings.filter(b=>b.status==='confirmed').length;
  $('adminStats').innerHTML=[['Total requests',adminBookings.length],['Pending review',pending],['Awaiting payment',awaiting],['Confirmed',confirmed]].map(x=>'<div class="admin-stat"><strong>'+x[1]+'</strong><span>'+x[0]+'</span></div>').join('');
  renderAdminBookings();
@@ -378,7 +379,11 @@ function renderAdminBookings(){
  const rows=adminBookings.filter(b=>(!status||b.status===status)&&[b.booking_ref,b.customer_name,b.customer_phone,b.pickup_location,b.destination].some(v=>String(v||'').toLowerCase().includes(term)));
  $('adminBookings').innerHTML=rows.length?rows.map(b=>{
  const opts=adminDrivers.filter(d=>d.is_active).map(d=>'<option value="'+esc(d.id)+'" '+(d.id===b.driver_id?'selected':'')+'>'+esc(d.full_name)+'</option>').join('');
- return '<article class="admin-booking"><div class="admin-booking-top"><strong>'+esc(b.booking_ref)+' · '+esc(b.customer_name)+'</strong><span class="status">'+esc(b.status.replaceAll('_',' '))+'</span></div><p>'+esc(b.customer_phone)+' · '+esc(b.chauffeur_vehicles?.display_name||'Vehicle')+'<br>'+new Date(b.start_at).toLocaleString('en-KE')+(b.end_at?' – '+new Date(b.end_at).toLocaleString('en-KE'):'')+'<br>'+esc(b.pickup_location)+' → '+esc(b.destination)+'<br>Hire: '+esc(b.pricing_method)+' · Payment: '+esc(b.payment_status)+' · WhatsApp consent: '+(b.whatsapp_opt_in?'Yes':'No')+(b.customer_notes?'<br>Trip notes: '+esc(b.customer_notes):'')+(b.assigned_driver_name?'<br>Driver: '+esc(b.assigned_driver_name)+' · '+esc(b.assigned_driver_phone):'')+'</p><div class="admin-booking-controls"><input type="number" min="0" step="1" placeholder="Quote (KES)" aria-label="Quote in KES" data-quote="'+esc(b.id)+'" value="'+(b.final_amount??b.quoted_amount??'')+'"><select aria-label="Booking status" data-status="'+esc(b.id)+'"><option value="pending_approval" '+(b.status==='pending_approval'?'selected':'')+'>Pending review</option><option value="approved_awaiting_payment" '+(b.status==='approved_awaiting_payment'?'selected':'')+'>Approve · awaiting payment</option><option value="confirmed" '+(b.status==='confirmed'?'selected':'')+'>Confirmed</option><option value="declined" '+(b.status==='declined'?'selected':'')+'>Declined</option><option value="completed" '+(b.status==='completed'?'selected':'')+'>Completed</option><option value="cancelled" '+(b.status==='cancelled'?'selected':'')+'>Cancelled</option></select><select aria-label="Assign driver" data-driver="'+esc(b.id)+'"><option value="">Unassigned</option>'+opts+'</select><div class="actions"><button class="btn" type="button" data-save-booking="'+esc(b.id)+'">Save booking</button></div></div></article>';
+ const waKey=b.status==='approved_awaiting_payment'?'approved':b.status==='declined'?'declined':null;
+ const waEvent=waKey?adminNotificationEvents.find(e=>e.booking_id===b.id&&e.event_key===waKey):null;
+ const waLabel=!b.whatsapp_opt_in?'Customer opted out':waEvent?(waEvent.delivery_status==='sent'?'Accepted by WhatsApp API':waEvent.delivery_status==='failed'?'Failed: '+(waEvent.error_message||'No provider detail'):waEvent.delivery_status):'No attempt recorded';
+ const retryWa=waKey&&b.whatsapp_opt_in&&waEvent?.delivery_status!=='sent'?'<button class="ghost" type="button" data-retry-whatsapp="'+esc(b.id)+'" data-wa-event="'+waKey+'">Retry WhatsApp update</button>':'';
+ return '<article class="admin-booking"><div class="admin-booking-top"><strong>'+esc(b.booking_ref)+' · '+esc(b.customer_name)+'</strong><span class="status">'+esc(b.status.replaceAll('_',' '))+'</span></div><p>'+esc(b.customer_phone)+' · '+esc(b.chauffeur_vehicles?.display_name||'Vehicle')+'<br>'+new Date(b.start_at).toLocaleString('en-KE')+(b.end_at?' – '+new Date(b.end_at).toLocaleString('en-KE'):'')+'<br>'+esc(b.pickup_location)+' → '+esc(b.destination)+'<br>Hire: '+esc(b.pricing_method)+' · Payment: '+esc(b.payment_status)+' · WhatsApp consent: '+(b.whatsapp_opt_in?'Yes':'No')+'<br>WhatsApp update: '+esc(waLabel)+(waEvent?.provider_message_id?'<br>Provider message ID: '+esc(waEvent.provider_message_id):'')+(b.customer_notes?'<br>Trip notes: '+esc(b.customer_notes):'')+(b.assigned_driver_name?'<br>Driver: '+esc(b.assigned_driver_name)+' · '+esc(b.assigned_driver_phone):'')+'</p><div class="admin-booking-controls"><input type="number" min="0" step="1" placeholder="Quote (KES)" aria-label="Quote in KES" data-quote="'+esc(b.id)+'" value="'+(b.final_amount??b.quoted_amount??'')+'"><select aria-label="Booking status" data-status="'+esc(b.id)+'"><option value="pending_approval" '+(b.status==='pending_approval'?'selected':'')+'>Pending review</option><option value="approved_awaiting_payment" '+(b.status==='approved_awaiting_payment'?'selected':'')+'>Approve · awaiting payment</option><option value="confirmed" '+(b.status==='confirmed'?'selected':'')+'>Confirmed</option><option value="declined" '+(b.status==='declined'?'selected':'')+'>Declined</option><option value="completed" '+(b.status==='completed'?'selected':'')+'>Completed</option><option value="cancelled" '+(b.status==='cancelled'?'selected':'')+'>Cancelled</option></select><select aria-label="Assign driver" data-driver="'+esc(b.id)+'"><option value="">Unassigned</option>'+opts+'</select><div class="actions"><button class="btn" type="button" data-save-booking="'+esc(b.id)+'">Save booking</button>'+retryWa+'</div></div></article>';
  }).join(''):'<p class="hint">No bookings match these filters.</p>';
 }
 async function saveAdminBooking(id){
@@ -413,7 +418,7 @@ async function saveAdminBooking(id){
    const {data:waData,error:waError}=await sb.functions.invoke('notify-chauffeur-whatsapp',{body:{booking_id:id,event_type:whatsappEvent}});
    if(waError)throw waError;
    if(waData?.error)throw new Error(waData.error);
-   if(waData?.status==='sent'||waData?.status==='already_sent')whatsappMessage=' WhatsApp update '+(waData.status==='sent'?'sent.':'was already sent.');
+   if(waData?.status==='accepted'||waData?.status==='sent'||waData?.status==='already_sent')whatsappMessage=' WhatsApp API '+(waData.status==='already_sent'?'already has this message.':'accepted the update; delivery is not yet confirmed.');
    else if(waData?.status==='skipped')whatsappMessage=' WhatsApp was skipped because the customer did not opt in.';
    else whatsappMessage=' Booking saved; WhatsApp response: '+String(waData?.status||'received')+'.';
   }catch(waError){
