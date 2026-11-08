@@ -1459,3 +1459,44 @@
 @media(max-width:760px){
   #accDlg #accBody .account-promotions-page>.account-tools{padding:17px 19px 21px!important;}
 }
+
+
+/* Marketing page: match the clean, unlayered Insights surface.
+   Remove page and section shells only; keep promotion packages, payment controls
+   and individual history items as the actual content components. */
+#accDlg #accBody .account-promotions-page,
+#accDlg #accBody .account-promotions-page>.account-tools,
+#accDlg #accBody .account-promotions-page>.account-tools.account-tools,
+#accDlg #accBody .account-promotions-page>.account-tools>section,
+#accDlg #accBody .account-promotions-page>.account-tools>.panel,
+#accDlg #accBody .account-promotions-page>.account-tools>.card,
+#accDlg #accBody .account-promotions-page>.account-tools::before,
+#accDlg #accBody .account-promotions-page>.account-tools::after,
+#accDlg #accBody .account-promotions-page::before,
+#accDlg #accBody .account-promotions-page::after{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+  filter:none!important;
+}
+#accDlg #accBody .account-promotions-page{
+  box-sizing:border-box!important;
+  width:100%!important;
+  padding:8px 4px 24px!important;
+}
+#accDlg #accBody .account-promotions-page>.account-tools{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:0 0 20px!important;
+  padding:10px 2px 18px!important;
+  border-radius:0!important;
+}
+#accDlg #accBody .account-promotions-page>.account-tools>h3{
+  margin:0 0 10px!important;
+}
