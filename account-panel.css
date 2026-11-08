@@ -1725,3 +1725,44 @@
     padding-right:0!important;
   }
 }
+
+
+/* Marketing content grid: one shared inset for every heading, description,
+   label, form control and package/history block. The package cards retain
+   their own internal padding and the existing unboxed glass surface. */
+#accDlg #accBody .account-page.account-promotions-page > .account-tools{
+  box-sizing:border-box!important;
+  width:100%!important;
+  padding:24px 32px 28px!important;
+  margin:0!important;
+}
+#accDlg #accBody .account-page.account-promotions-page > .account-tools
+  :is(h2,h3,h4,h5,h6,p,label,.meta,.description,.subtitle){
+  box-sizing:border-box!important;
+  padding-left:0!important;
+  padding-right:0!important;
+  margin-left:0!important;
+  text-align:left!important;
+}
+#accDlg #accBody .account-page.account-promotions-page > .account-tools
+  :is(.promotion-package-grid,.promotion-history-head,.promotion-history-item,#promotionHistoryList){
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+}
+#accDlg #accBody .account-page.account-promotions-page > .account-tools
+  :is(input,select,textarea){
+  box-sizing:border-box!important;
+  max-width:100%!important;
+}
+@media(max-width:760px){
+  #accDlg #accBody .account-page.account-promotions-page > .account-tools{
+    padding:20px 24px 24px!important;
+  }
+}
+@media(max-width:420px){
+  #accDlg #accBody .account-page.account-promotions-page > .account-tools{
+    padding-right:20px!important;
+    padding-left:20px!important;
+  }
+}
