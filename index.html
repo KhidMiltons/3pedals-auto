@@ -3779,103 +3779,57 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){f
 </style>
 
 <style id="garage-bookings-alignment-final">
-/* Inset the bookings heading and keep both actions together at the right edge. */
+/* Consistent inner gutter: keep the heading, actions and booking rows clear of the enclosing card edge. */
 #accDlg #accBody .account-bookings-head{
-  display:flex!important;
-  align-items:center!important;
-  justify-content:flex-start!important;
-  width:100%!important;
-  box-sizing:border-box!important;
-  margin:0 0 12px!important;
-  padding:8px 26px 0!important;
+  display:flex!important;align-items:center!important;justify-content:flex-start!important;
+  width:100%!important;box-sizing:border-box!important;
+  margin:0 0 14px!important;padding:12px 34px 0!important;
 }
 #accDlg #accBody .account-bookings-head h3{
-  flex:1 1 auto!important;
-  min-width:0!important;
-  margin:0!important;
-  padding:0!important;
-  font-size:clamp(15px,1.5vw,18px)!important;
-  line-height:1.4!important;
-  text-align:left!important;
+  flex:1 1 auto!important;min-width:0!important;margin:0!important;padding:0!important;
+  font-size:clamp(15px,1.5vw,18px)!important;line-height:1.4!important;text-align:left!important;
 }
 #accDlg #accBody #garageBookingAction{
-  display:flex!important;
-  align-items:center!important;
-  justify-content:flex-end!important;
-  flex-wrap:nowrap!important;
-  gap:10px!important;
-  width:100%!important;
-  box-sizing:border-box!important;
-  margin:0 0 20px!important;
-  padding:0 26px!important;
+  display:flex!important;align-items:center!important;justify-content:flex-end!important;
+  flex-wrap:nowrap!important;gap:12px!important;width:100%!important;box-sizing:border-box!important;
+  margin:0 0 22px!important;padding:0 34px!important;
 }
 #accDlg #accBody #garageBookingAction .btn,
 #accDlg #accBody #clearMyCompletedBookings{
-  display:inline-flex!important;
-  flex:0 0 auto!important;
-  align-items:center!important;
-  justify-content:center!important;
-  min-height:40px!important;
-  margin:0!important;
-  padding:9px 15px!important;
-  line-height:1.2!important;
-  text-align:center!important;
-  white-space:nowrap!important;
+  display:inline-flex!important;flex:0 0 auto!important;align-items:center!important;justify-content:center!important;
+  min-height:40px!important;margin:0!important;padding:9px 16px!important;
+  line-height:1.2!important;text-align:center!important;white-space:nowrap!important;
 }
 #accDlg #accBody #myGarageBookings{
-  width:100%!important;
-  min-width:0!important;
-  box-sizing:border-box!important;
-  padding:0 26px!important;
+  width:100%!important;min-width:0!important;box-sizing:border-box!important;padding:0 34px!important;
 }
 #accDlg #accBody #myGarageBookings .account-booking-row{
-  display:flex!important;
-  align-items:center!important;
-  justify-content:space-between!important;
-  gap:14px!important;
-  width:100%!important;
-  min-width:0!important;
-  box-sizing:border-box!important;
-  margin:0 0 10px!important;
-  padding:14px 16px!important;
+  display:flex!important;align-items:center!important;justify-content:space-between!important;
+  gap:14px!important;width:100%!important;min-width:0!important;box-sizing:border-box!important;
+  margin:0 0 10px!important;padding:14px 18px!important;
 }
 #accDlg #accBody #myGarageBookings .account-booking-row>div{
-  display:grid!important;
-  gap:5px!important;
-  flex:1 1 auto!important;
-  min-width:0!important;
+  display:grid!important;gap:5px!important;flex:1 1 auto!important;min-width:0!important;
 }
 #accDlg #accBody #myGarageBookings .account-booking-row .st{
-  flex:0 0 auto!important;
-  margin:0!important;
-  text-align:center!important;
+  flex:0 0 auto!important;margin:0!important;text-align:center!important;
 }
-#accDlg #accBody #myGarageBookings>p.meta{
-  margin:0!important;
-  padding:12px 0!important;
-  text-align:left!important;
-}
-@media(max-width:600px){
-  #accDlg #accBody .account-bookings-head{padding:8px 16px 0!important}
+#accDlg #accBody #myGarageBookings>p.meta{margin:0!important;padding:12px 0!important;text-align:left!important}
+@media(max-width:760px){
+  #accDlg #accBody .account-bookings-head{padding:10px 22px 0!important}
   #accDlg #accBody #garageBookingAction{
-    justify-content:flex-end!important;
-    gap:8px!important;
-    padding:0 16px!important;
-    margin-bottom:18px!important;
+    justify-content:flex-end!important;gap:9px!important;padding:0 22px!important;margin-bottom:18px!important;
   }
   #accDlg #accBody #garageBookingAction .btn,
-  #accDlg #accBody #clearMyCompletedBookings{
-    min-height:36px!important;
-    padding:8px 11px!important;
-    font-size:11px!important;
-  }
-  #accDlg #accBody #myGarageBookings{padding:0 16px!important}
-  #accDlg #accBody #myGarageBookings .account-booking-row{padding:12px!important;gap:9px!important}
+  #accDlg #accBody #clearMyCompletedBookings{min-height:37px!important;padding:8px 12px!important;font-size:11px!important}
+  #accDlg #accBody #myGarageBookings{padding:0 22px!important}
+  #accDlg #accBody #myGarageBookings .account-booking-row{padding:12px 14px!important;gap:9px!important}
 }
-@media(max-width:360px){
-  #accDlg #accBody #garageBookingAction{gap:6px!important;padding:0 12px!important}
+@media(max-width:380px){
+  #accDlg #accBody .account-bookings-head{padding-right:16px!important;padding-left:16px!important}
+  #accDlg #accBody #garageBookingAction{gap:7px!important;padding-right:16px!important;padding-left:16px!important}
   #accDlg #accBody #garageBookingAction .btn,
-  #accDlg #accBody #clearMyCompletedBookings{padding:7px 8px!important;font-size:10px!important}
-  #accDlg #accBody #myGarageBookings{padding:0 12px!important}
+  #accDlg #accBody #clearMyCompletedBookings{padding:7px 9px!important;font-size:10px!important}
+  #accDlg #accBody #myGarageBookings{padding-right:16px!important;padding-left:16px!important}
 }
 </style>
