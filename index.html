@@ -3729,7 +3729,11 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){f
 <style id="marketing-parent-wrapper-final-fix">
 /* The remaining layer is the shared .account-pages wrapper, not Marketing itself.
    Flatten that parent only while the Promotions page is the active page. */
-#accDlg #accBody .account-pages:has(> #accountPage-promotions:not([hidden])){
+#accDlg #accBody .account-pages:has(> #accountPage-promotions:not([hidden])),
+#accDlg #accBody #accountPage-promotions,
+#accDlg #accBody #accountPage-promotions > .account-tools,
+#accDlg #accBody #accountPage-promotions > .account-tools::before,
+#accDlg #accBody #accountPage-promotions > .account-tools::after{
   background:transparent!important;
   background-color:transparent!important;
   background-image:none!important;
