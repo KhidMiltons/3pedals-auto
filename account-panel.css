@@ -1500,3 +1500,21 @@
 #accDlg #accBody .account-promotions-page>.account-tools>h3{
   margin:0 0 10px!important;
 }
+
+/* Marketing page: eliminate the remaining lower nested wrapper outline without flattening package/history components. */
+#accDlg #accBody .account-promotions-page>.account-tools>*:not(.promotion-package-grid):not(.promotion-package):not(.promotion-history-item):not(.promotion-status-badge):not(button):not(input):not(select):not(textarea),
+#accDlg #accBody .account-promotions-page>.account-tools>*:not(.promotion-package-grid):not(.promotion-package):not(.promotion-history-item):not(.promotion-status-badge):not(button):not(input):not(select):not(textarea)::before,
+#accDlg #accBody .account-promotions-page>.account-tools>*:not(.promotion-package-grid):not(.promotion-package):not(.promotion-history-item):not(.promotion-status-badge):not(button):not(input):not(select):not(textarea)::after,
+#accDlg #accBody .account-promotions-page>.account-tools>*:not(.promotion-package-grid):not(.promotion-package):not(.promotion-history-item):not(.promotion-status-badge):not(button):not(input):not(select):not(textarea) :is(div,section,article,.panel,.card,.account-tools),
+#accDlg #accBody .account-promotions-page>.account-tools>*:not(.promotion-package-grid):not(.promotion-package):not(.promotion-history-item):not(.promotion-status-badge):not(button):not(input):not(select):not(textarea) :is(div,section,article,.panel,.card,.account-tools)::before,
+#accDlg #accBody .account-promotions-page>.account-tools>*:not(.promotion-package-grid):not(.promotion-package):not(.promotion-history-item):not(.promotion-status-badge):not(button):not(input):not(select):not(textarea) :is(div,section,article,.panel,.card,.account-tools)::after{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+  filter:none!important;
+}
