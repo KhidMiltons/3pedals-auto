@@ -3754,6 +3754,35 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){f
   content:none!important;display:none!important;
 }
 </style>
+
+<style id="overview-remove-shared-background-layer">
+/* Overview only: remove the shared glass panel behind the standalone cards. */
+#accDlg #accBody .account-pages:has(> #accountPage-overview:not([hidden])),
+#accDlg #accBody .account-pages:has(> #accountPage-overview:not([hidden]))::before,
+#accDlg #accBody .account-pages:has(> #accountPage-overview:not([hidden]))::after,
+#accDlg #accBody #accountPage-overview,
+#accDlg #accBody #accountPage-overview::before,
+#accDlg #accBody #accountPage-overview::after{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  border-color:transparent!important;
+  border-radius:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+  filter:none!important;
+}
+#accDlg #accBody .account-pages:has(> #accountPage-overview:not([hidden]))::before,
+#accDlg #accBody .account-pages:has(> #accountPage-overview:not([hidden]))::after,
+#accDlg #accBody #accountPage-overview::before,
+#accDlg #accBody #accountPage-overview::after{
+  content:none!important;
+  display:none!important;
+}
+</style>
 </body>
 
 </html>
