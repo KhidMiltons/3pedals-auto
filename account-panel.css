@@ -1344,14 +1344,14 @@
 }
 
 
-/* Promotion dashboard / Marketing section: remove the surrounding card layers
-   while keeping package choices and individual listing rows visible. */
-#accDlg #accBody .seller-dashboard>.account-tools:last-child,
-#accDlg #accBody .seller-dashboard>.account-tools:last-child::before,
-#accDlg #accBody .seller-dashboard>.account-tools:last-child::after,
-#accDlg #accBody .seller-dashboard>.account-tools:last-child>section,
-#accDlg #accBody .seller-dashboard>.account-tools:last-child>.panel,
-#accDlg #accBody .seller-dashboard>.account-tools:last-child>.card{
+/* Promotions page: the Marketing tools section is moved here by account rendering.
+   Remove only its outer surface; retain package cards, payment controls and history rows. */
+#accDlg #accBody .account-promotions-page>.account-tools,
+#accDlg #accBody .account-promotions-page>.account-tools::before,
+#accDlg #accBody .account-promotions-page>.account-tools::after,
+#accDlg #accBody .account-promotions-page>.account-tools>section,
+#accDlg #accBody .account-promotions-page>.account-tools>.panel,
+#accDlg #accBody .account-promotions-page>.account-tools>.card{
   background:transparent!important;
   background-color:transparent!important;
   background-image:none!important;
@@ -1362,12 +1362,13 @@
   backdrop-filter:none!important;
   filter:none!important;
 }
-#accDlg #accBody .seller-dashboard>.account-tools:last-child{
+#accDlg #accBody .account-promotions-page>.account-tools{
+  display:block!important;
   box-sizing:border-box!important;
   width:100%!important;
   min-width:0!important;
-  margin:0 0 20px!important;
+  margin:0!important;
   padding:10px 2px 18px!important;
   border-radius:0!important;
 }
-#accDlg #accBody .seller-dashboard>.account-tools:last-child>h3{margin:0 0 10px!important;}
+#accDlg #accBody .account-promotions-page>.account-tools>h3{margin:0 0 10px!important;}
