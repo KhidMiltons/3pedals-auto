@@ -1413,3 +1413,84 @@ body:has(#accDlg[open])::after {
     padding: 14px !important;
   }
 }
+
+
+/* 2026-11-08 — account dashboard typography rhythm and card spacing. */
+/* Keep headings, labels and card content on a consistent readable text edge. */
+#accDlg #accBody :is(.account-page,.account-pages,.workspace-v2) {
+  text-align: left !important;
+}
+#accDlg #accBody :is(h1,h2,h3,h4,.section-title,.account-bookings-heading) {
+  text-align: left !important;
+  line-height: 1.3 !important;
+  letter-spacing: -.015em !important;
+  overflow-wrap: anywhere !important;
+}
+#accDlg #accBody :is(p,.meta,.description,.helper-text) {
+  line-height: 1.55 !important;
+  overflow-wrap: anywhere !important;
+}
+#accDlg #accBody :is(.workspace-v2-hero,.workspace-v2-metric,.workspace-v2-card,
+  .account-tools,.account-booking-item,.svc,.profile-card,.dealer-account-editor) {
+  box-sizing: border-box !important;
+  min-width: 0 !important;
+  text-align: left !important;
+}
+#accDlg #accBody :is(.workspace-v2-metric,.workspace-v2-card,.account-tools,.svc) {
+  padding: 18px !important;
+}
+#accDlg #accBody :is(.workspace-v2-metric-grid,.workspace-v2-main-grid,.account-tools-grid,
+  .account-cards-grid,.account-actions-grid,.account-list-grid) {
+  column-gap: 16px !important;
+  row-gap: 16px !important;
+}
+#accDlg #accBody :is(.workspace-v2-card,.account-tools,.svc) > :is(h2,h3,h4,p,.meta) {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+#accDlg #accBody :is(.workspace-v2-card,.account-tools,.svc) > :is(h2,h3,h4):first-child {
+  margin-top: 0 !important;
+  margin-bottom: 12px !important;
+}
+#accDlg #accBody :is(.workspace-v2-card,.account-tools,.svc) > :is(p,.meta):last-child {
+  margin-bottom: 0 !important;
+}
+#accDlg #accBody :is(.workspace-v2-card,.account-tools,.svc) :is(button,a,[role="button"]) {
+  max-width: 100% !important;
+}
+#accDlg #accBody :is(.account-page,.workspace-v2) > :is(.workspace-v2-hero,.workspace-v2-metric-grid,
+  .workspace-v2-main-grid,.workspace-v2-card,.account-tools,.svc) {
+  margin-bottom: 16px !important;
+}
+#accDlg #accBody :is(.workspace-v2-metric,.workspace-v2-card,.account-tools,.svc) :is(h1,h2,h3,h4) {
+  margin-top: 0 !important;
+}
+#accDlg #accBody .account-bookings-page .account-booking-item {
+  padding: 18px 20px !important;
+  gap: 18px !important;
+}
+#accDlg #accBody .account-bookings-page .account-booking-item > div {
+  gap: 7px !important;
+  text-align: left !important;
+}
+#accDlg #accBody .account-bookings-page .account-booking-item :is(strong,b) {
+  line-height: 1.4 !important;
+}
+@media (max-width:760px) {
+  #accDlg #accBody :is(.workspace-v2-metric,.workspace-v2-card,.account-tools,.svc) {
+    padding: 15px !important;
+  }
+  #accDlg #accBody :is(.workspace-v2-metric-grid,.workspace-v2-main-grid,.account-tools-grid,
+    .account-cards-grid,.account-actions-grid,.account-list-grid) {
+    column-gap: 12px !important;
+    row-gap: 12px !important;
+  }
+  #accDlg #accBody :is(.account-page,.workspace-v2) > :is(.workspace-v2-hero,.workspace-v2-metric-grid,
+    .workspace-v2-main-grid,.workspace-v2-card,.account-tools,.svc) {
+    margin-bottom: 12px !important;
+  }
+  #accDlg #accBody .account-bookings-page .account-booking-item {
+    padding: 14px !important;
+    gap: 12px !important;
+  }
+}
