@@ -1707,3 +1707,21 @@
     padding-left:12px!important;
   }
 }
+
+
+/* Marketing: align the reminder, payment and history copy with the left edge
+   of the Featured package card. Keep the package cards and form controls intact. */
+#accDlg #accBody .account-page.account-promotions-page > .account-tools > :is(h3,h4,p,label),
+#accDlg #accBody .account-page.account-promotions-page > .account-tools > :is(h3,h4,p,label) :is(strong,span){
+  padding-left:0!important;
+  padding-right:0!important;
+  margin-left:0!important;
+  text-align:left!important;
+}
+@media(max-width:760px){
+  #accDlg #accBody .account-page.account-promotions-page > .account-tools > :is(h3,h4,p,label),
+  #accDlg #accBody .account-page.account-promotions-page > .account-tools > :is(h3,h4,p,label) :is(strong,span){
+    padding-left:0!important;
+    padding-right:0!important;
+  }
+}
