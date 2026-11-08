@@ -1612,3 +1612,50 @@
   #accDlg #accBody .account-promotions-page>.account-tools{padding:17px 16px 19px!important}
   #accDlg #accBody .account-promotions-page .promotion-package{padding:13px!important}
 }
+
+
+/* Marketing: remove the pale/solid wrapper completely, as on Insights.
+   The page remains transparent; content gets a generous inset instead. */
+#accDlg #accBody .account-promotions-page{
+  box-sizing:border-box!important;width:100%!important;min-width:0!important;
+  padding:8px 0 24px!important;background:transparent!important;
+  border:0!important;box-shadow:none!important;
+}
+#accDlg #accBody .account-promotions-page>.account-tools{
+  box-sizing:border-box!important;width:100%!important;min-width:0!important;
+  margin:0 0 20px!important;padding:22px 28px 24px!important;
+  background:transparent!important;background-color:transparent!important;background-image:none!important;
+  border:0!important;border-radius:0!important;outline:0!important;box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;filter:none!important;
+}
+#accDlg #accBody .account-promotions-page>.account-tools::before,
+#accDlg #accBody .account-promotions-page>.account-tools::after{content:none!important;display:none!important}
+#accDlg #accBody .account-promotions-page>.account-tools>.seller-listing,
+#accDlg #accBody .account-promotions-page>.account-tools>.seller-listing::before,
+#accDlg #accBody .account-promotions-page>.account-tools>.seller-listing::after{
+  background:transparent!important;background-color:transparent!important;background-image:none!important;
+  border:0!important;border-radius:0!important;outline:0!important;box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;filter:none!important;
+}
+#accDlg #accBody .account-promotions-page>.account-tools>.seller-listing{
+  padding:12px 0!important;margin:10px 0!important;
+  border-bottom:1px solid var(--acc-line,rgba(255,255,255,.09))!important;
+}
+#accDlg #accBody .account-promotions-page>.account-tools :is(h3,h4,p,label,.meta,.seller-listing-main,.seller-listing-actions){
+  box-sizing:border-box!important;max-width:100%!important;
+}
+#accDlg #accBody .account-promotions-page>.account-tools>h3{margin:0 0 16px!important}
+#accDlg #accBody .account-promotions-page .promotion-package{
+  padding:15px!important;background:#202629!important;background-color:#202629!important;
+  border:1px solid var(--acc-line,rgba(255,255,255,.12))!important;
+  border-radius:12px!important;box-shadow:none!important;
+}
+#accDlg #accBody .account-promotions-page .promotion-history-item{
+  padding:13px 15px!important;background:#202629!important;border:0!important;
+  border-radius:10px!important;box-shadow:none!important;
+}
+@media(max-width:760px){
+  #accDlg #accBody .account-promotions-page{padding:6px 0 18px!important}
+  #accDlg #accBody .account-promotions-page>.account-tools{padding:18px 18px 20px!important}
+  #accDlg #accBody .account-promotions-page .promotion-package{padding:13px!important}
+}
