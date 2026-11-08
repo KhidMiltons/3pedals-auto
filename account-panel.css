@@ -1206,3 +1206,29 @@
     width:100%!important;
   }
 }
+
+
+/* Final override: the Buying workspace outer card itself must be unpainted. */
+#accDlg #accBody #accountPage-buying .account-buyer-workspace,
+#accDlg #accBody #accountPage-buying section.account-tools.account-buyer-workspace{
+  background:none!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+  filter:none!important;
+}
+#accDlg #accBody #accountPage-buying .account-buyer-workspace::before,
+#accDlg #accBody #accountPage-buying .account-buyer-workspace::after{
+  content:none!important;
+  display:none!important;
+}
+#accDlg #accBody #accountPage-buying{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  box-shadow:none!important;
+}
