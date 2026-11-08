@@ -1298,3 +1298,35 @@
   border-radius:0!important;
 }
 #accDlg #accountMenu [data-page="dashboard"]{background-color:initial}
+
+
+/* Align the account Sign out and Close actions as a matched button pair. */
+#accDlg #accBody .acts:has(>#accOut):has(>#accClose){
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  align-items:stretch!important;
+  gap:12px!important;
+  width:100%!important;
+  margin:22px 0 8px!important;
+  padding:0!important;
+}
+#accDlg #accBody .acts:has(>#accOut):has(>#accClose)>#accOut,
+#accDlg #accBody .acts:has(>#accOut):has(>#accClose)>#accClose{
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:44px!important;
+  height:44px!important;
+  margin:0!important;
+  padding:0 16px!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+}
+@media(max-width:760px){
+  #accDlg #accBody .acts:has(>#accOut):has(>#accClose){gap:9px!important}
+  #accDlg #accBody .acts:has(>#accOut):has(>#accClose)>#accOut,
+  #accDlg #accBody .acts:has(>#accOut):has(>#accClose)>#accClose{min-height:42px!important;height:42px!important}
+}
