@@ -403,7 +403,26 @@ async function saveAdminBooking(id){
  else if(old.driver_id){payload.driver_id=null;payload.assigned_driver_name=null;payload.assigned_driver_phone=null;payload.driver_assigned_at=null}
  if(status==='confirmed'&&old.payment_status!=='paid')throw Error('A booking can only be confirmed after its M-Pesa payment is marked paid.');
  const {error}=await sb.from('chauffeur_bookings').update(payload).eq('id',id);if(error)throw error;
- await loadBookings();notice('bookingNotice','Booking '+old.booking_ref+' updated. WhatsApp messages remain on hold until the Meta template is approved.','success');
+ let whatsappMessage='';
+ let whatsappEvent=null;
+ if(status==='approved_awaiting_payment'&&old.status!=='approved_awaiting_payment')whatsappEvent='approved';
+ else if(status==='declined'&&old.status!=='declined')whatsappEvent='declined';
+ else if(status==='confirmed'&&driver&&driver.id!==old.driver_id)whatsappEvent='driver_assigned';
+ if(whatsappEvent){
+  try{
+   const {data:waData,error:waError}=await sb.functions.invoke('notify-chauffeur-whatsapp',{body:{booking_id:id,event_type:whatsappEvent}});
+   if(waError)throw waError;
+   if(waData?.error)throw new Error(waData.error);
+   if(waData?.status==='sent'||waData?.status==='already_sent')whatsappMessage=' WhatsApp update '+(waData.status==='sent'?'sent.':'was already sent.');
+   else if(waData?.status==='skipped')whatsappMessage=' WhatsApp was skipped because the customer did not opt in.';
+   else whatsappMessage=' Booking saved; WhatsApp response: '+String(waData?.status||'received')+'.';
+  }catch(waError){
+   console.error('Chauffeur WhatsApp notification failed:',waError);
+   whatsappMessage=' Booking saved, but the WhatsApp update could not be sent. Check the WhatsApp configuration and notification log.';
+  }
+ }
+ await loadBookings();
+ notice('bookingNotice','Booking '+old.booking_ref+' updated.'+whatsappMessage,'success');
 }
 function updateEstimate(){
  const car=vehicles.find(v=>v.id===$('vehicleId').value),method=$('pricingMethod').value;
