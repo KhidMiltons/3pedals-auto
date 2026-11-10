@@ -3906,3 +3906,72 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){f
   #accDlg #accBody #accountPage-settings .dealer-account-editor{padding:14px!important}
 }
 </style>
+
+<style id="marketing-background-and-content-spacing-final">
+/* Marketing dashboard: transparent page canvas, with no shared glass slab.
+   Promotion packages, payment controls and history items retain their own surfaces. */
+#accDlg #accBody .account-pages:has(> #accountPage-promotions:not([hidden])),
+#accDlg #accBody .account-pages:has(> #accountPage-promotions:not([hidden]))::before,
+#accDlg #accBody .account-pages:has(> #accountPage-promotions:not([hidden]))::after,
+#accDlg #accBody #accountPage-promotions,
+#accDlg #accBody #accountPage-promotions::before,
+#accDlg #accBody #accountPage-promotions::after,
+#accDlg #accBody #accountPage-promotions .account-promotions-page,
+#accDlg #accBody #accountPage-promotions .account-promotions-page::before,
+#accDlg #accBody #accountPage-promotions .account-promotions-page::after,
+#accDlg #accBody #accountPage-promotions>.account-tools,
+#accDlg #accBody #accountPage-promotions>.account-tools::before,
+#accDlg #accBody #accountPage-promotions>.account-tools::after{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  border-color:transparent!important;
+  border-radius:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+  filter:none!important;
+}
+#accDlg #accBody .account-pages:has(> #accountPage-promotions:not([hidden]))::before,
+#accDlg #accBody .account-pages:has(> #accountPage-promotions:not([hidden]))::after,
+#accDlg #accBody #accountPage-promotions::before,
+#accDlg #accBody #accountPage-promotions::after,
+#accDlg #accBody #accountPage-promotions .account-promotions-page::before,
+#accDlg #accBody #accountPage-promotions .account-promotions-page::after,
+#accDlg #accBody #accountPage-promotions>.account-tools::before,
+#accDlg #accBody #accountPage-promotions>.account-tools::after{
+  content:none!important;display:none!important;
+}
+#accDlg #accBody #accountPage-promotions{
+  box-sizing:border-box!important;width:100%!important;min-width:0!important;
+  padding:0!important;
+}
+#accDlg #accBody #accountPage-promotions>.account-tools,
+#accDlg #accBody #accountPage-promotions .account-promotions-page>.account-tools,
+#accDlg #accBody .account-page.account-promotions-page>.account-tools{
+  box-sizing:border-box!important;width:100%!important;min-width:0!important;
+  margin:0 0 20px!important;padding:24px 30px 28px!important;
+  text-align:left!important;
+}
+#accDlg #accBody #accountPage-promotions .account-tools>h2,
+#accDlg #accBody #accountPage-promotions .account-tools>h3,
+#accDlg #accBody #accountPage-promotions .account-tools>h4,
+#accDlg #accBody #accountPage-promotions .account-tools>p,
+#accDlg #accBody #accountPage-promotions .account-tools>label{
+  box-sizing:border-box!important;max-width:100%!important;
+  margin-left:0!important;margin-right:0!important;
+  padding-left:0!important;padding-right:0!important;
+}
+#accDlg #accBody #accountPage-promotions .account-tools>*{
+  min-width:0!important;
+}
+@media(max-width:760px){
+  #accDlg #accBody #accountPage-promotions>.account-tools,
+  #accDlg #accBody #accountPage-promotions .account-promotions-page>.account-tools,
+  #accDlg #accBody .account-page.account-promotions-page>.account-tools{
+    padding:18px 18px 22px!important;
+  }
+}
+</style>
