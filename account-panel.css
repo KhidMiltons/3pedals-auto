@@ -2274,3 +2274,83 @@
 #accDlg #accBody :is(.workspace-v2-metric,.workspace-v2-card,.seller-listing){
   backface-visibility:hidden;
 }
+
+
+/* FINAL Overview polish: remove every shared wrapper surface so the
+   welcome area and independent dashboard modules sit on the page canvas. */
+#accDlg #accBody .account-pages:has(> #accountPage-overview:not([hidden])),
+#accDlg #accBody .account-pages:has(> #accountPage-overview:not([hidden])) > #accountPage-overview,
+#accDlg #accBody #accountPage-overview,
+#accDlg #accBody #accountPage-overview > .workspace-v2,
+#accDlg #accBody #accountPage-overview > .workspace-v2::before,
+#accDlg #accBody #accountPage-overview > .workspace-v2::after {
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+  filter:none!important;
+}
+#accDlg #accBody .account-pages:has(> #accountPage-overview:not([hidden]))::before,
+#accDlg #accBody .account-pages:has(> #accountPage-overview:not([hidden]))::after,
+#accDlg #accBody #accountPage-overview::before,
+#accDlg #accBody #accountPage-overview::after,
+#accDlg #accBody #accountPage-overview > .workspace-v2::before,
+#accDlg #accBody #accountPage-overview > .workspace-v2::after {
+  content:none!important;
+  display:none!important;
+}
+/* The welcome banner is intentionally unboxed; only its content remains. */
+#accDlg #accBody #accountPage-overview .workspace-v2-hero {
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  border-radius:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+}
+
+/* Premium desktop card interaction: restrained lift, soft edge highlight,
+   and deeper shadow without a bright/white hover wash. */
+@media (hover:hover) and (pointer:fine) and (min-width:761px) {
+  #accDlg #accBody #accountPage-overview
+  :is(.workspace-v2-metric,.workspace-v2-inventory,.workspace-v2-shortcuts,
+      .workspace-v2-dealer,.workspace-v2-activity) {
+    transform:translate3d(0,0,0)!important;
+    border:1px solid rgba(255,255,255,.07)!important;
+    box-shadow:0 2px 12px rgba(0,0,0,.12)!important;
+    transition:
+      transform .3s cubic-bezier(.4,0,.2,1),
+      border-color .3s cubic-bezier(.4,0,.2,1),
+      box-shadow .3s cubic-bezier(.4,0,.2,1),
+      background-color .3s cubic-bezier(.4,0,.2,1)!important;
+    backface-visibility:hidden;
+  }
+  #accDlg #accBody #accountPage-overview
+  :is(.workspace-v2-metric,.workspace-v2-inventory,.workspace-v2-shortcuts,
+      .workspace-v2-dealer,.workspace-v2-activity):hover {
+    transform:translate3d(0,-4px,0)!important;
+    border-color:rgba(255,255,255,.20)!important;
+    background-color:#1b2023!important;
+    box-shadow:0 8px 30px rgba(0,0,0,.5)!important;
+  }
+  #accDlg #accBody #accountPage-overview
+  :is(.workspace-v2-metric,.workspace-v2-inventory,.workspace-v2-shortcuts,
+      .workspace-v2-dealer,.workspace-v2-activity):focus-within {
+    border-color:rgba(216,183,122,.3)!important;
+  }
+}
+@media(prefers-reduced-motion:reduce) {
+  #accDlg #accBody #accountPage-overview
+  :is(.workspace-v2-metric,.workspace-v2-inventory,.workspace-v2-shortcuts,
+      .workspace-v2-dealer,.workspace-v2-activity) {
+    transition:none!important;
+    transform:none!important;
+  }
+}
