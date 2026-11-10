@@ -2151,3 +2151,37 @@
 @media(max-width:380px){
   #accDlg #accBody #accountPage-overview .workspace-v2-metric{padding:10px!important}
 }
+
+/* Mobile seller-menu trigger: keep the brand/favicon mark icon-sized, never full-size. */
+@media(max-width:760px){
+  #accDlg #accMenuToggle{
+    box-sizing:border-box!important;
+    display:grid!important;
+    place-items:center!important;
+    width:42px!important;
+    min-width:42px!important;
+    max-width:42px!important;
+    height:42px!important;
+    min-height:42px!important;
+    max-height:42px!important;
+    padding:0!important;
+    overflow:hidden!important;
+    line-height:1!important;
+    font-size:0!important;
+  }
+  #accDlg #accMenuToggle img,
+  #accDlg #accMenuToggle svg,
+  #accDlg #accMenuToggle picture,
+  #accDlg #accMenuToggle picture img{
+    display:block!important;
+    width:18px!important;
+    min-width:18px!important;
+    max-width:18px!important;
+    height:18px!important;
+    min-height:18px!important;
+    max-height:18px!important;
+    flex:0 0 18px!important;
+    object-fit:contain!important;
+    overflow:hidden!important;
+  }
+}
