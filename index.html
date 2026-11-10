@@ -6,7 +6,7 @@
 <base target="_top">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
-<link rel="stylesheet" href="/account-panel.css?v=20261108-overview-modular-cards-1">
+<link rel="stylesheet" href="/account-panel.css?v=20261110-account-glass-and-profile-inset-1">
 <link rel="preload" as="image" href="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=60" media="(max-width: 760px)" fetchpriority="high">
 <link rel="preload" as="image" href="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72" media="(min-width: 761px)" fetchpriority="high">
 <link rel="preconnect" href="https://dlejmelyeaaxcvelvzia.supabase.co" crossorigin>
@@ -3807,4 +3807,102 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){f
 }
 </style>
 
-
+<style id="account-background-and-profile-spacing-final">
+/* Account shell: remove the sitewide glass slab from the scrolling page canvas.
+   Individual dashboard cards keep their own graphite surfaces. */
+#accDlg #accBody .account-pages,
+#accDlg #accBody .account-pages::before,
+#accDlg #accBody .account-pages::after,
+#accDlg #accBody .account-page,
+#accDlg #accBody .account-page::before,
+#accDlg #accBody .account-page::after{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  border-color:transparent!important;
+  border-radius:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+  filter:none!important;
+}
+#accDlg #accBody .account-pages::before,
+#accDlg #accBody .account-pages::after,
+#accDlg #accBody .account-page::before,
+#accDlg #accBody .account-page::after{
+  content:none!important;
+  display:none!important;
+}
+/* Profile: give headings, section copy and controls a consistent inset. */
+#accDlg #accBody #accountPage-settings{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  padding:18px 20px 30px!important;
+}
+#accDlg #accBody #accountPage-settings>h3{
+  margin:2px 0 18px!important;
+  padding:0 2px!important;
+}
+#accDlg #accBody #accountPage-settings>.account-settings-inner{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  padding:0!important;
+  gap:16px!important;
+}
+#accDlg #accBody #accountPage-settings .settings-section{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:0 0 18px!important;
+  padding:18px 20px 22px!important;
+  border:0!important;
+  border-radius:14px!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+#accDlg #accBody #accountPage-settings .settings-section>h4,
+#accDlg #accBody #accountPage-settings .settings-section>p{
+  margin-left:0!important;
+  margin-right:0!important;
+}
+#accDlg #accBody #accountPage-settings .profile-card{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:14px 0 20px!important;
+  padding:16px!important;
+  border:1px solid rgba(255,255,255,.075)!important;
+  border-radius:13px!important;
+  background:rgba(18,22,25,.30)!important;
+  box-shadow:none!important;
+}
+#accDlg #accBody #accountPage-settings .profile-grid,
+#accDlg #accBody #accountPage-settings .dealer-account-editor,
+#accDlg #accBody #accountPage-settings .profile-actions,
+#accDlg #accBody #accountPage-settings .dealer-save-row{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+}
+#accDlg #accBody #accountPage-settings .dealer-account-editor{
+  margin:18px 0!important;
+  padding:18px!important;
+  border:1px solid rgba(255,255,255,.075)!important;
+  border-radius:14px!important;
+  background:rgba(18,22,25,.26)!important;
+  box-shadow:none!important;
+}
+#accDlg #accBody #accountPage-settings .dealer-editor-section{
+  padding:16px 0 6px!important;
+}
+@media(max-width:760px){
+  #accDlg #accBody #accountPage-settings{padding:14px 12px 24px!important}
+  #accDlg #accBody #accountPage-settings .settings-section{padding:15px 14px 18px!important}
+  #accDlg #accBody #accountPage-settings .profile-card{padding:13px!important}
+  #accDlg #accBody #accountPage-settings .dealer-account-editor{padding:14px!important}
+}
+</style>
