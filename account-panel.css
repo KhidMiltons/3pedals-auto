@@ -2185,3 +2185,40 @@
     overflow:hidden!important;
   }
 }
+
+/* Mobile account navigation: restore the equals-style menu mark and keep branding compact. */
+@media(max-width:760px){
+  #accDlg #accMenuToggle{
+    position:relative!important;
+    display:grid!important;
+    place-items:center!important;
+    width:38px!important;min-width:38px!important;max-width:38px!important;
+    height:38px!important;min-height:38px!important;max-height:38px!important;
+    padding:0!important;overflow:hidden!important;
+    color:transparent!important;font-size:0!important;
+  }
+  #accDlg #accMenuToggle::before{
+    content:"="!important;
+    display:block!important;
+    color:var(--acc-text,#f5f2eb)!important;
+    font-family:Arial,sans-serif!important;
+    font-size:27px!important;
+    font-weight:700!important;
+    line-height:1!important;
+    letter-spacing:-2px!important;
+    transform:translateY(-2px)!important;
+  }
+  #accDlg #accMenuToggle img,
+  #accDlg #accMenuToggle svg,
+  #accDlg #accMenuToggle picture,
+  #accDlg #accMenuToggle i{
+    display:none!important;
+    width:0!important;height:0!important;
+  }
+  #accDlg #accountMenu img,
+  #accDlg #accountMenu picture img{
+    width:15px!important;min-width:15px!important;max-width:15px!important;
+    height:15px!important;min-height:15px!important;max-height:15px!important;
+    object-fit:contain!important;flex:0 0 15px!important;
+  }
+}
