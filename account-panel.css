@@ -2222,3 +2222,55 @@
     object-fit:contain!important;flex:0 0 15px!important;
   }
 }
+
+/* Desktop-only account dashboard micro-interactions. Keep the graphite/glass palette;
+   no pale hover wash, no effects on the page background, and no touch-device motion. */
+@media (hover:hover) and (pointer:fine) and (min-width:761px){
+  #accDlg #accBody :is(
+    .workspace-v2-metric,.workspace-v2-card,.workspace-v2-dealer,
+    .workspace-v2-activity,.account-full-activity,.settings-section,
+    .profile-card,.dealer-account-editor,.seller-listing,
+    .account-tools,.promotion-package,.promo-package,.account-stat-card,
+    .account-overview-stats>button,.workspace-v2-shortcuts>button
+  ){
+    transition:background-color .16s ease,border-color .16s ease,box-shadow .16s ease,transform .16s ease!important;
+  }
+  #accDlg #accBody :is(
+    .workspace-v2-metric,.workspace-v2-card,.workspace-v2-dealer,
+    .workspace-v2-activity,.account-full-activity,.settings-section,
+    .profile-card,.dealer-account-editor,.seller-listing,
+    .account-tools,.promotion-package,.promo-package,.account-stat-card
+  ):hover{
+    background-color:rgba(30,36,39,.94)!important;
+    border-color:rgba(216,183,122,.22)!important;
+    box-shadow:0 7px 20px rgba(0,0,0,.13)!important;
+  }
+  #accDlg #accBody :is(.workspace-v2-metric,.account-overview-stats>button,.workspace-v2-shortcuts>button):hover{
+    transform:translateY(-2px)!important;
+  }
+  #accDlg #accBody :is(button,a,[role="button"]){
+    transition:background-color .15s ease,border-color .15s ease,color .15s ease,box-shadow .15s ease!important;
+  }
+  #accDlg #accBody :is(button,a,[role="button"]):hover{
+    border-color:rgba(216,183,122,.28)!important;
+    box-shadow:0 3px 12px rgba(0,0,0,.12)!important;
+  }
+  #accDlg nav#accountMenu>button:hover{
+    color:#f4ead6!important;background:rgba(216,183,122,.09)!important;
+  }
+  #accDlg #accBody :is(button,a,[role="button"]):focus-visible{
+    outline:2px solid rgba(216,183,122,.68)!important;outline-offset:3px!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  #accDlg #accBody :is(.workspace-v2-metric,.workspace-v2-card,.workspace-v2-dealer,
+    .workspace-v2-activity,.account-full-activity,.settings-section,.profile-card,
+    .dealer-account-editor,.seller-listing,.account-tools,button,a,[role="button"]){
+    transition:none!important;transform:none!important;
+  }
+}
+/* Keep dashboard rendering lightweight: animate only paint properties and avoid
+   promoting every card to its own GPU layer. */
+#accDlg #accBody :is(.workspace-v2-metric,.workspace-v2-card,.seller-listing){
+  backface-visibility:hidden;
+}
