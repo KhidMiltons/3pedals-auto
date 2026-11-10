@@ -2354,3 +2354,105 @@
     transform:none!important;
   }
 }
+
+
+/* Workspace page family: flatten page-level wrappers across Buying, Insights,
+   Listings, Promotions, Garage Bookings, Activity Centre, Profile and Settings.
+   Keep actual content cards, form fields and package tiles intact. */
+#accDlg #accBody .account-pages:has((
+  > #accountPage-buying:not([hidden]),
+  > #accountPage-dashboard:not([hidden]),
+  > #accountPage-listings:not([hidden]),
+  > #accountPage-promotions:not([hidden]),
+  > #accountPage-bookings:not([hidden]),
+  > #accountPage-activity:not([hidden]),
+  > #accountPage-settings:not([hidden])
+)),
+#accDlg #accBody :is(
+  #accountPage-buying,#accountPage-dashboard,#accountPage-listings,
+  #accountPage-promotions,#accountPage-bookings,#accountPage-activity,
+  #accountPage-settings
+):not([hidden]),
+#accDlg #accBody :is(
+  #accountPage-buying,#accountPage-dashboard,#accountPage-listings,
+  #accountPage-promotions,#accountPage-bookings,#accountPage-activity,
+  #accountPage-settings
+):not([hidden]) > :is(.account-tools,.account-full-activity,.account-settings-inner) {
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  border-color:transparent!important;
+  border-radius:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+  filter:none!important;
+}
+#accDlg #accBody :is(
+  #accountPage-buying,#accountPage-dashboard,#accountPage-listings,
+  #accountPage-promotions,#accountPage-bookings,#accountPage-activity,
+  #accountPage-settings
+):not([hidden])::before,
+#accDlg #accBody :is(
+  #accountPage-buying,#accountPage-dashboard,#accountPage-listings,
+  #accountPage-promotions,#accountPage-bookings,#accountPage-activity,
+  #accountPage-settings
+):not([hidden])::after {
+  content:none!important;
+  display:none!important;
+}
+
+/* Subtle card hover treatment shared across the workspace page family. */
+@media (hover:hover) and (pointer:fine) and (min-width:761px) {
+  #accDlg #accBody :is(
+    #accountPage-buying,#accountPage-dashboard,#accountPage-listings,
+    #accountPage-promotions,#accountPage-bookings,#accountPage-activity,
+    #accountPage-settings
+  ) :is(
+    .account-booking-item,.account-saved-vehicle,.seller-listing,
+    .seller-garage-card,.promotion-package,.promo-package,
+    .promotion-history-item,.account-stat-card,.account-stat,
+    .seller-summary-card,.svc,.settings-section,.profile-card,
+    .dealer-account-editor,.account-full-activity .account-activity-item,
+    .account-tools .panel,.account-tools .card,.account-tools article
+  ) {
+    transition:
+      transform .3s cubic-bezier(.4,0,.2,1),
+      border-color .3s cubic-bezier(.4,0,.2,1),
+      box-shadow .3s cubic-bezier(.4,0,.2,1),
+      background-color .3s cubic-bezier(.4,0,.2,1)!important;
+    backface-visibility:hidden;
+  }
+  #accDlg #accBody :is(
+    #accountPage-buying,#accountPage-dashboard,#accountPage-listings,
+    #accountPage-promotions,#accountPage-bookings,#accountPage-activity,
+    #accountPage-settings
+  ) :is(
+    .account-booking-item,.account-saved-vehicle,.seller-listing,
+    .seller-garage-card,.promotion-package,.promo-package,
+    .promotion-history-item,.account-stat-card,.account-stat,
+    .seller-summary-card,.svc,.settings-section,.profile-card,
+    .dealer-account-editor,.account-full-activity .account-activity-item,
+    .account-tools .panel,.account-tools .card,.account-tools article
+  ):hover {
+    transform:translate3d(0,-3px,0)!important;
+    border-color:rgba(255,255,255,.19)!important;
+    box-shadow:0 8px 26px rgba(0,0,0,.38)!important;
+  }
+}
+@media(prefers-reduced-motion:reduce) {
+  #accDlg #accBody :is(
+    #accountPage-buying,#accountPage-dashboard,#accountPage-listings,
+    #accountPage-promotions,#accountPage-bookings,#accountPage-activity,
+    #accountPage-settings
+  ) :is(
+    .account-booking-item,.account-saved-vehicle,.seller-listing,
+    .seller-garage-card,.promotion-package,.promo-package,
+    .promotion-history-item,.account-stat-card,.account-stat,
+    .seller-summary-card,.svc,.settings-section,.profile-card,
+    .dealer-account-editor,.account-full-activity .account-activity-item,
+    .account-tools .panel,.account-tools .card,.account-tools article
+  ) {transition:none!important;transform:none!important}
+}
