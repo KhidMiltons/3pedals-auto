@@ -2627,8 +2627,20 @@ function detail(id){
     if(s.email)rows.push(["Email",`<a href="mailto:${esc(s.email)}">${esc(s.email)}</a>`]);
     if(s.web){const u=/^https?:\/\//i.test(s.web)?s.web:"https://"+s.web;rows.push(["Website",`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(s.web)}</a>`])}
   }else rows.push(["Seller","Private seller"+(s.name?", "+esc(s.name):"")]);
-  const msg=`Hello, I'm interested in the ${c.year} ${c.make} ${c.model} (KES ${fmt(c.price)}) listed on 3 Pedals Auto KE.`;
-  const wa=s.whatsapp?`<a class="btn wa" href="https://wa.me/${esc(s.whatsapp)}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">Chat on WhatsApp</a>`:"";
+  const businessWhatsapp=String(siteSettings.whatsapp_number||HOUSE.whatsapp||"254791961807").replace(/\\D/g,"");
+  const sellerWhatsapp=String(s.whatsapp||"").replace(/\\D/g,"");
+  const enquiryNumber=sellerWhatsapp||businessWhatsapp;
+  const inventoryUrl=`${location.origin}${location.pathname}#buy`;
+  const msg=`Hello, I'm interested in this vehicle listed on 3 Pedals Auto KE:
+
+Vehicle: ${c.year} ${c.make} ${c.model}
+Price: KES ${fmt(c.price)}
+Listing reference: ${c.id}
+
+Please share more details and let me know how I can arrange an inspection.
+
+View the inventory: ${inventoryUrl}`;
+  const wa=enquiryNumber?`<a class="btn wa" href="https://wa.me/${enquiryNumber}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">Chat on WhatsApp</a>`:"";
   const gal=ph.length?`<div class="gal"><img class="main" id="mainImg" src="${ph[0]}" alt="${esc(c.make+" "+c.model)} photo 1" fetchpriority="high" decoding="async">${ph.length>1?`<div class="thumbs">${ph.map((p,i)=>`<button data-i="${i}" aria-label="Photo ${i+1}" aria-current="${i===0}"><img src="${p}" alt="" loading="lazy" decoding="async"></button>`).join("")}</div>`:""}</div>`
     :`<div class="swatch" style="background:${c.color}">${c.year}</div>`;
   d.innerHTML=`${gal}<div class="in">
