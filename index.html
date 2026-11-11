@@ -2631,15 +2631,15 @@ function detail(id){
   const sellerWhatsapp=String(s.whatsapp||"").replace(/\D/g,"");
   const enquiryNumber=sellerWhatsapp||businessWhatsapp;
   const inventoryUrl=`${location.origin}/vehicle.html?id=${encodeURIComponent(c.id)}`;
-  const msg=`Hello, I'm interested in this vehicle listed on 3 Pedals Auto KE:
-
-Vehicle: ${c.year} ${c.make} ${c.model}
+  const vehicleRef=`3PA-${String(c.id||"").replace(/-/g,"").slice(0,8).toUpperCase()}`;
+  const sellerName=String(s.name||"the seller").trim()||"the seller";
+  const msg=`Hello ${sellerName}, I’m interested in the ${c.year?String(c.year)+" ":""}${c.make} ${c.model} listed on 3 Pedals Auto KE.
 Price: KES ${fmt(c.price)}
-Listing reference: ${c.id}
-
-Please share more details and let me know how I can arrange an inspection.
-
-View the inventory: ${inventoryUrl}`;
+Mileage: ${fmt(c.km)} km
+Fuel: ${c.fuel||"Not specified"}
+Vehicle reference: ${vehicleRef}
+${s.location?`Location: ${s.location}\n`:""}Could you confirm availability and let me know when I can arrange a viewing?
+Vehicle link: ${inventoryUrl}`;
   const wa=enquiryNumber?`<a class="btn wa" href="https://wa.me/${enquiryNumber}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">Chat on WhatsApp</a>`:"";
   const gal=ph.length?`<div class="gal"><img class="main" id="mainImg" src="${ph[0]}" alt="${esc(c.make+" "+c.model)} photo 1" fetchpriority="high" decoding="async">${ph.length>1?`<div class="thumbs">${ph.map((p,i)=>`<button data-i="${i}" aria-label="Photo ${i+1}" aria-current="${i===0}"><img src="${p}" alt="" loading="lazy" decoding="async"></button>`).join("")}</div>`:""}</div>`
     :`<div class="swatch" style="background:${c.color}">${c.year}</div>`;
