@@ -2627,8 +2627,8 @@ function detail(id){
     if(s.email)rows.push(["Email",`<a href="mailto:${esc(s.email)}">${esc(s.email)}</a>`]);
     if(s.web){const u=/^https?:\/\//i.test(s.web)?s.web:"https://"+s.web;rows.push(["Website",`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(s.web)}</a>`])}
   }else rows.push(["Seller","Private seller"+(s.name?", "+esc(s.name):"")]);
-  const businessWhatsapp=String(siteSettings.whatsapp_number||HOUSE.whatsapp||"254791961807").replace(/\\D/g,"");
-  const sellerWhatsapp=String(s.whatsapp||"").replace(/\\D/g,"");
+  const businessWhatsapp=String(siteSettings.whatsapp_number||HOUSE.whatsapp||"254791961807").replace(/\D/g,"");
+  const sellerWhatsapp=String(s.whatsapp||"").replace(/\D/g,"");
   const enquiryNumber=sellerWhatsapp||businessWhatsapp;
   const inventoryUrl=`${location.origin}${location.pathname}#buy`;
   const msg=`Hello, I'm interested in this vehicle listed on 3 Pedals Auto KE:
