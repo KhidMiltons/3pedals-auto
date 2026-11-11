@@ -411,13 +411,13 @@ function render(r){ window.__listing=r; if(window.track3PedalsEvent)window.track
   const title=vehicleTitle(r);const phone=r.seller_phone||r.phone||'';const whatsapp=r.whatsapp||phone;const wa=waNumber(whatsapp);
   const ref=`3PA-${String(r.id||"").replace(/-/g,"").slice(0,8).toUpperCase()}`;
   const pageUrl=new URL(location.href).href;
-    const msg=`Hello ${sellerNameForMessage(r)}, I’m interested in the ${title} listed on 3 Pedals Auto KE.
-  Price: KES ${fmt(r.price)}
-  Mileage: ${fmt(r.km)} km
-  Fuel: ${r.fuel||"Not specified"}
-  Vehicle reference: ${ref}
-  ${r.yard_location||r.location?`Location: ${r.yard_location||r.location}\n`:""}Could you confirm availability and let me know when I can arrange a viewing?
-  Vehicle link: ${pageUrl}`;
+    const msg=`Hello ${sellerNameForMessage(r)}, I’m interested in the ${r.year?String(r.year)+" ":""}${r.make} ${r.model} listed on 3 Pedals Auto KE.
+Price: KES ${fmt(r.price)}
+Mileage: ${fmt(r.km)} km
+Fuel: ${r.fuel||"Not specified"}
+Vehicle reference: ${ref}
+${r.yard_location||r.location?`Location: ${r.yard_location||r.location}\n`:""}Could you confirm availability and let me know when I can arrange a viewing?
+Vehicle link: ${pageUrl}`;
   const gallery=photos.length?`<div class="gallery"><img id="mainPhoto" class="main-photo" src="${esc(photos[0])}" alt="${esc(title)} photo 1" fetchpriority="high"><div class="thumbs">${photos.map((p,i)=>`<button class="thumb" type="button" data-photo="${i}" aria-current="${i===0}"><img src="${esc(p)}" alt="${esc(title)} photo ${i+1}" loading="lazy"></button>`).join('')}</div></div>`:`<div class="gallery"><div class="main-photo" style="display:grid;place-items:center;color:#e3b341;font:700 42px 'Playfair Display',serif">${esc(r.year||'')}</div></div>`;
   const isYard=r.seller_type==='yard'||!!r.yard_name||!!r.yard_location;
   const sellerName=r.yard_name||r.seller_name||'Seller';
