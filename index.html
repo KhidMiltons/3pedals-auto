@@ -2630,7 +2630,7 @@ function detail(id){
   const businessWhatsapp=String(siteSettings.whatsapp_number||HOUSE.whatsapp||"254791961807").replace(/\D/g,"");
   const sellerWhatsapp=String(s.whatsapp||"").replace(/\D/g,"");
   const enquiryNumber=sellerWhatsapp||businessWhatsapp;
-  const inventoryUrl=`${location.origin}${location.pathname}#buy`;
+  const inventoryUrl=`${location.origin}/vehicle.html?id=${encodeURIComponent(c.id)}`;
   const msg=`Hello, I'm interested in this vehicle listed on 3 Pedals Auto KE:
 
 Vehicle: ${c.year} ${c.make} ${c.model}
