@@ -2126,7 +2126,7 @@ async function openAccount(options={}){
       if(error){host.innerHTML='<p class="meta" role="alert">We could not load your chauffeur bookings. Please refresh and try again.</p>';console.warn("Chauffeur bookings account load failed:",error.message);return;}
       if(!data?.length){host.innerHTML='<p class="meta">You have no chauffeur bookings yet. When you submit a request, its progress will appear here.</p>';return;}
       const date=value=>value?new Date(value).toLocaleString("en-KE",{day:"numeric",month:"short",year:"numeric",hour:"numeric",minute:"2-digit"}):"Not set";
-      const label=value=>String(value||"pending").replaceAll("_"," ").replace(/\\b\\w/g,char=>char.toUpperCase());
+      const label=value=>String(value||"pending").replaceAll("_"," ").replace(/\b\w/g,char=>char.toUpperCase());
       host.innerHTML=data.map(item=>{
         const amount=item.final_amount??item.quoted_amount;
         const amountText=amount!==null&&amount!==undefined?"KES "+Number(amount).toLocaleString("en-KE"):"Awaiting quotation";
