@@ -2637,3 +2637,54 @@
 @media(prefers-reduced-motion:reduce){
   #accDlg,#accDlg *{transition:none!important;animation:none!important;scroll-behavior:auto!important}
 }
+
+/* ORIGINAL ACCOUNT APPEARANCE — enforce the graphite / champagne theme
+   on every account workspace surface, including overview shortcut tiles. */
+#accDlg.account-dashboard-dialog[open],
+#accDlg.account-dashboard-dialog[open]>.account-dashboard-main,
+#accDlg.account-dashboard-dialog[open]>.account-sidebar{
+  background:#090909!important;background-color:#090909!important;background-image:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;filter:none!important;
+}
+#accDlg.account-dashboard-dialog[open]>.account-sidebar{background:#0d0d0d!important}
+#accDlg #accBody :is(
+  .workspace-v2-card,.workspace-v2-dealer,.workspace-v2-activity,.workspace-v2-metric,
+  .workspace-v2-shortcuts>button,.workspace-v2-shortcut,.workspace-v2-hero,
+  .account-overview-panel,.account-overview-stats>button,.account-overview-stats>div,
+  .account-stat-card,.account-stat,.account-booking-item,.account-saved-vehicle,
+  .account-buyer-workspace,.dashboard-welcome,.seller-summary-card,.seller-listing,
+  .seller-garage-card,.promotion-package,.promo-package,.promotion-history-item,
+  .account-full-activity,.account-full-activity .account-activity-item,
+  .account-tools>.panel,.account-tools>section,.account-tools>article,
+  .account-tools .panel,.account-tools .card,.account-tools article,
+  .account-page .card,.settings-section,.profile-card,.dealer-overview-card,
+  .svc,.account-tools,.account-page section> .card
+){
+  color:#f4f0e7!important;background:#151515!important;background-color:#151515!important;
+  background-image:none!important;border:1px solid #28231a!important;border-radius:12px!important;
+  box-shadow:none!important;filter:none!important;-webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;transform:none!important;transition:background-color .16s ease,border-color .16s ease!important;
+}
+#accDlg #accBody .workspace-v2-hero{background:transparent!important;border:0!important}
+#accDlg #accBody :is(h1,h2,h3,h4,h5,h6,strong,b,label,th){color:#f4f0e7!important}
+#accDlg #accBody :is(p,small,.meta,.muted,.description,.subtitle,td,li){color:#c2bbae!important}
+#accDlg #accBody :is(.account-eyebrow,.seller-garage-eyebrow,.promotion-package b){color:#e3cc9d!important}
+#accDlg nav#accountMenu>button{color:#c9c2b5!important;background:transparent!important}
+#accDlg nav#accountMenu>button.active,#accDlg nav#accountMenu>button[aria-current="page"]{
+  color:#e3cc9d!important;background:#1b1812!important;box-shadow:inset 2px 0 #c9a66b!important
+}
+@media(hover:hover) and (pointer:fine){
+  #accDlg #accBody :is(
+    .workspace-v2-card,.workspace-v2-dealer,.workspace-v2-activity,.workspace-v2-metric,
+    .workspace-v2-shortcuts>button,.workspace-v2-shortcut,.account-overview-stats>button,
+    .account-overview-stats>div,.account-booking-item,.account-saved-vehicle,
+    .seller-listing,.seller-garage-card,.promotion-package,.promo-package,
+    .promotion-history-item,.account-full-activity .account-activity-item,
+    .account-tools>.panel,.account-tools>section,.account-tools>article,
+    .account-tools .panel,.account-tools .card,.account-tools article,
+    .account-page .card,.settings-section,.profile-card,.dealer-overview-card,.svc
+  ):hover{
+    background:#1c1913!important;border-color:rgba(201,166,107,.48)!important;
+    box-shadow:none!important;transform:none!important
+  }
+}
