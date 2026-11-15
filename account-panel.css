@@ -2456,3 +2456,184 @@
     .account-tools .panel,.account-tools .card,.account-tools article
   ) {transition:none!important;transform:none!important}
 }
+
+
+/* FINAL THEME RESET — flat black / gold / champagne account workspace.
+   No glass, blur, translucent surfaces, layered shadows or card movement. */
+:root{
+  --acc-bg:#090909;
+  --acc-panel:#151515;
+  --acc-panel-2:#1b1915;
+  --acc-line:rgba(214,184,125,.14);
+  --acc-text:#f4f0e7;
+  --acc-muted:#c2bbae;
+  --acc-soft:#918979;
+  --acc-gold:#c9a66b;
+  --acc-gold-strong:#e3cc9d;
+}
+#accDlg.account-dashboard-dialog[open]{
+  background:#090909!important;
+  background-color:#090909!important;
+  background-image:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+}
+#accDlg.account-dashboard-dialog[open]>.account-sidebar{
+  background:#0d0d0d!important;
+  background-color:#0d0d0d!important;
+  background-image:none!important;
+  border:0!important;
+  border-right:1px solid #242016!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+}
+#accDlg.account-dashboard-dialog[open]>.account-dashboard-main{
+  background:#090909!important;
+  background-color:#090909!important;
+  background-image:none!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+}
+#accDlg #accBody,
+#accDlg #accBody .account-pages,
+#accDlg #accBody .account-page{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+}
+#accDlg #accBody :is(
+  .account-tools,.profile-card,.account-overview-panel,.account-overview-stats>button,
+  .account-booking-item,.account-saved-vehicle,.seller-listing,.seller-garage-card,
+  .promotion-package,.account-buyer-workspace,.dashboard-welcome,.settings-section,
+  .dealer-overview-card,.account-stat,.seller-summary-card,.svc,
+  .account-page .card,.account-tools>.panel,.account-tools>section,
+  .workspace-v2-hero,.workspace-v2-metric,.workspace-v2-card,
+  .workspace-v2-dealer,.workspace-v2-activity,.account-full-activity,
+  .account-stat-card,.promo-package,.promotion-history-item
+){
+  color:var(--acc-text)!important;
+  background:#151515!important;
+  background-color:#151515!important;
+  background-image:none!important;
+  border:1px solid #28231a!important;
+  border-radius:12px!important;
+  outline:0!important;
+  box-shadow:none!important;
+  filter:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+  transform:none!important;
+  transition:none!important;
+}
+#accDlg #accBody .workspace-v2-hero{
+  background:transparent!important;
+  border:0!important;
+}
+#accDlg #accBody :is(h1,h2,h3,h4,h5,h6,strong,b,label,th){
+  color:#f4f0e7!important;
+}
+#accDlg #accBody :is(.account-eyebrow,.seller-garage-eyebrow,.promotion-package b){
+  color:var(--acc-gold-strong)!important;
+}
+#accDlg nav#accountMenu>button{
+  color:#c9c2b5!important;
+  background:transparent!important;
+  border-color:transparent!important;
+  box-shadow:none!important;
+  transform:none!important;
+  transition:none!important;
+}
+#accDlg nav#accountMenu>button.active,
+#accDlg nav#accountMenu>button[aria-current="page"]{
+  color:var(--acc-gold-strong)!important;
+  background:#1b1812!important;
+  box-shadow:inset 2px 0 #c9a66b!important;
+}
+#accDlg .account-dialog-head button{
+  color:var(--acc-gold-strong)!important;
+  background:#171512!important;
+  border:1px solid #302719!important;
+  box-shadow:none!important;
+}
+#accDlg #accBody .btn{
+  color:#11100d!important;
+  background:#c9a66b!important;
+  border:1px solid #c9a66b!important;
+  box-shadow:none!important;
+  transform:none!important;
+  transition:none!important;
+}
+#accDlg #accBody .btn.ghost{
+  color:#e9dfc9!important;
+  background:#1b1915!important;
+  border:1px solid #393020!important;
+}
+#accDlg #accBody input,
+#accDlg #accBody select,
+#accDlg #accBody textarea{
+  color:#f4f0e7!important;
+  background:#101010!important;
+  background-image:none!important;
+  border:1px solid #302b22!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+}
+#accDlg #accBody input:focus,
+#accDlg #accBody select:focus,
+#accDlg #accBody textarea:focus{
+  outline:1px solid #c9a66b!important;
+  border-color:#c9a66b!important;
+}
+#accDlg #accBody :is(button,a,[role="button"]){
+  transition:none!important;
+  transform:none!important;
+  box-shadow:none!important;
+}
+@media (hover:hover) and (pointer:fine){
+  #accDlg #accBody :is(
+    .account-tools,.profile-card,.account-overview-panel,.account-overview-stats>button,
+    .account-booking-item,.account-saved-vehicle,.seller-listing,.seller-garage-card,
+    .promotion-package,.settings-section,.dealer-overview-card,.account-stat,
+    .seller-summary-card,.svc,.account-page .card,.account-tools>.panel,
+    .account-tools>section,.workspace-v2-metric,.workspace-v2-card,
+    .workspace-v2-dealer,.workspace-v2-activity,.account-full-activity,
+    .account-stat-card,.promo-package,.promotion-history-item
+  ):hover{
+    background:#1c1913!important;
+    border-color:rgba(201,166,107,.48)!important;
+    box-shadow:none!important;
+    transform:none!important;
+  }
+  #accDlg nav#accountMenu>button:hover,
+  #accDlg nav#accountMenu>button:focus-visible{
+    color:#f0dcae!important;
+    background:#1b1812!important;
+    box-shadow:inset 2px 0 #c9a66b!important;
+  }
+  #accDlg #accBody .btn:hover,
+  #accDlg #accBody .btn:focus-visible{
+    color:#11100d!important;
+    background:#e0c58f!important;
+    border-color:#e0c58f!important;
+    box-shadow:none!important;
+    transform:none!important;
+  }
+  #accDlg #accBody .btn.ghost:hover{
+    color:#f0dcae!important;
+    background:#282116!important;
+    border-color:#8d7044!important;
+  }
+  #accDlg .account-dialog-head button:hover{
+    background:#252015!important;
+    border-color:#9a7b4b!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  #accDlg,#accDlg *{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+}
