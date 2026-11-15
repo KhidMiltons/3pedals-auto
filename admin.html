@@ -518,6 +518,18 @@ function renderChauffeurSchedule(){
  const bookedVehicles=new Set(upcoming.map(b=>b.vehicle_id).filter(Boolean)),rows=upcoming.slice(0,6);
  box.innerHTML='<div class="overview-card-head"><div><span class="meta">FLEET UTILISATION</span><h2>Upcoming chauffeur schedule</h2></div><span class="meta">'+upcoming.length+' upcoming</span></div><div class="chauffeur-schedule-metrics"><div><strong>'+activeFleet.length+'</strong><span>Active vehicles</span></div><div><strong>'+bookedVehicles.size+'</strong><span>Vehicles with upcoming bookings</span></div><div><strong>'+activeDrivers.length+'</strong><span>Available drivers</span></div></div>'+(rows.length?'<div class="chauffeur-upcoming">'+rows.map(b=>'<div class="chauffeur-upcoming-row"><div><strong>'+esc(b.booking_ref||"Chauffeur trip")+' · '+esc(b.chauffeur_vehicles?.display_name||"Vehicle")+'</strong><span>'+esc(b.customer_name||"Customer")+' · '+esc(b.pickup_location||"Pickup pending")+' → '+esc(b.destination||"Destination pending")+'</span><span>'+esc(b.assigned_driver_name||"Driver not assigned")+' · '+esc(String(b.status||"").replaceAll("_"," "))+'</span></div><span>'+esc(activityTime(b.start_at))+'</span></div>').join("")+'</div>':'<div class="empty">No upcoming chauffeur bookings are currently recorded.</div>');
 }
+function renderChauffeurDrivers(){
+ const box=$("chauffeurDriverList");if(!box)return;
+ const now=Date.now();
+ const activeBookings=chauffeurRows.filter(b=>b.driver_id&&["approved_awaiting_payment","confirmed"].includes(String(b.status||"").toLowerCase())&&b.end_at&&new Date(b.end_at).getTime()>now);
+ box.innerHTML=chauffeurDrivers.length?chauffeurDrivers.map(d=>{
+  const assigned=activeBookings.filter(b=>String(b.driver_id)===String(d.id));
+  const busy=assigned.length>0,statusText=!d.is_active?"Unavailable":busy?"Busy":"Available";
+  const statusClass=!d.is_active?"pending":busy?"approved":"approved";
+  const bookingNote=assigned.length?'<div class="meta" style="margin-top:6px">Assigned to '+assigned.map(b=>esc(b.booking_ref||"booking")).join(", ")+'</div>':"";
+  return '<article class="listing" style="padding:14px;margin-bottom:9px"><div class="summary" style="padding:0"><div class="vehicle"><h3>'+esc(d.full_name)+'</h3><div class="meta">'+esc(d.phone)+(d.email?' · '+esc(d.email):'')+'</div><div class="meta">Licence: '+esc(d.licence_number||'Not recorded')+(d.licence_expiry?' · Expires '+esc(d.licence_expiry):'')+'</div><div style="margin-top:7px"><span class="status '+statusClass+'">'+statusText+'</span></div>'+bookingNote+'</div><div class="actions"><button class="ghost" type="button" data-driver-edit="'+esc(d.id)+'">Edit</button><button class="ghost" type="button" data-driver-toggle="'+esc(d.id)+'">'+(d.is_active?'Mark unavailable':'Mark available')+'</button></div></div>'+(d.notes?'<div class="meta" style="margin-top:8px">Internal note: '+esc(d.notes)+'</div>':'')+'</article>';
+ }).join(""):'<div class="empty">No chauffeurs added yet. Add your first driver above.</div>';
+}
 async function loadChauffeurBookings(){
  const fleetBox=$("chauffeurFleetAdmin"),box=$("chauffeurAdminList"),driverBox=$("chauffeurDriverList");if(!box)return;
  if(driverBox){
@@ -525,7 +537,7 @@ async function loadChauffeurBookings(){
   if(driverError){driverBox.innerHTML='<div class="notice err">Could not load chauffeur roster: '+esc(driverError.message)+'</div>';chauffeurDrivers=[]}
   else{
    chauffeurDrivers=drivers||[];
-   driverBox.innerHTML=chauffeurDrivers.length?chauffeurDrivers.map(d=>'<article class="listing" style="padding:14px;margin-bottom:9px"><div class="summary" style="padding:0"><div class="vehicle"><h3>'+esc(d.full_name)+'</h3><div class="meta">'+esc(d.phone)+(d.email?' · '+esc(d.email):'')+'</div><div class="meta">Licence: '+esc(d.licence_number||'Not recorded')+(d.licence_expiry?' · Expires '+esc(d.licence_expiry):'')+'</div><div style="margin-top:7px"><span class="status '+(d.is_active?'approved':'pending')+'">'+(d.is_active?'Available':'Unavailable')+'</span></div></div><div class="actions"><button class="ghost" type="button" data-driver-edit="'+esc(d.id)+'">Edit</button><button class="ghost" type="button" data-driver-toggle="'+esc(d.id)+'">'+(d.is_active?'Mark unavailable':'Mark available')+'</button></div></div>'+(d.notes?'<div class="meta" style="margin-top:8px">Internal note: '+esc(d.notes)+'</div>':'')+'</article>').join():'<div class="empty">No chauffeurs added yet. Add your first driver above.</div>';
+   renderChauffeurDrivers();
   }
  }
  if(fleetBox){
@@ -543,7 +555,7 @@ async function loadChauffeurBookings(){
  ]);
  if(error){box.innerHTML='<div class="notice err">Could not load chauffeur requests: '+esc(error.message)+'</div>';return}
  if(waError)console.warn("Could not load chauffeur WhatsApp history:",waError);
- chauffeurNotificationEvents=waEvents||[];chauffeurRows=data||[];renderChauffeurSchedule();
+ chauffeurNotificationEvents=waEvents||[];chauffeurRows=data||[];renderChauffeurDrivers();renderChauffeurSchedule();
  if(!chauffeurRows.length){box.innerHTML='<div class="empty">No chauffeur booking requests yet.</div>';return}
  const q=chauffeurBookingSearch.toLowerCase(),visibleRows=chauffeurRows.filter(b=>{const status=String(b.status||"").toLowerCase(),date=String(b.start_at||"").slice(0,10),hay=[b.booking_ref,b.customer_name,b.customer_phone,b.pickup_location,b.destination,b.chauffeur_vehicles?.display_name,b.customer_notes].join(" ").toLowerCase();return(chauffeurBookingStatus==="all"||status===chauffeurBookingStatus)&&(!chauffeurBookingDate||date===chauffeurBookingDate)&&(!q||hay.includes(q))});$("chauffeurBookingCount").textContent=`Showing ${visibleRows.length} of ${chauffeurRows.length} bookings`;box.innerHTML=visibleRows.map(b=>{
   const pending=b.status==="pending_approval",awaiting=b.status==="approved_awaiting_payment";
@@ -574,8 +586,8 @@ $("chauffeurFleetAdmin")?.addEventListener("submit",async e=>{
 $("chauffeurAdminList")?.addEventListener("click",async e=>{
  const retry=e.target.closest("[data-chauffeur-wa-retry]");if(retry){retry.disabled=true;retry.textContent="Sending…";try{const result=await sendChauffeurWhatsApp(retry.dataset.chauffeurWaRetry,retry.dataset.waEvent);showNotice(result.status==="accepted"?"WhatsApp API accepted the template. Delivery is not yet confirmed.":result.status==="already_sent"?"WhatsApp API had already accepted this template.":"WhatsApp response: "+(result.status||"received"),"ok");await loadChauffeurBookings()}catch(err){showNotice("WhatsApp template failed: "+(err?.message||err),"err");await loadChauffeurBookings()}return}
  const approve=e.target.closest("[data-chauffeur-approve]"),decline=e.target.closest("[data-chauffeur-decline]"),assign=e.target.closest("[data-driver-save]");if(assign){
- const id=assign.dataset.driverSave,driverId=$("driver-"+id)?.value||null,booking=chauffeurRows.find(x=>String(x.id)===String(id));
- assign.disabled=true;
+ e.preventDefault();const id=assign.dataset.driverSave,select=$("driver-"+id);if(!select){showNotice("The driver selector could not be found. Refresh the booking list and try again.","err");return}const driverId=select.value||null,booking=chauffeurRows.find(x=>String(x.id)===String(id));
+ assign.disabled=true;assign.textContent="Saving…";
  try{
   if(!booking)throw new Error("Booking not found. Refresh the chauffeur requests and try again.");
   if(!["approved_awaiting_payment","confirmed"].includes(booking.status))throw new Error("A chauffeur can only be assigned after the booking has been approved.");
@@ -592,12 +604,14 @@ $("chauffeurAdminList")?.addEventListener("click",async e=>{
    if((conflicts||[]).some(x=>x.start_at&&x.end_at&&new Date(x.start_at).getTime()<end&&new Date(x.end_at).getTime()>start))throw new Error("This chauffeur already has another confirmed trip during the selected period.");
   }
   const payload=driver?{driver_id:driver.id,assigned_driver_name:driver.full_name,assigned_driver_phone:driver.phone,driver_assigned_at:new Date().toISOString(),updated_at:new Date().toISOString()}:{driver_id:null,assigned_driver_name:null,assigned_driver_phone:null,driver_assigned_at:null,updated_at:new Date().toISOString()};
-  const {error}=await sb.from("chauffeur_bookings").update(payload).eq("id",id);if(error)throw error;
+  const {data:saved,error}=await sb.from("chauffeur_bookings").update(payload).eq("id",id).select("id,driver_id,assigned_driver_name").maybeSingle();
+  if(error)throw error;
+  if(!saved)throw new Error("The booking was not updated. Check that you are signed in with an administrator account, then refresh and try again.");
   await recordAdminAudit(driver?"assign_chauffeur":"unassign_chauffeur","chauffeur_booking",id,(driver?"Assigned "+driver.full_name:"Cleared driver assignment")+" for "+booking.booking_ref);
-  showNotice(driver?"Chauffeur assigned. No overlapping confirmed trip was found.":"Chauffeur assignment cleared.","ok");
+  showNotice(driver?"Driver assigned successfully to "+driver.full_name+".":"Driver assignment cleared.","ok");
   await loadChauffeurBookings();await loadAdminOverview();await loadRequestsInbox();
  }catch(error){showNotice("Could not save chauffeur assignment: "+error.message,"err")}
- finally{assign.disabled=false}
+ finally{assign.disabled=false;assign.textContent="Save assignment"}
  return
 }if(!approve&&!decline)return;
  const id=approve?approve.dataset.chauffeurApprove:decline.dataset.chauffeurDecline;
