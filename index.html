@@ -2165,10 +2165,24 @@ async function openAccount(options={}){
        }));
        host.querySelectorAll("[data-request-chauffeur-restore]").forEach(button=>button.addEventListener("click",async()=>{
         if(!confirm("Send a request to restore this cancelled booking? The administrator must approve it before the booking becomes active again."))return;
+        const originalText=button.textContent;
         button.disabled=true;button.textContent="Sending…";
-        const {error}=await sb.from("chauffeur_cancellation_requests").update({status:"restoration_requested",admin_note:"Customer requested restoration of this cancelled booking."}).eq("id",button.dataset.requestChauffeurRestore).eq("user_id",accountOwnerId).in("status",["accepted","restoration_declined"]);
-        if(error){button.disabled=false;button.textContent="Request booking restoration";alert("Could not request booking restoration: "+error.message);return}
-        await loadMyChauffeurBookings();
+        try{
+         const {data,error}=await sb.from("chauffeur_cancellation_requests")
+          .update({status:"restoration_requested",admin_note:"Customer requested restoration of this cancelled booking."})
+          .eq("id",button.dataset.requestChauffeurRestore)
+          .eq("user_id",accountOwnerId)
+          .in("status",["accepted","restoration_declined"])
+          .select("id,status")
+          .maybeSingle();
+         if(error)throw error;
+         if(!data){throw new Error("No request was updated. Please refresh your bookings and try again. If this continues, contact our team.");}
+         await loadMyChauffeurBookings();
+        }catch(error){
+         console.error("Chauffeur booking restoration request failed",error);
+         button.disabled=false;button.textContent=originalText;
+         alert("Your restoration request was not sent: "+(error?.message||"Please try again."));
+        }
        }));
        host.querySelectorAll("[data-keep-chauffeur-booking]").forEach(button=>button.addEventListener("click",async()=>{
         if(!confirm("Keep this booking and withdraw your pending cancellation request?"))return;
