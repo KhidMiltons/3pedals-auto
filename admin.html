@@ -583,7 +583,7 @@ $("chauffeurFleetAdmin")?.addEventListener("submit",async e=>{
  showNotice("Chauffeur vehicle rates saved.","ok");await loadChauffeurBookings();
 });
 
-$("chauffeurAdminList")?.addEventListener("click",async e=>{
+document.addEventListener("click",async e=>{
  const retry=e.target.closest("[data-chauffeur-wa-retry]");if(retry){retry.disabled=true;retry.textContent="Sending…";try{const result=await sendChauffeurWhatsApp(retry.dataset.chauffeurWaRetry,retry.dataset.waEvent);showNotice(result.status==="accepted"?"WhatsApp API accepted the template. Delivery is not yet confirmed.":result.status==="already_sent"?"WhatsApp API had already accepted this template.":"WhatsApp response: "+(result.status||"received"),"ok");await loadChauffeurBookings()}catch(err){showNotice("WhatsApp template failed: "+(err?.message||err),"err");await loadChauffeurBookings()}return}
  const approve=e.target.closest("[data-chauffeur-approve]"),decline=e.target.closest("[data-chauffeur-decline]"),assign=e.target.closest("[data-driver-save]");if(assign){
  e.preventDefault();const id=assign.dataset.driverSave,select=$("driver-"+id);if(!select){showNotice("The driver selector could not be found. Refresh the booking list and try again.","err");return}const driverId=select.value||null,booking=chauffeurRows.find(x=>String(x.id)===String(id));
