@@ -2145,19 +2145,29 @@ async function openAccount(options={}){
         const driver=item.assigned_driver_name?'<span class="meta">Assigned driver: <strong>'+esc(item.assigned_driver_name)+'</strong>'+(item.assigned_driver_phone?' · '+esc(item.assigned_driver_phone):'')+'</span>':'<span class="meta">Driver details will appear here once assigned.</span>';
         const request=cancellations.find(x=>String(x.booking_id)===String(item.id));
         const canCancel=["pending_approval","approved_awaiting_payment","confirmed"].includes(String(item.status||"").toLowerCase());
-        const cancellationLine=request?'<div class="account-cancellation-state"><span class="meta">Cancellation request: </span><strong class="'+statusClass(request.status)+'">'+esc(label(request.status))+'</strong>'+(request.admin_note?'<span class="meta">Admin response: '+esc(request.admin_note)+'</span>':'')+(request.status==="pending"?'<span class="meta">Your request is awaiting administrator review. The booking remains active until it is accepted.</span>':'')+'</div>':"";
-        const cancelAction=canCancel&&!request?'<div class="account-booking-actions"><button type="button" class="btn ghost" data-request-chauffeur-cancel="'+esc(item.id)+'">Request cancellation</button></div>':"";
-        return '<article class="svc account-booking-row"><div><b>'+esc(item.booking_ref||"Chauffeur booking")+'</b><span class="meta">'+esc(item.chauffeur_vehicles?.display_name||"Chauffeur vehicle")+' · '+esc(item.pickup_location)+' → '+esc(item.destination)+'</span><span class="meta">Pickup: '+esc(date(item.start_at))+' · Expected end: '+esc(date(item.end_at))+'</span><span class="meta">Hire: '+esc(label(item.pricing_method))+' · Quotation: '+esc(amountText)+'</span>'+driver+'<span class="meta">Payment: '+esc(label(item.payment_status))+'</span>'+cancellationLine+cancelAction+'</div><span class="st '+statusClass(item.status)+'">'+esc(label(item.status))+'</span></article>';
+        const cancellationLine=request?'<div class="account-cancellation-state"><span class="meta">Cancellation request status</span><strong class="'+statusClass(request.status)+'">'+esc(label(request.status))+'</strong>'+(request.reason?'<span class="meta">Your reason: '+esc(request.reason)+'</span>':'')+(request.admin_note?'<span class="meta">Administrator response: '+esc(request.admin_note)+'</span>':'')+(request.status==="pending"?'<span class="meta">Your booking is still active while the administrator reviews this request.</span><div class="account-booking-actions"><button type="button" class="btn ghost" data-keep-chauffeur-booking="'+esc(request.id)+'">Keep this booking instead</button></div>':request.status==="withdrawn"?'<span class="meta">You chose to keep this booking. No cancellation will be made.</span>':"")+'</div>':"";
+        const cancelAction=canCancel&&(!request||["declined","withdrawn"].includes(String(request.status).toLowerCase()))?'<div class="account-booking-actions"><button type="button" class="btn ghost" data-request-chauffeur-cancel="'+esc(item.id)+'">Request cancellation</button></div>':"";
+        return '<article class="svc account-booking-row"><div><b>'+esc(item.booking_ref||"Chauffeur booking")+'</b><span class="meta">Vehicle: '+esc(item.chauffeur_vehicles?.display_name||"Chauffeur vehicle")+'</span><span class="meta">Route: '+esc(item.pickup_location)+' → '+esc(item.destination)+'</span><span class="meta">Pickup: '+esc(date(item.start_at))+' · Expected end: '+esc(date(item.end_at))+'</span><span class="meta">Hire type: '+esc(label(item.pricing_method))+' · Quotation: '+esc(amountText)+'</span>'+driver+'<span class="meta">Booking status: '+esc(label(item.status))+'</span><span class="meta">Payment status: '+esc(label(item.payment_status))+'</span>'+cancellationLine+cancelAction+'</div><span class="st '+statusClass(item.status)+'">'+esc(label(item.status))+'</span></article>';
        }).join("");
        $("refreshMyChauffeurBookings")?.addEventListener("click",()=>loadMyChauffeurBookings());
        host.querySelectorAll("[data-request-chauffeur-cancel]").forEach(button=>button.addEventListener("click",async()=>{
         const bookingId=button.dataset.requestChauffeurCancel;
-        if(!confirm("Submit a cancellation request for this chauffeur booking? The booking will remain active until an administrator reviews and accepts it."))return;
+        const reason=prompt("Why would you like to cancel this booking? Please provide a reason.\n\nChoose Cancel in the next step if you would rather keep the booking.");
+        if(reason===null)return;
+        if(!reason.trim()){alert("Please enter a reason before requesting cancellation.");return}
+        if(!confirm("Submit this cancellation request? The booking will remain active until an administrator accepts it. Choose Cancel to keep the booking."))return;
         button.disabled=true;button.textContent="Submitting…";
-        const existing=cancellations.find(x=>String(x.booking_id)===String(bookingId));
-        if(existing){button.disabled=false;button.textContent="Request cancellation";alert("A cancellation request already exists for this booking.");return}
-        const {error}=await sb.from("chauffeur_cancellation_requests").insert({booking_id:bookingId,user_id:accountOwnerId,reason:"Customer requested cancellation from the account panel.",status:"pending",admin_note:""});
+        const existing=cancellations.find(x=>String(x.booking_id)===String(bookingId)&&x.status==="pending");
+        if(existing){button.disabled=false;button.textContent="Request cancellation";alert("A cancellation request is already awaiting review.");return}
+        const {error}=await sb.from("chauffeur_cancellation_requests").insert({booking_id:bookingId,user_id:accountOwnerId,reason:reason.trim(),status:"pending",admin_note:""});
         if(error){button.disabled=false;button.textContent="Request cancellation";alert("We could not submit your cancellation request: "+error.message);return}
+        await loadMyChauffeurBookings();
+       }));
+       host.querySelectorAll("[data-keep-chauffeur-booking]").forEach(button=>button.addEventListener("click",async()=>{
+        if(!confirm("Keep this booking and withdraw your pending cancellation request?"))return;
+        button.disabled=true;button.textContent="Updating…";
+        const {error}=await sb.from("chauffeur_cancellation_requests").update({status:"withdrawn",admin_note:"Customer chose to keep the booking."}).eq("id",button.dataset.keepChauffeurBooking).eq("user_id",accountOwnerId).eq("status","pending");
+        if(error){button.disabled=false;button.textContent="Keep this booking instead";alert("Could not withdraw the cancellation request: "+error.message);return}
         await loadMyChauffeurBookings();
        }));
       }catch(error){
