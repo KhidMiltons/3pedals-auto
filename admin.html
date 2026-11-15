@@ -463,7 +463,7 @@ function resetChauffeurDriverForm(){
  $("chauffeurDriverForm").reset();$("chauffeurDriverId").value="";$("chauffeurDriverActive").checked=true;
  $("saveChauffeurDriver").textContent="Save driver";$("chauffeurDriverForm").classList.add("section-hidden");
 }
-$("newChauffeurVehicle")?.addEventListener("click",()=>{$("chauffeurVehicleForm").reset();$("chauffeurVehicleId").value="";$("chauffeurVehicleCapacity").value="4";$("chauffeurVehicleActive").checked=true;$("saveChauffeurVehicle").textContent="Add vehicle";$("chauffeurVehiclePhotoPreview").innerHTML="";$("chauffeurVehicleForm").classList.remove("section-hidden");$("chauffeurVehicleForm").scrollIntoView({behavior:"smooth",block:"center"})});
+
 $("cancelChauffeurVehicle")?.addEventListener("click",resetChauffeurVehicleForm);
 $("chauffeurVehiclePhoto")?.addEventListener("change",()=>{const file=$("chauffeurVehiclePhoto").files[0];$("chauffeurVehiclePhotoPreview").innerHTML=file?'<span class="meta">'+esc(file.name)+' · '+(file.size/1048576).toFixed(1)+' MB</span>':""});
 $("chauffeurVehicleForm")?.addEventListener("submit",async e=>{
@@ -482,6 +482,8 @@ $("chauffeurVehicleForm")?.addEventListener("submit",async e=>{
  finally{btn.disabled=false}
 });
 $("chauffeurFleetAdmin")?.addEventListener("click",async e=>{
+ const add=e.target.closest("#newChauffeurVehicle");
+ if(add){const form=$("chauffeurVehicleForm");form.reset();$("chauffeurVehicleId").value="";$("chauffeurVehicleCapacity").value="4";$("chauffeurVehicleActive").checked=true;$("saveChauffeurVehicle").textContent="Add vehicle";$("chauffeurVehiclePhotoPreview").innerHTML="";form.classList.remove("section-hidden");form.scrollIntoView({behavior:"smooth",block:"center"});return}
  const edit=e.target.closest("[data-chauffeur-edit]"),toggle=e.target.closest("[data-chauffeur-toggle]"),del=e.target.closest("[data-chauffeur-delete]"),rename=e.target.closest("#renameChauffeurCategory");
  if(rename){const from=$("chauffeurCategoryCurrent").value,to=$("chauffeurCategoryRename").value.trim().toLowerCase();if(!from||!to){showNotice("Choose a category and enter its new name.","err");return}if(from===to){showNotice("That is already the category name.","err");return}if(!confirm('Rename "'+from+'" to "'+to+'" for all vehicles in this category?'))return;const {error}=await sb.from("chauffeur_vehicles").update({category:to,updated_at:new Date().toISOString()}).eq("category",from);if(error){showNotice("Could not rename category: "+error.message,"err");return}showNotice("Vehicle category renamed.","ok");await loadChauffeurBookings();return}
  if(edit){const v=chauffeurFleetRows.find(x=>x.id===edit.dataset.chauffeurEdit);if(!v)return;$("chauffeurVehicleId").value=v.id;$("chauffeurVehicleMake").value=v.make_model||"";$("chauffeurVehicleName").value=v.display_name||"";$("chauffeurVehicleCategory").value=v.category||"";$("chauffeurVehicleCapacity").value=v.passenger_capacity||4;$("chauffeurVehicleDescription").value=v.description||"";$("chauffeurVehicleActive").checked=!!v.is_active;for(const key of ["hourly_rate","daily_rate","per_km_rate","airport_transfer_rate","half_day_rate","full_day_rate"])$("chauffeur-"+key).value=v[key]??"";$("chauffeurVehiclePhoto").value="";$("chauffeurVehiclePhotoNote").textContent=v.photo_url?"Current photo retained unless you choose a replacement.":"No current photo saved."; $("chauffeurVehiclePhotoPreview").innerHTML=v.photo_url?'<img src="'+esc(v.photo_url)+'" alt="Current vehicle photo">':"";$("saveChauffeurVehicle").textContent="Update vehicle";$("chauffeurVehicleError").classList.add("hidden");$("chauffeurVehicleForm").classList.remove("section-hidden");$("chauffeurVehicleForm").scrollIntoView({behavior:"smooth",block:"center"});return}
@@ -545,7 +547,7 @@ async function loadChauffeurBookings(){
  if(!chauffeurRows.length){box.innerHTML='<div class="empty">No chauffeur booking requests yet.</div>';return}
  const q=chauffeurBookingSearch.toLowerCase(),visibleRows=chauffeurRows.filter(b=>{const status=String(b.status||"").toLowerCase(),date=String(b.start_at||"").slice(0,10),hay=[b.booking_ref,b.customer_name,b.customer_phone,b.pickup_location,b.destination,b.chauffeur_vehicles?.display_name,b.customer_notes].join(" ").toLowerCase();return(chauffeurBookingStatus==="all"||status===chauffeurBookingStatus)&&(!chauffeurBookingDate||date===chauffeurBookingDate)&&(!q||hay.includes(q))});$("chauffeurBookingCount").textContent=`Showing ${visibleRows.length} of ${chauffeurRows.length} bookings`;box.innerHTML=visibleRows.map(b=>{
   const pending=b.status==="pending_approval",awaiting=b.status==="approved_awaiting_payment";
-  const canAssign=b.status==="confirmed"&&b.payment_status==="paid";
+  const canAssign=["approved_awaiting_payment","confirmed"].includes(b.status);
   const driverOptions='<option value="">Unassigned</option>'+chauffeurDrivers.filter(d=>d.is_active||d.id===b.driver_id).map(d=>'<option value="'+esc(d.id)+'" '+(d.id===b.driver_id?'selected':'')+'>'+esc(d.full_name)+' · '+esc(d.phone)+(d.is_active?'':' · unavailable')+'</option>').join("");
   const waNumber=adminWhatsAppNumber(b.customer_phone);
   const waText="Hello "+(b.customer_name||"")+", an update from 3 Pedals Auto KE for booking "+b.booking_ref+". Status: "+String(b.status||"").replaceAll("_"," ")+". Payment: "+String(b.payment_status||"").replaceAll("_"," ")+". "+(b.assigned_driver_name?"Your assigned chauffeur is "+b.assigned_driver_name+" ("+(b.assigned_driver_phone||"contact our office")+"). ":"")+"Journey: "+b.pickup_location+" to "+b.destination+".";
@@ -576,7 +578,7 @@ $("chauffeurAdminList")?.addEventListener("click",async e=>{
  assign.disabled=true;
  try{
   if(!booking)throw new Error("Booking not found. Refresh the chauffeur requests and try again.");
-  if(booking.status!=="confirmed"||booking.payment_status!=="paid")throw new Error("A chauffeur can only be assigned after the booking is confirmed and payment is marked paid.");
+  if(!["approved_awaiting_payment","confirmed"].includes(booking.status))throw new Error("A chauffeur can only be assigned after the booking has been approved.");
   if(!booking.start_at||!booking.end_at)throw new Error("This booking needs both a start and end time before a chauffeur can be assigned.");
   let driver=null;
   if(driverId){
@@ -584,7 +586,7 @@ $("chauffeurAdminList")?.addEventListener("click",async e=>{
    if(!driver||!driver.is_active)throw new Error("Choose an active chauffeur from the roster.");
    const today=new Date().toISOString().slice(0,10);
    if(driver.licence_expiry&&driver.licence_expiry<today)throw new Error("This chauffeur's driving licence has expired. Update the licence details before assigning.");
-   const {data:conflicts,error:conflictError}=await sb.from("chauffeur_bookings").select("id,booking_ref,start_at,end_at").eq("driver_id",driver.id).eq("status","confirmed").neq("id",id);
+   const {data:conflicts,error:conflictError}=await sb.from("chauffeur_bookings").select("id,booking_ref,start_at,end_at").eq("driver_id",driver.id).in("status",["approved_awaiting_payment","confirmed"]).neq("id",id);
    if(conflictError)throw conflictError;
    const start=new Date(booking.start_at).getTime(),end=new Date(booking.end_at).getTime();
    if((conflicts||[]).some(x=>x.start_at&&x.end_at&&new Date(x.start_at).getTime()<end&&new Date(x.end_at).getTime()>start))throw new Error("This chauffeur already has another confirmed trip during the selected period.");
