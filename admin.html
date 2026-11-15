@@ -584,8 +584,9 @@ $("chauffeurFleetAdmin")?.addEventListener("submit",async e=>{
 });
 
 document.addEventListener("click",async e=>{
- const retry=e.target.closest("[data-chauffeur-wa-retry]");if(retry){retry.disabled=true;retry.textContent="Sending…";try{const result=await sendChauffeurWhatsApp(retry.dataset.chauffeurWaRetry,retry.dataset.waEvent);showNotice(result.status==="accepted"?"WhatsApp API accepted the template. Delivery is not yet confirmed.":result.status==="already_sent"?"WhatsApp API had already accepted this template.":"WhatsApp response: "+(result.status||"received"),"ok");await loadChauffeurBookings()}catch(err){showNotice("WhatsApp template failed: "+(err?.message||err),"err");await loadChauffeurBookings()}return}
- const approve=e.target.closest("[data-chauffeur-approve]"),decline=e.target.closest("[data-chauffeur-decline]"),assign=e.target.closest("[data-driver-save]");if(assign){
+ const target=e.target instanceof Element?e.target:null;if(!target)return;
+ const retry=target.closest("[data-chauffeur-wa-retry]");if(retry){retry.disabled=true;retry.textContent="Sending…";try{const result=await sendChauffeurWhatsApp(retry.dataset.chauffeurWaRetry,retry.dataset.waEvent);showNotice(result.status==="accepted"?"WhatsApp API accepted the template. Delivery is not yet confirmed.":result.status==="already_sent"?"WhatsApp API had already accepted this template.":"WhatsApp response: "+(result.status||"received"),"ok");await loadChauffeurBookings()}catch(err){showNotice("WhatsApp template failed: "+(err?.message||err),"err");await loadChauffeurBookings()}return}
+ const approve=target.closest("[data-chauffeur-approve]"),decline=target.closest("[data-chauffeur-decline]"),assign=target.closest("[data-driver-save]");if(assign){
  e.preventDefault();const id=assign.dataset.driverSave,select=$("driver-"+id);if(!select){showNotice("The driver selector could not be found. Refresh the booking list and try again.","err");return}const driverId=select.value||null,booking=chauffeurRows.find(x=>String(x.id)===String(id));
  assign.disabled=true;assign.textContent="Saving…";
  try{
@@ -625,7 +626,9 @@ document.addEventListener("click",async e=>{
  await recordAdminAudit(approve?"approve_chauffeur_booking":"decline_chauffeur_booking","chauffeur_booking",id,(approve?"Approved with quote KES "+Number(payload.final_amount).toLocaleString("en-KE"):"Declined")+" · "+(chauffeurRows.find(x=>String(x.id)===String(id))?.booking_ref||id));
  let waNotice="";try{const result=await sendChauffeurWhatsApp(id,approve?"approved":"declined");waNotice=result.status==="accepted"?" WhatsApp template accepted by Meta; delivery is not yet confirmed.":result.status==="already_sent"?" WhatsApp template was already accepted.":result.status==="skipped"?" WhatsApp update skipped because the customer did not opt in.":" WhatsApp response: "+(result.status||"received")+". "}catch(waErr){waNotice=" WhatsApp template failed: "+(waErr?.message||waErr)+". You can retry from this booking card."}
  showNotice((approve?"Booking approved and quote saved. M-Pesa payment request still needs to be sent to the customer.":"Chauffeur booking declined.")+waNotice,waNotice.includes("failed")?"err":"ok");await loadChauffeurBookings();await loadAdminOverview();await loadRequestsInbox();
-});
+},true);
+
+
 
 let requestInboxKind="all",requestInboxSearch="";
 async function loadRequestsInbox(){
