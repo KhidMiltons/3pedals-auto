@@ -2688,3 +2688,60 @@
     box-shadow:none!important;transform:none!important
   }
 }
+
+/* Final account-panel cleanup: no pale/white wash, glass sheen or nested panel layers. */
+#accDlg.account-dashboard-dialog[open],
+#accDlg.account-dashboard-dialog[open]::before,
+#accDlg.account-dashboard-dialog[open]::after,
+#accDlg.account-dashboard-dialog[open]>.account-dashboard-main,
+#accDlg #accBody,
+#accDlg #accBody .account-pages,
+#accDlg #accBody .account-page{
+  background-color:#090909!important;background-image:none!important;
+  box-shadow:none!important;filter:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+#accDlg #accBody :is(.account-tools,.account-tools::before,.account-tools::after,
+.account-page::before,.account-page::after,.account-pages::before,.account-pages::after,
+.account-activity-page-head,.account-chauffeur-bookings-page,.account-chauffeur-bookings-page::before,
+.account-chauffeur-bookings-page::after){
+  background-color:transparent!important;background-image:none!important;
+  box-shadow:none!important;filter:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+#accDlg #accBody .account-chauffeur-bookings-page>.account-tools{
+  padding:0!important;margin:0!important;border:0!important;border-radius:0!important;
+}
+#accDlg #accBody .account-chauffeur-bookings-page .account-activity-page-head{
+  box-sizing:border-box!important;width:100%!important;min-width:0!important;
+  padding:18px 20px 20px!important;margin:0 0 18px!important;
+  border:0!important;border-bottom:1px solid #30291d!important;border-radius:0!important;
+  align-items:center!important;gap:16px!important;
+}
+#accDlg #accBody .account-chauffeur-bookings-page .account-activity-page-head>div{
+  min-width:0!important;padding:0!important;margin:0!important;
+}
+#accDlg #accBody .account-chauffeur-bookings-page .account-activity-page-head .account-eyebrow,
+#accDlg #accBody .account-chauffeur-bookings-page .account-activity-page-head h3,
+#accDlg #accBody .account-chauffeur-bookings-page .account-activity-page-head .meta{
+  margin-left:0!important;margin-right:0!important;
+}
+#accDlg #accBody .account-chauffeur-bookings-page .account-activity-page-head h3{
+  margin-top:4px!important;margin-bottom:6px!important;line-height:1.3!important;
+}
+#accDlg #accBody .account-chauffeur-bookings-page .account-activity-page-head p{
+  line-height:1.6!important;max-width:760px!important;
+}
+#accDlg #accBody :is(.account-tools,.account-page .card,.svc,.account-booking-row){
+  background:#111!important;background-color:#111!important;background-image:none!important;
+  box-shadow:none!important;filter:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+#accDlg #accBody :is(.account-tools,.account-page .card,.svc):not(.account-booking-row){
+  border-color:transparent!important;
+}
+@media(max-width:680px){
+ #accDlg #accBody .account-chauffeur-bookings-page .account-activity-page-head{
+  padding:15px 14px 17px!important;align-items:flex-start!important
+ }
+}
