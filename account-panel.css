@@ -2806,3 +2806,155 @@
     align-items:flex-start!important;flex-wrap:wrap!important;
   }
 }
+
+/* Unified account workspace design system — apply consistently to every account section. */
+#accDlg #accBody,
+#accDlg #accBody .account-pages,
+#accDlg #accBody .account-page,
+#accDlg #accBody .account-page[hidden]{
+  color:#f4f0e7!important;
+  background:transparent!important;background-image:none!important;
+  box-shadow:none!important;filter:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+#accDlg #accBody .account-page{
+  box-sizing:border-box!important;min-width:0!important;
+}
+#accDlg #accBody .account-page > .account-tools,
+#accDlg #accBody .account-page > .account-full-activity,
+#accDlg #accBody .account-page > .account-settings-inner,
+#accDlg #accBody .account-page > .account-promotions-page,
+#accDlg #accBody .account-page > .account-buyer-workspace{
+  box-sizing:border-box!important;width:100%!important;min-width:0!important;
+  padding:22px 24px!important;margin:0!important;
+  color:#f4f0e7!important;background:transparent!important;background-image:none!important;
+  border:0!important;border-radius:0!important;box-shadow:none!important;filter:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+/* Remove decorative pseudo-surfaces that create a second white/glass panel. */
+#accDlg #accBody .account-page::before,
+#accDlg #accBody .account-page::after,
+#accDlg #accBody .account-tools::before,
+#accDlg #accBody .account-tools::after,
+#accDlg #accBody .account-full-activity::before,
+#accDlg #accBody .account-full-activity::after,
+#accDlg #accBody .account-settings-inner::before,
+#accDlg #accBody .account-settings-inner::after{
+  content:none!important;display:none!important;background:none!important;
+  box-shadow:none!important;filter:none!important;
+}
+/* Every section introduction uses the same padded, understated treatment. */
+#accDlg #accBody .account-activity-page-head{
+  box-sizing:border-box!important;width:100%!important;min-width:0!important;
+  display:flex!important;align-items:center!important;justify-content:space-between!important;
+  flex-wrap:wrap!important;gap:14px 20px!important;
+  padding:18px 20px!important;margin:0 0 18px!important;
+  color:#f4f0e7!important;background:#151515!important;background-image:none!important;
+  border:0!important;border-left:2px solid #c9a66b!important;border-radius:8px!important;
+  box-shadow:none!important;filter:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+#accDlg #accBody .account-activity-page-head>div{
+  flex:1 1 360px!important;min-width:0!important;padding:0!important;margin:0!important;
+}
+#accDlg #accBody .account-activity-page-head .account-eyebrow{
+  display:block!important;margin:0 0 7px!important;padding:0!important;
+  color:#e3cc9d!important;line-height:1.5!important;
+}
+#accDlg #accBody .account-activity-page-head h2,
+#accDlg #accBody .account-activity-page-head h3,
+#accDlg #accBody .account-activity-page-head h4{
+  display:block!important;margin:0 0 7px!important;padding:0!important;
+  color:#f4f0e7!important;line-height:1.35!important;
+}
+#accDlg #accBody .account-activity-page-head .meta,
+#accDlg #accBody .account-activity-page-head p{
+  display:block!important;margin:0!important;padding:0!important;
+  color:#c2bbae!important;line-height:1.65!important;
+}
+/* Consistent flat card surfaces; remove glass, pale gradients and inset layers. */
+#accDlg #accBody :is(
+  .account-tools>.panel,.account-tools>section,.account-tools>article,
+  .account-tools .panel,.account-tools .card,.account-tools article,
+  .account-page .card,.account-full-activity .account-activity-item,
+  .account-booking-item,.account-booking-row,.account-saved-vehicle,
+  .seller-listing,.seller-garage-card,.seller-summary-card,
+  .promotion-package,.promo-package,.promotion-history-item,
+  .profile-card,.settings-section,.dealer-overview-card,
+  .account-stat-card,.account-overview-panel,.account-buyer-workspace
+){
+  box-sizing:border-box!important;min-width:0!important;
+  color:#f4f0e7!important;background:#151515!important;
+  background-color:#151515!important;background-image:none!important;
+  border:0!important;border-radius:8px!important;
+  box-shadow:none!important;filter:none!important;outline:0!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+  transform:none!important;
+}
+/* Consistent breathing room inside cards and between adjacent cards. */
+#accDlg #accBody :is(
+  .account-tools>.panel,.account-tools>section,.account-tools>article,
+  .account-tools .panel,.account-tools .card,.account-tools article,
+  .account-page .card,.account-full-activity .account-activity-item,
+  .account-booking-item,.account-booking-row,.account-saved-vehicle,
+  .seller-listing,.seller-garage-card,.seller-summary-card,
+  .promotion-package,.promo-package,.promotion-history-item,
+  .profile-card,.settings-section,.dealer-overview-card,.account-stat-card
+){
+  padding:18px!important;margin-block:0 12px!important;
+}
+#accDlg #accBody :is(
+  .account-tools,.account-full-activity,.account-settings-inner,
+  .account-saved-vehicles-grid,.account-activity-list,
+  .account-bookings-grid,.account-promotions-grid
+){
+  gap:14px!important;
+}
+/* Unified text hierarchy and spacing. */
+#accDlg #accBody :is(h1,h2,h3,h4,h5,h6){
+  color:#f4f0e7!important;line-height:1.35!important;
+}
+#accDlg #accBody :is(p,.meta,small,.muted,.description,.subtitle){
+  color:#c2bbae!important;line-height:1.6!important;
+}
+#accDlg #accBody :is(.account-eyebrow,.seller-garage-eyebrow){
+  color:#e3cc9d!important;letter-spacing:.08em!important;
+}
+/* Buttons: uniform internal padding and safe distance from card edges. */
+#accDlg #accBody :is(button,.btn,a.btn,[role="button"]){
+  box-sizing:border-box!important;min-height:38px!important;
+  padding:9px 14px!important;margin:2px!important;
+  border-radius:7px!important;box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+#accDlg #accBody :is(.account-tools,.account-page) :is(button,.btn,a.btn,[role="button"]){
+  max-width:100%!important;
+}
+#accDlg #accBody :is(input,select,textarea){
+  box-sizing:border-box!important;max-width:100%!important;
+  padding:11px 13px!important;border-radius:7px!important;
+}
+#accDlg #accBody :is(button,.btn,a.btn,[role="button"]):hover{
+  background-color:#211c13!important;border-color:rgba(201,166,107,.48)!important;
+  color:#e3cc9d!important;box-shadow:none!important;transform:none!important;
+}
+#accDlg #accBody :is(button,.btn,a.btn,[role="button"]):focus-visible{
+  outline:2px solid #c9a66b!important;outline-offset:2px!important;
+}
+@media(max-width:760px){
+  #accDlg #accBody .account-page > .account-tools,
+  #accDlg #accBody .account-page > .account-full-activity,
+  #accDlg #accBody .account-page > .account-settings-inner,
+  #accDlg #accBody .account-page > .account-promotions-page,
+  #accDlg #accBody .account-page > .account-buyer-workspace{
+    padding:14px!important;
+  }
+  #accDlg #accBody .account-activity-page-head{padding:15px!important;gap:12px!important}
+  #accDlg #accBody .account-activity-page-head>div{flex-basis:100%!important}
+  #accDlg #accBody :is(
+    .account-tools>.panel,.account-tools>section,.account-tools>article,
+    .account-tools .panel,.account-tools .card,.account-tools article,
+    .account-page .card,.account-booking-item,.account-booking-row,
+    .seller-listing,.promotion-package,.promo-package,.profile-card,.settings-section
+  ){padding:14px!important}
+}
