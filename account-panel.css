@@ -2958,3 +2958,124 @@
     .seller-listing,.promotion-package,.promo-package,.profile-card,.settings-section
   ){padding:14px!important}
 }
+
+/* Target the actual Insights and My Listings components (not generic card guesses). */
+#accDlg #accBody #accountPage-dashboard,
+#accDlg #accBody #accountPage-dashboard>.seller-dashboard{
+  background:transparent!important;background-image:none!important;
+  box-shadow:none!important;filter:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+#accDlg #accBody #accountPage-dashboard .workspace-v2-hero{
+  background:transparent!important;background-image:none!important;
+  border:0!important;box-shadow:none!important;
+}
+#accDlg #accBody #accountPage-dashboard .workspace-v2-metric,
+#accDlg #accBody #accountPage-dashboard .workspace-v2-card{
+  color:#f4f0e7!important;background:#151515!important;background-color:#151515!important;
+  background-image:none!important;border:0!important;border-radius:8px!important;
+  box-shadow:none!important;filter:none!important;transform:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+#accDlg #accBody #accountPage-dashboard .workspace-v2-metric{
+  min-height:108px!important;padding:16px!important;text-align:left!important;
+}
+#accDlg #accBody #accountPage-dashboard .workspace-v2-card{padding:18px!important}
+#accDlg #accBody #accountPage-dashboard .workspace-v2-card-heading{margin-bottom:14px!important}
+#accDlg #accBody #accountPage-dashboard .workspace-v2-card-heading>button,
+#accDlg #accBody #accountPage-dashboard .workspace-v2-primary-actions button{
+  min-height:36px!important;padding:9px 13px!important;margin:0!important;
+  background:#211c13!important;border:1px solid #40331e!important;
+  color:#e3cc9d!important;box-shadow:none!important;
+}
+#accDlg #accBody #accountPage-dashboard .workspace-v2-metric-top i,
+#accDlg #accBody #accountPage-dashboard .workspace-v2-shortcuts>button>span:first-child{
+  background:#211c13!important;color:#e3cc9d!important;
+}
+#accDlg #accBody #accountPage-dashboard .workspace-v2-shortcuts>button{
+  background:transparent!important;border:0!important;border-bottom:1px solid #30291d!important;
+  border-radius:0!important;box-shadow:none!important;transform:none!important;
+}
+#accDlg #accBody #accountPage-dashboard .workspace-v2-shortcuts>button:hover{
+  color:#e3cc9d!important;background:#1b1812!important;
+}
+#accDlg #accBody #accountPage-dashboard .workspace-v2-progress{background:#29251e!important}
+#accDlg #accBody #accountPage-dashboard .workspace-v2-footer{
+  border-color:#30291d!important;color:#a99e89!important;
+}
+/* My Listings lives in the second direct section of the Insights page. */
+#accDlg #accBody #accountPage-dashboard>.account-tools{
+  box-sizing:border-box!important;width:100%!important;min-width:0!important;
+  padding:20px!important;margin:0 0 14px!important;
+  color:#f4f0e7!important;background:#111!important;background-image:none!important;
+  border:0!important;border-radius:8px!important;box-shadow:none!important;filter:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+#accDlg #accBody #accountPage-dashboard>.account-tools h3,
+#accDlg #accBody #accountPage-dashboard>.account-tools h4{
+  color:#f4f0e7!important;margin:0 0 12px!important;
+}
+#accDlg #accBody #accountPage-dashboard .seller-listing-filters{
+  display:grid!important;grid-template-columns:minmax(0,1fr) minmax(150px,.7fr)!important;
+  gap:8px 14px!important;margin:14px 0 18px!important;padding:0!important;
+}
+#accDlg #accBody #accountPage-dashboard .seller-listing-filters label{margin:0 0 4px!important;color:#e3cc9d!important}
+#accDlg #accBody #accountPage-dashboard .seller-listing-filters input,
+#accDlg #accBody #accountPage-dashboard .seller-listing-filters select{
+  width:100%!important;min-width:0!important;background:#0b0b0b!important;
+  color:#f4f0e7!important;border:1px solid #393124!important;padding:10px 12px!important;
+}
+#accDlg #accBody #accountPage-dashboard .seller-listing{
+  display:grid!important;grid-template-columns:116px minmax(0,1fr)!important;
+  align-items:start!important;gap:14px!important;width:100%!important;
+  box-sizing:border-box!important;padding:14px!important;margin:0 0 12px!important;
+  color:#f4f0e7!important;background:#151515!important;background-image:none!important;
+  border:0!important;border-left:2px solid #c9a66b!important;border-radius:8px!important;
+  box-shadow:none!important;filter:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+#accDlg #accBody #accountPage-dashboard .seller-listing-photo,
+#accDlg #accBody #accountPage-dashboard .seller-garage-photo-placeholder{
+  display:block!important;width:100%!important;min-width:0!important;height:100%!important;
+  min-height:100px!important;object-fit:cover!important;border-radius:5px!important;
+  background:#0b0b0b!important;
+}
+#accDlg #accBody #accountPage-dashboard .seller-garage-content{
+  display:grid!important;gap:10px!important;min-width:0!important;
+  padding:0!important;background:transparent!important;border:0!important;
+  box-shadow:none!important;filter:none!important;
+}
+#accDlg #accBody #accountPage-dashboard .seller-garage-heading{
+  display:flex!important;align-items:flex-start!important;justify-content:space-between!important;
+  flex-wrap:wrap!important;gap:8px 14px!important;
+}
+#accDlg #accBody #accountPage-dashboard .seller-garage-heading h4{margin:4px 0!important;color:#f4f0e7!important}
+#accDlg #accBody #accountPage-dashboard .seller-garage-price{color:#e3cc9d!important}
+#accDlg #accBody #accountPage-dashboard .seller-garage-meta,
+#accDlg #accBody #accountPage-dashboard .seller-garage-promotion{
+  display:flex!important;align-items:center!important;flex-wrap:wrap!important;gap:8px 14px!important;
+  color:#c2bbae!important;background:transparent!important;border:0!important;
+  box-shadow:none!important;padding:0!important;
+}
+#accDlg #accBody #accountPage-dashboard .seller-listing-actions{
+  display:flex!important;align-items:center!important;flex-wrap:wrap!important;gap:8px!important;
+  margin:0!important;padding:0!important;
+}
+#accDlg #accBody #accountPage-dashboard .seller-listing-actions .btn{
+  min-height:36px!important;padding:8px 12px!important;margin:0!important;
+  background:#211c13!important;color:#e3cc9d!important;border:1px solid #40331e!important;
+}
+#accDlg #accBody #accountPage-dashboard .seller-garage-status{
+  background:#211c13!important;color:#e3cc9d!important;border:0!important;
+}
+@media(max-width:760px){
+  #accDlg #accBody #accountPage-dashboard>.account-tools{padding:14px!important}
+  #accDlg #accBody #accountPage-dashboard .workspace-v2-metric{padding:13px!important}
+  #accDlg #accBody #accountPage-dashboard .workspace-v2-card{padding:14px!important}
+  #accDlg #accBody #accountPage-dashboard .seller-listing{grid-template-columns:76px minmax(0,1fr)!important;padding:12px!important;gap:10px!important}
+}
+@media(max-width:460px){
+  #accDlg #accBody #accountPage-dashboard .seller-listing{grid-template-columns:minmax(0,1fr)!important}
+  #accDlg #accBody #accountPage-dashboard .seller-listing-photo,
+  #accDlg #accBody #accountPage-dashboard .seller-garage-photo-placeholder{height:150px!important}
+}
