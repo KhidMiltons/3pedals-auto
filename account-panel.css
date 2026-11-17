@@ -3079,3 +3079,99 @@
   #accDlg #accBody #accountPage-dashboard .seller-listing-photo,
   #accDlg #accBody #accountPage-dashboard .seller-garage-photo-placeholder{height:150px!important}
 }
+
+
+/* Final correction: remove pale surfaces from account sections and pad Buying Workspace. */
+#accDlg #accBody :is(#accountPage-activity,#accountPage-dashboard,#accountPage-promotions,#accountPage-bookings){
+  background:transparent!important;background-color:transparent!important;background-image:none!important;
+  border:0!important;box-shadow:none!important;filter:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+#accDlg #accBody :is(#accountPage-activity,#accountPage-dashboard,#accountPage-promotions,#accountPage-bookings) :is(
+  .account-tools,.account-full-activity,.account-activity-list,.account-promotions-page,
+  .account-bookings-page,.account-bookings-toolbar,.seller-dashboard,.seller-summary,
+  .seller-listings,.promotion-history,.promotion-history-list,.account-pages
+){
+  background:transparent!important;background-color:transparent!important;background-image:none!important;
+  border-color:transparent!important;box-shadow:none!important;filter:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+#accDlg #accBody :is(#accountPage-activity,#accountPage-dashboard,#accountPage-promotions,#accountPage-bookings) *{
+  background-image:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+#accDlg #accBody :is(#accountPage-activity,#accountPage-dashboard,#accountPage-promotions,#accountPage-bookings) :is(
+  .account-activity-item,.seller-listing,.seller-garage-card,.seller-summary-card,
+  .workspace-v2-metric,.workspace-v2-card,.promotion-package,.promo-package,
+  .promotion-history-item,.account-booking-item,.account-booking-row,.svc,
+  .account-stat-card,.account-activity-card,.account-booking-card
+){
+  color:#f4f0e7!important;background:#151515!important;background-color:#151515!important;
+  border:0!important;border-left:2px solid #c9a66b!important;border-radius:8px!important;
+  box-shadow:none!important;filter:none!important;
+}
+#accDlg #accBody #accountPage-activity .account-activity-item,
+#accDlg #accBody #accountPage-promotions :is(.promotion-package,.promo-package,.promotion-history-item),
+#accDlg #accBody #accountPage-bookings :is(.account-booking-item,.account-booking-row,.svc){
+  box-sizing:border-box!important;min-width:0!important;padding:18px 20px!important;margin:0 0 12px!important;
+}
+#accDlg #accBody :is(#accountPage-activity,#accountPage-promotions,#accountPage-bookings) :is(
+  p,.meta,small,.muted,.description,strong,time,span
+){line-height:1.6!important}
+#accDlg #accBody #accountPage-buying,
+#accDlg #accBody #accountPage-buying>.account-tools.account-buyer-workspace{
+  box-sizing:border-box!important;width:100%!important;min-width:0!important;
+  padding:0!important;margin:0!important;background:transparent!important;
+  background-image:none!important;border:0!important;box-shadow:none!important;
+}
+#accDlg #accBody #accountPage-buying>.account-tools.account-buyer-workspace{
+  display:flex!important;flex-direction:column!important;gap:16px!important;
+}
+#accDlg #accBody #accountPage-buying .account-activity-page-head{
+  box-sizing:border-box!important;width:100%!important;min-width:0!important;
+  display:flex!important;align-items:center!important;justify-content:space-between!important;
+  flex-wrap:wrap!important;gap:14px!important;
+  padding:18px 20px!important;margin:0!important;
+  color:#f4f0e7!important;background:#151515!important;background-image:none!important;
+  border:0!important;border-left:2px solid #c9a66b!important;border-radius:8px!important;
+  box-shadow:none!important;
+}
+#accDlg #accBody #accountPage-buying .account-activity-page-head>div{
+  flex:1 1 260px!important;min-width:0!important;padding:0!important;margin:0!important;
+}
+#accDlg #accBody #accountPage-buying .account-activity-page-head :is(.account-eyebrow,h3,p,.meta){
+  display:block!important;max-width:100%!important;white-space:normal!important;
+  overflow-wrap:anywhere!important;padding:0!important;
+}
+#accDlg #accBody #accountPage-buying .account-activity-page-head .account-eyebrow{margin:0 0 7px!important}
+#accDlg #accBody #accountPage-buying .account-activity-page-head h3{margin:0 0 7px!important}
+#accDlg #accBody #accountPage-buying .account-activity-page-head p{margin:0!important;line-height:1.65!important}
+#accDlg #accBody #accountPage-buying .account-activity-page-head>a.btn{
+  flex:0 0 auto!important;margin:0!important;padding:10px 16px!important;
+}
+#accDlg #accBody #accountPage-buying>.account-tools>h4{
+  margin:0!important;padding:0 2px!important;color:#f4f0e7!important;line-height:1.45!important;
+}
+#accDlg #accBody #accountPage-buying .account-saved-vehicles-grid{
+  box-sizing:border-box!important;display:grid!important;gap:12px!important;
+  width:100%!important;min-width:0!important;padding:0!important;margin:0!important;
+  background:transparent!important;border:0!important;box-shadow:none!important;
+}
+#accDlg #accBody #accountPage-buying .account-saved-vehicles-grid>.meta,
+#accDlg #accBody #accountPage-buying .account-saved-vehicles-grid>.account-overview-empty{
+  box-sizing:border-box!important;padding:18px 20px!important;margin:0!important;
+  color:#c2bbae!important;background:#151515!important;border-left:2px solid #c9a66b!important;
+  border-radius:8px!important;white-space:normal!important;overflow-wrap:anywhere!important;
+}
+#accDlg #accBody #accountPage-buying .account-saved-vehicles-grid :is(.account-saved-vehicle,.saved-vehicle-card){
+  box-sizing:border-box!important;min-width:0!important;padding:18px 20px!important;
+  color:#f4f0e7!important;background:#151515!important;border:0!important;
+  border-left:2px solid #c9a66b!important;border-radius:8px!important;box-shadow:none!important;
+}
+@media(max-width:760px){
+  #accDlg #accBody :is(#accountPage-activity,#accountPage-promotions,#accountPage-bookings) :is(
+    .account-activity-item,.promotion-package,.promo-package,.promotion-history-item,
+    .account-booking-item,.account-booking-row,.svc
+  ){padding:14px!important}
+  #accDlg #accBody #accountPage-buying .account-activity-page-head{padding:15px!important}
+  #accDlg #accBody #accountPage-buying .account-saved-vehicles-grid :is(.account-saved-vehicle,.saved-vehicle-card){padding:14px!important}
+}
