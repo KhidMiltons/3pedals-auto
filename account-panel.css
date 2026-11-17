@@ -3294,3 +3294,49 @@
     height:150px!important;
   }
 }
+
+
+/* Insights uses the same unboxed surface treatment as Overview. */
+#accDlg #accBody #accountPage-dashboard,
+#accDlg #accBody #accountPage-dashboard>.account-tools:first-child,
+#accDlg #accBody #accountPage-dashboard>.account-tools:first-child .workspace-v2,
+#accDlg #accBody #accountPage-dashboard>.account-tools:first-child .workspace-v2-main-grid,
+#accDlg #accBody #accountPage-dashboard>.account-tools:first-child .workspace-v2-metric-grid{
+  background:transparent!important;background-color:transparent!important;background-image:none!important;
+  border:0!important;border-color:transparent!important;border-radius:0!important;
+  box-shadow:none!important;filter:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+#accDlg #accBody #accountPage-dashboard>.account-tools:first-child :is(
+  .workspace-v2-metric,.workspace-v2-card,.workspace-v2-hero,
+  .workspace-v2-inventory,.workspace-v2-shortcuts,.workspace-v2-stat
+){
+  color:#f4f0e7!important;background:transparent!important;background-color:transparent!important;
+  background-image:none!important;border:0!important;border-radius:0!important;
+  box-shadow:none!important;filter:none!important;transform:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+#accDlg #accBody #accountPage-dashboard>.account-tools:first-child .workspace-v2-metric{
+  min-height:108px!important;padding:16px 14px!important;
+  border-bottom:1px solid #28231a!important;
+}
+#accDlg #accBody #accountPage-dashboard>.account-tools:first-child .workspace-v2-card{
+  padding:18px 14px!important;border-bottom:1px solid #28231a!important;
+}
+#accDlg #accBody #accountPage-dashboard>.account-tools:first-child :is(
+  .workspace-v2-metric:hover,.workspace-v2-metric:focus-visible,
+  .workspace-v2-card:hover
+){background:transparent!important;outline:none!important;transform:none!important}
+#accDlg #accBody #accountPage-dashboard>.account-tools:first-child :is(
+  .workspace-v2-card-heading,.workspace-v2-metric-top,.workspace-v2-metric-bottom
+){background:transparent!important}
+#accDlg #accBody #accountPage-dashboard>.account-tools:first-child .workspace-v2-shortcuts>button{
+  background:transparent!important;border:0!important;border-bottom:1px solid #28231a!important;
+  border-radius:0!important;box-shadow:none!important;padding:12px 4px!important;
+}
+@media(max-width:760px){
+  #accDlg #accBody #accountPage-dashboard>.account-tools:first-child .workspace-v2-metric,
+  #accDlg #accBody #accountPage-dashboard>.account-tools:first-child .workspace-v2-card{
+    padding:14px 8px!important;
+  }
+}
