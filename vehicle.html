@@ -61,9 +61,15 @@ header{position:sticky;top:0;z-index:10;background:rgba(8,10,13,.82);border-bott
 body{background:radial-gradient(ellipse at 12% -8%,rgba(201,183,132,.12),transparent 34%),radial-gradient(ellipse at 90% 18%,rgba(255,255,255,.035),transparent 35%),#0d0d0d!important;color:#f5f1e6!important;font-family:Manrope,system-ui,-apple-system,"Segoe UI",sans-serif!important}
 header,.head{background:linear-gradient(110deg,rgba(17,18,19,.9),rgba(30,30,31,.78))!important;border-color:rgba(201,183,132,.2)!important;backdrop-filter:blur(22px) saturate(140%)!important;-webkit-backdrop-filter:blur(22px) saturate(140%)!important}
 .card,.dealer,.stat,.state,.empty,.error,.panel,.seller-card,.info,.gallery,.seller,.spec,.note{background:linear-gradient(145deg,rgba(40,40,40,.76),rgba(22,23,24,.82))!important;color:#f5f1e6!important;border-color:rgba(201,183,132,.2)!important;backdrop-filter:blur(18px) saturate(135%)!important;-webkit-backdrop-filter:blur(18px) saturate(135%)!important;box-shadow:0 12px 34px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.035)!important;transition:transform .32s var(--ease),border-color .25s,box-shadow .32s!important}
-.card:hover,.card:focus-visible,.dealer:hover,.dealer:focus-visible{transform:translateY(-3px)!important;border-color:rgba(201,183,132,.55)!important;box-shadow:0 20px 46px rgba(0,0,0,.38),0 0 22px rgba(201,183,132,.08)!important}
+.card:focus-visible,.dealer:focus-visible{border-color:rgba(201,183,132,.55)!important;box-shadow:0 20px 46px rgba(0,0,0,.38),0 0 22px rgba(201,183,132,.08)!important}
 input,select,textarea,.back{background:rgba(255,255,255,.055)!important;color:#f5f1e6!important;border-color:rgba(201,183,132,.2)!important;backdrop-filter:blur(12px)!important;-webkit-backdrop-filter:blur(12px)!important}
-.btn{transition:transform .25s var(--ease),filter .25s,box-shadow .25s!important}.btn:hover,.btn:focus-visible{transform:translateY(-2px)!important;filter:brightness(1.08)!important;box-shadow:0 10px 24px rgba(0,0,0,.28)!important}.input::placeholder{color:#aaa18e!important}input::placeholder{color:#aaa18e!important}.eyebrow{color:#c9b784!important}a{color:inherit}.logo,.brand,.price,.arrow{color:#c9b784!important}.status{background:rgba(55,112,72,.2)!important;color:#b7e0bf!important;border-color:rgba(128,194,143,.3)!important}.yard-label{background:rgba(201,183,132,.14)!important;color:#c9b784!important}footer{border-color:rgba(201,183,132,.18)!important;color:#aaa18e!important}
+.btn{transition:transform .25s var(--ease),filter .25s,box-shadow .25s!important}
+.btn:focus-visible{filter:brightness(1.08)!important;box-shadow:0 10px 24px rgba(0,0,0,.28)!important}
+@media(hover:hover) and (pointer:fine){
+  .card:hover,.dealer:hover{transform:translateY(-3px)!important;border-color:rgba(201,183,132,.55)!important;box-shadow:0 20px 46px rgba(0,0,0,.38),0 0 22px rgba(201,183,132,.08)!important}
+  .btn:hover{transform:translateY(-2px)!important;filter:brightness(1.08)!important;box-shadow:0 10px 24px rgba(0,0,0,.28)!important}
+}
+.input::placeholder{color:#aaa18e!important}input::placeholder{color:#aaa18e!important}.eyebrow{color:#c9b784!important}a{color:inherit}.logo,.brand,.price,.arrow{color:#c9b784!important}.status{background:rgba(55,112,72,.2)!important;color:#b7e0bf!important;border-color:rgba(128,194,143,.3)!important}.yard-label{background:rgba(201,183,132,.14)!important;color:#c9b784!important}footer{border-color:rgba(201,183,132,.18)!important;color:#aaa18e!important}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
 </style>
 <link rel="stylesheet" href="site-theme.css?v=20261107-mobile-performance-1">
@@ -182,11 +188,13 @@ html body > header .back{
   text-decoration:none!important;white-space:nowrap!important;cursor:pointer!important;
   box-shadow:none!important;transition:background .25s ease,border-color .25s ease,color .25s ease,transform .25s ease!important;
 }
-html body > header nav a:hover,
-html body > header nav button:hover,
-html body > header .back:hover{
-  background:rgba(255,255,255,.10)!important;border-color:rgba(255,255,255,.10)!important;
-  color:#fff!important;transform:translateY(-1px)!important;
+@media(hover:hover) and (pointer:fine){
+  html body > header nav a:hover,
+  html body > header nav button:hover,
+  html body > header .back:hover{
+    background:rgba(255,255,255,.10)!important;border-color:rgba(255,255,255,.10)!important;
+    color:#fff!important;transform:translateY(-1px)!important;
+  }
 }
 html body > header .account-pill{
   display:flex!important;align-items:center!important;margin-left:auto!important;padding:4px!important;
@@ -232,15 +240,15 @@ html body > header nav a,html body > header nav button,html body > header .headn
   box-shadow:none!important;transform:translateY(0) scale(1)!important;
   transition:transform .46s cubic-bezier(.22,1,.36,1),background .32s ease,box-shadow .32s ease,border-color .32s ease,color .32s ease!important;
 }
-html body > header nav a:hover,html body > header nav button:hover,html body > header .headnav a:hover,html body > header .headnav button:hover,html body > header .back:hover{
-  background:rgba(255,255,255,.10)!important;border-color:rgba(255,255,255,.10)!important;color:#fff!important;
-  transform:translateY(-1px)!important;box-shadow:0 8px 18px rgba(0,0,0,.16)!important;
-}
 html body > header nav button[aria-selected="true"],html body > header nav a[aria-current="page"]{
   background:linear-gradient(180deg,#e7bd57,#d4a017)!important;color:#111!important;
   box-shadow:0 5px 16px rgba(215,169,40,.24)!important;
 }
 @media(hover:hover) and (pointer:fine){
+ html body > header nav a:hover,html body > header nav button:hover,html body > header .headnav a:hover,html body > header .headnav button:hover,html body > header .back:hover{
+   background:rgba(255,255,255,.10)!important;border-color:rgba(255,255,255,.10)!important;color:#fff!important;
+   transform:translateY(-1px)!important;box-shadow:0 8px 18px rgba(0,0,0,.16)!important;
+ }
  html body > header nav a:hover,html body > header nav button:hover,html body > header .headnav a:hover,html body > header .headnav button:hover{transform:translateY(-2px) scale(1.08)!important}
 }
 @media(max-width:760px){
@@ -283,12 +291,17 @@ html body>header .vehicle-header-nav a{
  background:transparent!important;color:#f1eee7!important;font:600 13px/1.2 Manrope,system-ui,sans-serif!important;
  text-decoration:none!important;white-space:nowrap!important;transition:background .25s ease,border-color .25s ease,transform .25s ease!important
 }
-html body>header .vehicle-header-nav a:hover,html body>header .vehicle-header-nav a:focus-visible{
- background:rgba(255,255,255,.12)!important;border-color:rgba(255,255,255,.16)!important;color:#fff!important;
- transform:translateY(-1px)!important;outline:none!important
+html body>header .vehicle-header-nav a:focus-visible{
+ background:rgba(255,255,255,.12)!important;border-color:rgba(255,255,255,.16)!important;color:#fff!important;outline:none!important
 }
 html body>header .vehicle-header-nav a.back{display:inline-flex!important;align-items:center!important;justify-content:center!important;min-height:40px!important;padding:9px 14px!important;margin:0!important;border:1px solid transparent!important;border-radius:10px!important;background:transparent!important;color:#f1eee7!important;font:600 13px/1.2 Manrope,system-ui,sans-serif!important;text-decoration:none!important;white-space:nowrap!important;transition:background .25s ease,border-color .25s ease,transform .25s ease!important}
-html body>header .vehicle-header-nav a.back:hover,html body>header .vehicle-header-nav a.back:focus-visible{background:rgba(255,255,255,.12)!important;border-color:rgba(255,255,255,.16)!important;color:#fff!important;transform:translateY(-1px)!important;outline:none!important}
+html body>header .vehicle-header-nav a.back:focus-visible{background:rgba(255,255,255,.12)!important;border-color:rgba(255,255,255,.16)!important;color:#fff!important;outline:none!important}
+@media(hover:hover) and (pointer:fine){
+ html body>header .vehicle-header-nav a:hover,
+ html body>header .vehicle-header-nav a.back:hover{
+  background:rgba(255,255,255,.12)!important;border-color:rgba(255,255,255,.16)!important;color:#fff!important;transform:translateY(-1px)!important;outline:none!important
+ }
+}
 @media(max-width:800px){
  html body>header>.wrap.head{gap:8px!important;flex-wrap:nowrap!important}
  html body>header .vehicle-header-nav{gap:2px!important;padding:3px!important;margin-left:0!important}
@@ -365,20 +378,32 @@ function updateVehicleSeo(r){
   let canonical=document.head.querySelector('link[rel="canonical"]');
   if(!canonical){canonical=document.createElement('link');canonical.rel='canonical';document.head.appendChild(canonical)}
   canonical.href=canonicalUrl.toString();
+  const isYard=r.seller_type==='yard'||!!r.yard_name||!!r.yard_location;
   const schema={
     '@context':'https://schema.org',
     '@type':'Vehicle',
+    '@id':canonicalUrl.toString()+'#vehicle',
     name:title,
     description:description,
     url:canonicalUrl.toString(),
-    brand:r.make?{'@type':'Brand',name:String(r.make)}:undefined,
-    model:r.model?String(r.model):undefined,
-    vehicleModelDate:r.year?String(r.year):undefined,
-    fuelType:r.fuel?String(r.fuel):undefined,
-    mileageFromOdometer:Number(r.km)>0?{'@type':'QuantitativeValue',value:Number(r.km),unitCode:'KMT'}:undefined,
-    image:photos.length?photos:undefined,
-    offers:Number(r.price)>0?{'@type':'Offer',priceCurrency:'KES',price:String(Number(r.price)),url:canonicalUrl.toString()}:undefined
+    itemCondition:'https://schema.org/UsedCondition'
   };
+  if(r.make)schema.brand={'@type':'Brand',name:String(r.make)};
+  if(r.model)schema.model=String(r.model);
+  if(r.year)schema.vehicleModelDate=String(r.year);
+  if(r.fuel)schema.fuelType=String(r.fuel);
+  if(Number(r.km)>0)schema.mileageFromOdometer={'@type':'QuantitativeValue',value:Number(r.km),unitCode:'KMT',unitText:'km'};
+  if(photos.length)schema.image=photos;
+  if(Number(r.price)>0){
+    schema.offers={
+      '@type':'Offer',
+      priceCurrency:'KES',
+      price:String(Number(r.price)),
+      availability:r.status==='sold'?'https://schema.org/OutOfStock':'https://schema.org/InStock',
+      url:canonicalUrl.toString(),
+      seller:{'@type':isYard?'AutoDealer':'Person',name:sellerNameForMessage(r)}
+    };
+  }
   let structured=document.getElementById('vehicle-structured-data');
   if(!structured){structured=document.createElement('script');structured.id='vehicle-structured-data';structured.type='application/ld+json';document.head.appendChild(structured)}
   structured.textContent=JSON.stringify(schema);
@@ -622,6 +647,7 @@ body>header,header.site-header,.site-header,header{
   root.querySelectorAll?.('video').forEach(video=>videos.push(video));
   videos.forEach(video=>{
    if(!video.hasAttribute('preload'))video.preload='none';
+   if(!video.hasAttribute('poster'))video.poster='/project-video-poster.svg';
    if(!video.hasAttribute('playsinline'))video.setAttribute('playsinline','');
    if(!video.hasAttribute('loading'))video.setAttribute('loading','lazy');
   });
@@ -705,9 +731,6 @@ html body input,html body select,html body textarea{
 }
 </style>
 
-</body>
-</html>
-
 
 <style id="dealer-vehicle-detail-glass-and-wallpaper">
 /* Vehicle opened from a dealer profile: use dealer navigation and the same blurred automotive glass theme. */
@@ -766,9 +789,11 @@ html body>header .back{
   backdrop-filter:blur(18px) saturate(145%)!important;
   transition:transform .35s cubic-bezier(.22,1,.36,1),background .25s,border-color .25s!important;
 }
-html body>header .back:hover{
-  transform:translateY(-2px)!important;background:rgba(255,255,255,.13)!important;
-  border-color:rgba(255,255,255,.32)!important;color:#fff!important;
+@media(hover:hover) and (pointer:fine){
+  html body>header .back:hover{
+    transform:translateY(-2px)!important;background:rgba(255,255,255,.13)!important;
+    border-color:rgba(255,255,255,.32)!important;color:#fff!important;
+  }
 }
 @media(max-width:800px){
   html body>header{
@@ -865,10 +890,15 @@ html body>header .vehicle-header-nav a.back{
   white-space:nowrap!important;box-shadow:none!important;
   transition:background .25s ease,border-color .25s ease,color .25s ease,transform .25s ease!important;
 }
-html body>header .vehicle-header-nav a:hover,
 html body>header .vehicle-header-nav a:focus-visible{
   background:rgba(255,255,255,.09)!important;border-color:rgba(255,255,255,.10)!important;
-  color:#fff!important;transform:translateY(-1px)!important;outline:none!important;
+  color:#fff!important;outline:none!important;
+}
+@media(hover:hover) and (pointer:fine){
+  html body>header .vehicle-header-nav a:hover{
+    background:rgba(255,255,255,.09)!important;border-color:rgba(255,255,255,.10)!important;
+    color:#fff!important;transform:translateY(-1px)!important;outline:none!important;
+  }
 }
 html body>main.wrap{padding-top:46px!important}
 @media(max-width:800px){
@@ -989,3 +1019,26 @@ html body :is(button,.btn,a.button,.back,nav a,nav button){font-family:"Manrope"
 html body :is(.price,.amount,.vehicle-price,[data-price]){font-family:"Manrope",system-ui,sans-serif!important;font-weight:700!important;font-variant-numeric:tabular-nums}
 html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){font-family:"Playfair Display",Georgia,serif!important;font-weight:600!important;letter-spacing:-.02em!important}
 </style>
+<style id="vehicle-mobile-performance-override">
+@media(max-width:760px){
+  html body :is(.card,.panel,.dealer,.stat,.state,.info,.gallery,.seller,.specs,.spec,.note,.related-card,.vehicle-card,.vehicle-details,.details,.info-card,.spec-card){
+    -webkit-backdrop-filter:none!important;
+    backdrop-filter:none!important;
+    background:rgba(18,20,23,.92)!important;
+    background-color:rgba(18,20,23,.92)!important;
+  }
+  .btn.ghost,.btn.dark,.back,.photo-step{
+    -webkit-backdrop-filter:none!important;
+    backdrop-filter:none!important;
+    background:rgba(26,28,32,.92)!important;
+    background-color:rgba(26,28,32,.92)!important;
+  }
+  input,select,textarea{
+    -webkit-backdrop-filter:none!important;
+    backdrop-filter:none!important;
+    background:rgba(20,22,25,.92)!important;
+  }
+}
+</style>
+</body>
+</html>

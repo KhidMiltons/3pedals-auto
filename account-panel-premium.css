@@ -59,10 +59,12 @@ body:has(#accDlg[open])::after {
   border: 1px solid rgba(255,255,255,.10) !important;
   transition: background .18s ease,border-color .18s ease,transform .18s ease !important;
 }
-#accDlg .account-dialog-head button:hover {
-  background: rgba(230,189,114,.10) !important;
-  border-color: rgba(230,189,114,.32) !important;
-  transform: translateY(-1px);
+@media (hover:hover) and (pointer:fine){
+  #accDlg .account-dialog-head button:hover {
+    background: rgba(230,189,114,.10) !important;
+    border-color: rgba(230,189,114,.32) !important;
+    transform: translateY(-1px);
+  }
 }
 
 /* The scroll region is the one primary content glass plane. */
@@ -229,14 +231,16 @@ body:has(#accDlg[open])::after {
   border-color: rgba(230,189,114,.42) !important;
   box-shadow: inset 0 1px rgba(255,255,255,.09),0 5px 18px rgba(0,0,0,.12) !important;
 }
-#accDlg #accBody .account-settings-tabs button:hover,
-#accDlg #accBody .profile-actions button:hover,
-#accDlg #accBody .dealer-save-row button:hover,
-#accDlg #accBody .settings-section button:hover {
-  color: #fff !important;
-  background: linear-gradient(135deg,rgba(230,189,114,.18),rgba(255,255,255,.055)) !important;
-  border-color: rgba(230,189,114,.35) !important;
-  transform: translateY(-1px);
+@media (hover:hover) and (pointer:fine){
+  #accDlg #accBody .account-settings-tabs button:hover,
+  #accDlg #accBody .profile-actions button:hover,
+  #accDlg #accBody .dealer-save-row button:hover,
+  #accDlg #accBody .settings-section button:hover {
+    color: #fff !important;
+    background: linear-gradient(135deg,rgba(230,189,114,.18),rgba(255,255,255,.055)) !important;
+    border-color: rgba(230,189,114,.35) !important;
+    transform: translateY(-1px);
+  }
 }
 #accDlg #accBody .dealer-save-row {
   display: flex;
@@ -276,13 +280,16 @@ body:has(#accDlg[open])::after {
     padding: 14px 12px 12px !important;
     border: 0 !important;
     border-radius: 0 !important;
-    background: rgba(25,25,25,.30) !important;
-    -webkit-backdrop-filter: blur(10px) saturate(120%) !important;
-    backdrop-filter: blur(10px) saturate(120%) !important;
+    background: rgba(16,18,21,.94) !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
   }
   #accDlg #accBody {
     border-radius: 15px !important;
     padding-bottom: 18px !important;
+    background: rgba(18,20,23,.90) !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
   }
   #accDlg #accBody .account-page > h3 { padding-top: 18px !important; }
   #accDlg #accBody .profile-grid,
@@ -709,12 +716,18 @@ body:has(#accDlg[open])::after {
 #accDlg #accBody .workspace-v2-metric::after {
   display: none !important;
 }
-#accDlg #accBody .workspace-v2-metric:hover,
+@media (hover:hover) and (pointer:fine){
+  #accDlg #accBody .workspace-v2-metric:hover {
+    background: #1d2225 !important;
+    border-color: rgba(230,189,114,.28) !important;
+    box-shadow: none !important;
+    transform: translateY(-1px);
+  }
+}
 #accDlg #accBody .workspace-v2-metric:focus-visible {
   background: #1d2225 !important;
   border-color: rgba(230,189,114,.28) !important;
   box-shadow: none !important;
-  transform: translateY(-1px);
 }
 #accDlg #accBody .workspace-v2-main-grid,
 #accDlg #accBody .workspace-v2-metric-grid {

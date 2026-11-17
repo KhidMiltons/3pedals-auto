@@ -63,9 +63,11 @@ body{
   -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
   transition:background .32s ease,border-color .32s ease,color .32s ease,transform .32s ease,box-shadow .32s ease;
 }
-.topbar>a:last-child:hover{
-  background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.18);
-  color:#fff!important;transform:translateY(-1px);box-shadow:0 8px 18px rgba(0,0,0,.16)
+@media(hover:hover) and (pointer:fine){
+  .topbar>a:last-child:hover{
+    background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.18);
+    color:#fff!important;transform:translateY(-1px);box-shadow:0 8px 18px rgba(0,0,0,.16)
+  }
 }
 .hero{
   max-width:760px;margin:24px 0 22px;padding:23px 26px 21px;
@@ -94,7 +96,7 @@ body{
 }
 .vehicle{padding:18px}
 .vehicle:hover,.booking:hover,.account-box:hover{border-color:rgba(183,160,106,.34)!important;box-shadow:0 22px 52px rgba(0,0,0,.27),inset 0 1px rgba(255,255,255,.06)!important}
-.vehicle:hover{transform:translateY(-3px)}
+@media(hover:hover) and (pointer:fine){.vehicle:hover{transform:translateY(-3px)}}
 .vehicle-art{
   height:174px;border-radius:14px;
   background:radial-gradient(ellipse at 50% 110%,rgba(183,160,106,.15),transparent 60%),linear-gradient(135deg,rgba(183,160,106,.12),rgba(255,255,255,.025))!important;
@@ -136,7 +138,7 @@ input[type=checkbox]{accent-color:#b7a06a}
   font:700 12px Manrope,sans-serif;letter-spacing:.01em;
   transition:transform .35s var(--chauffeur-ease),box-shadow .35s,filter .3s;
 }
-.btn:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(0,0,0,.25);filter:brightness(1.05)}
+@media(hover:hover) and (pointer:fine){.btn:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(0,0,0,.25);filter:brightness(1.05)}}
 .btn:active{transform:translateY(0) scale(.97)}
 .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
 .ghost{
@@ -144,7 +146,7 @@ input[type=checkbox]{accent-color:#b7a06a}
   border-radius:11px;background:rgba(255,255,255,.045)!important;color:var(--chauffeur-ink)!important;
   transition:background .3s,border-color .3s,transform .3s;
 }
-.ghost:hover{background:rgba(183,160,106,.09)!important;border-color:rgba(183,160,106,.38)!important;transform:translateY(-2px)}
+@media(hover:hover) and (pointer:fine){.ghost:hover{background:rgba(183,160,106,.09)!important;border-color:rgba(183,160,106,.38)!important;transform:translateY(-2px)}}
 .actions{gap:11px;margin-top:18px}
 .notice{
   color:var(--chauffeur-ink);background:rgba(255,255,255,.045)!important;
@@ -537,7 +539,7 @@ html body>header .account-pill{grid-area:account!important;justify-self:end!impo
 html body>header .account-pill span{display:none!important}
 html body>header .account-pill button{width:42px!important;height:42px!important;display:grid!important;place-items:center!important;padding:0!important;border:1px solid rgba(183,160,106,.25)!important;border-radius:11px!important;background:rgba(255,255,255,.035)!important;color:#c9b784!important;cursor:pointer!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 4px 12px rgba(0,0,0,.12)!important;transition:transform .22s cubic-bezier(.2,.8,.2,1),box-shadow .22s ease,background .22s ease!important}
 html body>header .account-pill button:before{content:""!important;width:18px!important;height:18px!important;display:block!important;background:currentColor!important;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='8' r='4' fill='none' stroke='black' stroke-width='2'/%3E%3Cpath d='M4 21c.8-4.1 3.4-6 8-6s7.2 1.9 8 6' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat!important;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='8' r='4' fill='none' stroke='black' stroke-width='2'/%3E%3Cpath d='M4 21c.8-4.1 3.4-6 8-6s7.2 1.9 8 6' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat!important}
-html body>header .account-pill button:hover{background:rgba(183,160,106,.09)!important;transform:translateY(-5px) scale(1.08)!important;box-shadow:0 10px 24px rgba(183,160,106,.11)!important}
+@media(hover:hover) and (pointer:fine){html body>header .account-pill button:hover{background:rgba(183,160,106,.09)!important;transform:translateY(-5px) scale(1.08)!important;box-shadow:0 10px 24px rgba(183,160,106,.11)!important}}
 html body>header .account-pill button:active{transform:translateY(-1px) scale(.96)!important}
 html body>header #chauffeurNav{grid-area:nav!important;display:flex!important;align-items:center!important;gap:3px!important;padding:4px!important;background:rgba(255,255,255,.045)!important;border:1px solid rgba(255,255,255,.085)!important;border-radius:14px!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.055),0 10px 28px rgba(0,0,0,.14)!important;-webkit-backdrop-filter:blur(12px)!important;backdrop-filter:blur(12px)!important;position:static!important;width:auto!important;max-width:none!important;max-height:none!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important;transform:none!important}
 html body>header #chauffeurNav a.navlink{--dock-scale:1;min-height:42px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;padding:9px 15px!important;border-radius:12px!important;border:1px solid transparent!important;background:transparent!important;color:#c9c8c4!important;font:600 14px/1 Manrope,system-ui,sans-serif!important;letter-spacing:.01em!important;white-space:nowrap!important;text-decoration:none!important;transform:translateY(calc((1 - var(--dock-scale))*2px)) scale(var(--dock-scale))!important;transform-origin:center bottom!important;will-change:transform!important;transition:transform .46s cubic-bezier(.22,1,.36,1),background .32s ease,box-shadow .32s ease,border-color .32s ease,color .32s ease!important}
@@ -600,7 +602,7 @@ html body>header.head .back{
  font:600 12px/1.2 Manrope,system-ui,sans-serif!important;text-decoration:none!important;white-space:nowrap!important;
  box-shadow:none!important;transition:transform .3s ease,background .3s ease,border-color .3s ease,color .3s ease!important;
 }
-html body>header.head .back:hover{transform:translateY(-2px)!important;background:rgba(255,255,255,.10)!important;border-color:rgba(255,255,255,.32)!important;color:#fff!important}
+@media(hover:hover) and (pointer:fine){html body>header.head .back:hover{transform:translateY(-2px)!important;background:rgba(255,255,255,.10)!important;border-color:rgba(255,255,255,.32)!important;color:#fff!important}}
 @media(max-width:520px){html body>header.head{width:calc(100% - 24px)!important;min-height:76px!important;margin:12px auto!important}html body>header.head>.wrap.headin{min-height:74px!important;padding:9px 12px!important}html body>header.head .brand{font-size:clamp(17px,4.5vw,22px)!important}html body>header.head .back{min-height:38px!important;padding:7px 11px!important;font-size:12px!important}}
 @media(prefers-reduced-motion:reduce){html body>header.head .back{transition:none!important}}
 </style>
@@ -716,5 +718,34 @@ html body .hero p{
 .review-form{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.review-form select,.review-form input{max-width:170px}
 .calendar-day{padding:11px;margin:7px 0;border-left:2px solid #b7a06a;background:rgba(255,255,255,.035);border-radius:0 10px 10px 0}
 @media(max-width:650px){.admin-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.admin-booking-controls{grid-template-columns:1fr 1fr}.admin-booking-controls .actions{grid-column:1/-1}.admin-toolbar select{max-width:none;width:100%}}
+</style>
+<style id="chauffeur-mobile-performance-override">
+@media(max-width:760px){
+  html body>header,html body>header.head,html body>header .account-pill,
+  html body>header #chauffeurNav,html body>header #chauffeurNav.mobile-menu-open,
+  html body>header #chauffeurNav.is-open,html body .hero,html body .glass,
+  html body .vehicle,html body .booking,html body .account-box,
+  html body .service-card,html body .assurance-grid article,html body .steps-grid article,
+  html body .chauffeur-assurance,html body .route-preview,html body .trip-summary,
+  html body .admin-stat,html body .calendar-day,html body .notice,
+  html body input,html body select,html body textarea,
+  html body .ghost,html body>header .back,html body>header .nav-toggle{
+    -webkit-backdrop-filter:none!important;
+    backdrop-filter:none!important;
+  }
+  html body .hero,html body .glass,html body .vehicle,html body .booking,
+  html body .account-box,html body .service-card,html body .assurance-grid article,
+  html body .steps-grid article,html body .chauffeur-assurance,
+  html body .admin-stat,html body .calendar-day{
+    background:rgba(18,20,23,.92)!important;
+    background-color:rgba(18,20,23,.92)!important;
+  }
+  html body>header,html body>header.head,html body>header #chauffeurNav,
+  html body input,html body select,html body textarea,
+  html body .ghost,html body>header .back,html body>header .nav-toggle{
+    background:rgba(26,28,32,.94)!important;
+    background-color:rgba(26,28,32,.94)!important;
+  }
+}
 </style>
 </body></html>

@@ -63,7 +63,7 @@ label{display:block;font-weight:600;font-size:14px;margin:12px 0 4px}
 .count{color:var(--mute);margin:8px 0 14px}
 .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;padding-bottom:40px}
 .card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;text-align:left;cursor:pointer;padding:0;min-width:0;box-shadow:0 8px 24px rgba(0,0,0,.07);transition:transform .28s cubic-bezier(.22,1,.36,1),box-shadow .28s ease,border-color .28s ease}
-.card:hover{transform:translateY(-7px);border-color:rgba(227,179,65,.65);box-shadow:0 18px 42px rgba(0,0,0,.15)}
+@media (hover:hover) and (pointer:fine){.card:hover{transform:translateY(-7px);border-color:rgba(227,179,65,.65);box-shadow:0 18px 42px rgba(0,0,0,.15)}.card:hover .swatch{transform:scale(1.035);filter:saturate(1.08)}}
 .card:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 .card-main{display:flex;flex:1;min-width:0;flex-direction:column;color:inherit;text-decoration:none}
 .card-main:focus-visible,.yard-link:focus-visible{outline:2px solid var(--gold);outline-offset:-3px;border-radius:10px}
@@ -71,7 +71,6 @@ label{display:block;font-weight:600;font-size:14px;margin:12px 0 4px}
 .card-extra .yard-line:first-child{margin-top:0}
 .card-extra .yard-link{color:var(--ink);font-size:12px}
 .swatch{height:148px;display:flex;align-items:flex-end;padding:10px 12px;position:relative;font:700 34px "Playfair Display",Georgia,serif;color:rgba(255,255,255,.94);background-position:center;background-repeat:no-repeat;background-size:contain!important;transition:transform .5s cubic-bezier(.22,1,.36,1),filter .35s ease}
-.card:hover .swatch{transform:scale(1.035);filter:saturate(1.08)}
 .card .body{padding:12px 13px 14px}
 .card h3{font-size:18px;line-height:1.15;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .price{font:700 21px "Playfair Display",Georgia,serif;color:var(--blue);margin-top:5px}
@@ -158,7 +157,7 @@ header .wrap{min-height:76px;display:grid;grid-template-columns:auto 1fr auto;gr
 .account-pill{grid-area:account;justify-self:end;display:flex;align-items:center;margin-left:auto;padding:4px;border:1px solid rgba(255,255,255,.13);border-radius:15px;background:linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.035));box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 8px 24px rgba(0,0,0,.18);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
 .account-pill span{display:none}
 .account-pill button{width:42px;height:42px;display:grid;place-items:center;padding:0;border:1px solid rgba(227,179,65,.28);border-radius:11px;background:rgba(255,255,255,.045);color:#e3b341;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 4px 12px rgba(0,0,0,.12);transition:transform .22s cubic-bezier(.2,.8,.2,1),box-shadow .22s ease,background .22s ease}
-.account-pill button:hover{background:rgba(227,179,65,.13);transform:translateY(-5px) scale(1.08);box-shadow:0 10px 22px rgba(227,179,65,.18),inset 0 1px 0 rgba(255,255,255,.18)}
+@media (hover:hover) and (pointer:fine){.account-pill button:hover{background:rgba(227,179,65,.13);transform:translateY(-5px) scale(1.08);box-shadow:0 10px 22px rgba(227,179,65,.18),inset 0 1px 0 rgba(255,255,255,.18)}}
 .account-pill button:active{transform:translateY(-1px) scale(.96)}
 .account-pill button::before{content:"";width:18px;height:18px;display:block;background:currentColor;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='8' r='4' fill='none' stroke='black' stroke-width='2'/%3E%3Cpath d='M4 21c.8-4.1 3.4-6 8-6s7.2 1.9 8 6' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='8' r='4' fill='none' stroke='black' stroke-width='2'/%3E%3Cpath d='M4 21c.8-4.1 3.4-6 8-6s7.2 1.9 8 6' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat}
 nav{grid-area:nav;display:flex;align-items:center;gap:3px;padding:4px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.11);border-radius:14px;box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 8px 24px rgba(0,0,0,.16);backdrop-filter:blur(12px)}
@@ -175,23 +174,30 @@ nav.dock-active button,nav.dock-active a.navlink{transition-duration:.5s}
 .hero{padding:54px 0 28px}.hero h1{font-size:clamp(42px,6vw,72px);max-width:13em;letter-spacing:-.015em}.hero h1::after{width:72px;height:4px;margin-top:18px;border-radius:99px}.hero p{font-size:17px;line-height:1.65;max-width:46em;margin-top:15px}
 .hero>div[style*="display:flex"]{gap:10px!important;margin-top:24px!important;align-items:center}
 .btn{min-height:44px;padding:11px 18px;border-radius:9px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;box-shadow:var(--shadow-sm);font-size:14px;font-weight:700;letter-spacing:.01em;transition:transform .16s ease,box-shadow .16s ease,background .16s ease,border-color .16s ease}
-.btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(15,23,42,.12)}
-.btn.ghost{background:var(--surface);border-color:var(--line);color:var(--ink)}.btn.ghost:hover{border-color:#b8c2ce;background:var(--surface-2)}
-.btn.alt{background:#111827;color:#fff}.btn.alt:hover{background:#1f2937}.btn.wa{background:var(--gold);color:#111827}
+.btn.ghost{background:var(--surface);border-color:var(--line);color:var(--ink)}.btn.alt{background:#111827;color:#fff}.btn.wa{background:var(--gold);color:#111827}
 .tiles{gap:16px;margin:10px 0 28px}.tile{min-height:128px;padding:20px 20px 18px;border-radius:var(--radius);border:1px solid var(--line);box-shadow:var(--shadow-sm);position:relative;transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease;background:var(--surface)}
-.tile:hover{transform:translateY(-2px);border-color:#c4ccd6;box-shadow:var(--shadow)}.tile h3{font-size:28px}.tile:after{content:none;display:none}.tile .meta{margin-top:5px;max-width:26em}
+.tile h3{font-size:28px}.tile:after{content:none;display:none}.tile .meta{margin-top:5px;max-width:26em}
 .panel{padding:24px;border-radius:var(--radius);border-color:var(--line);box-shadow:var(--shadow-sm);margin-bottom:40px}.panel h2{font-size:30px;margin-bottom:8px}
-.contact .svc{padding:15px 0;align-items:center}.svc b{font-size:15px}.contact a{color:var(--blue);text-decoration:none}.contact a:hover{text-decoration:underline}
+.contact .svc{padding:15px 0;align-items:center}.svc b{font-size:15px}.contact a{color:var(--blue);text-decoration:none}
 input,select,textarea{min-height:44px;padding:10px 13px;border-radius:9px;border-color:var(--line);background:var(--surface);transition:border-color .15s,box-shadow .15s}
 textarea{min-height:92px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(154,112,0,.12);outline:none}
 label{font-size:13px;letter-spacing:.02em;margin:15px 0 6px}.filters{gap:10px;margin:20px 0 12px}.filters input,.filters select{box-shadow:var(--shadow-sm)}
-.card{border-radius:var(--radius);border-color:var(--line);box-shadow:var(--shadow-sm);transition:transform .16s,box-shadow .16s,border-color .16s}.card:hover{border-color:#c1cad5;box-shadow:var(--shadow);transform:translateY(-2px)}
+.card{border-radius:var(--radius);border-color:var(--line);box-shadow:var(--shadow-sm);transition:transform .16s,box-shadow .16s,border-color .16s}
 .card .body{padding:16px 16px 17px}.card h3{font-size:24px}.price{font-size:26px;color:var(--blue)}
 .tag{padding:3px 9px;border-radius:999px;background:var(--surface-2)}
 .garage-hero{border-left:0;border-top:4px solid var(--gold);padding-left:0;padding-top:24px}.garage-hero h1{max-width:14em}
 .cols{gap:24px}.cols .panel{height:100%}.svc{padding:14px 0}
 .fab{right:24px;bottom:24px;padding:12px 17px;border-radius:999px;background:#111827;color:#f3c65d;border:1px solid #d4a017;box-shadow:0 10px 24px rgba(0,0,0,.2);font-size:14px}
-.auth-left{left:18px;top:auto;bottom:24px;transform:none;z-index:40}.auth-left button{min-height:40px;padding:8px 13px;border-radius:9px;background:#111827;color:#f3c65d;border:1px solid rgba(227,179,65,.55);box-shadow:0 8px 20px rgba(0,0,0,.18);font-size:13px;font-weight:700}.auth-left button:hover{background:#1f2937;transform:translateY(-1px)}
+.auth-left{left:18px;top:auto;bottom:24px;transform:none;z-index:40}.auth-left button{min-height:40px;padding:8px 13px;border-radius:9px;background:#111827;color:#f3c65d;border:1px solid rgba(227,179,65,.55);box-shadow:0 8px 20px rgba(0,0,0,.18);font-size:13px;font-weight:700}
+@media (hover:hover) and (pointer:fine){
+  .btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(15,23,42,.12)}
+  .btn.ghost:hover{border-color:#b8c2ce;background:var(--surface-2)}
+  .btn.alt:hover{background:#1f2937}
+  .tile:hover{transform:translateY(-2px);border-color:#c4ccd6;box-shadow:var(--shadow)}
+  .contact a:hover{text-decoration:underline}
+  .card:hover{border-color:#c1cad5;box-shadow:var(--shadow);transform:translateY(-2px)}
+  .auth-left button:hover{background:#1f2937;transform:translateY(-1px)}
+}
 dialog{border-radius:16px;border-color:var(--line);box-shadow:0 24px 70px rgba(0,0,0,.28)}dialog .in{padding:26px}.authbox .in>h2{font-size:32px;margin-bottom:6px}.authbox .in>.btn{margin-top:8px;margin-right:6px}.authbox .switch{padding-top:14px;border-top:1px solid var(--line)}
 .seg{border-radius:10px;border-color:var(--line);padding:10px 14px 12px;background:var(--surface-2)}
 .note{border-radius:10px;padding:14px 16px}.admin-table th,.admin-table td{padding:11px 9px}
@@ -218,7 +224,8 @@ footer .wrap{font-size:13px;text-align:center}
 .seller-dashboard .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:9px;margin:12px 0}.seller-dashboard .stats>div{min-width:0;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}.seller-dashboard .stats b,.seller-dashboard .stats span{display:block}.seller-dashboard .stats b{font-size:20px;overflow-wrap:anywhere}.seller-dashboard .stats span{font-size:12px;color:var(--mute)}
 .promoted-tag{position:absolute;right:12px;top:12px;z-index:3;padding:5px 9px;border:1px solid rgba(227,179,65,.65);border-radius:999px;background:#171513;color:#e3c57b;font:800 11px/1.2 Manrope,system-ui,sans-serif;letter-spacing:.06em}
 .featured-section{margin:34px 0 46px;padding:24px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,var(--surface),var(--surface-2));box-shadow:0 12px 34px rgba(0,0,0,.045)}.featured-section[hidden]{display:none!important}.featured-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:18px}.featured-heading h2{margin:5px 0 6px;font:600 clamp(26px,3vw,36px)/1.12 "Playfair Display",Georgia,serif;letter-spacing:-.025em}.featured-heading p{margin:0}.featured-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;padding-bottom:0}.featured-grid .swatch{min-height:145px}.featured-grid .card{height:100%;min-width:0}.featured-grid .card .body{padding:11px}.featured-grid .card h3{font-size:16px;line-height:1.3}.featured-grid .card .price{font-size:16px;margin-bottom:6px}.featured-grid .card .tag{font-size:10px;padding:3px 6px}.featured-grid .promoted-tag{right:8px;top:8px;padding:4px 7px;font-size:9px}@media(max-width:1100px){.featured-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:760px){.featured-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}}@media(max-width:600px){.featured-section{padding:15px;margin:24px 0 32px}.featured-heading{align-items:flex-start;flex-direction:column}.featured-heading .btn{margin:0}.featured-grid{grid-template-columns:1fr;gap:12px}.featured-grid .swatch{min-height:180px}}
-.seller-listing-filters{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px 12px;margin:12px 0}.seller-listing-filters label{align-self:end}.seller-listing-filters input,.seller-listing-filters select{width:100%;min-width:0}.seller-listing[hidden]{display:none!important}@media(max-width:600px){.seller-listing-filters{grid-template-columns:1fr;gap:6px}.seller-listing-filters label:not(:first-child){margin-top:6px}}\n@media(max-width:600px){.seller-listing{grid-template-columns:62px minmax(0,1fr)}.seller-listing-photo{width:62px;height:52px}.seller-listing-actions{grid-column:1/-1;justify-content:flex-start}.seller-listing-actions .btn{flex:1}}
+.seller-listing-filters{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px 12px;margin:12px 0}.seller-listing-filters label{align-self:end}.seller-listing-filters input,.seller-listing-filters select{width:100%;min-width:0}.seller-listing[hidden]{display:none!important}@media(max-width:600px){.seller-listing-filters{grid-template-columns:1fr;gap:6px}.seller-listing-filters label:not(:first-child){margin-top:6px}}
+@media(max-width:600px){.seller-listing{grid-template-columns:62px minmax(0,1fr)}.seller-listing-photo{width:62px;height:52px}.seller-listing-actions{grid-column:1/-1;justify-content:flex-start}.seller-listing-actions .btn{flex:1}}
 @media(max-width:600px){.profile-card{grid-template-columns:1fr}.profile-grid,.account-tools .field-row{grid-template-columns:1fr}}
 .authbox:not(.wide){width:min(440px,calc(100vw - 28px));max-width:440px}.authbox:not(.wide) .in{padding:28px;position:relative}.authbox:not(.wide) .in>h2{font-size:30px;margin:0 0 4px}.auth-intro{margin:0 0 20px;line-height:1.5}.auth-fields{display:grid;gap:2px}.auth-fields label{margin-top:10px}.auth-fields input{width:100%}.auth-actions{display:grid;gap:10px;margin-top:18px}.auth-actions .btn{width:100%;margin:0}.auth-divider{display:flex;align-items:center;gap:12px;margin:15px 0;color:var(--mute);font-size:13px}.auth-divider:before,.auth-divider:after{content:"";height:1px;flex:1;background:var(--line)}.google-btn{background:var(--surface);color:var(--ink);border:1px solid var(--line);box-shadow:none}.google-btn:hover{background:var(--surface-2)}.google-mark{font-weight:800;font-size:17px;color:#4285f4}.authbox .switch{border:0;padding:12px 0 0;text-align:center}.auth-brand{display:flex;align-items:center;justify-content:center;gap:9px;margin:0 0 20px;color:var(--ink);font-weight:800;letter-spacing:.025em}.auth-brand-mark{display:grid;place-items:center;width:30px;height:30px;border:1px solid rgba(227,179,65,.55);border-radius:50%;color:var(--gold);font-size:14px}.auth-optional{margin:13px 0 2px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2)}.auth-optional>summary{padding:11px 12px;color:var(--mute);font-size:13px;cursor:pointer}.auth-optional-inner{padding:0 12px 12px}.auth-optional-inner .seg{margin:12px 0 5px}.auth-optional-inner .meta{margin:4px 0}.auth-legal{margin:12px 0 0;text-align:center;font-size:12px;line-height:1.5}.auth-back{display:block;margin:15px auto 0;padding:4px;border:0;background:none;color:var(--mute);font-size:13px;cursor:pointer}.auth-back:hover{color:var(--gold)}.authbox[open]{animation:auth-appear .22s ease-out}@keyframes auth-appear{from{opacity:0;transform:translateY(8px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}.account-settings{margin:18px 0;border:1px solid var(--line);border-radius:13px;background:var(--surface-2)}.account-settings>summary{padding:15px 17px;cursor:pointer;font-weight:700}.account-settings-inner{padding:0 17px 17px}.account-settings-inner .profile-card{margin-top:0}.dashboard-shortcuts{position:sticky;top:0;z-index:5;display:flex;gap:8px;overflow:auto;padding:8px 0;background:var(--surface);scrollbar-width:thin}.dashboard-shortcuts button{flex:0 0 auto;border:1px solid var(--line);border-radius:999px;padding:8px 12px;background:var(--surface-2);color:var(--ink);font-weight:700;cursor:pointer}.dashboard-shortcuts button:hover{border-color:var(--gold)}.dashboard-welcome{padding:14px 16px;border-radius:13px;background:var(--surface-2);border:1px solid var(--line)}.dashboard-welcome h3{margin:0 0 4px}.seller-dashboard .account-tools>h3{scroll-margin-top:64px}
 .account-dialog-head{position:sticky;top:0;z-index:6;display:flex;justify-content:space-between;align-items:center;padding:2px 0 12px;background:var(--surface);border-bottom:1px solid var(--line)}.account-dialog-head h2{margin:0!important}.account-dialog-head button{width:38px;height:38px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2);color:var(--ink);font-size:24px;line-height:1;cursor:pointer}
@@ -267,7 +274,7 @@ form .btn{margin-top:10px}#sellForm>.btn,#bBtn{min-width:160px}
 dialog.wide{max-width:720px}
 dialog.wide .in{max-height:80vh;overflow:auto}
 .st{font-size:12px;font-weight:600;border:1px solid var(--line);border-radius:99px;padding:1px 9px;white-space:nowrap}
-.eyebrow{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.14em;color:var(--blue);margin-bottom:10px}.project-intro{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:26px 28px;margin:6px 0 34px;background:linear-gradient(135deg,var(--surface),var(--surface-2));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm)}.project-intro h2{font-size:32px;margin-bottom:6px}.project-intro p{margin:0;max-width:680px}.project-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;padding-bottom:50px}.project-card{overflow:hidden;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);transition:transform .18s,box-shadow .18s}.project-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}.project-featured{grid-column:1/-1;display:grid;grid-template-columns:1.25fr 1fr}.project-media{position:relative;min-height:300px;background:#111827;overflow:hidden}.project-media video{width:100%;height:100%;min-height:300px;display:block;object-fit:cover}.project-type{position:absolute;left:16px;top:16px;padding:6px 10px;border-radius:999px;background:#111827;color:#fff;font-size:11px;font-weight:800;letter-spacing:.1em}.project-body{padding:24px}.project-kicker{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);font-weight:800}.project-body h2{font-size:30px;margin:8px 0 10px}.project-body p{color:var(--mute);margin:0;line-height:1.65}.project-placeholder{min-height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:linear-gradient(135deg,#111827,#263342);color:#fff;text-align:center}.project-placeholder span{font-size:11px;letter-spacing:.15em;color:#e3b341;font-weight:800}.project-placeholder strong{font:700 34px "Barlow Condensed",sans-serif}.contact-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;padding-bottom:60px}.contact-card{min-height:145px;padding:22px;text-decoration:none;color:inherit;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);display:flex;flex-direction:column;justify-content:center;gap:5px;transition:.18s}.contact-card:hover{transform:translateY(-2px);border-color:#c4ccd6;box-shadow:var(--shadow)}.contact-card span{font-size:11px;letter-spacing:.13em;font-weight:800;color:var(--blue)}.contact-card strong{font:700 27px "Barlow Condensed",sans-serif}.contact-card small{color:var(--mute)}@media(max-width:1150px){.auto-quote-rail{left:12px;width:220px}.auto-quote-text{font-size:18px}}
+.eyebrow{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.14em;color:var(--blue);margin-bottom:10px}.project-intro{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:26px 28px;margin:6px 0 34px;background:linear-gradient(135deg,var(--surface),var(--surface-2));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm)}.project-intro h2{font-size:32px;margin-bottom:6px}.project-intro p{margin:0;max-width:680px}.project-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;padding-bottom:50px}.project-card{overflow:hidden;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);transition:transform .18s,box-shadow .18s}.project-featured{grid-column:1/-1;display:grid;grid-template-columns:1.25fr 1fr}.project-media{position:relative;min-height:300px;background:#111827;overflow:hidden}.project-media video{width:100%;height:100%;min-height:300px;display:block;object-fit:cover}.project-type{position:absolute;left:16px;top:16px;padding:6px 10px;border-radius:999px;background:#111827;color:#fff;font-size:11px;font-weight:800;letter-spacing:.1em}.project-body{padding:24px}.project-kicker{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);font-weight:800}.project-body h2{font-size:30px;margin:8px 0 10px}.project-body p{color:var(--mute);margin:0;line-height:1.65}.project-placeholder{min-height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:linear-gradient(135deg,#111827,#263342);color:#fff;text-align:center}.project-placeholder span{font-size:11px;letter-spacing:.15em;color:#e3b341;font-weight:800}.project-placeholder strong{font:700 34px "Barlow Condensed",sans-serif}.contact-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;padding-bottom:60px}.contact-card{min-height:145px;padding:22px;text-decoration:none;color:inherit;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);display:flex;flex-direction:column;justify-content:center;gap:5px;transition:.18s}.contact-card span{font-size:11px;letter-spacing:.13em;font-weight:800;color:var(--blue)}.contact-card strong{font:700 27px "Barlow Condensed",sans-serif}.contact-card small{color:var(--mute)}@media (hover:hover) and (pointer:fine){.project-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}.contact-card:hover{transform:translateY(-2px);border-color:#c4ccd6;box-shadow:var(--shadow)}}@media(max-width:1150px){.auto-quote-rail{left:12px;width:220px}.auto-quote-text{font-size:18px}}
 @media(max-width:900px){.auto-quote-rail{position:relative;left:auto;top:auto;bottom:auto;transform:none;width:205px;margin-bottom:22px}.auto-quote-body{min-height:170px;padding:16px}.auto-quote-top{padding:12px 14px 8px}.auto-quote-footer{padding:8px 14px 10px}}
 @media(max-width:600px){.auto-quote-rail{left:auto;top:auto;bottom:auto;width:min(190px,100%);margin-bottom:18px;border-radius:15px}.auto-quote-text{font-size:16px;line-height:1.35;margin-bottom:10px}.auto-quote-body{min-height:145px}.auto-quote-source{max-width:145px}}
 @media(max-width:760px){.project-intro{align-items:flex-start;flex-direction:column}.project-grid{grid-template-columns:1fr}.project-featured{grid-column:auto;display:block}.contact-grid{grid-template-columns:1fr}}@media(max-width:600px){.project-intro{padding:20px}.project-intro h2{font-size:28px}.project-body{padding:20px}.project-media,.project-media video{min-height:220px}.contact-card strong{font-size:24px}}
@@ -313,7 +320,7 @@ dialog.wide .in{max-height:80vh;overflow:auto}
 .journal-hero{padding-bottom:20px}
 .journal-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;padding-bottom:60px}
 .journal-card{display:flex;flex-direction:column;min-height:320px;padding:0;overflow:hidden;text-align:left;background:var(--surface);color:inherit;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow-sm);cursor:pointer;transition:transform .42s var(--premium-ease),box-shadow .42s var(--premium-ease),border-color .28s ease}
-.journal-card:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:rgba(183,160,106,.42)}
+@media (hover:hover) and (pointer:fine){.journal-card:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:rgba(183,160,106,.42)}}
 .journal-card-top{min-height:145px;padding:22px;background:linear-gradient(145deg,var(--surface-2),var(--surface));display:flex;flex-direction:column;justify-content:flex-end;position:relative}
 .journal-card-top:before{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(circle at 85% 15%,rgba(183,160,106,.13),transparent 36%);pointer-events:none}
 .journal-number{position:absolute;right:18px;top:16px;font:700 44px/1 "Barlow Condensed",sans-serif;color:rgba(183,160,106,.17)}
@@ -365,8 +372,10 @@ header{position:sticky;top:0;z-index:50;background:rgba(13,13,13,.84);border-bot
 header .wrap{min-height:76px}
 .logo{position:relative;transition:transform .45s var(--premium-ease),text-shadow .35s ease;user-select:none}
 .logo:after{content:"";position:absolute;left:0;right:25%;bottom:-5px;height:1px;background:linear-gradient(90deg,var(--gold),transparent);transform:scaleX(.45);transform-origin:left;opacity:.65;transition:transform .45s var(--premium-ease)}
-.logo:hover{transform:translateY(-1px) scale(1.025);text-shadow:0 0 22px rgba(227,179,65,.22)}
-.logo:hover:after{transform:scaleX(1)}
+@media (hover:hover) and (pointer:fine){
+  .logo:hover{transform:translateY(-1px) scale(1.025);text-shadow:0 0 22px rgba(227,179,65,.22)}
+  .logo:hover:after{transform:scaleX(1)}
+}
 nav{isolation:isolate}
 .hero{position:relative;padding:54px 0 30px}
 .hero:before{content:"";position:absolute;left:-90px;top:10px;width:300px;height:190px;background:radial-gradient(circle,rgba(212,160,23,.13),transparent 68%);filter:blur(8px);pointer-events:none}
@@ -376,24 +385,28 @@ nav{isolation:isolate}
 .hero p{font-size:16px;line-height:1.7}
 .btn{position:relative;overflow:hidden;border-radius:12px;box-shadow:0 7px 20px rgba(0,0,0,.10);transition:transform .35s var(--premium-ease),box-shadow .35s var(--premium-ease),background .35s ease,border-color .35s ease;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .btn:before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 25%,rgba(255,255,255,.22),transparent 70%);transform:translateX(-120%);transition:transform .65s var(--premium-ease);pointer-events:none}
-.btn:hover{transform:translateY(-3px);box-shadow:0 13px 30px rgba(0,0,0,.17)}
-.btn:hover:before{transform:translateX(120%)}
+@media (hover:hover) and (pointer:fine){
+  .btn:hover{transform:translateY(-3px);box-shadow:0 13px 30px rgba(0,0,0,.17)}
+  .btn:hover:before{transform:translateX(120%)}
+}
 .btn:active{transform:translateY(0) scale(.965);transition-duration:.1s}
 .panel,.tile,.card,.contact-card,.project-card,.filters{box-shadow:0 10px 35px rgba(0,0,0,.06)}
 .panel,.tile,.contact-card{border-color:color-mix(in srgb,var(--line) 82%,white 18%);transition:transform .45s var(--premium-ease),box-shadow .45s var(--premium-ease),border-color .35s ease,background .35s ease}
-.panel:hover,.tile:hover,.contact-card:hover{transform:translateY(-4px);box-shadow:var(--premium-shadow);border-color:rgba(212,160,23,.35)}
+@media (hover:hover) and (pointer:fine){.panel:hover,.tile:hover,.contact-card:hover{transform:translateY(-4px);box-shadow:var(--premium-shadow);border-color:rgba(212,160,23,.35)}}
 .tile{position:relative;overflow:hidden;background:linear-gradient(145deg,color-mix(in srgb,var(--surface) 92%,white 8%),var(--surface));border-radius:16px}
 .tile:before{content:"";position:absolute;inset:-40%;background:radial-gradient(circle at 30% 20%,rgba(212,160,23,.12),transparent 36%);opacity:0;transition:opacity .45s ease;pointer-events:none}
 .tile:hover:before{opacity:1}
 .card{border-radius:15px;transition:transform .5s var(--premium-ease),box-shadow .5s var(--premium-ease),border-color .35s ease}
-.card:hover{transform:translateY(-7px) scale(1.012);box-shadow:0 22px 48px rgba(0,0,0,.16);border-color:rgba(212,160,23,.5)}
+@media (hover:hover) and (pointer:fine){
+  .card:hover{transform:translateY(-7px) scale(1.012);box-shadow:0 22px 48px rgba(0,0,0,.16);border-color:rgba(212,160,23,.5)}
+  .card:hover img,.card:hover .swatch{transform:scale(1.035);filter:saturate(1.05) contrast(1.02)}
+}
 .card img,.card .swatch{transition:transform .7s var(--premium-ease),filter .5s ease}
-.card:hover img,.card:hover .swatch{transform:scale(1.035);filter:saturate(1.05) contrast(1.02)}
 input,select,textarea{border-radius:12px;transition:border-color .25s ease,box-shadow .3s ease,background .3s ease,transform .25s ease}
 input:hover,select:hover,textarea:hover{border-color:rgba(212,160,23,.45)}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 4px rgba(212,160,23,.12),0 8px 22px rgba(0,0,0,.06);transform:translateY(-1px)}
 .tag{border-radius:999px;background:rgba(212,160,23,.06);transition:transform .3s var(--premium-ease),background .3s ease,border-color .3s ease}
-.tag:hover{transform:translateY(-1px);background:rgba(212,160,23,.12);border-color:rgba(212,160,23,.4)}
+@media (hover:hover) and (pointer:fine){.tag:hover{transform:translateY(-1px);background:rgba(212,160,23,.12);border-color:rgba(212,160,23,.4)}}
 dialog{border-radius:22px;box-shadow:0 35px 100px rgba(0,0,0,.35);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);overflow:hidden}
 dialog::backdrop{backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);background:rgba(0,0,0,.58)}
 footer{background:linear-gradient(180deg,transparent,rgba(0,0,0,.035));margin-top:20px}
@@ -468,7 +481,7 @@ footer{color:var(--mute)!important}
 .auto-quote-source{font-size:10px;color:var(--mute);margin-top:4px}
 .auto-quote-footer{padding:10px 18px 14px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:8px}
 .auto-quote-next{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 11px;font:inherit;font-size:11px;font-weight:700;color:var(--ink);cursor:pointer;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
-.auto-quote-next:hover{transform:translateY(-1px);border-color:rgba(183,160,106,.5);box-shadow:0 8px 18px rgba(24,25,27,.08)}
+@media (hover:hover) and (pointer:fine){.auto-quote-next:hover{transform:translateY(-1px);border-color:rgba(183,160,106,.5);box-shadow:0 8px 18px rgba(24,25,27,.08)}}
 .auto-quote-updated{font-size:9px;color:var(--mute)}
 .auto-quote-loading .auto-quote-text{opacity:.45}
 @media(max-width:980px){.home-with-quote{grid-template-columns:1fr}.auto-quote-rail{position:fixed;left:0;top:96px;bottom:auto;transform:none;max-width:calc(100vw - 36px);margin:0;width:205px}.auto-quote-body{min-height:160px}}
@@ -556,12 +569,6 @@ main>section{contain:layout style}
 </style>
 
 
-<style id="restoreQuoteOriginal">
-.home-with-quote{display:grid!important;grid-template-columns:minmax(230px,300px) minmax(0,1fr)!important;gap:28px!important;align-items:start!important;margin-top:8px!important}
-.home-with-quote>div:last-child{width:auto!important}
-.auto-quote-rail{position:sticky!important;top:106px!important;left:auto!important;right:auto!important;bottom:auto!important;transform:none!important;width:auto!important;max-width:none!important;margin:0!important;z-index:auto!important}
-@media(max-width:980px){.home-with-quote{grid-template-columns:1fr!important}.auto-quote-rail{position:static!important;width:auto!important;max-width:none!important;margin:0 0 26px 0!important}}
-</style>
 <style id="journal-responsive-final">
 /* Final responsive rules for the article feed, reader and publishing controls. */
 #journalGrid{grid-template-columns:minmax(0,1fr)!important;min-width:0}
@@ -727,513 +734,15 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
  #authDlg .auth-back{font-size:12px!important;margin:8px auto 0!important;padding:3px!important}
 }
 @media(max-width:380px){#authDlg>.in{padding-left:13px!important;padding-right:13px!important}#authDlg .in>h2{font-size:25px!important}}
-</style><style id="journal-card-share-style">
-#journalGrid .journal-entry .journal-card-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
-#journalGrid .journal-entry .journal-card-actions .journal-read{margin:0!important}
-#journalGrid .journal-entry .journal-share{font-family:inherit}
-@media(max-width:520px){#journalGrid .journal-entry .journal-card-actions{gap:7px;margin-top:10px}#journalGrid .journal-entry .journal-card-actions .journal-read{min-height:40px!important}}
-</style>
-<style id="journal-share-dialog-style">
-.journal-share-dialog{width:min(520px,calc(100vw - 28px));padding:24px;border:1px solid rgba(201,183,132,.55);border-radius:18px;background:rgba(22,23,24,.96);color:#f5f1e6;box-shadow:0 24px 80px rgba(0,0,0,.65);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
-.journal-share-dialog::backdrop{background:rgba(0,0,0,.68);backdrop-filter:blur(5px)}.journal-share-dialog h2{font:700 24px/1.15 "Playfair Display",Georgia,serif;margin:0 42px 6px 0}.journal-share-dialog p{margin:0 0 18px;color:#aaa18e}.journal-share-dialog label{display:block;font-size:12px;font-weight:700;color:#c9b784}.journal-share-dialog .journal-share-url{display:block;width:100%;margin-top:7px;padding:12px;border:1px solid rgba(201,183,132,.3);border-radius:9px;background:#111213;color:#f5f1e6;font:13px/1.4 Manrope,system-ui,sans-serif}.journal-share-actions{display:flex;gap:9px;margin-top:14px}.journal-share-actions button,.journal-share-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:9px 15px;border:1px solid rgba(201,183,132,.45);border-radius:9px;background:rgba(201,183,132,.12);color:#f5f1e6;text-decoration:none;font:700 14px Manrope,system-ui,sans-serif;cursor:pointer}.journal-share-actions button:hover,.journal-share-actions a:hover{border-color:#c9b784;background:rgba(201,183,132,.22)}.journal-copy-status{display:block;margin-top:12px;color:#aaa18e}.journal-share-close{float:right;width:36px;height:36px;border:1px solid rgba(255,255,255,.14);border-radius:9px;background:rgba(255,255,255,.05);color:#f5f1e6;font-size:22px;cursor:pointer}
 </style>
 <link rel="stylesheet" href="site-theme.css?v=20261107-mobile-performance-1">
-
-<style id="mobile-inventory-featured-tag-fix">
-@media(max-width:560px){
-  /* Compact mobile listing details and reserve clear space for the featured badge. */
-  /* Keep the photo full-width above the vehicle details on mobile. */
-  #buy .card-main{position:relative!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:0!important;width:100%!important;min-width:0!important}
-  #buy .card .swatch{display:flex!important;width:100%!important;max-width:100%!important;flex:0 0 auto!important;box-sizing:border-box!important;min-width:0!important;height:clamp(150px,48vw,200px)!important;min-height:0!important;align-self:stretch!important;padding:8px!important}
-  #buy .card .body{display:block!important;width:100%!important;max-width:100%!important;min-width:0!important;flex:1 1 auto!important;box-sizing:border-box!important}
-  /* Tighten the inventory heading area on mobile. */
-  #buy .hero{padding:3px 0 7px!important;margin:0!important}
-  #buy .hero h1{margin:0!important}
-  #buy .hero p{margin:5px 0 0!important}
-  /* Mobile cards show only the vehicle name and price; full details are on the vehicle page. */
-  #buy .card .body{padding:7px 8px 8px!important}
-  #buy .card h3{margin:0 0 1px!important;font-size:13px!important;line-height:1.15!important;min-height:0!important}
-  #buy .card .price{margin:0!important;font-size:15px!important;line-height:1.12!important}
-  #buy .card .tag,#buy .card-extra,#buy .card-reveal{display:none!important}
-  /* Featured vehicle tiles stay compact without seller details or extra gaps. */
-  .featured-grid .card .body{padding:6px 7px!important}
-  .featured-grid .card h3{margin:0 0 1px!important;line-height:1.15!important}
-  .featured-grid .card .price{margin:0!important;line-height:1.12!important}
-  .featured-grid .card .tag,.featured-grid .card .card-extra,.featured-grid .card .yard-line,.featured-grid .card .card-reveal{display:none!important}
-  #buy .card .swatch .swatch-year{font-size:15px!important;line-height:1!important}
-  #buy .card .yard-badge{font-size:8px!important;line-height:1!important;padding:3px 5px!important;letter-spacing:.02em!important;max-width:calc(100% - 12px)!important;white-space:nowrap!important;z-index:6!important}
-  #buy .card .swatch .promoted-tag{
-    position:absolute!important;top:7px!important;right:5px!important;left:auto!important;
-    z-index:5!important;max-width:calc(100% - 10px);padding:3px 4px!important;
-    font-size:7px!important;line-height:1!important;letter-spacing:0!important;
-    white-space:nowrap;box-sizing:border-box
-  }
-  #buy .card .body{padding:9px 9px 10px!important}
-  #buy .card h3{font-size:14px!important;line-height:1.18!important;margin:0 0 4px!important;-webkit-line-clamp:2;line-clamp:2}
-  #buy .card .price{font-size:16px!important;line-height:1.15!important;margin:4px 0 2px!important;overflow-wrap:anywhere}
-  #buy .card .tag{display:inline-block;font-size:9px!important;line-height:1.15!important;padding:2px 4px!important;margin:4px 2px 0 0!important}
-  #buy .card-extra{padding-top:5px!important;margin-top:5px!important}
-  #buy .card-extra .yard-line{gap:4px!important;margin:3px 0 0!important;font-size:10px!important;line-height:1.2!important;overflow-wrap:anywhere}
-  #buy .card-extra .yard-link{display:block;min-width:0;max-width:100%;overflow-wrap:anywhere;word-break:break-word;font-size:10px!important;line-height:1.2!important}
-  #buy .card-extra .yard-logo{width:20px!important;height:20px!important;flex-basis:20px!important}
-  #buy .card-reveal{margin-top:3px!important;font-size:10px!important}
-}
-@media(max-width:380px){
-  #buy .card .swatch{width:32%!important;flex-basis:32%!important;height:144px!important;min-height:144px!important}
-  #buy .card .body{padding:8px 7px!important}
-  #buy .card h3{font-size:13px!important}
-  #buy .card .price{font-size:15px!important}
-}
-</style>
 <style id="account-restore-no-flash">html.account-restoring body{visibility:hidden!important;background:#0d0e0f!important}html.account-restoring #accDlg[open]{visibility:visible!important}html.account-restoring #accDlg[open] #accBody{min-height:100px}#accDlg .account-refresh-status{display:none!important}</style>
 <script>try{if(sessionStorage.getItem("3pedals:account-open")==="1")document.documentElement.classList.add("account-restoring")}catch(_){}</script>
-<style id="featured-card-compact-fix">
-@media(min-width:1100px){
-  .featured-grid{grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:8px!important}
-  .featured-grid .swatch{height:96px!important;min-height:96px!important}
-  .featured-grid .swatch-photo{height:100%!important;min-height:0!important;object-fit:cover!important}
-  .featured-grid .card .body{padding:7px!important}
-  .featured-grid .card h3{font-size:12px!important;line-height:1.2!important;margin:0 0 4px!important}
-  .featured-grid .card .price{font-size:12px!important;margin:0 0 4px!important}
-  .featured-grid .card .tag{font-size:8px!important;padding:2px 4px!important}
-  .featured-grid .card .card-extra{margin-top:5px!important}
-  .featured-grid .card .yard-line{font-size:9px!important;gap:4px!important}
-}
-@media(min-width:761px) and (max-width:1099px){
-  .featured-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:8px!important}
-  .featured-grid .swatch{height:100px!important;min-height:100px!important}
-  .featured-grid .card .body{padding:8px!important}
-  .featured-grid .card h3,.featured-grid .card .price{font-size:13px!important}
-}
-</style>
-<style id="featured-panel-container-compact">
-/* Keep the original panel height and spacing; align its width with the vehicle listing grid. */
-.featured-section{
-  width:100%!important;
-  max-width:100%!important;
-  margin-left:0!important;
-  margin-right:0!important;
-  box-sizing:border-box!important;
-}
-</style>
-
-<style id="mobile-fast-interactions">
-/* Small screens: avoid decorative motion and costly blur/filter work during scrolling. */
-@media (max-width: 820px), (hover: none), (pointer: coarse) {
-  html { scroll-behavior: auto !important; }
-  *, *::before, *::after {
-    animation-duration: 0.001ms !important;
-    animation-delay: 0ms !important;
-    transition-duration: 0.001ms !important;
-    transition-delay: 0ms !important;
-    scroll-behavior: auto !important;
-  }
-  .card:hover, .card:focus-visible, .tile:hover, .tile:focus-visible,
-  .project-card:hover, .project-card:focus-visible, .contact-card:hover,
-  .panel:hover, .mechanic-card:hover, .btn:hover, .back:hover, .logo:hover,
-  .account-pill:hover, .account-icon:hover, nav button:hover, nav a.navlink:hover,
-  .thumb:hover, .thumbs button:hover, .card:active, .tile:active, .btn:active {
-    transform: none !important;
-    filter: none !important;
-    box-shadow: none !important;
-  }
-  .card:hover img, .card:focus-visible img, .card:hover .swatch,
-  .card:focus-visible .swatch, .project-card:hover img, .project-card:hover video,
-  .account-icon:hover svg { transform: none !important; filter: none !important; }
-  .card-reveal { transition: none !important; }
-  nav button, nav a.navlink { --dock-scale: 1 !important; }
-  .backdrop-blur, .glass, .panel, .filters input, .filters select {
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-  }
-}
-@media (max-width: 820px) and (prefers-reduced-motion: no-preference) {
-  main > section:not([hidden]) { animation: none !important; }
-}
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation: none !important;
-    transition: none !important;
-    scroll-behavior: auto !important;
-  }
-}
-</style>
-<style id="mobile-marketplace-layout">
-@media(max-width:560px){
-  #buy .filters{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;margin:14px 0!important}
-  #buy .filters #q{grid-column:1/-1!important}
-  #buy .filters input,#buy .filters select{width:100%!important;min-width:0!important;min-height:44px!important;padding:9px 10px!important;font-size:13px!important;border-radius:8px!important}
-  #buy #grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
-  #buy #grid .card{display:flex!important;flex-direction:column!important;min-width:0!important;overflow:hidden!important}
-  #buy #grid .card .swatch{width:100%!important;height:clamp(112px,32vw,150px)!important;min-height:0!important;aspect-ratio:4/3!important;overflow:hidden!important}
-  #buy #grid .card .swatch-photo{width:100%!important;height:100%!important;object-fit:cover!important;display:block!important}
-  #buy #grid .card .body{display:flex!important;flex-direction:column!important;min-width:0!important;padding:9px!important}
-  #buy #grid .card h3{font-size:13px!important;line-height:1.25!important;min-height:2.5em!important;display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:2!important;line-clamp:2!important;overflow:hidden!important;overflow-wrap:anywhere!important}
-  #buy #grid .card .price{font-size:14px!important;line-height:1.25!important;margin-top:5px!important;overflow-wrap:anywhere!important}
-}
-</style>
-<style id="mobile-photo-text-separation">
-@media(max-width:560px){
- #buy #grid .card{display:flex!important;flex-direction:column!important;align-items:stretch!important}
- #buy #grid .card .swatch{position:relative!important;display:block!important;flex:0 0 auto!important;width:100%!important;height:clamp(125px,34vw,155px)!important;min-height:0!important;margin:0!important;border-radius:0!important;overflow:hidden!important;aspect-ratio:4/3!important}
- #buy #grid .card .swatch-photo{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:0!important;object-fit:cover!important;object-position:center!important}
- #buy #grid .card .body{position:relative!important;display:flex!important;flex-direction:column!important;flex:1 0 auto!important;width:100%!important;min-width:0!important;height:auto!important;padding:9px!important;overflow:visible!important}
- #buy #grid .card .body h3,#buy #grid .card .body .price,#buy #grid .card .body .tag,#buy #grid .card .body .card-extra,#buy #grid .card .body .yard-line{position:static!important;max-width:100%!important}
-}
-</style>
-<style id="mobile-inventory-compact-final">
-@media(max-width:560px){
-  /* Remove excess space before the inventory heading. */
-  #buy{padding-top:0!important;margin-top:0!important}
-  #buy .hero{padding:0 0 6px!important;margin:0!important;min-height:0!important}
-  #buy .hero h1{margin:0!important;padding:0!important}
-  #buy .hero p{margin:4px 0 0!important}
-  /* Keep mobile inventory cards to photo, name and price only. */
-  #buy #grid .card .body{padding:6px 7px!important;gap:0!important}
-  #buy #grid .card .body h3{min-height:0!important;height:auto!important;margin:0 0 1px!important;padding:0!important;font-size:13px!important;line-height:1.15!important}
-  #buy #grid .card .body .price{margin:0!important;padding:0!important;font-size:14px!important;line-height:1.12!important}
-  #buy #grid .card .body .tag,
-  #buy #grid .card .body .card-extra,
-  #buy #grid .card .body .yard-line,
-  #buy #grid .card .body .card-reveal{display:none!important}
-  /* Featured cards use the same compact name/price treatment, without seller details. */
-  .featured-grid .card .body{padding:6px 7px!important;gap:0!important}
-  .featured-grid .card .body h3{min-height:0!important;height:auto!important;margin:0 0 1px!important;padding:0!important;line-height:1.15!important}
-  .featured-grid .card .body .price{margin:0!important;padding:0!important;line-height:1.12!important}
-  .featured-grid .card .body .tag,
-  .featured-grid .card .body .card-extra,
-  .featured-grid .card .body .yard-line,
-  .featured-grid .card .body .card-reveal{display:none!important}
-}
-</style>
-
-<style id="mobile-inventory-spacing-override">
-@media (max-width:560px) {
-  /* This page's real card markup uses .card-main and .swatch, not .photo. */
-  #buy { padding-top:0!important; margin-top:0!important; }
-  #buy .hero { display:block!important; padding:0 0 6px!important; margin:0!important; min-height:0!important; gap:0!important; }
-  #buy .hero h1 { margin:0!important; padding:0!important; line-height:1.12!important; min-height:0!important; }
-  #buy .hero p { margin:4px 0 0!important; padding:0!important; }
-  #buy .filters { margin:8px 0!important; }
-  #buy .grid { grid-template-columns:repeat(2,minmax(0,1fr))!important; gap:8px!important; }
-  #buy .grid>.card { display:flex!important; flex-direction:column!important; min-width:0!important; height:auto!important; min-height:0!important; overflow:hidden!important; }
-  #buy .grid>.card .card-main { display:flex!important; flex-direction:column!important; align-items:stretch!important; gap:0!important; width:100%!important; height:auto!important; min-height:0!important; }
-  #buy .grid>.card .swatch { display:block!important; position:relative!important; width:100%!important; max-width:100%!important; height:clamp(125px,38vw,165px)!important; min-height:0!important; flex:0 0 auto!important; margin:0!important; padding:0!important; box-sizing:border-box!important; background-size:cover!important; background-position:center!important; overflow:hidden!important; }
-  #buy .grid>.card .swatch-photo { position:absolute!important; inset:0!important; display:block!important; width:100%!important; height:100%!important; min-height:0!important; object-fit:cover!important; object-position:center!important; }
-  #buy .grid>.card .body { display:block!important; width:100%!important; min-width:0!important; height:auto!important; min-height:0!important; flex:0 0 auto!important; box-sizing:border-box!important; margin:0!important; padding:6px 7px!important; gap:4px!important; overflow:visible!important; }
-  #buy .grid>.card .body h3 { display:-webkit-box!important; -webkit-box-orient:vertical!important; -webkit-line-clamp:2!important; min-height:0!important; height:auto!important; margin:0 0 1px!important; padding:0!important; font-size:13px!important; line-height:1.15!important; overflow:hidden!important; }
-  #buy .grid>.card .body .price { display:block!important; margin:0!important; padding:0!important; font-size:14px!important; line-height:1.12!important; }
-  /* Keep the original vehicle specs and seller/yard details visible below the price. */
-  #buy .grid>.card .body>.tag { display:inline-flex!important; margin:3px 3px 0 0!important; }
-  #buy .grid>.card .body .card-extra,
-  #buy .grid>.card .body .yard-line,
-  #buy .grid>.card .body .card-reveal { display:block!important; margin-top:4px!important; }
-  #buy .grid>.card>.yard-badge { font-size:8px!important; padding:2px 4px!important; }
-  /* Featured cards on the home page also show only the photo, name and price. */
-  .featured-grid>.card .card-main { display:flex!important; flex-direction:column!important; gap:0!important; }
-  .featured-grid>.card .swatch { width:100%!important; height:clamp(110px,32vw,145px)!important; min-height:0!important; flex:0 0 auto!important; }
-  .featured-grid>.card .swatch-photo { position:absolute!important; inset:0!important; width:100%!important; height:100%!important; object-fit:cover!important; }
-  .featured-grid>.card .body { padding:6px 7px!important; margin:0!important; }
-  .featured-grid>.card .body h3 { min-height:0!important; margin:0 0 1px!important; font-size:12px!important; line-height:1.15!important; }
-  .featured-grid>.card .body .price { margin:0!important; font-size:13px!important; line-height:1.12!important; }
-  .featured-grid>.card .body>.tag { display:inline-flex!important; margin:3px 3px 0 0!important; }
-  .featured-grid>.card .body .card-extra,
-  .featured-grid>.card .body .yard-line,
-  .featured-grid>.card .body .card-reveal { display:block!important; margin-top:4px!important; }
-}
-</style>
-
-<style id="journal-two-column-feed">
-/* Published Journal articles: two distinct cards per row on desktop and tablet. */
-#journalGrid.journal-grid{display:grid!important;width:100%!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;align-items:stretch!important;gap:22px!important}
-#journalGrid.journal-grid>.journal-entry{display:flex!important;flex-direction:column!important;grid-column:auto!important;width:100%!important;max-width:none!important;min-width:0!important;min-height:0!important;height:100%!important;margin:0!important}
-#journalGrid.journal-grid>.journal-entry .journal-entry-media,#journalGrid.journal-grid>.journal-entry .journal-entry-media img,#journalGrid.journal-grid>.journal-entry .journal-entry-empty{display:block!important;width:100%!important;height:clamp(190px,20vw,280px)!important;min-height:0!important;max-height:280px!important;object-fit:cover!important}
-#journalGrid.journal-grid>.journal-entry .project-body{display:flex!important;flex:1!important;flex-direction:column!important;min-width:0!important;overflow:visible!important;padding:clamp(18px,2vw,28px)!important}
-@media(max-width:600px){
-#journalGrid.journal-grid{grid-template-columns:minmax(0,1fr)!important;gap:16px!important}
-#journalGrid.journal-grid>.journal-entry{max-width:100%!important}
-#journalGrid.journal-grid>.journal-entry .journal-entry-media,#journalGrid.journal-grid>.journal-entry .journal-entry-media img,#journalGrid.journal-grid>.journal-entry .journal-entry-empty{height:clamp(190px,52vw,300px)!important;max-height:300px!important}
-}
-</style>
-
-<style id="translucent-glass-action-buttons">
-/* Standard-size transparent icon controls, shown on the home screen only. */
-.glass-icon-btn{
-  display:inline-flex!important;align-items:center!important;justify-content:center!important;
-  width:56px!important;height:56px!important;min-width:56px!important;padding:0!important;
-  border:0!important;outline:0!important;border-radius:0!important;box-sizing:border-box!important;
-  background:transparent!important;color:rgba(235,207,133,.88)!important;
-  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;box-shadow:none!important;
-  transition:transform .2s ease,color .2s ease,opacity .2s ease!important;opacity:.92!important;
-}
-.glass-icon-btn:focus,.glass-icon-btn:focus-visible{outline:0!important;border:0!important;box-shadow:none!important;background:transparent!important}
-.glass-icon-btn svg{width:40px!important;height:40px!important;display:block!important;fill:none!important;stroke:currentColor!important;stroke-width:1.7!important;stroke-linecap:round!important;stroke-linejoin:round!important;opacity:.92!important;filter:drop-shadow(0 0 4px rgba(215,169,40,.18))}
-.glass-icon-btn:hover{background:transparent!important;border:0!important;outline:0!important;box-shadow:none!important;transform:translateY(-1px);opacity:1!important;color:rgba(255,235,183,.98)!important}
-#publicWhatsappHero{font-size:0!important;gap:0!important;background:transparent!important}
-#publicWhatsappHero svg{color:rgba(235,207,133,.9)!important}
-#publicWhatsappFab{width:56px!important;height:56px!important;min-width:56px!important;right:18px!important;bottom:calc(18px + env(safe-area-inset-bottom,0px))!important;padding:0!important;color:rgba(235,207,133,.9)!important;border:0!important;outline:0!important;box-shadow:none!important;background:transparent!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;z-index:20}
-#publicWhatsappFab svg{width:40px!important;height:40px!important}
-#adminOpen,#accAdmin{cursor:pointer!important;background:transparent!important}
-/* Admin access appears only in the signed-in administrator account panel. */
-.account-admin-tools{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin:18px 0!important;padding:18px!important;border:1px solid rgba(255,255,255,.13)!important;border-radius:16px!important;background:rgba(255,255,255,.035)!important}
-.account-admin-tools h3{margin:0 0 5px!important}.account-admin-tools p{margin:0;max-width:620px}
-.account-admin-button{display:inline-flex!important;align-items:center;gap:9px;white-space:nowrap}
-.account-admin-button svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-body:has(#home[hidden]) #publicWhatsappFab{display:none!important}
-@media(max-width:600px){#publicWhatsappHero{width:52px!important;height:52px!important;min-width:52px!important}#publicWhatsappFab{width:54px!important;height:54px!important;min-width:54px!important}#publicWhatsappFab svg{width:38px!important;height:38px!important}}
-@media(prefers-reduced-motion:reduce){.glass-icon-btn{transition:none!important}}
-</style>
-
-
-<style id="desktop-journal-article-size">
-/* Widen journal article cards on desktop; keep their height and mobile styling unchanged. */
-@media (min-width: 761px){
-  #journalGrid.journal-grid{
-    grid-template-columns:repeat(2,minmax(0,1fr))!important;
-    gap:clamp(18px,1.8vw,28px)!important;
-  }
-  #journalGrid.journal-grid>.journal-entry{
-    width:100%!important;max-width:none!important;min-width:0!important;
-  }
-  #journalGrid.journal-grid>.journal-entry .journal-entry-media,
-  #journalGrid.journal-grid>.journal-entry .journal-entry-media img,
-  #journalGrid.journal-grid>.journal-entry .journal-entry-empty{
-    height:clamp(190px,20vw,280px)!important;
-    max-height:280px!important;
-  }
-  #journalGrid.journal-grid>.journal-entry .project-body{
-    padding:clamp(20px,2vw,30px)!important;
-  }
-}
-</style>
 <!-- Optional Meta Pixel is loaded by consent.js only after explicit acceptance. -->
 
 <link rel="stylesheet" href="/dashboard-glass.css?v=20261107-account-dark-glass-v316">
 <link rel="stylesheet" href="/account-panel-premium.css?v=20261108-card-spacing-typography-11">
-
-<style id="about-glass-redesign">
-/* About page: text-led content only; the site's existing blurred automotive wallpaper remains visible. */
-#about.about-page{padding:clamp(22px,4vw,48px) 0 36px;color:var(--ink)}
-#about .about-intro{max-width:850px;margin:0 auto 28px;text-align:center}
-#about .about-intro .eyebrow{letter-spacing:.22em;font-size:11px;font-weight:700;opacity:.8}
-#about .about-intro h1{font-size:clamp(34px,5vw,62px);line-height:1.05;letter-spacing:-.035em;margin:15px auto;max-width:850px}
-#about .about-intro h1 span{display:inline-block}
-#about .about-intro>p{max-width:660px;margin:0 auto;color:var(--muted);font-size:clamp(15px,1.5vw,18px);line-height:1.75}
-#about .about-story-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:18px;align-items:stretch}
-#about .about-glass-card,#about .about-value-card{min-width:0;border:1px solid rgba(255,255,255,.17);border-radius:20px;background:rgba(18,23,30,.36);-webkit-backdrop-filter:blur(24px) saturate(125%);backdrop-filter:blur(24px) saturate(125%);box-shadow:0 18px 46px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.07)}
-#about .about-glass-card{padding:clamp(22px,3vw,38px)}
-#about .about-overline,#about .about-value-number{font-size:10px;letter-spacing:.19em;font-weight:700;color:var(--muted)}
-#about .about-glass-card h2{font-size:clamp(23px,2.5vw,32px);line-height:1.2;margin:12px 0 16px;letter-spacing:-.02em}
-#about .about-glass-card>p{font-size:15px;line-height:1.8;color:var(--muted);margin:0 0 14px}
-#about .about-glass-card>p:last-child{margin-bottom:0}
-#about .about-principle{display:grid;grid-template-columns:38px 1fr;gap:13px;padding:15px 0;border-top:1px solid rgba(255,255,255,.12)}
-#about .about-principle-mark{font-size:11px;letter-spacing:.08em;color:var(--muted);padding-top:3px}
-#about .about-principle h3,#about .about-value-card h3{font-size:16px;line-height:1.35;margin:0 0 5px}
-#about .about-principle p,#about .about-value-card p{font-size:13px;line-height:1.7;color:var(--muted);margin:0}
-#about .about-values{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:18px}
-#about .about-value-card{padding:22px 24px}
-#about .about-value-card h3{font-size:17px;margin:12px 0 7px}
-#about .about-signoff{margin:28px auto 0;text-align:center;max-width:620px}
-#about .about-signoff span{font-size:10px;letter-spacing:.25em;font-weight:700;color:var(--muted)}
-#about .about-signoff p{font-size:14px;line-height:1.7;margin:8px 0 0;color:var(--muted)}
-@media(max-width:760px){#about.about-page{padding-top:18px}#about .about-intro{text-align:left;margin-bottom:20px}#about .about-intro>p{margin-left:0}#about .about-story-grid,#about .about-values{grid-template-columns:1fr}#about .about-glass-card{padding:22px}#about .about-values{gap:10px}#about .about-value-card{padding:18px 20px}#about .about-signoff{text-align:left}}
-</style>
-
-
-<style id="contact-page-professional-intro">
-/* Text-led contact introduction with no decorative image. */
-#contact .contact-intro-card{position:relative;overflow:hidden;margin:30px 0 24px;padding:clamp(26px,5vw,54px);border:1px solid rgba(255,255,255,.18);border-radius:22px;background:rgba(20,22,25,.28)!important;box-shadow:0 16px 42px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.07);backdrop-filter:blur(24px) saturate(145%);-webkit-backdrop-filter:blur(24px) saturate(145%)}
-#contact .contact-intro-card:before,#contact .contact-intro-card:after{content:none!important;display:none!important}
-#contact .contact-intro-copy{position:relative;z-index:1;max-width:850px}
-#contact .contact-intro-copy h1{max-width:14em;margin:10px 0 14px;font-size:clamp(34px,5.5vw,58px);line-height:1.08;letter-spacing:-.035em}
-#contact .contact-intro-copy>p{max-width:720px;color:rgba(255,255,255,.78);line-height:1.75}
-#contact .contact-specialties{display:flex;flex-wrap:wrap;gap:9px;margin:22px 0}
-#contact .contact-specialties span{padding:8px 12px;border:1px solid rgba(255,255,255,.16);border-radius:999px;background:rgba(255,255,255,.045);color:rgba(255,255,255,.88);font-size:12px;font-weight:650}
-#contact .contact-intro-note{margin-top:18px;font-size:14px}
-#nav .nav-contact,#nav .nav-contact[aria-selected="true"]{background:transparent!important;background-color:transparent!important;box-shadow:none!important;border-color:transparent!important}
-#nav .nav-contact[aria-selected="true"]{color:#d9bd7d!important;opacity:1}
-</style>
-<style id="home-header-left-nav-and-contact-grid-alignment">
-/* Keep the full brand name visible by giving the primary navigation the left side. */
-@media(min-width:981px){
-  body>header .wrap{
-    display:grid!important;
-    grid-template-columns:max-content minmax(0,1fr) max-content!important;
-    grid-template-areas:"brand nav account"!important;
-    align-items:center!important;
-    column-gap:clamp(12px,2vw,24px)!important;
-    width:100%!important;
-    max-width:1180px!important;
-  }
-  body>header .wrap>.logo{
-    grid-area:brand!important;justify-self:start!important;
-    display:block!important;flex:none!important;flex-shrink:0!important;
-    width:max-content!important;max-width:none!important;min-width:max-content!important;
-    white-space:nowrap!important;overflow:visible!important;text-overflow:clip!important;
-    font-size:clamp(21px,2.2vw,27px)!important;letter-spacing:.02em!important;
-  }
-  body>header .wrap>nav{
-    grid-area:nav!important;justify-self:end!important;min-width:0!important;
-    display:flex!important;flex-wrap:wrap!important;justify-content:flex-end!important;
-    gap:2px!important;overflow:visible!important;
-  }
-  body>header .wrap>nav button,body>header .wrap>nav a.navlink{
-    white-space:nowrap!important;padding-left:clamp(5px,.8vw,11px)!important;
-    padding-right:clamp(5px,.8vw,11px)!important;font-size:clamp(11px,1vw,14px)!important;
-  }
-  body>header .wrap>.account-pill{grid-area:account!important;justify-self:end!important;flex:none!important;white-space:nowrap!important;margin:0!important}
-}
-@media(min-width:981px) and (max-width:1120px){
- body>header .wrap{column-gap:10px!important}
- body>header .wrap>.logo{font-size:21px!important}
- body>header .wrap>nav button,body>header .wrap>nav a.navlink{font-size:11px!important;padding-left:5px!important;padding-right:5px!important}
-}
-@media(max-width:980px){
-  body>header .wrap{
-    grid-template-columns:auto minmax(0,1fr) auto!important;
-    grid-template-areas:"nav-toggle brand account"!important;
-    gap:10px!important;
-  }
-  body>header .wrap>.logo{grid-area:brand!important;justify-self:center!important;text-align:center!important;white-space:nowrap!important;font-size:clamp(19px,3.1vw,25px)!important;letter-spacing:.025em!important}
-  body>header .wrap>.account-pill{grid-area:account!important;justify-self:end!important}
-  body>header .wrap>.nav-toggle{grid-area:nav-toggle!important;justify-self:start!important}
-}
-@media(max-width:420px){
-  body>header .wrap{column-gap:7px!important}
-  body>header .wrap>.logo{font-size:18px!important;letter-spacing:0!important}
-  body>header .wrap>.nav-toggle{padding:7px!important}
-  body>header .wrap>.account-pill button{width:38px!important;height:38px!important}
-}
-/* The enquiry form shares the introduction card's exact outer grid width. */
-#contact #publicContactForm{
-  box-sizing:border-box!important;
-  display:block!important;
-  width:100%!important;
-  max-width:none!important;
-  margin:0 0 24px!important;
-  padding:clamp(22px,4vw,42px)!important;
-  border-radius:22px!important;
-  border:1px solid rgba(255,255,255,.16)!important;
-  background:rgba(20,22,25,.28)!important;
-  box-shadow:0 16px 42px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.06)!important;
-  -webkit-backdrop-filter:blur(24px) saturate(145%)!important;
-  backdrop-filter:blur(24px) saturate(145%)!important;
-}
-#contact #publicContactForm .contact-grid{width:100%!important;max-width:none!important}
-@media(max-width:600px){
-  #contact #publicContactForm{padding:20px!important}
-}
-</style>
-<style id="final-mobile-home-header-right-alignment">
-/* Mobile home header: brand stays left; both controls sit together at the far right. */
-@media(max-width:980px){
-  html body>header>.wrap{
-    display:grid!important;
-    grid-template-columns:minmax(0,1fr) 42px 42px!important;
-    grid-template-areas:"brand account nav-toggle"!important;
-    align-items:center!important;
-    justify-content:initial!important;
-    column-gap:8px!important;
-    row-gap:0!important;
-    width:100%!important;
-  }
-  html body>header>.wrap>.logo{
-    grid-area:brand!important;justify-self:start!important;text-align:left!important;
-    min-width:0!important;max-width:100%!important;overflow:hidden!important;
-    white-space:nowrap!important;text-overflow:ellipsis!important;
-  }
-  html body>header>.wrap>.account-pill{
-    grid-area:account!important;justify-self:end!important;
-    align-self:center!important;margin:0!important;
-  }
-  html body>header>.wrap>button#navToggle.nav-toggle{
-    grid-area:nav-toggle!important;justify-self:end!important;
-    align-self:center!important;display:inline-flex!important;
-    width:40px!important;height:40px!important;min-width:40px!important;
-    margin:0!important;position:relative!important;inset:auto!important;
-  }
-  html body>header #nav{
-    left:auto!important;right:10px!important;
-  }
-}
-@media(max-width:420px){
-  html body>header>.wrap{grid-template-columns:minmax(0,1fr) 38px 38px!important;column-gap:6px!important}
-  html body>header>.wrap>.account-pill button,
-  html body>header>.wrap>button#navToggle.nav-toggle{width:38px!important;height:38px!important;min-width:38px!important}
-  html body>header>.wrap>.logo{font-size:clamp(16px,4.6vw,19px)!important}
-}
-</style>
-<style id="mobile-account-inside-menu">
-/* Account access belongs inside the navigation drawer, not beside the menu trigger. */
-@media(min-width:981px){
-  html body>header>.wrap{grid-template-columns:auto minmax(0,1fr)!important;grid-template-areas:"brand nav"!important}
-  html body>header #nav{justify-self:end!important;min-width:0!important}
-  html body>header #nav>.account-pill{grid-area:auto!important;justify-self:auto!important;margin:0 0 0 4px!important;padding:2px!important;flex:0 0 auto!important}
-  html body>header #nav>.account-pill span{display:none!important}
-}
-@media(max-width:980px){
-  html body>header>.wrap{
-    display:grid!important;grid-template-columns:minmax(0,1fr) 42px!important;
-    grid-template-areas:"brand nav-toggle"!important;align-items:center!important;
-    column-gap:8px!important;row-gap:0!important;position:relative!important;
-  }
-  html body>header>.wrap>.logo{grid-area:brand!important;justify-self:start!important;min-width:0!important;max-width:100%!important;overflow:hidden!important;white-space:nowrap!important;text-overflow:ellipsis!important}
-  html body>header>.wrap>button#navToggle.nav-toggle{grid-area:nav-toggle!important;justify-self:end!important;display:inline-flex!important;width:40px!important;height:40px!important;min-width:40px!important;margin:0!important;position:relative!important;inset:auto!important}
-  html body>header #nav{
-    left:auto!important;right:10px!important;top:calc(100% + 8px)!important;
-    width:min(300px,calc(100vw - 32px))!important;max-width:calc(100vw - 32px)!important;
-    align-items:stretch!important;
-  }
-  html body>header #nav>.account-pill{
-    order:-1!important;display:flex!important;align-items:center!important;
-    justify-content:space-between!important;gap:12px!important;width:100%!important;
-    min-height:48px!important;margin:0 0 5px!important;padding:5px 8px 5px 13px!important;
-    border:1px solid rgba(227,179,65,.28)!important;border-radius:12px!important;
-    background:rgba(255,255,255,.045)!important;box-shadow:none!important;
-    -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
-  }
-  html body>header #nav>.account-pill span{display:inline!important;color:#f3f0e8!important;font-size:14px!important;font-weight:650!important}
-  html body>header #nav>.account-pill button{display:grid!important;place-items:center!important;flex:0 0 40px!important;width:40px!important;height:40px!important;min-width:40px!important;margin:0!important;padding:0!important;border-radius:10px!important}
-}
-@media(max-width:420px){
-  html body>header>.wrap{grid-template-columns:minmax(0,1fr) 38px!important;column-gap:6px!important}
-  html body>header>.wrap>button#navToggle.nav-toggle{width:38px!important;height:38px!important;min-width:38px!important}
-  html body>header #nav>.account-pill button{width:38px!important;height:38px!important;flex-basis:38px!important}
-  html body>header>.wrap>.logo{font-size:clamp(16px,4.6vw,19px)!important}
-}
-</style>
-<style id="privacy-legal-links">
-.legal-footer-links{display:inline-flex;gap:6px;flex-wrap:wrap;align-items:center}.legal-footer-links a,.account-legal-preferences a{color:var(--gold,#d7bd83);text-decoration:underline;text-underline-offset:3px}.legal-footer-links button{border:0;background:none;color:inherit;text-decoration:underline;text-underline-offset:3px;cursor:pointer;font:inherit;padding:0}.account-subscription-note{margin:16px 0;padding:16px;border-radius:12px;background:rgba(255,255,255,.035)}.account-subscription-note h4{margin:0 0 6px}.account-subscription-note p{margin:8px 0}
-.account-legal-preferences{margin:16px 0;padding:16px;border-radius:12px;background:rgba(255,255,255,.035)}.account-legal-preferences h4{margin:0 0 6px}.account-legal-preferences p{margin:8px 0}
-@media(max-width:600px){.legal-footer-links{display:flex;margin-top:8px}}
-</style>
-<style id="account-inside-menu-final">
-@media(min-width:981px){
- body>header>.wrap{grid-template-columns:auto minmax(0,1fr)!important;grid-template-areas:"brand nav"!important}
- body>header #nav{justify-self:end!important;min-width:0!important}
- body>header #nav>.account-pill{grid-area:auto!important;display:flex!important;align-items:center!important;margin:0 0 0 4px!important;padding:2px!important;flex:0 0 auto!important}
- body>header #nav>.account-pill span{display:none!important}
-}
-@media(max-width:980px){
- body>header>.wrap{display:grid!important;grid-template-columns:minmax(0,1fr) 42px!important;grid-template-areas:"brand nav-toggle"!important;align-items:center!important;column-gap:8px!important;row-gap:0!important;position:relative!important}
- body>header>.wrap>.logo{grid-area:brand!important;justify-self:start!important;min-width:0!important;max-width:100%!important;overflow:hidden!important;white-space:nowrap!important;text-overflow:ellipsis!important}
- body>header>.wrap>button#navToggle.nav-toggle{grid-area:nav-toggle!important;justify-self:end!important;display:inline-flex!important;width:40px!important;height:40px!important;min-width:40px!important;margin:0!important;position:relative!important;inset:auto!important}
- body>header #nav{left:auto!important;right:10px!important;top:calc(100% + 8px)!important;width:min(300px,calc(100vw - 32px))!important;max-width:calc(100vw - 32px)!important;align-items:stretch!important}
- body>header #nav>.account-pill{order:-1!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;width:100%!important;min-height:48px!important;margin:0 0 5px!important;padding:5px 8px 5px 13px!important;border:1px solid rgba(227,179,65,.28)!important;border-radius:12px!important;background:rgba(255,255,255,.045)!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
- body>header #nav>.account-pill span{display:inline!important;color:#f3f0e8!important;font-size:14px!important;font-weight:650!important}
- body>header #nav>.account-pill button{display:grid!important;place-items:center!important;flex:0 0 40px!important;width:40px!important;height:40px!important;min-width:40px!important;margin:0!important;padding:0!important;border-radius:10px!important}
-}
-@media(max-width:420px){
- body>header>.wrap{grid-template-columns:minmax(0,1fr) 38px!important;column-gap:6px!important}
- body>header>.wrap>button#navToggle.nav-toggle{width:38px!important;height:38px!important;min-width:38px!important}
- body>header #nav>.account-pill button{width:38px!important;height:38px!important;flex-basis:38px!important}
- body>header>.wrap>.logo{font-size:clamp(16px,4.6vw,19px)!important}
-}
-</style>
-
-<style id="account-chauffeur-live-styles">
-.account-chauffeur-toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:8px 0 14px;flex-wrap:wrap}.account-cancellation-state{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:9px;padding-top:8px;border-top:1px solid rgba(255,255,255,.08)}.account-cancellation-state .success{color:#8bd5a7}.account-cancellation-state .danger{color:#f1a09a}.account-cancellation-state .pending{color:#e6c77d}.account-booking-actions{margin-top:9px}.account-booking-row .st.success{color:#8bd5a7}.account-booking-row .st.danger{color:#f1a09a}
-</style>
+<link rel="stylesheet" href="/index-theme.css?v=20261118-consolidated-1">
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
@@ -1683,7 +1192,6 @@ $("authCloseTop").onclick=()=>$("authDlg").close();
 $("authCloseBack").onclick=()=>$("authDlg").close();
 $("authSwitch").onclick=()=>openAuth(window.authMode==="login"?"register":"login","",{seller:window.sellerSignupActive});
  $("authName").addEventListener("input",()=>{if(window.sellerSignupActive&&!sellerSlugEdited){$("authSellerSlug").value=slugifySellerName($("authName").value);refreshSellerUrlPreview()}});$("authSellerSlug").addEventListener("input",()=>{sellerSlugEdited=true;refreshSellerUrlPreview()});
-$("authName").addEventListener("input",()=>{if(window.sellerSignupActive&&!sellerSlugEdited){$("authSellerSlug").value=slugifySellerName($("authName").value);refreshSellerUrlPreview()}});$("authSellerSlug").addEventListener("input",()=>{sellerSlugEdited=true;refreshSellerUrlPreview()});
  document.querySelectorAll('input[name="accountType"]').forEach(r=>r.onchange=updateAuthTypeHint);
 $("authForgot").onclick=async()=>{
   const email=$("authEmail").value.trim().toLowerCase(),button=$("authForgot"),err=$("authErr");
@@ -2410,10 +1918,10 @@ function projectMedia(p,admin=false){
   if(!items.length)return `<div class="project-placeholder"><span>${esc(p.type||"ARTICLE")}</span><strong>${esc(p.category||"3 Pedals KE")}</strong></div>`;
   if(items.length===1){
     const m=items[0];
-    if(m.type==="video"||String(m.mime||"").startsWith("video/"))return `<div class="project-media"><video controls playsinline preload="none"><source src="${esc(m.url)}" type="${esc(m.mime||"video/mp4")}">Your browser does not support video playback.</video><span class="project-type">VIDEO</span></div>`;
+    if(m.type==="video"||String(m.mime||"").startsWith("video/"))return `<div class="project-media"><video controls playsinline preload="none" poster="/project-video-poster.svg"><source src="${esc(m.url)}" type="${esc(m.mime||"video/mp4")}">Your browser does not support video playback.</video><span class="project-type">VIDEO</span></div>`;
     return `<div class="project-media"><img class="project-image" src="${esc(m.url)}" alt="${esc(p.title)}" loading="lazy"><span class="project-type">PHOTO</span></div>`;
   }
-  return `<div class="project-media-grid">${items.map((m,i)=>{const video=m.type==="video"||String(m.mime||"").startsWith("video/");return `<div class="project-media-item">${video?`<video controls playsinline preload="none"><source src="${esc(m.url)}" type="${esc(m.mime||"video/mp4")}"></video>`:`<img src="${esc(m.url)}" alt="${esc(p.title)} — image ${i+1}" loading="lazy">`}${i===0?`<span class="project-type">${video?"VIDEO":"PHOTO"}</span>`:""}</div>`}).join("")}<span class="project-media-count">${items.length} MEDIA</span></div>`;
+  return `<div class="project-media-grid">${items.map((m,i)=>{const video=m.type==="video"||String(m.mime||"").startsWith("video/");return `<div class="project-media-item">${video?`<video controls playsinline preload="none" poster="/project-video-poster.svg"><source src="${esc(m.url)}" type="${esc(m.mime||"video/mp4")}"></video>`:`<img src="${esc(m.url)}" alt="${esc(p.title)} — image ${i+1}" loading="lazy">`}${i===0?`<span class="project-type">${video?"VIDEO":"PHOTO"}</span>`:""}</div>`}).join("")}<span class="project-media-count">${items.length} MEDIA</span></div>`;
 }
 function renderPublicProjects(list){
   const box=$("publicProjects");
@@ -2448,7 +1956,7 @@ async function loadJournal(){
 }
 async function loadProjects(){
   if(!sb){
-    $("publicProjects").innerHTML='<article class="project-card project-featured"><div class="project-media"><video controls playsinline preload="none"><source src="project-video-01.mp4" type="video/mp4">Your browser does not support video playback.</video><span class="project-type">VIDEO</span></div><div class="project-body"><span class="project-kicker">Garage / Behind the scenes</span><h2>Inside the 3 Pedals Garage</h2><p>Connect the site to Supabase to manage this project from the admin panel.</p></div></article>';
+    $("publicProjects").innerHTML='<article class="project-card project-featured"><div class="project-media"><video controls playsinline preload="none" poster="/project-video-poster.svg"><source src="project-video-01.mp4" type="video/mp4">Your browser does not support video playback.</video><span class="project-type">VIDEO</span></div><div class="project-body"><span class="project-kicker">Garage / Behind the scenes</span><h2>Inside the 3 Pedals Garage</h2><p>Connect the site to Supabase to manage this project from the admin panel.</p></div></article>';
     return;
   }
   renderPublicProjects(await getPublishedProjects());
@@ -2958,1408 +2466,290 @@ loadSiteSettings();
 })();
 </script>
 
-<script>
-// Premium micro-interactions: reveal sections without changing existing navigation logic.
-(()=>{
-  const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(reduced)return;
-  const smallOrTouch=window.matchMedia&&window.matchMedia('(max-width: 820px), (hover: none), (pointer: coarse)').matches;
-  if(smallOrTouch)return;
-  const apply=()=>{
-    document.querySelectorAll('main > section:not([hidden])').forEach(s=>{
-      s.animate([{opacity:.001,transform:'translateY(10px)'},{opacity:1,transform:'translateY(0)'}],{duration:420,easing:'cubic-bezier(.22,1,.36,1)',fill:'both'});
+<script id="3pedals-home-runtime">
+(() => {
+  const byId = id => document.getElementById(id);
+
+  // Section reveal micro-interactions on pointer/desktop devices
+  const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const smallOrTouch = window.matchMedia && window.matchMedia('(max-width: 820px), (hover: none), (pointer: coarse)').matches;
+  if (!reduced && !smallOrTouch) {
+    const applyReveal = () => {
+      document.querySelectorAll('main > section:not([hidden])').forEach(s => {
+        s.animate(
+          [{ opacity: .001, transform: 'translateY(10px)' }, { opacity: 1, transform: 'translateY(0)' }],
+          { duration: 420, easing: 'cubic-bezier(.22,1,.36,1)', fill: 'both' }
+        );
+      });
+    };
+    window.addEventListener('load', () => setTimeout(applyReveal, 40), { once: true });
+    document.querySelectorAll('#nav button[data-tab]').forEach(b => b.addEventListener('click', () => setTimeout(applyReveal, 20)));
+  }
+
+  // Lazy media, video preload="none", and lightweight poster fallback
+  const applyMedia = (root, initial = false) => {
+    const images = [];
+    if (root.nodeType === 1 && root.matches('img')) images.push(root);
+    root.querySelectorAll?.('img').forEach(img => images.push(img));
+    images.forEach((img, i) => {
+      if (!img.hasAttribute('decoding')) img.decoding = 'async';
+      if (!img.hasAttribute('loading')) img.loading = initial && i < 2 ? 'eager' : 'lazy';
+      if (!img.hasAttribute('referrerpolicy')) img.referrerPolicy = 'no-referrer-when-downgrade';
+    });
+    const videos = [];
+    if (root.nodeType === 1 && root.matches('video')) videos.push(root);
+    root.querySelectorAll?.('video').forEach(v => videos.push(v));
+    videos.forEach(v => {
+      if (!v.hasAttribute('preload') || (v.preload === 'metadata' && !v.closest('dialog'))) v.preload = 'none';
+      if (!v.hasAttribute('poster')) v.poster = '/project-video-poster.svg';
+      if (!v.hasAttribute('playsinline')) v.setAttribute('playsinline', '');
+      if (!v.hasAttribute('loading')) v.setAttribute('loading', 'lazy');
     });
   };
-  window.addEventListener('load',()=>setTimeout(apply,40),{once:true});
-  document.querySelectorAll('#nav button[data-tab]').forEach(b=>b.addEventListener('click',()=>setTimeout(apply,20)));
-})();
-</script>
-
-
-<script id="3pedals-performance-runtime">
-(()=>{
-  const applyMedia=(root,initial=false)=>{
-    const images=[];
-    if(root.nodeType===1&&root.matches('img'))images.push(root);
-    root.querySelectorAll?.('img').forEach(img=>images.push(img));
-    images.forEach((img,i)=>{
-      if(!img.hasAttribute('decoding'))img.decoding='async';
-      if(!img.hasAttribute('loading'))img.loading=initial&&i<2?'eager':'lazy';
-      if(!img.hasAttribute('referrerpolicy'))img.referrerPolicy='no-referrer-when-downgrade';
-    });
-    const videos=[];
-    if(root.nodeType===1&&root.matches('video'))videos.push(root);
-    root.querySelectorAll?.('video').forEach(v=>videos.push(v));
-    videos.forEach(v=>{
-      if(!v.hasAttribute('preload'))v.preload='none';
-      else if(v.preload==='metadata' && !v.closest('dialog'))v.preload='none';
-      if(!v.hasAttribute('playsinline'))v.setAttribute('playsinline','');
-      if(!v.hasAttribute('loading'))v.setAttribute('loading','lazy');
-    });
+  try { applyMedia(document, true); } catch (_) {}
+  let queued = [], scheduled = false;
+  const flushMedia = () => {
+    scheduled = false;
+    const nodes = queued;
+    queued = [];
+    for (const node of nodes) {
+      try { applyMedia(node); } catch (_) {}
+    }
   };
-  try{applyMedia(document,true)}catch(e){}
-  let queued=[],scheduled=false;
-  const flush=()=>{scheduled=false;const nodes=queued;queued=[];for(const node of nodes)try{applyMedia(node)}catch(e){}};
-  new MutationObserver(records=>{
-    for(const record of records)for(const node of record.addedNodes)if(node.nodeType===1)queued.push(node);
-    if(queued.length&&!scheduled){scheduled=true;requestAnimationFrame(flush)}
-  }).observe(document.body,{childList:true,subtree:true});
-})();
-</script>
-
-<style id="admin-loading-polish">
-.admin-loading-state{min-height:190px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:28px 16px}
-.admin-loading-spinner{width:28px;height:28px;border:3px solid var(--line);border-top-color:var(--gold);border-radius:50%;animation:admin-loading-spin .8s linear infinite}
-@keyframes admin-loading-spin{to{transform:rotate(360deg)}}
-@media(prefers-reduced-motion:reduce){.admin-loading-spinner{animation:none;border-top-color:var(--line)}}
-</style>
-<style id="instant-page-loading">
-.inventory-loading-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:16px;width:100%}
-.inventory-loading-card{min-width:0;border:1px solid var(--line);border-radius:16px;padding:10px;overflow:hidden;background:var(--panel,rgba(255,255,255,.55))}
-.inventory-loading-card span,.inventory-loading-card i{display:block;border-radius:9px;background:linear-gradient(100deg,rgba(120,120,120,.08) 20%,rgba(120,120,120,.17) 40%,rgba(120,120,120,.08) 60%);background-size:220% 100%;animation:inventory-shimmer 1.35s ease-in-out infinite}
-.inventory-loading-card span{height:145px;margin-bottom:12px}.inventory-loading-card i{height:11px;margin:9px 0;width:78%}.inventory-loading-card i:last-child{width:48%}
-@keyframes inventory-shimmer{to{background-position-x:-220%}}
-@media(prefers-reduced-motion:reduce){.inventory-loading-card span,.inventory-loading-card i{animation:none}}
-</style>
-<style id="seller-listing-photo-editor">
-#sellerEditListingDialog .edit-photo-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;margin:10px 0 18px}
-#sellerEditListingDialog .edit-photo-item{min-width:0;border:1px solid var(--line);border-radius:12px;padding:8px;background:var(--surface-2,#f8fafc);display:flex;flex-direction:column;gap:7px}
-#sellerEditListingDialog .edit-photo-item img{display:block;width:100%;height:90px;object-fit:cover;border-radius:8px;background:#e5e7eb}
-#sellerEditListingDialog .edit-photo-item .btn{width:100%;min-height:38px;padding:7px 10px}
-#sellerEditListingDialog #editListingPhotos:disabled{opacity:.6}
-</style>
-<script id="3pedals-analytics-events">
-window.track3PedalsEvent = function(name, params) {
-  if (!window.ThreePedalsConsent?.hasConsent()) return;
-  const payload = Object.assign({page_location: window.location.href, page_path: window.location.pathname}, params || {});
-  if (typeof window.gtag === "function") window.gtag("event", name, payload);
-  if (typeof window.fbq === "function") window.fbq("trackCustom", name, payload);
-};
-document.addEventListener("click", function(event) {
-  if (!window.ThreePedalsConsent?.hasConsent()) return;
-  const link = event.target.closest && event.target.closest("a[href]");
-  if (!link) return;
-  const href = link.href || "";
-  if (/wa\.me|api\.whatsapp\.com|whatsapp\.com/i.test(href)) {
-    window.track3PedalsEvent("whatsapp_click", {link_url: href, link_text: (link.innerText || link.getAttribute("aria-label") || "WhatsApp").trim().slice(0, 100)});
+  if (window.MutationObserver && document.body) {
+    new MutationObserver(records => {
+      for (const record of records) {
+        for (const node of record.addedNodes) {
+          if (node.nodeType === 1) queued.push(node);
+        }
+      }
+      if (queued.length && !scheduled) {
+        scheduled = true;
+        requestAnimationFrame(flushMedia);
+      }
+    }).observe(document.body, { childList: true, subtree: true });
   }
-});
-(function(){
-  if (!window.ThreePedalsConsent?.hasConsent()) return;
-  const path = window.location.pathname.toLowerCase();
-  if (path.endsWith("/dealers.html") || path === "/dealers" || path.endsWith("/yard.html")) {
-    window.track3PedalsEvent("dealer_page_view", {page_type: path.endsWith("/yard.html") ? "yard_profile" : "dealer_directory"});
+
+  // Consent-gated analytics events & WhatsApp link tracking
+  window.track3PedalsEvent = function(name, params) {
+    if (!window.ThreePedalsConsent?.hasConsent()) return;
+    const payload = Object.assign({ page_location: window.location.href, page_path: window.location.pathname }, params || {});
+    if (typeof window.gtag === 'function') window.gtag('event', name, payload);
+    if (typeof window.fbq === 'function') window.fbq('trackCustom', name, payload);
+  };
+  document.addEventListener('click', event => {
+    if (!window.ThreePedalsConsent?.hasConsent()) return;
+    const link = event.target.closest && event.target.closest('a[href]');
+    if (!link) return;
+    const href = link.href || '';
+    if (/wa\.me|api\.whatsapp\.com|whatsapp\.com/i.test(href)) {
+      window.track3PedalsEvent('whatsapp_click', {
+        link_url: href,
+        link_text: (link.innerText || link.getAttribute('aria-label') || 'WhatsApp').trim().slice(0, 100)
+      });
+    }
+  });
+  if (window.ThreePedalsConsent?.hasConsent()) {
+    const path = window.location.pathname.toLowerCase();
+    if (path.endsWith('/dealers.html') || path === '/dealers' || path.endsWith('/yard.html')) {
+      window.track3PedalsEvent('dealer_page_view', { page_type: path.endsWith('/yard.html') ? 'yard_profile' : 'dealer_directory' });
+    }
+    if (path.endsWith('/garage.html') || path === '/garage' || path.endsWith('/garage/')) {
+      window.track3PedalsEvent('garage_page_view', { page_type: 'garage' });
+    }
   }
-  if (path.endsWith("/garage.html") || path === "/garage" || path.endsWith("/garage/")) {
-    window.track3PedalsEvent("garage_page_view", {page_type: "garage"});
+
+  // Hero quote placement & periodic refresh
+  const placeQuote = () => {
+    const quote = byId('autoQuoteRail'), home = byId('home');
+    if (!quote || !home) return;
+    const hero = home.querySelector('.hero');
+    if (hero && !hero.contains(quote)) hero.appendChild(quote);
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', placeQuote, { once: true });
+  else placeQuote();
+  const updated = byId('autoQuoteUpdated'), nextQuote = byId('autoQuoteNext');
+  if (nextQuote && !window.__threePedalsQuoteRefreshTimer) {
+    window.__threePedalsQuoteRefreshTimer = window.setInterval(() => {
+      if (document.visibilityState === 'visible' && nextQuote.isConnected) nextQuote.click();
+    }, 6 * 60 * 60 * 1000);
+    if (updated) updated.textContent = 'Refreshes automatically';
   }
-})();
-</script>
 
-<style id="luxury-glass-home-footer">
+  // Mobile navigation drawer + Home / Contact section navigation recovery
+  const toggle = byId('navToggle'), nav = byId('nav');
+  if (toggle && nav) {
+    const closeNav = () => {
+      nav.classList.remove('mobile-menu-open', 'is-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open navigation');
+      document.body.classList.remove('nav-open');
+    };
+    toggle.addEventListener('click', event => {
+      event.preventDefault();
+      event.stopPropagation();
+      const opening = !nav.classList.contains('mobile-menu-open');
+      nav.classList.toggle('mobile-menu-open', opening);
+      toggle.setAttribute('aria-expanded', String(opening));
+      toggle.setAttribute('aria-label', opening ? 'Close navigation' : 'Open navigation');
+      document.body.classList.toggle('nav-open', opening);
+    });
+    nav.addEventListener('click', event => {
+      if (event.target.closest('a,button')) closeNav();
+    });
+    document.addEventListener('click', event => {
+      if (!event.target.closest('#nav') && !event.target.closest('#navToggle')) closeNav();
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') closeNav();
+    });
 
+    const contactBtn = nav.querySelector('[data-tab="contact"]');
+    if (contactBtn && !contactBtn.dataset.contactRepairBound) {
+      contactBtn.dataset.contactRepairBound = '1';
+      contactBtn.addEventListener('click', event => {
+        event.preventDefault();
+        document.querySelectorAll('main.wrap > section').forEach(section => { section.hidden = section.id !== 'contact'; });
+        document.querySelectorAll('#nav button[data-tab]').forEach(item => item.setAttribute('aria-selected', String(item === contactBtn)));
+        try { history.pushState({ siteSection: 'contact' }, '', location.pathname + location.search + '#contact'); } catch (_) {}
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        closeNav();
+      }, true);
+    }
 
-/* 3 Pedals — luxury glass showroom refresh */
-:root{color-scheme:dark;--bg:#090a0c;--surface:rgba(25,27,30,.68);--ink:#f7f4ed;--mute:#b9b3a7;--line:rgba(225,203,155,.22);--gold:#d7bd83;--gold-ink:#111}
-html{min-height:100%;background:#090a0c}
-body{min-height:100vh;display:flex;flex-direction:column;position:relative;isolation:isolate;background:#090a0c!important;color:#f7f4ed}
-body:before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;background:linear-gradient(180deg,rgba(5,6,8,.80),rgba(5,6,8,.90)),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72") center/cover no-repeat;transform:scale(1.02)}
-body:after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 75% 12%,rgba(214,184,119,.13),transparent 38%),linear-gradient(90deg,rgba(0,0,0,.24),transparent 45%,rgba(0,0,0,.18))}
-main{flex:1 0 auto;min-width:0}
-footer{margin-top:auto!important;width:100%;position:relative!important;inset:auto!important;clear:both;background:rgba(14,15,17,.74)!important;color:#c7c0b2!important;border-top:1px solid rgba(215,189,131,.25)!important;padding:20px 0 calc(20px + env(safe-area-inset-bottom,0px))!important;-webkit-backdrop-filter:blur(24px) saturate(140%);backdrop-filter:blur(24px) saturate(140%)}
-header,.site-header,.navbar,.nav-shell,.nav-wrap{background:rgba(15,16,18,.56)!important;border:1px solid rgba(255,255,255,.12)!important;border-radius:22px!important;box-shadow:0 18px 55px rgba(0,0,0,.26),inset 0 1px rgba(255,255,255,.12)!important;-webkit-backdrop-filter:blur(24px) saturate(145%)!important;backdrop-filter:blur(24px) saturate(145%)!important}
-header{margin:18px auto 0!important;width:min( calc(100% - 32px), 1440px);border-bottom:1px solid rgba(215,189,131,.22)!important}
-.hero{position:relative;isolation:isolate;overflow:hidden;border:1px solid rgba(255,255,255,.17);border-radius:30px;padding:clamp(34px,6vw,82px) clamp(22px,5vw,70px)!important;margin:26px auto 34px!important;width:min(calc(100% - 32px),1440px);min-height:clamp(360px,55vw,650px);display:flex;flex-direction:column;justify-content:center;background:linear-gradient(90deg,rgba(5,6,8,.82) 0%,rgba(5,6,8,.54) 46%,rgba(5,6,8,.12) 100%),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72") center 58%/cover no-repeat!important;box-shadow:0 28px 80px rgba(0,0,0,.42),inset 0 1px rgba(255,255,255,.2)!important}
-.hero:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(135deg,rgba(255,255,255,.10),transparent 34%,rgba(215,189,131,.08));pointer-events:none}
-.hero h1{max-width:11ch!important;font-family:Manrope,system-ui,sans-serif!important;font-weight:750!important;letter-spacing:-.045em!important;font-size:clamp(38px,6vw,76px)!important;color:#fff!important;text-shadow:0 5px 28px rgba(0,0,0,.45)}
-.hero h1:after{background:linear-gradient(90deg,#e8d7ae,#a88b54)!important;border-radius:99px}
-.hero p{max-width:38em;color:rgba(255,255,255,.84)!important}
-button,.btn,.button{transition:transform .22s ease,border-color .22s ease,background .22s ease}
-.btn,.button,button.primary{border-radius:12px}
-.card,.dealer,.listing,.vehicle-card,.story-card,.contact-card,.promotion-package,.panel,.tile,.dashboard-card,.featured-panel,.journal-card,.contact-form,.filter-panel,.search-panel{background:linear-gradient(135deg,rgba(255,255,255,.085),rgba(255,255,255,.025)),rgba(18,19,21,.67)!important;border:1px solid rgba(215,189,131,.19)!important;border-radius:18px!important;box-shadow:0 18px 46px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.08)!important;-webkit-backdrop-filter:blur(18px) saturate(135%)!important;backdrop-filter:blur(18px) saturate(135%)!important}
-input,select,textarea{background:rgba(255,255,255,.065)!important;color:#f7f4ed!important;border-color:rgba(215,189,131,.25)!important;border-radius:11px!important}
-input::placeholder,textarea::placeholder{color:#aaa397!important}
-a{color:#e4ce9d}
-@media(max-width:760px){
- body:before{background-image:linear-gradient(180deg,rgba(5,6,8,.83),rgba(5,6,8,.92)),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72")}
- header{width:calc(100% - 20px);margin-top:10px!important;border-radius:16px!important}
- .hero{width:calc(100% - 20px);margin:14px auto 24px!important;min-height:430px;border-radius:22px!important;background-position:58% center!important;padding:30px 22px!important}
- .hero h1{font-size:clamp(34px,10vw,52px)!important}
- footer{padding-bottom:calc(22px + env(safe-area-inset-bottom,0px))!important}
-}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+    const homeBtn = nav.querySelector('[data-tab="home"]');
+    if (homeBtn && !homeBtn.dataset.homeRecoveryBound) {
+      homeBtn.dataset.homeRecoveryBound = '1';
+      homeBtn.addEventListener('click', event => {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        try { if (typeof show === 'function') show('home'); }
+        catch (error) { console.error('Home navigation failed:', error); }
+        document.querySelectorAll('main.wrap > section').forEach(section => { section.hidden = section.id !== 'home'; });
+        document.querySelectorAll('#nav button[data-tab]').forEach(item => item.setAttribute('aria-selected', String(item === homeBtn)));
+        try { sessionStorage.setItem('3pedals:site-section', 'home'); } catch (_) {}
+        try { history.replaceState({ siteSection: 'home' }, '', location.pathname + location.search); } catch (_) {}
+        closeNav();
+        window.scrollTo({ top: 0, behavior: 'auto' });
+      }, true);
+    }
+  }
 
-</style>
-
-<style id="final-background-wallpaper-fix">
-html,body{background-color:#08090b!important}
-body{background-image:linear-gradient(90deg,rgba(4,5,7,.56),rgba(4,5,7,.28) 55%,rgba(4,5,7,.40)),linear-gradient(180deg,rgba(4,5,7,.10),rgba(4,5,7,.18) 55%,rgba(4,5,7,.55)),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72")!important;background-position:center,center,center center!important;background-size:cover,cover,cover!important;background-repeat:no-repeat,no-repeat,no-repeat!important;background-attachment:fixed,fixed,fixed!important}
-body:before{content:none!important;display:none!important}
-body:after{background:linear-gradient(90deg,rgba(0,0,0,.10),transparent 48%,rgba(0,0,0,.10))!important}
-#home .hero{background:rgba(18,19,22,.28)!important;background-image:linear-gradient(110deg,rgba(15,16,18,.22),rgba(255,255,255,.025))!important;backdrop-filter:blur(22px) saturate(130%)!important;-webkit-backdrop-filter:blur(22px) saturate(130%)!important}
-#home .tile,.tiles .tile,.showroom-vehicle-note{background:rgba(19,20,23,.32)!important;backdrop-filter:blur(22px) saturate(135%)!important;-webkit-backdrop-filter:blur(22px) saturate(135%)!important}
-@media(max-width:760px){body{background-attachment:scroll,scroll,scroll!important;background-position:center,center,58% center!important}}
-</style>
-<style id="final-interaction-and-quote-fix">#home #autoQuoteRail{display:block!important;position:relative!important;left:auto!important;top:auto!important;bottom:auto!important;transform:none!important;width:min(100%,290px)!important;max-width:100%!important;margin:0 0 22px auto!important;z-index:3!important;background:rgba(19,20,23,.34)!important;border:1px solid rgba(255,255,255,.34)!important;border-radius:18px!important;backdrop-filter:blur(22px) saturate(140%)!important;-webkit-backdrop-filter:blur(22px) saturate(140%)!important;color:#fff!important}#home .home-with-quote{display:flex!important;flex-direction:column!important;gap:0!important}#home .auto-quote-text,#home .auto-quote-label,#home .auto-quote-author{color:#fff!important}button,a,[role=button],summary,.account-pill,.account-icon,.tile,.card,.panel,.project-card,.contact-card,.mechanic-card,.nav-contact{transition:transform .22s ease,background-color .22s ease,border-color .22s ease,box-shadow .22s ease,opacity .22s ease!important}button:hover,a:hover,[role=button]:hover,summary:hover,.account-pill:hover,.account-icon:hover,.tile:hover,.card:hover,.panel:hover,.project-card:hover,.contact-card:hover,.mechanic-card:hover,.nav-contact:hover{border-color:rgba(211,181,143,.72)!important;box-shadow:0 10px 26px rgba(0,0,0,.2),0 0 0 1px rgba(211,181,143,.12)!important}button:hover,a:hover,[role=button]:hover,.tile:hover,.card:hover,.project-card:hover,.contact-card:hover,.mechanic-card:hover{transform:translateY(-2px)!important}button:focus-visible,a:focus-visible,[role=button]:focus-visible{outline:2px solid #d3b58f!important;outline-offset:3px!important}@media(max-width:760px){#home #autoQuoteRail{width:100%!important;margin:0 0 14px!important}}</style>
-<style id="home-quote-mobile-account-repair">
-/* Keep the quote inside the home hero glass panel. */
-#home .home-with-quote{display:block!important}
-#home #autoQuoteRail{display:block!important;position:relative!important;float:none!important;width:min(100%,390px)!important;max-width:100%!important;margin:24px 0 0!important;box-sizing:border-box!important;z-index:2!important}
-#home .home-with-quote>div{min-width:0!important}
-#home .hero{display:flex!important;flex-direction:column!important;align-items:flex-start!important}
-#home .hero #autoQuoteRail{align-self:flex-start!important}
-#autoQuoteRail .auto-quote-body{min-height:0!important;padding:14px 16px!important}
-#autoQuoteRail .auto-quote-text{font-size:clamp(15px,2vw,19px)!important;line-height:1.4!important;margin:5px 0 10px!important}
-#autoQuoteRail .auto-quote-top{padding:12px 15px 8px!important}
-#autoQuoteRail .auto-quote-footer{padding:8px 14px 10px!important}
-@media(max-width:640px){
- body>header{margin-bottom:12px!important}
- body>header>.wrap{padding:0 12px!important}
- main.wrap{width:calc(100% - 20px)!important}
- #home .hero{min-height:0!important;padding:24px 17px!important;gap:12px!important;border-radius:22px!important}
- #home .hero h1{font-size:clamp(2rem,8.5vw,2.8rem)!important;line-height:1.06!important;margin:8px 0 10px!important}
- #home .hero p{font-size:13px!important;line-height:1.5!important}
- #home .showroom-actions{gap:8px!important;flex-wrap:wrap!important}
- #home .showroom-actions .btn{padding:10px 13px!important;font-size:12px!important}
- #home .showroom-vehicle-note{position:relative!important;inset:auto!important;width:100%!important;margin-top:10px!important}
- #home #autoQuoteRail{width:100%!important;margin:14px 0 0!important}
- #home .tiles,.tiles,.cols,.grid,.vehicle-grid,.journal-grid{gap:10px!important}
- #home .tile,.tiles .tile,.card,.panel,.service-card,.booking-card,.garage-card,.contact-card,.feature-card,.dealer,.stat{padding:12px!important;border-radius:15px!important}
- #home .tile h2,#home .tile h3,.card h2,.card h3,.panel h2,.panel h3{font-size:15px!important;line-height:1.25!important}
-}
-</style>
-<script id="account-button-and-home-quote-repair">
-(()=>{
- const byId=id=>document.getElementById(id);
- // Move the quote card into the hero glass panel so it belongs to the same home-screen panel.
- function placeQuote(){
-   const quote=byId('autoQuoteRail'), home=byId('home');
-   if(!quote||!home)return;
-   const hero=home.querySelector('.hero');
-   if(hero && !hero.contains(quote)) hero.appendChild(quote);
- }
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',placeQuote,{once:true});else placeQuote();
- // Refresh the public quote card periodically; the existing quote loader provides web lookup and fallback content.
- const updated=byId('autoQuoteUpdated'), next=byId('autoQuoteNext');
- if(next && !window.__threePedalsQuoteRefreshTimer){
-   window.__threePedalsQuoteRefreshTimer=window.setInterval(()=>{
-     if(document.visibilityState==='visible' && next.isConnected) next.click();
-   },6*60*60*1000);
-   if(updated)updated.textContent='Refreshes automatically';
- }
-})();
-</script>
-
-
-<style id="restore-mobile-navigation-menu">
-@media(max-width:760px){
- body>header>.wrap{display:grid!important;grid-template-columns:minmax(0,1fr) auto auto!important;align-items:center!important;gap:10px!important;position:relative!important}
- body>header .nav-toggle{display:inline-flex!important;grid-column:3!important;grid-row:1!important;width:42px!important;height:42px!important;visibility:visible!important;opacity:1!important;z-index:1002!important}
- body>header .account-pill{grid-column:2!important;grid-row:1!important}
- body>header #nav{display:none!important;position:absolute!important;top:calc(100% + 8px)!important;left:0!important;right:0!important;z-index:1001!important;grid-column:1/-1!important;grid-row:2!important;padding:14px!important;margin:0!important;gap:8px!important;flex-direction:column!important;align-items:stretch!important;flex-wrap:nowrap!important;background:rgba(16,18,21,.94)!important;border:1px solid rgba(255,255,255,.22)!important;border-radius:18px!important;box-shadow:0 18px 42px rgba(0,0,0,.38)!important;backdrop-filter:blur(24px) saturate(140%)!important;-webkit-backdrop-filter:blur(24px) saturate(140%)!important}
- body>header #nav.mobile-menu-open,body>header #nav.is-open{display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}
- body>header #nav button,body>header #nav a{display:flex!important;visibility:visible!important;opacity:1!important;flex:0 0 auto!important;width:100%!important;min-height:42px!important;box-sizing:border-box!important;text-align:left!important;justify-content:flex-start!important;align-items:center!important;padding:12px 14px!important;border-radius:11px!important;font-size:13px!important;color:#f3f0e8!important;background:rgba(255,255,255,.035)!important;text-decoration:none!important}
-}
-</style>
-<script id="restore-mobile-navigation-menu-js">
-(()=>{
- const toggle=document.getElementById('navToggle'),nav=document.getElementById('nav');
- if(!toggle||!nav)return;
- const close=()=>{nav.classList.remove('mobile-menu-open');toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Open navigation');document.body.classList.remove('nav-open')};
- toggle.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();const opening=!nav.classList.contains('mobile-menu-open');nav.classList.toggle('mobile-menu-open',opening);toggle.setAttribute('aria-expanded',String(opening));toggle.setAttribute('aria-label',opening?'Close navigation':'Open navigation');document.body.classList.toggle('nav-open',opening)});
- nav.addEventListener('click',event=>{if(event.target.closest('a,button'))close()});
- document.addEventListener('click',event=>{if(!event.target.closest('#nav')&&!event.target.closest('#navToggle'))close()});
- document.addEventListener('keydown',event=>{if(event.key==='Escape')close()});
-})();
-</script>
-
-
-<script id="contact-navigation-repair">
-(()=>{
- const button=document.querySelector('#nav [data-tab="contact"]');
- const nav=document.getElementById('nav');
- if(!button||button.dataset.contactRepairBound)return;
- button.dataset.contactRepairBound='1';
- button.addEventListener('click',event=>{
-   event.preventDefault();
-   document.querySelectorAll('main.wrap > section').forEach(section=>section.hidden=section.id!=='contact');
-   document.querySelectorAll('#nav button[data-tab]').forEach(item=>item.setAttribute('aria-selected',String(item===button)));
-   history.pushState({siteSection:'contact'},'',location.pathname+location.search+'#contact');
-   window.scrollTo({top:0,behavior:'smooth'});
-   nav?.classList.remove('mobile-menu-open','is-open');
-   document.body.classList.remove('nav-open');
-   const toggle=document.getElementById('navToggle');
-   if(toggle){toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Open navigation')}
- },true);
-})();
-</script>
-
-<script id="account-button-recovery">
-(()=>{
- const showError=(message)=>{
-   const auth=document.getElementById('authDlg');
-   const err=document.getElementById('authErr');
-   if(err)err.textContent=message;
-   if(auth&&!auth.open){try{auth.showModal()}catch(e){auth.setAttribute('open','');auth.style.display='block'}}
-   const body=document.getElementById('accBody');
-   const account=document.getElementById('accDlg');
-   if(account?.open&&body&&!body.textContent.trim())body.innerHTML='<p class="meta" role="alert">'+message.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))+'</p>';
- };
- const openEntry=async event=>{
-   event.preventDefault();
-   event.stopImmediatePropagation();
-   try{
-     if(typeof me!=='undefined'&&me){
-       if(typeof openAccount!=='function')throw new Error('Account code did not initialize. Refresh the page and try again.');
-       await openAccount();
-     }else{
-       if(typeof openAuth!=='function')throw new Error('Sign-in code did not initialize. Please refresh the page.');
-       openAuth('login');
-       const dlg=document.getElementById('authDlg');
-       if(dlg&&!dlg.open)dlg.showModal();
-     }
-   }catch(error){
-     console.error('3 Pedals account dialog failed to open:',error);
-     showError(error?.message||'The account panel could not open. Please refresh and try again.');
-   }
- };
- const bind=()=>{
-   for(const id of ['accountOpen','accountTile']){
-     const el=document.getElementById(id);
-     if(!el||el.dataset.accountRecoveryBound==='v2')continue;
-     el.dataset.accountRecoveryBound='v2';
-     el.addEventListener('click',openEntry,true);
-   }
- };
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind,{once:true});else bind();
-})();
-</script>
-
-<style id="account-hang-and-premium-cards-fix">
-/* Account dialogs: keep controls above content and always reachable */
-#authDlg{color:var(--text,#f5f2eb);background:rgba(17,19,21,.94);border:1px solid rgba(195,169,112,.38);border-radius:22px;box-shadow:0 28px 90px rgba(0,0,0,.48);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
-#authDlg::backdrop{background:rgba(5,7,9,.64);backdrop-filter:blur(5px)}
-#authDlg .in{position:relative}
-#authCloseTop,#accCloseTop{position:sticky;top:0;z-index:20;float:right;display:grid;place-items:center;width:42px;height:42px;border-radius:50%;border:1px solid rgba(195,169,112,.38);background:rgba(255,255,255,.08);color:inherit;font-size:26px;cursor:pointer;pointer-events:auto}
-#authSwitch,#authCloseBack,#authSubmit,#accountRetryButton{position:relative;z-index:3;pointer-events:auto;cursor:pointer}
-.account-load-error{padding:24px;border:1px solid rgba(195,169,112,.35);border-radius:16px;background:rgba(255,255,255,.045)}
-.account-load-error button{padding:10px 16px;border-radius:999px;background:var(--gold,#c3a970);color:#171717;border:0;font-weight:700;cursor:pointer}
-footer{position:relative;background:rgba(20,22,24,.34);border-top:1px solid rgba(195,169,112,.28)!important;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
-footer .wrap{display:block}
-#footerBrand{color:inherit}
-#footerNote{color:inherit}
-.journal-intro,.journal-card,.project-intro,.project-card,.project-public-empty,.contact-card,.tile{background:linear-gradient(145deg,rgba(35,37,39,.82),rgba(15,17,18,.78))!important;border:1px solid rgba(195,169,112,.24)!important;border-radius:18px!important;box-shadow:0 16px 44px rgba(0,0,0,.18)!important;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
-.journal-card:hover,.contact-card:hover,.tile:hover,.project-card:hover{border-color:rgba(195,169,112,.62)!important;box-shadow:0 22px 54px rgba(0,0,0,.3)!important}
-.journal-card-top,.project-card .project-article{background:linear-gradient(145deg,rgba(195,169,112,.12),rgba(20,22,23,.88))!important}
-.journal-card-body h2,.project-body h2,.project-intro h2,.journal-intro h2{color:#f4efe4}
-.journal-read,.project-kicker,.contact-card span{color:#d9bd7d!important}
-@media(max-width:600px){.journal-intro{padding:22px!important}.journal-card-body{padding:18px}.project-body{padding:20px}}
-</style>
-<script id="account-dialog-reliable-controls">
-(()=>{ 
- const byId=id=>document.getElementById(id);
- document.addEventListener('click',event=>{
-   const target=event.target.closest('button');
-   if(!target)return;
-   if(target.id==='authCloseTop'||target.id==='authCloseBack'){event.preventDefault();byId('authDlg')?.close();return}
-   // Let the existing authSwitch.onclick handler toggle modes exactly once.
-   if(target.id==='authSwitch')return;
-   if(target.id==='accCloseTop'||target.id==='accCloseLoadError'){event.preventDefault();const d=byId('accDlg');if(d?.open)d.close();return}
-   if(target.id==='accountRetryButton'){event.preventDefault();if(typeof openAccount==='function')openAccount({refresh:true}).catch(err=>{console.error(err);const b=byId('accBody');if(b)b.innerHTML='<div class="account-load-error" role="alert"><h3>Still unable to load</h3><p>Please check your connection and try again.</p><button type="button" id="accountRetryButton">Try again</button></div>'});return}
- });
-})();
-</script>
-
-<style id="sitewide-glassmorphism-refresh">
-/* Unified, borderless glassmorphism across 3 Pedals Auto KE */
-:root{--glass-fill:rgba(20,22,25,.34);--glass-fill-strong:rgba(17,19,22,.58);--glass-stroke:rgba(255,255,255,.13);--glass-highlight:rgba(255,255,255,.08)}
-header,body>header,.site-header,.navbar,.nav-shell,.nav-wrap,
-#nav,#dlg,.authbox,.modal,.drawer,
-.hero,.tile,.card,.panel,.contact-card,.journal-intro,.journal-card,
-.project-intro,.project-card,.project-public-empty,.vehicle-card,.listing,
-.dealer,.featured-panel,.promotion-package,.dashboard-card,.contact-form,
-.filter-panel,.search-panel,.stat,.service-card,.booking-card,.garage-card,
-.showroom-vehicle-note,#autoQuoteRail,.account-pages,.account-tools,
-.account-page,.account-fast-loading,.account-load-error{
-  background-color:var(--glass-fill)!important;
-  border-color:var(--glass-stroke)!important;
-  -webkit-backdrop-filter:blur(22px) saturate(140%)!important;
-  backdrop-filter:blur(22px) saturate(140%)!important;
-  box-shadow:0 16px 44px rgba(0,0,0,.16),inset 0 1px 0 rgba(255,255,255,.07)!important;
-}
-header,body>header,.site-header,.navbar,.nav-shell,.nav-wrap{background-color:rgba(15,17,20,.38)!important}
-#nav{background-color:rgba(17,19,22,.56)!important}
-#home .hero{background-color:rgba(18,20,23,.28)!important}
-footer,body>footer,footer .wrap{
-  border:0!important;border-top:0!important;outline:0!important;
-  background:rgba(20,22,25,.22)!important;
-  -webkit-backdrop-filter:blur(26px) saturate(145%)!important;
-  backdrop-filter:blur(26px) saturate(145%)!important;
-  box-shadow:none!important;
-}
-footer{padding-top:20px!important}
-input,select,textarea,button,.btn{
-  -webkit-backdrop-filter:blur(14px) saturate(130%);
-  backdrop-filter:blur(14px) saturate(130%);
-}
-input,select,textarea{background:rgba(255,255,255,.055)!important}
-#authDlg{background:rgba(18,20,23,.62)!important;border-color:rgba(255,255,255,.16)!important}
-@media(max-width:760px){
-  header,body>header{background:rgba(15,17,20,.46)!important}
-  .tile,.card,.panel,.contact-card,.journal-card,.project-card{background-color:rgba(20,22,25,.38)!important}
-}
-</style>
-
-<style id="auth-switch-clickability-fix">
-#authDlg #authSwitchRow{position:relative!important;z-index:50!important;isolation:isolate!important;pointer-events:auto!important}
-#authDlg #authSwitch{position:relative!important;z-index:51!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;min-height:40px!important;min-width:64px!important;padding:8px 12px!important;margin:0 0 0 4px!important;pointer-events:auto!important;touch-action:manipulation!important;cursor:pointer!important}
-#authDlg #authSwitchRow *{pointer-events:auto}
-#authDlg .in{position:relative;z-index:1}
-</style>
-<script id="auth-switch-single-handler-fix">
-(()=>{
- const button=document.getElementById('authSwitch');
- if(!button||button.dataset.directToggleBound)return;
- button.dataset.directToggleBound='1';
- button.addEventListener('click',event=>{
-   event.preventDefault();
-   event.stopImmediatePropagation();
-   if(typeof openAuth==='function'){
-     const current=window.authMode||'register';
-     const seller=typeof window.sellerSignupActive!=='undefined'&&!!window.sellerSignupActive;
-     openAuth(current==='login'?'register':'login','',{seller});
-   }
- },true);
-})();
-</script>
-
-<style id="auth-switch-hard-reset">
-#authDlg #authSwitchRow{display:flex!important;align-items:center!important;justify-content:center!important;gap:6px!important;position:relative!important;z-index:9999!important;pointer-events:auto!important;visibility:visible!important;opacity:1!important}
-#authDlg #authSwitch{display:inline-flex!important;position:relative!important;z-index:10000!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;cursor:pointer!important;min-height:44px!important;padding:10px 14px!important;border:1px solid rgba(212,160,23,.65)!important;border-radius:999px!important;color:var(--gold,#d4a017)!important;background:rgba(212,160,23,.10)!important}
-#authDlg #authSwitchRow span{pointer-events:none!important}
-</style>
-<script id="auth-switch-hard-reset-js">
-(()=>{
- function bind(){
-   const old=document.getElementById('authSwitch');
-   if(!old||!old.parentNode)return;
-   // Replace the element to remove conflicting legacy listeners attached by earlier repairs.
-   const button=old.cloneNode(true);
-   old.replaceWith(button);
-   button.type='button';
-   button.addEventListener('click',event=>{
-     event.preventDefault();
-     event.stopPropagation();
-     const mode=window.authMode||'register';
-     const seller=typeof window.sellerSignupActive!=='undefined'&&!!window.sellerSignupActive;
-     if(typeof openAuth==='function')openAuth(mode==='login'?'register':'login','',{seller});
-     else {const error=document.getElementById('authErr');if(error)error.textContent='Sign-in form is still loading. Refresh the page and try again.'}
-   });
- }
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind,{once:true});else bind();
-})();
-</script>
-
-
-<style id="borderless-glass-footer-and-garage">
-/* Keep the footer and Garage page consistent with the site's translucent glass design. */
-footer,body>footer,.site-footer,#footer,.garage-hero,.garage-section,.garage-panel,.garage-card,
-#garage .tile,#garage .card,#garage .panel,#garage .service-card,#garage .booking-card,
-#garage .contact-card,#garage .stat,#garage .showroom-vehicle-note{
-  border:0!important;border-top:0!important;border-bottom:0!important;outline:0!important;
-  background:rgba(20,22,25,.28)!important;
-  -webkit-backdrop-filter:blur(24px) saturate(145%)!important;
-  backdrop-filter:blur(24px) saturate(145%)!important;
-  box-shadow:0 16px 42px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.07)!important;
-}
-footer::before,footer::after,body>footer::before,body>footer::after{border:0!important;box-shadow:none!important}
-footer a,body>footer a{position:relative}
-@media(max-width:760px){footer,body>footer{padding-bottom:calc(80px + env(safe-area-inset-bottom,0px))!important}}
-</style>
-
-
-<style id="dealer-garage-location-borderless-glass">
-/* Remove gold accent rules and use a subtle frosted-glass surface in dealer, garage and location sections. */
-footer,body>footer,.site-footer,#footer,
-#dealer,.dealer-section,.dealer-card,.dealer-panel,.dealer-hero,.dealer-location,
-#garage,.garage-section,.garage-card,.garage-panel,.garage-hero,
-#location,.location-section,.location-card,.location-panel,.location-hero,
-#dealers .tile,#dealers .card,#dealers .panel,
-#garage .tile,#garage .card,#garage .panel,
-#location .tile,#location .card,#location .panel{
- border:0!important;border-top:0!important;border-bottom:0!important;outline:0!important;
- background:rgba(20,22,25,.28)!important;
- -webkit-backdrop-filter:blur(24px) saturate(145%)!important;
- backdrop-filter:blur(24px) saturate(145%)!important;
- box-shadow:0 16px 42px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.06)!important;
-}
-.garage-hero,.dealer-hero,.location-hero{border-left:0!important;border-right:0!important}
-footer::before,footer::after,body>footer::before,body>footer::after{border:0!important;box-shadow:none!important}
-</style>
-
-
-<script id="account-login-switch-final-fix">
-(()=>{
- const bind=()=>{
-  const button=document.getElementById('authSwitch');
-  if(!button||button.dataset.loginSwitchFinalFix==='1')return;
-  button.dataset.loginSwitchFinalFix='1';
-  button.addEventListener('click',event=>{
-   event.preventDefault();
-   event.stopImmediatePropagation();
-   try{
-    const current=window.authMode||'register';
-    const next=current==='login'?'register':'login';
-    if(typeof openAuth!=='function')throw new Error('The sign-in form has not initialized. Refresh the page and try again.');
-    const seller=typeof window.sellerSignupActive!=='undefined'&&!!window.sellerSignupActive;
-    openAuth(next,'',{seller});
-    const dialog=document.getElementById('authDlg');
-    if(dialog&&!dialog.open)dialog.showModal();
-   }catch(error){
-    console.error('3 Pedals login switch failed:',error);
-    const message=document.getElementById('authErr');
-    if(message)message.textContent=error?.message||'Unable to open the login form. Refresh and try again.';
-    const dialog=document.getElementById('authDlg');
-    if(dialog&&!dialog.open){try{dialog.showModal()}catch(_){}}
-   }
-  },true);
- };
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind,{once:true});else bind();
-})();
-</script>
-
-
-<style id="location-footer-glass-no-gold">
-/* Location section: remove the gold separator and match the site's translucent glass surfaces. */
-#location footer,#location .site-footer,#location .location-footer,
-#location footer::before,#location footer::after,
-#location .site-footer::before,#location .site-footer::after,
-#location .location-footer::before,#location .location-footer::after{
- border:0!important;border-top:0!important;border-bottom:0!important;
- background:rgba(20,22,25,.28)!important;
- -webkit-backdrop-filter:blur(24px) saturate(145%)!important;
- backdrop-filter:blur(24px) saturate(145%)!important;
- box-shadow:0 16px 42px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.06)!important;
-}
-#location hr,#location .gold-line,#location .gold-divider,#location .section-divider{
- border:0!important;height:0!important;background:transparent!important;box-shadow:none!important;
-}
-</style>
-
-
-<style id="global-blurred-glass-wallpaper">
-/* Neutral smoked glass over the existing automotive photo; avoid a blue wash. */
-html,body{background:transparent!important;background-color:transparent!important}
-body{position:relative!important;isolation:isolate!important}
-body:before{
- content:""!important;display:block!important;position:fixed!important;inset:-10px!important;z-index:-1!important;pointer-events:none!important;
- background:
- linear-gradient(110deg,rgba(8,9,11,.42),rgba(8,9,11,.18) 48%,rgba(8,9,11,.42)),
- url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72") center center/cover no-repeat!important;
- filter:blur(4px)!important;transform:scale(1.025)!important
-}
-body:after{content:none!important;display:none!important}
-/* Glass should reveal the photograph through its surface, with a visible edge highlight. */
-header,body>header,.site-header,.navbar,.nav-shell,.nav-wrap,#nav,
-#home .hero,#home .tile,.tiles .tile,.showroom-vehicle-note,
-.card,.panel,.contact-card,.journal-intro,.journal-card,.project-intro,.project-card,
-.project-public-empty,.vehicle-card,.listing,.dealer,.featured-panel,.promotion-package,
-.dashboard-card,.contact-form,.filter-panel,.search-panel,.stat,.service-card,.booking-card,
-.garage-card,#autoQuoteRail,.authbox,.modal,.drawer,#dlg,.journal-photo-viewer{
- background-color:rgba(24,24,25,.24)!important;
- border:1px solid rgba(255,255,255,.22)!important;
- box-shadow:0 14px 38px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.16)!important;
- -webkit-backdrop-filter:blur(24px) saturate(125%)!important;
- backdrop-filter:blur(24px) saturate(125%)!important
-}
-header,body>header,.site-header,.navbar,.nav-shell,.nav-wrap{
- background-color:rgba(17,17,18,.38)!important;
- border-color:rgba(255,255,255,.18)!important
-}
-#home .hero{background-color:rgba(24,24,25,.18)!important}
-#home .tile,.tiles .tile,.showroom-vehicle-note,.card,.panel,.contact-card,.journal-card,.project-card{
- background-color:rgba(24,24,25,.24)!important
-}
-input,select,textarea{
- background:rgba(20,20,21,.30)!important;color:inherit!important;
- border:1px solid rgba(255,255,255,.25)!important;
- -webkit-backdrop-filter:blur(16px)!important;backdrop-filter:blur(16px)!important
-}
-input::placeholder,textarea::placeholder{color:rgba(255,255,255,.68)!important}
-#authDlg{background:rgba(17,17,18,.32)!important;border-color:rgba(255,255,255,.20)!important}
-@media(hover:hover){
- .card:hover,.tile:hover,.project-card:hover,.contact-card:hover,.journal-card:hover{
-  background-color:rgba(40,40,41,.32)!important;border-color:rgba(255,255,255,.34)!important;
-  box-shadow:0 20px 46px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.20)!important;
-  -webkit-backdrop-filter:blur(28px) saturate(135%)!important;backdrop-filter:blur(28px) saturate(135%)!important
- }
-}
-</style>
-
-<script id="home-navigation-recovery">
-(()=> {
-  const home = document.querySelector('#nav [data-tab="home"]');
-  if (!home || home.dataset.homeRecoveryBound === '1') return;
-  home.dataset.homeRecoveryBound = '1';
-  home.addEventListener('click', event => {
+  // Account entry recovery, dialog close/retry delegation, and single authSwitch capture handler
+  const showAccountError = message => {
+    const auth = byId('authDlg'), err = byId('authErr');
+    if (err) err.textContent = message;
+    if (auth && !auth.open) {
+      try { auth.showModal(); } catch (_) { auth.setAttribute('open', ''); auth.style.display = 'block'; }
+    }
+    const body = byId('accBody'), account = byId('accDlg');
+    if (account?.open && body && !body.textContent.trim()) {
+      body.innerHTML = '<p class="meta" role="alert">' + message.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])) + '</p>';
+    }
+  };
+  const openAccountEntry = async event => {
     event.preventDefault();
     event.stopImmediatePropagation();
-    try { if (typeof show === 'function') show('home'); }
-    catch (error) { console.error('Home navigation failed:', error); }
-    document.querySelectorAll('main.wrap > section').forEach(section => {
-      section.hidden = section.id !== 'home';
-    });
-    document.querySelectorAll('#nav button[data-tab]').forEach(item => {
-      item.setAttribute('aria-selected', String(item === home));
-    });
-    try { sessionStorage.setItem('3pedals:site-section', 'home'); } catch (_) {}
-    try { history.replaceState({siteSection:'home'}, '', location.pathname + location.search); } catch (_) {}
-    const nav = document.getElementById('nav');
-    nav?.classList.remove('mobile-menu-open', 'is-open');
-    document.body.classList.remove('nav-open');
-    const toggle = document.getElementById('navToggle');
-    if (toggle) { toggle.setAttribute('aria-expanded','false'); toggle.setAttribute('aria-label','Open navigation'); }
-    window.scrollTo({top:0,behavior:'auto'});
-  }, true);
+    try {
+      if (typeof me !== 'undefined' && me) {
+        if (typeof openAccount !== 'function') throw new Error('Account code did not initialize. Refresh the page and try again.');
+        await openAccount();
+      } else {
+        if (typeof openAuth !== 'function') throw new Error('Sign-in code did not initialize. Please refresh the page.');
+        openAuth('login');
+        const dlg = byId('authDlg');
+        if (dlg && !dlg.open) dlg.showModal();
+      }
+    } catch (error) {
+      console.error('3 Pedals account dialog failed to open:', error);
+      showAccountError(error?.message || 'The account panel could not open. Please refresh and try again.');
+    }
+  };
+  const bindAccountControls = () => {
+    for (const id of ['accountOpen', 'accountTile']) {
+      const el = byId(id);
+      if (!el || el.dataset.accountRecoveryBound === 'v2') continue;
+      el.dataset.accountRecoveryBound = 'v2';
+      el.addEventListener('click', openAccountEntry, true);
+    }
+    const authSwitch = byId('authSwitch');
+    if (authSwitch && authSwitch.dataset.homeSwitchBound !== '1') {
+      authSwitch.dataset.homeSwitchBound = '1';
+      authSwitch.type = 'button';
+      authSwitch.addEventListener('click', event => {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        try {
+          const current = window.authMode || 'register';
+          const next = current === 'login' ? 'register' : 'login';
+          if (typeof openAuth !== 'function') throw new Error('The sign-in form has not initialized. Refresh the page and try again.');
+          const seller = typeof window.sellerSignupActive !== 'undefined' && !!window.sellerSignupActive;
+          openAuth(next, '', { seller });
+          const dialog = byId('authDlg');
+          if (dialog && !dialog.open) dialog.showModal();
+        } catch (error) {
+          console.error('3 Pedals login switch failed:', error);
+          const message = byId('authErr');
+          if (message) message.textContent = error?.message || 'Unable to open the login form. Refresh and try again.';
+          const dialog = byId('authDlg');
+          if (dialog && !dialog.open) { try { dialog.showModal(); } catch (_) {} }
+        }
+      }, true);
+    }
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bindAccountControls, { once: true });
+  else bindAccountControls();
+
+  document.addEventListener('click', event => {
+    const target = event.target.closest('button');
+    if (!target) return;
+    if (target.id === 'authCloseTop' || target.id === 'authCloseBack') {
+      event.preventDefault();
+      byId('authDlg')?.close();
+      return;
+    }
+    if (target.id === 'accCloseTop' || target.id === 'accCloseLoadError') {
+      event.preventDefault();
+      const d = byId('accDlg');
+      if (d?.open) d.close();
+      return;
+    }
+    if (target.id === 'accountRetryButton') {
+      event.preventDefault();
+      if (typeof openAccount === 'function') {
+        openAccount({ refresh: true }).catch(err => {
+          console.error(err);
+          const b = byId('accBody');
+          if (b) b.innerHTML = '<div class="account-load-error" role="alert"><h3>Still unable to load</h3><p>Please check your connection and try again.</p><button type="button" id="accountRetryButton">Try again</button></div>';
+        });
+      }
+    }
+  });
+
+  // Mobile pull-down-to-refresh
+  if (!window.__threePedalsPullRefreshInstalled) {
+    window.__threePedalsPullRefreshInstalled = true;
+    let startX = 0, startY = 0, tracking = false;
+    const isMobile = () => window.matchMedia('(max-width: 800px)').matches;
+    const ignored = el => !!el?.closest('input,textarea,select,button,a,[role="dialog"],dialog,[contenteditable="true"],#nav,#garageSectionNav,#accountMenu');
+    window.addEventListener('touchstart', e => {
+      if (!isMobile() || e.touches.length !== 1 || window.scrollY > 2 || ignored(e.target)) { tracking = false; return; }
+      startX = e.touches[0].clientX; startY = e.touches[0].clientY; tracking = true;
+    }, { passive: true });
+    window.addEventListener('touchmove', e => {
+      if (!tracking || e.touches.length !== 1) return;
+      const dx = e.touches[0].clientX - startX, dy = e.touches[0].clientY - startY;
+      if (Math.abs(dx) > Math.abs(dy) * 0.8 || dy < 0) tracking = false;
+    }, { passive: true });
+    window.addEventListener('touchend', e => {
+      if (!tracking) return;
+      tracking = false;
+      if (!isMobile() || window.scrollY > 2 || !e.changedTouches.length) return;
+      const t = e.changedTouches[0], dx = t.clientX - startX, dy = t.clientY - startY;
+      if (dy >= 110 && Math.abs(dx) < Math.abs(dy) * 0.65) window.location.reload();
+    }, { passive: true });
+  }
 })();
 </script>
-
-
-<style id="home-lighter-glass">
-/* Keep the automotive wallpaper visible on Home; reduce only the Home cards' glass blur. */
-#home .hero,
-#home .tile,
-#home .tiles .tile,
-#home .showroom-vehicle-note,
-#home .auto-quote-rail,
-#home .journal-intro,
-#home .project-intro{
-  background-color:rgba(20,22,25,.30)!important;
-  -webkit-backdrop-filter:blur(8px) saturate(118%)!important;
-  backdrop-filter:blur(8px) saturate(118%)!important;
-}
-#home .tile,
-#home .tiles .tile,
-#home .showroom-vehicle-note,
-#home .auto-quote-rail,
-#home .journal-intro,
-#home .project-intro{
-  border-color:rgba(255,255,255,.20)!important;
-  box-shadow:0 12px 30px rgba(0,0,0,.16),inset 0 1px 0 rgba(255,255,255,.12)!important;
-}
-</style>
-
-
-<style id="location-section-home-glass-match">
-/* Keep the Home wallpaper and give the Location section the same translucent smoked-glass treatment. */
-#location .tile,#location .card,#location .panel,#location .location-card,#location .location-panel,
-#location .contact-card,#location .map-card,#location .location-content,#location .location-info,
-#location .location-details,#location .location-cta{
- background:linear-gradient(145deg,rgba(24,24,25,.30),rgba(17,17,18,.38))!important;
- border:1px solid rgba(255,255,255,.22)!important;
- box-shadow:0 14px 38px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.14)!important;
- -webkit-backdrop-filter:blur(24px) saturate(125%)!important;
- backdrop-filter:blur(24px) saturate(125%)!important
-}
-#location input,#location select,#location textarea{
- background:rgba(20,20,21,.30)!important;border-color:rgba(255,255,255,.25)!important;
- -webkit-backdrop-filter:blur(16px)!important;backdrop-filter:blur(16px)!important
-}
-</style>
-
-<style id="site-wide-mobile-glass-status-area">
-/* Consistent mobile glass treatment for the system safe-area/status region across public pages. */
-@media(max-width:800px){
-  html{background:transparent!important}
-  body{padding-top:0!important}
-  body>header,header.site-header,.site-header,header{
-    padding-top:env(safe-area-inset-top,0px)!important;
-    background-color:rgba(15,17,20,.18)!important;
-    border-bottom-color:rgba(255,255,255,.14)!important;
-    -webkit-backdrop-filter:blur(26px) saturate(145%)!important;
-    backdrop-filter:blur(26px) saturate(145%)!important;
-  }
-  @supports(padding:constant(safe-area-inset-top)){
-    body>header,header.site-header,.site-header,header{padding-top:constant(safe-area-inset-top)!important}
-  }
-}
-</style>
-
-
-
-<style id="site-wide-mobile-full-screen-scroll">
-/* Site-wide mobile screen-by-screen scrolling. Preserve natural scrolling for long pages and forms. */
-@media(max-width:760px){
-  html{scroll-behavior:smooth!important;scroll-snap-type:y proximity!important;scroll-padding-top:74px!important;overscroll-behavior-y:contain}
-  body{min-height:100%;overflow-x:hidden!important;overflow-y:auto!important}
-  main>section,main section[id],body>section,section.page-section,section.content-section{
-    scroll-snap-align:start!important;scroll-snap-stop:normal!important;scroll-margin-top:74px!important;box-sizing:border-box!important
-  }
-  @supports not (height:100svh){main>section,main section[id],body>section,section.page-section,section.content-section{scroll-margin-top:74px!important}}
-}
-@media(max-width:760px) and (prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}
-</style>
-
-<style id="site-wide-mobile-glass-status-area">
-/* Transparent mobile status/safe-area and header edge; keep the page wallpaper visible while scrolling. */
-@media(max-width:800px){
-  html{background:transparent!important}
-  body{padding-top:0!important}
-  body>header,header.site-header,.site-header,header{
-    padding-top:env(safe-area-inset-top,0px)!important;
-    background:transparent!important;
-    border-top:0!important;
-    border-bottom:0!important;
-    box-shadow:none!important;
-    -webkit-backdrop-filter:blur(18px) saturate(120%)!important;
-    backdrop-filter:blur(18px) saturate(120%)!important;
-  }
-  @supports(padding:constant(safe-area-inset-top)){
-    body>header,header.site-header,.site-header,header{padding-top:constant(safe-area-inset-top)!important}
-  }
-}
-</style>
-
-<style id="site-wide-transparent-status-header">
-/* Keep the header/status-area visually transparent on desktop and mobile. */
-html{background:transparent!important}
-body>header,header.site-header,.site-header,header{
-  background:transparent!important;
-  border-top:0!important;
-  border-bottom:0!important;
-  box-shadow:none!important;
-  -webkit-backdrop-filter:blur(18px) saturate(120%)!important;
-  backdrop-filter:blur(18px) saturate(120%)!important;
-}
-@media(max-width:800px){
-  body{padding-top:0!important}
-  body>header,header.site-header,.site-header,header{padding-top:env(safe-area-inset-top,0px)!important}
-  @supports(padding:constant(safe-area-inset-top)){
-    body>header,header.site-header,.site-header,header{padding-top:constant(safe-area-inset-top)!important}
-  }
-}
-</style>
-
-
-<style id="mobile-expanded-menu-card-compact">
-/* Compact the expanded mobile navigation card while preserving its glass appearance. */
-@media(max-width:600px){
-  body>header #nav,
-  body>header #nav.is-open,
-  body>header #nav.mobile-menu-open{
-    top:calc(100% + 6px)!important;
-    right:10px!important;left:auto!important;
-    width:min(184px,calc(100vw - 76px))!important;
-    max-width:min(184px,calc(100vw - 76px))!important;
-    max-height:min(60dvh,340px)!important;
-    padding:5px!important;gap:2px!important;
-    border-radius:12px!important;
-  }
-  body>header #nav button,
-  body>header #nav a.navlink{
-    min-height:32px!important;
-    padding:5px 8px!important;
-    font-size:12px!important;line-height:1.2!important;
-    border-radius:8px!important;
-  }
-}
-</style>
-
-
-
-<style id="mobile-expanded-menu-glass-blur">
-@media(max-width:600px){
- body>header #nav,body>header #nav.is-open,body>header #nav.mobile-menu-open{
-  background:rgba(22,23,25,.34)!important;
-  -webkit-backdrop-filter:blur(32px) saturate(165%)!important;
-  backdrop-filter:blur(32px) saturate(165%)!important;
-  border-color:rgba(255,255,255,.2)!important;
- }
-}
-</style>
-
-
-
-<script id="mobile-pull-down-to-refresh">
-(()=> {
- if(window.__threePedalsPullRefreshInstalled)return;
- window.__threePedalsPullRefreshInstalled=true;
- let startX=0,startY=0,tracking=false;
- const isMobile=()=>window.matchMedia('(max-width: 800px)').matches;
- const ignored=el=>!!el?.closest('input,textarea,select,button,a,[role="dialog"],dialog,[contenteditable="true"],#nav,#garageSectionNav,#accountMenu');
- window.addEventListener('touchstart',e=>{
-  if(!isMobile()||e.touches.length!==1||window.scrollY>2||ignored(e.target)){tracking=false;return}
-  startX=e.touches[0].clientX;startY=e.touches[0].clientY;tracking=true;
- },{passive:true});
- window.addEventListener('touchmove',e=>{
-  if(!tracking||e.touches.length!==1)return;
-  const dx=e.touches[0].clientX-startX,dy=e.touches[0].clientY-startY;
-  if(Math.abs(dx)>Math.abs(dy)*.8||dy<0){tracking=false;return}
- },{passive:true});
- window.addEventListener('touchend',e=>{
-  if(!tracking)return;tracking=false;
-  if(!isMobile()||window.scrollY>2||!e.changedTouches.length)return;
-  const t=e.changedTouches[0],dx=t.clientX-startX,dy=t.clientY-startY;
-  if(dy>=110&&Math.abs(dx)<Math.abs(dy)*.65)window.location.reload();
- },{passive:true});
-})();
-</script>
-
-
-
-<style id="expanded-home-menu-toggle-glass">
-/* Blur the hamburger control itself while its navigation menu is expanded. */
-@media(max-width:600px){
- html body>header button#navToggle.nav-toggle[aria-expanded="true"]{
-  background:rgba(22,23,25,.28)!important;
-  background-image:none!important;
-  border:1px solid rgba(255,255,255,.28)!important;
-  -webkit-backdrop-filter:blur(32px) saturate(165%)!important;
-  backdrop-filter:blur(32px) saturate(165%)!important;
-  box-shadow:0 8px 24px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.12)!important;
- }
- html body>header button#navToggle.nav-toggle[aria-expanded="true"] svg{filter:none!important}
-}
-</style>
-
-
-<style id="expanded-home-menu-toggle-glass-final">
-/* Keep the Home hamburger translucent while its mobile navigation is open.
-   The wider breakpoint also covers phones using desktop-site mode. */
-@media(max-width:980px){
- html body>header button#navToggle.nav-toggle[aria-expanded="true"],
- html body.nav-open>header button#navToggle.nav-toggle,
- html body:has(header #nav.mobile-menu-open)>header button#navToggle.nav-toggle,
- html body:has(header #nav.is-open)>header button#navToggle.nav-toggle{
-  background:rgba(22,23,25,.24)!important;
-  background-color:rgba(22,23,25,.24)!important;
-  background-image:none!important;
-  border:1px solid rgba(255,255,255,.30)!important;
-  -webkit-backdrop-filter:blur(32px) saturate(165%)!important;
-  backdrop-filter:blur(32px) saturate(165%)!important;
-  box-shadow:0 8px 24px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.12)!important;
- }
- html body>header button#navToggle.nav-toggle[aria-expanded="true"] svg,
- html body.nav-open>header button#navToggle.nav-toggle svg{
-  filter:none!important;
- }
-}
-</style>
-
-<style id="contact-us-navigation-no-background-final">
-/* Contact Us stays visually unfilled in every navigation state. */
-html body header #nav button.nav-contact,
-html body header #nav button.nav-contact:hover,
-html body header #nav button.nav-contact:focus,
-html body header #nav button.nav-contact:focus-visible,
-html body header #nav button.nav-contact[aria-selected="true"],
-html body header #nav button.nav-contact[aria-selected="true"]:hover{
-  background:transparent!important;
-  background-color:transparent!important;
-  background-image:none!important;
-  border-color:transparent!important;
-  box-shadow:none!important;
-  color:inherit!important;
-  outline:none!important;
-}
-</style>
-
-<style id="modern-standard-typography-and-account-admin">
-html body,html body button,html body input,html body select,html body textarea{font-family:Manrope,Inter,system-ui,-apple-system,"Segoe UI",sans-serif!important}
-html body :is(h1,h2,h3,h4,h5,h6){font-family:Manrope,Inter,system-ui,-apple-system,"Segoe UI",sans-serif!important;font-weight:650!important;letter-spacing:-.025em!important;line-height:1.2!important}
-html body .logo,html body .brand,html body .account-brand-title{font-family:Manrope,Inter,system-ui,-apple-system,"Segoe UI",sans-serif!important;font-weight:750!important;letter-spacing:-.025em!important}
-@media(max-width:600px){.account-admin-tools{align-items:stretch!important}.account-admin-button{width:100%;justify-content:center}}
-</style>
-
-<style id="official-3pedals-typography">
-/* Official 3 Pedals Auto KE typography: Sora headings/brand, Manrope interface and body, Playfair editorial accents. */
-html body,html body button,html body input,html body select,html body textarea{font-family:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif!important;font-synthesis:none;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-html body :is(h1,h2,h3,h4,h5,h6){font-family:"Sora","Manrope",system-ui,sans-serif!important;font-weight:600!important;letter-spacing:-.035em!important;line-height:1.18!important}
-html body :is(h1){font-weight:700!important;letter-spacing:-.045em!important}
-html body :is(p,li,label,small,.description,.muted,.meta,.subtitle,.section-subtitle,.eyebrow,.lead){font-family:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif!important}
-html body :is(.brand,.logo,.brand-name,.site-brand,.wordmark,header .brand,header .logo){font-family:"Sora",system-ui,sans-serif!important;font-weight:700!important;letter-spacing:-.035em!important}
-html body :is(button,.btn,a.button,.back,nav a,nav button){font-family:"Manrope",system-ui,sans-serif!important;font-weight:600!important}
-html body :is(.price,.amount,.vehicle-price,[data-price]){font-family:"Manrope",system-ui,sans-serif!important;font-weight:700!important;font-variant-numeric:tabular-nums}
-html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){font-family:"Playfair Display",Georgia,serif!important;font-weight:600!important;letter-spacing:-.02em!important}
-
-/* Home: add deliberate breathing room between the sticky header and introduction card. */
-#home .home-with-quote{padding-top:clamp(18px,2.4vw,30px)!important}
-@media(max-width:760px){#home .home-with-quote{padding-top:20px!important}}
-</style>
-
-\n<style id="mobile-performance-image-override">\n@media(max-width:760px){body:before{background-image:linear-gradient(110deg,rgba(8,9,11,.42),rgba(8,9,11,.18) 48%,rgba(8,9,11,.42)),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=60")!important}}\n</style>\n<style id="marketing-card-final-surface-fix">
-/* Final cascade override: index.html's later inline styles were re-applying
-   a dark card to Marketing after account-panel.css had flattened it. */
-#accDlg #accBody .account-page.account-promotions-page,
-#accDlg #accBody .account-page.account-promotions-page > .account-tools{
-  background:transparent!important;
-  background-color:transparent!important;
-  background-image:none!important;
-  border:0!important;
-  border-color:transparent!important;
-  border-radius:0!important;
-  outline:0!important;
-  box-shadow:none!important;
-  -webkit-backdrop-filter:none!important;
-  backdrop-filter:none!important;
-  filter:none!important;
-}
-#accDlg #accBody .account-page.account-promotions-page > .account-tools{
-  display:block!important;
-  box-sizing:border-box!important;
-  width:100%!important;
-  margin:0!important;
-  padding:24px 32px 28px!important;
-}
-#accDlg #accBody .account-page.account-promotions-page > .account-tools::before,
-#accDlg #accBody .account-page.account-promotions-page > .account-tools::after{
-  content:none!important;display:none!important;
-}
-#accDlg #accBody .account-page.account-promotions-page > .account-tools > :not(.promotion-package-grid):not(.promotion-package):not(.promotion-history-item):not(.promotion-history-head):not(button):not(input):not(select):not(textarea){
-  background:transparent!important;background-color:transparent!important;background-image:none!important;
-  border:0!important;border-radius:0!important;box-shadow:none!important;outline:0!important;
-}
-@media(max-width:760px){
-  #accDlg #accBody .account-page.account-promotions-page > .account-tools{padding:20px 24px 24px!important}
-}
-@media(max-width:420px){
-  #accDlg #accBody .account-page.account-promotions-page > .account-tools{padding-right:20px!important;padding-left:20px!important}
-}
-</style>
-<style id="marketing-parent-wrapper-final-fix">
-/* The remaining layer is the shared .account-pages wrapper, not Marketing itself.
-   Flatten that parent only while the Promotions page is the active page. */
-#accDlg #accBody .account-pages:has(> #accountPage-promotions:not([hidden])),
-#accDlg #accBody #accountPage-promotions,
-#accDlg #accBody #accountPage-promotions > .account-tools,
-#accDlg #accBody #accountPage-promotions > .account-tools::before,
-#accDlg #accBody #accountPage-promotions > .account-tools::after{
-  background:transparent!important;
-  background-color:transparent!important;
-  background-image:none!important;
-  border:0!important;
-  border-color:transparent!important;
-  border-radius:0!important;
-  outline:0!important;
-  box-shadow:none!important;
-  -webkit-backdrop-filter:none!important;
-  backdrop-filter:none!important;
-  filter:none!important;
-}
-#accDlg #accBody .account-pages:has(> #accountPage-promotions:not([hidden]))::before,
-#accDlg #accBody .account-pages:has(> #accountPage-promotions:not([hidden]))::after{
-  content:none!important;display:none!important;
-}
-</style>
-
-<style id="overview-remove-shared-background-layer">
-/* Overview only: remove the shared glass panel behind the standalone cards. */
-#accDlg #accBody .account-pages:has(> #accountPage-overview:not([hidden])),
-#accDlg #accBody .account-pages:has(> #accountPage-overview:not([hidden]))::before,
-#accDlg #accBody .account-pages:has(> #accountPage-overview:not([hidden]))::after,
-#accDlg #accBody #accountPage-overview,
-#accDlg #accBody #accountPage-overview::before,
-#accDlg #accBody #accountPage-overview::after{
-  background:transparent!important;
-  background-color:transparent!important;
-  background-image:none!important;
-  border:0!important;
-  border-color:transparent!important;
-  border-radius:0!important;
-  outline:0!important;
-  box-shadow:none!important;
-  -webkit-backdrop-filter:none!important;
-  backdrop-filter:none!important;
-  filter:none!important;
-}
-#accDlg #accBody .account-pages:has(> #accountPage-overview:not([hidden]))::before,
-#accDlg #accBody .account-pages:has(> #accountPage-overview:not([hidden]))::after,
-#accDlg #accBody #accountPage-overview::before,
-#accDlg #accBody #accountPage-overview::after{
-  content:none!important;
-  display:none!important;
-}
-</style>
-
-
-<style id="account-chauffeur-flat-black-layout">
-/* Chauffeur bookings: restore the flat black/champagne account theme and remove glass layers. */
-#accDlg #accBody .account-chauffeur-bookings-page,
-#accDlg #accBody .account-chauffeur-bookings-page>.account-tools,
-#accDlg #accBody .account-chauffeur-bookings-page .account-activity-page-head,
-#accDlg #accBody #myChauffeurBookings{
-  background:transparent!important;background-color:transparent!important;background-image:none!important;
-  border:0!important;border-radius:0!important;box-shadow:none!important;filter:none!important;
-  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
-}
-#accDlg #accBody .account-chauffeur-bookings-page>.account-tools{padding:0!important;margin:0!important}
-#accDlg #accBody .account-chauffeur-bookings-page .account-activity-page-head{
-  display:flex!important;align-items:center!important;justify-content:space-between!important;
-  gap:16px!important;padding:0 0 16px!important;margin:0 0 16px!important;
-  border-bottom:1px solid #28231a!important;
-}
-#accDlg #accBody .account-chauffeur-bookings-page .account-booking-row{
-  display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;align-items:start!important;
-  gap:18px!important;width:100%!important;box-sizing:border-box!important;
-  padding:18px 20px!important;margin:0 0 12px!important;
-  color:#f4f0e7!important;background:#151515!important;background-color:#151515!important;
-  background-image:none!important;border:0!important;border-left:2px solid #c9a66b!important;
-  border-radius:8px!important;box-shadow:none!important;filter:none!important;
-  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;transform:none!important;
-}
-#accDlg #accBody .account-chauffeur-bookings-page .account-booking-row>div{
-  display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:7px!important;
-  min-width:0!important;width:100%!important;line-height:1.55!important;
-}
-#accDlg #accBody .account-chauffeur-bookings-page .account-booking-row>div>b{
-  display:block!important;margin:0 0 3px!important;color:#e3cc9d!important;font-size:14px!important;
-}
-#accDlg #accBody .account-chauffeur-bookings-page .account-booking-row>div>.meta{
-  display:block!important;min-width:0!important;margin:0!important;overflow-wrap:anywhere!important;
-  color:#c2bbae!important;font-size:11px!important;line-height:1.55!important;
-}
-#accDlg #accBody .account-chauffeur-bookings-page .account-booking-row .account-cancellation-state{
-  display:grid!important;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),max-content))!important;
-  align-items:center!important;gap:7px 12px!important;margin-top:9px!important;padding-top:12px!important;
-  border-top:1px solid #302b22!important;
-}
-#accDlg #accBody .account-chauffeur-bookings-page .account-booking-row .account-cancellation-state>.meta{
-  display:block!important
-}
-#accDlg #accBody .account-chauffeur-bookings-page .account-booking-row .account-booking-actions{
-  grid-column:1/-1!important;margin:3px 0 0!important;
-}
-#accDlg #accBody .account-chauffeur-bookings-page .account-booking-row>.st{
-  display:inline-flex!important;align-items:center!important;justify-content:center!important;
-  width:auto!important;min-width:0!important;max-width:190px!important;min-height:28px!important;
-  padding:7px 10px!important;margin:0!important;border:1px solid #393020!important;
-  border-radius:6px!important;background:#211c13!important;color:#e3cc9d!important;
-  font-size:10px!important;line-height:1.35!important;text-align:center!important;white-space:normal!important;
-  box-shadow:none!important;transform:none!important;
-}
-#accDlg #accBody .account-chauffeur-bookings-page .account-chauffeur-toolbar{
-  display:flex!important;align-items:center!important;justify-content:space-between!important;
-  gap:12px!important;margin:0 0 14px!important;padding:0!important;
-}
-#accDlg #accBody .account-chauffeur-bookings-page .account-booking-row:hover{
-  background:#1b1812!important;border-left-color:#e3cc9d!important;box-shadow:none!important;transform:none!important;
-}
-@media(max-width:680px){
-  #accDlg #accBody .account-chauffeur-bookings-page .account-booking-row{grid-template-columns:minmax(0,1fr)!important;padding:15px!important;gap:10px!important}
-  #accDlg #accBody .account-chauffeur-bookings-page .account-booking-row>.st{justify-self:start!important;grid-row:1}
-  #accDlg #accBody .account-chauffeur-bookings-page .account-activity-page-head{align-items:flex-start!important;flex-direction:column!important}
-}
-</style>
-
 </body>
-
 </html>
-
-
-
-
-
-
-<style id="mobile-contact-nav-alignment-final">
-@media(max-width:760px){
-  body>header #nav{align-items:stretch!important}
-  body>header #nav>.nav-contact,
-  body>header #nav>button.nav-contact{
-    display:flex!important;align-items:center!important;justify-content:flex-start!important;
-    box-sizing:border-box!important;width:100%!important;min-height:42px!important;
-    margin:0!important;padding:12px 14px!important;
-    font:inherit!important;font-size:13px!important;line-height:1.25!important;
-    text-align:left!important;vertical-align:middle!important;white-space:normal!important;
-    transform:none!important;
-  }
-}
-</style>
-
-<style id="account-background-and-profile-spacing-final">
-/* Account shell: remove the sitewide glass slab from the scrolling page canvas.
-   Individual dashboard cards keep their own graphite surfaces. */
-#accDlg #accBody .account-pages,
-#accDlg #accBody .account-pages::before,
-#accDlg #accBody .account-pages::after,
-#accDlg #accBody .account-page,
-#accDlg #accBody .account-page::before,
-#accDlg #accBody .account-page::after{
-  background:transparent!important;
-  background-color:transparent!important;
-  background-image:none!important;
-  border:0!important;
-  border-color:transparent!important;
-  border-radius:0!important;
-  outline:0!important;
-  box-shadow:none!important;
-  -webkit-backdrop-filter:none!important;
-  backdrop-filter:none!important;
-  filter:none!important;
-}
-#accDlg #accBody .account-pages::before,
-#accDlg #accBody .account-pages::after,
-#accDlg #accBody .account-page::before,
-#accDlg #accBody .account-page::after{
-  content:none!important;
-  display:none!important;
-}
-/* Profile: give headings, section copy and controls a consistent inset. */
-#accDlg #accBody #accountPage-settings{
-  box-sizing:border-box!important;
-  width:100%!important;
-  min-width:0!important;
-  padding:18px 20px 30px!important;
-}
-#accDlg #accBody #accountPage-settings>h3{
-  margin:2px 0 18px!important;
-  padding:0 2px!important;
-}
-#accDlg #accBody #accountPage-settings>.account-settings-inner{
-  box-sizing:border-box!important;
-  width:100%!important;
-  min-width:0!important;
-  padding:0!important;
-  gap:16px!important;
-}
-#accDlg #accBody #accountPage-settings .settings-section{
-  box-sizing:border-box!important;
-  width:100%!important;
-  min-width:0!important;
-  margin:0 0 18px!important;
-  padding:18px 20px 22px!important;
-  border:0!important;
-  border-radius:14px!important;
-  background:transparent!important;
-  box-shadow:none!important;
-}
-#accDlg #accBody #accountPage-settings .settings-section>h4,
-#accDlg #accBody #accountPage-settings .settings-section>p{
-  margin-left:0!important;
-  margin-right:0!important;
-}
-#accDlg #accBody #accountPage-settings .profile-card{
-  box-sizing:border-box!important;
-  width:100%!important;
-  min-width:0!important;
-  margin:14px 0 20px!important;
-  padding:16px!important;
-  border:1px solid rgba(255,255,255,.075)!important;
-  border-radius:13px!important;
-  background:rgba(18,22,25,.30)!important;
-  box-shadow:none!important;
-}
-#accDlg #accBody #accountPage-settings .profile-grid,
-#accDlg #accBody #accountPage-settings .dealer-account-editor,
-#accDlg #accBody #accountPage-settings .profile-actions,
-#accDlg #accBody #accountPage-settings .dealer-save-row{
-  box-sizing:border-box!important;
-  width:100%!important;
-  min-width:0!important;
-}
-#accDlg #accBody #accountPage-settings .dealer-account-editor{
-  margin:18px 0!important;
-  padding:18px!important;
-  border:1px solid rgba(255,255,255,.075)!important;
-  border-radius:14px!important;
-  background:rgba(18,22,25,.26)!important;
-  box-shadow:none!important;
-}
-#accDlg #accBody #accountPage-settings .dealer-editor-section{
-  padding:16px 0 6px!important;
-}
-@media(max-width:760px){
-  #accDlg #accBody #accountPage-settings{padding:14px 12px 24px!important}
-  #accDlg #accBody #accountPage-settings .settings-section{padding:15px 14px 18px!important}
-  #accDlg #accBody #accountPage-settings .profile-card{padding:13px!important}
-  #accDlg #accBody #accountPage-settings .dealer-account-editor{padding:14px!important}
-}
-</style>
-
-<style id="marketing-background-and-content-spacing-final">
-/* Marketing dashboard: transparent page canvas, with no shared glass slab.
-   Promotion packages, payment controls and history items retain their own surfaces. */
-#accDlg #accBody .account-pages:has(> #accountPage-promotions:not([hidden])),
-#accDlg #accBody .account-pages:has(> #accountPage-promotions:not([hidden]))::before,
-#accDlg #accBody .account-pages:has(> #accountPage-promotions:not([hidden]))::after,
-#accDlg #accBody #accountPage-promotions,
-#accDlg #accBody #accountPage-promotions::before,
-#accDlg #accBody #accountPage-promotions::after,
-#accDlg #accBody #accountPage-promotions .account-promotions-page,
-#accDlg #accBody #accountPage-promotions .account-promotions-page::before,
-#accDlg #accBody #accountPage-promotions .account-promotions-page::after,
-#accDlg #accBody #accountPage-promotions>.account-tools,
-#accDlg #accBody #accountPage-promotions>.account-tools::before,
-#accDlg #accBody #accountPage-promotions>.account-tools::after{
-  background:transparent!important;
-  background-color:transparent!important;
-  background-image:none!important;
-  border:0!important;
-  border-color:transparent!important;
-  border-radius:0!important;
-  outline:0!important;
-  box-shadow:none!important;
-  -webkit-backdrop-filter:none!important;
-  backdrop-filter:none!important;
-  filter:none!important;
-}
-#accDlg #accBody .account-pages:has(> #accountPage-promotions:not([hidden]))::before,
-#accDlg #accBody .account-pages:has(> #accountPage-promotions:not([hidden]))::after,
-#accDlg #accBody #accountPage-promotions::before,
-#accDlg #accBody #accountPage-promotions::after,
-#accDlg #accBody #accountPage-promotions .account-promotions-page::before,
-#accDlg #accBody #accountPage-promotions .account-promotions-page::after,
-#accDlg #accBody #accountPage-promotions>.account-tools::before,
-#accDlg #accBody #accountPage-promotions>.account-tools::after{
-  content:none!important;display:none!important;
-}
-#accDlg #accBody #accountPage-promotions{
-  box-sizing:border-box!important;width:100%!important;min-width:0!important;
-  padding:0!important;
-}
-#accDlg #accBody #accountPage-promotions>.account-tools,
-#accDlg #accBody #accountPage-promotions .account-promotions-page>.account-tools,
-#accDlg #accBody .account-page.account-promotions-page>.account-tools{
-  box-sizing:border-box!important;width:100%!important;min-width:0!important;
-  margin:0 0 20px!important;padding:24px 30px 28px!important;
-  text-align:left!important;
-}
-#accDlg #accBody #accountPage-promotions .account-tools>h2,
-#accDlg #accBody #accountPage-promotions .account-tools>h3,
-#accDlg #accBody #accountPage-promotions .account-tools>h4,
-#accDlg #accBody #accountPage-promotions .account-tools>p,
-#accDlg #accBody #accountPage-promotions .account-tools>label{
-  box-sizing:border-box!important;max-width:100%!important;
-  margin-left:0!important;margin-right:0!important;
-  padding-left:0!important;padding-right:0!important;
-}
-#accDlg #accBody #accountPage-promotions .account-tools>*{
-  min-width:0!important;
-}
-@media(max-width:760px){
-  #accDlg #accBody #accountPage-promotions>.account-tools,
-  #accDlg #accBody #accountPage-promotions .account-promotions-page>.account-tools,
-  #accDlg #accBody .account-page.account-promotions-page>.account-tools{
-    padding:18px 18px 22px!important;
-  }
-}
-</style>
-
-<style id="marketing-reminder-grid-alignment">
-/* Align every listing reminder into the same two-column grid. */
-#accDlg #accBody #accountPage-promotions .marketing-reminder-row{
-  display:grid!important;
-  grid-template-columns:minmax(0,1fr) minmax(170px,auto)!important;
-  align-items:center!important;
-  column-gap:20px!important;
-  row-gap:8px!important;
-  width:100%!important;
-  box-sizing:border-box!important;
-  padding:14px 0!important;
-  margin:0!important;
-  border:0!important;
-  border-bottom:1px solid rgba(255,255,255,.09)!important;
-  border-radius:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
-}
-#accDlg #accBody #accountPage-promotions .marketing-reminder-row .seller-listing-main{
-  display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;
-  align-items:center!important;gap:12px!important;min-width:0!important;
-}
-#accDlg #accBody #accountPage-promotions .marketing-reminder-row .seller-listing-main strong{
-  min-width:0!important;overflow-wrap:anywhere!important;
-}
-#accDlg #accBody #accountPage-promotions .marketing-reminder-row .seller-listing-main .meta{
-  margin:0!important;white-space:nowrap!important;text-align:right!important;
-}
-#accDlg #accBody #accountPage-promotions .marketing-reminder-row .seller-listing-actions{
-  display:flex!important;justify-content:flex-end!important;align-items:center!important;
-  min-width:170px!important;margin:0!important;
-}
-#accDlg #accBody #accountPage-promotions .marketing-reminder-row .seller-listing-actions .btn{
-  margin:0!important;white-space:nowrap!important;
-}
-#accDlg #accBody #accountPage-promotions .marketing-reminder-row:last-of-type{border-bottom:0!important}
-@media(max-width:760px){
-  #accDlg #accBody #accountPage-promotions .marketing-reminder-row{
-    grid-template-columns:minmax(0,1fr)!important;gap:10px!important;padding:13px 0!important;
-  }
-  #accDlg #accBody #accountPage-promotions .marketing-reminder-row .seller-listing-main{
-    grid-template-columns:minmax(0,1fr) auto!important;gap:8px!important;
-  }
-  #accDlg #accBody #accountPage-promotions .marketing-reminder-row .seller-listing-main .meta{
-    white-space:normal!important;
-  }
-  #accDlg #accBody #accountPage-promotions .marketing-reminder-row .seller-listing-actions{
-    min-width:0!important;justify-content:flex-start!important;
-  }
-}
-@media(max-width:420px){
-  #accDlg #accBody #accountPage-promotions .marketing-reminder-row .seller-listing-main{
-    grid-template-columns:minmax(0,1fr)!important;gap:4px!important;
-  }
-  #accDlg #accBody #accountPage-promotions .marketing-reminder-row .seller-listing-main .meta{text-align:left!important}
-}
-</style>
-
-<style id="account-workspace-chauffeur-baseline-final">
-/* Match every account workspace section to the established Chauffeur Bookings layout.
-   Keep the page canvas flat; use charcoal rows/cards with a champagne left accent. */
-#accDlg #accBody .account-pages,
-#accDlg #accBody .account-page,
-#accDlg #accBody .account-page > .account-tools,
-#accDlg #accBody .account-page > .account-full-activity,
-#accDlg #accBody .account-page > .account-settings-inner,
-#accDlg #accBody .account-page > .account-promotions-page,
-#accDlg #accBody .account-page > .account-buyer-workspace,
-#accDlg #accBody .account-page .account-tools,
-#accDlg #accBody .account-page .account-full-activity,
-#accDlg #accBody .account-page .account-settings-inner{
-  box-sizing:border-box!important;min-width:0!important;
-  color:#f4f0e7!important;background:transparent!important;background-color:transparent!important;
-  background-image:none!important;border:0!important;border-radius:0!important;
-  box-shadow:none!important;filter:none!important;outline:0!important;
-  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
-}
-#accDlg #accBody .account-page > .account-tools,
-#accDlg #accBody .account-page > .account-full-activity,
-#accDlg #accBody .account-page > .account-settings-inner,
-#accDlg #accBody .account-page > .account-promotions-page,
-#accDlg #accBody .account-page > .account-buyer-workspace{
-  width:100%!important;padding:0!important;margin:0!important;
-}
-#accDlg #accBody .account-page::before,
-#accDlg #accBody .account-page::after,
-#accDlg #accBody .account-tools::before,
-#accDlg #accBody .account-tools::after,
-#accDlg #accBody .account-full-activity::before,
-#accDlg #accBody .account-full-activity::after,
-#accDlg #accBody .settings-section::before,
-#accDlg #accBody .settings-section::after{
-  content:none!important;display:none!important;
-}
-/* Section headings follow Chauffeur Bookings: clean title and a fine divider. */
-#accDlg #accBody .account-page > h2,
-#accDlg #accBody .account-page > h3,
-#accDlg #accBody .account-page > .account-tools > h2,
-#accDlg #accBody .account-page > .account-tools > h3,
-#accDlg #accBody .account-page > .account-tools > h4,
-#accDlg #accBody .account-activity-page-head{
-  box-sizing:border-box!important;width:100%!important;min-width:0!important;
-  color:#f4f0e7!important;background:transparent!important;background-image:none!important;
-  border:0!important;border-bottom:1px solid #28231a!important;border-radius:0!important;
-  box-shadow:none!important;filter:none!important;
-  padding:0 0 16px!important;margin:0 0 16px!important;
-}
-#accDlg #accBody .account-page > h2,
-#accDlg #accBody .account-page > h3,
-#accDlg #accBody .account-page > .account-tools > h2,
-#accDlg #accBody .account-page > .account-tools > h3,
-#accDlg #accBody .account-page > .account-tools > h4{
-  line-height:1.4!important;
-}
-#accDlg #accBody .account-activity-page-head>div{padding:0!important;margin:0!important}
-#accDlg #accBody .account-activity-page-head .account-eyebrow{
-  color:#e3cc9d!important;margin:0 0 7px!important;padding:0!important;
-}
-#accDlg #accBody .account-activity-page-head h2,
-#accDlg #accBody .account-activity-page-head h3,
-#accDlg #accBody .account-activity-page-head p,
-#accDlg #accBody .account-activity-page-head .meta{
-  margin-top:0!important;padding:0!important;
-}
-#accDlg #accBody :is(.account-booking-row,.account-activity-item,.account-saved-vehicle,
-.seller-listing,.seller-garage-card,.seller-summary-card,.workspace-v2-metric,
-.workspace-v2-card,.promotion-package,.promo-package,.promotion-history-item,
-.profile-card,.settings-section,.dealer-overview-card,.account-stat-card,
-.account-overview-panel,.account-buyer-workspace,.account-activity-card){
-  box-sizing:border-box!important;min-width:0!important;
-  color:#f4f0e7!important;background:#151515!important;background-color:#151515!important;
-  background-image:none!important;border:0!important;border-left:2px solid #c9a66b!important;
-  border-radius:8px!important;box-shadow:none!important;filter:none!important;
-  outline:0!important;transform:none!important;
-  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
-}
-#accDlg #accBody :is(.account-booking-row,.account-activity-item,.account-saved-vehicle,
-.seller-listing,.seller-garage-card,.seller-summary-card,.workspace-v2-metric,
-.workspace-v2-card,.promotion-package,.promo-package,.promotion-history-item,
-.profile-card,.settings-section,.dealer-overview-card,.account-stat-card,
-.account-overview-panel,.account-activity-card){
-  padding:18px 20px!important;margin:0 0 12px!important;
-}
-#accDlg #accBody .workspace-v2-hero{
-  display:flex!important;align-items:center!important;justify-content:space-between!important;
-  flex-wrap:wrap!important;gap:16px!important;padding:0 0 18px!important;margin:0 0 18px!important;
-  color:#f4f0e7!important;background:transparent!important;border:0!important;
-  border-bottom:1px solid #28231a!important;border-radius:0!important;box-shadow:none!important;
-}
-#accDlg #accBody .workspace-v2-metric-grid,
-#accDlg #accBody .workspace-v2-card-grid{gap:12px!important}
-#accDlg #accBody .workspace-v2-metric{min-height:104px!important;text-align:left!important}
-#accDlg #accBody .workspace-v2-metric strong,
-#accDlg #accBody .workspace-v2-card h3,
-#accDlg #accBody .workspace-v2-card h4{color:#f4f0e7!important}
-#accDlg #accBody :is(.workspace-v2-kicker,.workspace-v2-metric-top,.workspace-v2-card-heading,
-.account-eyebrow,.seller-garage-eyebrow){color:#e3cc9d!important}
-#accDlg #accBody :is(.workspace-v2-shortcuts>button,.workspace-v2-primary-actions button,
-.workspace-v2-card-heading>button){
-  box-sizing:border-box!important;min-height:38px!important;padding:9px 14px!important;
-  color:#e3cc9d!important;background:#211c13!important;border:1px solid #40331e!important;
-  border-radius:7px!important;box-shadow:none!important;
-}
-#accDlg #accBody .account-page :is(p,.meta,small,.muted,.description,.subtitle){
-  color:#c2bbae!important;line-height:1.6!important;
-}
-#accDlg #accBody .account-page :is(label,.form-label){color:#e3cc9d!important}
-#accDlg #accBody .account-page :is(input,select,textarea){
-  box-sizing:border-box!important;max-width:100%!important;padding:11px 13px!important;
-  color:#f4f0e7!important;background:#0b0b0b!important;border:1px solid #393124!important;
-  border-radius:7px!important;box-shadow:none!important;
-}
-#accDlg #accBody .account-page :is(button,.btn,a.btn,[role="button"]){
-  box-sizing:border-box!important;min-height:38px!important;padding:9px 14px!important;
-  margin:2px!important;border-radius:7px!important;box-shadow:none!important;
-}
-#accDlg #accBody .account-page :is(button,.btn,a.btn):not(.workspace-v2-metric){
-  max-width:100%!important;
-}
-#accDlg #accBody .account-page :is(button,.btn,a.btn):hover{
-  color:#e3cc9d!important;background-color:#211c13!important;
-  border-color:#55452a!important;box-shadow:none!important;transform:none!important;
-}
-#accDlg #accBody .account-page :is(button,.btn,a.btn):focus-visible{
-  outline:2px solid #c9a66b!important;outline-offset:2px!important;
-}
-/* Profile and settings: retain functional tabs while removing the old glass-card nesting. */
-#accDlg #accBody #accountPage-settings{padding:0!important}
-#accDlg #accBody #accountPage-settings>.account-settings-inner{display:grid!important;gap:14px!important}
-#accDlg #accBody #accountPage-settings .account-settings-tabs{
-  display:flex!important;flex-wrap:wrap!important;gap:8px!important;
-  padding:0 0 14px!important;margin:0 0 16px!important;border-bottom:1px solid #28231a!important;
-}
-#accDlg #accBody #accountPage-settings .settings-section{
-  width:100%!important;min-width:0!important;margin:0 0 12px!important;padding:18px 20px!important;
-  color:#f4f0e7!important;background:#151515!important;border:0!important;
-  border-left:2px solid #c9a66b!important;border-radius:8px!important;box-shadow:none!important;
-}
-#accDlg #accBody #accountPage-settings .settings-section .account-tools{
-  padding:0!important;margin:0!important;background:transparent!important;border:0!important;
-}
-#accDlg #accBody #accountPage-settings .profile-card{
-  background:#151515!important;border:0!important;border-left:2px solid #c9a66b!important;
-  border-radius:8px!important;box-shadow:none!important;padding:16px!important;
-}
-#accDlg #accBody .account-page :is(.account-activity-list,.account-bookings-grid,
-.account-saved-vehicles-grid,.account-promotions-grid){display:grid!important;gap:12px!important}
-@media(max-width:760px){
-  #accDlg #accBody .account-page > .account-tools,
-  #accDlg #accBody .account-page > .account-full-activity{padding:0!important}
-  #accDlg #accBody :is(.account-booking-row,.account-activity-item,.account-saved-vehicle,
-  .seller-listing,.seller-garage-card,.seller-summary-card,.workspace-v2-metric,
-  .workspace-v2-card,.promotion-package,.promo-package,.promotion-history-item,
-  .profile-card,.settings-section,.dealer-overview-card,.account-stat-card,
-  .account-overview-panel,.account-activity-card){padding:14px!important}
-  #accDlg #accBody .workspace-v2-hero{align-items:flex-start!important}
-  #accDlg #accBody #accountPage-settings .settings-section{padding:14px!important}
-}
-</style>
