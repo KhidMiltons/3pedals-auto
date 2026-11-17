@@ -3,7 +3,6 @@
 <head>
 <script src="/consent.js?v=20261107-1"></script>
 <meta charset="utf-8">
-<base target="_top">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
 <link rel="stylesheet" href="/account-panel.css?v=20261118-transparent-vehicle-cards">
@@ -2737,7 +2736,7 @@ Vehicle link: ${inventoryUrl}`;
   <div style="display:flex;gap:8px;flex-wrap:wrap">${wa}<button class="btn alt" id="insp">Book inspection at the garage</button><button class="btn ghost" id="cls">Close</button></div></div>`;
   let photoIndex=0;const showPhoto=index=>{photoIndex=(index+ph.length)%ph.length;const image=$("mainImg"),counter=d.querySelector(".vehicle-count");if(image){image.src=ph[photoIndex];image.alt=`${c.make} ${c.model} — photo ${photoIndex+1} of ${ph.length}`}if(counter)counter.textContent=`${photoIndex+1} / ${ph.length}`;d.querySelectorAll(".thumbs button").forEach((button,i)=>button.setAttribute("aria-current",String(i===photoIndex)))};if(ph.length>1)d.querySelector(".gal").insertAdjacentHTML("beforeend",`<span class="vehicle-count">1 / ${ph.length}</span><button class="vehicle-step vehicle-prev" type="button" data-vehicle-step="-1" aria-label="Previous photo">‹</button><button class="vehicle-step vehicle-next" type="button" data-vehicle-step="1" aria-label="Next photo">›</button>`);d.showModal();d.querySelectorAll(".thumbs button").forEach(button=>button.onclick=()=>showPhoto(+button.dataset.i));d.querySelectorAll("[data-vehicle-step]").forEach(button=>button.onclick=()=>showPhoto(photoIndex+Number(button.dataset.vehicleStep)));
   $("cls").onclick=()=>d.close();
-  $("insp").onclick=()=>{const q="service="+encodeURIComponent("Pre-purchase inspection")+"&car="+encodeURIComponent(`${c.year} ${c.make} ${c.model}`);(window.top||window).location.href=GARAGE_URL+(GARAGE_URL.includes("?")?"&":"?")+q};
+  $("insp").onclick=()=>{const q="service="+encodeURIComponent("Pre-purchase inspection")+"&car="+encodeURIComponent(`${c.year} ${c.make} ${c.model}`);window.location.href=GARAGE_URL+(GARAGE_URL.includes("?")?"&":"?")+q};
 }
 $("dlg").addEventListener("click",e=>{if(e.target===$("dlg"))$("dlg").close()});
 

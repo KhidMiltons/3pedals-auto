@@ -1,0 +1,16 @@
+{
+  "name": "3pedals-auto",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "3 Pedals Auto KE static web marketplace served via Express",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
+    "build": "node --check server.js",
+    "lint": "node --check server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

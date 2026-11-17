@@ -3,7 +3,6 @@
 <head>
 <script src="/consent.js?v=20261107-1"></script>
 <meta charset="utf-8">
-<base target="_top">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
 <link rel="preload" as="image" href="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72" fetchpriority="high">
@@ -730,7 +729,7 @@ function refreshAccount(){
   if(me&&profile){if(!$('rName').value)$('rName').value=profile.name||"";if(!$('rPhone').value)$('rPhone').value=profile.phone||""}
   renderMine();
 }
-$("accountOpen").onclick=async()=>{if(me&&sb)await sb.auth.signOut();else(window.top||window).location.href=authUrl("login")};
+$("accountOpen").onclick=async()=>{if(me&&sb)await sb.auth.signOut();else window.location.href=authUrl("login")};
 const services=[
  ["Oil and filter change",3500,"45 min"],["Full service",8500,"3 hrs"],["Brake pads and discs check",6000,"2 hrs"],
  ["Wheel alignment and balancing",3000,"1 hr"],["Computer diagnostics",2500,"1 hr"],["Pre-purchase inspection",5000,"2 hrs"]
@@ -762,7 +761,7 @@ $("inspTile").onclick=()=>{show("book");$("bSvc").value="Pre-purchase inspection
 
 // Deep links open booking, while Back first returns to the Garage home section.
 try{
-  const current=new URL((window.top||window).location.href),sv=current.searchParams.get("service"),car=current.searchParams.get("car"),requested=current.searchParams.get("section")==="book"||!!sv||!!car,route=current.hash.slice(1);
+  const current=new URL(window.location.href),sv=current.searchParams.get("service"),car=current.searchParams.get("car"),requested=current.searchParams.get("section")==="book"||!!sv||!!car,route=current.hash.slice(1);
   if(requested){const target=new URL(current);target.searchParams.delete("section");const base=new URL(target);base.searchParams.delete("service");base.searchParams.delete("car");base.hash="";history.replaceState({garageSection:"home"},"",base.pathname+base.search);if(sv&&services.some(s=>s[0]===sv))$("bSvc").value=sv;if(car)$("bCar").value=car.slice(0,120);const query=new URLSearchParams();if(sv)query.set("service",sv);if(car)query.set("car",car);const suffix=query.toString()?`?${query}`:"";history.pushState({garageSection:"book"},"",location.pathname+suffix+"#book");show("book",{updateUrl:false})}
   else if(["book","roadside","mechanics"].includes(route)){history.replaceState({garageSection:route},"",location.href);show(route,{updateUrl:false,scroll:false})}
   else history.replaceState({garageSection:"home"},"",location.href);
