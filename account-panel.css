@@ -3218,3 +3218,28 @@
 #accDlg #accBody #accountPage-dashboard>.account-tools:nth-child(2) .seller-listing :is(
   .seller-listing-main,.seller-garage-content,.seller-garage-meta,.seller-garage-promotion
 )::after{content:none!important;display:none!important}
+
+
+/* My Listings: remove any remaining white or translucent fills from nested elements. */
+#accDlg #accBody #accountPage-dashboard>.account-tools:nth-child(2),
+#accDlg #accBody #accountPage-dashboard>.account-tools:nth-child(2) *{
+  background-color:transparent!important;
+  background-image:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+  box-shadow:none!important;
+}
+#accDlg #accBody #accountPage-dashboard>.account-tools:nth-child(2) .seller-listing{
+  background:#151515!important;background-color:#151515!important;
+}
+#accDlg #accBody #accountPage-dashboard>.account-tools:nth-child(2) .seller-garage-media,
+#accDlg #accBody #accountPage-dashboard>.account-tools:nth-child(2) .seller-listing-photo,
+#accDlg #accBody #accountPage-dashboard>.account-tools:nth-child(2) .seller-garage-photo-placeholder{
+  background-color:#0b0b0b!important;
+}
+#accDlg #accBody #accountPage-dashboard>.account-tools:nth-child(2) .seller-garage-status{
+  background:#211c13!important;background-color:#211c13!important;color:#e3cc9d!important;
+}
+#accDlg #accBody #accountPage-dashboard>.account-tools:nth-child(2) .seller-listing-actions .btn{
+  background:#211c13!important;background-color:#211c13!important;color:#e3cc9d!important;
+}
