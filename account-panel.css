@@ -3175,3 +3175,46 @@
   #accDlg #accBody #accountPage-buying .account-activity-page-head{padding:15px!important}
   #accDlg #accBody #accountPage-buying .account-saved-vehicles-grid :is(.account-saved-vehicle,.saved-vehicle-card){padding:14px!important}
 }
+
+
+/* My Listings: completely flatten legacy glass wrappers and keep only solid listing rows. */
+#accDlg #accBody #accountPage-dashboard :is(.account-tools,.seller-dashboard,.seller-listings):has(#sellerListings),
+#accDlg #accBody #accountPage-dashboard>.account-tools:nth-child(2),
+#accDlg #accBody #accountPage-dashboard>.account-tools:nth-child(2)>:not(.seller-listing){
+  background:transparent!important;background-color:transparent!important;background-image:none!important;
+  border:0!important;border-color:transparent!important;border-radius:0!important;
+  box-shadow:none!important;filter:none!important;outline:0!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+#accDlg #accBody #accountPage-dashboard :is(.account-tools,.seller-dashboard,.seller-listings):has(#sellerListings) *,
+#accDlg #accBody #accountPage-dashboard>.account-tools:nth-child(2) *{
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+  filter:none!important;box-shadow:none!important;
+}
+#accDlg #accBody #accountPage-dashboard :is(.account-tools,.seller-dashboard,.seller-listings):has(#sellerListings)::before,
+#accDlg #accBody #accountPage-dashboard :is(.account-tools,.seller-dashboard,.seller-listings):has(#sellerListings)::after,
+#accDlg #accBody #accountPage-dashboard>.account-tools:nth-child(2)::before,
+#accDlg #accBody #accountPage-dashboard>.account-tools:nth-child(2)::after{
+  content:none!important;display:none!important;
+}
+#accDlg #accBody #accountPage-dashboard>.account-tools:nth-child(2) .seller-listing{
+  background:#151515!important;background-color:#151515!important;background-image:none!important;
+  border:0!important;border-left:2px solid #c9a66b!important;border-radius:8px!important;
+  padding:16px!important;margin:0 0 12px!important;
+  box-shadow:none!important;filter:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+#accDlg #accBody #accountPage-dashboard>.account-tools:nth-child(2) .seller-listing :is(
+  .seller-listing-main,.seller-garage-content,.seller-garage-meta,.seller-garage-promotion
+){
+  background:transparent!important;background-color:transparent!important;background-image:none!important;
+  border:0!important;border-radius:0!important;padding:0!important;margin:0!important;
+  box-shadow:none!important;filter:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+#accDlg #accBody #accountPage-dashboard>.account-tools:nth-child(2) .seller-listing :is(
+  .seller-listing-main,.seller-garage-content,.seller-garage-meta,.seller-garage-promotion
+)::before,
+#accDlg #accBody #accountPage-dashboard>.account-tools:nth-child(2) .seller-listing :is(
+  .seller-listing-main,.seller-garage-content,.seller-garage-meta,.seller-garage-promotion
+)::after{content:none!important;display:none!important}
