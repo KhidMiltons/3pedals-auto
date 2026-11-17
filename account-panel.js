@@ -7,7 +7,8 @@
   if (mount.parentElement !== document.body) document.body.appendChild(mount);
   mount.innerHTML = `
     <dialog id="accDlg" class="account-dashboard-dialog" aria-label="3 Pedals Auto KE Glass Dashboard">
-      <nav id="accountMenu" class="account-sidebar" aria-label="Account navigation" hidden>
+      <div id="accountMenuBackdrop" class="account-menu-backdrop" aria-hidden="true"></div>
+      <nav id="accountMenu" class="account-sidebar" aria-label="Account navigation">
         <a class="account-sidebar-brand" href="/" aria-label="3 Pedals Auto KE home">
           <img src="favicon.svg" alt="">
           <span><strong>3 PEDALS</strong><small>AUTO KE · ACCOUNT</small></span>

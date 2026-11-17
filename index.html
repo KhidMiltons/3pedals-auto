@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>try{const t=localStorage.getItem("3pedals:theme");document.documentElement.setAttribute("data-theme",t==="light"?"light":"dark");document.documentElement.dataset.ux="1"}catch(_){document.documentElement.setAttribute("data-theme","dark");document.documentElement.dataset.ux="1"}</script>
 <script src="/consent.js?v=20261107-1"></script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -743,6 +744,7 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 <link rel="stylesheet" href="/dashboard-glass.css?v=20261107-account-dark-glass-v316">
 <link rel="stylesheet" href="/account-panel-premium.css?v=20261108-card-spacing-typography-11">
 <link rel="stylesheet" href="/index-theme.css?v=20261118-consolidated-1">
+<link rel="stylesheet" href="/site-ux.css?v=20261120">
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
@@ -1353,11 +1355,28 @@ async function changeProfilePhoto(file){
     me=au.data.user||me;profile={...(profile||{}),avatar_url:url};return true;
   }catch(e){err.textContent=e.message||"Could not upload that profile picture.";return false}
 }
-function positionAccountMenu(){const nav=$("accountMenu"),toggle=$("accMenuToggle");if(!nav||!toggle||nav.hidden||!nav.classList.contains("menu-open"))return;const b=toggle.getBoundingClientRect(),pad=12,width=Math.min(320,window.innerWidth-pad*2),left=Math.max(pad,Math.min(b.left,window.innerWidth-width-pad)),top=Math.min(window.innerHeight-180,b.bottom+8),available=Math.max(180,Math.min(window.innerHeight*.72,window.innerHeight-top-pad));nav.style.setProperty("position","fixed","important");nav.style.setProperty("inset","auto","important");nav.style.setProperty("left",`${left}px`,`important`);nav.style.setProperty("top",`${top}px`,`important`);nav.style.setProperty("width",`${width}px`,`important`);nav.style.setProperty("max-height",`${available}px`,`important`);nav.style.setProperty("overflow-y","auto","important");nav.style.setProperty("z-index","10000","important")}
-function clearAccountMenuPosition(nav){["display","position","inset","left","top","width","max-height","z-index"].forEach(property=>nav.style.removeProperty(property))}
-function closeAccountMenu(){const nav=$("accountMenu"),toggle=$("accMenuToggle");if(!nav)return;nav.classList.remove("menu-open");clearAccountMenuPosition(nav);const desktop=window.matchMedia("(min-width: 761px)").matches;nav.hidden=!desktop;if(desktop){nav.style.setProperty("display","flex","important");nav.style.setProperty("position","relative","important");nav.style.removeProperty("left");nav.style.removeProperty("top");nav.style.removeProperty("width");nav.style.removeProperty("max-height")}toggle?.setAttribute("aria-expanded","false");toggle?.setAttribute("aria-label","Open seller navigation")}
-let lastAccountMenuPointerToggle=0;window.toggleAccountMenu=function(event){event?.preventDefault();event?.stopPropagation();const nav=$("accountMenu"),toggle=$("accMenuToggle");if(!nav||!toggle)return;const open=toggle.getAttribute("aria-expanded")!=="true";if(open){nav.hidden=false;nav.removeAttribute("aria-hidden");nav.classList.add("menu-open");nav.style.setProperty("display","flex","important");nav.style.setProperty("visibility","visible","important");nav.style.setProperty("pointer-events","auto","important");toggle.setAttribute("aria-expanded","true");toggle.setAttribute("aria-label","Close seller navigation");requestAnimationFrame(()=>{positionAccountMenu();requestAnimationFrame(positionAccountMenu)})}else closeAccountMenu();if(!open)toggle.setAttribute("aria-expanded","false")};const accountMenuToggle=$("accMenuToggle");if(accountMenuToggle&&!accountMenuToggle.dataset.menuClickBound){accountMenuToggle.dataset.menuClickBound="1";accountMenuToggle.addEventListener("click",window.toggleAccountMenu)}
-window.addEventListener("resize",()=>positionAccountMenu());window.addEventListener("orientationchange",()=>setTimeout(positionAccountMenu,120));
+const accountMenuDesktopQuery=window.matchMedia("(min-width: 761px)");
+function syncAccountMenuState(open){
+  const nav=$("accountMenu"),toggle=$("accMenuToggle"),backdrop=$("accountMenuBackdrop");
+  if(!nav)return;
+  const mobileOpen=Boolean(open)&&!accountMenuDesktopQuery.matches;
+  nav.classList.toggle("menu-open",mobileOpen);
+  backdrop?.classList.toggle("is-open",mobileOpen);
+  toggle?.setAttribute("aria-expanded",String(mobileOpen));
+  toggle?.setAttribute("aria-label",mobileOpen?"Close seller navigation":"Open seller navigation");
+}
+function closeAccountMenu(){syncAccountMenuState(false)}
+window.toggleAccountMenu=function(event){
+  event?.preventDefault();
+  event?.stopPropagation();
+  const nav=$("accountMenu");
+  if(!nav||accountMenuDesktopQuery.matches)return;
+  syncAccountMenuState(!nav.classList.contains("menu-open"));
+};
+const accountMenuToggle=$("accMenuToggle");
+if(accountMenuToggle&&!accountMenuToggle.dataset.menuClickBound){accountMenuToggle.dataset.menuClickBound="1";accountMenuToggle.addEventListener("click",window.toggleAccountMenu)}
+$("accountMenuBackdrop")?.addEventListener("click",()=>closeAccountMenu());
+accountMenuDesktopQuery.addEventListener("change",ev=>{if(ev.matches)closeAccountMenu()});
 function showSellerAccountPage(selected,button,options={}){
   const pages=$("accBody").querySelector(".account-pages"),dashboard=pages?.querySelector("#accountPage-dashboard");if(!pages)return;
   if(selected==="buying"){pages.querySelectorAll(".account-page").forEach(page=>page.hidden=page.id!=="accountPage-buying");loadSavedVehicles().then(renderSavedVehicles)}
@@ -1935,7 +1954,7 @@ function showJournalShare(article){const url=journalPublicUrl(article),dialog=do
 function renderJournal(list){
   const box=$("journalGrid"),articles=(list||[]).filter(p=>p.type==="article"&&p.body);
   if(!articles.length){box.innerHTML='<div class="project-public-empty" style="grid-column:1/-1"><h3>The Journal is coming soon.</h3><p class="meta">Our first automotive stories will appear here once published by the 3 Pedals team.</p></div>';return}
-  box.innerHTML=articles.map(p=>{const photos=mediaItemsForProject(p).filter(m=>m.type!=="video"&&!String(m.mime||"").startsWith("video/")),cover=photos.find(m=>m.is_cover===true||m.cover===true)||photos[0],url=journalUrlFor(p);return `<article class="project-card project-featured journal-entry"><a class="journal-entry-media" href="${esc(url)}" aria-label="Read ${esc(p.title)}">${cover?`<img src="${esc(cover.url)}" alt="${esc(p.title)}" loading="lazy">`:'<span class="journal-entry-empty">3 Pedals Journal</span>'}</a><div class="project-body"><span class="project-kicker">${esc(p.category||"Automotive Journal")}</span><h2><a href="${esc(url)}">${esc(p.title)}</a></h2><div class="journal-meta"><span>3 PEDALS JOURNAL</span>${p.created_at?`<span>·</span><span>${esc(new Date(p.created_at).toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"}))}</span>`:""}${photos.length?`<span>·</span><span>${photos.length} photos</span>`:""}</div><p>${esc(p.description||"A story for people who love cars.")}</p><div class="journal-card-actions"><a class="journal-read" href="${esc(url)}">Read more</a><button class="journal-read journal-share" type="button" data-share-journal="${esc(p.id)}">Share story</button></div></div></article>`}).join("");
+  box.innerHTML=articles.map(p=>{const photos=mediaItemsForProject(p).filter(m=>m.type!=="video"&&!String(m.mime||"").startsWith("video/")),cover=photos.find(m=>m.is_cover===true||m.cover===true)||photos[0],url=journalUrlFor(p);const words=String([p.title,p.description,p.body].filter(Boolean).join(" ")).replace(/\[\[\s*photo\s*:\s*\d+\s*\]\]/gi," ").trim().split(/\s+/).filter(Boolean).length;const mins=Math.max(1,Math.ceil(words/200));return `<article class="project-card project-featured journal-entry"><a class="journal-entry-media" href="${esc(url)}" aria-label="Read ${esc(p.title)}">${cover?`<img src="${esc(cover.url)}" alt="${esc(p.title)}" loading="lazy">`:'<span class="journal-entry-empty">3 Pedals Journal</span>'}</a><div class="project-body"><span class="project-kicker">${esc(p.category||"Automotive Journal")}</span><h2><a href="${esc(url)}">${esc(p.title)}</a></h2><div class="journal-meta"><span>3 PEDALS JOURNAL</span>${p.created_at?`<span>·</span><span>${esc(new Date(p.created_at).toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"}))}</span>`:""}<span>·</span><span>${mins} min read</span>${photos.length?`<span>·</span><span>${photos.length} photos</span>`:""}</div><p>${esc(p.description||"A story for people who love cars.")}</p><div class="journal-card-actions"><a class="journal-read" href="${esc(url)}">Read more</a><button class="journal-read journal-share" type="button" data-share-journal="${esc(p.id)}">Share story</button></div></div></article>`}).join("");
   box.querySelectorAll("[data-share-journal]").forEach(button=>button.addEventListener("click",event=>{event.preventDefault();event.stopPropagation();const article=articles.find(item=>String(item.id)===String(button.dataset.shareJournal));if(article)showJournalShare(article)}));
 }
 function openJournalArticle(p){
@@ -2751,5 +2770,6 @@ loadSiteSettings();
   }
 })();
 </script>
+<script src="/site-ux.js?v=20261120"></script>
 </body>
 </html>

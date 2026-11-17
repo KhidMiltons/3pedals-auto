@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>try{const t=localStorage.getItem("3pedals:theme");document.documentElement.setAttribute("data-theme",t==="light"?"light":"dark");document.documentElement.dataset.ux="1"}catch(_){document.documentElement.setAttribute("data-theme","dark");document.documentElement.dataset.ux="1"}</script>
 <script src="/consent.js?v=20261107-1"></script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -323,6 +324,7 @@ html body>main.wrap{padding-top:48px!important}
 
 
 
+<link rel="stylesheet" href="/site-ux.css?v=20261120">
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
@@ -331,12 +333,14 @@ html body>main.wrap{padding-top:48px!important}
 
 <!-- End Google Tag Manager (noscript) -->
 
-<header><div class="wrap head"><a class="logo" href="/">3 Pedals Auto KE</a><nav class="vehicle-header-nav" aria-label="Main navigation"><a class="back" id="vehicleBackLink" href="/dealers.html">← Back to Dealers</a><a href="/">Home</a><a href="/inventory.html">Cars for Sale</a></nav></div></header>
+<header class="no-print"><div class="wrap head"><a class="logo" href="/">3 Pedals Auto KE</a><nav class="vehicle-header-nav" aria-label="Main navigation"><a class="back" id="vehicleBackLink" href="/dealers.html">← Back to Dealers</a><a href="/">Home</a><a href="/inventory.html">Cars for Sale</a></nav></div></header>
 <main class="wrap">
   <div id="app" class="state">Loading vehicle…</div>
 </main>
+<footer class="ux-site-footer no-print"><div class="wrap">3 Pedals Auto KE · Prices in KES.</div></footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
+<script src="/site-ux.js?v=20261120"></script>
 <script>
 const CFG=window.SB_CONFIG||{};
 const sb=(CFG.url&&!/^PASTE/.test(CFG.url)&&window.supabase)?window.supabase.createClient(CFG.url,CFG.key):null;
@@ -459,7 +463,134 @@ Vehicle link: ${pageUrl}`;
     mapUrl?`<a class="btn ghost" href="${esc(mapUrl)}" target="_blank" rel="noopener">📍 Get directions to this yard</a>`:'',
     yardLink
   ].join('');
-  $('app').outerHTML=`<div class="vehicle"><div>${gallery}</div><article class="info"><span class="eyebrow">3 Pedals Auto KE · Approved listing</span><h1>${esc(r.make)} ${esc(r.model)} <span class="year">${esc(r.year||'')}</span></h1><div class="price">KES ${fmt(r.price)}</div><span class="status">Available to enquire</span><div class="ref">Vehicle reference: <strong>${ref}</strong></div><div class="specs"><div class="spec"><span>Fuel:</span><strong>${esc(r.fuel||'Not specified')}</strong></div><div class="spec"><span>Mileage:</span><strong>${fmt(r.km)} km</strong></div><div class="spec"><span>Location:</span><strong>${esc(sellerLocation||'Not specified')}</strong></div><div class="spec"><span>Listing:</span><strong>${isYard?'Car yard':'Private seller'}</strong></div></div><details class="vehicle-features-disclosure"><summary><span>View more · Features &amp; condition</span><span class="feature-chevron" aria-hidden="true">⌄</span></summary><div class="vehicle-features-content"><p class="desc">${esc(r.description||'No description provided.')}</p><ul class="vehicle-feature-list"><li>Fully Loaded</li><li>7-Speed PDK Automatic Transmission</li><li>All-Wheel Drive (AWD)</li><li>Leather Seats</li><li>Panoramic Sunroof</li><li>Electric Seats</li><li>Push-to-Start</li><li>Keyless Entry</li><li>Multifunction Steering Wheel</li><li>Paddle Shifters</li><li>Sport Mode</li><li>Cruise Control</li><li>Dual-Zone Climate Control</li><li>Premium Touchscreen Infotainment System</li><li>Bluetooth Connectivity</li><li>Reverse Camera</li><li>Front and Rear Parking Sensors</li><li>Electric Tailgate</li><li>Power Windows</li><li>Electric Folding Mirrors</li><li>Alloy Rims</li><li>LED Headlights</li><li>Daytime Running Lights</li><li>ABS</li><li>Multiple Airbags</li><li>Porsche Stability Management</li><li>Traction Control</li><li>Premium Sporty Interior</li><li>Exceptional Handling</li><li>Powerful Performance with Luxury Comfort</li></ul><p class="vehicle-tradein-note">Trade-in options available. Financing can be arranged.</p></div></details><div class="seller"><h3>${isYard?"Car Yard":"Seller"}</h3><p><strong>${esc(sellerName)}</strong></p>${sellerBits}</div><div class="actions">${wa?`<a class="btn gold" href="https://wa.me/${esc(wa)}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">💬 WhatsApp Enquiry</a>`:''}${phone?`<a class="btn dark" href="tel:${esc(waNumber(phone))}">📞 Call Seller</a>`:''}<button class="btn ghost" type="button" id="saveVehicleBtn" aria-pressed="false" disabled>Checking saved status…</button><button class="btn ghost" type="button" id="shareBtn">↗ Share vehicle</button><button class="btn ghost" type="button" id="copyLinkBtn">⧉ Copy vehicle link</button><button class="btn ghost" type="button" id="copyBtn">Copy details</button><a class="btn ghost" href="/inventory">← More cars</a></div><span id="shareFeedback" class="meta" role="status" aria-live="polite"></span><div class="note">For your safety, inspect the vehicle in person, verify ownership documents and complete payment only after you are satisfied with the car and paperwork.</div></article></div>`;
+  const descText=String(r.description||'').trim();
+  const engineMatch=descText.match(/\b(\d+(?:\.\d+)?\s*(?:L|litre|cc)\b(?:\s*(?:turbo|hybrid|diesel|petrol|v6|v8))?|\d{3,4}\s*cc|V\d{1,2}|Boxer\s*\d?|Hybrid|Full\s*electric)/i);
+  const transMatch=descText.match(/\b(\d-speed\s+[a-z]+|PDK|DSG|CVT|Tiptronic|Automatic|Auto|Manual)\b/i);
+  const dutyMatch=descText.match(/\b(duty\s*paid|duty\s*free|kenya\s*used|locally\s*used|foreign\s*used|fresh\s*import|kenya\s*stock)\b/i);
+  const specEngine=engineMatch?engineMatch[0]:(r.fuel?`${r.fuel} powertrain`:'Verified on inspection');
+  const specTransmission=transMatch?transMatch[0]:'Automatic / Verify on viewing';
+  const specDuty=dutyMatch?dutyMatch[0]:(r.stock_mode==='import'?'Import / Duty clearance':'Duty Paid / Kenya Registered');
+
+  $('app').outerHTML=`<div class="vehicle"><div class="no-print">${gallery}</div><article class="info"><span class="eyebrow">3 Pedals Auto KE · Approved listing</span><h1>${esc(r.make)} ${esc(r.model)} <span class="year">${esc(r.year||'')}</span></h1><div class="price">KES ${fmt(r.price)}</div><span class="status">Available to enquire</span><div class="ref">Vehicle reference: <strong>${ref}</strong></div><div class="specs"><div class="spec"><span>Fuel:</span><strong>${esc(r.fuel||'Not specified')}</strong></div><div class="spec"><span>Mileage:</span><strong>${fmt(r.km)} km</strong></div><div class="spec"><span>Engine:</span><strong>${esc(specEngine)}</strong></div><div class="spec"><span>Transmission:</span><strong>${esc(specTransmission)}</strong></div><div class="spec"><span>Duty status:</span><strong>${esc(specDuty)}</strong></div><div class="spec"><span>Location:</span><strong>${esc(sellerLocation||'Not specified')}</strong></div><div class="spec"><span>Listing:</span><strong>${isYard?'Car yard':'Private seller'}</strong></div></div><details class="vehicle-features-disclosure"><summary><span>View more · Features &amp; condition</span><span class="feature-chevron" aria-hidden="true">⌄</span></summary><div class="vehicle-features-content"><p class="desc">${esc(r.description||'No description provided.')}</p><ul class="vehicle-feature-list"><li>Logbook &amp; Ownership Due Diligence Ready</li><li>Chassis &amp; Mileage Verification Supported</li><li>Pre-Purchase Inspection Eligible at 3 Pedals Garage</li><li>Viewing &amp; Test Drive by Appointment</li></ul><p class="vehicle-tradein-note">Trade-in options available. Financing can be arranged.</p></div></details><div class="seller"><h3>${isYard?"Car Yard":"Seller"}</h3><p><strong>${esc(sellerName)}</strong></p>${sellerBits}</div><div class="actions no-print">${wa?`<a class="btn gold" href="https://wa.me/${esc(wa)}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">💬 WhatsApp Enquiry</a>`:''}${phone?`<a class="btn dark" href="tel:${esc(waNumber(phone))}">📞 Call Seller</a>`:''}<button class="btn ghost" type="button" id="vehiclePrintA4Btn">🖨 Print Spec Sheet (A4)</button><button class="btn ghost" type="button" id="vehiclePreviewA4Btn">📄 Preview A4</button><button class="btn ghost" type="button" id="saveVehicleBtn" aria-pressed="false" disabled>Checking saved status…</button><button class="btn ghost" type="button" id="shareBtn">↗ Share vehicle</button><button class="btn ghost" type="button" id="copyLinkBtn">⧉ Copy vehicle link</button><button class="btn ghost" type="button" id="copyBtn">Copy details</button><a class="btn ghost" href="/inventory">← More cars</a></div><span id="shareFeedback" class="meta no-print" role="status" aria-live="polite"></span><div class="note no-print">For your safety, inspect the vehicle in person, verify ownership documents and complete payment only after you are satisfied with the car and paperwork.</div></article></div>`;
+
+  // Populate Printable A4 Vehicle Spec Sheet + QR
+  const mainEl=document.querySelector('main.wrap');
+  let a4Host=$('vehicleA4PrintHost');
+  if(!a4Host&&mainEl){
+    a4Host=document.createElement('section');
+    a4Host.id='vehicleA4PrintHost';
+    a4Host.className='a4-preview-panel';
+    a4Host.setAttribute('aria-label','Printable A4 Vehicle Spec Sheet');
+    mainEl.appendChild(a4Host);
+  }
+  if(a4Host){
+    const qrSvg=window.ThreePedalsUX?.generateQrSvg(pageUrl,`QR link for ${title}`)||'';
+    const printedDate=new Date().toLocaleDateString('en-KE',{year:'numeric',month:'short',day:'numeric'});
+    a4Host.innerHTML=`
+      <div class="a4-preview-toolbar no-print">
+        <div><strong>A4 Printable Spec Sheet Preview (210mm × 297mm)</strong></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button type="button" class="btn gold" id="a4SheetPrintNow">Print Spec Sheet (A4)</button>
+          <button type="button" class="btn ghost" id="a4SheetClosePreview">Close preview</button>
+        </div>
+      </div>
+      <div class="a4-preview-scroll">
+        <article class="a4-sheet" id="vehicleA4Sheet">
+          <header class="a4-letterhead">
+            <div class="a4-brand-row">
+              <img src="/favicon.svg" alt="3 Pedals Auto KE logo">
+              <div>
+                <div class="a4-brand-title">3 Pedals Auto KE</div>
+                <div class="a4-brand-sub">Verified Automotive Marketplace · Nairobi, Kenya · 3pedalsauto.co.ke</div>
+              </div>
+            </div>
+            <div class="a4-ref-meta">
+              <div><strong>Ref:</strong> ${esc(ref)}</div>
+              <div><strong>Generated:</strong> ${esc(printedDate)}</div>
+              <div><strong>Status:</strong> Available</div>
+            </div>
+          </header>
+
+          <section class="a4-hero-block">
+            <div>
+              ${photos[0]?`<img class="a4-photo" src="${esc(photos[0])}" alt="${esc(title)}">`:`<div class="a4-photo" style="display:grid;place-items:center;font-weight:700">No photo provided</div>`}
+            </div>
+            <div class="a4-title-col">
+              <div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#8c6510">${isYard?'Car Yard Specification Sheet':'Vehicle Specification Sheet'}</div>
+              <h1>${esc(title)}</h1>
+              <div class="a4-price-box">
+                <small>Asking Price</small>
+                <strong>KES ${fmt(r.price)}</strong>
+              </div>
+              <div style="font-size:12px;line-height:1.5">
+                <div><strong>Yard / Location:</strong> ${esc(sellerLocation||'Kenya (verify on enquiry)')}</div>
+                <div><strong>Seller Type:</strong> ${isYard?'Car Yard / Dealer':'Private Seller'}</div>
+              </div>
+            </div>
+          </section>
+
+          <section class="a4-spec-grid" aria-label="Vehicle Specifications">
+            <div class="a4-spec-cell"><span>Year</span><strong>${esc(r.year||'—')}</strong></div>
+            <div class="a4-spec-cell"><span>Mileage</span><strong>${fmt(r.km)} km</strong></div>
+            <div class="a4-spec-cell"><span>Fuel Type</span><strong>${esc(r.fuel||'Not specified')}</strong></div>
+            <div class="a4-spec-cell"><span>Engine</span><strong>${esc(specEngine)}</strong></div>
+            <div class="a4-spec-cell"><span>Transmission</span><strong>${esc(specTransmission)}</strong></div>
+            <div class="a4-spec-cell"><span>Duty Status</span><strong>${esc(specDuty)}</strong></div>
+          </section>
+
+          <section class="a4-section-box">
+            <h3>Vehicle Notes &amp; Condition Summary</h3>
+            <p>${esc(descText||'Contact the seller or book a pre-purchase inspection at 3 Pedals Garage for full service history and condition verification.')}</p>
+          </section>
+
+          <footer class="a4-bottom-row">
+            <div class="a4-seller-lines">
+              <div><strong>${isYard?'Car Yard':'Seller'}:</strong> ${esc(sellerName)}</div>
+              ${sellerLocation?`<div><strong>Location:</strong> ${esc(sellerLocation)}</div>`:''}
+              ${phone?`<div><strong>Phone / WhatsApp:</strong> ${esc(phone)}</div>`:''}
+              ${r.seller_email?`<div><strong>Email:</strong> ${esc(r.seller_email)}</div>`:''}
+              <div class="a4-url-foot"><strong>Listing URL:</strong> ${esc(pageUrl)}</div>
+            </div>
+            <div class="a4-qr-wrap">
+              ${qrSvg}
+              <small>Scan to view online</small>
+            </div>
+          </footer>
+        </article>
+      </div>
+    `;
+    $('a4SheetPrintNow')?.addEventListener('click',()=>window.print());
+    $('a4SheetClosePreview')?.addEventListener('click',()=>{
+      a4Host.classList.remove('is-preview-open');
+      const prevBtn=$('vehiclePreviewA4Btn');
+      if(prevBtn)prevBtn.textContent='📄 '+(window.ThreePedalsUX?.t('previewA4')||'Preview A4');
+    });
+  }
+
+  $('vehiclePrintA4Btn')?.addEventListener('click',()=>window.print());
+  $('vehiclePreviewA4Btn')?.addEventListener('click',()=>{
+    if(!a4Host)return;
+    const opened=a4Host.classList.toggle('is-preview-open');
+    const btn=$('vehiclePreviewA4Btn');
+    if(btn)btn.textContent='📄 '+(window.ThreePedalsUX?.t(opened?'hideA4':'previewA4')||(opened?'Hide Preview':'Preview A4'));
+    if(opened)a4Host.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+
+  // Track & render Recently Viewed Vehicles
+  window.ThreePedalsUX?.recordRecentVehicle({id:r.id,title,price:r.price,km:r.km,fuel:r.fuel,photo:photos[0]||''});
+  let recentHost=$('recentlyViewedSection');
+  if(!recentHost&&mainEl){
+    recentHost=document.createElement('section');
+    recentHost.id='recentlyViewedSection';
+    mainEl.appendChild(recentHost);
+  }
+  if(recentHost){
+    window.ThreePedalsUX?.renderRecentlyViewed(recentHost,{excludeId:r.id});
+    window.addEventListener('3pedals:lang-changed',()=>{
+      window.ThreePedalsUX?.renderRecentlyViewed(recentHost,{excludeId:r.id});
+    });
+  }
+
   const saveVehicleButton=$("saveVehicleBtn");
   if(saveVehicleButton&&sb){
     sb.auth.getSession().then(async({data})=>{
@@ -472,7 +603,7 @@ Vehicle link: ${pageUrl}`;
   }
   const sellerContactActions=document.querySelector(".actions");if(sellerContactActions){sellerContactActions.querySelectorAll('a[href^="https://wa.me/"],a[href^="tel:"]').forEach(link=>{link.addEventListener("click",()=>{if(typeof window.fbq==="function")window.fbq("track","Lead",{content_type:"product",content_ids:[String(r.id||"")],content_name:title,value:Number(r.price||0),currency:"KES",contact_method:link.href.startsWith("https://wa.me/")?"WhatsApp":"Phone"});});});}
   let photoIndex=0;const showPhoto=index=>{photoIndex=(index+photos.length)%photos.length;const image=$('mainPhoto'),counter=document.querySelector('.photo-count');image.src=photos[photoIndex];image.alt=`${title} — photo ${photoIndex+1} of ${photos.length}`;if(counter)counter.textContent=`${photoIndex+1} / ${photos.length}`;document.querySelectorAll('.thumb').forEach((button,i)=>button.setAttribute('aria-current',String(i===photoIndex)))};
-  const viewer=document.createElement('div');viewer.className='vehicle-photo-viewer';viewer.id='vehiclePhotoViewer';viewer.setAttribute('role','dialog');viewer.setAttribute('aria-modal','true');viewer.setAttribute('aria-label','Full-size vehicle photos');viewer.innerHTML='<button type="button" class="viewer-close" aria-label="Close full-size photo">×</button><button type="button" class="viewer-step viewer-prev" aria-label="Previous photo">‹</button><span class="viewer-count"></span><img alt=""><button type="button" class="viewer-step viewer-next" aria-label="Next photo">›</button>';document.body.appendChild(viewer);
+  const viewer=document.createElement('div');viewer.className='vehicle-photo-viewer no-print';viewer.id='vehiclePhotoViewer';viewer.setAttribute('role','dialog');viewer.setAttribute('aria-modal','true');viewer.setAttribute('aria-label','Full-size vehicle photos');viewer.innerHTML='<button type="button" class="viewer-close" aria-label="Close full-size photo">×</button><button type="button" class="viewer-step viewer-prev" aria-label="Previous photo">‹</button><span class="viewer-count"></span><img alt=""><button type="button" class="viewer-step viewer-next" aria-label="Next photo">›</button>';document.body.appendChild(viewer);
   const syncViewer=()=>{const image=viewer.querySelector('img');image.src=photos[photoIndex];image.alt=`${title} — full-size photo ${photoIndex+1} of ${photos.length}`;viewer.querySelector('.viewer-count').textContent=`${photoIndex+1} / ${photos.length}`};
   const openViewer=()=>{if(!photos.length)return;syncViewer();viewer.classList.add('is-open');document.body.style.overflow='hidden';viewer.querySelector('.viewer-close').focus()};
   const closeViewer=()=>{viewer.classList.remove('is-open');document.body.style.overflow=''};
@@ -484,7 +615,7 @@ if(photos.length>1){document.querySelector('.gallery').insertAdjacentHTML('befor
 
 }
 async function loadRelated(current){
-  const host=document.createElement('section');host.id='relatedVehicles';host.className='related-section';host.setAttribute('aria-label','Similar vehicles');
+  const host=document.createElement('section');host.id='relatedVehicles';host.className='related-section no-print';host.setAttribute('aria-label','Similar vehicles');
   host.innerHTML='<div class="related-heading"><div><h2>You may also like</h2><p>More approved vehicles from 3 Pedals Auto KE.</p></div><a class="btn ghost" href="/inventory">View all cars</a></div><div class="related-grid" id="relatedGrid"></div>';
   const vehicle=document.querySelector('.vehicle');if(!vehicle)return;vehicle.insertAdjacentElement('afterend',host);
   try{
