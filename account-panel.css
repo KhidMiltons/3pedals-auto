@@ -3392,3 +3392,44 @@
 #accDlg #accBody #accountPage-dashboard .seller-dashboard>.account-tools:nth-child(2) .seller-listing:last-child{
   border-bottom:0!important;
 }
+
+
+/* My Listings: restore distinct vehicle cards, but leave every card surface transparent. */
+#accDlg #accBody #accountPage-dashboard .seller-dashboard>.account-tools:nth-child(2){
+  background:transparent!important;background-color:transparent!important;background-image:none!important;
+  border:0!important;border-radius:0!important;box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+#accDlg #accBody #accountPage-dashboard .seller-dashboard>.account-tools:nth-child(2) .seller-listing{
+  display:grid!important;grid-template-columns:116px minmax(0,1fr)!important;
+  gap:16px!important;align-items:start!important;
+  margin:0 0 14px!important;padding:16px!important;
+  background:transparent!important;background-color:transparent!important;background-image:none!important;
+  border:1px solid #393124!important;border-radius:12px!important;
+  box-shadow:none!important;filter:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+#accDlg #accBody #accountPage-dashboard .seller-dashboard>.account-tools:nth-child(2) .seller-listing:last-child{
+  margin-bottom:0!important;
+}
+#accDlg #accBody #accountPage-dashboard .seller-dashboard>.account-tools:nth-child(2) .seller-listing :is(
+  .seller-garage-content,.seller-garage-heading,.seller-garage-meta,
+  .seller-garage-promotion,.seller-garage-media
+){
+  background:transparent!important;background-color:transparent!important;background-image:none!important;
+  border:0!important;border-radius:0!important;box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+#accDlg #accBody #accountPage-dashboard .seller-dashboard>.account-tools:nth-child(2) .seller-garage-media{
+  overflow:hidden!important;border-radius:8px!important;
+}
+@media(max-width:600px){
+  #accDlg #accBody #accountPage-dashboard .seller-dashboard>.account-tools:nth-child(2) .seller-listing{
+    grid-template-columns:76px minmax(0,1fr)!important;gap:12px!important;padding:13px!important;
+  }
+}
+@media(max-width:460px){
+  #accDlg #accBody #accountPage-dashboard .seller-dashboard>.account-tools:nth-child(2) .seller-listing{
+    grid-template-columns:minmax(0,1fr)!important;
+  }
+}
