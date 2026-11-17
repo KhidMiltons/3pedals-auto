@@ -3243,3 +3243,54 @@
 #accDlg #accBody #accountPage-dashboard>.account-tools:nth-child(2) .seller-listing-actions .btn{
   background:#211c13!important;background-color:#211c13!important;color:#e3cc9d!important;
 }
+
+
+/* My Listings matches the clean, unboxed Overview canvas. */
+#accDlg #accBody #accountPage-dashboard>.account-tools:nth-child(2),
+#accDlg #accBody #accountPage-dashboard>.account-tools:nth-child(2) .seller-listing,
+#accDlg #accBody #accountPage-dashboard>.account-tools:nth-child(2) .seller-listing :is(
+  .seller-garage-content,.seller-garage-heading,.seller-garage-meta,
+  .seller-garage-promotion,.seller-garage-media,.seller-garage-photo-placeholder
+){
+  background:transparent!important;background-color:transparent!important;background-image:none!important;
+  border:0!important;border-color:transparent!important;border-radius:0!important;
+  box-shadow:none!important;filter:none!important;outline:0!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+#accDlg #accBody #accountPage-dashboard>.account-tools:nth-child(2) .seller-listing{
+  display:grid!important;grid-template-columns:116px minmax(0,1fr)!important;
+  gap:14px!important;padding:18px 0!important;margin:0!important;
+  border-bottom:1px solid #28231a!important;
+}
+#accDlg #accBody #accountPage-dashboard>.account-tools:nth-child(2) .seller-listing:last-child{
+  border-bottom:0!important;
+}
+#accDlg #accBody #accountPage-dashboard>.account-tools:nth-child(2) .seller-listing :is(
+  .seller-listing-main,.seller-garage-content,.seller-garage-heading,
+  .seller-garage-meta,.seller-garage-promotion
+){padding:0!important;margin:0!important}
+#accDlg #accBody #accountPage-dashboard>.account-tools:nth-child(2) .seller-listing :is(
+  .seller-garage-media,.seller-listing-photo,.seller-garage-photo-placeholder
+){background-color:transparent!important}
+#accDlg #accBody #accountPage-dashboard>.account-tools:nth-child(2) .seller-listing :is(
+  .seller-listing-main,.seller-garage-content,.seller-garage-heading,
+  .seller-garage-meta,.seller-garage-promotion
+)::before,
+#accDlg #accBody #accountPage-dashboard>.account-tools:nth-child(2) .seller-listing :is(
+  .seller-listing-main,.seller-garage-content,.seller-garage-heading,
+  .seller-garage-meta,.seller-garage-promotion
+)::after{content:none!important;display:none!important}
+@media(max-width:600px){
+  #accDlg #accBody #accountPage-dashboard>.account-tools:nth-child(2) .seller-listing{
+    grid-template-columns:76px minmax(0,1fr)!important;padding:15px 0!important;gap:11px!important;
+  }
+}
+@media(max-width:460px){
+  #accDlg #accBody #accountPage-dashboard>.account-tools:nth-child(2) .seller-listing{
+    grid-template-columns:minmax(0,1fr)!important;
+  }
+  #accDlg #accBody #accountPage-dashboard>.account-tools:nth-child(2) .seller-listing-photo,
+  #accDlg #accBody #accountPage-dashboard>.account-tools:nth-child(2) .seller-garage-photo-placeholder{
+    height:150px!important;
+  }
+}
