@@ -1276,6 +1276,13 @@
         });
         const data = await res.json().catch(() => ({}));
         if (!res.ok) {
+          if (res.status === 405) {
+            throw new Error(
+              getLang() === "sw"
+                ? "Huduma ya mazungumzo haipatikani kwenye seva hii tuli (HTTP 405). Hakikisha unatumia seva ya Node (node server.js / Development App) badala ya tovuti tuli."
+                : "Advisor backend is not running on this static host (HTTP 405). Open the Node server app (Development URL / node server.js) so /api/chat can process requests."
+            );
+          }
           throw new Error(data.error || `Request failed (${res.status})`);
         }
         state.messages.push({

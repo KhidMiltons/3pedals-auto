@@ -28,7 +28,7 @@ app.use((req, res, next) => {
 });
 
 function getGenAiClient() {
-  const apiKey = process.env.GEMINI_API_KEY || "";
+  const apiKey = (process.env.GEMINI_API_KEY || process.env.API_KEY || "").trim();
   if (!apiKey) return null;
   return new GoogleGenAI({
     apiKey,
@@ -176,7 +176,17 @@ app.post("/api/chat", async (req, res) => {
     });
   } catch (err) {
     const status = Number(err?.status) || 500;
-    const message = err?.message || "Failed to generate response from Gemini.";
+    let message = err?.message || "Failed to generate response from Gemini.";
+    try {
+      const parsed = JSON.parse(message);
+      if (parsed?.error?.message) {
+        message = parsed.error.message;
+      }
+    } catch (_) {}
+    if (/api key not valid|api_key_invalid/i.test(message)) {
+      message =
+        "Gemini API key is invalid or not yet activated in Settings > Secrets (GEMINI_API_KEY).";
+    }
     res.status(status >= 400 && status < 600 ? status : 500).json({
       error: message,
     });
