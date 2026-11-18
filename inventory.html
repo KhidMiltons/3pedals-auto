@@ -503,11 +503,15 @@ function deriveEfficiencyClass(r){
   const explicit=String(r?.fuel_efficiency_class||r?.efficiency_class||"").trim().toUpperCase();
   if(/^[A-G]$/.test(explicit))return explicit;
   const fuel=String(r?.fuel||"").toLowerCase();
+  const titleText=[r?.make,r?.model].filter(Boolean).join(" ").toLowerCase();
   const text=[r?.make,r?.model,r?.description].filter(Boolean).join(" ").toLowerCase();
-  const explicitText=text.match(/\b(?:fuel\s*)?efficiency\s*(?:class|rating|grade)?\s*[:\-]?\s*([a-g])\b/i);
+  const explicitText=text.match(/\b(?:fuel\s*)?efficiency\s+(?:class|rating|grade)\s*[:\-]?\s*([a-g])\b/i);
   if(explicitText)return explicitText[1].toUpperCase();
-  if(/\belectric\b|\bev\b|plug-?in|phev|\bblev\b|\bbyd\b|\bneta\b|\bleaf\b/.test(fuel+" "+text))return "A";
-  const isHybrid=/hybrid|e-power|epower|e:hev/.test(fuel+" "+text);
+  const isEvFuel=/electric|\bev\b|plug-?in|phev/.test(fuel);
+  const isEvModel=/\b(byd|neta|leaf|model\s*[3ysx]|id\.?\s*[346]|bz4x|ariya|ioniq\s*[56]|eq[abcs]|i[34x]|taycan|e-tron)\b/.test(titleText);
+  const isEvDesc=/\b(full\s+electric|pure\s+electric|100%\s*electric|all-electric|electric\s+vehicle|electric\s+powertrain|plug-?in\s+hybrid|phev)\b/.test(text);
+  if(isEvFuel||isEvModel||isEvDesc)return "A";
+  const isHybrid=/hybrid|e-power|epower|e:hev/.test(fuel+" "+titleText)||/\b(petrol\s+hybrid|diesel\s+hybrid|self-charging\s+hybrid|mild\s+hybrid|e-power)\b/.test(text);
   let cc=0;
   const ccMatch=text.match(/\b(\d{3,4})\s*cc\b/);
   if(ccMatch)cc=Number(ccMatch[1]);
