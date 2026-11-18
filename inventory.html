@@ -467,14 +467,14 @@ main.wrap>.inventory-intro-compact p{
 <main class="wrap">
 <section class="hero inventory-intro-compact"><span class="eyebrow">3 PEDALS AUTO KE</span><h1>Current inventory.</h1><p>Browse vehicles currently approved and listed for sale. Open any car to see its photos, specifications, seller details and WhatsApp contact.</p></section>
 <section>
-<div class="filters"><input id="q" type="search" placeholder="Search make, model or year" aria-label="Search make, model or year"><select id="make" aria-label="Filter by make"><option value="">All makes</option></select><select id="modelFilter" aria-label="Filter by model" disabled><option value="">All models</option></select><select id="yearFilter" aria-label="Filter by year"><option value="">All years</option></select><select id="fuel" aria-label="Filter by fuel type"><option value="">All fuel types</option></select><select id="max" aria-label="Maximum price"><option value="0">Any price</option><option value="1000000">Up to KES 1,000,000</option><option value="2000000">Up to KES 2,000,000</option><option value="3500000">Up to KES 3,500,000</option><option value="5000000">Up to KES 5,000,000</option><option value="10000000">Up to KES 10,000,000</option><option value="20000000">Up to KES 20,000,000</option></select><select id="sort" aria-label="Sort inventory"><option value="new">Newest / newest model year</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option><option value="km">Lowest mileage</option></select><button class="back" id="clearFilters" type="button">Clear filters</button></div>
+<div class="filters"><input id="q" type="search" placeholder="Search make, model or year" aria-label="Search make, model or year"><select id="make" aria-label="Filter by make"><option value="">All makes</option></select><select id="modelFilter" aria-label="Filter by model" disabled><option value="">All models</option></select><select id="yearFilter" aria-label="Filter by year"><option value="">All years</option></select><select id="fuel" aria-label="Filter by fuel type"><option value="">All fuel types</option></select><select id="efficiencyClass" aria-label="Filter by fuel efficiency class"><option value="">All efficiency classes</option><option value="A">Class A · Ultra-efficient (EV / Hybrid)</option><option value="B">Class B · High efficiency</option><option value="C">Class C · Good economy</option><option value="D">Class D · Balanced</option><option value="E">Class E · Heavy / Diesel 4x4</option><option value="F">Class F · Performance / V6</option><option value="G">Class G · V8 / High output</option></select><select id="max" aria-label="Maximum price"><option value="0">Any price</option><option value="1000000">Up to KES 1,000,000</option><option value="2000000">Up to KES 2,000,000</option><option value="3500000">Up to KES 3,500,000</option><option value="5000000">Up to KES 5,000,000</option><option value="10000000">Up to KES 10,000,000</option><option value="20000000">Up to KES 20,000,000</option></select><select id="sort" aria-label="Sort inventory"><option value="new">Newest / newest model year</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option><option value="km">Lowest mileage</option></select><button class="back" id="clearFilters" type="button">Clear filters</button></div>
 <section class="featured-section" id="featuredVehicles" aria-labelledby="featuredVehiclesTitle" hidden>
 <div class="featured-heading"><div><span class="eyebrow">HAND-PICKED VISIBILITY</span><h2 id="featuredVehiclesTitle">Featured Vehicles</h2></div><span class="featured-note">Paid promotions</span></div>
 <div id="featuredGrid" class="grid featured-grid" aria-live="polite"></div>
 </section>
 <div id="count" class="count">Loading inventory…</div><div id="grid" class="grid"></div><div class="load-more-wrap"><button id="loadMoreCars" class="back" type="button" hidden>Show more cars</button></div>
 </section><section id="recentlyViewedSection" hidden></section></main><footer class="ux-site-footer no-print"><div class="wrap">3 Pedals Auto KE · Prices in KES.</div></footer>
-<dialog id="dlg"></dialog>
+<dialog id="dlg"></dialog><aside id="compareTrayBar" class="ux-compare-dock no-print" aria-live="polite" hidden></aside><dialog id="compareModal" aria-label="Side-by-side vehicle comparison"></dialog>
 <script src="/site-ux.js?v=20261120"></script>
 <script>
 const $=id=>document.getElementById(id),CFG=window.SB_CONFIG||{};const sb=CFG.url&&window.supabase?window.supabase.createClient(CFG.url,CFG.key):null;let cars=[];
@@ -486,9 +486,71 @@ async function loadInventorySavedVehicles(){if(!sb)return;const {data:{session}}
 async function toggleInventorySavedVehicle(listingId,button){if(!inventoryUser){alert("Please sign in through the Account panel on the home page before saving vehicles.");return}const id=String(listingId),removing=savedVehicleIds.has(id);if(button){button.disabled=true;button.textContent=removing?"Removing…":"Saving…"}const result=removing?await sb.from("saved_vehicles").delete().eq("user_id",inventoryUser.id).eq("listing_id",id):await sb.from("saved_vehicles").insert({user_id:inventoryUser.id,listing_id:id});if(result.error){if(button){button.disabled=false;button.textContent=removing?"Remove saved":"Save vehicle"}alert(result.error.message||"Could not update saved vehicles.");return}if(removing)savedVehicleIds.delete(id);else savedVehicleIds.add(id);document.querySelectorAll("[data-save-vehicle]").forEach(el=>{if(el.dataset.saveVehicle===id){el.textContent=savedVehicleIds.has(id)?"Saved ✓":"Save vehicle";el.setAttribute("aria-pressed",String(savedVehicleIds.has(id)));el.disabled=false}});render()}
 const esc=s=>String(s??"").replace(/[&<>\"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));const fmt=n=>Number(n||0).toLocaleString("en-KE");const normWa=x=>{let d=String(x||"").replace(/\D/g,"");if(d.startsWith("00"))d=d.slice(2);if(/^0[17]\d{8}$/.test(d))return"254"+d.slice(1);if(/^[17]\d{8}$/.test(d))return"254"+d;if(/^254[17]\d{8}$/.test(d))return d;return d};
 function sellerType(r){const raw=String(r?.seller_type||r?.account_type||"").trim().toLowerCase().replace(/[\s_-]+/g," ");if(["yard","dealer","car yard","car dealer","business"].includes(raw))return"yard";if(["private","private seller","individual"].includes(raw))return"private";return [r?.yard_name,r?.yard_location,r?.yard_contact].some(v=>String(v||"").trim())?"yard":"private"}
-function rowToCar(r){return {id:r.id,make:r.make||"",model:r.model||"",year:r.year||"",price:r.price||0,km:r.km||0,fuel:r.fuel||"",desc:r.description||"",photos:Array.isArray(r.photos)?r.photos:[],seller:{type:sellerType(r),name:r.yard_name||r.seller_name||"",contact:r.contact||r.yard_contact||"",phone:r.seller_phone||r.phone||"",email:r.seller_email||r.email||"",web:r.web||r.yard_web||"",whatsapp:r.whatsapp||"",yard:r.yard_name||"",location:r.yard_location||r.location||"",logo:r.yard_logo_url||r.seller_logo_url||""}}}
-function cardMarkup(c,i){const p=c.photos[0],saved=savedVehicleIds.has(String(c.id));return `<article class="card" style="--card-index:${i}" data-id="${esc(c.id)}" tabindex="0" aria-label="Open ${esc(c.year)} ${esc(c.make)} ${esc(c.model)} details"><div class="photo">${p?`<img class="inventory-photo" src="${esc(p)}" alt="${esc(c.year+" "+c.make+" "+c.model)}" loading="${i===0?"eager":"lazy"}" decoding="async" fetchpriority="${i===0?"high":"low"}" sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 320px">`:""}<span class="year">${esc(c.year)}</span>${c.isPromoted?'<span class="promoted-tag">FEATURED</span>':""}</div><div class="body"><h3>${esc(c.year)} ${esc(c.make)} ${esc(c.model)}</h3><div class="price">KES ${fmt(c.price)}</div><div class="tags"><span class="tag">${fmt(c.km)} km</span><span class="tag">${esc(c.fuel)}</span><span class="tag">${c.seller.type==="yard"?"Car yard":"Private seller"}</span></div>${c.seller.type==="yard"?`<div class="dealer-cardline">${c.seller.logo?`<img src="${esc(c.seller.logo)}" alt="" loading="lazy">`:"🏢"}<span>${esc(c.seller.yard||c.seller.name||"Car yard")}</span></div>`:""}</div><button type="button" class="inventory-save-button" data-save-vehicle="${esc(c.id)}" aria-pressed="${String(saved)}">${saved?"Saved ✓":"Save vehicle"}</button></article>`}
-let visibleCarCount=12;const CAR_PAGE_SIZE=12;function render(){const q=$("q").value.trim().toLowerCase(),mk=$("make").value,model=$("modelFilter").value,year=$("yearFilter").value,fuel=$("fuel").value,mx=+$("max").value,s=$("sort").value;let r=cars.filter(c=>(!q||(c.make+" "+c.model+" "+c.year).toLowerCase().includes(q))&&(!mk||c.make===mk)&&(!model||c.model===model)&&(!year||String(c.year)===year)&&(!fuel||String(c.fuel||"").toLowerCase()===fuel.toLowerCase())&&(!mx||Number(c.price)<=mx));r.sort((a,b)=>s==="low"?Number(a.price)-Number(b.price):s==="high"?Number(b.price)-Number(a.price):s==="km"?Number(a.km)-Number(b.km):Number(b.year)-Number(a.year));const visible=r.slice(0,visibleCarCount);$("count").textContent=r.length+(r.length===1?" car":" cars")+" found"+(r.length>visible.length?` · showing ${visible.length}`:"");$("grid").innerHTML=r.length?visible.map(cardMarkup).join(""):`<div class="empty">No approved cars match your search right now.</div>`;const more=$("loadMoreCars");if(more){more.hidden=visible.length>=r.length;more.textContent=`Show ${Math.min(CAR_PAGE_SIZE,r.length-visible.length)} more cars`;more.setAttribute("aria-label",`Show more cars, ${r.length-visible.length} remaining`)}const section=$("featuredVehicles"),featuredGrid=$("featuredGrid");if(section&&featuredGrid){const featured=cars.filter(c=>c.isPromoted).slice(0,6);section.hidden=featured.length===0;featuredGrid.innerHTML=featured.map(cardMarkup).join("")}}
+const COMPARE_STORAGE_KEY="3pedals:compare:v1",MAX_COMPARE=4;
+const EFF_TIERS={
+  A:{en:"Ultra-efficient (EV / Compact Hybrid)",shortEn:"Ultra-efficient",sw:"Ufanisi wa juu sana (EV / Hybrid)"},
+  B:{en:"High efficiency (Hybrid / ≤1.1L)",shortEn:"High efficiency",sw:"Ufanisi wa juu"},
+  C:{en:"Good economy (1.2L–1.5L)",shortEn:"Good economy",sw:"Uchumi mzuri wa mafuta"},
+  D:{en:"Balanced (1.6L–2.0L / Eco Diesel)",shortEn:"Balanced",sw:"Wastani mzuri"},
+  E:{en:"Moderate-high (2.2L–2.8L SUV/4x4)",shortEn:"Moderate-high",sw:"Nguvu ya kati-juu"},
+  F:{en:"Performance / V6 (3.0L–3.8L)",shortEn:"Performance",sw:"Nguvu kubwa / V6"},
+  G:{en:"High-output / V8 (>3.8L)",shortEn:"High-output",sw:"Injini kubwa / V8"}
+};
+const invLang=()=>window.ThreePedalsUX?.getLang?.()==="sw"?"sw":"en";
+const effWordLabel=()=>invLang()==="sw"?"Ufanisi":"Efficiency";
+const effTierText=(cls,full=false)=>{const m=EFF_TIERS[cls]||EFF_TIERS.D;return invLang()==="sw"?m.sw:(full?m.en:m.shortEn)};
+function deriveEfficiencyClass(r){
+  const explicit=String(r?.fuel_efficiency_class||r?.efficiency_class||"").trim().toUpperCase();
+  if(/^[A-G]$/.test(explicit))return explicit;
+  const fuel=String(r?.fuel||"").toLowerCase();
+  const text=[r?.make,r?.model,r?.description].filter(Boolean).join(" ").toLowerCase();
+  const explicitText=text.match(/\b(?:fuel\s*)?efficiency\s*(?:class|rating|grade)?\s*[:\-]?\s*([a-g])\b/i);
+  if(explicitText)return explicitText[1].toUpperCase();
+  if(/\belectric\b|\bev\b|plug-?in|phev|\bblev\b|\bbyd\b|\bneta\b|\bleaf\b/.test(fuel+" "+text))return "A";
+  const isHybrid=/hybrid|e-power|epower|e:hev/.test(fuel+" "+text);
+  let cc=0;
+  const ccMatch=text.match(/\b(\d{3,4})\s*cc\b/);
+  if(ccMatch)cc=Number(ccMatch[1]);
+  else{
+    const lMatch=text.match(/\b([0-6]\.\d)\s*(?:l|litre|liter|tsi|tdi|d4d|crdi|vvt|turbo)?\b/);
+    if(lMatch)cc=Math.round(Number(lMatch[1])*1000);
+  }
+  if(isHybrid){
+    if(cc&&cc<=1600)return "A";
+    if(/\b(aqua|prius|fit|note|vitz|axio|fielder|insight|grace|yaris|c-hr|chr)\b/.test(text))return "A";
+    return "B";
+  }
+  if(cc>0){
+    if(fuel.includes("diesel")){
+      if(cc<=1800)return "C";
+      if(cc<=2400)return "D";
+      if(cc<=3000)return "E";
+      if(cc<=3800)return "F";
+      return "G";
+    }
+    if(cc<=1100)return "B";
+    if(cc<=1550)return "C";
+    if(cc<=2050)return "D";
+    if(cc<=2650)return "E";
+    if(cc<=3800)return "F";
+    return "G";
+  }
+  if(/\b(v8|v10|v12|amg\s*63|63\s*amg|lx\s*570|lx570|g500|g63|range rover|gt-r)\b/.test(text))return "G";
+  if(/\b(alto|mira|pixis|wagon r|n-box|nbox|dayz|ek wagon|passo|boon)\b/.test(text))return "B";
+  if(/\b(vitz|demio|fit|note|swift|axio|fielder|belta|sienta|probox|succeed|polo|mazda\s*2|mini cooper|yaris|ractis|porte|spade|rumion|auris)\b/.test(text))return "C";
+  if(/\b(premio|allion|mazda\s*3|atenza|civic|corolla|forester|impreza|xv|cx-5|cx5|x-trail|xtrail|rav4|cr-v|crv|tiguan|c180|c200|320i|golf)\b/.test(text))return "D";
+  if(/\b(mark x|crown|harrier|legacy|outback|camry|hilux|prado|fortuner|navara|ranger|d-max|dmax|pajero|discovery)\b/.test(text))return "E";
+  if(/\b(rx\s*350|rx350|murano|cayenne|x5|gle|s350|fj cruiser)\b/.test(text))return "F";
+  return fuel.includes("diesel")?"D":"C";
+}
+function rowToCar(r){const effClass=deriveEfficiencyClass(r);return {id:r.id,make:r.make||"",model:r.model||"",year:r.year||"",price:r.price||0,km:r.km||0,fuel:r.fuel||"",effClass,desc:r.description||"",photos:Array.isArray(r.photos)?r.photos:[],seller:{type:sellerType(r),name:r.yard_name||r.seller_name||"",contact:r.contact||r.yard_contact||"",phone:r.seller_phone||r.phone||"",email:r.seller_email||r.email||"",web:r.web||r.yard_web||"",whatsapp:r.whatsapp||"",yard:r.yard_name||"",location:r.yard_location||r.location||"",logo:r.yard_logo_url||r.seller_logo_url||""}}}
+function readCompareList(){try{const raw=JSON.parse(localStorage.getItem(COMPARE_STORAGE_KEY)||"[]");return Array.isArray(raw)?raw.filter(x=>x&&x.id).slice(0,MAX_COMPARE):[]}catch(_){return []}}
+function writeCompareList(list){try{localStorage.setItem(COMPARE_STORAGE_KEY,JSON.stringify(list.slice(0,MAX_COMPARE)))}catch(_){}}
+let compareList=readCompareList(),compareNotice="";
+function isInCompare(id){return compareList.some(item=>String(item.id)===String(id))}
+function carToCompareItem(c){return {id:String(c.id),title:`${c.year} ${c.make} ${c.model}`.trim(),year:c.year||"",make:c.make||"",model:c.model||"",price:Number(c.price||0),km:Number(c.km||0),fuel:c.fuel||"",effClass:c.effClass||"C",sellerType:c.seller?.type||"private",sellerName:c.seller?.yard||c.seller?.name||(c.seller?.type==="yard"?"Car yard":"Private seller"),location:c.seller?.location||"",photo:(c.photos&&c.photos[0])||""}}
+function cardMarkup(c,i){const p=c.photos[0],saved=savedVehicleIds.has(String(c.id)),compared=isInCompare(c.id),sw=invLang()==="sw";return `<article class="card" style="--card-index:${i}" data-id="${esc(c.id)}" tabindex="0" aria-label="Open ${esc(c.year)} ${esc(c.make)} ${esc(c.model)} details"><div class="photo">${p?`<img class="inventory-photo" src="${esc(p)}" alt="${esc(c.year+" "+c.make+" "+c.model)}" loading="${i===0?"eager":"lazy"}" decoding="async" fetchpriority="${i===0?"high":"low"}" sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 320px">`:""}<span class="year">${esc(c.year)}</span>${c.isPromoted?'<span class="promoted-tag">FEATURED</span>':""}</div><div class="body"><h3>${esc(c.year)} ${esc(c.make)} ${esc(c.model)}</h3><div class="price">KES ${fmt(c.price)}</div><div class="tags"><span class="tag">${fmt(c.km)} km</span><span class="tag">${esc(c.fuel)}</span><span class="tag">${c.seller.type==="yard"?"Car yard":"Private seller"}</span></div><div class="eff-line" data-eff="${esc(c.effClass)}"><span>${esc(effWordLabel())}</span><strong>${sw?"Daraja":"Class"} ${esc(c.effClass)}</strong><span>· ${esc(effTierText(c.effClass))}</span></div>${c.seller.type==="yard"?`<div class="dealer-cardline">${c.seller.logo?`<img src="${esc(c.seller.logo)}" alt="" loading="lazy">`:"🏢"}<span>${esc(c.seller.yard||c.seller.name||"Car yard")}</span></div>`:""}</div><div class="card-actions-bar"><button type="button" class="inventory-save-button" data-save-vehicle="${esc(c.id)}" aria-pressed="${String(saved)}">${saved?(sw?"Imehifadhiwa ✓":"Saved ✓"):(sw?"Hifadhi":"Save vehicle")}</button><button type="button" class="inventory-compare-button" data-compare-vehicle="${esc(c.id)}" aria-pressed="${String(compared)}">${compared?(sw?"Kwenye linganisho ✓":"In compare ✓"):(sw?"Linganisha":"Compare")}</button></div></article>`}
+let visibleCarCount=12;const CAR_PAGE_SIZE=12;function render(){const q=$("q").value.trim().toLowerCase(),mk=$("make").value,model=$("modelFilter").value,year=$("yearFilter").value,fuel=$("fuel").value,eff=$("efficiencyClass")?.value||"",mx=+$("max").value,s=$("sort").value;let r=cars.filter(c=>(!q||(c.make+" "+c.model+" "+c.year).toLowerCase().includes(q))&&(!mk||c.make===mk)&&(!model||c.model===model)&&(!year||String(c.year)===year)&&(!fuel||String(c.fuel||"").toLowerCase()===fuel.toLowerCase())&&(!eff||c.effClass===eff)&&(!mx||Number(c.price)<=mx));r.sort((a,b)=>s==="low"?Number(a.price)-Number(b.price):s==="high"?Number(b.price)-Number(a.price):s==="km"?Number(a.km)-Number(b.km):Number(b.year)-Number(a.year));const visible=r.slice(0,visibleCarCount);$("count").textContent=r.length+(r.length===1?" car":" cars")+" found"+(r.length>visible.length?` · showing ${visible.length}`:"");$("grid").innerHTML=r.length?visible.map(cardMarkup).join(""):`<div class="empty">No approved cars match your search right now.</div>`;const more=$("loadMoreCars");if(more){more.hidden=visible.length>=r.length;more.textContent=`Show ${Math.min(CAR_PAGE_SIZE,r.length-visible.length)} more cars`;more.setAttribute("aria-label",`Show more cars, ${r.length-visible.length} remaining`)}const section=$("featuredVehicles"),featuredGrid=$("featuredGrid");if(section&&featuredGrid){const featured=cars.filter(c=>c.isPromoted).slice(0,6);section.hidden=featured.length===0;featuredGrid.innerHTML=featured.map(cardMarkup).join("")}syncCompareButtons();renderCompareTray()}
 function renderInventoryRecentSection(){
   const host=$("recentlyViewedSection");
   if(!host||!window.ThreePedalsUX)return;
@@ -500,11 +562,176 @@ function renderInventoryRecentSection(){
     }
   });
 }
-window.addEventListener("3pedals:lang-changed",renderInventoryRecentSection);
-function detail(id){const c=cars.find(x=>x.id===id);if(!c)return;const saved=savedVehicleIds.has(String(c.id));const d=$("dlg"),s=c.seller,ph=c.photos;const sellerName=s.type==="yard"?(s.yard||s.name||"Car yard"):(s.name||"the seller");const vehicleRef=`3PA-${String(c.id||"").replace(/-/g,"").slice(0,8).toUpperCase()}`;const vehicleUrl=`${location.origin}/vehicle.html?id=${encodeURIComponent(c.id)}`;window.ThreePedalsUX?.recordRecentVehicle({id:c.id,title:`${c.year} ${c.make} ${c.model}`.trim(),price:c.price,km:c.km,fuel:c.fuel,photo:ph[0]||""});renderInventoryRecentSection();const msg=encodeURIComponent(`Hello ${sellerName}, I’m interested in the ${c.year} ${c.make} ${c.model} listed on 3 Pedals Auto KE.\nPrice: KES ${fmt(c.price)}\nMileage: ${fmt(c.km)} km\nFuel: ${c.fuel||"Not specified"}\nVehicle reference: ${vehicleRef}\n${s.location?`Location: ${s.location}\n`:""}Could you confirm availability and let me know when I can arrange a viewing?\nVehicle link: ${vehicleUrl}`);const wa=s.whatsapp?`<a class="btn" href="https://wa.me/${normWa(s.whatsapp)}?text=${msg}" target="_blank" rel="noopener">Chat on WhatsApp</a>`:"";const details=[["Mileage",`${fmt(c.km)} km`],["Fuel",c.fuel||"Not specified"],["Listing type",s.type==="yard"?"Car yard":"Private seller"],["Location",s.location||"Not specified"]];const facts=items=>`<div class="detail-facts">${items.map(([label,value])=>`<div class="detail-fact"><span>${esc(label)}</span><strong>${esc(value)}</strong></div>`).join("")}</div>`;const sellerInfo=s.type==="yard"?[s.contact,s.location,s.phone,s.email].filter(Boolean).map(esc).join(" · "):s.phone?esc(s.phone):"Contact the seller directly about this listing.";const sellerCard=`<div class="seller-card">${s.logo?`<img class="seller-avatar" src="${esc(s.logo)}" alt="${esc(sellerName)} logo">`:`<div class="seller-avatar" aria-hidden="true">${s.type==="yard"?"🏢":"3P"}</div>`}<div><strong>${esc(sellerName)}</strong><p>${sellerInfo}</p></div></div>`;const specs=[...[ ["Year",c.year||"Not specified"],["Make",c.make||"Not specified"],["Model",c.model||"Not specified"],["Mileage",`${fmt(c.km)} km`],["Fuel",c.fuel||"Not specified"] ]];d.innerHTML=`<div class="detail" data-car-id="${esc(c.id)}"><button class="detail-modal-close" id="close" type="button" aria-label="Close vehicle details">×</button><div class="gallery">${ph.length?`<img id="mainimg" class="mainimg" src="${esc(ph[0])}" alt="${esc(c.make+" "+c.model)} photo 1 of ${ph.length}" fetchpriority="high">${ph.length>1?`<div class="thumbs">${ph.map((p,i)=>`<button type="button" data-i="${i}" aria-label="Show photo ${i+1}" aria-current="${i===0}"><img src="${esc(p)}" alt="" loading="lazy"></button>`).join("")}</div>`:""}`:`<div class="mainimg" style="display:grid;place-items:center;color:var(--gold)">No photos available</div>`}</div><article class="info"><div class="detail-heading"><div><span class="eyebrow">${s.type==="yard"?"Car yard listing":"Private listing"}</span><h2>${esc(c.year)} ${esc(c.make)} ${esc(c.model)}</h2></div><div class="detail-price">KES ${fmt(c.price)}</div></div><p class="detail-ref">Vehicle reference: ${esc(String(c.id).slice(0,8).toUpperCase())}</p>${facts(details)}${sellerCard}<section class="detail-section"><h3>About this car</h3><p>${esc(c.desc||"No description provided by the seller.")}</p></section><details class="detail-disclosure"><summary>Specifications</summary>${facts(specs)}</details><p class="detail-note">For your safety, inspect the vehicle in person, verify ownership documents and complete payment only after you are satisfied with the car and paperwork.</p><div class="actions"><button type="button" class="btn ghost" id="detailSaveVehicle" data-save-vehicle="${esc(c.id)}" aria-pressed="${String(saved)}">${saved?"Saved ✓ · Remove":"Save vehicle"}</button>${wa}${s.phone?`<a class="btn ghost" href="tel:${esc(normWa(s.phone))}">Call seller</a>`:""}<a class="btn ghost" href="/vehicle.html?id=${encodeURIComponent(c.id)}">Full spec &amp; A4</a></div></article></div>`;let photoIndex=0;const showPhoto=index=>{photoIndex=(index+ph.length)%ph.length;const image=d.querySelector("#mainimg"),counter=d.querySelector(".gallery-count");if(image){image.src=ph[photoIndex];image.alt=`${c.make} ${c.model} — photo ${photoIndex+1} of ${ph.length}`}if(counter)counter.textContent=`${photoIndex+1} / ${ph.length}`;d.querySelectorAll(".thumbs button").forEach((button,i)=>button.setAttribute("aria-current",String(i===photoIndex)))};if(ph.length>1){d.querySelector(".gallery").insertAdjacentHTML("beforeend",`<span class="gallery-count">1 / ${ph.length}</span><button class="gallery-step gallery-prev" type="button" data-gallery-step="-1" aria-label="Previous photo">‹</button><button class="gallery-step gallery-next" type="button" data-gallery-step="1" aria-label="Next photo">›</button>`)}if(ph.length){const viewPhoto=()=>{const car=cars.find(item=>String(item.id)===String(d.querySelector(".detail")?.dataset?.carId));if(car)openInventoryViewer(car)};d.querySelector("#mainimg").onclick=viewPhoto}d.showModal();d.querySelectorAll(".thumbs button").forEach(button=>button.onclick=()=>showPhoto(+button.dataset.i));d.querySelectorAll("[data-gallery-step]").forEach(button=>button.onclick=()=>showPhoto(photoIndex+Number(button.dataset.galleryStep)));$("close").onclick=()=>d.close();const saveButton=$("detailSaveVehicle");if(saveButton)saveButton.onclick=()=>toggleInventorySavedVehicle(c.id,saveButton)}
-const inventoryViewer=document.createElement("dialog");inventoryViewer.className="inventory-photo-viewer";inventoryViewer.id="inventoryPhotoViewer";inventoryViewer.setAttribute("aria-label","Full-size vehicle photos");inventoryViewer.innerHTML='<button type="button" class="viewer-close" aria-label="Close full-size photo">×</button><button type="button" class="viewer-step viewer-prev" aria-label="Previous photo">‹</button><span class="viewer-count"></span><img alt=""><button type="button" class="viewer-step viewer-next" aria-label="Next photo">›</button>';document.body.appendChild(inventoryViewer);let viewerPhotos=[],viewerIndex=0;function syncInventoryViewer(){const image=inventoryViewer.querySelector("img");image.src=viewerPhotos[viewerIndex]||"";image.alt="Full-size vehicle photo "+(viewerIndex+1)+" of "+viewerPhotos.length;inventoryViewer.querySelector(".viewer-count").textContent=(viewerIndex+1)+" / "+viewerPhotos.length}function openInventoryViewer(car){viewerPhotos=(car.photos||[]).filter(p=>typeof p==="string"&&p.trim());if(!viewerPhotos.length)return;viewerIndex=0;syncInventoryViewer();inventoryViewer.classList.add("is-open");if(!inventoryViewer.open)inventoryViewer.showModal();inventoryViewer.querySelector(".viewer-close").focus()}function closeInventoryViewer(){inventoryViewer.classList.remove("is-open");if(inventoryViewer.open)inventoryViewer.close();const image=inventoryViewer.querySelector("img");if(image)image.removeAttribute("src");viewerPhotos=[];viewerIndex=0}function openCurrentDetailPhoto(){const id=$("dlg").querySelector(".detail")?.dataset?.carId;const car=cars.find(item=>String(item.id)===String(id));if(car)openInventoryViewer(car)}inventoryViewer.querySelector(".viewer-close").onclick=closeInventoryViewer;inventoryViewer.querySelector(".viewer-prev").onclick=()=>{viewerIndex=(viewerIndex+viewerPhotos.length-1)%viewerPhotos.length;syncInventoryViewer()};inventoryViewer.querySelector(".viewer-next").onclick=()=>{viewerIndex=(viewerIndex+1)%viewerPhotos.length;syncInventoryViewer()};inventoryViewer.addEventListener("click",e=>{if(e.target===inventoryViewer)closeInventoryViewer()});inventoryViewer.addEventListener("cancel",e=>{e.preventDefault();closeInventoryViewer()});document.addEventListener("keydown",e=>{if(!inventoryViewer.classList.contains("is-open"))return;if(e.key==="Escape"){e.preventDefault();closeInventoryViewer();return}if(e.key==="ArrowLeft"){viewerIndex=(viewerIndex+viewerPhotos.length-1)%viewerPhotos.length;syncInventoryViewer()}if(e.key==="ArrowRight"){viewerIndex=(viewerIndex+1)%viewerPhotos.length;syncInventoryViewer()}});document.querySelectorAll("#grid,#featuredGrid").forEach(grid=>{grid.addEventListener("click",e=>{const save=e.target.closest("[data-save-vehicle]");if(save){e.preventDefault();e.stopPropagation();toggleInventorySavedVehicle(save.dataset.saveVehicle,save);return}const card=e.target.closest(".card");if(!card)return;const car=cars.find(item=>String(item.id)===String(card.dataset.id));if(car)detail(car.id)});grid.addEventListener("keydown",e=>{const card=e.target.closest(".card");if(!card||!["Enter"," "].includes(e.key))return;e.preventDefault();const car=cars.find(item=>String(item.id)===String(card.dataset.id));if(car)detail(car.id)})});
+window.addEventListener("3pedals:lang-changed",()=>{syncEfficiencyFilterLanguage();renderInventoryRecentSection();render()});
+function syncEfficiencyFilterLanguage(){
+  const sel=$("efficiencyClass");if(!sel)return;const sw=invLang()==="sw";
+  const allOpt=sel.querySelector('option[value=""]');
+  if(allOpt)allOpt.textContent=sw?"Madaraja yote ya mafuta (A–G)":"All efficiency classes";
+  ["A","B","C","D","E","F","G"].forEach(cls=>{const opt=sel.querySelector(`option[value="${cls}"]`);if(opt)opt.textContent=(sw?"Daraja ":"Class ")+cls+" · "+effTierText(cls,true)});
+}
+function syncCompareButtons(){
+  const sw=invLang()==="sw";
+  document.querySelectorAll("[data-compare-vehicle]").forEach(btn=>{
+    const active=isInCompare(btn.dataset.compareVehicle);
+    btn.setAttribute("aria-pressed",String(active));
+    if(btn.id==="detailCompareVehicle"){
+      btn.textContent=active?(sw?"Kwenye linganisho ✓ · Ondoa":"In compare ✓ · Remove"):(sw?"Ongeza kulinganisha":"Compare");
+    }else{
+      btn.textContent=active?(sw?"Kwenye linganisho ✓":"In compare ✓"):(sw?"Linganisha":"Compare");
+    }
+  });
+}
+function toggleCompareVehicle(idOrCar){
+  const id=String(typeof idOrCar==="object"?idOrCar.id:idOrCar);
+  compareNotice="";
+  if(isInCompare(id)){
+    compareList=compareList.filter(x=>String(x.id)!==id);
+  }else{
+    if(compareList.length>=MAX_COMPARE){
+      const sw=invLang()==="sw";
+      compareNotice=sw?`Unaweza kulinganisha magari ${MAX_COMPARE} pekee kwa wakati mmoja.` : `You can compare up to ${MAX_COMPARE} vehicles at a time. Remove one first.`;
+      renderCompareTray();
+      const detailBtn=$("detailCompareVehicle");
+      if($("dlg")?.open&&detailBtn&&detailBtn.dataset.compareVehicle===id){
+        detailBtn.textContent=sw?`Upeo ni magari ${MAX_COMPARE}`:`Max ${MAX_COMPARE} in compare`;
+      }
+      return;
+    }
+    const found=typeof idOrCar==="object"?idOrCar:cars.find(c=>String(c.id)===id);
+    if(!found)return;
+    compareList=[carToCompareItem(found),...compareList];
+  }
+  writeCompareList(compareList);
+  syncCompareButtons();
+  renderCompareTray();
+  if($("compareModal")?.open)renderCompareModal();
+}
+function clearCompareList(){
+  compareNotice="";
+  compareList=[];
+  writeCompareList([]);
+  syncCompareButtons();
+  renderCompareTray();
+  if($("compareModal")?.open)$("compareModal").close();
+}
+function renderCompareTray(){
+  const bar=$("compareTrayBar");if(!bar)return;
+  if(!compareList.length){bar.hidden=true;bar.innerHTML="";return}
+  bar.hidden=false;
+  const sw=invLang()==="sw";
+  const names=compareList.map(x=>esc(x.title)).join(" · ");
+  const thumbs=compareList.slice(0,4).map(x=>x.photo?`<img src="${esc(x.photo)}" alt="" loading="lazy">`:"").join("");
+  bar.innerHTML=`
+    <div class="ux-compare-dock-info">
+      ${thumbs?`<div class="ux-compare-thumbs">${thumbs}</div>`:""}
+      <div class="ux-compare-dock-text">
+        <strong>${sw?`Linganisha (${compareList.length}/${MAX_COMPARE})`:`Compare (${compareList.length}/${MAX_COMPARE})`}</strong>
+        <span>${compareNotice?esc(compareNotice):names}</span>
+      </div>
+    </div>
+    <div class="ux-compare-dock-actions">
+      <button type="button" class="ux-compare-open-btn" id="openCompareModalBtn">${sw?`Linganisha (${compareList.length})`:`Compare (${compareList.length})`}</button>
+      <button type="button" class="ux-compare-clear-btn" id="clearCompareTrayBtn">${sw?"Futa":"Clear"}</button>
+    </div>
+  `;
+  $("openCompareModalBtn")?.addEventListener("click",openCompareModal);
+  $("clearCompareTrayBtn")?.addEventListener("click",clearCompareList);
+}
+function renderCompareModal(){
+  const dlg=$("compareModal");if(!dlg)return;
+  const sw=invLang()==="sw";
+  if(!compareList.length){if(dlg.open)dlg.close();return}
+  const items=compareList.map(item=>{
+    const live=cars.find(c=>String(c.id)===String(item.id));
+    return live?carToCompareItem(live):item;
+  });
+  const prices=items.map(x=>Number(x.price||0)).filter(n=>n>0);
+  const minPrice=prices.length>1?Math.min(...prices):null;
+  const kms=items.map(x=>Number(x.km||0)).filter(n=>n>=0);
+  const minKm=kms.length>1?Math.min(...kms):null;
+  const rankMap={A:1,B:2,C:3,D:4,E:5,F:6,G:7};
+  const effRanks=items.map(x=>rankMap[x.effClass]||4);
+  const bestEffRank=effRanks.length>1&&new Set(effRanks).size>1?Math.min(...effRanks):null;
+  dlg.innerHTML=`
+    <div class="ux-compare-modal-shell">
+      <div class="ux-compare-modal-head">
+        <div>
+          <h2>${sw?"Ulinganisho wa Magari":"Side-by-Side Comparison"}</h2>
+        </div>
+        <div class="ux-compare-head-actions">
+          <button type="button" class="ux-compare-clear-btn" id="modalClearCompareBtn">${sw?"Futa yote":"Clear all"}</button>
+          <button type="button" class="ux-compare-close" id="closeCompareModalBtn" aria-label="${sw?"Funga ulinganisho":"Close comparison"}">×</button>
+        </div>
+      </div>
+      <div class="ux-compare-scroll">
+        <table class="ux-compare-table">
+          <thead>
+            <tr>
+              <th class="ux-compare-rowhead">${sw?"Gari":"Vehicle"}</th>
+              ${items.map(c=>`
+                <th class="ux-compare-col-head">
+                  ${c.photo?`<img class="ux-compare-photo" src="${esc(c.photo)}" alt="${esc(c.title)}">`:""}
+                  <span class="ux-compare-title">${esc(c.title)}</span>
+                  <div class="ux-compare-col-btns">
+                    <button type="button" class="ux-compare-mini-btn" data-compare-open="${esc(c.id)}">${sw?"Fungua":"Details"}</button>
+                    <a class="ux-compare-mini-btn" href="/vehicle.html?id=${encodeURIComponent(c.id)}">${sw?"Karatasi A4":"Full spec"}</a>
+                    <button type="button" class="ux-compare-mini-btn" data-compare-remove="${esc(c.id)}" aria-label="${sw?"Ondoa":"Remove"} ${esc(c.title)}">×</button>
+                  </div>
+                </th>
+              `).join("")}
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th class="ux-compare-rowhead">${sw?"Bei (KES)":"Price (KES)"}</th>
+              ${items.map(c=>`<td><strong>KES ${fmt(c.price)}</strong>${minPrice!==null&&Number(c.price)===minPrice?`<span class="ux-compare-best">${sw?"Bei nafuu zaidi":"Lowest price"}</span>`:""}</td>`).join("")}
+            </tr>
+            <tr>
+              <th class="ux-compare-rowhead">${sw?"Daraja la Mafuta":"Fuel Efficiency"}</th>
+              ${items.map(c=>`<td class="ux-compare-eff-value" data-eff="${esc(c.effClass)}"><strong>${sw?"Daraja":"Class"} ${esc(c.effClass)}</strong> · ${esc(effTierText(c.effClass))}${bestEffRank!==null&&(rankMap[c.effClass]||4)===bestEffRank?`<span class="ux-compare-best">${sw?"Ufanisi bora zaidi":"Most efficient"}</span>`:""}</td>`).join("")}
+            </tr>
+            <tr>
+              <th class="ux-compare-rowhead">${sw?"Umbali":"Mileage"}</th>
+              ${items.map(c=>`<td>${fmt(c.km)} km${minKm!==null&&Number(c.km)===minKm?`<span class="ux-compare-best">${sw?"Kilomita chache zaidi":"Lowest mileage"}</span>`:""}</td>`).join("")}
+            </tr>
+            <tr>
+              <th class="ux-compare-rowhead">${sw?"Mwaka":"Year"}</th>
+              ${items.map(c=>`<td>${esc(c.year||"—")}</td>`).join("")}
+            </tr>
+            <tr>
+              <th class="ux-compare-rowhead">${sw?"Aina ya Mafuta":"Fuel Type"}</th>
+              ${items.map(c=>`<td>${esc(c.fuel||"—")}</td>`).join("")}
+            </tr>
+            <tr>
+              <th class="ux-compare-rowhead">${sw?"Muuzaji / Eneo":"Seller & Location"}</th>
+              ${items.map(c=>`<td>${esc(c.sellerName||"—")}${c.location?`<br><small>${esc(c.location)}</small>`:""}</td>`).join("")}
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+  $("closeCompareModalBtn")?.addEventListener("click",()=>dlg.close());
+  $("modalClearCompareBtn")?.addEventListener("click",clearCompareList);
+  dlg.querySelectorAll("[data-compare-remove]").forEach(btn=>btn.addEventListener("click",()=>toggleCompareVehicle(btn.dataset.compareRemove)));
+  dlg.querySelectorAll("[data-compare-open]").forEach(btn=>btn.addEventListener("click",()=>{
+    const targetId=btn.dataset.compareOpen;
+    dlg.close();
+    const live=cars.find(c=>String(c.id)===String(targetId));
+    if(live)detail(live.id);
+    else location.href=`/vehicle.html?id=${encodeURIComponent(targetId)}`;
+  }));
+}
+function openCompareModal(){
+  renderCompareModal();
+  const dlg=$("compareModal");
+  if(dlg&&!dlg.open)dlg.showModal();
+}
+$("compareModal")?.addEventListener("click",e=>{if(e.target===$("compareModal"))$("compareModal").close()});
+function detail(id){const c=cars.find(x=>x.id===id);if(!c)return;const saved=savedVehicleIds.has(String(c.id)),compared=isInCompare(c.id),sw=invLang()==="sw";const d=$("dlg"),s=c.seller,ph=c.photos;const sellerName=s.type==="yard"?(s.yard||s.name||"Car yard"):(s.name||"the seller");const vehicleRef=`3PA-${String(c.id||"").replace(/-/g,"").slice(0,8).toUpperCase()}`;const vehicleUrl=`${location.origin}/vehicle.html?id=${encodeURIComponent(c.id)}`;window.ThreePedalsUX?.recordRecentVehicle({id:c.id,title:`${c.year} ${c.make} ${c.model}`.trim(),price:c.price,km:c.km,fuel:c.fuel,photo:ph[0]||""});renderInventoryRecentSection();const msg=encodeURIComponent(`Hello ${sellerName}, I’m interested in the ${c.year} ${c.make} ${c.model} listed on 3 Pedals Auto KE.\nPrice: KES ${fmt(c.price)}\nMileage: ${fmt(c.km)} km\nFuel: ${c.fuel||"Not specified"}\nFuel efficiency: Class ${c.effClass}\nVehicle reference: ${vehicleRef}\n${s.location?`Location: ${s.location}\n`:""}Could you confirm availability and let me know when I can arrange a viewing?\nVehicle link: ${vehicleUrl}`);const wa=s.whatsapp?`<a class="btn" href="https://wa.me/${normWa(s.whatsapp)}?text=${msg}" target="_blank" rel="noopener">Chat on WhatsApp</a>`:"";const details=[["Mileage",`${fmt(c.km)} km`],["Fuel",c.fuel||"Not specified"],["Efficiency",`Class ${c.effClass} · ${effTierText(c.effClass)}`],["Listing type",s.type==="yard"?"Car yard":"Private seller"],["Location",s.location||"Not specified"]];const facts=items=>`<div class="detail-facts">${items.map(([label,value])=>`<div class="detail-fact"><span>${esc(label)}</span><strong>${esc(value)}</strong></div>`).join("")}</div>`;const sellerInfo=s.type==="yard"?[s.contact,s.location,s.phone,s.email].filter(Boolean).map(esc).join(" · "):s.phone?esc(s.phone):"Contact the seller directly about this listing.";const sellerCard=`<div class="seller-card">${s.logo?`<img class="seller-avatar" src="${esc(s.logo)}" alt="${esc(sellerName)} logo">`:`<div class="seller-avatar" aria-hidden="true">${s.type==="yard"?"🏢":"3P"}</div>`}<div><strong>${esc(sellerName)}</strong><p>${sellerInfo}</p></div></div>`;const specs=[...[ ["Year",c.year||"Not specified"],["Make",c.make||"Not specified"],["Model",c.model||"Not specified"],["Mileage",`${fmt(c.km)} km`],["Fuel",c.fuel||"Not specified"],["Efficiency class",`Class ${c.effClass} (${effTierText(c.effClass,true)})`] ]];d.innerHTML=`<div class="detail" data-car-id="${esc(c.id)}"><button class="detail-modal-close" id="close" type="button" aria-label="Close vehicle details">×</button><div class="gallery">${ph.length?`<img id="mainimg" class="mainimg" src="${esc(ph[0])}" alt="${esc(c.make+" "+c.model)} photo 1 of ${ph.length}" fetchpriority="high">${ph.length>1?`<div class="thumbs">${ph.map((p,i)=>`<button type="button" data-i="${i}" aria-label="Show photo ${i+1}" aria-current="${i===0}"><img src="${esc(p)}" alt="" loading="lazy"></button>`).join("")}</div>`:""}`:`<div class="mainimg" style="display:grid;place-items:center;color:var(--gold)">No photos available</div>`}</div><article class="info"><div class="detail-heading"><div><span class="eyebrow">${s.type==="yard"?"Car yard listing":"Private listing"}</span><h2>${esc(c.year)} ${esc(c.make)} ${esc(c.model)}</h2></div><div class="detail-price">KES ${fmt(c.price)}</div></div><p class="detail-ref">Vehicle reference: ${esc(String(c.id).slice(0,8).toUpperCase())}</p>${facts(details)}${sellerCard}<section class="detail-section"><h3>About this car</h3><p>${esc(c.desc||"No description provided by the seller.")}</p></section><details class="detail-disclosure"><summary>Specifications</summary>${facts(specs)}</details><p class="detail-note">For your safety, inspect the vehicle in person, verify ownership documents and complete payment only after you are satisfied with the car and paperwork.</p><div class="actions"><button type="button" class="btn ghost" id="detailSaveVehicle" data-save-vehicle="${esc(c.id)}" aria-pressed="${String(saved)}">${saved?"Saved ✓ · Remove":"Save vehicle"}</button><button type="button" class="btn ghost" id="detailCompareVehicle" data-compare-vehicle="${esc(c.id)}" aria-pressed="${String(compared)}">${compared?(sw?"Kwenye linganisho ✓ · Ondoa":"In compare ✓ · Remove"):(sw?"Ongeza kulinganisha":"Compare")}</button>${wa}${s.phone?`<a class="btn ghost" href="tel:${esc(normWa(s.phone))}">Call seller</a>`:""}<a class="btn ghost" href="/vehicle.html?id=${encodeURIComponent(c.id)}">Full spec &amp; A4</a></div></article></div>`;let photoIndex=0;const showPhoto=index=>{photoIndex=(index+ph.length)%ph.length;const image=d.querySelector("#mainimg"),counter=d.querySelector(".gallery-count");if(image){image.src=ph[photoIndex];image.alt=`${c.make} ${c.model} — photo ${photoIndex+1} of ${ph.length}`}if(counter)counter.textContent=`${photoIndex+1} / ${ph.length}`;d.querySelectorAll(".thumbs button").forEach((button,i)=>button.setAttribute("aria-current",String(i===photoIndex)))};if(ph.length>1){d.querySelector(".gallery").insertAdjacentHTML("beforeend",`<span class="gallery-count">1 / ${ph.length}</span><button class="gallery-step gallery-prev" type="button" data-gallery-step="-1" aria-label="Previous photo">‹</button><button class="gallery-step gallery-next" type="button" data-gallery-step="1" aria-label="Next photo">›</button>`)}if(ph.length){const viewPhoto=()=>{const car=cars.find(item=>String(item.id)===String(d.querySelector(".detail")?.dataset?.carId));if(car)openInventoryViewer(car)};d.querySelector("#mainimg").onclick=viewPhoto}d.showModal();d.querySelectorAll(".thumbs button").forEach(button=>button.onclick=()=>showPhoto(+button.dataset.i));d.querySelectorAll("[data-gallery-step]").forEach(button=>button.onclick=()=>showPhoto(photoIndex+Number(button.dataset.galleryStep)));$("close").onclick=()=>d.close();const saveButton=$("detailSaveVehicle");if(saveButton)saveButton.onclick=()=>toggleInventorySavedVehicle(c.id,saveButton);const compareButton=$("detailCompareVehicle");if(compareButton)compareButton.onclick=()=>toggleCompareVehicle(c)}
+const inventoryViewer=document.createElement("dialog");inventoryViewer.className="inventory-photo-viewer";inventoryViewer.id="inventoryPhotoViewer";inventoryViewer.setAttribute("aria-label","Full-size vehicle photos");inventoryViewer.innerHTML='<button type="button" class="viewer-close" aria-label="Close full-size photo">×</button><button type="button" class="viewer-step viewer-prev" aria-label="Previous photo">‹</button><span class="viewer-count"></span><img alt=""><button type="button" class="viewer-step viewer-next" aria-label="Next photo">›</button>';document.body.appendChild(inventoryViewer);let viewerPhotos=[],viewerIndex=0;function syncInventoryViewer(){const image=inventoryViewer.querySelector("img");image.src=viewerPhotos[viewerIndex]||"";image.alt="Full-size vehicle photo "+(viewerIndex+1)+" of "+viewerPhotos.length;inventoryViewer.querySelector(".viewer-count").textContent=(viewerIndex+1)+" / "+viewerPhotos.length}function openInventoryViewer(car){viewerPhotos=(car.photos||[]).filter(p=>typeof p==="string"&&p.trim());if(!viewerPhotos.length)return;viewerIndex=0;syncInventoryViewer();inventoryViewer.classList.add("is-open");if(!inventoryViewer.open)inventoryViewer.showModal();inventoryViewer.querySelector(".viewer-close").focus()}function closeInventoryViewer(){inventoryViewer.classList.remove("is-open");if(inventoryViewer.open)inventoryViewer.close();const image=inventoryViewer.querySelector("img");if(image)image.removeAttribute("src");viewerPhotos=[];viewerIndex=0}function openCurrentDetailPhoto(){const id=$("dlg").querySelector(".detail")?.dataset?.carId;const car=cars.find(item=>String(item.id)===String(id));if(car)openInventoryViewer(car)}inventoryViewer.querySelector(".viewer-close").onclick=closeInventoryViewer;inventoryViewer.querySelector(".viewer-prev").onclick=()=>{viewerIndex=(viewerIndex+viewerPhotos.length-1)%viewerPhotos.length;syncInventoryViewer()};inventoryViewer.querySelector(".viewer-next").onclick=()=>{viewerIndex=(viewerIndex+1)%viewerPhotos.length;syncInventoryViewer()};inventoryViewer.addEventListener("click",e=>{if(e.target===inventoryViewer)closeInventoryViewer()});inventoryViewer.addEventListener("cancel",e=>{e.preventDefault();closeInventoryViewer()});document.addEventListener("keydown",e=>{if(!inventoryViewer.classList.contains("is-open"))return;if(e.key==="Escape"){e.preventDefault();closeInventoryViewer();return}if(e.key==="ArrowLeft"){viewerIndex=(viewerIndex+viewerPhotos.length-1)%viewerPhotos.length;syncInventoryViewer()}if(e.key==="ArrowRight"){viewerIndex=(viewerIndex+1)%viewerPhotos.length;syncInventoryViewer()}});document.querySelectorAll("#grid,#featuredGrid").forEach(grid=>{grid.addEventListener("click",e=>{const save=e.target.closest("[data-save-vehicle]");if(save){e.preventDefault();e.stopPropagation();toggleInventorySavedVehicle(save.dataset.saveVehicle,save);return}const cmp=e.target.closest("[data-compare-vehicle]");if(cmp){e.preventDefault();e.stopPropagation();toggleCompareVehicle(cmp.dataset.compareVehicle);return}const card=e.target.closest(".card");if(!card)return;const car=cars.find(item=>String(item.id)===String(card.dataset.id));if(car)detail(car.id)});grid.addEventListener("keydown",e=>{const card=e.target.closest(".card");if(!card||!["Enter"," "].includes(e.key))return;e.preventDefault();const car=cars.find(item=>String(item.id)===String(card.dataset.id));if(car)detail(car.id)})});
 $("grid").addEventListener("pointermove",e=>{if(e.pointerType!=="mouse")return;const photo=e.target.closest(".photo");if(!photo)return;const r=photo.getBoundingClientRect();photo.style.setProperty("--lens-x",`${((e.clientX-r.left)/r.width)*100}%`);photo.style.setProperty("--lens-y",`${((e.clientY-r.top)/r.height)*100}%`)});
-["q","make","modelFilter","yearFilter","fuel","max","sort"].forEach(id=>$(id).addEventListener("input",()=>{visibleCarCount=CAR_PAGE_SIZE;render()}));$("loadMoreCars").addEventListener("click",()=>{visibleCarCount+=CAR_PAGE_SIZE;render()});$("make").addEventListener("change",()=>{updateModelOptions();render()});$("clearFilters").addEventListener("click",()=>{$("q").value="";$("make").value="";$("modelFilter").value="";$("yearFilter").value="";$("fuel").value="";$("max").value="0";$("sort").value="new";updateModelOptions();render()});
+["q","make","modelFilter","yearFilter","fuel","efficiencyClass","max","sort"].forEach(id=>$(id).addEventListener("input",()=>{visibleCarCount=CAR_PAGE_SIZE;render()}));$("loadMoreCars").addEventListener("click",()=>{visibleCarCount+=CAR_PAGE_SIZE;render()});$("make").addEventListener("change",()=>{updateModelOptions();render()});$("clearFilters").addEventListener("click",()=>{$("q").value="";$("make").value="";$("modelFilter").value="";$("yearFilter").value="";$("fuel").value="";$("efficiencyClass").value="";$("max").value="0";$("sort").value="new";updateModelOptions();render()});syncEfficiencyFilterLanguage();renderCompareTray();
 function updateModelOptions(){const make=$("make").value,models=[...new Set(cars.filter(c=>!make||c.make===make).map(c=>c.model).filter(Boolean))].sort((a,b)=>a.localeCompare(b)),select=$("modelFilter"),previous=select.value;select.innerHTML='<option value="">All models</option>'+models.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");select.disabled=!models.length;if(models.includes(previous))select.value=previous}
 const INVENTORY_CACHE_KEY="3pedals:inventory-approved:v4";
 function readInventoryCache(){try{const legacy=INVENTORY_CACHE_KEY.replace(":v4",":v3");const raw=localStorage.getItem(INVENTORY_CACHE_KEY)||sessionStorage.getItem(INVENTORY_CACHE_KEY)||localStorage.getItem(legacy)||sessionStorage.getItem(legacy);const saved=JSON.parse(raw||"null");return saved&&Array.isArray(saved.rows)&&Date.now()-saved.at<10*60*1000?saved.rows:null}catch(_){return null}}
