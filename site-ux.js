@@ -967,6 +967,359 @@
     return `<svg viewBox="0 0 ${vb} ${vb}" role="img" aria-label="${escapeHtml(label)}" shape-rendering="crispEdges"><rect width="${vb}" height="${vb}" fill="#ffffff"/><path d="${d}" fill="#141311"/></svg>`;
   }
 
+  // ===== Multi-Turn Gemini Auto Advisor Chatbot (Search & Maps Grounding) =====
+  const CHAT_STORAGE_KEY = "3pedals:gemini-chat:v1";
+
+  function readChatSession() {
+    try {
+      const parsed = JSON.parse(sessionStorage.getItem(CHAT_STORAGE_KEY) || "null");
+      if (parsed && Array.isArray(parsed.messages)) {
+        return {
+          role: String(parsed.role || "buyer_advisor"),
+          mode: String(parsed.mode || "auto"),
+          messages: parsed.messages.filter((m) => m && typeof m.text === "string").slice(-24)
+        };
+      }
+    } catch (_) {}
+    return { role: "buyer_advisor", mode: "auto", messages: [] };
+  }
+
+  function writeChatSession(state) {
+    try {
+      sessionStorage.setItem(
+        CHAT_STORAGE_KEY,
+        JSON.stringify({
+          role: state.role,
+          mode: state.mode,
+          messages: state.messages.slice(-24)
+        })
+      );
+    } catch (_) {}
+  }
+
+  function formatChatMarkdown(raw) {
+    const escaped = escapeHtml(String(raw || ""));
+    const lines = escaped.split(/\r?\n/);
+    const htmlLines = [];
+    let inList = false;
+
+    const inlineFormat = (txt) =>
+      txt
+        .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+        .replace(/`([^`]+)`/g, "<code>$1</code>");
+
+    for (const line of lines) {
+      const bulletMatch = line.match(/^\s*[-*•]\s+(.*)$/);
+      if (bulletMatch) {
+        if (!inList) {
+          htmlLines.push("<ul>");
+          inList = true;
+        }
+        htmlLines.push(`<li>${inlineFormat(bulletMatch[1])}</li>`);
+      } else {
+        if (inList) {
+          htmlLines.push("</ul>");
+          inList = false;
+        }
+        if (line.trim()) {
+          htmlLines.push(`<p>${inlineFormat(line)}</p>`);
+        }
+      }
+    }
+    if (inList) htmlLines.push("</ul>");
+    return htmlLines.join("") || `<p>${escaped}</p>`;
+  }
+
+  function initGeminiAdvisorChat() {
+    if (document.getElementById("uxChatFab") || location.pathname.toLowerCase().includes("admin")) {
+      return;
+    }
+
+    const state = readChatSession();
+    let userLocation = null;
+    let isSending = false;
+
+    const fab = document.createElement("button");
+    fab.type = "button";
+    fab.id = "uxChatFab";
+    fab.className = "ux-chat-fab no-print";
+    fab.setAttribute("aria-expanded", "false");
+    fab.setAttribute("aria-controls", "uxChatDrawer");
+
+    const drawer = document.createElement("aside");
+    drawer.id = "uxChatDrawer";
+    drawer.className = "ux-chat-drawer no-print";
+    drawer.hidden = true;
+    drawer.setAttribute("role", "dialog");
+    drawer.setAttribute("aria-label", "3P Auto Advisor Chat");
+
+    document.body.appendChild(fab);
+    document.body.appendChild(drawer);
+
+    function chatLabels() {
+      const sw = getLang() === "sw";
+      return {
+        fab: sw ? "Uliza Mshauri" : "Auto Advisor",
+        title: sw ? "Mshauri wa Magari 3P" : "3P Auto Advisor",
+        subtitle: sw ? "Utafutaji wa Google, Ramani & Ushauri" : "Live Search, Maps Grounding & Specs",
+        roleLabel: sw ? "Jukumu" : "Role",
+        modeLabel: sw ? "Zana" : "Mode",
+        clear: sw ? "Futa" : "Clear",
+        close: sw ? "Funga" : "Close",
+        locBtn: userLocation ? (sw ? "Eneo ✓" : "GPS ✓") : (sw ? "Tumia eneo" : "Use GPS"),
+        placeholder: sw
+          ? "Uliza kuhusu magari, ushuru wa KRA, au yadi karibu nawe…"
+          : "Ask about cars in Kenya, import duties, or nearby yards…",
+        send: sw ? "Tuma" : "Send",
+        thinking: sw ? "Inachakata…" : "Thinking…",
+        emptyTitle: sw
+          ? "Karibu! Niulize chochote kuhusu magari Kenya."
+          : "Ask about cars in Kenya, live duties, or nearby car yards.",
+        prompts: sw
+          ? [
+              "Linganisha matumizi ya mafuta kati ya Mazda Atenza na Subaru Forester Kenya",
+              "Yadi za magari zilizo karibu Mombasa Road Nairobi",
+              "Sheria za sasa za ushuru wa KRA na kikomo cha miaka 8 Kenya"
+            ]
+          : [
+              "Compare 2016 Mazda Atenza vs Subaru Forester maintenance in Kenya",
+              "Reputable car yards along Mombasa Road Nairobi",
+              "Current Kenya car import duty & 8-year age limit rules"
+            ],
+        roles: [
+          { value: "buyer_advisor", label: sw ? "Mshauri wa Ununuzi" : "Buyer Advisor" },
+          { value: "yard_locator", label: sw ? "Yadi & Ramani" : "Yard & Places Locator" },
+          { value: "import_specialist", label: sw ? "Ushuru & KRA" : "Import & Duty Specialist" },
+          { value: "inspection_tech", label: sw ? "Ukaguzi wa Kiufundi" : "Inspection Tech" }
+        ],
+        modes: [
+          { value: "auto", label: sw ? "Otomatiki (Search/Maps)" : "Auto (Search / Maps)" },
+          { value: "search", label: "Google Search" },
+          { value: "maps", label: "Google Maps" },
+          { value: "fast", label: sw ? "Haraka (Flash Lite)" : "Fast (Flash Lite)" }
+        ]
+      };
+    }
+
+    function syncFabLabel() {
+      const lbl = chatLabels();
+      fab.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>${lbl.fab}</span>`;
+      fab.setAttribute("aria-label", lbl.fab);
+    }
+
+    function renderDrawer() {
+      const lbl = chatLabels();
+      drawer.innerHTML = `
+        <div class="ux-chat-head">
+          <div>
+            <strong>${lbl.title}</strong>
+            <span>${lbl.subtitle}</span>
+          </div>
+          <div class="ux-chat-head-actions">
+            <button type="button" class="ux-chat-mini-btn" id="uxChatGpsBtn" title="Share current location for Maps grounding">${lbl.locBtn}</button>
+            <button type="button" class="ux-chat-mini-btn" id="uxChatClearBtn">${lbl.clear}</button>
+            <button type="button" class="ux-chat-close-btn" id="uxChatCloseBtn" aria-label="${lbl.close}">×</button>
+          </div>
+        </div>
+        <div class="ux-chat-controls">
+          <label>
+            <span>${lbl.roleLabel}</span>
+            <select id="uxChatRoleSelect">
+              ${lbl.roles.map((r) => `<option value="${r.value}" ${state.role === r.value ? "selected" : ""}>${r.label}</option>`).join("")}
+            </select>
+          </label>
+          <label>
+            <span>${lbl.modeLabel}</span>
+            <select id="uxChatModeSelect">
+              ${lbl.modes.map((m) => `<option value="${m.value}" ${state.mode === m.value ? "selected" : ""}>${m.label}</option>`).join("")}
+            </select>
+          </label>
+        </div>
+        <div class="ux-chat-messages" id="uxChatMessages" role="log" aria-live="polite"></div>
+        <form class="ux-chat-form" id="uxChatForm">
+          <textarea id="uxChatInput" rows="2" placeholder="${lbl.placeholder}" aria-label="${lbl.placeholder}"></textarea>
+          <button type="submit" id="uxChatSendBtn">${lbl.send}</button>
+        </form>
+      `;
+
+      renderMessages();
+
+      document.getElementById("uxChatCloseBtn")?.addEventListener("click", () => setOpen(false));
+      document.getElementById("uxChatClearBtn")?.addEventListener("click", () => {
+        state.messages = [];
+        writeChatSession(state);
+        renderMessages();
+      });
+      document.getElementById("uxChatRoleSelect")?.addEventListener("change", (e) => {
+        state.role = e.target.value;
+        writeChatSession(state);
+      });
+      document.getElementById("uxChatModeSelect")?.addEventListener("change", (e) => {
+        state.mode = e.target.value;
+        writeChatSession(state);
+      });
+      document.getElementById("uxChatGpsBtn")?.addEventListener("click", () => {
+        if (!navigator.geolocation) return;
+        const btn = document.getElementById("uxChatGpsBtn");
+        if (btn) btn.textContent = "…";
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            userLocation = { latitude: pos.coords.latitude, longitude: pos.coords.longitude };
+            if (btn) btn.textContent = chatLabels().locBtn;
+          },
+          () => {
+            if (btn) btn.textContent = "GPS ✕";
+          },
+          { enableHighAccuracy: false, timeout: 7000 }
+        );
+      });
+
+      const form = document.getElementById("uxChatForm");
+      const input = document.getElementById("uxChatInput");
+      form?.addEventListener("submit", (e) => {
+        e.preventDefault();
+        sendMessage(input?.value || "");
+      });
+      input?.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault();
+          sendMessage(input.value);
+        }
+      });
+    }
+
+    function renderMessages() {
+      const box = document.getElementById("uxChatMessages");
+      if (!box) return;
+      const lbl = chatLabels();
+
+      if (!state.messages.length) {
+        box.innerHTML = `
+          <div class="ux-chat-empty">
+            <p>${lbl.emptyTitle}</p>
+            <div class="ux-chat-starters">
+              ${lbl.prompts.map((p) => `<button type="button" class="ux-chat-starter">${escapeHtml(p)}</button>`).join("")}
+            </div>
+          </div>
+        `;
+        box.querySelectorAll(".ux-chat-starter").forEach((btn) => {
+          btn.addEventListener("click", () => sendMessage(btn.textContent || ""));
+        });
+        return;
+      }
+
+      box.innerHTML = state.messages
+        .map((m) => {
+          const isUser = m.role === "user";
+          const sources = Array.isArray(m.sources) ? m.sources : [];
+          const sourcesHtml = sources.length
+            ? `<div class="ux-chat-sources">${sources
+                .map(
+                  (s) =>
+                    `<a class="ux-chat-source-link" href="${escapeHtml(s.uri)}" target="_blank" rel="noopener noreferrer" data-source-type="${escapeHtml(s.type)}">${s.type === "maps" ? "📍" : "🔎"} <span>${escapeHtml(s.title)}</span></a>${
+                      Array.isArray(s.snippets) && s.snippets.length
+                        ? `<small class="ux-chat-snippet">${escapeHtml(s.snippets[0])}</small>`
+                        : ""
+                    }`
+                )
+                .join("")}</div>`
+            : "";
+          const badge =
+            !isUser && m.model
+              ? `<span class="ux-chat-meta">${escapeHtml(m.model)}${m.groundingMode ? " · " + escapeHtml(m.groundingMode) : ""}</span>`
+              : "";
+          return `
+            <div class="ux-chat-msg ${isUser ? "is-user" : m.isError ? "is-error" : "is-model"}">
+              <div class="ux-chat-bubble">
+                ${isUser ? `<p>${escapeHtml(m.text)}</p>` : formatChatMarkdown(m.text)}
+                ${sourcesHtml}
+                ${badge}
+              </div>
+            </div>
+          `;
+        })
+        .join("");
+
+      if (isSending) {
+        box.insertAdjacentHTML(
+          "beforeend",
+          `<div class="ux-chat-msg is-model"><div class="ux-chat-bubble ux-chat-typing">${lbl.thinking}</div></div>`
+        );
+      }
+      box.scrollTop = box.scrollHeight;
+    }
+
+    async function sendMessage(rawText) {
+      const text = String(rawText || "").trim();
+      if (!text || isSending) return;
+      const input = document.getElementById("uxChatInput");
+      const sendBtn = document.getElementById("uxChatSendBtn");
+      if (input) input.value = "";
+
+      state.messages.push({ role: "user", text });
+      writeChatSession(state);
+      isSending = true;
+      if (sendBtn) sendBtn.disabled = true;
+      renderMessages();
+
+      try {
+        const res = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            messages: state.messages.filter((m) => !m.isError).map((m) => ({ role: m.role, text: m.text })),
+            role: state.role,
+            mode: state.mode,
+            lang: getLang(),
+            location: userLocation
+          })
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          throw new Error(data.error || `Request failed (${res.status})`);
+        }
+        state.messages.push({
+          role: "model",
+          text: String(data.reply || ""),
+          model: data.model || "gemini-4-hydrogen",
+          groundingMode: data.groundingMode || "",
+          sources: Array.isArray(data.groundingSources) ? data.groundingSources : []
+        });
+      } catch (err) {
+        state.messages.push({
+          role: "model",
+          isError: true,
+          text: err?.message || "Unable to reach the Auto Advisor right now. Please try again."
+        });
+      } finally {
+        isSending = false;
+        if (sendBtn) sendBtn.disabled = false;
+        writeChatSession(state);
+        renderMessages();
+      }
+    }
+
+    function setOpen(next) {
+      drawer.hidden = !next;
+      fab.setAttribute("aria-expanded", String(next));
+      if (next) {
+        renderDrawer();
+        setTimeout(() => document.getElementById("uxChatInput")?.focus(), 40);
+      }
+    }
+
+    fab.addEventListener("click", () => setOpen(drawer.hidden));
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !drawer.hidden) setOpen(false);
+    });
+    window.addEventListener("3pedals:lang-changed", () => {
+      syncFabLabel();
+      if (!drawer.hidden) renderDrawer();
+    });
+
+    syncFabLabel();
+  }
+
   window.ThreePedalsUX = {
     getTheme,
     setTheme: applyTheme,
@@ -990,6 +1343,7 @@
     initHeaderControls();
     initBackToTop();
     initFooterNewsletter();
+    initGeminiAdvisorChat();
     applyLanguage(getLang());
   }
 
