@@ -1055,11 +1055,14 @@ async function toggleSavedVehicle(id,button){
   id=String(id);const removing=savedVehicleIds.has(id);
   if(button){button.disabled=true;button.textContent=removing?"Removing…":"Saving…"}
   const result=removing?await sb.from("saved_vehicles").delete().eq("listing_id",id):await sb.from("saved_vehicles").insert({listing_id:id,user_id:me.id});
-  if(result.error){if(button){button.disabled=false;button.textContent=removing?"Remove saved":"Save vehicle"}alert(result.error.message||"Could not update saved vehicles.");return}
+  if(result.error){if(button){button.disabled=false;button.textContent=removing?"Remove saved":"Save vehicle"}window.ThreePedalsAccountUI?.toast(result.error.message||"Could not update saved vehicles.","err");return}
   if(removing){savedVehicleIds.delete(id);savedVehicleRows=savedVehicleRows.filter(row=>String(row.listing_id)!==id)}
   else{savedVehicleIds.add(id);savedVehiclesLoadedFor=null;await loadSavedVehicles()}
   document.querySelectorAll("[data-save-vehicle]").forEach(el=>{if(el.dataset.saveVehicle===id){el.textContent=savedVehicleIds.has(id)?"Saved ✓":"Save vehicle";el.setAttribute("aria-pressed",String(savedVehicleIds.has(id)));el.disabled=false}});
+  const savedMetric=$("accBody")?.querySelector('[data-overview-page="buying"] strong');
+  if(savedMetric)savedMetric.textContent=String(savedVehicleRows.length);
   renderSavedVehicles();
+  window.ThreePedalsAccountUI?.toast(removing?"Removed from saved vehicles.":"Saved to your shortlist.","ok");
 }
 function renderSavedVehicles(){
   const target=$("savedVehiclesGrid");if(!target)return;
@@ -1149,8 +1152,15 @@ async function loadSession(){
   if(me){
     const consentChoice=window.ThreePedalsConsent?.getChoice?.()||"rejected";persistPrivacyConsent(consentChoice).catch(error=>console.warn("Privacy preference sync failed:",error));
     try{
-      if(sessionStorage.getItem("3pedals:account-open")==="1"){
-        const savedPage=restoreAccountPage||sessionStorage.getItem("3pedals:account-page")||"settings";
+      const urlParams=new URLSearchParams(location.search);
+      const returnToAccount=urlParams.get("returnToAccount")==="1";
+      if(returnToAccount){
+        urlParams.delete("returnToAccount");
+        const cleanQuery=urlParams.toString();
+        history.replaceState(history.state,"",location.pathname+(cleanQuery?`?${cleanQuery}`:"")+location.hash);
+      }
+      if(returnToAccount||sessionStorage.getItem("3pedals:account-open")==="1"){
+        const savedPage=restoreAccountPage||sessionStorage.getItem("3pedals:account-page")||"overview";
         // Populate the already-open loading shell as soon as the authenticated session is known.
         openAccount({refresh:true,restore:true,page:savedPage}).catch(error=>console.warn("Could not restore the account panel:",error));
       }
@@ -1334,11 +1344,22 @@ async function updateAccountPassword(){
   catch(e){err.textContent=e.message||"Could not update your password."}finally{btn.disabled=false}
 }
 async function permanentlyDeleteAccount(){
-  if(!confirm("Permanently delete your account and your listings and bookings? This cannot be undone."))return;
-  if(prompt('Type DELETE to permanently remove your account.')!=="DELETE")return;
-  const btn=$("accDeleteAccount"),err=$("accProfileErr");btn.disabled=true;err.textContent="Deleting account…";
-  try{const {error}=await sb.rpc("delete_my_account");if(error)throw error;await sb.auth.signOut();me=null;profile=null;refreshAccountUI();$("accDlg").close();alert("Your account has been permanently deleted.")}
-  catch(e){err.textContent=e.message||"Could not delete the account. Confirm the account deletion SQL has been installed.";btn.disabled=false}
+  const ui=window.ThreePedalsAccountUI;
+  const typed=await ui?.prompt({
+    eyebrow:"DANGER ZONE",
+    title:"Permanently delete account",
+    message:"This will permanently remove your account, vehicle listings, saved vehicles, and bookings.",
+    label:'Type DELETE to confirm permanent removal',
+    placeholder:"DELETE",
+    matchExact:"DELETE",
+    required:true,
+    confirmText:"Delete permanently",
+    danger:true
+  });
+  if(typed!=="DELETE")return;
+  const btn=$("accDeleteAccount"),err=$("accProfileErr");btn.disabled=true;if(err)err.textContent="Deleting account…";
+  try{const {error}=await sb.rpc("delete_my_account");if(error)throw error;await sb.auth.signOut();me=null;profile=null;try{sessionStorage.removeItem("3pedals:account-open");sessionStorage.removeItem("3pedals:account-page");sessionStorage.removeItem("3pedals:account-view-cache")}catch(_){}refreshAccountUI();$("accDlg").close();ui?.toast("Your account has been permanently deleted.","ok")}
+  catch(e){if(err)err.textContent=e.message||"Could not delete the account. Confirm the account deletion SQL has been installed.";ui?.toast(e.message||"Could not delete the account.","err");btn.disabled=false}
 }
 async function changeProfilePhoto(file){
   const err=$("accProfileErr");if(!file)return false;
@@ -1413,6 +1434,7 @@ window.addEventListener("popstate",event=>{const state=event.state||{},dialog=$(
 async function openAccount(options={}){
   const renderVersion=++accountRenderVersion;
   const d=$("accDlg"),box=$("accBody");
+  const preservedSettingsTab=options.settingsTab||(d.open?box.querySelector("[data-settings-tab].active")?.dataset?.settingsTab:null);
   // Restore the previously selected account page after a data refresh or browser reload.
   let requestedAccountPage=options.page||((d.open&&history.state?.accountOpen)?history.state.accountPage:null);
   if(!requestedAccountPage&&options.restore){try{requestedAccountPage=sessionStorage.getItem("3pedals:account-page")}catch(_){}}
@@ -1682,19 +1704,36 @@ async function openAccount(options={}){
        $("refreshMyChauffeurBookings")?.addEventListener("click",()=>loadMyChauffeurBookings());
        host.querySelectorAll("[data-request-chauffeur-cancel]").forEach(button=>button.addEventListener("click",async()=>{
         const bookingId=button.dataset.requestChauffeurCancel;
-        const reason=prompt("Why would you like to cancel this booking? Please provide a reason.\n\nChoose Cancel in the next step if you would rather keep the booking.");
-        if(reason===null)return;
-        if(!reason.trim()){alert("Please enter a reason before requesting cancellation.");return}
-        if(!confirm("Submit this cancellation request? The booking will remain active until an administrator accepts it. Choose Cancel to keep the booking."))return;
+        const ui=window.ThreePedalsAccountUI;
+        const reason=await ui?.prompt({
+          eyebrow:"CHAUFFEUR BOOKING",
+          title:"Request cancellation",
+          message:"Tell us why you need to cancel this booking. Your booking remains active until an administrator reviews the request.",
+          label:"Cancellation reason",
+          placeholder:"e.g. Change in travel schedule",
+          multiline:true,
+          required:true,
+          confirmText:"Submit request",
+          cancelText:"Keep booking"
+        });
+        if(!reason)return;
         button.disabled=true;button.textContent="Submitting…";
         const existing=cancellations.find(x=>String(x.booking_id)===String(bookingId)&&x.status==="pending");
-        if(existing){button.disabled=false;button.textContent="Request cancellation";alert("A cancellation request is already awaiting review.");return}
+        if(existing){button.disabled=false;button.textContent="Request cancellation";ui?.toast("A cancellation request is already awaiting review.","warn");return}
         const {error}=await sb.from("chauffeur_cancellation_requests").insert({booking_id:bookingId,user_id:accountOwnerId,reason:reason.trim(),status:"pending",admin_note:""});
-        if(error){button.disabled=false;button.textContent="Request cancellation";alert("We could not submit your cancellation request: "+error.message);return}
+        if(error){button.disabled=false;button.textContent="Request cancellation";ui?.toast("Could not submit cancellation request: "+error.message,"err");return}
+        ui?.toast("Cancellation request submitted.","ok");
         await loadMyChauffeurBookings();
        }));
        host.querySelectorAll("[data-request-chauffeur-restore]").forEach(button=>button.addEventListener("click",async()=>{
-        if(!confirm("Send a request to restore this cancelled booking? The administrator must approve it before the booking becomes active again."))return;
+        const ui=window.ThreePedalsAccountUI;
+        const confirmed=await ui?.confirm({
+          eyebrow:"CHAUFFEUR BOOKING",
+          title:"Request booking restoration",
+          message:"Send a request to restore this cancelled booking? An administrator must approve it before the booking becomes active again.",
+          confirmText:"Send request"
+        });
+        if(!confirmed)return;
         const originalText=button.textContent;
         button.disabled=true;button.textContent="Sending…";
         try{
@@ -1706,19 +1745,28 @@ async function openAccount(options={}){
           .select("id,status")
           .maybeSingle();
          if(error)throw error;
-         if(!data){throw new Error("No request was updated. Please refresh your bookings and try again. If this continues, contact our team.");}
+         if(!data){throw new Error("No request was updated. Please refresh your bookings and try again.");}
+         ui?.toast("Restoration request sent.","ok");
          await loadMyChauffeurBookings();
         }catch(error){
          console.error("Chauffeur booking restoration request failed",error);
          button.disabled=false;button.textContent=originalText;
-         alert("Your restoration request was not sent: "+(error?.message||"Please try again."));
+         ui?.toast("Restoration request failed: "+(error?.message||"Please try again."),"err");
         }
        }));
        host.querySelectorAll("[data-keep-chauffeur-booking]").forEach(button=>button.addEventListener("click",async()=>{
-        if(!confirm("Keep this booking and withdraw your pending cancellation request?"))return;
+        const ui=window.ThreePedalsAccountUI;
+        const confirmed=await ui?.confirm({
+          eyebrow:"CHAUFFEUR BOOKING",
+          title:"Keep this booking?",
+          message:"Withdraw your pending cancellation request so this chauffeur booking stays active.",
+          confirmText:"Withdraw cancellation"
+        });
+        if(!confirmed)return;
         button.disabled=true;button.textContent="Updating…";
         const {error}=await sb.from("chauffeur_cancellation_requests").update({status:"withdrawn",admin_note:"Customer chose to keep the booking."}).eq("id",button.dataset.keepChauffeurBooking).eq("user_id",accountOwnerId).eq("status","pending");
-        if(error){button.disabled=false;button.textContent="Keep this booking instead";alert("Could not withdraw the cancellation request: "+error.message);return}
+        if(error){button.disabled=false;button.textContent="Keep this booking instead";ui?.toast("Could not withdraw the cancellation request: "+error.message,"err");return}
+        ui?.toast("Cancellation request withdrawn.","ok");
         await loadMyChauffeurBookings();
        }));
       }catch(error){
@@ -1741,17 +1789,32 @@ async function openAccount(options={}){
   $("accUpdatePassword").onclick=updateAccountPassword;
   $("accDeleteAccount").onclick=permanentlyDeleteAccount;
   box.querySelectorAll("[data-sold]").forEach(bt=>bt.onclick=async()=>{
-    const salePrice=Number(prompt(`Enter the seller-reported final sale price in KES for ${bt.dataset.title||"this vehicle"}:`));
-    if(!Number.isFinite(salePrice)||salePrice<=0){alert("Enter a valid sale price greater than zero.");return}
-    if(!confirm("Mark this vehicle as SOLD? It will immediately be removed from the public Buy inventory. The sale amount is seller-reported, not a verified payout."))return;
+    const ui=window.ThreePedalsAccountUI;
+    const rawPrice=await ui?.prompt({
+      eyebrow:"RECORD SALE",
+      title:`Mark ${bt.dataset.title||"vehicle"} as sold`,
+      message:"Marking this vehicle as sold immediately removes it from public inventory.",
+      label:"Seller-reported final sale price (KES)",
+      placeholder:"e.g. 2450000",
+      inputType:"number",
+      min:"1",
+      step:"1",
+      required:true,
+      helperNote:"The sale amount is seller-reported for your insights only and is not a verified platform payout.",
+      confirmText:"Confirm & mark sold"
+    });
+    if(rawPrice===null)return;
+    const salePrice=Number(rawPrice);
+    if(!Number.isFinite(salePrice)||salePrice<=0){ui?.toast("Enter a valid sale price greater than zero.","warn");return}
     bt.disabled=true;bt.textContent="Updating…";
     const {data,error}=await sb.rpc("mark_listing_sold",{listing_id:bt.dataset.sold,reported_price:salePrice});
-    if(error){alert(error.message||"Could not mark this vehicle as sold.");bt.disabled=false;bt.textContent="Mark as sold";return}
-    if(data!==true){alert("We could not mark this vehicle as sold. Please try again.");bt.disabled=false;bt.textContent="Mark as sold";return}
-    openAccount();loadListings();
+    if(error){ui?.toast(error.message||"Could not mark this vehicle as sold.","err");bt.disabled=false;bt.textContent="Mark sold";return}
+    if(data!==true){ui?.toast("We could not mark this vehicle as sold. Please try again.","err");bt.disabled=false;bt.textContent="Mark sold";return}
+    ui?.toast("Vehicle marked as sold.","ok");
+    openAccount({refresh:true});loadListings();
   });
-  box.querySelectorAll("[data-reposted]").forEach(bt=>bt.onclick=async()=>{const msg=$("reminderMessage");bt.disabled=true;bt.textContent="Saving…";const {error}=await sb.from("listings").update({reposted_at:new Date().toISOString()}).eq("id",bt.dataset.reposted).eq("owner",me.id);if(error){msg.textContent=`Could not update reminder: ${error.message}`;bt.disabled=false;bt.textContent="Mark reposted today";return}openAccount()});
-  $("clearPromotionHistory")?.addEventListener("click",async()=>{if(!confirm("Clear promotion history from this seller account? This only hides the history here; payment records are retained."))return;const button=$("clearPromotionHistory"),message=$("promotionHistoryMessage"),now=new Date().toISOString();button.disabled=true;message.textContent="Clearing history…";const {error}=await sb.from("seller_settings").upsert({seller_id:me.id,promotion_history_cleared_at:now,updated_at:now},{onConflict:"seller_id"});if(error){message.textContent=`Could not clear history: ${error.message}`;button.disabled=false;return}message.textContent="History cleared from this account. Payment records are retained.";setTimeout(()=>openAccount(),700)});
+  box.querySelectorAll("[data-reposted]").forEach(bt=>bt.onclick=async()=>{const msg=$("reminderMessage");bt.disabled=true;bt.textContent="Saving…";const {error}=await sb.from("listings").update({reposted_at:new Date().toISOString()}).eq("id",bt.dataset.reposted).eq("owner",me.id);if(error){msg.textContent=`Could not update reminder: ${error.message}`;bt.disabled=false;bt.textContent="Mark reposted today";return}window.ThreePedalsAccountUI?.toast("Listing marked reposted today.","ok");openAccount({refresh:true})});
+  $("clearPromotionHistory")?.addEventListener("click",async()=>{const confirmed=await window.ThreePedalsAccountUI?.confirm({eyebrow:"PROMOTIONS",title:"Clear promotion history?",message:"This hides past promotion entries from your seller account view. Payment records remain retained securely.",confirmText:"Clear history"});if(!confirmed)return;const button=$("clearPromotionHistory"),message=$("promotionHistoryMessage"),now=new Date().toISOString();button.disabled=true;message.textContent="Clearing history…";const {error}=await sb.from("seller_settings").upsert({seller_id:me.id,promotion_history_cleared_at:now,updated_at:now},{onConflict:"seller_id"});if(error){message.textContent=`Could not clear history: ${error.message}`;button.disabled=false;return}message.textContent="History cleared from this account. Payment records are retained.";window.ThreePedalsAccountUI?.toast("Promotion history cleared.","ok");setTimeout(()=>openAccount({refresh:true}),600)});
   box.querySelectorAll("[data-promote-listing]").forEach(bt=>bt.onclick=()=>{menu.querySelector('[data-page="promotions"]')?.click();const select=$("promoListing");if(select){select.value=bt.dataset.promoteListing;requestAnimationFrame(()=>{const body=$("accBody");select.focus({preventScroll:true});body.scrollTo({top:body.scrollTop+select.getBoundingClientRect().top-body.getBoundingClientRect().top-24,behavior:"smooth"})})}});
   $("startPromotion")?.addEventListener("click",async()=>{
     const listing_id=$("promoListing").value,package_id=$("promoPackage").value,phone_number=$("promoPhone").value.trim(),msg=$("promotionMessage"),button=$("startPromotion");
@@ -1801,7 +1864,7 @@ async function openAccount(options={}){
   const listingSearch=$("sellerListingSearch"),listingStatus=$("sellerListingStatus"),listingCount=$("sellerListingCount");
   box.querySelector("[data-save-dealer-info]")?.addEventListener("click",saveAccountProfile);
   const clearMyCompleted=$("clearMyCompletedBookings");
-  clearMyCompleted?.addEventListener("click",async()=>{const completed=(B||[]).filter(item=>String(item.status||"").toLowerCase()==="done"||String(item.service_status||"").toLowerCase()==="completed");if(!completed.length){const host=$("myGarageBookings");if(host)host.innerHTML='<p class="meta">No completed bookings to clear.</p>';return}if(!confirm(`Clear ${completed.length} completed garage booking${completed.length===1?"":"s"} from My Garage? This removes their booking records from your account.`))return;clearMyCompleted.disabled=true;clearMyCompleted.textContent="Clearing…";const ids=completed.map(item=>item.id);const {error}=await sb.from("bookings").delete().in("id",ids).eq("user_id",me.id);if(error){clearMyCompleted.disabled=false;clearMyCompleted.textContent="Clear completed";alert("Could not clear completed bookings: "+error.message);return}ids.forEach(id=>box.querySelector(`[data-my-booking="${CSS.escape(String(id))}"]`)?.remove());clearMyCompleted.textContent="Cleared";if(!$("myGarageBookings")?.children.length)$("myGarageBookings").innerHTML='<p class="meta">No bookings yet.</p>';});
+  clearMyCompleted?.addEventListener("click",async()=>{const ui=window.ThreePedalsAccountUI;const completed=(B||[]).filter(item=>String(item.status||"").toLowerCase()==="done"||String(item.service_status||"").toLowerCase()==="completed");if(!completed.length){ui?.toast("No completed garage bookings to clear.","info");return}const confirmed=await ui?.confirm({eyebrow:"GARAGE BOOKINGS",title:`Clear ${completed.length} completed booking${completed.length===1?"":"s"}?`,message:"This permanently removes completed service records from your My Garage list.",confirmText:"Clear completed",danger:true});if(!confirmed)return;clearMyCompleted.disabled=true;clearMyCompleted.textContent="Clearing…";const ids=completed.map(item=>item.id);const {error}=await sb.from("bookings").delete().in("id",ids).eq("user_id",me.id);if(error){clearMyCompleted.disabled=false;clearMyCompleted.textContent="Clear completed";ui?.toast("Could not clear completed bookings: "+error.message,"err");return}ids.forEach(id=>box.querySelector(`[data-my-booking="${CSS.escape(String(id))}"]`)?.remove());clearMyCompleted.textContent="Cleared";ui?.toast("Completed bookings cleared.","ok");if(!$("myGarageBookings")?.children.length)$("myGarageBookings").innerHTML='<p class="meta">No bookings yet.</p>';});
   const filterSellerListings=()=>{const query=(listingSearch?.value||"").trim().toLowerCase(),status=listingStatus?.value||"";let shown=0;const rows=box.querySelectorAll("[data-seller-listing]");rows.forEach(row=>{const matches=(!query||(row.dataset.listingSearch||"").includes(query))&&(!status||row.dataset.listingStatus===status);row.hidden=!matches;if(matches)shown++});if(listingCount)listingCount.textContent=`Showing ${shown} of ${rows.length} listings`;};
   listingSearch?.addEventListener("input",filterSellerListings);listingStatus?.addEventListener("change",filterSellerListings);filterSellerListings();
   box.querySelectorAll("[data-view]").forEach(bt=>bt.onclick=()=>{window.location.href=`vehicle.html?id=${encodeURIComponent(bt.dataset.view)}`});
@@ -1817,7 +1880,6 @@ async function openAccount(options={}){
   const renderEditPhotoGallery=()=>{
     $("editListingPhotoCount").textContent=editPhotoItems.length+" of 15 photos";
     $("editListingPhotoGallery").innerHTML=editPhotoItems.map((item,index)=>`<div class="edit-photo-item"><img src="${esc(item.preview||item.url)}" alt="Vehicle photo ${index+1}"><button type="button" class="btn ghost" data-remove-edit-photo="${index}" aria-label="Remove photo ${index+1}">Remove</button></div>`).join("");
-    $("editListingPhotoPhotos");
     $("editListingPhotos").disabled=editPhotoItems.length>=15;
   };
   $("editListingPhotoGallery").addEventListener("click",event=>{
@@ -1889,19 +1951,33 @@ async function openAccount(options={}){
     }
   };
   box.querySelectorAll("[data-del]").forEach(bt=>bt.onclick=async()=>{
-    if(!confirm("Delete this listing? This will remove the listing from your account."))return;
+    const ui=window.ThreePedalsAccountUI;
+    const confirmed=await ui?.confirm({
+      eyebrow:"MY LISTINGS",
+      title:"Delete this listing?",
+      message:"This will permanently remove the vehicle listing and its photos from your account.",
+      confirmText:"Delete listing",
+      danger:true
+    });
+    if(!confirmed)return;
     bt.disabled=true;bt.textContent="Deleting…";
     const {data:deleted,error}=await sb.from("listings").delete().eq("id",bt.dataset.del).eq("owner",me.id).select("photos").maybeSingle();
-    if(error){alert(error.message);bt.disabled=false;bt.textContent="Delete";return}
-    if(!deleted){alert("This listing could not be found in your account. Refresh and try again.");openAccount();return}
+    if(error){ui?.toast(error.message||"Could not delete listing.","err");bt.disabled=false;bt.textContent="Delete";return}
+    if(!deleted){ui?.toast("This listing could not be found in your account.","warn");openAccount({refresh:true});return}
     const paths=photoStoragePaths(deleted.photos||[]);
     if(paths.length){const removed=await sb.storage.from("car-photos").remove(paths);if(removed.error)console.warn("Listing deleted, but its photo files could not be removed:",removed.error)}
-    openAccount();loadListings();
+    ui?.toast("Listing deleted.","ok");
+    openAccount({refresh:true});loadListings();
   });
-  $("accOut").onclick=async()=>{await sb.auth.signOut();d.close()};
+  $("accOut").onclick=async()=>{await sb.auth.signOut();try{sessionStorage.removeItem("3pedals:account-open");sessionStorage.removeItem("3pedals:account-page");sessionStorage.removeItem("3pedals:account-view-cache")}catch(_){}d.close()};
   $("accClose").onclick=()=>d.close();
   if($("accAdmin"))$("accAdmin").onclick=()=>{window.location.href="/admin.html"};
-  showSellerAccountPage(requestedAccountPage||"settings",null,{updateHistory:false,scroll:false});
+  const activeSettingsMenuBtn=requestedAccountPage==="settings"&&preservedSettingsTab?($("accountMenu").querySelector(`[data-account-tab="${preservedSettingsTab}"]`)||$("accountMenu").querySelector('[data-page="settings"]')):null;
+  showSellerAccountPage(requestedAccountPage||"settings",activeSettingsMenuBtn,{updateHistory:false,scroll:false});
+  if(requestedAccountPage==="settings"&&preservedSettingsTab){
+    const tabBtn=box.querySelector(`[data-settings-tab="${preservedSettingsTab}"]`);
+    tabBtn?.click();
+  }
   // Reveal the underlying site only after the restored account section is ready.
   document.documentElement.classList.remove("account-restoring");
   // Cache a session-only snapshot for instant refresh restoration. Strip fields
@@ -2058,11 +2134,14 @@ loadJournal();
   }catch(e){console.error(e);err.textContent=e.message||"Could not save the entry. Check the Supabase setup and storage policies.";btn.disabled=false;btn.textContent=existing?"Save changes":(isArticle?"Create article":"Create video project");if(progress)progress.hidden=true}
 }
 async function deleteProject(p){
-  if(!confirm(`Delete “${p.title}” permanently?`))return;
+  const ui=window.ThreePedalsAccountUI;
+  const confirmed=await ui?.confirm({eyebrow:"ADMIN · CONTENT",title:`Delete “${p.title}”?`,message:"This permanently removes the project or article from the database.",confirmText:"Delete permanently",danger:true});
+  if(!confirmed)return;
   const {error}=await sb.from("projects").delete().eq("id",p.id);
-  if(error){alert(error.message);return}
+  if(error){ui?.toast(error.message||"Could not delete item.","err");return}
   const items=mediaItemsForProject(p);
   await removeProjectMedia(items);
+  ui?.toast("Deleted.","ok");
   await loadProjects();await openAdmin();
 }
 function adminProjectsHtml(P){
@@ -2098,7 +2177,7 @@ async function openAdmin(){
   <h3 style="margin-top:18px">Users</h3>${P.map(u=>`<p class="meta">${esc(u.name||"")} · ${esc(u.email||"")} · ${esc(u.phone||"")}${u.is_admin?" · admin":""}</p>`).join("")}`;
   bindProjectAdmin(PR);
   $("saveAboutUs")?.addEventListener("click",async()=>{const status=$("aboutSaveStatus"),values={};for(const key of Object.keys(ABOUT_DEFAULTS)){const el=$(aboutFieldId(key));values[key]=el?.value.trim()||""}if(Object.values(values).some(v=>!v)){status.textContent="Please fill in each About Us field.";return}status.textContent="Saving…";const {error}=await sb.from("site_settings").update(values).eq("id",1);if(error){status.textContent=`Could not save. Run admin_about_booking_history.sql in Supabase, then try again. (${error.message})`;return}siteSettings={...siteSettings,...values};renderAboutSettings();status.textContent="About Us updated."});
-  $("clearCompletedBookings")?.addEventListener("click",async()=>{if(!completedBookings.length)return;const ids=completedBookings.map(x=>x.id);if(!confirm(`Permanently clear ${ids.length} completed garage booking${ids.length===1?"":"s"} and their service history? Active and cancelled bookings will be kept.`))return;const {error}=await sb.from("bookings").delete().in("id",ids);if(error){alert(`Could not clear completed bookings. Run admin_about_booking_history.sql in Supabase, then try again. (${error.message})`);return}alert(`${ids.length} completed booking${ids.length===1?"":"s"} cleared.`);openAdmin()});
+  $("clearCompletedBookings")?.addEventListener("click",async()=>{const ui=window.ThreePedalsAccountUI;if(!completedBookings.length)return;const ids=completedBookings.map(x=>x.id);const confirmed=await ui?.confirm({eyebrow:"ADMIN · BOOKINGS",title:`Clear ${ids.length} completed booking${ids.length===1?"":"s"}?`,message:"Active and cancelled bookings will be kept. Service history for completed items will be cleared.",confirmText:"Clear completed",danger:true});if(!confirmed)return;const {error}=await sb.from("bookings").delete().in("id",ids);if(error){ui?.toast(`Could not clear completed bookings: ${error.message}`,"err");return}ui?.toast(`${ids.length} completed booking${ids.length===1?"":"s"} cleared.`,"ok");openAdmin()});
 }
 function bindProjectAdmin(PR){
   $("projectNew")?.addEventListener("click",()=>{$("projectEditor").innerHTML=projectFormHtml({},"video");bindProjectForm(null);});
@@ -2127,7 +2206,7 @@ $('adminClose').onclick=()=>$("adminDlg").close();
 $("adminPanel").onclick=async e=>{
   const b=e.target.closest("[data-a]");if(!b)return;
   const id=b.dataset.id,a=b.dataset.a;
-  if(a==="del"){if(!confirm("Delete this listing permanently?"))return;await sb.from("listings").delete().eq("id",id)}
+  if(a==="del"){const confirmed=await window.ThreePedalsAccountUI?.confirm({eyebrow:"ADMIN · LISTINGS",title:"Delete this listing permanently?",message:"This removes the listing from the database.",confirmText:"Delete permanently",danger:true});if(!confirmed)return;await sb.from("listings").delete().eq("id",id)}
   else await sb.from("listings").update({status:a==="approve"?"approved":"rejected"}).eq("id",id);
   openAdmin();loadListings();
 };
@@ -2332,8 +2411,9 @@ $("sPhotos").onchange=async e=>{
   }
   e.target.value="";
 };
-$("sCancel").onclick=()=>{
-  if(!confirm("Cancel this listing? Your entered details and selected photos will be cleared."))return;
+$("sCancel").onclick=async()=>{
+  const confirmed=await window.ThreePedalsAccountUI?.confirm({eyebrow:"SELL YOUR CAR",title:"Cancel this listing?",message:"Your entered vehicle details and selected photos will be cleared.",confirmText:"Clear & cancel",danger:true});
+  if(!confirmed)return;
   $("sellForm").reset();photos=[];renderPhotoPreviews();sellMode();$("sErr").textContent="";$("sOk").hidden=true;show("buy");
 };
 $("vehicleDocsLink").onclick=e=>{const q=new URLSearchParams();if($("sMake").value)q.set("make",$("sMake").value);if($("sModel").value)q.set("model",[$("sModel").value,$("sVariant").value].filter(Boolean).join(" "));if($("sYear").value)q.set("year",$("sYear").value);if($("sPrice").value)q.set("price",$("sPrice").value);try{sessionStorage.setItem("3pedals:seller-settings",JSON.stringify({...sellerPreferences,seller_name:profileName(),seller_contact:profilePhone()||me?.email||"",seller_logo:sellerPreferences.print_logo_on_documents!==false?profileAvatarUrl():""}))}catch(_){}if(q.toString())e.currentTarget.href="vehicle_documents.html?"+q.toString()};

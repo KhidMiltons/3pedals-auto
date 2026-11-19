@@ -1,4 +1,4 @@
-/* 3 Pedals Auto KE — Account Workspace Shell (Dual-Theme: Dark Obsidian & Light Parchment) */
+/* 3 Pedals Auto KE — Account Workspace Shell & Action UI (Dual-Theme: Dark Obsidian & Light Parchment) */
 (() => {
   "use strict";
   const mount = document.getElementById("accountPanelMount");
@@ -51,7 +51,184 @@
             </button>
           </div>
         </header>
+        <div id="accToastHost" class="acc-toast-host" aria-live="polite"></div>
         <div id="accBody" aria-live="polite"></div>
       </section>
-    </dialog>`;
+    </dialog>
+    <dialog id="accActionDlg" class="acc-action-dialog" aria-labelledby="accActionTitle"></dialog>`;
+
+  const dlg = document.getElementById("accDlg");
+  const actionDlg = document.getElementById("accActionDlg");
+  const toastHost = document.getElementById("accToastHost");
+  let fallbackToastHost = null;
+
+  const escHtml = (value) =>
+    String(value ?? "").replace(/[&<>"]/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
+
+  function getToastHost() {
+    if (dlg?.open && toastHost) return toastHost;
+    if (!fallbackToastHost) {
+      fallbackToastHost = document.createElement("div");
+      fallbackToastHost.id = "siteToastHost";
+      fallbackToastHost.className = "acc-toast-host acc-toast-host--floating";
+      fallbackToastHost.setAttribute("aria-live", "polite");
+      document.body.appendChild(fallbackToastHost);
+    }
+    return fallbackToastHost;
+  }
+
+  function toast(message, kind = "info", durationMs = 4400) {
+    const text = String(message || "").trim();
+    if (!text) return;
+    const host = getToastHost();
+    const item = document.createElement("div");
+    item.className = `acc-toast acc-toast--${kind}`;
+    item.setAttribute("role", kind === "err" ? "alert" : "status");
+    item.innerHTML = `<span class="acc-toast-dot" aria-hidden="true"></span><span class="acc-toast-text">${escHtml(text)}</span><button type="button" class="acc-toast-close" aria-label="Dismiss message">×</button>`;
+    const remove = () => {
+      if (!item.isConnected) return;
+      item.classList.add("is-leaving");
+      window.setTimeout(() => item.remove(), 180);
+    };
+    item.querySelector(".acc-toast-close")?.addEventListener("click", remove);
+    host.appendChild(item);
+    while (host.children.length > 3) host.firstElementChild?.remove();
+    window.setTimeout(remove, durationMs);
+  }
+
+  function openActionDialog(config) {
+    return new Promise((resolve) => {
+      if (!actionDlg) {
+        resolve(null);
+        return;
+      }
+      if (actionDlg.open) actionDlg.close();
+      const {
+        mode = "confirm",
+        eyebrow = "CONFIRM ACTION",
+        title = "Please confirm",
+        message = "",
+        helperNote = "",
+        confirmText = "Confirm",
+        cancelText = "Cancel",
+        danger = false,
+        label = "",
+        placeholder = "",
+        inputType = "text",
+        min = "",
+        step = "",
+        defaultValue = "",
+        required = false,
+        matchExact = "",
+        multiline = false,
+      } = config || {};
+
+      const fieldId = "accActionInput";
+      const fieldMarkup =
+        mode === "prompt"
+          ? `<div class="acc-action-field">
+              ${label ? `<label for="${fieldId}">${escHtml(label)}</label>` : ""}
+              ${
+                multiline
+                  ? `<textarea id="${fieldId}" rows="3" placeholder="${escHtml(placeholder)}">${escHtml(defaultValue)}</textarea>`
+                  : `<input id="${fieldId}" type="${escHtml(inputType)}" ${min !== "" ? `min="${escHtml(min)}"` : ""} ${step !== "" ? `step="${escHtml(step)}"` : ""} value="${escHtml(defaultValue)}" placeholder="${escHtml(placeholder)}" autocomplete="off">`
+              }
+            </div>`
+          : "";
+
+      actionDlg.innerHTML = `
+        <form class="acc-action-form" novalidate>
+          <div class="acc-action-head">
+            <div>
+              <p class="account-eyebrow">${escHtml(eyebrow)}</p>
+              <h3 id="accActionTitle">${escHtml(title)}</h3>
+            </div>
+            <button type="button" class="acc-action-x" data-action-cancel aria-label="Close">×</button>
+          </div>
+          ${message ? `<p class="acc-action-msg">${escHtml(message)}</p>` : ""}
+          ${fieldMarkup}
+          ${helperNote ? `<p class="acc-action-note">${escHtml(helperNote)}</p>` : ""}
+          <p id="accActionError" class="acc-action-err" role="alert"></p>
+          <div class="acc-action-btns">
+            <button type="button" class="btn ghost" data-action-cancel>${escHtml(cancelText)}</button>
+            <button type="submit" class="btn ${danger ? "acc-btn-danger" : ""}">${escHtml(confirmText)}</button>
+          </div>
+        </form>`;
+
+      let settled = false;
+      const finish = (value) => {
+        if (settled) return;
+        settled = true;
+        if (actionDlg.open) actionDlg.close();
+        resolve(value);
+      };
+
+      const form = actionDlg.querySelector("form");
+      const input = actionDlg.querySelector(`#${fieldId}`);
+      const errEl = actionDlg.querySelector("#accActionError");
+
+      actionDlg.querySelectorAll("[data-action-cancel]").forEach((btn) =>
+        btn.addEventListener("click", () => finish(mode === "confirm" ? false : null))
+      );
+
+      actionDlg.addEventListener(
+        "cancel",
+        (ev) => {
+          ev.preventDefault();
+          finish(mode === "confirm" ? false : null);
+        },
+        { once: true }
+      );
+
+      actionDlg.addEventListener(
+        "click",
+        (ev) => {
+          if (ev.target === actionDlg) finish(mode === "confirm" ? false : null);
+        },
+        { once: true }
+      );
+
+      form?.addEventListener("submit", (ev) => {
+        ev.preventDefault();
+        if (mode === "confirm") {
+          finish(true);
+          return;
+        }
+        const raw = input ? String(input.value || "") : "";
+        const trimmed = raw.trim();
+        if (required && !trimmed) {
+          if (errEl) errEl.textContent = "Please complete this field before continuing.";
+          input?.focus();
+          return;
+        }
+        if (inputType === "number") {
+          const num = Number(trimmed);
+          const minNum = min !== "" ? Number(min) : -Infinity;
+          if (!trimmed || !Number.isFinite(num) || num < minNum) {
+            if (errEl) errEl.textContent = min !== "" ? `Enter a valid number (${min} or higher).` : "Enter a valid number.";
+            input?.focus();
+            return;
+          }
+        }
+        if (matchExact && trimmed !== matchExact) {
+          if (errEl) errEl.textContent = `Type ${matchExact} exactly to confirm.`;
+          input?.focus();
+          return;
+        }
+        finish(trimmed);
+      });
+
+      actionDlg.showModal();
+      window.requestAnimationFrame(() => {
+        if (input) input.focus();
+        else actionDlg.querySelector('[type="submit"]')?.focus();
+      });
+    });
+  }
+
+  window.ThreePedalsAccountUI = {
+    toast,
+    confirm: (opts) => openActionDialog({ ...(opts || {}), mode: "confirm" }),
+    prompt: (opts) => openActionDialog({ ...(opts || {}), mode: "prompt" }),
+  };
 })();

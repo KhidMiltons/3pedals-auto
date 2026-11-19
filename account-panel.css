@@ -1915,15 +1915,62 @@ html[data-theme="light"] #accDlg::backdrop {
   background: var(--ap-surface-2);
 }
 
-/* ===== 13. Edit Listing Modal ===== */
+/* ===== 13. Edit Listing Modal, Toasts & Action Confirm Dialog ===== */
 #sellerEditListingDialog {
+  --ap-bg: #0e1014;
+  --ap-surface: #171a21;
+  --ap-surface-2: #1d212a;
+  --ap-input: #101216;
+  --ap-ink: #f4f1ea;
+  --ap-ink-strong: #ffffff;
+  --ap-mute: #a39e92;
+  --ap-line: rgba(255, 255, 255, 0.12);
+  --ap-line-strong: rgba(255, 255, 255, 0.2);
   width: min(720px, calc(100vw - 24px));
   max-height: 90dvh;
   padding: 22px;
   border-radius: 16px;
-  border: 1px solid var(--ap-line-strong, rgba(255, 255, 255, 0.16));
-  background: var(--ap-bg, #0e1014);
-  color: var(--ap-ink, #f4f1ea);
+  border: 1px solid var(--ap-line-strong);
+  background: var(--ap-bg);
+  color: var(--ap-ink);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.56);
+}
+
+html[data-theme="light"] #sellerEditListingDialog {
+  --ap-bg: #faf6ec;
+  --ap-surface: #ffffff;
+  --ap-surface-2: #f4efe2;
+  --ap-input: #ffffff;
+  --ap-ink: #171512;
+  --ap-ink-strong: #0e0d0b;
+  --ap-mute: #575044;
+  --ap-line: rgba(112, 90, 44, 0.18);
+  --ap-line-strong: rgba(112, 90, 44, 0.34);
+  box-shadow: 0 24px 64px rgba(36, 28, 14, 0.2);
+}
+
+#sellerEditListingDialog::backdrop,
+#accActionDlg::backdrop {
+  background: rgba(6, 8, 11, 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+html[data-theme="light"] #sellerEditListingDialog::backdrop,
+html[data-theme="light"] #accActionDlg::backdrop {
+  background: rgba(28, 24, 16, 0.42);
+}
+
+#sellerEditListingDialog .account-dialog-head {
+  padding: 0 0 14px;
+  margin-bottom: 14px;
+  min-height: auto;
+  background: transparent;
+}
+
+#sellerEditListingDialog .account-dialog-head h2 {
+  margin: 0;
+  font-size: 20px;
 }
 
 #sellerEditListingDialog .two {
@@ -1950,6 +1997,262 @@ html[data-theme="light"] #accDlg::backdrop {
   aspect-ratio: 4 / 3;
   object-fit: cover;
   border-radius: 8px;
+}
+
+.acc-toast-host {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 10060;
+  display: grid;
+  gap: 8px;
+  width: min(390px, calc(100vw - 28px));
+  pointer-events: none;
+}
+
+.acc-toast {
+  pointer-events: auto;
+  display: grid;
+  grid-template-columns: 8px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 11px;
+  background: #171a21;
+  color: #f4f1ea;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.4);
+  font-family: "Manrope", system-ui, sans-serif;
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.4;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+html[data-theme="light"] .acc-toast {
+  background: #ffffff;
+  color: #171512;
+  border-color: rgba(112, 90, 44, 0.3);
+  box-shadow: 0 14px 32px rgba(36, 28, 14, 0.16);
+}
+
+.acc-toast.is-leaving {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.acc-toast-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #dfb867;
+}
+
+.acc-toast--ok .acc-toast-dot { background: #46c47f; }
+.acc-toast--warn .acc-toast-dot { background: #e9a949; }
+.acc-toast--err .acc-toast-dot { background: #f07b6e; }
+
+.acc-toast--ok { border-color: rgba(70, 196, 127, 0.42); }
+.acc-toast--warn { border-color: rgba(233, 169, 73, 0.42); }
+.acc-toast--err { border-color: rgba(240, 123, 110, 0.45); }
+
+.acc-toast-close {
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  opacity: 0.7;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.acc-toast-close:hover {
+  opacity: 1;
+  background: rgba(128, 128, 128, 0.16);
+}
+
+#accActionDlg.acc-action-dialog {
+  --ap-surface: #171a21;
+  --ap-surface-2: #1d212a;
+  --ap-surface-hover: #212631;
+  --ap-input: #101216;
+  --ap-ink: #f4f1ea;
+  --ap-ink-strong: #ffffff;
+  --ap-mute: #a39e92;
+  --ap-line: rgba(255, 255, 255, 0.12);
+  --ap-line-strong: rgba(255, 255, 255, 0.2);
+  --ap-gold: #dfb867;
+  --ap-gold-soft: rgba(223, 184, 103, 0.14);
+  --ap-gold-border: rgba(223, 184, 103, 0.36);
+  --ap-gold-btn: linear-gradient(180deg, #ecd084 0%, #cda247 100%);
+  --ap-gold-ink: #16130d;
+  --ap-warn-bg: rgba(233, 169, 73, 0.12);
+  --ap-warn-border: rgba(233, 169, 73, 0.32);
+  --ap-bad: #f07b6e;
+  --ap-bad-bg: rgba(240, 123, 110, 0.14);
+  --ap-bad-border: rgba(240, 123, 110, 0.36);
+  --ap-shadow: 0 28px 80px rgba(0, 0, 0, 0.56);
+  width: min(470px, calc(100vw - 24px));
+  max-width: 470px;
+  padding: 0;
+  border-radius: 16px;
+  border: 1px solid var(--ap-line-strong);
+  background: var(--ap-surface);
+  color: var(--ap-ink);
+  box-shadow: var(--ap-shadow);
+  font-family: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  z-index: 10050;
+}
+
+html[data-theme="light"] #accActionDlg.acc-action-dialog {
+  --ap-surface: #ffffff;
+  --ap-surface-2: #f4efe2;
+  --ap-surface-hover: #ede6d6;
+  --ap-input: #ffffff;
+  --ap-ink: #171512;
+  --ap-ink-strong: #0e0d0b;
+  --ap-mute: #575044;
+  --ap-line: rgba(112, 90, 44, 0.18);
+  --ap-line-strong: rgba(112, 90, 44, 0.34);
+  --ap-gold: #8c640d;
+  --ap-gold-soft: rgba(158, 116, 21, 0.12);
+  --ap-gold-border: rgba(140, 100, 13, 0.34);
+  --ap-gold-btn: linear-gradient(180deg, #e1bd68 0%, #c89b37 100%);
+  --ap-gold-ink: #171512;
+  --ap-warn-bg: rgba(176, 107, 12, 0.10);
+  --ap-warn-border: rgba(176, 107, 12, 0.28);
+  --ap-bad: #a82820;
+  --ap-bad-bg: rgba(168, 40, 32, 0.08);
+  --ap-bad-border: rgba(168, 40, 32, 0.28);
+  --ap-shadow: 0 24px 64px rgba(36, 28, 14, 0.22);
+}
+
+#accActionDlg :is(h3, label) {
+  color: var(--ap-ink-strong);
+}
+
+#accActionDlg .account-eyebrow {
+  margin: 0 0 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ap-gold);
+}
+
+#accActionDlg :is(input, textarea) {
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 12px;
+  border-radius: 9px;
+  border: 1px solid var(--ap-line-strong);
+  background: var(--ap-input);
+  color: var(--ap-ink-strong);
+  font-size: 14px;
+}
+
+#accActionDlg .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 9px 16px;
+  border-radius: 9px;
+  border: 1px solid var(--ap-gold-border);
+  background: var(--ap-gold-btn);
+  color: var(--ap-gold-ink);
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+#accActionDlg .btn.ghost {
+  background: var(--ap-surface-2);
+  border-color: var(--ap-line-strong);
+  color: var(--ap-ink);
+}
+
+#accActionDlg .acc-action-form {
+  display: grid;
+  gap: 14px;
+  padding: 22px;
+}
+
+#accActionDlg .acc-action-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+#accActionDlg .acc-action-head h3 {
+  margin: 0;
+  font-size: 19px;
+}
+
+#accActionDlg .acc-action-x {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  border: 1px solid var(--ap-line-strong);
+  border-radius: 8px;
+  background: var(--ap-surface-2);
+  color: var(--ap-ink);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+#accActionDlg .acc-action-msg {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ap-ink);
+}
+
+#accActionDlg .acc-action-note {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--ap-warn-bg);
+  border: 1px solid var(--ap-warn-border);
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--ap-ink);
+}
+
+#accActionDlg .acc-action-err {
+  margin: 0;
+  min-height: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ap-bad);
+}
+
+#accActionDlg .acc-action-err:empty {
+  display: none;
+}
+
+#accActionDlg .acc-action-btns {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+#accActionDlg .btn.acc-btn-danger {
+  background: var(--ap-bad-bg);
+  border-color: var(--ap-bad-border);
+  color: var(--ap-bad);
+}
+
+#accActionDlg .btn.acc-btn-danger:hover {
+  opacity: 1;
+  background: rgba(240, 123, 110, 0.22);
 }
 
 /* ===== 14. Responsive Rules ===== */

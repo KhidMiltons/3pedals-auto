@@ -429,7 +429,7 @@ async function copyText(text){
   try{const field=document.createElement('textarea');field.value=text;field.setAttribute('readonly','');field.style.position='fixed';field.style.opacity='0';document.body.appendChild(field);field.select();const copied=document.execCommand('copy');field.remove();if(copied)return true}catch(_e){}
   return false;
 }
-async function copyVehicleLink(){const url=new URL(location.href).href,feedback=$('shareFeedback');if(await copyText(url)){feedback.textContent='Vehicle link copied — ready to share.';return}prompt('Copy this vehicle link:',url)}
+async function copyVehicleLink(){const url=new URL(location.href).href,feedback=$('shareFeedback');if(await copyText(url)){feedback.textContent='Vehicle link copied — ready to share.';return}feedback.textContent='Share URL: '+url}
 async function share(){
   const listing=window.__listing,title=vehicleTitle(listing),url=new URL(location.href).href,text=`${title} — KES ${fmt(listing.price)} on 3 Pedals Auto KE`;
   if(navigator.share){try{await navigator.share({title,text,url});return}catch(error){if(error?.name==='AbortError')return}}
@@ -598,7 +598,7 @@ Vehicle link: ${pageUrl}`;
       const {data:existing,error}=await sb.from("saved_vehicles").select("listing_id").eq("user_id",user.id).eq("listing_id",r.id).maybeSingle();
       if(error){saveVehicleButton.textContent="Save vehicle";saveVehicleButton.disabled=false;return}
       let saved=!!existing;saveVehicleButton.textContent=saved?"Saved ✓ · Remove":"Save vehicle";saveVehicleButton.setAttribute("aria-pressed",String(saved));saveVehicleButton.disabled=false;
-      saveVehicleButton.onclick=async()=>{saveVehicleButton.disabled=true;const result=saved?await sb.from("saved_vehicles").delete().eq("user_id",user.id).eq("listing_id",r.id):await sb.from("saved_vehicles").insert({user_id:user.id,listing_id:r.id});if(result.error){saveVehicleButton.disabled=false;alert(result.error.message||"Could not update saved vehicles.");return}const next=!saved;saveVehicleButton.textContent=next?"Saved ✓ · Remove":"Save vehicle";saved=next;saveVehicleButton.setAttribute("aria-pressed",String(next));saveVehicleButton.disabled=false};
+      saveVehicleButton.onclick=async()=>{saveVehicleButton.disabled=true;const result=saved?await sb.from("saved_vehicles").delete().eq("user_id",user.id).eq("listing_id",r.id):await sb.from("saved_vehicles").insert({user_id:user.id,listing_id:r.id});if(result.error){saveVehicleButton.disabled=false;$('shareFeedback').textContent=result.error.message||"Could not update saved vehicles.";return}const next=!saved;saveVehicleButton.textContent=next?"Saved ✓ · Remove":"Save vehicle";saved=next;saveVehicleButton.setAttribute("aria-pressed",String(next));saveVehicleButton.disabled=false;$('shareFeedback').textContent=next?"Vehicle saved to your account.":"Removed from saved vehicles."};
     }).catch(()=>{saveVehicleButton.disabled=false;saveVehicleButton.textContent="Save vehicle"});
   }
   const sellerContactActions=document.querySelector(".actions");if(sellerContactActions){sellerContactActions.querySelectorAll('a[href^="https://wa.me/"],a[href^="tel:"]').forEach(link=>{link.addEventListener("click",()=>{if(typeof window.fbq==="function")window.fbq("track","Lead",{content_type:"product",content_ids:[String(r.id||"")],content_name:title,value:Number(r.price||0),currency:"KES",contact_method:link.href.startsWith("https://wa.me/")?"WhatsApp":"Phone"});});});}
@@ -611,7 +611,7 @@ Vehicle link: ${pageUrl}`;
 if(photos.length>1){document.querySelector('.gallery').insertAdjacentHTML('beforeend',`<span class="photo-count">1 / ${photos.length}</span><button class="photo-step photo-prev" type="button" data-photo-step="-1" aria-label="Previous photo">‹</button><button class="photo-step photo-next" type="button" data-photo-step="1" aria-label="Next photo">›</button>`)}document.querySelectorAll('.thumb').forEach(button=>button.onclick=()=>showPhoto(+button.dataset.photo));document.querySelectorAll('[data-photo-step]').forEach(button=>button.onclick=()=>showPhoto(photoIndex+Number(button.dataset.photoStep)));
   $('shareBtn').onclick=share;
   $('copyLinkBtn').onclick=copyVehicleLink;
-  $('copyBtn').onclick=async()=>{const copy=`${title}\nKES ${fmt(r.price)}\nMileage: ${fmt(r.km)} km\nFuel: ${r.fuel||'Not specified'}\nVehicle reference: ${ref}\n${new URL(location.href).href}`;if(await copyText(copy))$('shareFeedback').textContent='Vehicle details copied.';else prompt('Copy vehicle details:',copy)};
+  $('copyBtn').onclick=async()=>{const copy=`${title}\nKES ${fmt(r.price)}\nMileage: ${fmt(r.km)} km\nFuel: ${r.fuel||'Not specified'}\nVehicle reference: ${ref}\n${new URL(location.href).href}`;if(await copyText(copy))$('shareFeedback').textContent='Vehicle details copied.';else $('shareFeedback').textContent='Could not access clipboard — select details above to copy.'};
 
 }
 async function loadRelated(current){
