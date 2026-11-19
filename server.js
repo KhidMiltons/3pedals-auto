@@ -60,7 +60,7 @@ function shouldRouteToMaps(text) {
 async function findOpenStreetMapPlaces(queryText, location) {
   const userLat = Number(location?.latitude), userLng = Number(location?.longitude);
   const hasLocation = Number.isFinite(userLat) && Number.isFinite(userLng);
-  const area = String(queryText || "").replace(/\\b(near me|nearby|car yards?|dealers?|dealerships?|garages?|mechanics?|inspection centers?|ntsa|showrooms?|directions|map|maps)\\b/ig, " ").replace(/\\s+/g, " ").trim() || "Nairobi";
+  const area = String(queryText || "").replace(/\b(near me|nearby|car yards?|dealers?|dealerships?|garages?|mechanics?|inspection centers?|ntsa|showrooms?|directions|map|maps)\b/ig, " ").replace(/\\s+/g, " ").trim() || "Nairobi";
   let center = hasLocation ? { lat: userLat, lon: userLng } : null;
   if (!center) {
     const url = new URL("https://nominatim.openstreetmap.org/search");
@@ -126,7 +126,7 @@ app.post("/api/chat", async (req, res) => {
     catch (error) { console.warn("OpenStreetMap lookup failed:", error); }
     if (osmPlaces.length) {
       const last = cleanedHistory[cleanedHistory.length - 1];
-      if (last?.role === "user") last.parts[0].text += "\\n\\nOpenStreetMap place data (coverage may be incomplete; do not invent ratings or opening hours): " + JSON.stringify(osmPlaces);
+      if (last?.role === "user") last.parts[0].text += "\n\nOpenStreetMap place data (coverage may be incomplete; do not invent ratings or opening hours): " + JSON.stringify(osmPlaces);
     }
   }
 
