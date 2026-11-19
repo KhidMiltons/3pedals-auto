@@ -13,6 +13,29 @@ const host = "0.0.0.0";
 const BLOCKED_PREFIXES = ["/.git", "/.github", "/github", "/outputs", "/scripts", "/supabase", "/.gmp_cache"];
 const BLOCKED_FILES = new Set(["/package.json", "/package-lock.json", "/server.js", "/PROJECTS_SETUP.sql", "/.env", "/.env.local"]);
 
+const ALLOWED_ORIGINS = new Set([
+  "https://3pedalsauto.co.ke",
+  "https://www.3pedalsauto.co.ke",
+]);
+
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (origin && ALLOWED_ORIGINS.has(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+    res.setHeader("Vary", "Origin");
+    res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  } else if (origin) {
+    return res.status(403).json({ error: "This website is not allowed to access the 3 Pedals Auto API." });
+  }
+  if (req.method === "OPTIONS") return res.sendStatus(204);
+  next();
+});
+
+app.get("/api/health", (_req, res) => {
+  res.json({ ok: true, service: "3 Pedals Auto API" });
+});
+
 app.use(express.json({ limit: "2mb" }));
 
 app.use((req, res, next) => {
