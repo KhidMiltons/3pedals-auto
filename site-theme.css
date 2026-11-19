@@ -696,25 +696,11 @@ body > footer { background:rgba(10,11,13,.42) !important; -webkit-backdrop-filte
 }
 
 
-/* Glass Dashboard V2: account workspace + admin dashboard only.
-   Preserve the existing automotive wallpaper and all public-site layouts. */
+/* Glass Dashboard V2: admin dashboard only (account workspace is in account-panel.css). */
 :root{--workspace-glass:rgba(31,32,34,.43);--workspace-border:rgba(255,255,255,.19);--workspace-shadow:0 18px 48px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.11);--workspace-ease:cubic-bezier(.22,1,.36,1)}
-#accDlg{color:#f7f4ed!important;background:rgba(18,19,21,.27)!important;border:1px solid rgba(255,255,255,.14)!important;-webkit-backdrop-filter:blur(20px) saturate(135%)!important;backdrop-filter:blur(20px) saturate(135%)!important}
-#accDlg::backdrop{background:rgba(4,5,7,.42)!important;-webkit-backdrop-filter:blur(7px) saturate(115%);backdrop-filter:blur(7px) saturate(115%)}
-#accDlg>.in{background:transparent!important}
-#accDlg .account-dialog-head{background:rgba(24,25,27,.52)!important;border-bottom:1px solid rgba(255,255,255,.14)!important;-webkit-backdrop-filter:blur(24px) saturate(145%)!important;backdrop-filter:blur(24px) saturate(145%)!important}
-#accDlg nav#accountMenu.dashboard-shortcuts{background:rgba(26,27,29,.43)!important;border-right-color:rgba(255,255,255,.15)!important;-webkit-backdrop-filter:blur(22px) saturate(140%)!important;backdrop-filter:blur(22px) saturate(140%)!important}
-#accDlg nav#accountMenu button{color:rgba(248,245,237,.84)!important;transition:background .24s var(--workspace-ease),color .24s var(--workspace-ease),transform .24s var(--workspace-ease),border-color .24s ease!important}
 @media (hover:hover) and (pointer:fine){
-  #accDlg nav#accountMenu button:hover{color:#fff!important;background:rgba(255,255,255,.105)!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)!important;transform:translateX(3px)}
-  #accDlg .stat:hover,#accDlg .seller-listing:hover,#accDlg .promotion-package:hover,#accDlg .account-settings:hover,#accDlg .profile-card:hover,#accDlg .dashboard-card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.31)!important;box-shadow:0 22px 54px rgba(0,0,0,.27),inset 0 1px rgba(255,255,255,.14)!important}
-  #accDlg button:not(.primary):not(.btn-primary):not(.button-primary):hover,#accDlg .btn:not(.primary):not(.btn-primary):not(.button-primary):hover{transform:translateY(-2px);border-color:rgba(255,255,255,.28)!important}
   body:has(#app) .tabs .tab:hover,body:has(#app) .ghost:hover{background:rgba(255,255,255,.12)!important;border-color:rgba(255,255,255,.30)!important;transform:translateY(-2px)}
 }
-#accDlg nav#accountMenu button:focus-visible,#accDlg nav#accountMenu button.active{color:#fff!important;background:rgba(255,255,255,.105)!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)!important;transform:translateX(3px)}
-#accDlg .account-page,#accDlg .account-tools,#accDlg .dashboard-welcome,#accDlg .account-settings,#accDlg .profile-card,#accDlg .seller-listing,#accDlg .stat,#accDlg .panel,#accDlg .dashboard-card,#accDlg .promotion-package,#accDlg .account-page .card{background:linear-gradient(135deg,rgba(255,255,255,.105),rgba(255,255,255,.025)),var(--workspace-glass)!important;border:1px solid var(--workspace-border)!important;border-radius:16px!important;box-shadow:var(--workspace-shadow)!important;-webkit-backdrop-filter:blur(20px) saturate(140%)!important;backdrop-filter:blur(20px) saturate(140%)!important;transition:transform .28s var(--workspace-ease),border-color .28s ease,box-shadow .28s ease,background .28s ease!important}
-#accDlg input,#accDlg select,#accDlg textarea,#accDlg .field,#accDlg .seg,#accDlg .seller-mode-switch{color:#f7f4ed!important;background:rgba(255,255,255,.065)!important;border-color:rgba(255,255,255,.19)!important}
-#accDlg button:not(.primary):not(.btn-primary):not(.button-primary),#accDlg .btn:not(.primary):not(.btn-primary):not(.button-primary){transition:transform .22s var(--workspace-ease),background .22s ease,border-color .22s ease,box-shadow .22s ease!important}
 body:has(#app) .wrap{max-width:1480px!important}
 body:has(#app) .top{background:rgba(24,25,27,.44)!important;border:1px solid rgba(255,255,255,.19)!important;border-radius:20px!important;box-shadow:var(--workspace-shadow)!important;-webkit-backdrop-filter:blur(24px) saturate(145%)!important;backdrop-filter:blur(24px) saturate(145%)!important}
 body:has(#app) .stat,body:has(#app) .listing,body:has(#app) .notice,body:has(#app) .empty,body:has(#app) .attention-panel,body:has(#app) .editor,body:has(#app) .contact-form,body:has(#app) .article-item,body:has(#app) .project-item,body:has(#app) .field{color:#f7f4ed!important;background:linear-gradient(135deg,rgba(255,255,255,.10),rgba(255,255,255,.025)),rgba(30,31,33,.43)!important;border:1px solid rgba(255,255,255,.18)!important;border-radius:16px!important;box-shadow:var(--workspace-shadow)!important;-webkit-backdrop-filter:blur(20px) saturate(140%)!important;backdrop-filter:blur(20px) saturate(140%)!important;transition:transform .28s var(--workspace-ease),border-color .28s ease,box-shadow .28s ease!important}
@@ -724,8 +710,8 @@ body:has(#app) .tabs .tab.active{color:#fff!important;background:rgba(255,255,25
 body:has(#app) .brand span,body:has(#app) .stat span,body:has(#app) .meta,body:has(#app) .attention-copy span{color:rgba(245,242,234,.70)!important}
 body:has(#app) input,body:has(#app) select,body:has(#app) textarea{color:#f7f4ed!important;background:rgba(255,255,255,.06)!important;border-color:rgba(255,255,255,.18)!important}
 body:has(#app) .photos img{border-color:rgba(255,255,255,.22)!important}
-@media(max-width:760px){#accDlg{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background:rgba(16,18,21,.94)!important}#accDlg .account-page,#accDlg .account-tools,#accDlg .dashboard-welcome,#accDlg .account-settings,#accDlg .profile-card,#accDlg .seller-listing,#accDlg .stat,body:has(#app) .stat,body:has(#app) .listing,body:has(#app) .attention-panel{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background:rgba(18,20,23,.90)!important}}
-@media(prefers-reduced-motion:reduce){#accDlg *,body:has(#app) *{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+@media(max-width:760px){body:has(#app) .stat,body:has(#app) .listing,body:has(#app) .attention-panel{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background:rgba(18,20,23,.90)!important}}
+@media(prefers-reduced-motion:reduce){body:has(#app) *{transition-duration:.01ms!important;animation-duration:.01ms!important}}
 
 
 /* 3 Pedals editorial polish — cleaner hierarchy, calmer spacing and consistent controls.
@@ -1020,56 +1006,7 @@ html body :is(.vehicle-card,.listing,.dealer,.story-card,.journal-card) img{
   backface-visibility:hidden;
 }
 
-/* Account dashboard: match the transparent dark sidebar, not a white SaaS skin. */
-html body #accDlg,
-html body #accDlg[open],
-html body #accDlg>.in,
-html body #accDlg #accBody,
-html body #accDlg #accBody>.account-pages,
-html body #accDlg #accBody .account-pages,
-html body #accDlg #accBody .account-page,
-html body #accDlg #accBody .account-tools,
-html body #accDlg #accBody .account-settings,
-html body #accDlg #accBody .account-settings-inner,
-html body #accDlg .account-dialog-head,
-html body #accDlg #accountMenu.dashboard-shortcuts{
-  color:var(--p3-ivory)!important;
-  background-color:rgba(9,13,17,.28)!important;
-  background-image:none!important;
-  border-color:rgba(255,255,255,.10)!important;
-  box-shadow:none!important;
-}
-html body #accDlg #accBody :is(.profile-card,.account-stat,.profile-grid>div,
-.svc,.seller-summary-card,.account-overview-panel,.account-overview-stats>button,
-.account-booking-item,.account-saved-vehicle,.seller-listing,.seller-garage-card,
-.promotion-package,.account-buyer-workspace,.dashboard-welcome,.settings-section,
-.account-quick-panel>button,.panel,.card,.seller-card,.dashboard-card,
-.dealer-overview-details>div){
-  color:var(--p3-ivory)!important;
-  background:rgba(9,13,17,.40)!important;
-  background-image:none!important;
-  border-color:rgba(255,255,255,.105)!important;
-  box-shadow:0 12px 30px rgba(0,0,0,.17)!important;
-  -webkit-backdrop-filter:blur(24px) saturate(138%)!important;
-  backdrop-filter:blur(24px) saturate(138%)!important;
-}
-@media (hover:hover) and (pointer:fine){
-  html body #accDlg #accBody :is(.profile-card,.account-stat,.svc,
-  .account-overview-panel,.account-overview-stats>button,.account-booking-item,
-  .account-saved-vehicle,.seller-listing,.seller-garage-card,.promotion-package,
-  .dashboard-welcome,.account-quick-panel>button,.panel,.card,.seller-card,
-  .dashboard-card):hover{
-    background:rgba(13,17,21,.52)!important;
-    border-color:rgba(201,183,132,.20)!important;
-    transform:translateY(-1px);
-  }
-}
-html body #accDlg #accBody :is(h1,h2,h3,h4,h5,h6,strong,b,label,th){
-  color:#f7f2e8!important;
-}
-html body #accDlg #accBody :is(p,li,td,small,.meta,.muted,.description,.subtitle){
-  color:rgba(244,240,233,.78)!important;
-}
+/* Account workspace styling moved to /account-panel.css */
 
 /* Admin workspace: premium graphite surfaces without changing data layouts. */
 html body:has(#app) .wrap{max-width:1480px}
@@ -1126,12 +1063,6 @@ html body:has(#app) .tabs .tab.active{
     .filter-panel,.search-panel,.vehicle-detail-card,.article-card,.journal-card,
     .account-page,.dashboard-card,.dashboard-welcome,.account-settings,.authbox,
     .editor,.contact-form,.modal-content,.dialog-card,.settings-card,.package
-  ),
-  html body #accDlg #accBody :is(
-    .profile-card,.account-stat,.svc,.account-overview-panel,
-    .account-overview-stats>button,.account-booking-item,.account-saved-vehicle,
-    .seller-listing,.seller-garage-card,.promotion-package,.dashboard-welcome,
-    .panel,.card,.seller-card,.dashboard-card
   ) {
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
