@@ -967,7 +967,7 @@
     return `<svg viewBox="0 0 ${vb} ${vb}" role="img" aria-label="${escapeHtml(label)}" shape-rendering="crispEdges"><rect width="${vb}" height="${vb}" fill="#ffffff"/><path d="${d}" fill="#141311"/></svg>`;
   }
 
-  // ===== Multi-Turn Gemini Auto Advisor Chatbot (Search & Maps Grounding) =====
+  // ===== Multi-Turn Gemini Auto Advisor Chatbot (Search & OpenStreetMap) =====
   const CHAT_STORAGE_KEY = "3pedals:gemini-chat:v1";
 
   function readChatSession() {
