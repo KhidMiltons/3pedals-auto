@@ -46,7 +46,7 @@ const ROLE_INSTRUCTIONS = {
   import_specialist:
     "You are 3P Import & Duty Specialist for Kenya. Explain KRA/KEBS/NTSA rules, 8-year age limits, CRSP valuation factors, import duty, excise, VAT, IDF, RDL, and registration steps in Kenya accurately using Search grounding when current rates or policies are asked.",
   yard_locator:
-    "You are 3P Yard & Inspection Locator for 3 Pedals Auto KE. Help buyers find reputable car yards, NTSA inspection centers, garages, and automotive service hubs across Kenya with grounded Google Maps place details and links.",
+    "You are 3P Yard & Inspection Locator for 3 Pedals Auto KE. Help buyers find reputable car yards, NTSA inspection centers, garages, and automotive service hubs across Kenya with OpenStreetMap place data and links. Clearly identify incomplete map coverage and never invent ratings or opening hours.",
   inspection_tech:
     "You are 3P Pre-Purchase Mechanical Advisor. Give practical, itemized inspection checklists, common model faults, mileage verification tips, and logbook verification guidance for buyers in Kenya.",
 };
@@ -57,17 +57,30 @@ function shouldRouteToMaps(text) {
   );
 }
 
-app.get("/api/maps-config", (_req, res) => {
-  const apiKey =
-    process.env.GOOGLE_MAPS_API_KEY ||
-    process.env.VITE_GOOGLE_MAPS_API_KEY ||
-    process.env.MAPS_API_KEY ||
-    "";
-  res.json({
-    configured: Boolean(apiKey),
-    apiKey,
-  });
-});
+async function findOpenStreetMapPlaces(queryText, location) {
+  const userLat = Number(location?.latitude), userLng = Number(location?.longitude);
+  const hasLocation = Number.isFinite(userLat) && Number.isFinite(userLng);
+  const area = String(queryText || "").replace(/\\b(near me|nearby|car yards?|dealers?|dealerships?|garages?|mechanics?|inspection centers?|ntsa|showrooms?|directions|map|maps)\\b/ig, " ").replace(/\\s+/g, " ").trim() || "Nairobi";
+  let center = hasLocation ? { lat: userLat, lon: userLng } : null;
+  if (!center) {
+    const url = new URL("https://nominatim.openstreetmap.org/search");
+    url.search = new URLSearchParams({ format: "jsonv2", limit: "1", countrycodes: "ke", q: area + ", Kenya" });
+    const response = await fetch(url, { headers: { "User-Agent": "3PedalsAutoKE/1.0 (https://3pedalsauto.co.ke)", Accept: "application/json" } });
+    if (!response.ok) throw new Error("OpenStreetMap location search is unavailable.");
+    const found = await response.json();
+    if (found[0]) center = { lat: Number(found[0].lat), lon: Number(found[0].lon) };
+  }
+  if (!center) center = { lat: -1.2921, lon: 36.8219 };
+  const pattern = "car|auto|motor|vehicle|garage|inspection|ntsa|toyota|subaru|mazda|mitsubishi|nissan|dealer|showroom";
+  const query = '[out:json][timeout:20];(nwr["name"~"' + pattern + '",i](around:12000,' + center.lat + ',' + center.lon + '););out center tags 50;';
+  const response = await fetch("https://overpass-api.de/api/interpreter", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8", "User-Agent": "3PedalsAutoKE/1.0 (https://3pedalsauto.co.ke)" }, body: "data=" + encodeURIComponent(query) });
+  if (!response.ok) throw new Error("OpenStreetMap place search is unavailable.");
+  const data = await response.json();
+  return (data.elements || []).map(el => {
+    const tags = el.tags || {};
+    return { name: tags.name || tags.brand || "Automotive location", lat: Number(el.lat ?? el.center?.lat), lon: Number(el.lon ?? el.center?.lon), address: [tags["addr:street"], tags["addr:suburb"], tags["addr:city"]].filter(Boolean).join(", "), category: tags.amenity || tags.shop || tags.office || tags.craft || "automotive", mapUrl: "https://www.openstreetmap.org/" + el.type + "/" + el.id };
+  }).filter(p => Number.isFinite(p.lat) && Number.isFinite(p.lon)).slice(0, 30);
+}
 
 app.post("/api/chat", async (req, res) => {
   const ai = getGenAiClient();
@@ -105,8 +118,16 @@ app.post("/api/chat", async (req, res) => {
 
   let effectiveMode = requestedMode;
   if (effectiveMode === "auto") {
-    effectiveMode =
-      roleKey === "yard_locator" || shouldRouteToMaps(lastUserMsg) ? "maps" : "search";
+    effectiveMode = roleKey === "yard_locator" || shouldRouteToMaps(lastUserMsg) ? "maps" : "search";
+  }
+  let osmPlaces = [];
+  if (effectiveMode === "maps") {
+    try { osmPlaces = await findOpenStreetMapPlaces(lastUserMsg, req.body?.location); }
+    catch (error) { console.warn("OpenStreetMap lookup failed:", error); }
+    if (osmPlaces.length) {
+      const last = cleanedHistory[cleanedHistory.length - 1];
+      if (last?.role === "user") last.parts[0].text += "\\n\\nOpenStreetMap place data (coverage may be incomplete; do not invent ratings or opening hours): " + JSON.stringify(osmPlaces);
+    }
   }
 
   let model = "gemini-4-hydrogen";
@@ -116,16 +137,7 @@ app.post("/api/chat", async (req, res) => {
     model = "gemini-3.1-flash-lite";
   } else if (effectiveMode === "maps") {
     model = "gemini-4-hydrogen";
-    config.tools = [{ googleMaps: {} }];
-    const lat = Number(req.body?.location?.latitude);
-    const lng = Number(req.body?.location?.longitude);
-    if (Number.isFinite(lat) && Number.isFinite(lng)) {
-      config.toolConfig = {
-        retrievalConfig: {
-          latLng: { latitude: lat, longitude: lng },
-        },
-      };
-    }
+    config.tools = [{ googleSearch: {} }];
   } else if (effectiveMode === "search") {
     model = "gemini-4-hydrogen";
     config.tools = [{ googleSearch: {} }];
@@ -151,27 +163,21 @@ app.post("/api/chat", async (req, res) => {
           title: chunk.web.title || chunk.web.uri,
           uri: chunk.web.uri,
         });
-      } else if (chunk?.maps?.uri && !seenUris.has(chunk.maps.uri)) {
-        seenUris.add(chunk.maps.uri);
-        const snippets = Array.isArray(chunk.maps.placeAnswerSources?.reviewSnippets)
-          ? chunk.maps.placeAnswerSources.reviewSnippets
-              .map((s) => s?.content || s?.text || "")
-              .filter(Boolean)
-              .slice(0, 2)
-          : [];
-        groundingSources.push({
-          type: "maps",
-          title: chunk.maps.title || "Google Maps Place",
-          uri: chunk.maps.uri,
-          snippets,
-        });
+      }
+    }
+    if (effectiveMode === "maps") {
+      for (const place of osmPlaces.slice(0, 8)) {
+        if (place.mapUrl && !seenUris.has(place.mapUrl)) {
+          seenUris.add(place.mapUrl);
+          groundingSources.push({ type: "osm", title: place.name, uri: place.mapUrl });
+        }
       }
     }
 
     res.json({
       reply: reply || "I could not generate a response for that request. Please try rephrasing.",
       model,
-      groundingMode: effectiveMode,
+      groundingMode: effectiveMode === "maps" ? "OpenStreetMap" : effectiveMode,
       groundingSources,
     });
   } catch (err) {
