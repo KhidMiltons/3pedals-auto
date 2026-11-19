@@ -60,7 +60,7 @@ function shouldRouteToMaps(text) {
 async function findOpenStreetMapPlaces(queryText, location) {
   const userLat = Number(location?.latitude), userLng = Number(location?.longitude);
   const hasLocation = Number.isFinite(userLat) && Number.isFinite(userLng);
-  const area = String(queryText || "").replace(/\b(near me|nearby|car yards?|dealers?|dealerships?|garages?|mechanics?|inspection centers?|ntsa|showrooms?|directions|map|maps)\b/ig, " ").replace(/\\s+/g, " ").trim() || "Nairobi";
+  const area = String(queryText || "").replace(/\b(near me|nearby|car yards?|dealers?|dealerships?|garages?|mechanics?|inspection centers?|ntsa|showrooms?|directions|map|maps)\b/ig, " ").replace(/\s+/g, " ").trim() || "Nairobi";
   let center = hasLocation ? { lat: userLat, lon: userLng } : null;
   if (!center) {
     const url = new URL("https://nominatim.openstreetmap.org/search");
