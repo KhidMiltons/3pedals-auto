@@ -1,4 +1,5 @@
 (() => {
+  const API_BASE_URL = "https://threepedals-auto.onrender.com";
   if (window.__ThreePedalsUXLoaded) return;
   window.__ThreePedalsUXLoaded = true;
 
@@ -1263,7 +1264,7 @@
       renderMessages();
 
       try {
-        const res = await fetch("/api/chat", {
+        const res = await fetch(`${API_BASE_URL}/api/chat`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
