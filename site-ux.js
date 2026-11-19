@@ -1061,7 +1061,7 @@
       return {
         fab: sw ? "Uliza Mshauri" : "Auto Advisor",
         title: sw ? "Mshauri wa Magari 3P" : "3P Auto Advisor",
-        subtitle: sw ? "Utafutaji wa Google, Ramani & Ushauri" : "Live Search, Maps Grounding & Specs",
+        subtitle: sw ? "Utafutaji wa Google, OpenStreetMap & Ushauri" : "Live Search, OpenStreetMap & Specs",
         roleLabel: sw ? "Jukumu" : "Role",
         modeLabel: sw ? "Zana" : "Mode",
         clear: sw ? "Futa" : "Clear",
@@ -1093,9 +1093,9 @@
           { value: "inspection_tech", label: sw ? "Ukaguzi wa Kiufundi" : "Inspection Tech" }
         ],
         modes: [
-          { value: "auto", label: sw ? "Otomatiki (Search/Maps)" : "Auto (Search / Maps)" },
+          { value: "auto", label: sw ? "Otomatiki (Search/OpenStreetMap)" : "Auto (Search / OpenStreetMap)" },
           { value: "search", label: "Google Search" },
-          { value: "maps", label: "Google Maps" },
+          { value: "maps", label: "OpenStreetMap" },
           { value: "fast", label: sw ? "Haraka (Flash Lite)" : "Fast (Flash Lite)" }
         ]
       };
@@ -1216,7 +1216,7 @@
             ? `<div class="ux-chat-sources">${sources
                 .map(
                   (s) =>
-                    `<a class="ux-chat-source-link" href="${escapeHtml(s.uri)}" target="_blank" rel="noopener noreferrer" data-source-type="${escapeHtml(s.type)}">${s.type === "maps" ? "📍" : "🔎"} <span>${escapeHtml(s.title)}</span></a>${
+                    `<a class="ux-chat-source-link" href="${escapeHtml(s.uri)}" target="_blank" rel="noopener noreferrer" data-source-type="${escapeHtml(s.type)}">${s.type === "osm" ? "📍" : "🔎"} <span>${escapeHtml(s.title)}</span></a>${
                       Array.isArray(s.snippets) && s.snippets.length
                         ? `<small class="ux-chat-snippet">${escapeHtml(s.snippets[0])}</small>`
                         : ""
