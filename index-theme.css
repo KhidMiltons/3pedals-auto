@@ -132,20 +132,20 @@ input::placeholder,textarea::placeholder{color:rgba(255,255,255,.68)!important}
 .hero h1:after{background:linear-gradient(90deg,#e8d7ae,#a88b54)!important;border-radius:99px}
 .hero p{max-width:38em;color:rgba(255,255,255,.84)!important}
 @media(max-width:760px){
-  header{width:calc(100% - 20px);margin-top:10px!important;border-radius:16px!important}
+  body>header{width:calc(100% - 20px);margin-top:10px!important;border-radius:16px!important}
   .hero{width:calc(100% - 20px);margin:14px auto 24px!important;min-height:430px;border-radius:22px!important;padding:30px 22px!important}
   .hero h1{font-size:clamp(34px,10vw,52px)!important}
 }
 
 /* Unified glass surfaces */
-header,body>header,.site-header,.navbar,.nav-shell,.nav-wrap,#nav,
-#dlg,.authbox,.modal,.drawer,
+body>header,.site-header,.navbar,.nav-shell,.nav-wrap,#nav,
+#dlg,.authbox,.modal:not(#accDlg),.drawer,
 .hero,#home .tile,.tiles .tile,.showroom-vehicle-note,
 .card,.panel,.contact-card,.journal-intro,.journal-card,.project-intro,.project-card,
 .project-public-empty,.vehicle-card,.listing,.dealer,.featured-panel,.promotion-package,
 .dashboard-card,.contact-form,.filter-panel,.search-panel,.stat,.service-card,.booking-card,
 .garage-card,#autoQuoteRail,.journal-photo-viewer,
-.account-pages,.account-tools,.account-page,.account-fast-loading,.account-load-error{
+.account-fast-loading,.account-load-error{
   background-color:rgba(24,24,25,.24)!important;
   border:1px solid rgba(255,255,255,.22)!important;
   box-shadow:0 14px 38px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.16)!important;
@@ -154,8 +154,8 @@ header,body>header,.site-header,.navbar,.nav-shell,.nav-wrap,#nav,
   border-radius:18px!important;
 }
 #nav{background-color:rgba(17,17,18,.56)!important}
-header{margin:18px auto 0!important;width:min(calc(100% - 32px),1440px);border-radius:22px!important}
-body>header,header.site-header,.site-header,header{
+body>header{margin:18px auto 0!important;width:min(calc(100% - 32px),1440px);border-radius:22px!important}
+body>header,header.site-header,.site-header{
   background:transparent!important;
   border-top:0!important;border-bottom:0!important;border-left:0!important;border-right:0!important;
   box-shadow:none!important;
@@ -164,9 +164,9 @@ body>header,header.site-header,.site-header,header{
 }
 @media(max-width:800px){
   body{padding-top:0!important}
-  body>header,header.site-header,.site-header,header{padding-top:env(safe-area-inset-top,0px)!important}
+  body>header,header.site-header,.site-header{padding-top:env(safe-area-inset-top,0px)!important}
   @supports(padding:constant(safe-area-inset-top)){
-    body>header,header.site-header,.site-header,header{padding-top:constant(safe-area-inset-top)!important}
+    body>header,header.site-header,.site-header{padding-top:constant(safe-area-inset-top)!important}
   }
 }
 
@@ -376,8 +376,8 @@ footer a,body>footer a{position:relative}
 #footerBrand,#footerNote{color:inherit}
 @media(max-width:760px){footer,body>footer{padding-bottom:calc(80px + env(safe-area-inset-bottom,0px))!important}}
 
-input,select,textarea{background:rgba(20,20,21,.30)!important;color:inherit!important;border:1px solid rgba(255,255,255,.25)!important;border-radius:11px!important;-webkit-backdrop-filter:blur(16px)!important;backdrop-filter:blur(16px)!important}
-input,select,textarea,button,.btn{-webkit-backdrop-filter:blur(14px) saturate(130%);backdrop-filter:blur(14px) saturate(130%)}
+:is(input,select,textarea):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){background:rgba(20,20,21,.30)!important;color:inherit!important;border:1px solid rgba(255,255,255,.25)!important;border-radius:11px!important;-webkit-backdrop-filter:blur(16px)!important;backdrop-filter:blur(16px)!important}
+:is(input,select,textarea,button,.btn):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){-webkit-backdrop-filter:blur(14px) saturate(130%);backdrop-filter:blur(14px) saturate(130%)}
 
 .journal-card-top,.project-card .project-article{background:linear-gradient(145deg,rgba(195,169,112,.12),rgba(20,22,23,.88))!important}
 .journal-card-body h2,.project-body h2,.project-intro h2,.journal-intro h2{color:#f4efe4}
@@ -388,7 +388,7 @@ input,select,textarea,button,.btn{-webkit-backdrop-filter:blur(14px) saturate(13
 #authDlg{background:rgba(17,17,18,.32)!important;border-color:rgba(255,255,255,.20)!important;color:var(--text,#f5f2eb);border-radius:22px;box-shadow:0 28px 90px rgba(0,0,0,.48)}
 #authDlg::backdrop{background:rgba(5,7,9,.64);backdrop-filter:blur(5px)}
 #authDlg .in{position:relative;z-index:1}
-#authCloseTop,#accCloseTop{position:sticky;top:0;z-index:20;float:right;display:grid;place-items:center;width:42px;height:42px;border-radius:50%;border:1px solid rgba(195,169,112,.38);background:rgba(255,255,255,.08);color:inherit;font-size:26px;cursor:pointer;pointer-events:auto}
+#authCloseTop{position:sticky;top:0;z-index:20;float:right;display:grid;place-items:center;width:42px;height:42px;border-radius:50%;border:1px solid rgba(195,169,112,.38);background:rgba(255,255,255,.08);color:inherit;font-size:26px;cursor:pointer;pointer-events:auto}
 #authCloseBack,#authSubmit,#accountRetryButton{position:relative;z-index:3;pointer-events:auto;cursor:pointer}
 .account-load-error{padding:24px;border:1px solid rgba(195,169,112,.35);border-radius:16px}
 .account-load-error button{padding:10px 16px;border-radius:999px;background:var(--gold,#c3a970);color:#171717;border:0;font-weight:700;cursor:pointer}

@@ -33,175 +33,247 @@ main{padding:34px 0 60px}.eyebrow{color:var(--gold);font-size:11px;font-weight:8
 @media(max-width:850px){.tools{grid-template-columns:repeat(2,minmax(0,1fr))}.tools input{grid-column:1/-1}.tools .search-label{grid-column:1/-1}}@media(max-width:520px){.wrap{width:calc(100% - 24px)}.headin{min-height:60px}.brand{font-size:19px}.back{padding:8px 10px;font-size:13px}main{padding-top:25px}.summary{gap:8px}.stat{flex:1 1 135px;padding:11px 13px}.dealer{min-height:112px;padding:15px}.logo{width:46px;height:46px;flex-basis:46px}.tools{grid-template-columns:1fr}.tools input{grid-column:auto}.tools .search-label{grid-column:auto}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
 </style>
-<style id="3pedals-glass-theme">
-:root{color-scheme:dark;--bg:#0d0d0d;--surface:rgba(27,28,29,.78);--surface2:rgba(34,35,36,.76);--text:#f5f1e6;--ink:#f5f1e6;--muted:#aaa18e;--mute:#aaa18e;--gold:#c9b784;--blue:#c9b784;--line:rgba(201,183,132,.2);--ease:cubic-bezier(.22,1,.36,1)}
-body{background:radial-gradient(ellipse at 12% -8%,rgba(201,183,132,.12),transparent 34%),radial-gradient(ellipse at 90% 18%,rgba(255,255,255,.035),transparent 35%),#0d0d0d!important;color:#f5f1e6!important;font-family:Manrope,system-ui,-apple-system,"Segoe UI",sans-serif!important}
-header,.head{background:linear-gradient(110deg,rgba(17,18,19,.9),rgba(30,30,31,.78))!important;border-color:rgba(201,183,132,.2)!important;backdrop-filter:blur(22px) saturate(140%)!important;-webkit-backdrop-filter:blur(22px) saturate(140%)!important}
-.card,.dealer,.stat,.state,.empty,.error,.panel,.seller-card,.info,.gallery,.seller,.spec,.note{background:linear-gradient(145deg,rgba(40,40,40,.76),rgba(22,23,24,.82))!important;color:#f5f1e6!important;border-color:rgba(201,183,132,.2)!important;backdrop-filter:blur(18px) saturate(135%)!important;-webkit-backdrop-filter:blur(18px) saturate(135%)!important;box-shadow:0 12px 34px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.035)!important;transition:transform .32s var(--ease),border-color .25s,box-shadow .32s!important}
-@media(hover:hover) and (pointer:fine){
-  .card:hover,.dealer:hover{transform:translateY(-3px)!important;border-color:rgba(201,183,132,.55)!important;box-shadow:0 20px 46px rgba(0,0,0,.38),0 0 22px rgba(201,183,132,.08)!important}
-  .btn:hover{transform:translateY(-2px)!important;filter:brightness(1.08)!important;box-shadow:0 10px 24px rgba(0,0,0,.28)!important}
-}
-.card:focus-visible,.dealer:focus-visible{border-color:rgba(201,183,132,.55)!important;box-shadow:0 20px 46px rgba(0,0,0,.38),0 0 22px rgba(201,183,132,.08)!important}
-input,select,textarea,.back{background:rgba(255,255,255,.055)!important;color:#f5f1e6!important;border-color:rgba(201,183,132,.2)!important;backdrop-filter:blur(12px)!important;-webkit-backdrop-filter:blur(12px)!important}
-.btn{transition:transform .25s var(--ease),filter .25s,box-shadow .25s!important}.btn:focus-visible{filter:brightness(1.08)!important;box-shadow:0 10px 24px rgba(0,0,0,.28)!important}.input::placeholder{color:#aaa18e!important}input::placeholder{color:#aaa18e!important}.eyebrow{color:#c9b784!important}a{color:inherit}.logo,.brand,.price,.arrow{color:#c9b784!important}.status{background:rgba(55,112,72,.2)!important;color:#b7e0bf!important;border-color:rgba(128,194,143,.3)!important}.yard-label{background:rgba(201,183,132,.14)!important;color:#c9b784!important}footer{border-color:rgba(201,183,132,.18)!important;color:#aaa18e!important}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
-</style>
-<link rel="stylesheet" href="site-theme.css?v=20261107-mobile-performance-1">
+<link rel="stylesheet" href="site-theme.css?v=20261121-modern-dashboard">
+<link rel="stylesheet" href="/site-ux.css?v=20261121-modern-dashboard">
 <!-- Meta Pixel loads only after explicit optional-cookie consent. -->
-<style id="shared-home-glass-header">
-
-/* shared-home-glass-header: Home-page glass header treatment — keep each page's own navigation and actions. */
-html body > header{
-  position:sticky!important;top:0!important;z-index:1000!important;
-  color:#fff!important;background:rgba(8,10,13,.78)!important;
-  border:0!important;border-bottom:1px solid rgba(227,179,65,.18)!important;
-  box-shadow:0 8px 30px rgba(0,0,0,.22)!important;
-  -webkit-backdrop-filter:blur(18px) saturate(140%)!important;
-  backdrop-filter:blur(18px) saturate(140%)!important;
+<style id="dealers-clean-shell">
+/* Unified dual-theme glass shell for Car Dealers directory (Dark Obsidian & Light Parchment) */
+html, html body {
+  min-height: 100% !important;
+  font-family: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
-html body > header > .wrap,
-html body > header > .headin,
-html body > header > .head{
-  box-sizing:border-box!important;width:100%!important;max-width:1180px!important;
-  min-height:76px!important;margin:0 auto!important;padding:10px 24px!important;
-  display:flex!important;align-items:center!important;justify-content:space-between!important;
-  gap:18px!important;flex-wrap:wrap!important;background:transparent!important;
-  border:0!important;box-shadow:none!important;
+html body {
+  min-height: 100vh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  position: relative !important;
+  isolation: isolate !important;
+  background: #08090b !important;
+  background-image: none !important;
+  color: #f5f1e6;
 }
-html body > header .logo,
-html body > header .brand{
-  color:#e3b341!important;font-family:"Playfair Display",Georgia,serif!important;
-  font-size:30px!important;font-weight:700!important;letter-spacing:.055em!important;
-  line-height:1.15!important;text-transform:uppercase!important;white-space:nowrap!important;
-  text-decoration:none!important;flex:0 0 auto!important;
+html[data-theme="light"] body {
+  background: #f5f0e3 !important;
+  color: #171512 !important;
 }
-html body > header nav,
-html body > header .headnav{
-  display:flex;align-items:center;justify-content:center;gap:3px!important;
-  padding:4px!important;border:1px solid rgba(255,255,255,.11)!important;
-  border-radius:14px!important;background:rgba(255,255,255,.055)!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 8px 24px rgba(0,0,0,.16)!important;
-  -webkit-backdrop-filter:blur(12px)!important;backdrop-filter:blur(12px)!important;
+#dealers-blurred-wallpaper {
+  position: fixed !important;
+  inset: -10px !important;
+  z-index: 0 !important;
+  display: block !important;
+  pointer-events: none !important;
+  background-image:
+    linear-gradient(110deg, rgba(4, 6, 9, 0.72), rgba(6, 8, 12, 0.54) 48%, rgba(4, 6, 9, 0.72)),
+    url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72") !important;
+  background-position: center center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  filter: blur(6px) !important;
+  transform: scale(1.03) !important;
 }
-html body > header nav a,
-html body > header nav button,
-html body > header .back{
-  min-height:42px!important;display:inline-flex!important;align-items:center!important;
-  justify-content:center!important;padding:9px 15px!important;margin:0!important;
-  border:1px solid transparent!important;border-radius:12px!important;
-  background:transparent!important;color:#d7d9de!important;
-  font:600 14px/1.2 Manrope,system-ui,sans-serif!important;letter-spacing:.01em!important;
-  text-decoration:none!important;white-space:nowrap!important;cursor:pointer!important;
-  box-shadow:none!important;transition:background .25s ease,border-color .25s ease,color .25s ease,transform .25s ease!important;
+html body > :not(#dealers-blurred-wallpaper):not(.ux-chat-fab):not(.ux-chat-drawer):not(.ux-back-to-top):not(.acc-toast-host):not(#siteToastHost):not(dialog) {
+  position: relative !important;
+  z-index: 1 !important;
 }
-@media(hover:hover) and (pointer:fine){
-  html body > header nav a:hover,
-  html body > header nav button:hover,
-  html body > header .back:hover{
-    background:rgba(255,255,255,.10)!important;border-color:rgba(255,255,255,.10)!important;
-    color:#fff!important;transform:translateY(-1px)!important;
+html body > header.head {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 1000 !important;
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: env(safe-area-inset-top, 0px) 0 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 0 !important;
+  background: rgba(13, 15, 19, 0.72) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(135%) !important;
+  backdrop-filter: blur(20px) saturate(135%) !important;
+}
+html[data-theme="light"] body > header.head {
+  background: rgba(250, 247, 240, 0.86) !important;
+  border-bottom: 1px solid rgba(138, 114, 62, 0.22) !important;
+  box-shadow: 0 8px 24px rgba(48, 38, 18, 0.08) !important;
+}
+html body > header.head > .wrap.headin {
+  width: min(1180px, calc(100% - 28px)) !important;
+  max-width: none !important;
+  min-height: 72px !important;
+  margin: 0 auto !important;
+  padding: 10px 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  flex-wrap: nowrap !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+html body > header.head .brand {
+  order: 1;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-size: clamp(20px, 2.3vw, 28px) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  color: #e3b341 !important;
+  line-height: 1.1 !important;
+  white-space: nowrap !important;
+  text-decoration: none !important;
+  flex: 0 0 auto !important;
+}
+html[data-theme="light"] body > header.head .brand {
+  color: #8c640d !important;
+}
+html body > header.head .ux-header-right {
+  order: 2;
+  margin-left: auto !important;
+  flex: 0 1 auto !important;
+}
+html body > header.head .back {
+  order: 3;
+  position: static !important;
+  margin: 0 !important;
+  flex: 0 0 auto !important;
+  min-height: 38px !important;
+  padding: 8px 13px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  border-radius: 10px !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: #f4f0e8 !important;
+  font: 600 13px/1 "Manrope", system-ui, sans-serif !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+html[data-theme="light"] body > header.head .back {
+  background: rgba(255, 255, 255, 0.78) !important;
+  border-color: rgba(138, 114, 62, 0.34) !important;
+  color: #171512 !important;
+}
+@media (hover: hover) and (pointer: fine) {
+  html body > header.head .back:hover {
+    border-color: rgba(227, 179, 65, 0.65) !important;
+    background: rgba(255, 255, 255, 0.12) !important;
+    transform: translateY(-1px);
+  }
+  html[data-theme="light"] body > header.head .back:hover {
+    background: #ffffff !important;
+    border-color: #9e7415 !important;
   }
 }
-html body > header .account-pill{
-  display:flex!important;align-items:center!important;margin-left:auto!important;padding:4px!important;
-  border:1px solid rgba(255,255,255,.13)!important;border-radius:15px!important;
-  background:linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.035))!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 8px 24px rgba(0,0,0,.18)!important;
-  -webkit-backdrop-filter:blur(16px)!important;backdrop-filter:blur(16px)!important;
+html body > main.wrap {
+  flex: 1 0 auto !important;
+  width: min(1160px, calc(100% - 36px)) !important;
+  margin: 0 auto !important;
 }
-@media(max-width:760px){
-  html body > header > .wrap,
-  html body > header > .headin,
-  html body > header > .head{min-height:68px!important;padding:9px 14px!important;gap:10px!important}
-  html body > header .logo,
-  html body > header .brand{font-size:clamp(19px,5vw,25px)!important;white-space:normal!important}
-  html body > header nav,
-  html body > header .headnav{gap:2px!important;padding:3px!important}
-  html body > header nav a,
-  html body > header nav button,
-  html body > header .back{min-height:38px!important;padding:8px 10px!important;font-size:12px!important}
+html body :is(h1, h2, h3) {
+  font-family: "Playfair Display", Georgia, serif;
 }
-@media(prefers-reduced-motion:reduce){
-  html body > header nav a,html body > header nav button,html body > header .back{transition:none!important}
+html body .dealer,
+html body .stat,
+html body .state {
+  background: rgba(22, 24, 28, 0.58) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(130%) !important;
+  backdrop-filter: blur(18px) saturate(130%) !important;
+  color: #f4f0e8;
 }
-
-
-/* Match the Home page typography and navigation dock across this page. */
-html body{font-family:Manrope,system-ui,sans-serif!important;font-size:16px;line-height:1.6}
-html body :is(button,input,select,textarea){font-family:Manrope,system-ui,sans-serif}
-html body :is(h1,h2,h3){font-family:"Playfair Display",Georgia,serif!important;line-height:1.05;letter-spacing:.01em}
-html body > header .logo,html body > header .brand{font-family:"Playfair Display",Georgia,serif!important}
-html body > header nav,html body > header .headnav{
-  gap:3px!important;padding:4px!important;border:1px solid rgba(255,255,255,.11)!important;
-  border-radius:14px!important;background:rgba(255,255,255,.055)!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 8px 24px rgba(0,0,0,.16)!important;
-  -webkit-backdrop-filter:blur(12px)!important;backdrop-filter:blur(12px)!important;
+html[data-theme="light"] body .dealer,
+html[data-theme="light"] body .stat,
+html[data-theme="light"] body .state {
+  background: rgba(255, 253, 248, 0.88) !important;
+  border-color: rgba(138, 114, 62, 0.28) !important;
+  box-shadow: 0 10px 26px rgba(48, 38, 18, 0.08) !important;
+  color: #171512 !important;
 }
-html body > header nav a,html body > header nav button,html body > header .headnav a,html body > header .headnav button,html body > header .back{
-  min-height:42px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;
-  padding:9px 15px!important;border:1px solid transparent!important;border-radius:12px!important;
-  background:transparent!important;color:#d7d9de!important;
-  font:600 14px/1 Manrope,system-ui,sans-serif!important;letter-spacing:.01em!important;
-  text-decoration:none!important;white-space:nowrap!important;cursor:pointer!important;
-  box-shadow:none!important;transform:translateY(0) scale(1)!important;
-  transition:transform .46s cubic-bezier(.22,1,.36,1),background .32s ease,box-shadow .32s ease,border-color .32s ease,color .32s ease!important;
+html body .tools input,
+html body .tools select {
+  background: rgba(20, 22, 26, 0.56) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: #f4f0e8 !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  backdrop-filter: blur(12px) !important;
 }
-@media(hover:hover) and (pointer:fine){
-  html body > header nav a:hover,html body > header nav button:hover,html body > header .headnav a:hover,html body > header .headnav button:hover,html body > header .back:hover{
-    background:rgba(255,255,255,.10)!important;border-color:rgba(255,255,255,.10)!important;color:#fff!important;
-    transform:translateY(-1px)!important;box-shadow:0 8px 18px rgba(0,0,0,.16)!important;
+html[data-theme="light"] body .tools input,
+html[data-theme="light"] body .tools select {
+  background: #ffffff !important;
+  border-color: rgba(138, 114, 62, 0.34) !important;
+  color: #171512 !important;
+}
+html[data-theme="light"] body .tools input::placeholder {
+  color: #6b6355 !important;
+}
+html[data-theme="light"] body .tools select option {
+  background: #ffffff !important;
+  color: #171512 !important;
+}
+html body > footer,
+html body > footer.ux-site-footer {
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  margin-top: auto !important;
+  border: 0 !important;
+  border-top: 0 !important;
+  border-bottom: 0 !important;
+  box-shadow: none !important;
+}
+@media (hover: hover) and (pointer: fine) {
+  html body .dealer:hover,
+  html body .dealer:focus-visible {
+    transform: translateY(-3px) !important;
+    border-color: rgba(227, 179, 65, 0.55) !important;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.14) !important;
   }
 }
-html body > header nav button[aria-selected="true"],html body > header nav a[aria-current="page"]{
-  background:linear-gradient(180deg,#e7bd57,#d4a017)!important;color:#111!important;
-  box-shadow:0 5px 16px rgba(215,169,40,.24)!important;
+@media (max-width: 800px) {
+  html body > header.head > .wrap.headin {
+    width: calc(100% - 24px) !important;
+    min-height: 64px !important;
+    gap: 8px !important;
+  }
+  html body > header.head .brand {
+    font-size: clamp(16px, 4.4vw, 21px) !important;
+    letter-spacing: 0.02em !important;
+  }
+  html body > header.head .back {
+    padding: 7px 10px !important;
+    font-size: 12px !important;
+    min-height: 36px !important;
+  }
 }
-@media(hover:hover) and (pointer:fine){
- html body > header nav a:hover,html body > header nav button:hover,html body > header .headnav a:hover,html body > header .headnav button:hover{transform:translateY(-2px) scale(1.08)!important}
+@media (max-width: 760px) {
+  html body :is(.dealer, .stat, .state) {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
 }
-@media(max-width:760px){
- html body > header nav a,html body > header nav button,html body > header .headnav a,html body > header .headnav button,html body > header .back{font-size:12px!important;padding:8px 10px!important;min-height:38px!important}
+@media (max-width: 520px) {
+  html body > main.wrap {
+    width: calc(100% - 24px) !important;
+  }
 }
-@media(prefers-reduced-motion:reduce){
- html body > header nav a,html body > header nav button,html body > header .headnav a,html body > header .headnav button,html body > header .back{transition:none!important;transform:none!important}
-}
-
-</style>
-
-<style id="home-header-font-colors">
-/* Match header text colors to the Home page: champagne brand, soft-white navigation, white hover, dark active text. */
-html body > header :is(.logo,.brand){color:#e3b341!important}
-html body > header :is(nav a,nav button,.headnav a,.headnav button,.back){color:#d7d9de!important}
-html body > header :is(nav a:hover,nav button:hover,.headnav a:hover,.headnav button:hover,.back:hover){color:#fff!important}
-html body > header nav button[aria-selected="true"],html body > header nav a[aria-current="page"],html body > header .headnav button[aria-selected="true"],html body > header .headnav a[aria-current="page"]{color:#111!important}
-</style>
-
-<style id="home-reference-typography">
-/* Typography matched to the supplied Home-header reference. */
-html body{font-family:Manrope,system-ui,-apple-system,"Segoe UI",sans-serif!important}
-html body h1,html body h2,html body h3,html body .logo,html body .brand{font-family:"Playfair Display",Georgia,serif!important}
-html body > header .logo,html body > header .brand{font-family:"Playfair Display",Georgia,serif!important;font-size:27px!important;font-weight:700!important;letter-spacing:.03em!important;text-transform:uppercase!important}
-html body > header nav a,html body > header nav button,html body > header .headnav a,html body > header .headnav button,html body > header .back{font-family:Manrope,system-ui,sans-serif!important;font-size:14px!important;font-weight:400!important;letter-spacing:0!important}
-</style>
-<style id="dealers-header-back-position-final">
-/* Keep the dealer-directory Back button aligned inside the floating glass header. */
-html body>header.head{width:min(1160px,calc(100% - 48px))!important;margin:20px auto 12px!important}
-html body>header.head>.wrap.headin{
- position:relative!important;width:100%!important;max-width:none!important;min-height:80px!important;
- padding:10px 28px!important;display:flex!important;align-items:center!important;
- justify-content:space-between!important;gap:16px!important
-}
-html body>header.head>.wrap.headin>.brand{margin:0 auto 0 0!important;flex:0 1 auto!important}
-html body>header.head>.wrap.headin>.back{
- position:static!important;inset:auto!important;margin:0 0 0 auto!important;flex:0 0 auto!important;transform:none!important
-}
-@media(max-width:800px){
- html body>header.head{width:calc(100% - 24px)!important;margin:12px auto!important}
- html body>header.head>.wrap.headin{min-height:68px!important;padding:8px 12px!important;gap:10px!important}
+@media (prefers-reduced-motion: reduce) {
+  #dealers-blurred-wallpaper {
+    filter: none !important;
+  }
+  html body * {
+    transition: none !important;
+  }
 }
 </style>
-<link rel="stylesheet" href="/site-ux.css?v=20261120">
 </head>
 <body>
 <div id="dealers-blurred-wallpaper" aria-hidden="true"></div>
@@ -296,157 +368,7 @@ document.addEventListener('click', function(event) {
   }
 })();
 </script>
-<style id="dealer-directory-glass-refresh">body{background:#08090b!important;background-image:linear-gradient(90deg,rgba(4,5,7,.62),rgba(4,5,7,.32),rgba(4,5,7,.55)),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72")!important;background-position:center,center!important;background-size:cover,cover!important;background-attachment:fixed,fixed!important}.head{background:rgba(18,19,22,.38)!important;border:1px solid rgba(255,255,255,.35)!important;border-radius:22px!important;backdrop-filter:blur(24px)!important;-webkit-backdrop-filter:blur(24px)!important}.dealer,.stat,.state,.empty,.error,.tools input,.tools select{background:rgba(20,21,23,.48)!important;backdrop-filter:blur(20px) saturate(130%)!important;-webkit-backdrop-filter:blur(20px) saturate(130%)!important;border-color:rgba(201,183,132,.25)!important}@media(hover:hover) and (pointer:fine){.dealer:hover{transform:translateY(-3px)!important}}.dealer:focus-visible{transform:translateY(-3px)!important}a,button,.dealer,.back{transition:all .22s ease!important}a:hover,button:hover,.back:hover{border-color:rgba(211,181,143,.72)!important;box-shadow:0 10px 26px rgba(0,0,0,.2)!important}</style>
-<style id="site-wide-mobile-glass-status-area">
-/* Consistent mobile glass treatment for the system safe-area/status region across public pages. */
-@media(max-width:800px){
-  html{background:transparent!important}
-  body{padding-top:0!important}
-  body>header,header.site-header,.site-header,header{
-    padding-top:env(safe-area-inset-top,0px)!important;
-    background-color:rgba(15,17,20,.18)!important;
-    border-bottom-color:rgba(255,255,255,.14)!important;
-    -webkit-backdrop-filter:blur(26px) saturate(145%)!important;
-    backdrop-filter:blur(26px) saturate(145%)!important;
-  }
-  @supports(padding:constant(safe-area-inset-top)){
-    body>header,header.site-header,.site-header,header{padding-top:constant(safe-area-inset-top)!important}
-  }
-}
-</style>
 
-
-
-<style id="site-wide-mobile-full-screen-scroll">
-/* Site-wide mobile screen-by-screen scrolling. Preserve natural scrolling for long pages and forms. */
-@media(max-width:760px){
-  html{scroll-behavior:smooth!important;scroll-snap-type:y proximity!important;scroll-padding-top:74px!important;overscroll-behavior-y:contain}
-  body{min-height:100%;overflow-x:hidden!important;overflow-y:auto!important}
-  main>section,main section[id],body>section,section.page-section,section.content-section{
-    scroll-snap-align:start!important;scroll-snap-stop:normal!important;scroll-margin-top:74px!important;box-sizing:border-box!important
-  }
-  @supports not (height:100svh){main>section,main section[id],body>section,section.page-section,section.content-section{scroll-margin-top:74px!important}}
-}
-@media(max-width:760px) and (prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}
-</style>
-
-<style id="site-wide-mobile-glass-status-area">
-/* Transparent mobile status/safe-area and header edge; keep the page wallpaper visible while scrolling. */
-@media(max-width:800px){
-  html{background:transparent!important}
-  body{padding-top:0!important}
-  body>header,header.site-header,.site-header,header{
-    padding-top:env(safe-area-inset-top,0px)!important;
-    background:transparent!important;
-    border-top:0!important;
-    border-bottom:0!important;
-    box-shadow:none!important;
-    -webkit-backdrop-filter:blur(18px) saturate(120%)!important;
-    backdrop-filter:blur(18px) saturate(120%)!important;
-  }
-  @supports(padding:constant(safe-area-inset-top)){
-    body>header,header.site-header,.site-header,header{padding-top:constant(safe-area-inset-top)!important}
-  }
-}
-</style>
-
-<style id="site-wide-transparent-status-header">
-/* Keep the header/status-area visually transparent on desktop and mobile. */
-html{background:transparent!important}
-body>header,header.site-header,.site-header,header{
-  background:transparent!important;
-  border-top:0!important;
-  border-bottom:0!important;
-  box-shadow:none!important;
-  -webkit-backdrop-filter:blur(18px) saturate(120%)!important;
-  backdrop-filter:blur(18px) saturate(120%)!important;
-}
-@media(max-width:800px){
-  body{padding-top:0!important}
-  body>header,header.site-header,.site-header,header{padding-top:env(safe-area-inset-top,0px)!important}
-  @supports(padding:constant(safe-area-inset-top)){
-    body>header,header.site-header,.site-header,header{padding-top:constant(safe-area-inset-top)!important}
-  }
-}
-</style>
-
-
-<style id="dealers-header-back-right-fix">
-/* Pin only the header Back control to the far-right edge of the header content. */
-header.head > .wrap.headin{
-  position:relative!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:flex-start!important;
-  width:min(1160px,calc(100% - 36px))!important;
-  min-height:68px!important;
-}
-header.head > .wrap.headin > .brand{
-  margin-right:auto!important;
-  flex:0 1 auto!important;
-}
-header.head > .wrap.headin > .back{
-  position:absolute!important;
-  right:0!important;
-  left:auto!important;
-  margin:0!important;
-  flex:0 0 auto!important;
-}
-@media(max-width:520px){
-  header.head > .wrap.headin{width:calc(100% - 24px)!important;min-height:60px!important}
-}
-</style>
-
-
-<style id="dealers-background-image-blur">
-/* Keep the original Porsche wallpaper visible and soften only that fixed image layer. */
-body{
-  position:relative!important;
-  isolation:isolate!important;
-  background:#08090b!important;
-  background-image:none!important;
-}
-#dealers-blurred-wallpaper{
-  position:fixed!important;
-  inset:-8px!important;
-  z-index:0!important;
-  pointer-events:none!important;
-  background-image:linear-gradient(90deg,rgba(4,5,7,.62),rgba(4,5,7,.32),rgba(4,5,7,.55)),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72")!important;
-  background-position:center!important;
-  background-size:cover!important;
-  background-repeat:no-repeat!important;
-  filter:blur(3px)!important;
-  transform:scale(1.02)!important;
-}
-body > :not(#dealers-blurred-wallpaper){
-  position:relative;
-  z-index:1;
-}
-header.head{z-index:5!important}
-</style>
-
-
-<style id="dealers-home-glass-borders">
-/* Match the Home screen's white-edged translucent glass cards. */
-header.head{
-  border:1px solid rgba(255,255,255,.18)!important;
-  box-shadow:0 14px 38px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.16)!important;
-}
-.dealer,.stat,.state{
-  border:1px solid rgba(255,255,255,.22)!important;
-  box-shadow:0 12px 30px rgba(0,0,0,.16),inset 0 1px 0 rgba(255,255,255,.12)!important;
-}
-.stat{
-  background:rgba(20,22,25,.30)!important;
-  -webkit-backdrop-filter:blur(8px) saturate(118%)!important;
-  backdrop-filter:blur(8px) saturate(118%)!important;
-  border-radius:15px!important;
-}
-.dealer:hover,.dealer:focus-visible{
-  border-color:rgba(255,255,255,.34)!important;
-  box-shadow:0 20px 46px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.20)!important;
-}
-</style>
 
 <script id="3pedals-site-media-performance">
 (()=>{
@@ -487,416 +409,6 @@ header.head{
 })();
 </script>
 
-<style id="shared-home-wallpaper-glass-treatment">
-/* Match the homepage: softly blurred Porsche wallpaper, restrained dark overlay,
-   translucent surfaces and crisp foreground content. */
-html{background:#08090b!important}
-html body{
-  position:relative!important;
-  isolation:isolate!important;
-  background:transparent!important;
-  background-color:transparent!important;
-}
-html body:before{
-  content:""!important;
-  display:block!important;
-  position:fixed!important;
-  inset:-10px!important;
-  z-index:-1!important;
-  pointer-events:none!important;
-  background:
-    linear-gradient(110deg,rgba(8,9,11,.42),rgba(8,9,11,.18) 48%,rgba(8,9,11,.42)),
-    url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72") center center/cover no-repeat!important;
-  filter:blur(4px)!important;
-  transform:scale(1.025)!important;
-}
-html body:after{content:none!important;display:none!important}
-html body header,html body .head,html body .top,html body .site-header,
-html body .navbar,html body .nav-shell,html body .nav-wrap{
-  background:rgba(17,18,20,.42)!important;
-  border-color:rgba(255,255,255,.18)!important;
-  box-shadow:0 14px 38px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.10)!important;
-  -webkit-backdrop-filter:blur(22px) saturate(135%)!important;
-  backdrop-filter:blur(22px) saturate(135%)!important;
-}
-html body .card,html body .panel,html body .dealer,html body .stat,
-html body .state,html body .empty,html body .error,html body .seller-card,
-html body .info,html body .gallery,html body .seller,html body .spec,
-html body .note,html body .listing,html body .article-item,
-html body .project-item,html body .vehicle-card,html body .story-card,
-html body .contact-card,html body .promotion-package,html body .dashboard-card,
-html body .featured-panel,html body .filter-panel,html body .search-panel,
-html body .vehicle-detail-card,html body .article-card,html body .account-page,
-html body .editor,html body .contact-form,html body .package,html body .notice,
-html body .booking-card,html body .service-card,html body .yard-card{
-  background-color:rgba(24,25,27,.30)!important;
-  border-color:rgba(255,255,255,.18)!important;
-  box-shadow:0 14px 38px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.09)!important;
-  -webkit-backdrop-filter:blur(18px) saturate(130%)!important;
-  backdrop-filter:blur(18px) saturate(130%)!important;
-}
-html body input,html body select,html body textarea{
-  background-color:rgba(20,21,23,.34)!important;
-  border-color:rgba(255,255,255,.20)!important;
-  -webkit-backdrop-filter:blur(12px)!important;
-  backdrop-filter:blur(12px)!important;
-}
-@media(max-width:760px){
-  html body:before{
-    background-image:
-      linear-gradient(180deg,rgba(8,9,11,.38),rgba(8,9,11,.50)),
-      url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72")!important;
-    background-position:center,58% center!important;
-  }
-}
-@media(prefers-reduced-motion:reduce){
-  html body:before{filter:none!important}
-}
-</style>
-
-
-<style id="dealers-home-treatment-final-fix">
-/* Final, page-specific override: keep one wallpaper layer and match Home exactly. */
-html,html body{min-height:100%!important;background:#08090b!important}
-html body{
-  position:relative!important;isolation:isolate!important;
-  background:transparent!important;background-image:none!important;
-}
-html body:before{content:none!important;display:none!important}
-html body:after{content:none!important;display:none!important}
-html body #dealers-blurred-wallpaper{
-  position:fixed!important;inset:-10px!important;z-index:-1!important;
-  display:block!important;pointer-events:none!important;
-  background-image:
-    linear-gradient(110deg,rgba(8,9,11,.42),rgba(8,9,11,.18) 48%,rgba(8,9,11,.42)),
-    url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72")!important;
-  background-position:center center!important;background-size:cover!important;
-  background-repeat:no-repeat!important;filter:blur(4px)!important;
-  transform:scale(1.025)!important;
-}
-html body> :not(#dealers-blurred-wallpaper){position:relative!important;z-index:1!important}
-html body>header.head{
-  background:rgba(17,18,20,.42)!important;
-  border:1px solid rgba(255,255,255,.18)!important;
-  box-shadow:0 14px 38px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.10)!important;
-  -webkit-backdrop-filter:blur(22px) saturate(135%)!important;
-  backdrop-filter:blur(22px) saturate(135%)!important;
-}
-html body .dealer,html body .stat,html body .state,html body .empty,html body .error{
-  background:rgba(24,25,27,.30)!important;
-  border:1px solid rgba(255,255,255,.18)!important;
-  box-shadow:0 14px 38px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.09)!important;
-  -webkit-backdrop-filter:blur(18px) saturate(130%)!important;
-  backdrop-filter:blur(18px) saturate(130%)!important;
-}
-html body .tools input,html body .tools select{
-  background:rgba(20,21,23,.34)!important;border-color:rgba(255,255,255,.20)!important;
-  -webkit-backdrop-filter:blur(12px)!important;backdrop-filter:blur(12px)!important;
-}
-@media(max-width:760px){
- html body #dealers-blurred-wallpaper{background-position:center center!important}
-}
-</style>
-
-
-<style id="fleet-header-home-match-final">
-html body>header{
- width:min(1160px,calc(100% - 108px))!important;min-height:82px!important;
- margin:52px auto 12px!important;padding:0!important;
- border:1px solid rgba(255,255,255,.20)!important;border-radius:28px!important;
- background:rgba(24,26,29,.22)!important;
- box-shadow:0 12px 34px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.12)!important;
- -webkit-backdrop-filter:blur(0)!important;backdrop-filter:blur(0)!important;
-}
-html body>header>.wrap{
- width:100%!important;max-width:none!important;min-height:80px!important;
- padding:10px 62px!important;display:flex!important;align-items:center!important;
- justify-content:space-between!important;gap:18px!important;
-}
-html body>header .logo{
- display:inline-flex!important;align-items:center!important;min-height:52px!important;
- padding:4px 10px!important;border:1px solid rgba(255,255,255,.22)!important;
- border-radius:16px!important;background:rgba(255,255,255,.025)!important;
- font:700 clamp(24px,2.55vw,34px)/1 "Playfair Display",Georgia,serif!important;
- letter-spacing:.015em!important;text-transform:uppercase!important;color:#e5d3a0!important;
-}
-html body>header .back{
- display:inline-flex!important;align-items:center!important;justify-content:center!important;
- min-height:44px!important;padding:10px 18px!important;border:1px solid rgba(255,255,255,.32)!important;
- border-radius:12px!important;background:rgba(255,255,255,.045)!important;color:#f5f5f3!important;
- font:600 13px Manrope,system-ui,sans-serif!important;box-shadow:none!important;
-}
-@media(max-width:800px){
- html body>header{width:calc(100% - 24px)!important;min-height:70px!important;margin:12px auto!important;border-radius:22px!important}
- html body>header>.wrap{min-height:68px!important;padding:8px 12px!important;gap:8px!important}
- html body>header .logo{min-height:44px!important;padding:4px 8px!important;font-size:clamp(17px,4.5vw,22px)!important;letter-spacing:0!important}
- html body>header .back{min-height:38px!important;padding:8px 12px!important;font-size:12px!important}
-}
-@media(max-width:380px){html body>header .logo{font-size:16px!important;padding:4px 7px!important}}
-</style>
-<style id="locations-home-glass-header">
-html body>header.head{
- width:min(1160px,calc(100% - 108px))!important;margin:52px auto 10px!important;
- min-height:82px!important;padding:0!important;border:1px solid rgba(255,255,255,.20)!important;
- border-radius:28px!important;background:rgba(24,26,29,.22)!important;
- box-shadow:0 12px 34px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.12)!important;
- -webkit-backdrop-filter:blur(0)!important;backdrop-filter:blur(0)!important;
-}
-html body>header.head>.wrap.headin{
- width:100%!important;max-width:none!important;min-height:80px!important;
- padding:10px 14px 10px 62px!important;display:flex!important;align-items:center!important;
- justify-content:space-between!important;gap:18px!important;
-}
-html body>header.head .brand{
- display:inline-flex!important;align-items:center!important;width:max-content!important;max-width:100%!important;
- min-height:52px!important;padding:4px 10px!important;border:1px solid rgba(255,255,255,.22)!important;
- border-radius:16px!important;font-family:"Playfair Display",Georgia,serif!important;
- font-size:clamp(24px,2.55vw,34px)!important;line-height:1!important;font-weight:700!important;
- letter-spacing:.015em!important;text-transform:uppercase!important;color:#e5d3a0!important;
- white-space:nowrap!important;overflow:visible!important;background:rgba(255,255,255,.025)!important;
- box-shadow:inset 0 1px 0 rgba(255,255,255,.08)!important;text-decoration:none!important;
-}
-html body>header.head .back{
- display:inline-flex!important;align-items:center!important;justify-content:center!important;
- min-height:42px!important;padding:9px 15px!important;border:1px solid rgba(255,255,255,.20)!important;
- border-radius:12px!important;background:rgba(255,255,255,.045)!important;color:#f5f5f3!important;
- font:600 13px Manrope,system-ui,sans-serif!important;box-shadow:none!important;
- transition:transform .3s ease,background .3s ease,border-color .3s ease;
-}
-@media(hover:hover) and (pointer:fine){
-  html body>header.head .back:hover{transform:translateY(-2px);background:rgba(255,255,255,.10)!important;border-color:rgba(255,255,255,.32)!important}
-}
-@media(max-width:800px){
- html body>header.head{width:calc(100% - 24px)!important;margin:12px auto 12px!important;min-height:76px!important;border-radius:24px!important}
- html body>header.head>.wrap.headin{min-height:74px!important;padding:9px 12px!important;gap:8px!important}
- html body>header.head .brand{min-height:46px!important;padding:4px 9px!important;font-size:clamp(17px,4.5vw,22px)!important;letter-spacing:0!important}
- html body>header.head .back{min-height:38px!important;padding:7px 11px!important;font-size:12px!important}
-}
-@media(max-width:380px){html body>header.head .brand{font-size:16px!important;padding:4px 7px!important}}
-</style>
-
-<style id="dealers-footer-original-restore">
-/* Keep the Dealers footer on its original, untouched page styling. */
-html body>footer{
-  position:relative!important;
-  z-index:1!important;
-  display:block!important;
-  margin:0!important;
-  padding:20px 0 32px!important;
-  border:0!important;
-  border-top:1px solid var(--line)!important;
-  border-radius:0!important;
-  background:transparent!important;
-  background-color:transparent!important;
-  background-image:none!important;
-  color:var(--mute)!important;
-  font:400 13px inherit!important;
-  box-shadow:none!important;
-  -webkit-backdrop-filter:none!important;
-  backdrop-filter:none!important;
-  filter:none!important;
-  transform:none!important;
-  text-align:left!important;
-}
-html body>footer>.wrap{
-  width:min(1160px,calc(100% - 48px))!important;
-  margin:0 auto!important;
-}
-</style>
-
-<style id="dealers-footer-bottom-layout-fix">
-/* Keep the footer at the bottom of the viewport on short pages,
-   while allowing it to follow the full dealer grid on longer pages. */
-html,html body{min-height:100%!important}
-html body{
-  min-height:100vh!important;
-  display:flex!important;
-  flex-direction:column!important;
-}
-html body>header.head{flex:0 0 auto!important}
-html body>main.wrap{
-  flex:1 0 auto!important;
-  width:min(1160px,calc(100% - 36px))!important;
-}
-html body>footer{
-  flex:0 0 auto!important;
-  width:100%!important;
-  margin-top:auto!important;
-}
-@media(max-width:520px){
-  html body>main.wrap{width:calc(100% - 24px)!important}
-}
-</style>
-
-
-<style id="homepage-header-match-final">
-/* Match the homepage header shell: transparent smoked glass, a soft backdrop
-   blur, and no heavy fill, gold strip, or opaque gradient. Keep each page's
-   existing header layout, controls, spacing, and responsive behaviour. */
-html body>header,
-html body>header.head,
-html body>header.top,
-html body>header.site-header,
-html body>header .site-header{
-  background:transparent!important;
-  background-color:transparent!important;
-  background-image:none!important;
-  border-top-color:transparent!important;
-  border-right-color:transparent!important;
-  border-bottom-color:transparent!important;
-  border-left-color:transparent!important;
-  box-shadow:none!important;
-  -webkit-backdrop-filter:blur(18px) saturate(120%)!important;
-  backdrop-filter:blur(18px) saturate(120%)!important;
-}
-</style>
-
-
-
-
-
-<style id="homepage-header-rounded-outline-final">
-/* Match homepage: only the rounded left/right end edges are visible.
-   Top and bottom edges stay transparent; preserve each page's layout. */
-html body>header,
-html body>header.head,
-html body>header.top,
-html body>header.site-header,
-html body>header .site-header{
-  box-sizing:border-box!important;
-  background:transparent!important;
-  background-color:transparent!important;
-  background-image:none!important;
-  border-top:0!important;
-  border-bottom:0!important;
-  border-left:1px solid rgba(255,255,255,.18)!important;
-  border-right:1px solid rgba(255,255,255,.18)!important;
-  border-radius:22px!important;
-  box-shadow:none!important;
-  -webkit-backdrop-filter:blur(18px) saturate(120%)!important;
-  backdrop-filter:blur(18px) saturate(120%)!important;
-}
-@media(max-width:760px){
- html body>header,
- html body>header.head,
- html body>header.top,
- html body>header.site-header,
- html body>header .site-header{border-radius:16px!important}
-}
-</style>
-
-<style id="dealers-background-darkness-final">
-/* Darken only the existing wallpaper layer so dealer content stays clearer. */
-html body #dealers-blurred-wallpaper{
-  background-image:
-    linear-gradient(110deg,rgba(3,4,6,.68),rgba(3,4,6,.52) 48%,rgba(3,4,6,.68)),
-    url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72")!important;
-}
-</style>
-
-<style id="dealers-dark-blur-hover-final">
-/* Dealers page: stronger wallpaper contrast and gentle background softness. */
-html body #dealers-blurred-wallpaper{
-  background-image:
-    linear-gradient(110deg,rgba(2,3,5,.76),rgba(2,3,5,.64) 48%,rgba(2,3,5,.76)),
-    url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72")!important;
-  filter:blur(7px)!important;
-  transform:scale(1.035)!important;
-}
-/* Consistent, restrained hover/focus feedback across page controls and content. */
-html body a,
-html body button,
-html body input,
-html body select,
-html body textarea,
-html body .dealer,
-html body .stat,
-html body .state,
-html body .empty,
-html body .error,
-html body .tools,
-html body [role="button"],
-html body [tabindex]:not([tabindex="-1"]){
-  transition:
-    transform .28s cubic-bezier(.2,.75,.25,1),
-    background-color .28s ease,
-    border-color .28s ease,
-    box-shadow .28s ease,
-    color .28s ease,
-    filter .28s ease!important;
-}
-@media(hover:hover) and (pointer:fine){
-  html body a:hover,
-  html body button:hover,
-  html body [role="button"]:hover,
-  html body [tabindex]:not([tabindex="-1"]):hover{
-    transform:translateY(-2px)!important;
-    filter:brightness(1.10)!important;
-  }
-  html body .dealer:hover,
-  html body .stat:hover,
-  html body .state:hover,
-  html body .empty:hover,
-  html body .error:hover{
-    transform:translateY(-4px)!important;
-    border-color:rgba(255,255,255,.42)!important;
-    box-shadow:0 18px 42px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.16)!important;
-    filter:brightness(1.06)!important;
-  }
-  html body input:hover,
-  html body select:hover,
-  html body textarea:hover{
-    border-color:rgba(255,255,255,.42)!important;
-    box-shadow:0 0 0 3px rgba(255,255,255,.055)!important;
-  }
-}
-html body a:focus-visible,
-html body button:focus-visible,
-html body input:focus-visible,
-html body select:focus-visible,
-html body textarea:focus-visible,
-html body [role="button"]:focus-visible,
-html body [tabindex]:focus-visible{
-  outline:2px solid rgba(255,255,255,.58)!important;
-  outline-offset:3px!important;
-}
-@media(prefers-reduced-motion:reduce){
-  html body *{transition:none!important}
-}
-</style>
-
-<style id="official-3pedals-typography">
-/* Official 3 Pedals Auto KE typography: Sora headings/brand, Manrope interface and body, Playfair editorial accents. */
-html body,html body button,html body input,html body select,html body textarea{font-family:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif!important;font-synthesis:none;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-html body :is(h1,h2,h3,h4,h5,h6){font-family:"Sora","Manrope",system-ui,sans-serif!important;font-weight:600!important;letter-spacing:-.035em!important;line-height:1.18!important}
-html body :is(h1){font-weight:700!important;letter-spacing:-.045em!important}
-html body :is(p,li,label,small,.description,.muted,.meta,.subtitle,.section-subtitle,.eyebrow,.lead){font-family:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif!important}
-html body :is(.brand,.logo,.brand-name,.site-brand,.wordmark,header .brand,header .logo){font-family:"Sora",system-ui,sans-serif!important;font-weight:700!important;letter-spacing:-.035em!important}
-html body :is(button,.btn,a.button,.back,nav a,nav button){font-family:"Manrope",system-ui,sans-serif!important;font-weight:600!important}
-html body :is(.price,.amount,.vehicle-price,[data-price]){font-family:"Manrope",system-ui,sans-serif!important;font-weight:700!important;font-variant-numeric:tabular-nums}
-html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){font-family:"Playfair Display",Georgia,serif!important;font-weight:600!important;letter-spacing:-.02em!important}
-</style>
-<style id="dealers-mobile-performance-override">
-@media(max-width:760px){
-  html body :is(.dealer,.stat,.state,.empty,.error,.card,.panel){
-    -webkit-backdrop-filter:none!important;
-    backdrop-filter:none!important;
-    background:rgba(18,20,23,.90)!important;
-    background-color:rgba(18,20,23,.90)!important;
-  }
-  html body :is(.back,.ghost,.btn.ghost){
-    -webkit-backdrop-filter:none!important;
-    backdrop-filter:none!important;
-    background:rgba(26,28,32,.92)!important;
-    background-color:rgba(26,28,32,.92)!important;
-  }
-  html body :is(.tools input,.tools select,input,select,textarea){
-    -webkit-backdrop-filter:none!important;
-    backdrop-filter:none!important;
-    background:rgba(20,22,25,.92)!important;
-  }
-}
-</style>
-<script src="/site-ux.js?v=20261120"></script>
+<script src="/site-ux.js?v=20261121-modern-dashboard"></script>
 </body>
 </html>

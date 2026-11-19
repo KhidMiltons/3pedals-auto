@@ -92,9 +92,9 @@ html[data-theme="light"] body > header :is(.logo, .brand) {
   background-clip: border-box !important;
   -webkit-background-clip: border-box !important;
   background-image: none !important;
-  border-color: rgba(138, 114, 62, 0.30) !important;
-  background: rgba(255, 255, 255, 0.72) !important;
-  background-color: rgba(255, 255, 255, 0.72) !important;
+  border: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
 html[data-theme="light"] body > header :is(
@@ -301,7 +301,7 @@ html[data-theme="light"] body .project-card .project-article {
   color: #171512 !important;
 }
 
-html[data-theme="light"] body :is(input, select, textarea) {
+html[data-theme="light"] body :is(input, select, textarea):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
   background: #ffffff !important;
   background-color: #ffffff !important;
   color: #171512 !important;
@@ -347,7 +347,7 @@ html[data-theme="light"] body .detail-fact {
   color: #171512 !important;
 }
 
-html[data-theme="light"] body :is(dialog, #dlg, #authDlg, #accDlg) {
+html[data-theme="light"] body :is(dialog, #dlg, #authDlg):not(#accDlg):not(#accActionDlg):not(#sellerEditListingDialog) {
   background: #faf6ec !important;
   color: #171512 !important;
   border-color: rgba(138, 114, 62, 0.32) !important;
@@ -812,6 +812,7 @@ html[data-ux="1"] #accDlg[open] {
   position: fixed !important;
   display: grid !important;
   grid-template-columns: 248px minmax(0, 1fr) !important;
+  grid-template-rows: minmax(0, 1fr) !important;
   gap: 0 !important;
   align-items: stretch !important;
 }
@@ -821,7 +822,10 @@ html[data-ux="1"] #accDlg .account-dashboard-main {
   min-height: 0 !important;
   overflow: hidden !important;
   width: 100% !important;
+  height: 100% !important;
+  align-self: stretch !important;
   grid-column: 2 !important;
+  grid-row: 1 !important;
 }
 
 html[data-ux="1"] #accDlg #accMenuToggle {
@@ -834,6 +838,8 @@ html[data-ux="1"] #accDlg #accountMenuBackdrop {
 
 html[data-ux="1"] #accDlg nav#accountMenu.account-sidebar {
   grid-column: 1 !important;
+  grid-row: 1 !important;
+  align-self: stretch !important;
   position: relative !important;
   inset: auto !important;
   left: auto !important;
@@ -2874,12 +2880,16 @@ html[data-theme="light"] .ux-map-place-card {
 
 /* Multi-turn Gemini Auto Advisor Chat */
 .ux-chat-fab {
-  position: fixed;
-  right: 20px;
-  bottom: calc(74px + env(safe-area-inset-bottom, 0px));
-  z-index: 955;
-  display: inline-flex;
-  align-items: center;
+  position: fixed !important;
+  left: auto !important;
+  right: 20px !important;
+  bottom: calc(74px + env(safe-area-inset-bottom, 0px)) !important;
+  z-index: 955 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  width: auto !important;
+  max-width: max-content !important;
+  flex: none !important;
   gap: 8px;
   height: 44px;
   padding: 0 15px;
@@ -2893,7 +2903,7 @@ html[data-theme="light"] .ux-map-place-card {
 }
 
 body:has(#publicWhatsappFab, #garageFab, .whatsapp-fab, .fab) .ux-chat-fab {
-  bottom: calc(138px + env(safe-area-inset-bottom, 0px));
+  bottom: calc(138px + env(safe-area-inset-bottom, 0px)) !important;
 }
 
 .ux-chat-fab svg {
@@ -2903,10 +2913,11 @@ body:has(#publicWhatsappFab, #garageFab, .whatsapp-fab, .fab) .ux-chat-fab {
 }
 
 .ux-chat-drawer {
-  position: fixed;
-  right: 20px;
-  bottom: calc(126px + env(safe-area-inset-bottom, 0px));
-  z-index: 980;
+  position: fixed !important;
+  left: auto !important;
+  right: 20px !important;
+  bottom: calc(126px + env(safe-area-inset-bottom, 0px)) !important;
+  z-index: 980 !important;
   width: min(410px, calc(100vw - 24px));
   height: min(560px, calc(100dvh - 150px));
   display: flex;
@@ -3220,15 +3231,16 @@ html[data-theme="light"] .ux-chat-form textarea {
 
 @media (max-width: 560px) {
   .ux-chat-fab {
-    right: 14px;
+    left: auto !important;
+    right: 14px !important;
     padding: 0 12px;
     height: 42px;
   }
   .ux-chat-drawer {
-    right: 12px;
-    left: 12px;
-    width: auto;
-    bottom: calc(122px + env(safe-area-inset-bottom, 0px));
+    right: 12px !important;
+    left: 12px !important;
+    width: auto !important;
+    bottom: calc(122px + env(safe-area-inset-bottom, 0px)) !important;
     height: min(460px, calc(100dvh - 150px));
   }
 }

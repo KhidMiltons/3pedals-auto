@@ -91,6 +91,30 @@ html[data-theme="light"] #accDlg {
   z-index: 9995;
 }
 
+@media (min-width: 761px) {
+  #accDlg.account-dashboard-dialog[open] {
+    display: grid;
+    grid-template-columns: 248px minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+    gap: 0;
+    align-items: stretch;
+  }
+  #accDlg nav#accountMenu.account-sidebar {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: stretch;
+    height: 100%;
+    min-height: 0;
+  }
+  #accDlg .account-dashboard-main {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: stretch;
+    height: 100%;
+    min-height: 0;
+  }
+}
+
 #accDlg::backdrop {
   background: rgba(6, 8, 11, 0.68);
   backdrop-filter: blur(6px);
@@ -332,15 +356,29 @@ html[data-theme="light"] #accDlg::backdrop {
 
 #accDlg .account-dialog-head {
   flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  min-height: 62px;
-  padding: 10px clamp(16px, 2.4vw, 28px);
-  background: var(--ap-header);
-  border-bottom: 1px solid var(--ap-line);
+  position: relative !important;
+  inset: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 62px !important;
+  margin: 0 !important;
+  padding: 10px clamp(16px, 2.4vw, 28px) !important;
+  background: var(--ap-header) !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--ap-line) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
   z-index: 5;
+}
+
+#accDlg .account-dialog-head::before,
+#accDlg .account-dialog-head::after {
+  content: none !important;
+  display: none !important;
 }
 
 #accDlg .account-head-title-wrap {
@@ -356,10 +394,11 @@ html[data-theme="light"] #accDlg::backdrop {
   align-items: center;
   gap: 9px;
   margin: 0;
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 16px !important;
+  font-weight: 700 !important;
   color: var(--ap-ink-strong);
   white-space: nowrap;
+  flex: 0 0 auto;
 }
 
 #accDlg .account-brand-icon {
@@ -388,46 +427,55 @@ html[data-theme="light"] #accDlg::backdrop {
 }
 
 #accDlg .account-head-actions {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  flex: 0 0 auto;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex: 0 0 auto !important;
 }
 
 #accDlg #accMenuToggle,
 #accDlg #accHomeTop,
 #accDlg #accCloseTop {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  min-height: 40px;
-  border: 1px solid var(--ap-line-strong);
-  border-radius: var(--ap-radius-sm);
-  background: var(--ap-surface);
-  color: var(--ap-ink);
-  font-size: 13px;
-  font-weight: 600;
+  position: static !important;
+  float: none !important;
+  inset: auto !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  min-height: 40px !important;
+  height: 40px !important;
+  margin: 0 !important;
+  border: 1px solid var(--ap-line-strong) !important;
+  border-radius: var(--ap-radius-sm) !important;
+  background: var(--ap-surface) !important;
+  color: var(--ap-ink) !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
   cursor: pointer;
   transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
 
 #accDlg #accMenuToggle,
 #accDlg #accCloseTop {
-  width: 40px;
-  padding: 0;
+  width: 40px !important;
+  min-width: 40px !important;
+  padding: 0 !important;
 }
 
 #accDlg #accHomeTop {
-  padding: 0 13px;
+  width: auto !important;
+  min-width: 0 !important;
+  padding: 0 13px !important;
+  white-space: nowrap !important;
 }
 
 #accDlg #accMenuToggle:hover,
 #accDlg #accHomeTop:hover,
 #accDlg #accCloseTop:hover {
-  background: var(--ap-surface-hover);
-  border-color: var(--ap-gold-border);
-  color: var(--ap-gold);
+  background: var(--ap-surface-hover) !important;
+  border-color: var(--ap-gold-border) !important;
+  color: var(--ap-gold) !important;
 }
 
 #accDlg #accBody {
@@ -456,6 +504,13 @@ html[data-theme="light"] #accDlg::backdrop {
   gap: 20px;
   max-width: 1020px;
   margin: 0 auto;
+  background: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
 }
 
 #accDlg .account-page[hidden] {
@@ -466,6 +521,14 @@ html[data-theme="light"] #accDlg::backdrop {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 18px;
+  background: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  padding: 0 !important;
 }
 
 /* ===== 4. Buttons, Inputs & Section Headers ===== */
@@ -1926,7 +1989,13 @@ html[data-theme="light"] #accDlg::backdrop {
   --ap-mute: #a39e92;
   --ap-line: rgba(255, 255, 255, 0.12);
   --ap-line-strong: rgba(255, 255, 255, 0.2);
+  --ap-gold: #dfb867;
+  --ap-gold-soft: rgba(223, 184, 103, 0.14);
+  --ap-gold-border: rgba(223, 184, 103, 0.36);
+  --ap-gold-btn: linear-gradient(180deg, #ecd084 0%, #cda247 100%);
+  --ap-gold-ink: #16130d;
   width: min(720px, calc(100vw - 24px));
+  max-width: 720px;
   max-height: 90dvh;
   padding: 22px;
   border-radius: 16px;
@@ -1934,6 +2003,8 @@ html[data-theme="light"] #accDlg::backdrop {
   background: var(--ap-bg);
   color: var(--ap-ink);
   box-shadow: 0 28px 80px rgba(0, 0, 0, 0.56);
+  font-family: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  z-index: 10040;
 }
 
 html[data-theme="light"] #sellerEditListingDialog {
@@ -1946,6 +2017,11 @@ html[data-theme="light"] #sellerEditListingDialog {
   --ap-mute: #575044;
   --ap-line: rgba(112, 90, 44, 0.18);
   --ap-line-strong: rgba(112, 90, 44, 0.34);
+  --ap-gold: #8c640d;
+  --ap-gold-soft: rgba(158, 116, 21, 0.12);
+  --ap-gold-border: rgba(140, 100, 13, 0.34);
+  --ap-gold-btn: linear-gradient(180deg, #e1bd68 0%, #c89b37 100%);
+  --ap-gold-ink: #171512;
   box-shadow: 0 24px 64px rgba(36, 28, 14, 0.2);
 }
 
@@ -1962,15 +2038,58 @@ html[data-theme="light"] #accActionDlg::backdrop {
 }
 
 #sellerEditListingDialog .account-dialog-head {
-  padding: 0 0 14px;
-  margin-bottom: 14px;
-  min-height: auto;
-  background: transparent;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px;
+  padding: 0 0 14px !important;
+  margin-bottom: 14px !important;
+  min-height: auto !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--ap-line) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
 }
 
 #sellerEditListingDialog .account-dialog-head h2 {
   margin: 0;
-  font-size: 20px;
+  font-size: 20px !important;
+  color: var(--ap-ink-strong);
+}
+
+#sellerEditListingDialog :is(input, select, textarea) {
+  width: 100%;
+  min-height: 42px;
+  padding: 9px 12px;
+  border-radius: 9px;
+  border: 1px solid var(--ap-line-strong);
+  background: var(--ap-input);
+  color: var(--ap-ink-strong);
+  font-size: 14px;
+}
+
+#sellerEditListingDialog .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 9px 16px;
+  border-radius: 9px;
+  border: 1px solid var(--ap-gold-border);
+  background: var(--ap-gold-btn);
+  color: var(--ap-gold-ink);
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+#sellerEditListingDialog .btn.ghost {
+  background: var(--ap-surface-2);
+  border-color: var(--ap-line-strong);
+  color: var(--ap-ink);
+  width: auto !important;
+  padding: 8px 14px !important;
 }
 
 #sellerEditListingDialog .two {

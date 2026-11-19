@@ -11,14 +11,14 @@
 }
 
 /* Shared chrome and navigation */
-header, .head, .top, .site-header, .navbar, .nav-shell, .nav-wrap {
+body > header, .head, .top, .site-header, .navbar, .nav-shell, .nav-wrap {
   background: rgba(18, 19, 22, .66) !important;
   border-color: var(--glass-edge) !important;
   box-shadow: 0 10px 34px rgba(0, 0, 0, .16), inset 0 1px rgba(255, 255, 255, .055) !important;
   -webkit-backdrop-filter: blur(22px) saturate(150%) !important;
   backdrop-filter: blur(22px) saturate(150%) !important;
 }
-nav, .nav, .nav-links, .mobile-nav, .seller-nav {
+nav:not(.account-sidebar), .nav, .nav-links, .mobile-nav {
   background: rgba(22, 23, 26, .58) !important;
   border-color: rgba(211, 185, 125, .16) !important;
   -webkit-backdrop-filter: blur(20px) saturate(145%) !important;
@@ -29,10 +29,10 @@ nav, .nav, .nav-links, .mobile-nav, .seller-nav {
 .card, .dealer, .stat, .state, .empty, .error, .panel, .seller-card,
 .info, .gallery, .seller, .spec, .note, .listing, .article-item,
 .project-item, .vehicle-card, .story-card, .contact-card, .promotion-package,
-.auto-quote-rail, .dashboard-welcome, .account-settings, .authbox,
+.auto-quote-rail, .authbox,
 #login, .editor, .contact-form, .modal-content, .dialog-card,
 .settings-card, .package, .featured-panel, .filter-panel, .search-panel,
-.vehicle-detail-card, .article-card, .account-page, .dashboard-card {
+.vehicle-detail-card, .article-card, .dashboard-card {
   background: linear-gradient(135deg, rgba(255, 255, 255, .075), rgba(255, 255, 255, .025)), var(--glass-surface) !important;
   border-color: var(--glass-edge) !important;
   box-shadow: var(--glass-shadow) !important;
@@ -47,15 +47,15 @@ nav, .nav, .nav-links, .mobile-nav, .seller-nav {
 }
 
 /* Translucent controls; primary champagne-gold actions retain their own gradient. */
-input, select, textarea, .field, .seg, .seller-mode-switch,
-.dashboard-shortcuts, #accountMenu, .dropdown-menu, .popover,
+:is(input, select, textarea):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *),
+.field, .seg, .dropdown-menu, .popover,
 .journal-share-dialog, .journal-share-url {
   background-color: rgba(255, 255, 255, .055) !important;
   border-color: rgba(211, 185, 125, .19) !important;
   -webkit-backdrop-filter: blur(14px) saturate(130%) !important;
   backdrop-filter: blur(14px) saturate(130%) !important;
 }
-input:focus, select:focus, textarea:focus {
+:is(input, select, textarea):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):focus {
   border-color: rgba(211, 185, 125, .62) !important;
   box-shadow: 0 0 0 3px rgba(201, 164, 92, .12) !important;
 }
@@ -71,10 +71,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 
 /* Keep the glass refined on mobile and respect reduced-motion preferences. */
 @media (max-width: 640px) {
-  header, .head, .top, .site-header, .navbar, .nav-shell, .nav-wrap,
-  nav, .nav, .nav-links, .mobile-nav, .seller-nav,
+  body > header, .head, .top, .site-header, .navbar, .nav-shell, .nav-wrap,
+  nav:not(.account-sidebar), .nav, .nav-links, .mobile-nav,
   .card, .dealer, .stat, .panel, .listing, .vehicle-card, .story-card,
-  .contact-card, .promotion-package, .account-settings, .authbox,
+  .contact-card, .promotion-package, .authbox,
   .modal-content, .dialog-card, .settings-card, .featured-panel {
     -webkit-backdrop-filter: blur(11px) saturate(125%) !important;
     backdrop-filter: blur(11px) saturate(125%) !important;
@@ -121,7 +121,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
     background-image: radial-gradient(ellipse at 14% -8%, rgba(183,160,106,.12), transparent 34%), linear-gradient(145deg,#f8f6f1,#efede7 62%,#f5f3ee) !important;
   }
 
-  header, .head, .top {
+  body > header, .head, .top {
     color: #1a1b1d !important;
     background: rgba(251,250,247,.84) !important;
     border-color: rgba(154,122,62,.22) !important;
@@ -130,21 +130,21 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
     backdrop-filter: blur(22px) saturate(135%) !important;
   }
   .logo, .brand, .back, .account-pill, .eyebrow, .arrow, .price { color: #806638 !important; }
-  nav {
+  nav:not(.account-sidebar) {
     background: rgba(255,255,255,.58) !important;
     border-color: rgba(26,27,29,.1) !important;
     box-shadow: 0 8px 24px rgba(24,25,27,.08) !important;
   }
-  nav button, nav a, nav a.navlink, nav button[aria-selected="false"] {
+  nav:not(.account-sidebar) button, nav:not(.account-sidebar) a, nav:not(.account-sidebar) a.navlink, nav:not(.account-sidebar) button[aria-selected="false"] {
     color: #363530 !important;
     border-color: transparent !important;
   }
-  nav button:hover, nav a:hover, nav a.navlink:hover {
+  nav:not(.account-sidebar) button:hover, nav:not(.account-sidebar) a:hover, nav:not(.account-sidebar) a.navlink:hover {
     color: #171717 !important;
     background: rgba(154,122,62,.1) !important;
     border-color: rgba(154,122,62,.18) !important;
   }
-  nav button[aria-selected="true"], .tab.active, .primary, .btn.primary {
+  nav:not(.account-sidebar) button[aria-selected="true"], .tab.active, .primary, .btn.primary {
     color: #171717 !important;
     background: linear-gradient(135deg,#d8c497,#b7a06a) !important;
     border-color: rgba(154,122,62,.35) !important;
@@ -153,7 +153,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .card, .dealer, .stat, .state, .empty, .error, .panel, .seller-card,
   .info, .gallery, .seller, .spec, .note, .listing, .article-item,
   .project-item, .vehicle-card, .story-card, .contact-card, .promotion-package,
-  .auto-quote-rail, .dashboard-welcome, .account-settings, .authbox,
+  .auto-quote-rail, .authbox,
   #login, .editor, .contact-form {
     color: #1a1b1d !important;
     background: linear-gradient(145deg,rgba(255,255,255,.9),rgba(247,245,239,.86)) !important;
@@ -172,15 +172,14 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .contact-card small, .contact-form p, .notice, .state, .summary p {
     color: #6f6c64 !important;
   }
-  input, select, textarea, .back, .ghost, .tab:not(.active), .article-share,
+  :is(input, select, textarea):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *), .back, .ghost, .tab:not(.active), .article-share,
   .journal-share-dialog .journal-share-url {
     color: #242421 !important;
     background: rgba(255,255,255,.78) !important;
     border-color: rgba(26,27,29,.15) !important;
   }
   input::placeholder, textarea::placeholder { color: #858177 !important; }
-  .field, .seller-mode-switch, .seg, .dashboard-shortcuts,
-  #accountMenu, .dashboard-shortcuts button {
+  .field, .seg {
     color: #242421 !important;
     background: rgba(255,255,255,.68) !important;
     border-color: rgba(26,27,29,.12) !important;
@@ -191,16 +190,14 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .badge.draft, .status.pending { color: #765900 !important; }
   .status.rejected { color: #9b2525 !important; }
 
-  .auth-left button, .account-pill button, .seller-nav button,
-  #accountMenu button, .dashboard-shortcuts button {
+  .auth-left button, .account-pill button {
     color: #62502c !important;
   }
-  #accountMenu, .dashboard-shortcuts, .seller-nav, .journal-share-dialog {
+  .journal-share-dialog {
     background: rgba(250,249,245,.9) !important;
     color: #1a1b1d !important;
     border-color: rgba(154,122,62,.35) !important;
   }
-  #accountMenu button:hover, .dashboard-shortcuts button:hover,
   .article-share:hover, .journal-share-actions button:hover,
   .journal-share-actions a:hover {
     background: rgba(183,160,106,.2) !important;
@@ -253,7 +250,7 @@ body {
     radial-gradient(ellipse at 88% 24%, rgba(201,164,92,.075), transparent 30%),
     linear-gradient(145deg, #101114 0%, #090a0c 55%, #141311 100%) !important;
 }
-header, .head, .top, .site-header, .navbar, .nav-shell, .nav-wrap {
+body > header, .head, .top, .site-header, .navbar, .nav-shell, .nav-wrap {
   color: #f5f1e8 !important;
   background: rgba(14, 15, 17, .68) !important;
   border-color: rgba(211,185,125,.24) !important;
@@ -261,7 +258,7 @@ header, .head, .top, .site-header, .navbar, .nav-shell, .nav-wrap {
   -webkit-backdrop-filter: blur(24px) saturate(155%) !important;
   backdrop-filter: blur(24px) saturate(155%) !important;
 }
-nav, nav.dock-active, .nav, .nav-links, .mobile-nav, .seller-nav {
+nav:not(.account-sidebar), nav.dock-active, .nav, .nav-links, .mobile-nav {
   color: #f5f1e8 !important;
   background: rgba(22,23,26,.66) !important;
   border-color: rgba(211,185,125,.22) !important;
@@ -269,15 +266,15 @@ nav, nav.dock-active, .nav, .nav-links, .mobile-nav, .seller-nav {
   -webkit-backdrop-filter: blur(22px) saturate(145%) !important;
   backdrop-filter: blur(22px) saturate(145%) !important;
 }
-nav button, nav a, nav a.navlink, nav button[aria-selected="false"] {
+nav:not(.account-sidebar) button, nav:not(.account-sidebar) a, nav:not(.account-sidebar) a.navlink, nav:not(.account-sidebar) button[aria-selected="false"] {
   color: #e6e0d3 !important;
   background-color: transparent !important;
 }
-nav button:hover, nav a:hover, nav a.navlink:hover {
+nav:not(.account-sidebar) button:hover, nav:not(.account-sidebar) a:hover, nav:not(.account-sidebar) a.navlink:hover {
   color: #f7e7be !important;
   background: rgba(201,164,92,.10) !important;
 }
-nav button[aria-selected="true"], .tab.active, .primary, .btn.primary,
+nav:not(.account-sidebar) button[aria-selected="true"], .tab.active, .primary, .btn.primary,
 .btn-primary, .button-primary, .gold-button {
   color: #171512 !important;
   background: linear-gradient(135deg,#f1dfb0 0%,#c9a45c 52%,#9b773b 100%) !important;
@@ -286,11 +283,11 @@ nav button[aria-selected="true"], .tab.active, .primary, .btn.primary,
 .card, .dealer, .stat, .state, .empty, .error, .panel, .seller-card,
 .info, .gallery, .seller, .spec, .note, .listing, .article-item,
 .project-item, .vehicle-card, .story-card, .contact-card, .promotion-package,
-.auto-quote-rail, .dashboard-welcome, .account-settings, .authbox,
+.auto-quote-rail, .authbox,
 #login, .editor, .contact-form, .modal-content, .dialog-card,
 .settings-card, .package, .featured-panel, .filter-panel, .search-panel,
-.vehicle-detail-card, .article-card, .account-page, .dashboard-card,
-.panel, .tile, .profile-card, .featured-section, .journal-card,
+.vehicle-detail-card, .article-card, .dashboard-card,
+.tile, .featured-section, .journal-card,
 .journal-card-top, .journal-card-body {
   color: #f5f1e8 !important;
   background: linear-gradient(135deg, rgba(255,255,255,.075), rgba(255,255,255,.022)), rgba(19,20,23,.72) !important;
@@ -305,9 +302,8 @@ nav button[aria-selected="true"], .tab.active, .primary, .btn.primary,
   border-color: rgba(211,185,125,.46) !important;
   box-shadow: 0 20px 48px rgba(0,0,0,.32), inset 0 1px rgba(255,255,255,.08) !important;
 }
-input, select, textarea, .field, .seg, .seller-mode-switch,
-.dashboard-shortcuts, #accountMenu, .dropdown-menu, .popover,
-.journal-share-dialog, .journal-share-url {
+:is(input, select, textarea):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *), .field, .seg,
+.dropdown-menu, .popover, .journal-share-dialog, .journal-share-url {
   color: #f5f1e8 !important;
   background: rgba(255,255,255,.055) !important;
   border-color: rgba(211,185,125,.24) !important;
@@ -323,8 +319,8 @@ input::placeholder, textarea::placeholder { color: #aaa397 !important; }
   color: #d8bd7b !important;
 }
 a { color: #e0c37f; }
-#accountMenu, .dashboard-shortcuts, .seller-nav, .journal-share-dialog,
-#accDlg, .modal, .dialog, .popover-content {
+.journal-share-dialog,
+.modal:not(#accDlg), .dialog:not(#accDlg):not(#accActionDlg):not(#sellerEditListingDialog), .popover-content {
   color: #f5f1e8 !important;
   background: rgba(16,17,19,.88) !important;
   border-color: rgba(211,185,125,.28) !important;
@@ -348,10 +344,10 @@ a { color: #e0c37f; }
   background: radial-gradient(ellipse at 50% 25%, rgba(201,164,92,.14), transparent 62%) !important;
 }
 @media (max-width: 640px) {
-  header, .head, .top, .site-header, .navbar, .nav-shell, .nav-wrap,
-  nav, .nav, .nav-links, .mobile-nav, .seller-nav,
+  body > header, .head, .top, .site-header, .navbar, .nav-shell, .nav-wrap,
+  nav:not(.account-sidebar), .nav, .nav-links, .mobile-nav,
   .card, .dealer, .stat, .panel, .listing, .vehicle-card, .story-card,
-  .contact-card, .promotion-package, .account-settings, .authbox,
+  .contact-card, .promotion-package, .authbox,
   .modal-content, .dialog-card, .settings-card, .featured-panel {
     -webkit-backdrop-filter: blur(11px) saturate(125%) !important;
     backdrop-filter: blur(11px) saturate(125%) !important;
@@ -366,9 +362,9 @@ body{min-height:100vh;display:flex;flex-direction:column;position:relative;isola
 body:before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;background:linear-gradient(180deg,rgba(5,6,8,.80),rgba(5,6,8,.90)),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=2400&q=85") center/cover no-repeat;transform:scale(1.02)}
 body:after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 75% 12%,rgba(214,184,119,.13),transparent 38%),linear-gradient(90deg,rgba(0,0,0,.24),transparent 45%,rgba(0,0,0,.18))}
 main{flex:1 0 auto;min-width:0}
-footer{margin-top:auto!important;width:100%;position:relative!important;inset:auto!important;clear:both;background:rgba(14,15,17,.74)!important;color:#c7c0b2!important;border-top:1px solid rgba(215,189,131,.25)!important;padding:20px 0 calc(20px + env(safe-area-inset-bottom,0px))!important;-webkit-backdrop-filter:blur(24px) saturate(140%);backdrop-filter:blur(24px) saturate(140%)}
-header,.site-header,.navbar,.nav-shell,.nav-wrap{background:rgba(15,16,18,.56)!important;border:1px solid rgba(255,255,255,.12)!important;border-radius:22px!important;box-shadow:0 18px 55px rgba(0,0,0,.26),inset 0 1px rgba(255,255,255,.12)!important;-webkit-backdrop-filter:blur(24px) saturate(145%)!important;backdrop-filter:blur(24px) saturate(145%)!important}
-header{margin:18px auto 0!important;width:min( calc(100% - 32px), 1440px);border-bottom:1px solid rgba(215,189,131,.22)!important}
+footer{margin-top:auto!important;width:100%;position:relative!important;inset:auto!important;clear:both;background:rgba(14,15,17,.74)!important;color:#c7c0b2!important;border:0!important;border-top:0!important;padding:20px 0 calc(20px + env(safe-area-inset-bottom,0px))!important;-webkit-backdrop-filter:blur(24px) saturate(140%);backdrop-filter:blur(24px) saturate(140%)}
+body>header,.site-header,.navbar,.nav-shell,.nav-wrap{background:rgba(15,16,18,.56)!important;border:1px solid rgba(255,255,255,.12)!important;border-radius:22px!important;box-shadow:0 18px 55px rgba(0,0,0,.26),inset 0 1px rgba(255,255,255,.12)!important;-webkit-backdrop-filter:blur(24px) saturate(145%)!important;backdrop-filter:blur(24px) saturate(145%)!important}
+body>header{margin:18px auto 0!important;width:min( calc(100% - 32px), 1440px)}
 .hero{position:relative;isolation:isolate;overflow:hidden;border:1px solid rgba(255,255,255,.17);border-radius:30px;padding:clamp(34px,6vw,82px) clamp(22px,5vw,70px)!important;margin:26px auto 34px!important;width:min(calc(100% - 32px),1440px);min-height:clamp(360px,55vw,650px);display:flex;flex-direction:column;justify-content:center;background:linear-gradient(90deg,rgba(5,6,8,.82) 0%,rgba(5,6,8,.54) 46%,rgba(5,6,8,.12) 100%),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=2200&q=88") center 58%/cover no-repeat!important;box-shadow:0 28px 80px rgba(0,0,0,.42),inset 0 1px rgba(255,255,255,.2)!important}
 .hero:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(135deg,rgba(255,255,255,.10),transparent 34%,rgba(215,189,131,.08));pointer-events:none}
 .hero h1{max-width:11ch!important;font-family:Manrope,system-ui,sans-serif!important;font-weight:750!important;letter-spacing:-.045em!important;font-size:clamp(38px,6vw,76px)!important;color:#fff!important;text-shadow:0 5px 28px rgba(0,0,0,.45)}
@@ -377,12 +373,12 @@ header{margin:18px auto 0!important;width:min( calc(100% - 32px), 1440px);border
 button,.btn,.button{transition:transform .22s ease,border-color .22s ease,background .22s ease}
 .btn,.button,button.primary{border-radius:12px}
 .card,.dealer,.listing,.vehicle-card,.story-card,.contact-card,.promotion-package,.panel,.tile,.dashboard-card,.featured-panel,.journal-card,.contact-form,.filter-panel,.search-panel{background:linear-gradient(135deg,rgba(255,255,255,.085),rgba(255,255,255,.025)),rgba(18,19,21,.67)!important;border:1px solid rgba(215,189,131,.19)!important;border-radius:18px!important;box-shadow:0 18px 46px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.08)!important;-webkit-backdrop-filter:blur(18px) saturate(135%)!important;backdrop-filter:blur(18px) saturate(135%)!important}
-input,select,textarea{background:rgba(255,255,255,.065)!important;color:#f7f4ed!important;border-color:rgba(215,189,131,.25)!important;border-radius:11px!important}
+:is(input,select,textarea):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){background:rgba(255,255,255,.065)!important;color:#f7f4ed!important;border-color:rgba(215,189,131,.25)!important;border-radius:11px!important}
 input::placeholder,textarea::placeholder{color:#aaa397!important}
 a{color:#e4ce9d}
 @media(max-width:760px){
  body:before{background-image:linear-gradient(180deg,rgba(5,6,8,.83),rgba(5,6,8,.92)),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=75")}
- header{width:calc(100% - 20px);margin-top:10px!important;border-radius:16px!important}
+ body>header{width:calc(100% - 20px);margin-top:10px!important;border-radius:16px!important}
  .hero{width:calc(100% - 20px);margin:14px auto 24px!important;min-height:430px;border-radius:22px!important;background-position:58% center!important;padding:30px 22px!important}
  .hero h1{font-size:clamp(34px,10vw,52px)!important}
  footer{padding-bottom:calc(22px + env(safe-area-inset-bottom,0px))!important}
@@ -406,9 +402,9 @@ body:before { background-image: linear-gradient(120deg, transparent 0%, rgba(255
 /* Opaque graphite surfaces prevent the page wallpaper showing through cards. */
 .card, .dealer, .stat, .state, .empty, .error, .panel, .seller-card, .listing,
 .article-item, .project-item, .vehicle-card, .story-card, .contact-card,
-.promotion-package, .dashboard-welcome, .account-settings, .authbox, .editor,
+.promotion-package, .authbox, .editor,
 .contact-form, .settings-card, .package, .featured-panel, .filter-panel,
-.search-panel, .vehicle-detail-card, .article-card, .account-page, .dashboard-card {
+.search-panel, .vehicle-detail-card, .article-card, .dashboard-card {
   background: #17191c !important;
   -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
@@ -784,7 +780,7 @@ a{
 a:not(.button):not(.btn):not(.navlink):hover{
   text-decoration-color:rgba(255,255,255,.55);
 }
-header,body>.header,body>header{
+body > header,body>.header{
   -webkit-backdrop-filter:blur(18px) saturate(135%)!important;
   backdrop-filter:blur(18px) saturate(135%)!important;
 }
@@ -938,11 +934,11 @@ html body :is(.card,.dealer,.stat,.panel,.listing,.vehicle-card,.story-card,
 }
 
 /* Unified header glass while retaining the individual page's header geometry. */
-html body :is(header,.top,.header,.site-header,.main-header,.navbar){
+html body :is(body > header,.top,.site-header,.main-header,.navbar){
   -webkit-backdrop-filter:blur(22px) saturate(138%);
   backdrop-filter:blur(22px) saturate(138%);
 }
-html body :is(header,.top,.header,.site-header,.main-header,.navbar) :is(a,button){
+html body :is(body > header,.top,.site-header,.main-header,.navbar) :is(a,button){
   -webkit-tap-highlight-color:transparent;
 }
 html body :is(.eyebrow,.section-kicker,.overline,.label-kicker){
@@ -965,7 +961,7 @@ html body a:focus-visible{
   outline:2px solid rgba(201,183,132,.78)!important;
   outline-offset:3px;
 }
-html body :is(input,select,textarea,.input,.field){
+html body :is(input,select,textarea,.input,.field):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){
   color:var(--p3-ivory)!important;
   background:rgba(8,12,15,.48)!important;
   border-color:rgba(255,255,255,.13)!important;
@@ -975,7 +971,7 @@ html body :is(input,select,textarea,.input,.field){
 html body :is(input,select,textarea,.input,.field)::placeholder{
   color:rgba(244,240,232,.48)!important;
 }
-html body :is(input,select,textarea,.input,.field):focus{
+html body :is(input,select,textarea,.input,.field):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):focus{
   border-color:rgba(201,183,132,.58)!important;
   box-shadow:0 0 0 3px rgba(201,183,132,.10)!important;
   outline:none!important;
@@ -997,7 +993,8 @@ html body :is(.status,.badge,.chip,.tag,.yard-label,.pill){
 }
 html body :is(footer,.site-footer){
   color:rgba(244,240,232,.62);
-  border-color:rgba(201,183,132,.13);
+  border:0!important;
+  border-top:0!important;
 }
 html body img,html body video{
   max-width:100%;
@@ -1061,7 +1058,7 @@ html body:has(#app) .tabs .tab.active{
     .vehicle-card,.story-card,.contact-card,.promotion-package,.tile,.profile-card,
     .feature-card,.service-card,.booking-card,.garage-card,.featured-panel,
     .filter-panel,.search-panel,.vehicle-detail-card,.article-card,.journal-card,
-    .account-page,.dashboard-card,.dashboard-welcome,.account-settings,.authbox,
+    .dashboard-card,.authbox,
     .editor,.contact-form,.modal-content,.dialog-card,.settings-card,.package
   ) {
     -webkit-backdrop-filter: none !important;
@@ -1069,13 +1066,13 @@ html body:has(#app) .tabs .tab.active{
     background: rgba(18, 20, 23, .90) !important;
     background-color: rgba(18, 20, 23, .90) !important;
   }
-  html body :is(.ghost,.btn.ghost,.btn.dark,.alt,.back,.icon-btn,button.secondary,.btn-secondary) {
+  html body :is(.ghost,.btn.ghost,.btn.dark,.alt,.back,.icon-btn,button.secondary,.btn-secondary):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
     background: rgba(26, 28, 32, .92) !important;
     background-color: rgba(26, 28, 32, .92) !important;
   }
-  html body :is(input, select, textarea) {
+  html body :is(input, select, textarea):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
     background: rgba(20, 22, 25, .92) !important;
