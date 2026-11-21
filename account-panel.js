@@ -1,54 +1,72 @@
-/* 3 Pedals Auto KE — Account Workspace Shell & Action UI (Dual-Theme: Dark Obsidian & Light Parchment) */
+/* 3 Pedals Auto KE — Account Workspace Shell & Action UI (Parity with Admin Console) */
 (() => {
   "use strict";
   const mount = document.getElementById("accountPanelMount");
   if (!mount) return;
   if (mount.parentElement !== document.body) document.body.appendChild(mount);
+
+  const currentTheme = () =>
+    document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
+
   mount.innerHTML = `
     <dialog id="accDlg" class="account-dashboard-dialog" aria-label="3 Pedals Auto KE Account Workspace">
       <div id="accountMenuBackdrop" class="account-menu-backdrop" aria-hidden="true"></div>
       <nav id="accountMenu" class="account-sidebar" aria-label="Account navigation">
         <a class="account-sidebar-brand" href="/" aria-label="3 Pedals Auto KE home">
           <img src="favicon.svg" alt="" width="28" height="28">
-          <span><strong>3 PEDALS</strong><small>AUTO KE · WORKSPACE</small></span>
+          <span><strong>3 PEDALS</strong><small>Account Workspace</small></span>
         </a>
-        <div class="seller-nav-identity"><small>YOUR WORKSPACE</small><strong>Seller account</strong></div>
+        <div class="seller-nav-identity">
+          <small>Signed in member</small>
+          <strong>Account workspace</strong>
+          <span>Loading profile…</span>
+        </div>
         <div class="seller-mode-switch" aria-label="Marketplace mode">
           <button type="button" data-buying>Buying</button>
           <button type="button" class="selected" aria-current="page">Selling</button>
         </div>
-        <div class="seller-nav-label">WORKSPACE</div>
-        <button type="button" class="active" data-page="overview" aria-current="page">Overview</button>
-        <button type="button" data-page="buying">Buying workspace</button>
-        <button type="button" data-page="dashboard">Insights</button>
-        <button type="button" data-page="listings">My listings</button>
-        <button type="button" data-page="promotions">Promotions</button>
-        <button type="button" data-page="bookings">Garage bookings</button>
-        <button type="button" data-page="chauffeur">Chauffeur bookings</button>
-        <button type="button" data-page="activity">Activity centre</button>
-        <button type="button" data-seller-signup>Create seller account</button>
-        <div class="seller-nav-label">ACCOUNT</div>
-        <button type="button" data-page="settings" data-account-tab="business">Profile</button>
-        <button type="button" data-page="settings" data-account-tab="account">Settings</button>
-        <div class="account-sidebar-footer"><button type="button" data-signout>Log out</button></div>
+        <div class="seller-nav-label">Workspace</div>
+        <button type="button" class="account-nav-btn active" data-page="overview" aria-current="page"><span>Overview</span></button>
+        <button type="button" class="account-nav-btn" data-page="buying"><span>Buying workspace</span><span class="account-nav-count"></span></button>
+        <button type="button" class="account-nav-btn" data-page="dashboard"><span>Insights</span></button>
+        <div class="seller-nav-label">Selling &amp; Services</div>
+        <button type="button" class="account-nav-btn" data-page="listings"><span>My listings</span><span class="account-nav-count"></span></button>
+        <button type="button" class="account-nav-btn" data-page="promotions"><span>Promotions</span><span class="account-nav-count"></span></button>
+        <button type="button" class="account-nav-btn" data-page="bookings"><span>Garage bookings</span><span class="account-nav-count"></span></button>
+        <button type="button" class="account-nav-btn" data-page="chauffeur"><span>Chauffeur bookings</span><span class="account-nav-count"></span></button>
+        <button type="button" class="account-nav-btn" data-page="activity"><span>Activity centre</span><span class="account-nav-count"></span></button>
+        <div class="seller-nav-label">Account</div>
+        <button type="button" class="account-nav-btn" data-page="settings" data-account-tab="business"><span>Profile</span></button>
+        <button type="button" class="account-nav-btn" data-page="settings" data-account-tab="account"><span>Settings</span></button>
+        <button type="button" class="account-nav-btn" data-seller-signup><span>Seller store URL</span></button>
+        <div class="account-sidebar-footer">
+          <button type="button" class="ap-btn ap-btn-ghost" id="accThemeToggle">${currentTheme() === "light" ? "Dark theme" : "Light theme"}</button>
+          <button type="button" class="ap-btn ap-btn-ghost" id="accHomeSide">Back to site</button>
+          <button type="button" class="ap-btn ap-btn-ghost" data-signout>Sign out</button>
+        </div>
       </nav>
       <section class="account-dashboard-main">
         <header class="account-dialog-head">
-          <button id="accMenuToggle" type="button" aria-label="Open account menu" aria-expanded="false" aria-controls="accountMenu">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-          </button>
-          <div class="account-head-title-wrap">
-            <h2 class="account-brand-title"><img src="favicon.svg" alt="" class="account-brand-icon" width="22" height="22"><span>3 Pedals Auto KE</span></h2>
-            <span id="accActiveSectionTitle" class="account-header-section">Overview</span>
+          <div class="account-topbar-left">
+            <button id="accMenuToggle" type="button" aria-label="Open account menu" aria-expanded="false" aria-controls="accountMenu">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            </button>
+            <div class="account-breadcrumb">
+              <span class="account-breadcrumb-root">Account</span>
+              <span class="account-breadcrumb-sep" aria-hidden="true">/</span>
+              <span id="accActiveSectionTitle" class="account-breadcrumb-current">Overview</span>
+            </div>
+          </div>
+          <div class="account-global-search">
+            <input id="accGlobalSearch" type="search" placeholder="Search listings, bookings, saved vehicles, settings…" aria-label="Search account workspace" autocomplete="off">
+            <span class="account-search-kbd" aria-hidden="true">Ctrl K</span>
+            <div id="accGlobalResults" class="account-global-results" hidden></div>
           </div>
           <div class="account-head-actions">
-            <button id="accHomeTop" type="button" aria-label="Return to homepage" title="Return to homepage">
-              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 10v9.5a1 1 0 0 0 1 1h4v-5h4v5h4a1 1 0 0 0 1-1V10"/></svg>
-              <span>Home</span>
-            </button>
-            <button id="accCloseTop" type="button" aria-label="Close account" title="Close account">
-              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
-            </button>
+            <span id="accLastSync" class="account-sync-label"></span>
+            <button id="accRefreshTop" type="button" class="ap-btn ap-btn-ghost">Refresh</button>
+            <button id="accHomeTop" type="button" class="ap-btn ap-btn-ghost" aria-label="Return to homepage" title="Return to homepage">Back to site</button>
+            <button id="accCloseTop" type="button" class="ap-icon-close" aria-label="Close account" title="Close account">×</button>
           </div>
         </header>
         <div id="accToastHost" class="acc-toast-host" aria-live="polite"></div>
@@ -64,6 +82,25 @@
 
   const escHtml = (value) =>
     String(value ?? "").replace(/[&<>"]/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
+
+  function applyTheme(next) {
+    const theme = next === "light" ? "light" : "dark";
+    if (window.ThreePedalsUX && typeof window.ThreePedalsUX.setTheme === "function") {
+      window.ThreePedalsUX.setTheme(theme);
+    } else {
+      document.documentElement.setAttribute("data-theme", theme);
+      try {
+        localStorage.setItem("3pedals:theme", theme);
+      } catch (_) {}
+    }
+    const toggle = document.getElementById("accThemeToggle");
+    if (toggle) toggle.textContent = theme === "light" ? "Dark theme" : "Light theme";
+  }
+
+  function syncThemeButton() {
+    const toggle = document.getElementById("accThemeToggle");
+    if (toggle) toggle.textContent = currentTheme() === "light" ? "Dark theme" : "Light theme";
+  }
 
   function getToastHost() {
     if (dlg?.open && toastHost) return toastHost;
@@ -84,7 +121,7 @@
     const item = document.createElement("div");
     item.className = `acc-toast acc-toast--${kind}`;
     item.setAttribute("role", kind === "err" ? "alert" : "status");
-    item.innerHTML = `<span class="acc-toast-dot" aria-hidden="true"></span><span class="acc-toast-text">${escHtml(text)}</span><button type="button" class="acc-toast-close" aria-label="Dismiss message">×</button>`;
+    item.innerHTML = `<span class="acc-toast-text">${escHtml(text)}</span><button type="button" class="acc-toast-close" aria-label="Dismiss message">×</button>`;
     const remove = () => {
       if (!item.isConnected) return;
       item.classList.add("is-leaving");
@@ -105,7 +142,7 @@
       if (actionDlg.open) actionDlg.close();
       const {
         mode = "confirm",
-        eyebrow = "CONFIRM ACTION",
+        eyebrow = "Confirm Action",
         title = "Please confirm",
         message = "",
         helperNote = "",
@@ -140,7 +177,7 @@
         <form class="acc-action-form" novalidate>
           <div class="acc-action-head">
             <div>
-              <p class="account-eyebrow">${escHtml(eyebrow)}</p>
+              <span class="ap-eyebrow">${escHtml(eyebrow)}</span>
               <h3 id="accActionTitle">${escHtml(title)}</h3>
             </div>
             <button type="button" class="acc-action-x" data-action-cancel aria-label="Close">×</button>
@@ -150,8 +187,8 @@
           ${helperNote ? `<p class="acc-action-note">${escHtml(helperNote)}</p>` : ""}
           <p id="accActionError" class="acc-action-err" role="alert"></p>
           <div class="acc-action-btns">
-            <button type="button" class="btn ghost" data-action-cancel>${escHtml(cancelText)}</button>
-            <button type="submit" class="btn ${danger ? "acc-btn-danger" : ""}">${escHtml(confirmText)}</button>
+            <button type="button" class="ap-btn ap-btn-ghost" data-action-cancel>${escHtml(cancelText)}</button>
+            <button type="submit" class="ap-btn ${danger ? "ap-btn-danger" : "ap-btn-primary"}">${escHtml(confirmText)}</button>
           </div>
         </form>`;
 
@@ -230,5 +267,7 @@
     toast,
     confirm: (opts) => openActionDialog({ ...(opts || {}), mode: "confirm" }),
     prompt: (opts) => openActionDialog({ ...(opts || {}), mode: "prompt" }),
+    toggleTheme: () => applyTheme(currentTheme() === "light" ? "dark" : "light"),
+    syncThemeButton,
   };
 })();

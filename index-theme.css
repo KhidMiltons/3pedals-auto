@@ -137,15 +137,15 @@ input::placeholder,textarea::placeholder{color:rgba(255,255,255,.68)!important}
   .hero h1{font-size:clamp(34px,10vw,52px)!important}
 }
 
-/* Unified glass surfaces */
+/* Unified glass surfaces (storefront only; exclude Account Workspace modals) */
 body>header,.site-header,.navbar,.nav-shell,.nav-wrap,#nav,
 #dlg,.authbox,.modal:not(#accDlg),.drawer,
 .hero,#home .tile,.tiles .tile,.showroom-vehicle-note,
 .card,.panel,.contact-card,.journal-intro,.journal-card,.project-intro,.project-card,
-.project-public-empty,.vehicle-card,.listing,.dealer,.featured-panel,.promotion-package,
-.dashboard-card,.contact-form,.filter-panel,.search-panel,.stat,.service-card,.booking-card,
+.project-public-empty,.vehicle-card,.dealer,.featured-panel,
+.dashboard-card,.contact-form,.filter-panel,.search-panel,.service-card,.booking-card,
 .garage-card,#autoQuoteRail,.journal-photo-viewer,
-.account-fast-loading,.account-load-error{
+:is(.listing,.stat,.promotion-package,.account-fast-loading,.account-load-error):not(#accDlg *) {
   background-color:rgba(24,24,25,.24)!important;
   border:1px solid rgba(255,255,255,.22)!important;
   box-shadow:0 14px 38px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.16)!important;
@@ -326,18 +326,18 @@ html body header #nav button.nav-contact[aria-selected="true"]:hover{
 #autoQuoteRail .auto-quote-top{padding:12px 15px 8px!important}
 #autoQuoteRail .auto-quote-footer{padding:8px 14px 10px!important}
 
-button,a,[role=button],summary,.account-pill,.account-icon,.tile,.card,.panel,.project-card,.contact-card,.mechanic-card,.nav-contact{
+:is(button,a,[role=button],summary,.account-pill,.account-icon,.tile,.card,.panel,.project-card,.contact-card,.mechanic-card,.nav-contact):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){
   transition:transform .22s ease,background-color .22s ease,border-color .22s ease,box-shadow .22s ease,opacity .22s ease!important;
 }
 @media (hover: hover) and (pointer: fine){
-  button:hover,a:hover,[role=button]:hover,summary:hover,.account-pill:hover,.account-icon:hover,.tile:hover,.card:hover,.panel:hover,.project-card:hover,.contact-card:hover,.mechanic-card:hover,.nav-contact:hover{
+  :is(button,a,[role=button],summary,.account-pill,.account-icon,.tile,.card,.panel,.project-card,.contact-card,.mechanic-card,.nav-contact):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):hover{
     border-color:rgba(211,181,143,.72)!important;
     box-shadow:0 10px 26px rgba(0,0,0,.2),0 0 0 1px rgba(211,181,143,.12)!important;
   }
-  button:hover,a:hover,[role=button]:hover,.tile:hover,.card:hover,.project-card:hover,.contact-card:hover,.mechanic-card:hover{
+  :is(button,a,[role=button],.tile,.card,.project-card,.contact-card,.mechanic-card):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):hover{
     transform:translateY(-2px)!important;
   }
-  .card:hover,.tile:hover,.project-card:hover,.contact-card:hover,.journal-card:hover{
+  :is(.card,.tile,.project-card,.contact-card,.journal-card):not(#accDlg *):hover{
     background-color:rgba(40,40,41,.32)!important;border-color:rgba(255,255,255,.34)!important;
     box-shadow:0 20px 46px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.20)!important;
     -webkit-backdrop-filter:blur(28px) saturate(135%)!important;backdrop-filter:blur(28px) saturate(135%)!important;
@@ -566,22 +566,22 @@ body:has(#home[hidden]) #publicWhatsappFab{display:none!important}
 
 /* ===== Mobile Performance (<= 760px): Crisp Semi-Opaque Cards, Tiles & Buttons without Heavy Blur ===== */
 @media(max-width:760px){
-  .card,.dealer,.listing,.vehicle-card,.story-card,.journal-card,.journal-entry,
+  :is(.card,.dealer,.listing,.vehicle-card,.story-card,.journal-card,.journal-entry,
   .project-card,.project-intro,.journal-intro,.project-public-empty,.contact-card,.promotion-package,
   .stat,.panel,.tile,#home .tile,.tiles .tile,.garage-card,.service-card,.booking-card,
   .featured-panel,.dashboard-card,.contact-form,.filter-panel,.search-panel,
   .showroom-vehicle-note,#autoQuoteRail,.about-glass-card,.about-value-card,.contact-intro-card,
   #location .tile,#location .card,#location .panel,#location .location-card,#location .location-panel,
   #location .contact-card,#location .map-card,#location .location-content,#location .location-info,
-  #location .location-details,#location .location-cta,.journal-share-dialog{
+  #location .location-details,#location .location-cta,.journal-share-dialog):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){
     -webkit-backdrop-filter:none!important;
     backdrop-filter:none!important;
     background:rgba(18,20,23,.90)!important;
     background-color:rgba(18,20,23,.90)!important;
   }
-  button.ghost,.btn.ghost,.button.ghost,.btn.alt,.button.alt,.journal-entry .journal-read,
+  :is(button.ghost,.btn.ghost,.button.ghost,.btn.alt,.button.alt,.journal-entry .journal-read,
   .journal-entry .journal-share,.journal-share-actions button,.journal-share-actions a,
-  .auto-quote-next,.yard-badge,.project-media-count,.account-card-save{
+  .auto-quote-next,.yard-badge,.project-media-count,.account-card-save):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){
     -webkit-backdrop-filter:none!important;
     backdrop-filter:none!important;
     background:rgba(26,28,32,.92)!important;
@@ -592,7 +592,7 @@ body:has(#home[hidden]) #publicWhatsappFab{display:none!important}
     backdrop-filter:blur(8px) saturate(118%)!important;
     background-color:rgba(18,20,23,.48)!important;
   }
-  input,select,textarea{
+  :is(input,select,textarea):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){
     -webkit-backdrop-filter:none!important;
     backdrop-filter:none!important;
     background:rgba(20,22,25,.90)!important;

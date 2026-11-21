@@ -1,19 +1,21 @@
-/* 3 Pedals Auto KE — Modern Dual-Theme Account Dashboard System
-   Single source of truth for #accDlg, #sellerEditListingDialog, and mobile header account pill.
-   Supports both Dark Obsidian (default) and Light Parchment (html[data-theme="light"]). */
+/* 3 Pedals Auto KE — Account Workspace Stylesheet (1:1 Parity with Admin Console)
+   Supports Dark Obsidian (default) and Light Parchment (html[data-theme="light"]). */
 
-#accDlg {
-  --ap-bg: #0e1014;
-  --ap-sidebar: #13161b;
-  --ap-header: rgba(14, 16, 20, 0.94);
-  --ap-surface: #171a21;
-  --ap-surface-2: #1d212a;
-  --ap-surface-hover: #212631;
-  --ap-input: #101216;
-  --ap-ink: #f4f1ea;
+#accDlg,
+#sellerEditListingDialog,
+#accActionDlg,
+.acc-toast-host {
+  --ap-bg: #0c0e12;
+  --ap-sidebar: #11141a;
+  --ap-header: rgba(12, 14, 18, 0.92);
+  --ap-surface: #151921;
+  --ap-surface-2: #1b202a;
+  --ap-surface-hover: #212733;
+  --ap-input: #0f1217;
+  --ap-ink: #f3efe6;
   --ap-ink-strong: #ffffff;
-  --ap-mute: #a39e92;
-  --ap-line: rgba(255, 255, 255, 0.09);
+  --ap-mute: #9e988c;
+  --ap-line: rgba(255, 255, 255, 0.085);
   --ap-line-strong: rgba(255, 255, 255, 0.16);
   --ap-gold: #dfb867;
   --ap-gold-soft: rgba(223, 184, 103, 0.14);
@@ -25,29 +27,41 @@
   --ap-ok-border: rgba(70, 196, 127, 0.32);
   --ap-warn: #e9a949;
   --ap-warn-bg: rgba(233, 169, 73, 0.12);
-  --ap-warn-border: rgba(233, 169, 73, 0.32);
+  --ap-warn-border: rgba(233, 169, 73, 0.34);
   --ap-bad: #f07b6e;
   --ap-bad-bg: rgba(240, 123, 110, 0.12);
   --ap-bad-border: rgba(240, 123, 110, 0.34);
-  --ap-shadow: 0 28px 80px rgba(0, 0, 0, 0.56);
-  --ap-card-shadow: 0 1px 2px rgba(0, 0, 0, 0.24);
+  --ap-info: #78b7f0;
+  --ap-info-bg: rgba(120, 183, 240, 0.12);
+  --ap-info-border: rgba(120, 183, 240, 0.32);
+  --ap-shadow: 0 24px 64px rgba(0, 0, 0, 0.48);
   --ap-radius: 14px;
-  --ap-radius-sm: 9px;
+  --ap-radius-sm: 10px;
+  --ap-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ap-font-sans: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ap-font-display: "Sora", "Manrope", system-ui, sans-serif;
+  --ap-font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --err: var(--ap-bad);
+  --ok: var(--ap-ok);
+  --mute: var(--ap-mute);
 }
 
-html[data-theme="light"] #accDlg {
-  --ap-bg: #f6f2e8;
-  --ap-sidebar: #ede6d6;
-  --ap-header: rgba(250, 247, 240, 0.96);
+html[data-theme="light"] #accDlg,
+html[data-theme="light"] #sellerEditListingDialog,
+html[data-theme="light"] #accActionDlg,
+html[data-theme="light"] .acc-toast-host {
+  --ap-bg: #f4efe4;
+  --ap-sidebar: #ebe4d3;
+  --ap-header: rgba(248, 244, 235, 0.94);
   --ap-surface: #ffffff;
   --ap-surface-2: #f9f6ee;
-  --ap-surface-hover: #f4efe2;
+  --ap-surface-hover: #f2ecde;
   --ap-input: #ffffff;
-  --ap-ink: #171512;
-  --ap-ink-strong: #0e0d0b;
-  --ap-mute: #575044;
-  --ap-line: rgba(112, 90, 44, 0.18);
-  --ap-line-strong: rgba(112, 90, 44, 0.34);
+  --ap-ink: #181612;
+  --ap-ink-strong: #0d0c0a;
+  --ap-mute: #5c5548;
+  --ap-line: rgba(112, 90, 44, 0.16);
+  --ap-line-strong: rgba(112, 90, 44, 0.32);
   --ap-gold: #8c640d;
   --ap-gold-soft: rgba(158, 116, 21, 0.12);
   --ap-gold-border: rgba(140, 100, 13, 0.34);
@@ -62,11 +76,13 @@ html[data-theme="light"] #accDlg {
   --ap-bad: #a82820;
   --ap-bad-bg: rgba(168, 40, 32, 0.08);
   --ap-bad-border: rgba(168, 40, 32, 0.28);
-  --ap-shadow: 0 24px 70px rgba(36, 28, 14, 0.18);
-  --ap-card-shadow: 0 2px 8px rgba(42, 33, 16, 0.05);
+  --ap-info: #1c5b96;
+  --ap-info-bg: rgba(28, 91, 150, 0.10);
+  --ap-info-border: rgba(28, 91, 150, 0.28);
+  --ap-shadow: 0 20px 56px rgba(36, 28, 14, 0.14);
 }
 
-/* ===== 1. Dialog Frame & Layout ===== */
+/* ===== 1. Full-Viewport App Shell ===== */
 #accDlg:not([open]) {
   display: none !important;
 }
@@ -74,27 +90,84 @@ html[data-theme="light"] #accDlg {
 #accDlg.account-dashboard-dialog[open] {
   position: fixed;
   inset: 0;
-  margin: auto;
-  width: min(1240px, calc(100vw - 28px));
-  max-width: 1240px;
-  height: min(90dvh, 860px);
-  max-height: 92dvh;
+  margin: 0;
+  width: 100vw;
+  max-width: 100vw;
+  height: 100dvh;
+  max-height: 100dvh;
   padding: 0;
   overflow: hidden;
-  border: 1px solid var(--ap-line-strong);
-  border-radius: 20px;
+  border: 0;
+  border-radius: 0;
   background: var(--ap-bg);
   color: var(--ap-ink);
-  box-shadow: var(--ap-shadow);
-  font-family: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  box-shadow: none;
+  font-family: var(--ap-font-sans);
+  font-size: 14px;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-variant-numeric: tabular-nums;
   z-index: 9995;
 }
 
-@media (min-width: 761px) {
+#accDlg::backdrop {
+  background: var(--ap-bg);
+}
+
+#accDlg *,
+#accDlg *::before,
+#accDlg *::after {
+  box-sizing: border-box;
+}
+
+#accDlg :is(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--ap-font-display) !important;
+  color: var(--ap-ink-strong);
+  letter-spacing: -0.025em !important;
+  line-height: 1.2 !important;
+  text-wrap: balance;
+  margin: 0;
+}
+
+#accDlg button,
+#accDlg input,
+#accDlg select,
+#accDlg textarea {
+  font-family: var(--ap-font-sans);
+  font-size: 14px;
+  color: inherit;
+}
+
+#accDlg .mono {
+  font-family: var(--ap-font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+#accDlg .hidden,
+#accDlg [hidden] {
+  display: none !important;
+}
+
+#accDlg .meta,
+#accDlg small {
+  color: var(--ap-mute);
+  font-size: 13px;
+}
+
+#accDlg a:not(.ap-btn):not(.btn):not(.account-sidebar-brand) {
+  color: var(--ap-gold);
+}
+
+#accDlg :focus-visible {
+  outline: 2px solid var(--ap-gold);
+  outline-offset: 2px;
+}
+
+@media (min-width: 961px) {
   #accDlg.account-dashboard-dialog[open] {
     display: grid;
-    grid-template-columns: 248px minmax(0, 1fr);
+    grid-template-columns: 260px minmax(0, 1fr);
     grid-template-rows: minmax(0, 1fr);
     gap: 0;
     align-items: stretch;
@@ -115,59 +188,26 @@ html[data-theme="light"] #accDlg {
   }
 }
 
-#accDlg::backdrop {
-  background: rgba(6, 8, 11, 0.68);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-}
-
-html[data-theme="light"] #accDlg::backdrop {
-  background: rgba(28, 24, 16, 0.42);
-}
-
-#accDlg *,
-#accDlg *::before,
-#accDlg *::after {
-  box-sizing: border-box;
-}
-
-#accDlg :is(h1, h2, h3, h4, h5, h6) {
-  font-family: "Sora", "Manrope", system-ui, sans-serif;
-  color: var(--ap-ink-strong);
-  letter-spacing: -0.025em;
-  line-height: 1.2;
-}
-
-#accDlg button,
-#accDlg input,
-#accDlg select,
-#accDlg textarea {
-  font-family: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
-}
-
-#accDlg .meta,
-#accDlg small {
-  color: var(--ap-mute);
-}
-
-/* ===== 2. Sidebar Navigation Rail ===== */
+/* ===== 2. Sidebar Navigation Rail (Matches .admin-sidebar) ===== */
 #accDlg nav#accountMenu.account-sidebar {
-  background: var(--ap-sidebar);
-  border-right: 1px solid var(--ap-line);
-  padding: 18px 14px;
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 2px;
+  padding: 18px 14px;
+  background: var(--ap-sidebar);
+  border-right: 1px solid var(--ap-line);
   overflow-y: auto;
   overscroll-behavior: contain;
+  z-index: 40;
 }
 
 #accDlg .account-sidebar-brand {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 6px 10px 14px;
-  margin-bottom: 6px;
+  padding: 4px 8px 14px;
+  margin-bottom: 8px;
   border-bottom: 1px solid var(--ap-line);
   text-decoration: none;
   color: var(--ap-ink-strong);
@@ -182,25 +222,25 @@ html[data-theme="light"] #accDlg::backdrop {
 
 #accDlg .account-sidebar-brand strong {
   display: block;
-  font-family: "Sora", sans-serif;
+  font-family: var(--ap-font-display);
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.04em;
   color: var(--ap-ink-strong);
 }
 
-#accDlg .account-sidebar-brand span,
 #accDlg .account-sidebar-brand small {
   display: block;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
   color: var(--ap-gold);
 }
 
 #accDlg .seller-nav-identity {
-  padding: 10px 12px 12px;
-  margin-bottom: 8px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
   border-radius: 10px;
   background: var(--ap-surface);
   border: 1px solid var(--ap-line);
@@ -208,7 +248,7 @@ html[data-theme="light"] #accDlg::backdrop {
 
 #accDlg .seller-nav-identity small {
   display: block;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.09em;
   text-transform: uppercase;
@@ -217,10 +257,10 @@ html[data-theme="light"] #accDlg::backdrop {
 
 #accDlg .seller-nav-identity strong {
   display: block;
-  margin-top: 3px;
-  font-family: "Sora", sans-serif;
-  font-size: 15px;
-  font-weight: 600;
+  margin-top: 2px;
+  font-size: 13px;
+  font-family: var(--ap-font-sans);
+  font-weight: 700;
   color: var(--ap-ink-strong);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -229,8 +269,8 @@ html[data-theme="light"] #accDlg::backdrop {
 
 #accDlg .seller-nav-identity span {
   display: block;
-  margin-top: 2px;
-  font-size: 12px;
+  margin-top: 1px;
+  font-size: 11.5px;
   color: var(--ap-mute);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -242,23 +282,23 @@ html[data-theme="light"] #accDlg::backdrop {
   grid-template-columns: 1fr 1fr;
   gap: 4px;
   padding: 4px;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
   border-radius: 10px;
   background: var(--ap-surface);
   border: 1px solid var(--ap-line);
 }
 
 #accDlg .seller-mode-switch button {
-  min-height: 36px;
-  padding: 6px 10px;
+  min-height: 32px;
+  padding: 5px 10px;
   border: 0;
   border-radius: 7px;
   background: transparent;
   color: var(--ap-mute);
-  font-size: 12.5px;
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.16s ease, color 0.16s ease;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 #accDlg .seller-mode-switch button:hover {
@@ -267,51 +307,45 @@ html[data-theme="light"] #accDlg::backdrop {
 
 #accDlg .seller-mode-switch button.selected,
 #accDlg .seller-mode-switch button[aria-current="page"] {
-  background: var(--ap-gold-btn);
-  color: var(--ap-gold-ink);
+  background: var(--ap-gold-soft);
+  color: var(--ap-gold);
+  font-weight: 700;
 }
 
 #accDlg .seller-nav-label {
-  padding: 12px 10px 4px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.11em;
+  margin: 12px 10px 5px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--ap-mute);
 }
 
+#accDlg nav#accountMenu button.account-nav-btn,
 #accDlg nav#accountMenu button[data-page],
-#accDlg nav#accountMenu button[data-seller-signup],
-#accDlg nav#accountMenu .account-sidebar-footer button {
+#accDlg nav#accountMenu button[data-seller-signup] {
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: space-between;
+  gap: 8px;
   width: 100%;
-  min-height: 40px;
-  padding: 9px 12px;
+  min-height: 38px;
+  padding: 8px 11px;
   border: 1px solid transparent;
-  border-radius: 9px;
+  border-radius: var(--ap-radius-sm);
   background: transparent;
   color: var(--ap-ink);
-  font-size: 13.5px;
+  font-size: 13px;
   font-weight: 600;
   text-align: left;
   cursor: pointer;
-  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
-}
-
-#accDlg nav#accountMenu button[data-page] svg.nav-ico,
-#accDlg nav#accountMenu button[data-seller-signup] svg.nav-ico,
-#accDlg nav#accountMenu .account-sidebar-footer button svg.nav-ico {
-  width: 16px;
-  height: 16px;
-  flex: 0 0 16px;
-  opacity: 0.72;
+  white-space: nowrap;
+  transition: background-color 0.16s var(--ap-ease), border-color 0.16s var(--ap-ease), color 0.16s ease;
 }
 
 #accDlg nav#accountMenu button[data-page]:hover,
 #accDlg nav#accountMenu button[data-seller-signup]:hover {
-  background: var(--ap-surface);
+  background: var(--ap-surface-hover);
   color: var(--ap-ink-strong);
 }
 
@@ -323,159 +357,240 @@ html[data-theme="light"] #accDlg::backdrop {
   font-weight: 700;
 }
 
-#accDlg nav#accountMenu button[data-page].active svg.nav-ico {
-  opacity: 1;
+#accDlg .account-nav-count {
+  font-family: var(--ap-font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ap-mute);
+}
+
+#accDlg nav#accountMenu button[data-page].active .account-nav-count {
+  color: var(--ap-gold);
+}
+
+#accDlg .account-nav-count:empty {
+  display: none;
 }
 
 #accDlg .account-sidebar-footer {
   margin-top: auto;
-  padding-top: 12px;
+  padding-top: 14px;
   border-top: 1px solid var(--ap-line);
+  display: grid;
+  gap: 6px;
 }
 
 #accDlg .account-sidebar-footer button {
-  color: var(--ap-mute);
+  width: 100%;
+  justify-content: flex-start;
+  min-height: 38px;
 }
 
-#accDlg .account-sidebar-footer button:hover {
-  background: var(--ap-bad-bg);
-  border-color: var(--ap-bad-border);
-  color: var(--ap-bad);
+#accDlg .account-menu-backdrop {
+  display: none;
 }
 
-/* ===== 3. Main Column & Sticky Top Bar ===== */
+/* ===== 3. Main Content Column & Sticky Top Bar (Matches .admin-topbar) ===== */
 #accDlg .account-dashboard-main {
-  display: flex;
-  flex-direction: column;
   min-width: 0;
   min-height: 0;
+  display: flex;
+  flex-direction: column;
   height: 100%;
   overflow: hidden;
   background: var(--ap-bg);
 }
 
 #accDlg .account-dialog-head {
+  position: sticky;
+  top: 0;
+  z-index: 30;
   flex: 0 0 auto;
-  position: relative !important;
-  inset: auto !important;
-  display: flex !important;
+  display: grid !important;
+  grid-template-columns: auto minmax(200px, 460px) auto;
   align-items: center !important;
   justify-content: space-between !important;
-  gap: 12px !important;
+  gap: 16px !important;
   width: 100% !important;
-  max-width: none !important;
-  min-height: 62px !important;
   margin: 0 !important;
-  padding: 10px clamp(16px, 2.4vw, 28px) !important;
+  padding: 12px 28px !important;
   background: var(--ap-header) !important;
   border: 0 !important;
   border-bottom: 1px solid var(--ap-line) !important;
   border-radius: 0 !important;
   box-shadow: none !important;
-  z-index: 5;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
-#accDlg .account-dialog-head::before,
-#accDlg .account-dialog-head::after {
-  content: none !important;
-  display: none !important;
-}
-
-#accDlg .account-head-title-wrap {
+#accDlg .account-topbar-left {
   display: flex;
   align-items: center;
   gap: 12px;
   min-width: 0;
-  flex: 1 1 auto;
 }
 
-#accDlg h2.account-brand-title {
-  display: inline-flex;
+#accDlg #accMenuToggle {
+  display: none;
   align-items: center;
-  gap: 9px;
-  margin: 0;
-  font-size: 16px !important;
-  font-weight: 700 !important;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 10px;
+  border: 1px solid var(--ap-line-strong);
+  background: var(--ap-surface);
   color: var(--ap-ink-strong);
-  white-space: nowrap;
-  flex: 0 0 auto;
+  cursor: pointer;
 }
 
-#accDlg .account-brand-icon {
-  width: 22px;
-  height: 22px;
-  flex: 0 0 22px;
-  border-radius: 5px;
-}
-
-#accDlg .account-header-section {
-  display: inline-flex;
+#accDlg .account-breadcrumb {
+  display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--ap-mute);
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-size: 13px;
   white-space: nowrap;
 }
 
-#accDlg .account-header-section::before {
-  content: "/";
-  opacity: 0.45;
+#accDlg .account-breadcrumb-root {
+  color: var(--ap-mute);
+  font-weight: 600;
+}
+
+#accDlg .account-breadcrumb-sep {
+  color: var(--ap-mute);
+}
+
+#accDlg .account-breadcrumb-current {
+  color: var(--ap-ink-strong);
+  font-family: var(--ap-font-display);
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Topbar Global Search */
+#accDlg .account-global-search {
+  position: relative;
+  width: 100%;
+}
+
+#accDlg .account-global-search input {
+  width: 100%;
+  min-height: 40px !important;
+  padding: 8px 66px 8px 14px !important;
+  border-radius: 10px !important;
+  border: 1px solid var(--ap-line-strong) !important;
+  background: var(--ap-input) !important;
+  color: var(--ap-ink-strong) !important;
+  font-size: 13px !important;
+}
+
+#accDlg .account-search-kbd {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 2px 6px;
+  border-radius: 5px;
+  border: 1px solid var(--ap-line-strong);
+  background: var(--ap-surface-2);
+  color: var(--ap-mute);
+  font-family: var(--ap-font-mono);
+  font-size: 11px;
+  pointer-events: none;
+}
+
+#accDlg .account-global-results {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 8px;
+  border-radius: 12px;
+  background: var(--ap-surface);
+  border: 1px solid var(--ap-line-strong);
+  box-shadow: var(--ap-shadow);
+  z-index: 60;
+}
+
+#accDlg .account-global-hit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ap-ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+#accDlg .account-global-hit:hover,
+#accDlg .account-global-hit:focus-visible {
+  background: var(--ap-surface-hover);
+}
+
+#accDlg .account-global-hit strong {
+  display: block;
+  font-size: 13px;
+  color: var(--ap-ink-strong);
+}
+
+#accDlg .account-global-hit span {
+  display: block;
+  font-size: 12px;
+  color: var(--ap-mute);
+}
+
+#accDlg .account-global-hit em {
+  font-style: normal;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ap-gold);
+  white-space: nowrap;
 }
 
 #accDlg .account-head-actions {
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 8px !important;
-  flex: 0 0 auto !important;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
 }
 
-#accDlg #accMenuToggle,
-#accDlg #accHomeTop,
-#accDlg #accCloseTop {
-  position: static !important;
-  float: none !important;
-  inset: auto !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 6px !important;
-  min-height: 40px !important;
-  height: 40px !important;
-  margin: 0 !important;
-  border: 1px solid var(--ap-line-strong) !important;
-  border-radius: var(--ap-radius-sm) !important;
-  background: var(--ap-surface) !important;
-  color: var(--ap-ink) !important;
-  font-size: 13px !important;
-  font-weight: 600 !important;
+#accDlg .account-sync-label {
+  font-size: 12px;
+  color: var(--ap-mute);
+  white-space: nowrap;
+}
+
+#accDlg .ap-icon-close {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--ap-radius-sm);
+  border: 1px solid var(--ap-line-strong);
+  background: var(--ap-surface-2);
+  color: var(--ap-ink-strong);
+  font-size: 20px;
+  line-height: 1;
   cursor: pointer;
-  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease;
 }
 
-#accDlg #accMenuToggle,
-#accDlg #accCloseTop {
-  width: 40px !important;
-  min-width: 40px !important;
-  padding: 0 !important;
-}
-
-#accDlg #accHomeTop {
-  width: auto !important;
-  min-width: 0 !important;
-  padding: 0 13px !important;
-  white-space: nowrap !important;
-}
-
-#accDlg #accMenuToggle:hover,
-#accDlg #accHomeTop:hover,
-#accDlg #accCloseTop:hover {
-  background: var(--ap-surface-hover) !important;
-  border-color: var(--ap-gold-border) !important;
-  color: var(--ap-gold) !important;
+#accDlg .ap-icon-close:hover {
+  background: var(--ap-surface-hover);
+  border-color: var(--ap-gold-border);
+  color: var(--ap-gold);
 }
 
 #accDlg #accBody {
@@ -483,7 +598,7 @@ html[data-theme="light"] #accDlg::backdrop {
   min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: clamp(18px, 2.4vw, 28px);
+  padding: 24px 28px 64px;
   overscroll-behavior: contain;
   scrollbar-width: thin;
   scrollbar-color: var(--ap-line-strong) transparent;
@@ -499,18 +614,12 @@ html[data-theme="light"] #accDlg::backdrop {
 }
 
 #accDlg .account-pages {
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 20px;
-  max-width: 1020px;
-  margin: 0 auto;
-  background: transparent !important;
-  background-image: none !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  -webkit-backdrop-filter: none !important;
-  backdrop-filter: none !important;
+  gap: 0;
 }
 
 #accDlg .account-page[hidden] {
@@ -518,398 +627,335 @@ html[data-theme="light"] #accDlg::backdrop {
 }
 
 #accDlg .account-page {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 18px;
-  background: transparent !important;
-  background-image: none !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  -webkit-backdrop-filter: none !important;
-  backdrop-filter: none !important;
-  padding: 0 !important;
+  display: block;
 }
 
-/* ===== 4. Buttons, Inputs & Section Headers ===== */
-#accDlg .btn {
+/* ===== 4. Buttons, Inputs & Notices (Matches Admin Section 3) ===== */
+#accDlg .ap-btn,
+#accDlg .btn,
+#sellerEditListingDialog .btn,
+#accActionDlg .ap-btn,
+#accActionDlg .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  min-height: 42px;
-  padding: 10px 18px;
-  border: 1px solid transparent;
+  gap: 7px;
+  min-height: 40px;
+  padding: 8px 15px;
   border-radius: var(--ap-radius-sm);
-  background: var(--ap-gold-btn);
-  color: var(--ap-gold-ink);
-  font-size: 13.5px;
-  font-weight: 700;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  flex-shrink: 0;
   text-decoration: none;
   cursor: pointer;
-  transition: opacity 0.16s ease, border-color 0.16s ease, background-color 0.16s ease;
+  transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease, opacity 0.16s ease;
 }
 
-#accDlg .btn:hover {
-  opacity: 0.92;
+#accDlg .ap-btn-primary,
+#accDlg .btn:not(.ghost):not(.ap-btn-ghost):not(.ap-btn-danger),
+#sellerEditListingDialog .btn:not(.ghost),
+#accActionDlg .ap-btn-primary,
+#accActionDlg .btn:not(.ghost):not(.ap-btn-danger) {
+  background: var(--ap-gold-btn);
+  color: var(--ap-gold-ink);
+  border: 1px solid var(--ap-gold-border);
+  font-weight: 700;
 }
 
-#accDlg .btn:disabled {
-  opacity: 0.55;
+#accDlg .ap-btn-ghost,
+#accDlg .btn.ghost,
+#sellerEditListingDialog .btn.ghost,
+#accActionDlg .ap-btn-ghost,
+#accActionDlg .btn.ghost {
+  background: var(--ap-surface-2);
+  color: var(--ap-ink-strong);
+  border: 1px solid var(--ap-line-strong);
+}
+
+#accDlg .ap-btn-ghost:hover,
+#accDlg .btn.ghost:hover,
+#sellerEditListingDialog .btn.ghost:hover,
+#accActionDlg .ap-btn-ghost:hover,
+#accActionDlg .btn.ghost:hover {
+  background: var(--ap-surface-hover);
+  border-color: var(--ap-gold-border);
+  color: var(--ap-ink-strong);
+}
+
+#accDlg .ap-btn-danger,
+#accDlg #accDeleteAccount,
+#accActionDlg .ap-btn-danger,
+#accActionDlg .btn.acc-btn-danger {
+  background: var(--ap-bad-bg);
+  color: var(--ap-bad);
+  border: 1px solid var(--ap-bad-border);
+}
+
+#accDlg .ap-btn-danger:hover,
+#accDlg #accDeleteAccount:hover,
+#accActionDlg .ap-btn-danger:hover {
+  background: rgba(240, 123, 110, 0.20);
+}
+
+#accDlg :is(button, .btn, .ap-btn):disabled {
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
-#accDlg .btn.ghost {
-  background: var(--ap-surface-2);
-  border-color: var(--ap-line-strong);
-  color: var(--ap-ink);
-}
-
-#accDlg .btn.ghost:hover {
-  opacity: 1;
-  background: var(--ap-surface-hover);
-  border-color: var(--ap-gold-border);
-  color: var(--ap-gold);
-}
-
-#accDlg .btn.alt {
-  background: var(--ap-gold-btn);
-  color: var(--ap-gold-ink);
-  border-color: var(--ap-gold-border);
-}
-
-#accDlg button:focus-visible,
-#accDlg a:focus-visible,
-#accDlg input:focus-visible,
-#accDlg select:focus-visible,
-#accDlg textarea:focus-visible {
-  outline: 2px solid var(--ap-gold);
-  outline-offset: 2px;
+#accDlg label,
+#sellerEditListingDialog label,
+#accActionDlg label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ap-mute);
+  margin: 12px 0 6px;
 }
 
 #accDlg input:not([type="checkbox"]):not([type="radio"]),
 #accDlg select,
-#accDlg textarea {
+#accDlg textarea,
+#sellerEditListingDialog input:not([type="checkbox"]):not([type="radio"]),
+#sellerEditListingDialog select,
+#sellerEditListingDialog textarea,
+#accActionDlg input:not([type="checkbox"]):not([type="radio"]),
+#accActionDlg textarea {
   display: block;
   width: 100%;
-  min-height: 44px;
-  padding: 10px 13px;
-  border: 1px solid var(--ap-line-strong);
+  min-height: 40px;
+  padding: 9px 12px;
   border-radius: var(--ap-radius-sm);
+  border: 1px solid var(--ap-line-strong);
   background: var(--ap-input);
   color: var(--ap-ink-strong);
   font-size: 14px;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  outline: none;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease;
 }
 
-#accDlg textarea {
-  min-height: 100px;
+#accDlg textarea,
+#sellerEditListingDialog textarea,
+#accActionDlg textarea {
+  min-height: 92px;
   resize: vertical;
 }
 
-#accDlg input:focus,
-#accDlg select:focus,
-#accDlg textarea:focus {
-  outline: none;
+#accDlg :is(input, select, textarea):focus,
+#sellerEditListingDialog :is(input, select, textarea):focus,
+#accActionDlg :is(input, textarea):focus {
   border-color: var(--ap-gold);
   box-shadow: 0 0 0 3px var(--ap-gold-soft);
 }
 
-#accDlg input::placeholder,
-#accDlg textarea::placeholder {
+#accDlg :is(input, textarea)::placeholder {
   color: var(--ap-mute);
   opacity: 0.72;
 }
 
-#accDlg label {
-  display: block;
-  margin: 0 0 6px;
-  font-size: 12.5px;
-  font-weight: 700;
-  color: var(--ap-ink);
+#accDlg input[type="checkbox"],
+#accDlg input[type="radio"] {
+  width: auto;
+  min-height: 0;
+  accent-color: var(--ap-gold);
+  cursor: pointer;
 }
 
-#accDlg .acts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  align-items: center;
-}
-
-#accDlg .account-eyebrow,
-#accDlg .workspace-v2-kicker {
-  margin: 0 0 6px;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
-  color: var(--ap-gold);
-}
-
-#accDlg .account-activity-page-head {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 14px;
-  padding-bottom: 16px;
-  margin-bottom: 16px;
-  border-bottom: 1px solid var(--ap-line);
-}
-
-#accDlg .account-activity-page-head h3 {
-  margin: 0 0 4px;
-  font-size: clamp(20px, 2vw, 24px);
-}
-
-#accDlg .account-activity-page-head p {
-  margin: 0;
-  font-size: 14px;
-}
-
-#accDlg .account-activity-page-head > span {
-  display: inline-flex;
-  align-items: center;
-  padding: 5px 11px;
-  border-radius: 7px;
-  background: var(--ap-gold-soft);
-  border: 1px solid var(--ap-gold-border);
-  color: var(--ap-gold);
-  font-size: 12px;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-}
-
-/* ===== 5. Workspace V2 Overview ===== */
-#accDlg .workspace-v2 {
-  display: grid;
-  gap: 18px;
-}
-
-#accDlg .workspace-v2-hero {
+#accDlg .ap-notice {
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 18px;
-  padding: 22px 24px;
-  border-radius: var(--ap-radius);
-  background: var(--ap-surface);
-  border: 1px solid var(--ap-line);
-  box-shadow: var(--ap-card-shadow);
-}
-
-#accDlg .workspace-v2-welcome h3 {
-  margin: 0 0 6px;
-  font-size: clamp(22px, 2.5vw, 30px);
-  font-weight: 700;
-}
-
-#accDlg .workspace-v2-welcome p:not(.workspace-v2-kicker) {
-  margin: 0;
-  font-size: 14px;
-  color: var(--ap-mute);
-  max-width: 56ch;
-}
-
-#accDlg .workspace-v2-hero-actions {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
   gap: 12px;
-}
-
-#accDlg .workspace-v2-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--ap-ok);
-}
-
-#accDlg .workspace-v2-status i {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--ap-ok);
-}
-
-#accDlg .workspace-v2-primary-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-#accDlg .workspace-v2-primary-actions button {
-  min-height: 40px;
-  padding: 9px 16px;
-  border-radius: var(--ap-radius-sm);
-  font-size: 13.5px;
-  font-weight: 700;
-  cursor: pointer;
+  padding: 13px 16px;
+  margin-bottom: 16px;
+  border-radius: 12px;
   border: 1px solid var(--ap-line-strong);
-  background: var(--ap-surface-2);
+  background: var(--ap-surface);
+  color: var(--ap-ink);
+  font-size: 13px;
+}
+
+#accDlg .ap-notice.warn {
+  background: var(--ap-warn-bg);
+  border-color: var(--ap-warn-border);
   color: var(--ap-ink-strong);
-  transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
-#accDlg .workspace-v2-primary-actions button:not(.workspace-v2-action-secondary) {
-  background: var(--ap-gold-btn);
-  border-color: var(--ap-gold-border);
-  color: var(--ap-gold-ink);
-}
-
-#accDlg .workspace-v2-primary-actions button.workspace-v2-action-secondary:hover {
-  background: var(--ap-surface-hover);
-  border-color: var(--ap-gold-border);
-}
-
-#accDlg .workspace-v2-metric-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
-}
-
-#accDlg .workspace-v2-metric {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 10px;
-  min-height: 122px;
-  padding: 18px 20px;
+#accDlg .ap-empty,
+#accDlg .account-overview-empty {
+  text-align: center;
+  padding: 36px 20px;
+  border: 1px dashed var(--ap-line-strong);
   border-radius: var(--ap-radius);
   background: var(--ap-surface);
-  border: 1px solid var(--ap-line);
-  box-shadow: var(--ap-card-shadow);
-  color: var(--ap-ink);
-  text-align: left;
-  cursor: pointer;
-  transition: border-color 0.16s ease, background-color 0.16s ease, transform 0.16s ease;
+  color: var(--ap-mute);
+  font-size: 13.5px;
 }
 
-#accDlg .workspace-v2-metric:hover {
-  background: var(--ap-surface-hover);
-  border-color: var(--ap-gold-border);
-  transform: translateY(-1px);
-}
-
-#accDlg .workspace-v2-metric-top {
+#accDlg .acts,
+#accDlg .ap-actions {
   display: flex;
   align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* ===== 5. Panel Headers, KPI Stats & Cards (Matches Admin Section 4) ===== */
+#accDlg .ap-panel-title {
+  display: flex;
+  align-items: flex-end;
   justify-content: space-between;
-  width: 100%;
-  font-size: 12px;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 0 0 20px;
+}
+
+#accDlg .ap-eyebrow,
+#accDlg .account-eyebrow,
+#accActionDlg .ap-eyebrow {
+  display: block;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.08em;
-  color: var(--ap-mute);
-}
-
-#accDlg .workspace-v2-metric-top i {
-  font-style: normal;
-  font-variant-numeric: tabular-nums;
+  text-transform: uppercase;
   color: var(--ap-gold);
+  margin: 0 0 4px;
 }
 
-#accDlg .workspace-v2-metric strong {
-  font-family: "Sora", sans-serif;
-  font-size: clamp(28px, 2.5vw, 34px);
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  line-height: 1;
-  color: var(--ap-ink-strong);
+#accDlg .ap-panel-title h1 {
+  font-size: clamp(24px, 2.6vw, 32px);
 }
 
-#accDlg .workspace-v2-metric-bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  font-size: 12.5px;
-  color: var(--ap-mute);
+#accDlg .ap-panel-title h2 {
+  font-size: clamp(18px, 2vw, 22px);
 }
 
-#accDlg .workspace-v2-metric-bottom b {
-  color: var(--ap-gold);
-  font-weight: 700;
+#accDlg .ap-panel-title p.meta {
+  margin: 6px 0 0;
+  max-width: 68ch;
 }
 
-#accDlg .workspace-v2-main-grid {
+#accDlg .ap-stats {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-  gap: 16px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
 }
 
-#accDlg .workspace-v2-card {
-  padding: 20px 22px;
+#accDlg .ap-stat {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 16px 18px;
+  min-height: 98px;
   border-radius: var(--ap-radius);
   background: var(--ap-surface);
   border: 1px solid var(--ap-line);
-  box-shadow: var(--ap-card-shadow);
+  text-align: left;
+  transition: border-color 0.16s ease, background-color 0.16s ease;
 }
 
-#accDlg .workspace-v2-card-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding-bottom: 14px;
-  margin-bottom: 14px;
-  border-bottom: 1px solid var(--ap-line);
-}
-
-#accDlg .workspace-v2-card-heading h4 {
-  margin: 0;
-  font-size: 17px;
-}
-
-#accDlg .workspace-v2-card-heading button {
-  min-height: 36px;
-  padding: 6px 12px;
-  border-radius: 8px;
-  border: 1px solid var(--ap-line-strong);
-  background: var(--ap-surface-2);
-  color: var(--ap-ink);
-  font-size: 12.5px;
-  font-weight: 700;
+#accDlg button.ap-stat {
   cursor: pointer;
 }
 
-#accDlg .workspace-v2-card-heading button:hover {
+#accDlg button.ap-stat:hover {
+  background: var(--ap-surface-hover);
   border-color: var(--ap-gold-border);
+}
+
+#accDlg .ap-stat b {
+  font-family: var(--ap-font-display);
+  font-size: clamp(22px, 2.2vw, 28px);
+  font-weight: 700;
   color: var(--ap-gold);
-}
-
-#accDlg .workspace-v2-inventory-total {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  margin-bottom: 12px;
-}
-
-#accDlg .workspace-v2-inventory-total strong {
-  font-family: "Sora", sans-serif;
-  font-size: 32px;
   font-variant-numeric: tabular-nums;
-  color: var(--ap-ink-strong);
+  line-height: 1.1;
 }
 
-#accDlg .workspace-v2-inventory-total span {
-  font-size: 13.5px;
+#accDlg .ap-stat span {
+  font-size: 12px;
+  font-weight: 600;
   color: var(--ap-mute);
 }
 
-#accDlg .workspace-v2-progress {
+#accDlg .ap-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+#accDlg .ap-card,
+#accDlg .account-tools,
+#accDlg .settings-section {
+  background: var(--ap-surface);
+  border: 1px solid var(--ap-line);
+  border-radius: var(--ap-radius);
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: none;
+}
+
+#accDlg .ap-overview-grid > .ap-card {
+  margin-bottom: 0;
+}
+
+#accDlg .ap-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+#accDlg .ap-card-head h2 {
+  font-size: 17px;
+  margin-top: 2px;
+}
+
+#accDlg .ap-card-mark {
+  font-family: var(--ap-font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ap-gold);
+}
+
+#accDlg .ap-metric-row-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+#accDlg .ap-metric-row-3 strong {
+  display: block;
+  font-family: var(--ap-font-display);
+  font-size: clamp(17px, 1.8vw, 22px);
+  font-weight: 700;
+  color: var(--ap-gold);
+  overflow-wrap: anywhere;
+}
+
+#accDlg .ap-metric-row-3 span {
+  display: block;
+  margin-top: 3px;
+  font-size: 12px;
+  color: var(--ap-mute);
+}
+
+#accDlg .ap-progress-track {
   width: 100%;
   height: 8px;
+  margin: 0 0 16px;
   border-radius: 6px;
   background: var(--ap-surface-2);
   overflow: hidden;
-  margin-bottom: 16px;
 }
 
-#accDlg .workspace-v2-progress i {
+#accDlg .ap-progress-track i {
   display: block;
   height: 100%;
   width: var(--workspace-progress, 0%);
@@ -917,109 +963,133 @@ html[data-theme="light"] #accDlg::backdrop {
   background: var(--ap-gold-btn);
 }
 
-#accDlg .workspace-v2-status-list {
+#accDlg .ap-footnote {
+  margin: 14px 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* Task Centre Rows & Activity Rows */
+#accDlg .ap-task-list {
   display: grid;
   gap: 8px;
 }
 
-#accDlg .workspace-v2-status-list > div {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 12px;
-  border-radius: 8px;
-  background: var(--ap-surface-2);
-  font-size: 13.5px;
-}
-
-#accDlg .workspace-v2-status-list > div span {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--ap-ink);
-}
-
-#accDlg .workspace-v2-status-list > div strong {
-  font-variant-numeric: tabular-nums;
-  color: var(--ap-ink-strong);
-}
-
-#accDlg .workspace-v2-status-list i {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-}
-
-#accDlg .workspace-v2-status-list i.live { background: var(--ap-ok); }
-#accDlg .workspace-v2-status-list i.review { background: var(--ap-warn); }
-#accDlg .workspace-v2-status-list i.other { background: var(--ap-mute); }
-
-#accDlg .workspace-v2-shortcuts {
+#accDlg .ap-task-row {
   display: grid;
-  align-content: start;
-  gap: 8px;
-}
-
-#accDlg .workspace-v2-shortcuts > button {
-  display: grid;
-  grid-template-columns: 34px minmax(0, 1fr) auto;
+  grid-template-columns: 42px minmax(0, 1fr) auto;
   align-items: center;
-  gap: 12px;
-  width: 100%;
-  min-height: 54px;
-  padding: 10px 12px;
-  border: 1px solid var(--ap-line);
+  gap: 14px;
+  padding: 12px 14px;
   border-radius: 10px;
   background: var(--ap-surface-2);
-  color: var(--ap-ink);
-  text-align: left;
-  cursor: pointer;
-  transition: background-color 0.15s ease, border-color 0.15s ease;
+  border: 1px solid var(--ap-line);
 }
 
-#accDlg .workspace-v2-shortcuts > button:hover {
-  background: var(--ap-surface-hover);
-  border-color: var(--ap-gold-border);
-}
-
-#accDlg .workspace-v2-shortcut-index {
+#accDlg .ap-task-count {
   display: grid;
   place-items: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
   background: var(--ap-gold-soft);
   color: var(--ap-gold);
-  font-size: 12px;
+  font-family: var(--ap-font-mono);
   font-weight: 700;
-  font-variant-numeric: tabular-nums;
+  font-size: 13px;
 }
 
-#accDlg .workspace-v2-shortcuts > button strong {
+#accDlg .ap-task-copy strong {
   display: block;
   font-size: 14px;
   color: var(--ap-ink-strong);
 }
 
-#accDlg .workspace-v2-shortcuts > button small {
+#accDlg .ap-task-copy span {
   display: block;
   font-size: 12px;
   color: var(--ap-mute);
 }
 
-#accDlg .workspace-v2-shortcuts > button b {
-  color: var(--ap-gold);
+#accDlg .ap-activity-list {
+  display: grid;
 }
 
-#accDlg .workspace-v2-dealer-content {
+#accDlg .ap-activity-row {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 0;
+  border-top: 1px solid var(--ap-line);
+}
+
+#accDlg .ap-activity-row:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+#accDlg .ap-activity-row:last-child {
+  padding-bottom: 0;
+}
+
+#accDlg .ap-activity-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  background: var(--ap-gold-soft);
+  color: var(--ap-gold);
+  font-family: var(--ap-font-mono);
+  font-weight: 700;
+  font-size: 11px;
+}
+
+#accDlg .ap-activity-icon.vehicle {
+  background: var(--ap-ok-bg);
+  color: var(--ap-ok);
+}
+
+#accDlg .ap-activity-icon.booking {
+  background: var(--ap-info-bg);
+  color: var(--ap-info);
+}
+
+#accDlg .ap-activity-icon.sale {
+  background: var(--ap-warn-bg);
+  color: var(--ap-warn);
+}
+
+#accDlg .ap-activity-row strong {
+  display: block;
+  font-size: 13px;
+  color: var(--ap-ink-strong);
+}
+
+#accDlg .ap-activity-row span {
+  display: block;
+  font-size: 12px;
+  color: var(--ap-mute);
+}
+
+#accDlg .ap-activity-row time {
+  font-size: 12px;
+  color: var(--ap-mute);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Dealership Card inside Overview */
+#accDlg .ap-dealer-content {
   display: grid;
   grid-template-columns: auto minmax(0, 1.3fr) repeat(3, minmax(0, 1fr));
   align-items: center;
   gap: 16px;
 }
 
-#accDlg .workspace-v2-dealer-content img,
-#accDlg .workspace-v2-dealer-monogram {
+#accDlg .ap-dealer-content img,
+#accDlg .ap-dealer-monogram {
   width: 52px;
   height: 52px;
   border-radius: 10px;
@@ -1027,158 +1097,195 @@ html[data-theme="light"] #accDlg::backdrop {
   border: 1px solid var(--ap-line-strong);
 }
 
-#accDlg .workspace-v2-dealer-monogram {
+#accDlg .ap-dealer-monogram {
   display: grid;
   place-items: center;
   background: var(--ap-gold-soft);
   color: var(--ap-gold);
-  font-family: "Sora", sans-serif;
+  font-family: var(--ap-font-display);
   font-weight: 700;
   font-size: 16px;
 }
 
-#accDlg .workspace-v2-dealer-content small {
+#accDlg .ap-dealer-content small {
   display: block;
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 700;
   letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--ap-mute);
   margin-bottom: 3px;
 }
 
-#accDlg .workspace-v2-dealer-content strong {
+#accDlg .ap-dealer-content strong {
   display: block;
   font-size: 13.5px;
   color: var(--ap-ink-strong);
   overflow-wrap: anywhere;
 }
 
-#accDlg .workspace-v2-dealer-name span {
+#accDlg .ap-dealer-name span {
   display: block;
-  font-size: 12.5px;
+  font-size: 12px;
   color: var(--ap-mute);
   margin-top: 2px;
 }
 
-#accDlg .workspace-v2-footer {
-  display: flex;
+/* ===== 6. Segmented Tabs, Filter Bars & Status Labels (Matches Admin Section 5) ===== */
+#accDlg .ap-segmented-bar,
+#accDlg .account-settings-tabs {
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
   flex-wrap: wrap;
-  gap: 8px;
-  padding: 12px 4px 0;
-  border-top: 1px solid var(--ap-line);
-  font-size: 12px;
-  color: var(--ap-mute);
-}
-
-/* ===== 6. Activity List ===== */
-#accDlg .account-activity-list,
-#accDlg .workspace-v2-activity-list {
-  display: grid;
-  gap: 8px;
-}
-
-#accDlg .account-activity-item {
-  display: grid;
-  grid-template-columns: 8px minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 14px;
-  padding: 13px 16px;
-  border-radius: 10px;
-  background: var(--ap-surface-2);
+  gap: 4px;
+  padding: 4px;
+  margin-bottom: 16px;
+  border-radius: 11px;
+  background: var(--ap-surface);
   border: 1px solid var(--ap-line);
 }
 
-#accDlg .account-activity-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--ap-gold);
+#accDlg .ap-segmented-bar .ap-seg-tab,
+#accDlg .account-settings-tabs button {
+  min-height: 34px;
+  padding: 6px 14px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ap-mute);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
-#accDlg .account-activity-dot.vehicle { background: var(--ap-ok); }
-#accDlg .account-activity-dot.promotion { background: var(--ap-gold); }
-#accDlg .account-activity-dot.booking { background: #5a9cf5; }
-#accDlg .account-activity-dot.sale { background: var(--ap-warn); }
-
-#accDlg .account-activity-item strong {
-  display: block;
-  font-size: 14px;
+#accDlg .ap-segmented-bar .ap-seg-tab:hover,
+#accDlg .account-settings-tabs button:hover {
   color: var(--ap-ink-strong);
 }
 
-#accDlg .account-activity-item p {
-  margin: 2px 0 0;
-  font-size: 13px;
-  color: var(--ap-mute);
+#accDlg .ap-segmented-bar .ap-seg-tab.active,
+#accDlg .account-settings-tabs button.active {
+  background: var(--ap-gold-soft);
+  color: var(--ap-gold);
+  font-weight: 700;
 }
 
-#accDlg .account-activity-item time {
+#accDlg .ap-tools-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px 14px;
+  margin: 0 0 16px;
+  border-radius: 12px;
+  background: var(--ap-surface);
+  border: 1px solid var(--ap-line);
+}
+
+#accDlg .ap-tools-bar input[type="search"] {
+  flex: 1 1 240px;
+  min-width: 180px;
+}
+
+#accDlg .ap-tools-bar select {
+  flex: 0 1 210px;
+  min-width: 160px;
+}
+
+#accDlg .tools-count {
+  margin-left: auto;
   font-size: 12px;
   color: var(--ap-mute);
   white-space: nowrap;
-  font-variant-numeric: tabular-nums;
 }
 
-#accDlg .account-overview-empty {
-  padding: 20px;
-  border-radius: 10px;
-  background: var(--ap-surface-2);
-  border: 1px dashed var(--ap-line-strong);
-  color: var(--ap-mute);
-  font-size: 14px;
-  text-align: center;
-}
-
-/* ===== 7. Content Cards, Insights & My Listings ===== */
-#accDlg .account-tools {
-  padding: 22px 24px;
-  border-radius: var(--ap-radius);
-  background: var(--ap-surface);
-  border: 1px solid var(--ap-line);
-  box-shadow: var(--ap-card-shadow);
-}
-
-#accDlg .account-tools > h3 {
-  margin: 0 0 6px;
-  font-size: clamp(18px, 1.8vw, 22px);
-}
-
-#accDlg .account-tools > h4 {
-  margin: 20px 0 8px;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ap-gold);
-}
-
-#accDlg .dashboard-welcome {
-  display: flex;
+#accDlg .ap-status {
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-  padding: 14px 16px;
-  margin: 14px 0;
-  border-radius: 10px;
-  background: var(--ap-warn-bg);
-  border: 1px solid var(--ap-warn-border);
-  color: var(--ap-ink-strong);
+  padding: 3px 9px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: capitalize;
+  letter-spacing: 0.02em;
+  border: 1px solid var(--ap-line-strong);
+  background: var(--ap-surface-2);
+  color: var(--ap-ink);
+  white-space: nowrap;
 }
 
+#accDlg .ap-status.pending,
+#accDlg .ap-status.pending_approval,
+#accDlg .ap-status.approved_awaiting_payment,
+#accDlg .ap-status.restoration_requested,
+#accDlg .ap-status.awaiting {
+  background: var(--ap-warn-bg);
+  border-color: var(--ap-warn-border);
+  color: var(--ap-warn);
+}
+
+#accDlg .ap-status.approved,
+#accDlg .ap-status.confirmed,
+#accDlg .ap-status.done,
+#accDlg .ap-status.completed,
+#accDlg .ap-status.success,
+#accDlg .ap-status.active,
+#accDlg .ap-status.verified,
+#accDlg .ap-status.restored {
+  background: var(--ap-ok-bg);
+  border-color: var(--ap-ok-border);
+  color: var(--ap-ok);
+}
+
+#accDlg .ap-status.rejected,
+#accDlg .ap-status.cancelled,
+#accDlg .ap-status.declined,
+#accDlg .ap-status.failed,
+#accDlg .ap-status.danger {
+  background: var(--ap-bad-bg);
+  border-color: var(--ap-bad-border);
+  color: var(--ap-bad);
+}
+
+#accDlg .ap-status.sold,
+#accDlg .ap-status.info {
+  background: var(--ap-info-bg);
+  border-color: var(--ap-info-border);
+  color: var(--ap-info);
+}
+
+#accDlg .ap-meta-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--ap-mute);
+}
+
+#accDlg .ap-meta-line .sep {
+  opacity: 0.55;
+}
+
+/* ===== 7. Insights Tables & Seller Listings (Matches Admin Section 6 & 8) ===== */
 #accDlg .seller-analytics-table {
   width: 100%;
-  border-collapse: collapse;
-  margin: 12px 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 13px;
 }
 
 #accDlg .seller-analytics-table th,
 #accDlg .seller-analytics-table td {
-  padding: 11px 6px;
+  padding: 10px 4px;
   border-bottom: 1px solid var(--ap-line);
-  font-size: 14px;
+}
+
+#accDlg .seller-analytics-table tr:last-child th,
+#accDlg .seller-analytics-table tr:last-child td {
+  border-bottom: 0;
 }
 
 #accDlg .seller-analytics-table th {
@@ -1189,142 +1296,52 @@ html[data-theme="light"] #accDlg::backdrop {
 
 #accDlg .seller-analytics-table td {
   text-align: right;
+  font-family: var(--ap-font-display);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   color: var(--ap-ink-strong);
 }
 
-#accDlg .seller-listing-filters {
+#accDlg .seller-listing.ap-listing-card {
   display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
-  gap: 12px;
-  padding: 14px;
-  margin: 14px 0 10px;
-  border-radius: 10px;
-  background: var(--ap-surface-2);
-  border: 1px solid var(--ap-line);
-}
-
-#accDlg .seller-listing-filters label {
-  margin-bottom: 5px;
-  font-size: 12px;
-  color: var(--ap-mute);
-}
-
-#accDlg #sellerListingCount {
-  margin: 0 0 14px;
-  font-size: 13px;
-}
-
-#accDlg .seller-listing.seller-garage-card {
-  display: grid;
-  grid-template-columns: 196px minmax(0, 1fr);
-  gap: 18px;
-  padding: 16px;
-  margin-bottom: 14px;
+  grid-template-columns: 164px minmax(0, 1fr);
+  gap: 16px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
   border-radius: var(--ap-radius);
-  background: var(--ap-surface-2);
+  background: var(--ap-surface);
   border: 1px solid var(--ap-line);
   transition: border-color 0.16s ease;
 }
 
-#accDlg .seller-listing.seller-garage-card:hover {
+#accDlg .seller-listing.ap-listing-card:hover {
   border-color: var(--ap-gold-border);
 }
 
-#accDlg .seller-garage-media {
-  position: relative;
+#accDlg .ap-listing-thumb {
+  width: 164px;
+  height: 112px;
   border-radius: 10px;
   overflow: hidden;
-  background: var(--ap-bg);
-  aspect-ratio: 16 / 10;
   border: 1px solid var(--ap-line);
+  background: var(--ap-surface-2);
+  display: grid;
+  place-items: center;
 }
 
-#accDlg .seller-listing-photo {
+#accDlg .ap-listing-thumb img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-#accDlg .seller-garage-photo-placeholder {
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-content: center;
-  text-align: center;
-  font-family: "Sora", sans-serif;
-  font-size: 12px;
+#accDlg .ap-listing-placeholder {
+  font-family: var(--ap-font-mono);
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.08em;
   color: var(--ap-mute);
-}
-
-#accDlg .seller-garage-status,
-#accDlg .account-booking-row .st,
-#accDlg .promotion-status-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4px 9px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1.2;
-  white-space: nowrap;
-}
-
-#accDlg .seller-garage-status {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  background: rgba(14, 16, 20, 0.88);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-}
-
-#accDlg .seller-garage-status.status-approved,
-#accDlg .account-booking-row .st.success {
-  background: var(--ap-ok-bg);
-  color: var(--ap-ok);
-  border: 1px solid var(--ap-ok-border);
-}
-
-#accDlg .seller-garage-status.status-approved {
-  background: rgba(14, 24, 18, 0.90);
-  color: #6ce09d;
-}
-
-#accDlg .seller-garage-status.status-pending,
-#accDlg .account-booking-row .st.pending,
-#accDlg .account-booking-row .st,
-#accDlg .promotion-status-badge {
-  background: var(--ap-warn-bg);
-  color: var(--ap-warn);
-  border: 1px solid var(--ap-warn-border);
-}
-
-#accDlg .seller-garage-status.status-pending {
-  background: rgba(24, 20, 12, 0.90);
-  color: #f4bd62;
-}
-
-#accDlg .seller-garage-status.status-rejected,
-#accDlg .account-booking-row .st.danger {
-  background: var(--ap-bad-bg);
-  color: var(--ap-bad);
-  border: 1px solid var(--ap-bad-border);
-}
-
-#accDlg .seller-garage-status.status-rejected {
-  background: rgba(28, 14, 14, 0.90);
-  color: #ff9c92;
-}
-
-#accDlg .seller-garage-status.status-sold {
-  background: rgba(20, 22, 26, 0.90);
-  color: #d7d2c8;
 }
 
 #accDlg .seller-garage-content {
@@ -1334,7 +1351,7 @@ html[data-theme="light"] #accDlg::backdrop {
   min-width: 0;
 }
 
-#accDlg .seller-garage-heading {
+#accDlg .ap-listing-head {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -1342,62 +1359,34 @@ html[data-theme="light"] #accDlg::backdrop {
   flex-wrap: wrap;
 }
 
-#accDlg .seller-garage-eyebrow {
-  display: block;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: var(--ap-gold);
-  margin-bottom: 3px;
-}
-
-#accDlg .seller-garage-heading h4 {
-  margin: 0;
+#accDlg .ap-listing-head h3 {
   font-size: 17px;
-  color: var(--ap-ink-strong);
+  margin: 0;
 }
 
-#accDlg .seller-garage-price {
-  font-family: "Sora", sans-serif;
+#accDlg .ap-listing-head-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+#accDlg .ap-listing-price {
+  font-family: var(--ap-font-display);
   font-size: 16px;
   font-weight: 700;
-  font-variant-numeric: tabular-nums;
   color: var(--ap-gold);
+  font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
 
-#accDlg .seller-garage-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 14px;
-  font-size: 13px;
-  color: var(--ap-mute);
-  font-variant-numeric: tabular-nums;
-}
-
-#accDlg .seller-garage-promotion {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12.5px;
+#accDlg .ap-listing-promo-note {
+  font-size: 12px;
   color: var(--ap-mute);
 }
 
-#accDlg .seller-garage-promotion strong {
+#accDlg .ap-listing-promo-note strong {
   color: var(--ap-ink-strong);
-  margin-right: 6px;
-}
-
-#accDlg .seller-garage-promotion-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--ap-mute);
-  flex: 0 0 7px;
-}
-
-#accDlg .seller-garage-promotion-dot.is-active {
-  background: var(--ap-ok);
 }
 
 #accDlg .seller-listing-actions {
@@ -1405,46 +1394,46 @@ html[data-theme="light"] #accDlg::backdrop {
   flex-wrap: wrap;
   gap: 8px;
   margin-top: auto;
-  padding-top: 6px;
-}
-
-#accDlg .seller-listing-actions .btn {
-  min-height: 38px;
-  padding: 7px 13px;
-  font-size: 12.5px;
+  padding-top: 4px;
 }
 
 #accDlg .seller-listing-metrics {
-  font-size: 12.5px;
+  font-size: 12px;
+  color: var(--ap-mute);
   font-variant-numeric: tabular-nums;
 }
 
 /* ===== 8. Buying Workspace & Saved Vehicles ===== */
 #accDlg .account-saved-vehicles-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(248px, 1fr));
   gap: 14px;
-  margin-top: 12px;
 }
 
 #accDlg .account-saved-vehicle {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border-radius: 12px;
-  background: var(--ap-surface-2);
+  border-radius: var(--ap-radius);
+  background: var(--ap-surface);
   border: 1px solid var(--ap-line);
+  transition: border-color 0.16s ease;
+}
+
+#accDlg .account-saved-vehicle:hover {
+  border-color: var(--ap-gold-border);
 }
 
 #accDlg .account-saved-vehicle-image {
   display: grid;
   place-items: center;
   aspect-ratio: 16 / 10;
-  background: var(--ap-bg);
+  background: var(--ap-surface-2);
   color: var(--ap-mute);
   text-decoration: none;
+  font-family: var(--ap-font-mono);
   font-weight: 700;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 #accDlg .account-saved-vehicle-image img {
@@ -1458,24 +1447,25 @@ html[data-theme="light"] #accDlg::backdrop {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  padding: 14px;
+  padding: 15px;
   flex: 1 1 auto;
 }
 
 #accDlg .account-saved-vehicle-info strong {
-  font-family: "Sora", sans-serif;
+  font-family: var(--ap-font-display);
   font-size: 15px;
   color: var(--ap-ink-strong);
 }
 
 #accDlg .account-saved-vehicle-info b {
+  font-family: var(--ap-font-display);
   font-size: 15px;
   color: var(--ap-gold);
   font-variant-numeric: tabular-nums;
 }
 
 #accDlg .account-saved-vehicle-info small {
-  font-size: 12.5px;
+  font-size: 12px;
   font-variant-numeric: tabular-nums;
 }
 
@@ -1490,15 +1480,15 @@ html[data-theme="light"] #accDlg::backdrop {
 #accDlg .account-saved-vehicle-info > div a,
 #accDlg .account-saved-vehicle-info > div button {
   flex: 1 1 0;
-  min-height: 38px;
+  min-height: 36px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 7px 10px;
   border-radius: 8px;
   border: 1px solid var(--ap-line-strong);
-  background: var(--ap-surface);
-  color: var(--ap-ink);
+  background: var(--ap-surface-2);
+  color: var(--ap-ink-strong);
   font-size: 12.5px;
   font-weight: 600;
   text-decoration: none;
@@ -1507,36 +1497,16 @@ html[data-theme="light"] #accDlg::backdrop {
 
 #accDlg .account-saved-vehicle-info > div a:hover,
 #accDlg .account-saved-vehicle-info > div button:hover {
+  background: var(--ap-surface-hover);
   border-color: var(--ap-gold-border);
-  color: var(--ap-gold);
 }
 
 /* ===== 9. Promotions & Marketing ===== */
-#accDlg .marketing-reminder-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--ap-line);
-}
-
-#accDlg .marketing-reminder-row:last-of-type {
-  border-bottom: 0;
-}
-
-#accDlg .marketing-reminder-row .seller-listing-main strong {
-  display: block;
-  font-size: 14.5px;
-  color: var(--ap-ink-strong);
-}
-
 #accDlg .promotion-package-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
   gap: 12px;
-  margin: 12px 0 18px;
+  margin: 0 0 18px;
 }
 
 #accDlg .promotion-package {
@@ -1544,77 +1514,50 @@ html[data-theme="light"] #accDlg::backdrop {
   border-radius: 12px;
   background: var(--ap-surface-2);
   border: 1px solid var(--ap-line);
+  box-shadow: none;
+  backdrop-filter: none;
 }
 
 #accDlg .promotion-package strong {
   display: block;
-  font-family: "Sora", sans-serif;
-  font-size: 16px;
+  font-family: var(--ap-font-display);
+  font-size: 15px;
   color: var(--ap-ink-strong);
   margin-bottom: 4px;
 }
 
 #accDlg .promotion-package span {
   display: block;
-  font-size: 13px;
+  font-size: 12.5px;
   color: var(--ap-mute);
 }
 
 #accDlg .promotion-package b {
   display: block;
   margin-top: 10px;
-  font-family: "Sora", sans-serif;
+  font-family: var(--ap-font-display);
   font-size: 19px;
   color: var(--ap-gold);
   font-variant-numeric: tabular-nums;
-}
-
-#accDlg #accountPage-promotions label {
-  margin-top: 14px;
 }
 
 #accDlg #startPromotion {
   margin-top: 14px;
 }
 
-#accDlg .promotion-history-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+#accDlg .ap-promo-form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
-  margin: 22px 0 10px;
-  padding-top: 16px;
-  border-top: 1px solid var(--ap-line);
-}
-
-#accDlg .promotion-history-head h4 {
-  margin: 0;
 }
 
 /* ===== 10. Garage & Chauffeur Bookings ===== */
-#accDlg .account-bookings-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-  padding: 18px 22px;
-  border-radius: var(--ap-radius);
-  background: var(--ap-surface);
-  border: 1px solid var(--ap-line);
-}
-
-#accDlg .account-bookings-toolbar h3 {
-  margin: 0;
-  font-size: 19px;
-}
-
 #accDlg .account-chauffeur-toolbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 #accDlg .svc.account-booking-row,
@@ -1624,8 +1567,8 @@ html[data-theme="light"] #accDlg::backdrop {
   align-items: start;
   gap: 14px;
   padding: 16px 18px;
-  margin-bottom: 10px;
-  border-radius: 12px;
+  margin-bottom: 12px;
+  border-radius: var(--ap-radius);
   background: var(--ap-surface);
   border: 1px solid var(--ap-line);
 }
@@ -1639,14 +1582,14 @@ html[data-theme="light"] #accDlg::backdrop {
 
 #accDlg .svc.account-booking-row > div > b,
 #accDlg .svc.promotion-history-item > div > b {
-  font-family: "Sora", sans-serif;
+  font-family: var(--ap-font-display);
   font-size: 15px;
   color: var(--ap-ink-strong);
 }
 
 #accDlg .svc.account-booking-row .meta,
 #accDlg .svc.promotion-history-item .meta {
-  font-size: 13px;
+  font-size: 12.5px;
   line-height: 1.5;
   overflow-wrap: anywhere;
 }
@@ -1664,55 +1607,9 @@ html[data-theme="light"] #accDlg::backdrop {
 }
 
 /* ===== 11. Settings & Profile ===== */
-#accDlg #accountPage-settings > h3 {
-  margin: 0 0 12px;
-  font-size: clamp(20px, 2vw, 24px);
-}
-
 #accDlg .account-settings-inner {
   display: grid;
   gap: 16px;
-}
-
-#accDlg .account-settings-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  border-bottom: 1px solid var(--ap-line);
-  padding-bottom: 0;
-}
-
-#accDlg .account-settings-tabs button {
-  position: relative;
-  min-height: 42px;
-  padding: 10px 15px;
-  border: 0;
-  border-bottom: 2px solid transparent;
-  background: transparent;
-  color: var(--ap-mute);
-  font-size: 13.5px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: color 0.15s ease, border-color 0.15s ease;
-}
-
-#accDlg .account-settings-tabs button:hover {
-  color: var(--ap-ink-strong);
-}
-
-#accDlg .account-settings-tabs button.active {
-  color: var(--ap-gold);
-  border-bottom-color: var(--ap-gold);
-}
-
-#accDlg .settings-section {
-  display: grid;
-  gap: 16px;
-  padding: 22px 24px;
-  border-radius: var(--ap-radius);
-  background: var(--ap-surface);
-  border: 1px solid var(--ap-line);
-  box-shadow: var(--ap-card-shadow);
 }
 
 #accDlg .settings-section[hidden] {
@@ -1723,22 +1620,12 @@ html[data-theme="light"] #accDlg::backdrop {
   padding: 0;
   border: 0;
   background: transparent;
-  box-shadow: none;
-}
-
-#accDlg .settings-section > h4 {
   margin: 0;
-  font-size: 18px;
-}
-
-#accDlg .settings-section > p.meta {
-  margin: -10px 0 4px;
-  font-size: 13.5px;
 }
 
 #accDlg .profile-card {
   display: grid;
-  grid-template-columns: 76px minmax(0, 1fr);
+  grid-template-columns: 72px minmax(0, 1fr);
   align-items: center;
   gap: 18px;
   padding: 16px;
@@ -1748,17 +1635,17 @@ html[data-theme="light"] #accDlg::backdrop {
 }
 
 #accDlg .profile-avatar {
-  width: 76px;
-  height: 76px;
-  border-radius: 14px;
+  width: 72px;
+  height: 72px;
+  border-radius: 12px;
   display: grid;
   place-items: center;
   overflow: hidden;
   background: var(--ap-gold-soft);
   border: 1px solid var(--ap-gold-border);
   color: var(--ap-gold);
-  font-family: "Sora", sans-serif;
-  font-size: 24px;
+  font-family: var(--ap-font-display);
+  font-size: 22px;
   font-weight: 700;
 }
 
@@ -1785,6 +1672,7 @@ html[data-theme="light"] #accDlg::backdrop {
   border-radius: 12px;
   background: var(--ap-gold-soft);
   border: 1px solid var(--ap-gold-border);
+  margin: 14px 0;
 }
 
 #accDlg .account-admin-button svg {
@@ -1799,7 +1687,7 @@ html[data-theme="light"] #accDlg::backdrop {
 #accDlg .dealer-fields-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px 16px;
+  gap: 4px 16px;
 }
 
 #accDlg .dealer-field-wide {
@@ -1808,6 +1696,7 @@ html[data-theme="light"] #accDlg::backdrop {
 
 #accDlg .dealer-account-editor {
   padding: 18px;
+  margin-top: 16px;
   border-radius: 12px;
   background: var(--ap-surface-2);
   border: 1px solid var(--ap-line);
@@ -1823,24 +1712,13 @@ html[data-theme="light"] #accDlg::backdrop {
 }
 
 #accDlg .dealer-editor-heading h3 {
-  margin: 2px 0 4px;
-  font-size: 18px;
-}
-
-#accDlg .dealer-profile-status {
-  padding: 4px 10px;
-  border-radius: 6px;
-  background: var(--ap-gold-soft);
-  border: 1px solid var(--ap-gold-border);
-  color: var(--ap-gold);
-  font-size: 12px;
-  font-weight: 700;
-  white-space: nowrap;
+  font-size: 17px;
+  margin-top: 2px;
 }
 
 #accDlg .dealer-editor-section h4 {
-  margin: 18px 0 10px;
-  font-size: 13px;
+  margin: 18px 0 6px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--ap-gold);
@@ -1861,7 +1739,7 @@ html[data-theme="light"] #accDlg::backdrop {
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: end;
   gap: 10px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 #accDlg .check-row {
@@ -1869,15 +1747,15 @@ html[data-theme="light"] #accDlg::backdrop {
   align-items: center;
   gap: 10px;
   margin: 10px 0;
-  font-size: 13.5px;
+  font-size: 13px;
   font-weight: 600;
+  color: var(--ap-ink);
   cursor: pointer;
 }
 
 #accDlg .check-row input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  accent-color: var(--ap-gold);
+  width: 17px;
+  height: 17px;
 }
 
 #accDlg .account-subscription-note,
@@ -1894,11 +1772,6 @@ html[data-theme="light"] #accDlg::backdrop {
   font-size: 15px;
 }
 
-#accDlg .account-legal-preferences a {
-  color: var(--ap-gold);
-  font-weight: 600;
-}
-
 #accDlg .danger-zone {
   padding: 18px;
   border-radius: 12px;
@@ -1909,12 +1782,6 @@ html[data-theme="light"] #accDlg::backdrop {
 #accDlg .danger-zone h3 {
   margin: 0 0 6px;
   font-size: 16px;
-  color: var(--ap-bad);
-}
-
-#accDlg #accDeleteAccount {
-  background: var(--ap-bad-bg);
-  border-color: var(--ap-bad-border);
   color: var(--ap-bad);
 }
 
@@ -1937,7 +1804,7 @@ html[data-theme="light"] #accDlg::backdrop {
 #accDlg .account-fast-avatar {
   width: 48px;
   height: 48px;
-  border-radius: 12px;
+  border-radius: 10px;
   background: var(--ap-surface-2);
 }
 
@@ -1960,13 +1827,13 @@ html[data-theme="light"] #accDlg::backdrop {
 
 #accDlg .account-fast-loading-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
 }
 
 #accDlg .account-fast-loading-grid span {
-  height: 74px;
-  border-radius: 10px;
+  height: 82px;
+  border-radius: var(--ap-radius);
   background: var(--ap-surface-2);
 }
 
@@ -1978,124 +1845,60 @@ html[data-theme="light"] #accDlg::backdrop {
   background: var(--ap-surface-2);
 }
 
-/* ===== 13. Edit Listing Modal, Toasts & Action Confirm Dialog ===== */
-#sellerEditListingDialog {
-  --ap-bg: #0e1014;
-  --ap-surface: #171a21;
-  --ap-surface-2: #1d212a;
-  --ap-input: #101216;
-  --ap-ink: #f4f1ea;
-  --ap-ink-strong: #ffffff;
-  --ap-mute: #a39e92;
-  --ap-line: rgba(255, 255, 255, 0.12);
-  --ap-line-strong: rgba(255, 255, 255, 0.2);
-  --ap-gold: #dfb867;
-  --ap-gold-soft: rgba(223, 184, 103, 0.14);
-  --ap-gold-border: rgba(223, 184, 103, 0.36);
-  --ap-gold-btn: linear-gradient(180deg, #ecd084 0%, #cda247 100%);
-  --ap-gold-ink: #16130d;
-  width: min(720px, calc(100vw - 24px));
-  max-width: 720px;
-  max-height: 90dvh;
-  padding: 22px;
+/* ===== 13. Modals & Toasts (Matches Admin Section 9) ===== */
+#sellerEditListingDialog,
+#accActionDlg.acc-action-dialog {
+  margin: auto;
+  padding: 0;
   border-radius: 16px;
   border: 1px solid var(--ap-line-strong);
-  background: var(--ap-bg);
+  background: var(--ap-surface);
   color: var(--ap-ink);
-  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.56);
-  font-family: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  box-shadow: var(--ap-shadow);
+  font-family: var(--ap-font-sans);
+  font-size: 14px;
+  line-height: 1.55;
+  max-height: 90dvh;
+}
+
+#sellerEditListingDialog {
+  width: min(720px, calc(100vw - 24px));
+  padding: 22px 24px;
   z-index: 10040;
 }
 
-html[data-theme="light"] #sellerEditListingDialog {
-  --ap-bg: #faf6ec;
-  --ap-surface: #ffffff;
-  --ap-surface-2: #f4efe2;
-  --ap-input: #ffffff;
-  --ap-ink: #171512;
-  --ap-ink-strong: #0e0d0b;
-  --ap-mute: #575044;
-  --ap-line: rgba(112, 90, 44, 0.18);
-  --ap-line-strong: rgba(112, 90, 44, 0.34);
-  --ap-gold: #8c640d;
-  --ap-gold-soft: rgba(158, 116, 21, 0.12);
-  --ap-gold-border: rgba(140, 100, 13, 0.34);
-  --ap-gold-btn: linear-gradient(180deg, #e1bd68 0%, #c89b37 100%);
-  --ap-gold-ink: #171512;
-  box-shadow: 0 24px 64px rgba(36, 28, 14, 0.2);
+#accActionDlg.acc-action-dialog {
+  width: min(500px, calc(100vw - 24px));
+  z-index: 10050;
 }
 
 #sellerEditListingDialog::backdrop,
 #accActionDlg::backdrop {
-  background: rgba(6, 8, 11, 0.65);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  background: rgba(6, 8, 12, 0.68);
+  backdrop-filter: blur(5px);
 }
 
-html[data-theme="light"] #sellerEditListingDialog::backdrop,
-html[data-theme="light"] #accActionDlg::backdrop {
-  background: rgba(28, 24, 16, 0.42);
+#sellerEditListingDialog :is(h2, h3),
+#accActionDlg :is(h2, h3) {
+  font-family: var(--ap-font-display);
+  color: var(--ap-ink-strong);
+  margin: 0;
 }
 
 #sellerEditListingDialog .account-dialog-head {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
   gap: 12px;
-  padding: 0 0 14px !important;
-  margin-bottom: 14px !important;
-  min-height: auto !important;
-  background: transparent !important;
-  border: 0 !important;
-  border-bottom: 1px solid var(--ap-line) !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-}
-
-#sellerEditListingDialog .account-dialog-head h2 {
-  margin: 0;
-  font-size: 20px !important;
-  color: var(--ap-ink-strong);
-}
-
-#sellerEditListingDialog :is(input, select, textarea) {
-  width: 100%;
-  min-height: 42px;
-  padding: 9px 12px;
-  border-radius: 9px;
-  border: 1px solid var(--ap-line-strong);
-  background: var(--ap-input);
-  color: var(--ap-ink-strong);
-  font-size: 14px;
-}
-
-#sellerEditListingDialog .btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 40px;
-  padding: 9px 16px;
-  border-radius: 9px;
-  border: 1px solid var(--ap-gold-border);
-  background: var(--ap-gold-btn);
-  color: var(--ap-gold-ink);
-  font-size: 13.5px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-#sellerEditListingDialog .btn.ghost {
-  background: var(--ap-surface-2);
-  border-color: var(--ap-line-strong);
-  color: var(--ap-ink);
-  width: auto !important;
-  padding: 8px 14px !important;
+  padding-bottom: 14px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--ap-line);
 }
 
 #sellerEditListingDialog .two {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  gap: 4px 16px;
   margin-bottom: 12px;
 }
 
@@ -2116,188 +1919,21 @@ html[data-theme="light"] #accActionDlg::backdrop {
   aspect-ratio: 4 / 3;
   object-fit: cover;
   border-radius: 8px;
+  border: 1px solid var(--ap-line);
 }
 
-.acc-toast-host {
-  position: fixed;
-  right: 22px;
-  bottom: 22px;
-  z-index: 10060;
-  display: grid;
+#sellerEditListingDialog .acts {
+  display: flex;
+  justify-content: flex-end;
   gap: 8px;
-  width: min(390px, calc(100vw - 28px));
-  pointer-events: none;
-}
-
-.acc-toast {
-  pointer-events: auto;
-  display: grid;
-  grid-template-columns: 8px minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 14px;
-  border-radius: 11px;
-  background: #171a21;
-  color: #f4f1ea;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.4);
-  font-family: "Manrope", system-ui, sans-serif;
-  font-size: 13.5px;
-  font-weight: 600;
-  line-height: 1.4;
-  transition: opacity 0.18s ease, transform 0.18s ease;
-}
-
-html[data-theme="light"] .acc-toast {
-  background: #ffffff;
-  color: #171512;
-  border-color: rgba(112, 90, 44, 0.3);
-  box-shadow: 0 14px 32px rgba(36, 28, 14, 0.16);
-}
-
-.acc-toast.is-leaving {
-  opacity: 0;
-  transform: translateY(6px);
-}
-
-.acc-toast-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #dfb867;
-}
-
-.acc-toast--ok .acc-toast-dot { background: #46c47f; }
-.acc-toast--warn .acc-toast-dot { background: #e9a949; }
-.acc-toast--err .acc-toast-dot { background: #f07b6e; }
-
-.acc-toast--ok { border-color: rgba(70, 196, 127, 0.42); }
-.acc-toast--warn { border-color: rgba(233, 169, 73, 0.42); }
-.acc-toast--err { border-color: rgba(240, 123, 110, 0.45); }
-
-.acc-toast-close {
-  width: 28px;
-  height: 28px;
-  border: 0;
-  border-radius: 6px;
-  background: transparent;
-  color: inherit;
-  opacity: 0.7;
-  font-size: 18px;
-  line-height: 1;
-  cursor: pointer;
-}
-
-.acc-toast-close:hover {
-  opacity: 1;
-  background: rgba(128, 128, 128, 0.16);
-}
-
-#accActionDlg.acc-action-dialog {
-  --ap-surface: #171a21;
-  --ap-surface-2: #1d212a;
-  --ap-surface-hover: #212631;
-  --ap-input: #101216;
-  --ap-ink: #f4f1ea;
-  --ap-ink-strong: #ffffff;
-  --ap-mute: #a39e92;
-  --ap-line: rgba(255, 255, 255, 0.12);
-  --ap-line-strong: rgba(255, 255, 255, 0.2);
-  --ap-gold: #dfb867;
-  --ap-gold-soft: rgba(223, 184, 103, 0.14);
-  --ap-gold-border: rgba(223, 184, 103, 0.36);
-  --ap-gold-btn: linear-gradient(180deg, #ecd084 0%, #cda247 100%);
-  --ap-gold-ink: #16130d;
-  --ap-warn-bg: rgba(233, 169, 73, 0.12);
-  --ap-warn-border: rgba(233, 169, 73, 0.32);
-  --ap-bad: #f07b6e;
-  --ap-bad-bg: rgba(240, 123, 110, 0.14);
-  --ap-bad-border: rgba(240, 123, 110, 0.36);
-  --ap-shadow: 0 28px 80px rgba(0, 0, 0, 0.56);
-  width: min(470px, calc(100vw - 24px));
-  max-width: 470px;
-  padding: 0;
-  border-radius: 16px;
-  border: 1px solid var(--ap-line-strong);
-  background: var(--ap-surface);
-  color: var(--ap-ink);
-  box-shadow: var(--ap-shadow);
-  font-family: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
-  z-index: 10050;
-}
-
-html[data-theme="light"] #accActionDlg.acc-action-dialog {
-  --ap-surface: #ffffff;
-  --ap-surface-2: #f4efe2;
-  --ap-surface-hover: #ede6d6;
-  --ap-input: #ffffff;
-  --ap-ink: #171512;
-  --ap-ink-strong: #0e0d0b;
-  --ap-mute: #575044;
-  --ap-line: rgba(112, 90, 44, 0.18);
-  --ap-line-strong: rgba(112, 90, 44, 0.34);
-  --ap-gold: #8c640d;
-  --ap-gold-soft: rgba(158, 116, 21, 0.12);
-  --ap-gold-border: rgba(140, 100, 13, 0.34);
-  --ap-gold-btn: linear-gradient(180deg, #e1bd68 0%, #c89b37 100%);
-  --ap-gold-ink: #171512;
-  --ap-warn-bg: rgba(176, 107, 12, 0.10);
-  --ap-warn-border: rgba(176, 107, 12, 0.28);
-  --ap-bad: #a82820;
-  --ap-bad-bg: rgba(168, 40, 32, 0.08);
-  --ap-bad-border: rgba(168, 40, 32, 0.28);
-  --ap-shadow: 0 24px 64px rgba(36, 28, 14, 0.22);
-}
-
-#accActionDlg :is(h3, label) {
-  color: var(--ap-ink-strong);
-}
-
-#accActionDlg .account-eyebrow {
-  margin: 0 0 4px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ap-gold);
-}
-
-#accActionDlg :is(input, textarea) {
-  width: 100%;
-  min-height: 42px;
-  padding: 10px 12px;
-  border-radius: 9px;
-  border: 1px solid var(--ap-line-strong);
-  background: var(--ap-input);
-  color: var(--ap-ink-strong);
-  font-size: 14px;
-}
-
-#accActionDlg .btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 40px;
-  padding: 9px 16px;
-  border-radius: 9px;
-  border: 1px solid var(--ap-gold-border);
-  background: var(--ap-gold-btn);
-  color: var(--ap-gold-ink);
-  font-size: 13.5px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-#accActionDlg .btn.ghost {
-  background: var(--ap-surface-2);
-  border-color: var(--ap-line-strong);
-  color: var(--ap-ink);
+  flex-wrap: wrap;
+  margin-top: 16px;
 }
 
 #accActionDlg .acc-action-form {
   display: grid;
   gap: 14px;
-  padding: 22px;
+  padding: 22px 24px;
 }
 
 #accActionDlg .acc-action-head {
@@ -2308,7 +1944,6 @@ html[data-theme="light"] #accActionDlg.acc-action-dialog {
 }
 
 #accActionDlg .acc-action-head h3 {
-  margin: 0;
   font-size: 19px;
 }
 
@@ -2320,15 +1955,14 @@ html[data-theme="light"] #accActionDlg.acc-action-dialog {
   border-radius: 8px;
   background: var(--ap-surface-2);
   color: var(--ap-ink);
-  font-size: 18px;
+  font-size: 20px;
   line-height: 1;
   cursor: pointer;
 }
 
 #accActionDlg .acc-action-msg {
   margin: 0;
-  font-size: 14px;
-  line-height: 1.55;
+  font-size: 13.5px;
   color: var(--ap-ink);
 }
 
@@ -2339,13 +1973,11 @@ html[data-theme="light"] #accActionDlg.acc-action-dialog {
   background: var(--ap-warn-bg);
   border: 1px solid var(--ap-warn-border);
   font-size: 12.5px;
-  line-height: 1.45;
   color: var(--ap-ink);
 }
 
 #accActionDlg .acc-action-err {
   margin: 0;
-  min-height: 0;
   font-size: 13px;
   font-weight: 600;
   color: var(--ap-bad);
@@ -2359,104 +1991,164 @@ html[data-theme="light"] #accActionDlg.acc-action-dialog {
   display: flex;
   justify-content: flex-end;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
   margin-top: 4px;
 }
 
-#accActionDlg .btn.acc-btn-danger {
-  background: var(--ap-bad-bg);
-  border-color: var(--ap-bad-border);
-  color: var(--ap-bad);
+.acc-toast-host {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 10060;
+  display: grid;
+  gap: 8px;
+  width: min(380px, calc(100vw - 32px));
+  pointer-events: none;
 }
 
-#accActionDlg .btn.acc-btn-danger:hover {
-  opacity: 1;
-  background: rgba(240, 123, 110, 0.22);
+.acc-toast {
+  pointer-events: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 11px;
+  background: var(--ap-surface);
+  border: 1px solid var(--ap-line-strong);
+  color: var(--ap-ink-strong);
+  box-shadow: var(--ap-shadow);
+  font-family: var(--ap-font-sans);
+  font-size: 13px;
+  transition: opacity 0.18s ease, transform 0.18s ease;
 }
 
-/* ===== 14. Responsive Rules ===== */
-@media (max-width: 980px) {
-  #accDlg .workspace-v2-metric-grid {
+.acc-toast.is-leaving {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.acc-toast--ok { border-color: var(--ap-ok-border); }
+.acc-toast--warn { border-color: var(--ap-warn-border); }
+.acc-toast--err { border-color: var(--ap-bad-border); color: var(--ap-bad); }
+
+.acc-toast-close {
+  border: 0;
+  background: transparent;
+  color: var(--ap-mute);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* ===== 14. Responsive Breakpoints (Matches Admin Section 10) ===== */
+@media (max-width: 1120px) {
+  #accDlg .ap-stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  #accDlg .workspace-v2-main-grid {
+  #accDlg .ap-overview-grid {
     grid-template-columns: minmax(0, 1fr);
   }
-  #accDlg .workspace-v2-dealer-content {
+  #accDlg .ap-dealer-content {
     grid-template-columns: auto minmax(0, 1fr);
+  }
+  #accDlg .ap-promo-form-grid {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 960px) {
   #accDlg.account-dashboard-dialog[open] {
-    width: calc(100vw - 10px);
-    height: 94dvh;
-    max-height: 94dvh;
-    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
   }
-
+  #accDlg #accMenuToggle {
+    display: inline-flex;
+  }
+  #accDlg nav#accountMenu.account-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: min(290px, 84vw);
+    max-width: min(290px, 84vw);
+    height: 100dvh;
+    z-index: 10020;
+    transform: translateX(-105%);
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform 0.22s var(--ap-ease), visibility 0.22s ease;
+    box-shadow: var(--ap-shadow);
+  }
+  #accDlg nav#accountMenu.account-sidebar.menu-open {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+  }
+  #accDlg #accountMenuBackdrop.is-open {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 9990;
+    background: rgba(6, 8, 12, 0.56);
+  }
   #accDlg .account-dialog-head {
-    padding: 8px 12px;
-    min-height: 56px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    padding: 12px 16px !important;
   }
+  #accDlg .account-global-search {
+    grid-column: 1 / -1;
+    order: 3;
+  }
+  #accDlg #accBody {
+    padding: 18px 16px 56px;
+  }
+}
 
-  #accDlg h2.account-brand-title span {
+@media (max-width: 720px) {
+  #accDlg .ap-stats,
+  #accDlg .ap-metric-row-3,
+  #accDlg .account-fast-loading-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  #accDlg .seller-listing.ap-listing-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #accDlg .ap-listing-thumb {
+    width: 100%;
+    height: 170px;
+  }
+  #accDlg .profile-card,
+  #accDlg .profile-grid,
+  #accDlg .dealer-fields-grid,
+  #accDlg .field-row,
+  #accDlg .svc.account-booking-row,
+  #accDlg .svc.promotion-history-item,
+  #sellerEditListingDialog .two {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #accDlg .ap-task-row {
+    grid-template-columns: 38px minmax(0, 1fr);
+  }
+  #accDlg .ap-task-row > button {
+    grid-column: 2;
+    justify-self: start;
+  }
+  #accDlg .ap-activity-row {
+    grid-template-columns: 32px minmax(0, 1fr);
+  }
+  #accDlg .ap-activity-row time {
+    grid-column: 2;
+  }
+  #accDlg .account-sync-label,
+  #accDlg #accHomeTop {
     display: none;
   }
-
-  #accDlg #accBody {
-    padding: 14px;
-  }
-
   #accDlg :is(input, select, textarea) {
     font-size: 16px !important;
   }
 
-  #accDlg .workspace-v2-hero,
-  #accDlg .account-tools,
-  #accDlg .settings-section,
-  #accDlg .workspace-v2-card {
-    padding: 16px;
-  }
-
-  #accDlg .workspace-v2-hero-actions {
-    align-items: flex-start;
-    width: 100%;
-  }
-
-  #accDlg .workspace-v2-primary-actions {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr;
-  }
-
-  #accDlg .seller-listing.seller-garage-card {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  #accDlg .profile-card,
-  #accDlg .profile-grid,
-  #accDlg .dealer-fields-grid,
-  #accDlg .seller-listing-filters,
-  #accDlg .field-row,
-  #sellerEditListingDialog .two {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  #accDlg .svc.account-booking-row,
-  #accDlg .svc.promotion-history-item {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  #accDlg .account-activity-item {
-    grid-template-columns: 8px minmax(0, 1fr);
-  }
-
-  #accDlg .account-activity-item time {
-    grid-column: 2;
-  }
-
-  /* Header mobile account pill alignment */
+  /* Header mobile account pill alignment (outside dialog) */
   body > header #nav > .account-pill {
     display: flex !important;
     align-items: center !important;
@@ -2486,10 +2178,11 @@ html[data-theme="light"] #accActionDlg.acc-action-dialog {
 }
 
 @media (max-width: 480px) {
-  #accDlg .workspace-v2-metric-grid {
+  #accDlg .ap-stats,
+  #accDlg .ap-metric-row-3 {
     grid-template-columns: minmax(0, 1fr);
   }
-  #accDlg .workspace-v2-dealer-content {
+  #accDlg .ap-dealer-content {
     grid-template-columns: minmax(0, 1fr);
   }
 }

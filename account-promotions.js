@@ -20,7 +20,15 @@
               : payStatus === "failed"
                 ? "Payment failed"
                 : "Awaiting payment";
-        return `<div class="svc promotion-history-item"><div><b>${esc(p.package_name || "Vehicle promotion")}</b><span class="meta">${esc(vehicle ? [vehicle.year, vehicle.make, vehicle.model].filter(Boolean).join(" ") : "Vehicle listing")} · KES ${fmt(p.amount)}</span><span class="meta">Payment: ${esc(formatStatus(payStatus))} · Created ${esc(p.created_at ? new Date(p.created_at).toLocaleDateString() : "Date unavailable")}</span></div><span class="st promotion-status-badge">${esc(badgeText)}</span></div>`;
+        const statusTone =
+          payStatus === "verified"
+            ? "verified"
+            : payStatus === "cancelled"
+              ? "cancelled"
+              : payStatus === "failed"
+                ? "failed"
+                : "pending";
+        return `<div class="svc promotion-history-item"><div><b>${esc(p.package_name || "Vehicle promotion")}</b><span class="meta">${esc(vehicle ? [vehicle.year, vehicle.make, vehicle.model].filter(Boolean).join(" ") : "Vehicle listing")} · KES ${fmt(p.amount)}</span><span class="meta">Payment: ${esc(formatStatus(payStatus))} · Created ${esc(p.created_at ? new Date(p.created_at).toLocaleDateString() : "Date unavailable")}</span></div><span class="ap-status ${statusTone}">${esc(badgeText)}</span></div>`;
       })
       .join("");
   }
