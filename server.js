@@ -10,17 +10,45 @@ const app = express();
 const port = Number(process.env.PORT) || 3000;
 const host = "0.0.0.0";
 
-const BLOCKED_PREFIXES = ["/.git", "/.github", "/github", "/outputs", "/scripts", "/supabase", "/.gmp_cache"];
+const BLOCKED_PREFIXES = ["/.git", "/.github", "/github", "/outputs", "/scripts", "/supabase"];
 const BLOCKED_FILES = new Set(["/package.json", "/package-lock.json", "/server.js", "/PROJECTS_SETUP.sql", "/.env", "/.env.local"]);
+
+const EXTRA_ALLOWED_ORIGINS = String(process.env.ALLOWED_ORIGINS || "")
+  .split(",")
+  .map((s) => s.trim())
+  .filter(Boolean);
 
 const ALLOWED_ORIGINS = new Set([
   "https://3pedalsauto.co.ke",
   "https://www.3pedalsauto.co.ke",
+  "https://threepedals-auto.onrender.com",
+  ...EXTRA_ALLOWED_ORIGINS,
 ]);
+
+function isAllowedOrigin(origin, req) {
+  if (!origin) return false;
+  if (ALLOWED_ORIGINS.has(origin)) return true;
+  try {
+    const parsed = new URL(origin);
+    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return false;
+    const reqHost = String(req.headers["x-forwarded-host"] || req.headers.host || "")
+      .split(",")[0]
+      .trim()
+      .toLowerCase();
+    if (reqHost && parsed.host.toLowerCase() === reqHost) return true;
+    const hostname = parsed.hostname.toLowerCase();
+    if (hostname === "localhost" || hostname === "127.0.0.1" || hostname.endsWith(".run.app")) {
+      return true;
+    }
+  } catch (_) {
+    return false;
+  }
+  return false;
+}
 
 app.use((req, res, next) => {
   const origin = req.headers.origin;
-  if (origin && ALLOWED_ORIGINS.has(origin)) {
+  if (origin && isAllowedOrigin(origin, req)) {
     res.setHeader("Access-Control-Allow-Origin", origin);
     res.setHeader("Vary", "Origin");
     res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
@@ -81,28 +109,84 @@ function shouldRouteToMaps(text) {
 }
 
 async function findOpenStreetMapPlaces(queryText, location) {
-  const userLat = Number(location?.latitude), userLng = Number(location?.longitude);
-  const hasLocation = Number.isFinite(userLat) && Number.isFinite(userLng);
-  const area = String(queryText || "").replace(/\b(near me|nearby|car yards?|dealers?|dealerships?|garages?|mechanics?|inspection centers?|ntsa|showrooms?|directions|map|maps)\b/ig, " ").replace(/\s+/g, " ").trim() || "Nairobi";
-  let center = hasLocation ? { lat: userLat, lon: userLng } : null;
-  if (!center) {
+  const userLat = Number(location?.latitude);
+  const userLng = Number(location?.longitude);
+  const hasLocation =
+    Number.isFinite(userLat) &&
+    Number.isFinite(userLng) &&
+    Math.abs(userLat) <= 90 &&
+    Math.abs(userLng) <= 180;
+  const rawQuery = String(queryText || "");
+  const wantsNearMe = /\b(near me|nearby|around me|closest|karibu nami)\b/i.test(rawQuery);
+  const area = rawQuery
+    .replace(/\b(near me|nearby|around me|closest|karibu nami|car yards?|dealers?|dealerships?|garages?|mechanics?|inspection cent(er|re)s?|motor vehicle|ntsa|showrooms?|reputable|find|where is|directions|map|maps|kenya)\b/gi, " ")
+    .replace(/\b(in|near|around|along|at|for|to|the|of)\b/gi, " ")
+    .replace(/[^\w\s-]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  let center = null;
+  if (area && !wantsNearMe) {
     const url = new URL("https://nominatim.openstreetmap.org/search");
-    url.search = new URLSearchParams({ format: "jsonv2", limit: "1", countrycodes: "ke", q: area + ", Kenya" });
-    const response = await fetch(url, { headers: { "User-Agent": "3PedalsAutoKE/1.0 (https://3pedalsauto.co.ke)", Accept: "application/json" } });
+    url.search = new URLSearchParams({
+      format: "jsonv2",
+      limit: "1",
+      countrycodes: "ke",
+      q: `${area}, Kenya`,
+    });
+    const response = await fetch(url, {
+      headers: {
+        "User-Agent": "3PedalsAutoKE/1.0 (https://3pedalsauto.co.ke)",
+        Accept: "application/json",
+      },
+      signal: AbortSignal.timeout(9000),
+    });
     if (!response.ok) throw new Error("OpenStreetMap location search is unavailable.");
     const found = await response.json();
     if (found[0]) center = { lat: Number(found[0].lat), lon: Number(found[0].lon) };
   }
+  if (!center && hasLocation) {
+    center = { lat: userLat, lon: userLng };
+  }
   if (!center) center = { lat: -1.2921, lon: 36.8219 };
+
   const pattern = "car|auto|motor|vehicle|garage|inspection|ntsa|toyota|subaru|mazda|mitsubishi|nissan|dealer|showroom";
-  const query = '[out:json][timeout:20];(nwr["name"~"' + pattern + '",i](around:12000,' + center.lat + ',' + center.lon + '););out center tags 50;';
-  const response = await fetch("https://overpass-api.de/api/interpreter", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8", "User-Agent": "3PedalsAutoKE/1.0 (https://3pedalsauto.co.ke)" }, body: "data=" + encodeURIComponent(query) });
+  const around = `around:12000,${center.lat},${center.lon}`;
+  const query = `[out:json][timeout:15];(nwr["shop"~"^(car|car_repair|car_parts|tyres)$"](${around});nwr["amenity"~"^(car_rental|car_wash|vehicle_inspection)$"](${around});nwr["office"="automotive"](${around});nwr["name"~"${pattern}",i](${around}););out center tags 60;`;
+  const response = await fetch("https://overpass-api.de/api/interpreter", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+      "User-Agent": "3PedalsAutoKE/1.0 (https://3pedalsauto.co.ke)",
+    },
+    body: "data=" + encodeURIComponent(query),
+    signal: AbortSignal.timeout(12000),
+  });
   if (!response.ok) throw new Error("OpenStreetMap place search is unavailable.");
   const data = await response.json();
-  return (data.elements || []).map(el => {
-    const tags = el.tags || {};
-    return { name: tags.name || tags.brand || "Automotive location", lat: Number(el.lat ?? el.center?.lat), lon: Number(el.lon ?? el.center?.lon), address: [tags["addr:street"], tags["addr:suburb"], tags["addr:city"]].filter(Boolean).join(", "), category: tags.amenity || tags.shop || tags.office || tags.craft || "automotive", mapUrl: "https://www.openstreetmap.org/" + el.type + "/" + el.id };
-  }).filter(p => Number.isFinite(p.lat) && Number.isFinite(p.lon)).slice(0, 30);
+  const seen = new Set();
+  return (data.elements || [])
+    .map((el) => {
+      const tags = el.tags || {};
+      return {
+        name: tags.name || tags.brand || "Automotive location",
+        lat: Number(el.lat ?? el.center?.lat),
+        lon: Number(el.lon ?? el.center?.lon),
+        address: [tags["addr:street"], tags["addr:suburb"], tags["addr:city"]]
+          .filter(Boolean)
+          .join(", "),
+        category: tags.amenity || tags.shop || tags.office || tags.craft || "automotive",
+        mapUrl: `https://www.openstreetmap.org/${encodeURIComponent(String(el.type || "node"))}/${encodeURIComponent(String(el.id || ""))}`,
+      };
+    })
+    .filter((p) => {
+      if (!Number.isFinite(p.lat) || !Number.isFinite(p.lon)) return false;
+      const key = `${p.name}|${p.lat.toFixed(5)}|${p.lon.toFixed(5)}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    })
+    .slice(0, 30);
 }
 
 app.post("/api/chat", async (req, res) => {

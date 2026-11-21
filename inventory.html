@@ -502,7 +502,7 @@ main.wrap>.inventory-intro-compact p{
 </section>
 <section id="recentlyViewedSection" hidden></section></main><footer class="ux-site-footer no-print"><div class="wrap">3 Pedals Auto KE · Prices in KES.</div></footer>
 <dialog id="dlg"></dialog><aside id="compareTrayBar" class="ux-compare-dock no-print" aria-live="polite" hidden></aside><dialog id="compareModal" aria-label="Side-by-side vehicle comparison"></dialog>
-<script src="/site-ux.js?v=20261121-modern-dashboard"></script>
+<script src="/site-ux.js?v=20261121-osm-advisor"></script>
 <script>
 const $=id=>document.getElementById(id),CFG=window.SB_CONFIG||{};const sb=CFG.url&&window.supabase?window.supabase.createClient(CFG.url,CFG.key):null;let cars=[];
 const inventoryOpenedFromAccount=new URLSearchParams(location.search).get("from")==="account";
@@ -1066,6 +1066,7 @@ function ensureInventoryMap(){
  if(osmMap)return Promise.resolve(osmMap);
  const canvas=$("inventoryGoogleMap");
  if(!canvas||!window.L)return Promise.resolve(null);
+ canvas.textContent="";
  osmMap=L.map(canvas,{scrollWheelZoom:false,preferCanvas:true}).setView([-1.2921,36.8219],12);
  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:OSM_ATTRIBUTION}).addTo(osmMap);
  setTimeout(()=>osmMap&&osmMap.invalidateSize(),120);
@@ -1079,36 +1080,47 @@ function makeOsmPopup(place){
  link.href=place.url;link.target="_blank";link.rel="noopener noreferrer";link.textContent=invLang()==="sw"?"Fungua OpenStreetMap ↗":"View on OpenStreetMap ↗";box.appendChild(link);
  return box;
 }
-async function searchMapPlaces(queryText){
+function fetchWithTimeout(url,options,ms=11000){
+ const ctrl=new AbortController(),timer=setTimeout(()=>ctrl.abort(),ms);
+ return fetch(url,Object.assign({},options,{signal:ctrl.signal})).finally(()=>clearTimeout(timer));
+}
+async function searchMapPlaces(queryText,{useBias=false}={}){
  const listEl=$("mapPlacesList"),sw=invLang()==="sw",cleanQuery=String(queryText||"").trim()||"Car yards in Nairobi",map=await ensureInventoryMap();
  if(!map)return;
  if(listEl)listEl.innerHTML='<div class="ux-map-place-card"><strong>'+(sw?"Inatafuta maeneo…":"Searching OpenStreetMap…")+'</strong></div>';
  try{
-  const area=cleanQuery.replace(/\b(car yards?|dealers?|dealerships?|garages?|mechanics?|inspection centers?|ntsa|showrooms?)\b/ig," ").replace(/\b(in|near|around|along)\b/ig," ").replace(/\s+/g," ").trim()||"Nairobi";
-  const geo=await fetch("https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=ke&q="+encodeURIComponent(area+", Kenya"),{headers:{Accept:"application/json"}});
-  if(!geo.ok)throw new Error("Location search is temporarily unavailable.");
-  const found=await geo.json(),center=osmUserBias||(found[0]?{lat:Number(found[0].lat),lon:Number(found[0].lon)}:{lat:-1.2921,lon:36.8219});
+  const wantsNearMe=/\b(near me|nearby|around me|karibu nami)\b/i.test(cleanQuery);
+  const area=cleanQuery.replace(/\b(near me|nearby|around me|karibu nami|car yards?|dealers?|dealerships?|garages?|mechanics?|inspection cent(er|re)s?|motor vehicle|ntsa|showrooms?|kenya)\b/ig," ").replace(/\b(in|near|around|along|at|for|to)\b/ig," ").replace(/[^\w\s-]/g," ").replace(/\s+/g," ").trim();
+  let center=(useBias||wantsNearMe)&&osmUserBias?osmUserBias:null;
+  if(!center&&area){
+   const geo=await fetchWithTimeout("https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=ke&q="+encodeURIComponent(area+", Kenya"),{headers:{Accept:"application/json"}},9000);
+   if(!geo.ok)throw new Error("Location search is temporarily unavailable.");
+   const found=await geo.json();
+   if(found[0])center={lat:Number(found[0].lat),lon:Number(found[0].lon)};
+  }
+  if(!center)center=osmUserBias&&useBias?osmUserBias:{lat:-1.2921,lon:36.8219};
   const pattern="car|auto|motor|vehicle|garage|inspection|ntsa|toyota|subaru|mazda|mitsubishi|nissan|dealer|showroom";
-  const q='[out:json][timeout:20];(nwr["name"~"'+pattern+'",i](around:12000,'+center.lat+','+center.lon+'););out center tags 70;';
-  const response=await fetch("https://overpass-api.de/api/interpreter",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},body:"data="+encodeURIComponent(q)});
+  const around="around:12000,"+center.lat+","+center.lon;
+  const q='[out:json][timeout:15];(nwr["shop"~"^(car|car_repair|car_parts|tyres)$"]('+around+');nwr["amenity"~"^(car_rental|car_wash|vehicle_inspection)$"]('+around+');nwr["office"="automotive"]('+around+');nwr["name"~"'+pattern+'",i]('+around+'););out center tags 70;';
+  const response=await fetchWithTimeout("https://overpass-api.de/api/interpreter",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},body:"data="+encodeURIComponent(q)},12000);
   if(!response.ok)throw new Error("Place search is busy. Please try again shortly.");
-  const data=await response.json(),seen=new Set(),places=(data.elements||[]).map(el=>({lat:Number(el.lat??el.center?.lat),lon:Number(el.lon??el.center?.lon),name:el.tags?.name||el.tags?.brand||"Automotive location",address:[el.tags?.["addr:street"],el.tags?.["addr:suburb"],el.tags?.["addr:city"]].filter(Boolean).join(", "),url:"https://www.openstreetmap.org/"+el.type+"/"+el.id})).filter(p=>Number.isFinite(p.lat)&&Number.isFinite(p.lon)&&!seen.has(p.name+"|"+p.lat+"|"+p.lon)&&seen.add(p.name+"|"+p.lat+"|"+p.lon)).slice(0,35);
+  const data=await response.json(),seen=new Set(),places=(data.elements||[]).map(el=>({lat:Number(el.lat??el.center?.lat),lon:Number(el.lon??el.center?.lon),name:el.tags?.name||el.tags?.brand||"Automotive location",address:[el.tags?.["addr:street"],el.tags?.["addr:suburb"],el.tags?.["addr:city"]].filter(Boolean).join(", "),url:"https://www.openstreetmap.org/"+encodeURIComponent(String(el.type||"node"))+"/"+encodeURIComponent(String(el.id||""))})).filter(p=>Number.isFinite(p.lat)&&Number.isFinite(p.lon)&&!seen.has(p.name+"|"+p.lat.toFixed(5)+"|"+p.lon.toFixed(5))&&seen.add(p.name+"|"+p.lat.toFixed(5)+"|"+p.lon.toFixed(5))).slice(0,35);
   clearMapMarkers();
   if(!places.length){if(listEl)listEl.innerHTML='<div class="ux-map-place-card"><strong>'+(sw?"Hakuna maeneo yaliyowekwa kwenye ramani karibu na eneo hili.":"No mapped automotive places found nearby.")+'</strong><span>'+esc(cleanQuery)+'</span><small>OpenStreetMap data may be incomplete.</small></div>';map.setView([center.lat,center.lon],13);return}
   const bounds=[];
-  places.forEach((place,index)=>{const marker=L.marker([place.lat,place.lon]).addTo(map).bindPopup(makeOsmPopup(place));osmMarkers.push(marker);bounds.push([place.lat,place.lon])});
+  places.forEach(place=>{const marker=L.marker([place.lat,place.lon]).addTo(map).bindPopup(makeOsmPopup(place));osmMarkers.push(marker);bounds.push([place.lat,place.lon])});
   if(bounds.length===1)map.setView(bounds[0],15);else map.fitBounds(bounds,{padding:[28,28],maxZoom:14});
   if(listEl){listEl.innerHTML=places.map((p,i)=>'<button type="button" class="ux-map-place-card" data-map-place-idx="'+i+'"><strong>'+esc(p.name)+'</strong>'+(p.address?'<span>'+esc(p.address)+'</span>':"")+'<small>OpenStreetMap</small><a href="'+esc(p.url)+'" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">'+(sw?"Fungua ramani ↗":"View map ↗")+'</a></button>').join("");listEl.querySelectorAll("[data-map-place-idx]").forEach(btn=>btn.addEventListener("click",()=>{const i=Number(btn.dataset.mapPlaceIdx),p=places[i];if(!p)return;map.setView([p.lat,p.lon],16);osmMarkers[i]?.openPopup()}))}
- }catch(err){console.warn("OpenStreetMap place search failed:",err);if(listEl)listEl.innerHTML='<div class="ux-map-place-card"><strong>'+(sw?"Utafutaji haukukamilika":"Search could not complete")+'</strong><span>'+esc(err?.message||"Try another location query.")+'</span></div>'}
+ }catch(err){console.warn("OpenStreetMap place search failed:",err);if(listEl)listEl.innerHTML='<div class="ux-map-place-card"><strong>'+(sw?"Utafutaji haukukamilika":"Search could not complete")+'</strong><span>'+esc(err?.name==="AbortError"?"Search timed out. Please try again.":err?.message||"Try another location query.")+'</span></div>'}
 }
-function focusYardOnMap(query){const section=$("yardMapSection"),input=$("mapPlaceQuery");if(input&&query)input.value=query;section?.scrollIntoView({behavior:"smooth",block:"start"});searchMapPlaces(query)}
-$("mapSearchBtn")?.addEventListener("click",()=>searchMapPlaces($("mapPlaceQuery")?.value));
-$("mapPlaceQuery")?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();searchMapPlaces(e.target.value)}});
-$("mapPresets")?.addEventListener("click",e=>{const chip=e.target.closest("[data-map-query]");if(!chip)return;const q=chip.dataset.mapQuery;if($("mapPlaceQuery"))$("mapPlaceQuery").value=q;searchMapPlaces(q)});
+function focusYardOnMap(query){const section=$("yardMapSection"),input=$("mapPlaceQuery");if(input&&query)input.value=query;section?.scrollIntoView({behavior:"smooth",block:"start"});searchMapPlaces(query,{useBias:false})}
+$("mapSearchBtn")?.addEventListener("click",()=>searchMapPlaces($("mapPlaceQuery")?.value,{useBias:false}));
+$("mapPlaceQuery")?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();searchMapPlaces(e.target.value,{useBias:false})}});
+$("mapPresets")?.addEventListener("click",e=>{const chip=e.target.closest("[data-map-query]");if(!chip)return;const q=chip.dataset.mapQuery;if($("mapPlaceQuery"))$("mapPlaceQuery").value=q;searchMapPlaces(q,{useBias:false})});
 $("mapNearMeBtn")?.addEventListener("click",()=>{
  if(!navigator.geolocation)return;
  const btn=$("mapNearMeBtn"),sw=invLang()==="sw";if(btn)btn.textContent="…";
- navigator.geolocation.getCurrentPosition(pos=>{osmUserBias={lat:pos.coords.latitude,lon:pos.coords.longitude};if(btn)btn.textContent=sw?"Karibu Nami ✓":"Near Me ✓";searchMapPlaces($("mapPlaceQuery")?.value?.trim()||"Car yards near me")},()=>{if(btn)btn.textContent=sw?"Karibu Nami":"Near Me";const list=$("mapPlacesList");if(list)list.innerHTML='<div class="ux-map-place-card"><strong>'+(sw?"Eneo halikupatikana":"Location permission was not granted")+'</strong></div>'},{enableHighAccuracy:false,timeout:7000})
+ navigator.geolocation.getCurrentPosition(pos=>{osmUserBias={lat:pos.coords.latitude,lon:pos.coords.longitude};if(btn)btn.textContent=sw?"Karibu Nami ✓":"Near Me ✓";if($("mapPlaceQuery"))$("mapPlaceQuery").value="Car yards near me";searchMapPlaces("Car yards near me",{useBias:true})},()=>{if(btn)btn.textContent=sw?"Karibu Nami":"Near Me";const list=$("mapPlacesList");if(list)list.innerHTML='<div class="ux-map-place-card"><strong>'+(sw?"Eneo halikupatikana":"Location permission was not granted")+'</strong></div>'},{enableHighAccuracy:false,timeout:7000})
 });
 syncMapExplorerLanguage();
 const leafletScript=document.createElement("script");leafletScript.src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";leafletScript.integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=";leafletScript.crossOrigin="";leafletScript.onload=()=>ensureInventoryMap().then(map=>{if(map)searchMapPlaces("Car yards in Nairobi")});leafletScript.onerror=()=>{const canvas=$("inventoryGoogleMap");if(canvas)canvas.textContent="Could not load the free map library. Please refresh."};document.head.appendChild(leafletScript);

@@ -1,5 +1,8 @@
 (() => {
-  const API_BASE_URL = "https://threepedals-auto.onrender.com";
+  const RENDER_API_URL = "https://threepedals-auto.onrender.com";
+  const API_BASE_URL = /(^|\.)3pedalsauto\.co\.ke$|github\.io$/i.test(location.hostname)
+    ? RENDER_API_URL
+    : "";
   if (window.__ThreePedalsUXLoaded) return;
   window.__ThreePedalsUXLoaded = true;
 
@@ -1117,7 +1120,7 @@
             <span>${lbl.subtitle}</span>
           </div>
           <div class="ux-chat-head-actions">
-            <button type="button" class="ux-chat-mini-btn" id="uxChatGpsBtn" title="Share current location for Maps grounding">${lbl.locBtn}</button>
+            <button type="button" class="ux-chat-mini-btn" id="uxChatGpsBtn" title="Share current location for nearby OpenStreetMap results">${lbl.locBtn}</button>
             <button type="button" class="ux-chat-mini-btn" id="uxChatClearBtn">${lbl.clear}</button>
             <button type="button" class="ux-chat-close-btn" id="uxChatCloseBtn" aria-label="${lbl.close}">×</button>
           </div>
@@ -1213,8 +1216,9 @@
         .map((m) => {
           const isUser = m.role === "user";
           const sources = Array.isArray(m.sources) ? m.sources : [];
-          const sourcesHtml = sources.length
-            ? `<div class="ux-chat-sources">${sources
+          const safeSources = sources.filter((s) => /^https?:\/\//i.test(String(s?.uri || "")));
+          const sourcesHtml = safeSources.length
+            ? `<div class="ux-chat-sources">${safeSources
                 .map(
                   (s) =>
                     `<a class="ux-chat-source-link" href="${escapeHtml(s.uri)}" target="_blank" rel="noopener noreferrer" data-source-type="${escapeHtml(s.type)}">${s.type === "osm" ? "📍" : "🔎"} <span>${escapeHtml(s.title)}</span></a>${
@@ -1263,10 +1267,23 @@
       if (sendBtn) sendBtn.disabled = true;
       renderMessages();
 
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 45000);
+      const wakeNoticeId = setTimeout(() => {
+        const typingEl = document.querySelector("#uxChatMessages .ux-chat-typing");
+        if (typingEl) {
+          typingEl.textContent =
+            getLang() === "sw"
+              ? "Inaamsha seva ya mshauri… tafadhali subiri sekunde chache."
+              : "Waking up Auto Advisor server… this can take a moment on first load.";
+        }
+      }, 5000);
+
       try {
         const res = await fetch(`${API_BASE_URL}/api/chat`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          signal: controller.signal,
           body: JSON.stringify({
             messages: state.messages.filter((m) => !m.isError).map((m) => ({ role: m.role, text: m.text })),
             role: state.role,
@@ -1294,12 +1311,20 @@
           sources: Array.isArray(data.groundingSources) ? data.groundingSources : []
         });
       } catch (err) {
+        const isTimeout = err?.name === "AbortError";
+        const msg = isTimeout
+          ? getLang() === "sw"
+            ? "Muda wa ombi umeisha. Tafadhali jaribu tena."
+            : "The advisor request timed out while waking up or searching. Please try again."
+          : err?.message || "Unable to reach the Auto Advisor right now. Please try again.";
         state.messages.push({
           role: "model",
           isError: true,
-          text: err?.message || "Unable to reach the Auto Advisor right now. Please try again."
+          text: msg
         });
       } finally {
+        clearTimeout(timeoutId);
+        clearTimeout(wakeNoticeId);
         isSending = false;
         if (sendBtn) sendBtn.disabled = false;
         writeChatSession(state);
