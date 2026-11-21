@@ -78,6 +78,7 @@ html[data-theme="light"] body :is(.price, .detail-price, .related-price, .stat s
 html[data-theme="light"] body > header,
 html[data-theme="light"] body > header.head,
 html[data-theme="light"] body > header.top,
+html[data-theme="light"] body > .wrap > header.top,
 html[data-theme="light"] body > header.site-header {
   background: rgba(252, 249, 242, 0.88) !important;
   background-color: rgba(252, 249, 242, 0.88) !important;
@@ -106,6 +107,15 @@ html[data-theme="light"] body > header #garageSectionNav :is(button, a, a.navlin
 html[data-theme="light"] body > header #chauffeurNav :is(button, a, a.navlink) {
   color: #26221b !important;
   border-color: rgba(138, 114, 62, 0.28) !important;
+}
+
+html[data-theme="light"] body > header :is(.back, a.back, button.back),
+html[data-theme="light"] body > .wrap > header.top :is(.back, a.back, button.back) {
+  background: rgba(255, 255, 255, 0.94) !important;
+  background-color: rgba(255, 255, 255, 0.94) !important;
+  color: #171512 !important;
+  border: 1px solid rgba(138, 114, 62, 0.38) !important;
+  box-shadow: 0 2px 8px rgba(48, 38, 18, 0.06) !important;
 }
 
 html[data-theme="light"] body > header :is(
@@ -234,9 +244,9 @@ html[data-theme="light"] body :is(
   .dashboard-card, .featured-panel, .filter-panel, .search-panel,
   .vehicle-detail-card, .article-card, .editor, .contact-form,
   .package, .notice, .booking-card, .service-card, .yard-card,
-  .tile, #home .tile, .showroom-vehicle-note, .journal-intro, .journal-card,
-  .project-intro, .project-card, .project-public-empty, #autoQuoteRail,
-  .journal-photo-viewer, .vehicle, .booking, .glass, .account-box,
+  .tile, #home .tile, .tiles .tile, .showroom-vehicle-note, .journal-intro, .journal-card, .journal-entry,
+  .project-intro, .project-card, .project-public-empty, #autoQuoteRail, #home #autoQuoteRail, .auto-quote-rail,
+  .journal-photo-viewer, .vehicle, .booking, .glass, .account-box, .check,
   .chauffeur-assurance, .assurance-grid article, .steps-grid article,
   .route-preview, .trip-summary, .admin-stat, .calendar-day,
   .mechanic-card, .request-hero, .contact, #home #garageContactCard.contact,
@@ -244,7 +254,7 @@ html[data-theme="light"] body :is(
   .article, .article-toc, .inline-article-photo, .journal-internal-links a,
   #contact .contact-intro-card, #contact #publicContactForm,
   #about .about-glass-card, #about .about-value-card, .account-load-error
-) {
+):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
   background: rgba(253, 250, 243, 0.94) !important;
   background-color: rgba(253, 250, 243, 0.94) !important;
   background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.90), rgba(246, 240, 228, 0.92)) !important;
@@ -316,16 +326,70 @@ html[data-theme="light"] body select option {
   color: #171512 !important;
 }
 
-html[data-theme="light"] body :is(.btn.ghost,.ghost,.journal-share,.article-share,.detail-modal-close):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
-  background: rgba(255, 255, 255, 0.90) !important;
-  color: #1e1b16 !important;
-  border-color: rgba(138, 114, 62, 0.34) !important;
+html[data-theme="light"] body :is(
+  .back, a.back, button.back, #yardClearFilters, .btn.ghost, .button.ghost, .ghost,
+  .journal-share, .article-share, .detail-modal-close, .auto-quote-next,
+  .tabs button:not(.active)
+):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
+  background: rgba(255, 255, 255, 0.94) !important;
+  background-color: rgba(255, 255, 255, 0.94) !important;
+  color: #171512 !important;
+  border: 1px solid rgba(138, 114, 62, 0.36) !important;
+  box-shadow: 0 2px 8px rgba(48, 38, 18, 0.06) !important;
 }
 
-html[data-theme="light"] body :is(.btn.gold,.btn.primary,.journal-read:not(.journal-share)):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
+html[data-theme="light"] body #home #garageContactCard.contact > h2 {
+  color: #171512 !important;
+}
+
+html[data-theme="light"] body :is(.btn.alt, .button.alt):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
+  background: #171512 !important;
+  background-color: #171512 !important;
+  color: #f7f2e6 !important;
+  border-color: #171512 !important;
+}
+
+html[data-theme="light"] body :is(.btn.gold,.btn.primary,.tabs button.active,.journal-read:not(.journal-share)):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
   background: linear-gradient(180deg, #dfbe6f, #c79f3e) !important;
   color: #171512 !important;
   border-color: rgba(158, 116, 21, 0.5) !important;
+}
+
+/* Keep form field wrapper divs transparent (never dark input boxes around labels) */
+html body:not(:has(#app)) .field {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+html[data-theme="light"] body:not(:has(#app)) .field > label {
+  color: #2c261d !important;
+  font-weight: 700 !important;
+}
+
+html[data-theme="light"] body :is(.service-select, .vehicle-select, .route-preview a) {
+  color: #835d09 !important;
+  border-top-color: rgba(138, 114, 62, 0.22) !important;
+}
+
+html[data-theme="light"] body .faq-list,
+html[data-theme="light"] body .faq-list details,
+html[data-theme="light"] body .booking-row,
+html[data-theme="light"] body .admin-booking,
+html[data-theme="light"] body .admin-subsection,
+html[data-theme="light"] body .admin-row {
+  border-color: rgba(138, 114, 62, 0.22) !important;
+}
+
+html[data-theme="light"] body .faq-list summary,
+html[data-theme="light"] body .trip-summary-grid span,
+html[data-theme="light"] body .assurance-grid article > span,
+html[data-theme="light"] body .steps-grid article > span {
+  color: #171512 !important;
 }
 
 html[data-theme="light"] body .tag,
@@ -363,17 +427,38 @@ html[data-theme="light"] body footer.foot {
 
 @media (max-width: 760px) {
   html[data-theme="light"] body :is(
-    .card, .panel, .dealer, .stat, .state, .empty, .error, .tile,
-    .vehicle-card, .story-card, .journal-card, .service-card, .booking-card,
+    .card, .panel, .dealer, .stat, .state, .empty, .error, .tile, #home .tile, .tiles .tile,
+    .vehicle-card, .story-card, .journal-card, .journal-entry, .journal-intro,
+    .project-card, .project-intro, .project-public-empty, .contact-card, .promotion-package,
+    .dashboard-card, .filter-panel, .search-panel, .featured-panel, .about-glass-card,
+    .about-value-card, .contact-intro-card, .service-card, .booking-card,
     .garage-card, .gallery, .info, .seller, .specs, .spec, .related-card,
-    .vehicle, .booking, .account-box, .chauffeur-assurance, .mechanic-card,
-    .request-hero, .contact, #home #garageContactCard.contact, .auto-quote-rail,
-    header, header.head, #nav, #garageSectionNav, #chauffeurNav,
-    .btn.ghost, .ghost, .back, input, select, textarea
-  ) {
+    .vehicle, .booking, .account-box, .chauffeur-assurance, .assurance-grid article,
+    .steps-grid article, .route-preview, .trip-summary, .admin-stat, .calendar-day,
+    .mechanic-card, .request-hero, .contact, #home #garageContactCard.contact,
+    .auto-quote-rail, #home #autoQuoteRail, .showroom-vehicle-note, .check,
+    header, header.head, #nav, #garageSectionNav, #chauffeurNav
+  ):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
     background: #fbf8f1 !important;
     background-color: #fbf8f1 !important;
+    background-image: none !important;
     color: #171512 !important;
+  }
+  html[data-theme="light"] body :is(
+    .btn.ghost, .button.ghost, .ghost, .back, a.back, button.back, #yardClearFilters,
+    .auto-quote-next, .journal-share, .article-share, .tabs button:not(.active),
+    input, select, textarea
+  ):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    color: #171512 !important;
+    border-color: rgba(138, 114, 62, 0.36) !important;
+  }
+  html[data-theme="light"] body :is(.btn.alt, .button.alt):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
+    background: #171512 !important;
+    background-color: #171512 !important;
+    color: #f7f2e6 !important;
+    border-color: #171512 !important;
   }
   html[data-theme="light"] body > header #nav :is(button, a, a.navlink, button.nav-contact),
   html[data-theme="light"] body > header #nav > .account-pill span {
@@ -634,14 +719,22 @@ html[data-theme="light"] .ux-drawer-controls {
   }
 }
 
+html[data-ux="1"] body > header,
+html[data-ux="1"] body > .wrap > header.top {
+  position: sticky !important;
+  z-index: 1000 !important;
+}
+
 @media (max-width: 860px) {
-  html[data-ux="1"] body > header nav.ux-subnav-links {
+  html[data-ux="1"] body > header nav.ux-subnav-links,
+  html[data-ux="1"] body > .wrap > header.top nav.ux-subnav-links {
     display: none !important;
   }
   .ux-mobile-subtoggle {
     display: inline-flex !important;
   }
-  html[data-ux="1"] body > header nav.ux-subnav-links.is-open {
+  html[data-ux="1"] body > header nav.ux-subnav-links.is-open,
+  html[data-ux="1"] body > .wrap > header.top nav.ux-subnav-links.is-open {
     display: flex !important;
     flex-direction: column !important;
     align-items: stretch !important;
@@ -653,20 +746,30 @@ html[data-theme="light"] .ux-drawer-controls {
     padding: 8px !important;
     border-radius: 14px !important;
     border: 1px solid rgba(255, 255, 255, 0.22) !important;
-    background: rgba(18, 20, 24, 0.96) !important;
-    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.5) !important;
+    background: rgba(18, 20, 24, 0.98) !important;
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.56) !important;
+    backdrop-filter: blur(20px) saturate(140%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(140%) !important;
   }
-  html[data-ux="1"][data-theme="light"] body > header nav.ux-subnav-links.is-open {
+  html[data-ux="1"][data-theme="light"] body > header nav.ux-subnav-links.is-open,
+  html[data-ux="1"][data-theme="light"] body > .wrap > header.top nav.ux-subnav-links.is-open {
     background: #fbf8f1 !important;
-    border-color: rgba(138, 114, 62, 0.34) !important;
-    box-shadow: 0 18px 40px rgba(48, 38, 18, 0.16) !important;
+    background-color: #fbf8f1 !important;
+    border-color: rgba(138, 114, 62, 0.36) !important;
+    box-shadow: 0 18px 42px rgba(48, 38, 18, 0.22) !important;
   }
-  html[data-ux="1"] body > header nav.ux-subnav-links.is-open .ux-subnav-link {
+  html[data-ux="1"][data-theme="light"] body > header nav.ux-subnav-links.is-open .ux-subnav-link,
+  html[data-ux="1"][data-theme="light"] body > .wrap > header.top nav.ux-subnav-links.is-open .ux-subnav-link {
+    color: #171512 !important;
+  }
+  html[data-ux="1"] body > header nav.ux-subnav-links.is-open .ux-subnav-link,
+  html[data-ux="1"] body > .wrap > header.top nav.ux-subnav-links.is-open .ux-subnav-link {
     justify-content: flex-start !important;
     width: 100% !important;
     padding: 10px 12px !important;
   }
-  html[data-ux="1"] body > header nav.ux-subnav-links.is-open .ux-drawer-controls {
+  html[data-ux="1"] body > header nav.ux-subnav-links.is-open .ux-drawer-controls,
+  html[data-ux="1"] body > .wrap > header.top nav.ux-subnav-links.is-open .ux-drawer-controls {
     display: flex !important;
   }
 }
@@ -839,7 +942,7 @@ html[data-ux="1"] #accDlg #accountMenuBackdrop {
   display: none !important;
 }
 
-html[data-ux="1"] #accDlg nav#accountMenu.account-sidebar {
+html[data-ux="1"] #accDlg #accountMenu.account-sidebar {
   grid-column: 1 !important;
   grid-row: 1 !important;
   align-self: stretch !important;
@@ -850,19 +953,36 @@ html[data-ux="1"] #accDlg nav#accountMenu.account-sidebar {
   bottom: auto !important;
   right: auto !important;
   transform: none !important;
+  margin: 0 !important;
+  padding: 18px 14px !important;
   width: 260px !important;
   min-width: 260px !important;
   max-width: 260px !important;
   height: 100% !important;
   max-height: 100% !important;
+  overflow-x: hidden !important;
   overflow-y: auto !important;
   display: flex !important;
   flex-direction: column !important;
   gap: 2px !important;
+  background: #11141a !important;
+  color: #f3efe6 !important;
+  border: 0 !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.085) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   visibility: visible !important;
   opacity: 1 !important;
   pointer-events: auto !important;
   z-index: 40 !important;
+}
+
+html[data-ux="1"][data-theme="light"] #accDlg #accountMenu.account-sidebar {
+  background: #ebe4d3 !important;
+  color: #181612 !important;
+  border-right-color: rgba(112, 90, 44, 0.16) !important;
 }
 
 @media (max-width: 960px) {
@@ -900,7 +1020,7 @@ html[data-ux="1"] #accDlg nav#accountMenu.account-sidebar {
     pointer-events: auto !important;
   }
 
-  html[data-ux="1"] #accDlg nav#accountMenu.account-sidebar {
+  html[data-ux="1"] #accDlg #accountMenu.account-sidebar {
     position: fixed !important;
     top: 0 !important;
     bottom: 0 !important;
@@ -914,23 +1034,28 @@ html[data-ux="1"] #accDlg nav#accountMenu.account-sidebar {
     padding: calc(18px + env(safe-area-inset-top, 0px)) 14px calc(18px + env(safe-area-inset-bottom, 0px)) !important;
     border-radius: 0 !important;
     z-index: 10020 !important;
+    overflow-x: hidden !important;
     overflow-y: auto !important;
     background: #11141a !important;
+    color: #f3efe6 !important;
+    border: 0 !important;
     border-right: 1px solid rgba(255, 255, 255, 0.085) !important;
     box-shadow: 0 24px 64px rgba(0, 0, 0, 0.48) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
     transform: translateX(-105%) !important;
     visibility: hidden !important;
     pointer-events: none !important;
     transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.22s ease !important;
   }
 
-  html[data-ux="1"] #accDlg nav#accountMenu.account-sidebar.menu-open {
+  html[data-ux="1"] #accDlg #accountMenu.account-sidebar.menu-open {
     transform: translateX(0) !important;
     visibility: visible !important;
     pointer-events: auto !important;
   }
 
-  html[data-theme="light"] #accDlg nav#accountMenu.account-sidebar {
+  html[data-theme="light"] #accDlg #accountMenu.account-sidebar {
     background: #ebe4d3 !important;
     border-right-color: rgba(112, 90, 44, 0.16) !important;
     color: #181612 !important;

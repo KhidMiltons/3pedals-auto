@@ -1,7 +1,9 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script>(function(){try{var t=localStorage.getItem("3pedals:theme")||"dark";document.documentElement.setAttribute("data-theme",t==="light"?"light":"dark");document.documentElement.dataset.ux="1";}catch(e){}})();</script>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0d0d0d">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <title>Vehicle documents | 3 Pedals Auto KE</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,7 +20,8 @@
   nav button,nav a.navlink { --dock-scale: 1 !important; }
 }
 </style>
-<link rel="stylesheet" href="site-theme.css?v=20261121-modern-dashboard">
+<link rel="stylesheet" href="site-theme.css?v=20261121-ux-polish">
+<link rel="stylesheet" href="/site-ux.css?v=20261121-ux-polish">
 <style id="vehicle-documents-device-light-theme">
 @media screen and (prefers-color-scheme:light){
   :root{color-scheme:light;--bg:#f3f1ec;--panel:rgba(255,255,255,.72);--ink:#292820;--muted:#716d63;--gold:#806638;--line:rgba(91,82,63,.2)}
@@ -211,7 +214,7 @@ body>header,header.site-header,.site-header,header{
 <style id="shared-home-wallpaper-glass-treatment">
 /* Match the homepage: softly blurred Porsche wallpaper, restrained dark overlay,
    translucent surfaces and crisp foreground content. */
-html{background:#08090b!important}
+html:not([data-theme="light"]){background:#08090b!important}
 html body{
   position:relative!important;
   isolation:isolate!important;
@@ -232,31 +235,31 @@ html body:before{
   transform:scale(1.025)!important;
 }
 html body:after{content:none!important;display:none!important}
-html body header,html body .head,html body .top,html body .site-header,
-html body .navbar,html body .nav-shell,html body .nav-wrap{
+html:not([data-theme="light"]) body header,html:not([data-theme="light"]) body .head,html:not([data-theme="light"]) body .top,html:not([data-theme="light"]) body .site-header,
+html:not([data-theme="light"]) body .navbar,html:not([data-theme="light"]) body .nav-shell,html:not([data-theme="light"]) body .nav-wrap{
   background:rgba(17,18,20,.42)!important;
   border-color:rgba(255,255,255,.18)!important;
   box-shadow:0 14px 38px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.10)!important;
   -webkit-backdrop-filter:blur(22px) saturate(135%)!important;
   backdrop-filter:blur(22px) saturate(135%)!important;
 }
-html body .card,html body .panel,html body .dealer,html body .stat,
-html body .state,html body .empty,html body .error,html body .seller-card,
-html body .info,html body .gallery,html body .seller,html body .spec,
-html body .note,html body .listing,html body .article-item,
-html body .project-item,html body .vehicle-card,html body .story-card,
-html body .contact-card,html body .promotion-package,html body .dashboard-card,
-html body .featured-panel,html body .filter-panel,html body .search-panel,
-html body .vehicle-detail-card,html body .article-card,html body .account-page,
-html body .editor,html body .contact-form,html body .package,html body .notice,
-html body .booking-card,html body .service-card,html body .yard-card{
+html:not([data-theme="light"]) body .card,html:not([data-theme="light"]) body .panel,html:not([data-theme="light"]) body .dealer,html:not([data-theme="light"]) body .stat,
+html:not([data-theme="light"]) body .state,html:not([data-theme="light"]) body .empty,html:not([data-theme="light"]) body .error,html:not([data-theme="light"]) body .seller-card,
+html:not([data-theme="light"]) body .info,html:not([data-theme="light"]) body .gallery,html:not([data-theme="light"]) body .seller,html:not([data-theme="light"]) body .spec,
+html:not([data-theme="light"]) body .note,html:not([data-theme="light"]) body .listing,html:not([data-theme="light"]) body .article-item,
+html:not([data-theme="light"]) body .project-item,html:not([data-theme="light"]) body .vehicle-card,html:not([data-theme="light"]) body .story-card,
+html:not([data-theme="light"]) body .contact-card,html:not([data-theme="light"]) body .promotion-package,html:not([data-theme="light"]) body .dashboard-card,
+html:not([data-theme="light"]) body .featured-panel,html:not([data-theme="light"]) body .filter-panel,html:not([data-theme="light"]) body .search-panel,
+html:not([data-theme="light"]) body .vehicle-detail-card,html:not([data-theme="light"]) body .article-card,html:not([data-theme="light"]) body .account-page,
+html:not([data-theme="light"]) body .editor,html:not([data-theme="light"]) body .contact-form,html:not([data-theme="light"]) body .package,html:not([data-theme="light"]) body .notice,
+html:not([data-theme="light"]) body .booking-card,html:not([data-theme="light"]) body .service-card,html:not([data-theme="light"]) body .yard-card{
   background-color:rgba(24,25,27,.30)!important;
   border-color:rgba(255,255,255,.18)!important;
   box-shadow:0 14px 38px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.09)!important;
   -webkit-backdrop-filter:blur(18px) saturate(130%)!important;
   backdrop-filter:blur(18px) saturate(130%)!important;
 }
-html body input,html body select,html body textarea{
+html:not([data-theme="light"]) body input,html:not([data-theme="light"]) body select,html:not([data-theme="light"]) body textarea{
   background-color:rgba(20,21,23,.34)!important;
   border-color:rgba(255,255,255,.20)!important;
   -webkit-backdrop-filter:blur(12px)!important;
@@ -345,22 +348,23 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){f
 </style>
 <style id="vehicle-documents-mobile-performance-override">
 @media(max-width:760px){
-  html body>header,html body>header.top,html body .panel,html body .check,
-  html body .tabs button:not(.active),html body .btn:not(.primary),html body .back,
-  html body input,html body select,html body textarea{
+  html:not([data-theme="light"]) body>header,html:not([data-theme="light"]) body>header.top,html:not([data-theme="light"]) body .panel,html:not([data-theme="light"]) body .check,
+  html:not([data-theme="light"]) body .tabs button:not(.active),html:not([data-theme="light"]) body .btn:not(.primary),html:not([data-theme="light"]) body .back,
+  html:not([data-theme="light"]) body input,html:not([data-theme="light"]) body select,html:not([data-theme="light"]) body textarea{
     -webkit-backdrop-filter:none!important;
     backdrop-filter:none!important;
   }
-  html body .panel{
+  html:not([data-theme="light"]) body .panel{
     background:rgba(18,20,23,.92)!important;
     background-color:rgba(18,20,23,.92)!important;
   }
-  html body .check,html body .tabs button:not(.active),html body .btn:not(.primary),
-  html body .back,html body input,html body select,html body textarea{
+  html:not([data-theme="light"]) body .check,html:not([data-theme="light"]) body .tabs button:not(.active),html:not([data-theme="light"]) body .btn:not(.primary),
+  html:not([data-theme="light"]) body .back,html:not([data-theme="light"]) body input,html:not([data-theme="light"]) body select,html:not([data-theme="light"]) body textarea{
     background:rgba(26,28,32,.94)!important;
     background-color:rgba(26,28,32,.94)!important;
   }
 }
 </style>
+<script src="/site-ux.js?v=20261121-ux-polish"></script>
 </body>
 </html>

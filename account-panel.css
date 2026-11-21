@@ -88,20 +88,20 @@ html[data-theme="light"] .acc-toast-host {
 }
 
 #accDlg.account-dashboard-dialog[open] {
-  position: fixed;
-  inset: 0;
-  margin: 0;
-  width: 100vw;
-  max-width: 100vw;
-  height: 100dvh;
-  max-height: 100dvh;
-  padding: 0;
-  overflow: hidden;
-  border: 0;
-  border-radius: 0;
+  position: fixed !important;
+  inset: 0 !important;
+  margin: 0 !important;
+  width: 100vw !important;
+  max-width: 100vw !important;
+  height: 100dvh !important;
+  max-height: 100dvh !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  border: 0 !important;
+  border-radius: 0 !important;
   background: var(--ap-bg);
   color: var(--ap-ink);
-  box-shadow: none;
+  box-shadow: none !important;
   font-family: var(--ap-font-sans);
   font-size: 14px;
   line-height: 1.55;
@@ -172,7 +172,7 @@ html[data-theme="light"] .acc-toast-host {
     gap: 0;
     align-items: stretch;
   }
-  #accDlg nav#accountMenu.account-sidebar {
+  #accDlg #accountMenu.account-sidebar {
     grid-column: 1;
     grid-row: 1;
     align-self: stretch;
@@ -189,17 +189,39 @@ html[data-theme="light"] .acc-toast-host {
 }
 
 /* ===== 2. Sidebar Navigation Rail (Matches .admin-sidebar) ===== */
-#accDlg nav#accountMenu.account-sidebar {
+#accDlg #accountMenu.account-sidebar {
   position: relative;
   display: flex;
   flex-direction: column;
   gap: 2px;
+  margin: 0;
   padding: 18px 14px;
   background: var(--ap-sidebar);
+  border: 0;
   border-right: 1px solid var(--ap-line);
+  border-radius: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ap-line-strong) transparent;
   z-index: 40;
+}
+
+#accDlg #accountMenu.account-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+#accDlg #accountMenu.account-sidebar::-webkit-scrollbar-thumb {
+  background: var(--ap-line-strong);
+  border-radius: 99px;
+}
+
+#accDlg #accountMenu.account-sidebar > * {
+  flex: 0 0 auto;
 }
 
 #accDlg .account-sidebar-brand {
@@ -309,7 +331,7 @@ html[data-theme="light"] .acc-toast-host {
 #accDlg .seller-mode-switch button[aria-current="page"] {
   background: var(--ap-gold-soft);
   color: var(--ap-gold);
-  font-weight: 700;
+  font-weight: 700 !important;
 }
 
 #accDlg .seller-nav-label {
@@ -321,9 +343,9 @@ html[data-theme="light"] .acc-toast-host {
   color: var(--ap-mute);
 }
 
-#accDlg nav#accountMenu button.account-nav-btn,
-#accDlg nav#accountMenu button[data-page],
-#accDlg nav#accountMenu button[data-seller-signup] {
+#accDlg #accountMenu button.account-nav-btn,
+#accDlg #accountMenu button[data-page],
+#accDlg #accountMenu button[data-seller-signup] {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -343,18 +365,19 @@ html[data-theme="light"] .acc-toast-host {
   transition: background-color 0.16s var(--ap-ease), border-color 0.16s var(--ap-ease), color 0.16s ease;
 }
 
-#accDlg nav#accountMenu button[data-page]:hover,
-#accDlg nav#accountMenu button[data-seller-signup]:hover {
+#accDlg #accountMenu button[data-page]:hover,
+#accDlg #accountMenu button[data-seller-signup]:hover {
   background: var(--ap-surface-hover);
   color: var(--ap-ink-strong);
+  transform: none !important;
 }
 
-#accDlg nav#accountMenu button[data-page].active,
-#accDlg nav#accountMenu button[data-page][aria-current="page"] {
+#accDlg #accountMenu button[data-page].active,
+#accDlg #accountMenu button[data-page][aria-current="page"] {
   background: var(--ap-gold-soft);
   border-color: var(--ap-gold-border);
   color: var(--ap-gold);
-  font-weight: 700;
+  font-weight: 700 !important;
 }
 
 #accDlg .account-nav-count {
@@ -364,7 +387,8 @@ html[data-theme="light"] .acc-toast-host {
   color: var(--ap-mute);
 }
 
-#accDlg nav#accountMenu button[data-page].active .account-nav-count {
+#accDlg #accountMenu button[data-page].active .account-nav-count,
+#accDlg #accountMenu button[data-page][aria-current="page"] .account-nav-count {
   color: var(--ap-gold);
 }
 
@@ -653,6 +677,12 @@ html[data-theme="light"] .acc-toast-host {
   transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease, opacity 0.16s ease;
 }
 
+#accDlg :is(button, a, .btn, .ap-btn):is(:hover, :active),
+#accActionDlg :is(button, a, .btn, .ap-btn):is(:hover, :active),
+#sellerEditListingDialog :is(button, a, .btn, .ap-btn):is(:hover, :active) {
+  transform: none !important;
+}
+
 #accDlg .ap-btn-primary,
 #accDlg .btn:not(.ghost):not(.ap-btn-ghost):not(.ap-btn-danger),
 #sellerEditListingDialog .btn:not(.ghost),
@@ -661,7 +691,7 @@ html[data-theme="light"] .acc-toast-host {
   background: var(--ap-gold-btn);
   color: var(--ap-gold-ink);
   border: 1px solid var(--ap-gold-border);
-  font-weight: 700;
+  font-weight: 700 !important;
 }
 
 #accDlg .ap-btn-ghost,
@@ -2065,7 +2095,7 @@ html[data-theme="light"] .acc-toast-host {
   #accDlg #accMenuToggle {
     display: inline-flex;
   }
-  #accDlg nav#accountMenu.account-sidebar {
+  #accDlg #accountMenu.account-sidebar {
     position: fixed;
     top: 0;
     left: 0;
@@ -2073,6 +2103,13 @@ html[data-theme="light"] .acc-toast-host {
     width: min(290px, 84vw);
     max-width: min(290px, 84vw);
     height: 100dvh;
+    padding: calc(18px + env(safe-area-inset-top, 0px)) 14px calc(18px + env(safe-area-inset-bottom, 0px));
+    background: var(--ap-sidebar);
+    border: 0;
+    border-right: 1px solid var(--ap-line);
+    border-radius: 0;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
     z-index: 10020;
     transform: translateX(-105%);
     visibility: hidden;
@@ -2080,7 +2117,7 @@ html[data-theme="light"] .acc-toast-host {
     transition: transform 0.22s var(--ap-ease), visibility 0.22s ease;
     box-shadow: var(--ap-shadow);
   }
-  #accDlg nav#accountMenu.account-sidebar.menu-open {
+  #accDlg #accountMenu.account-sidebar.menu-open {
     transform: translateX(0);
     visibility: visible;
     pointer-events: auto;

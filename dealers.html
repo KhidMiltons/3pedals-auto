@@ -33,8 +33,8 @@ main{padding:34px 0 60px}.eyebrow{color:var(--gold);font-size:11px;font-weight:8
 @media(max-width:850px){.tools{grid-template-columns:repeat(2,minmax(0,1fr))}.tools input{grid-column:1/-1}.tools .search-label{grid-column:1/-1}}@media(max-width:520px){.wrap{width:calc(100% - 24px)}.headin{min-height:60px}.brand{font-size:19px}.back{padding:8px 10px;font-size:13px}main{padding-top:25px}.summary{gap:8px}.stat{flex:1 1 135px;padding:11px 13px}.dealer{min-height:112px;padding:15px}.logo{width:46px;height:46px;flex-basis:46px}.tools{grid-template-columns:1fr}.tools input{grid-column:auto}.tools .search-label{grid-column:auto}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
 </style>
-<link rel="stylesheet" href="site-theme.css?v=20261121-modern-dashboard">
-<link rel="stylesheet" href="/site-ux.css?v=20261121-modern-dashboard">
+<link rel="stylesheet" href="site-theme.css?v=20261121-ux-polish">
+<link rel="stylesheet" href="/site-ux.css?v=20261121-ux-polish">
 <!-- Meta Pixel loads only after explicit optional-cookie consent. -->
 <style id="dealers-clean-shell">
 /* Unified dual-theme glass shell for Car Dealers directory (Dark Obsidian & Light Parchment) */
@@ -71,7 +71,7 @@ html[data-theme="light"] body {
   filter: blur(6px) !important;
   transform: scale(1.03) !important;
 }
-html body > :not(#dealers-blurred-wallpaper):not(.ux-chat-fab):not(.ux-chat-drawer):not(.ux-back-to-top):not(.acc-toast-host):not(#siteToastHost):not(dialog) {
+html body > :where(:not(#dealers-blurred-wallpaper):not(header):not(header.head):not(.ux-chat-fab):not(.ux-chat-drawer):not(.ux-back-to-top):not(.acc-toast-host):not(#siteToastHost):not(dialog)) {
   position: relative !important;
   z-index: 1 !important;
 }
@@ -218,6 +218,11 @@ html[data-theme="light"] body .tools input::placeholder {
 }
 html[data-theme="light"] body .tools select option {
   background: #ffffff !important;
+  color: #171512 !important;
+}
+html[data-theme="light"] body .tools .back {
+  background: rgba(255, 255, 255, 0.94) !important;
+  border-color: rgba(138, 114, 62, 0.36) !important;
   color: #171512 !important;
 }
 html body > footer,
@@ -409,6 +414,6 @@ document.addEventListener('click', function(event) {
 })();
 </script>
 
-<script src="/site-ux.js?v=20261121-osm-advisor"></script>
+<script src="/site-ux.js?v=20261121-ux-polish"></script>
 </body>
 </html>

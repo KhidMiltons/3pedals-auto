@@ -138,14 +138,41 @@ input::placeholder,textarea::placeholder{color:rgba(255,255,255,.68)!important}
 }
 
 /* Unified glass surfaces (storefront only; exclude Account Workspace modals) */
-body>header,.site-header,.navbar,.nav-shell,.nav-wrap,#nav,
-#dlg,.authbox,.modal:not(#accDlg),.drawer,
-.hero,#home .tile,.tiles .tile,.showroom-vehicle-note,
-.card,.panel,.contact-card,.journal-intro,.journal-card,.project-intro,.project-card,
-.project-public-empty,.vehicle-card,.dealer,.featured-panel,
-.dashboard-card,.contact-form,.filter-panel,.search-panel,.service-card,.booking-card,
-.garage-card,#autoQuoteRail,.journal-photo-viewer,
-:is(.listing,.stat,.promotion-package,.account-fast-loading,.account-load-error):not(#accDlg *) {
+html:not([data-theme="light"]) body>header,
+html:not([data-theme="light"]) .site-header,
+html:not([data-theme="light"]) .navbar,
+html:not([data-theme="light"]) .nav-shell,
+html:not([data-theme="light"]) .nav-wrap,
+html:not([data-theme="light"]) #nav,
+html:not([data-theme="light"]) #dlg,
+html:not([data-theme="light"]) .authbox,
+html:not([data-theme="light"]) .modal:not(#accDlg),
+html:not([data-theme="light"]) .drawer,
+html:not([data-theme="light"]) .hero,
+html:not([data-theme="light"]) #home .tile,
+html:not([data-theme="light"]) .tiles .tile,
+html:not([data-theme="light"]) .showroom-vehicle-note,
+html:not([data-theme="light"]) .card,
+html:not([data-theme="light"]) .panel,
+html:not([data-theme="light"]) .contact-card,
+html:not([data-theme="light"]) .journal-intro,
+html:not([data-theme="light"]) .journal-card,
+html:not([data-theme="light"]) .project-intro,
+html:not([data-theme="light"]) .project-card,
+html:not([data-theme="light"]) .project-public-empty,
+html:not([data-theme="light"]) .vehicle-card,
+html:not([data-theme="light"]) .dealer,
+html:not([data-theme="light"]) .featured-panel,
+html:not([data-theme="light"]) .dashboard-card,
+html:not([data-theme="light"]) .contact-form,
+html:not([data-theme="light"]) .filter-panel,
+html:not([data-theme="light"]) .search-panel,
+html:not([data-theme="light"]) .service-card,
+html:not([data-theme="light"]) .booking-card,
+html:not([data-theme="light"]) .garage-card,
+html:not([data-theme="light"]) #autoQuoteRail,
+html:not([data-theme="light"]) .journal-photo-viewer,
+html:not([data-theme="light"]) :is(.listing,.stat,.promotion-package,.account-fast-loading,.account-load-error):not(#accDlg *) {
   background-color:rgba(24,24,25,.24)!important;
   border:1px solid rgba(255,255,255,.22)!important;
   box-shadow:0 14px 38px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.16)!important;
@@ -153,7 +180,10 @@ body>header,.site-header,.navbar,.nav-shell,.nav-wrap,#nav,
   backdrop-filter:blur(24px) saturate(125%)!important;
   border-radius:18px!important;
 }
-#nav{background-color:rgba(17,17,18,.56)!important}
+#nav,.hero,#home .tile,.tiles .tile,.card,.panel,.contact-card,.journal-intro,.journal-card,.project-intro,.project-card,.vehicle-card,.dealer,#autoQuoteRail{
+  border-radius:18px;
+}
+html:not([data-theme="light"]) #nav{background-color:rgba(17,17,18,.56)!important}
 body>header{margin:18px auto 0!important;width:min(calc(100% - 32px),1440px);border-radius:22px!important}
 body>header,header.site-header,.site-header{
   background:transparent!important;
@@ -305,8 +335,14 @@ html body header #nav button.nav-contact[aria-selected="true"]:hover{
 }
 
 /* ===== Home Lighter Glass, Quote Rail & Interactions ===== */
-#home .hero{background-color:rgba(20,22,25,.30)!important;-webkit-backdrop-filter:blur(8px) saturate(118%)!important;backdrop-filter:blur(8px) saturate(118%)!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important}
-#home .tile,#home .tiles .tile,#home .showroom-vehicle-note,#home .auto-quote-rail,#home .journal-intro,#home .project-intro{
+#home .hero{display:flex!important;flex-direction:column!important;align-items:flex-start!important}
+html:not([data-theme="light"]) #home .hero{background-color:rgba(20,22,25,.30)!important;-webkit-backdrop-filter:blur(8px) saturate(118%)!important;backdrop-filter:blur(8px) saturate(118%)!important}
+html:not([data-theme="light"]) #home .tile,
+html:not([data-theme="light"]) #home .tiles .tile,
+html:not([data-theme="light"]) #home .showroom-vehicle-note,
+html:not([data-theme="light"]) #home .auto-quote-rail,
+html:not([data-theme="light"]) #home .journal-intro,
+html:not([data-theme="light"]) #home .project-intro{
   background-color:rgba(20,22,25,.30)!important;
   -webkit-backdrop-filter:blur(8px) saturate(118%)!important;backdrop-filter:blur(8px) saturate(118%)!important;
   border-color:rgba(255,255,255,.20)!important;
@@ -317,10 +353,15 @@ html body header #nav button.nav-contact[aria-selected="true"]:hover{
 #home #autoQuoteRail{
   display:block!important;position:relative!important;float:none!important;left:auto!important;top:auto!important;bottom:auto!important;transform:none!important;
   width:min(100%,390px)!important;max-width:100%!important;margin:24px 0 0!important;box-sizing:border-box!important;z-index:2!important;
-  border:1px solid rgba(255,255,255,.34)!important;border-radius:18px!important;color:#fff!important;
+  border-radius:18px!important;
+}
+html:not([data-theme="light"]) #home #autoQuoteRail{
+  border:1px solid rgba(255,255,255,.34)!important;color:#fff!important;
 }
 #home .hero #autoQuoteRail{align-self:flex-start!important}
-#home .auto-quote-text,#home .auto-quote-label,#home .auto-quote-author{color:#fff!important}
+html:not([data-theme="light"]) #home .auto-quote-text,
+html:not([data-theme="light"]) #home .auto-quote-label,
+html:not([data-theme="light"]) #home .auto-quote-author{color:#fff!important}
 #autoQuoteRail .auto-quote-body{min-height:0!important;padding:14px 16px!important}
 #autoQuoteRail .auto-quote-text{font-size:clamp(15px,2vw,19px)!important;line-height:1.4!important;margin:5px 0 10px!important}
 #autoQuoteRail .auto-quote-top{padding:12px 15px 8px!important}
@@ -337,7 +378,7 @@ html body header #nav button.nav-contact[aria-selected="true"]:hover{
   :is(button,a,[role=button],.tile,.card,.project-card,.contact-card,.mechanic-card):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):hover{
     transform:translateY(-2px)!important;
   }
-  :is(.card,.tile,.project-card,.contact-card,.journal-card):not(#accDlg *):hover{
+  html:not([data-theme="light"]) :is(.card,.tile,.project-card,.contact-card,.journal-card):not(#accDlg *):hover{
     background-color:rgba(40,40,41,.32)!important;border-color:rgba(255,255,255,.34)!important;
     box-shadow:0 20px 46px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.20)!important;
     -webkit-backdrop-filter:blur(28px) saturate(135%)!important;backdrop-filter:blur(28px) saturate(135%)!important;
@@ -376,12 +417,13 @@ footer a,body>footer a{position:relative}
 #footerBrand,#footerNote{color:inherit}
 @media(max-width:760px){footer,body>footer{padding-bottom:calc(80px + env(safe-area-inset-bottom,0px))!important}}
 
-:is(input,select,textarea):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){background:rgba(20,20,21,.30)!important;color:inherit!important;border:1px solid rgba(255,255,255,.25)!important;border-radius:11px!important;-webkit-backdrop-filter:blur(16px)!important;backdrop-filter:blur(16px)!important}
+html:not([data-theme="light"]) :is(input,select,textarea):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){background:rgba(20,20,21,.30)!important;color:inherit!important;border:1px solid rgba(255,255,255,.25)!important;-webkit-backdrop-filter:blur(16px)!important;backdrop-filter:blur(16px)!important}
+input,select,textarea{border-radius:11px}
 :is(input,select,textarea,button,.btn):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){-webkit-backdrop-filter:blur(14px) saturate(130%);backdrop-filter:blur(14px) saturate(130%)}
 
-.journal-card-top,.project-card .project-article{background:linear-gradient(145deg,rgba(195,169,112,.12),rgba(20,22,23,.88))!important}
-.journal-card-body h2,.project-body h2,.project-intro h2,.journal-intro h2{color:#f4efe4}
-.journal-read,.project-kicker,.contact-card span{color:#d9bd7d!important}
+html:not([data-theme="light"]) .journal-card-top,html:not([data-theme="light"]) .project-card .project-article{background:linear-gradient(145deg,rgba(195,169,112,.12),rgba(20,22,23,.88))!important}
+html:not([data-theme="light"]) .journal-card-body h2,html:not([data-theme="light"]) .project-body h2,html:not([data-theme="light"]) .project-intro h2,html:not([data-theme="light"]) .journal-intro h2{color:#f4efe4}
+html:not([data-theme="light"]) .journal-read,html:not([data-theme="light"]) .project-kicker,html:not([data-theme="light"]) .contact-card span{color:#d9bd7d!important}
 @media(max-width:600px){.journal-intro{padding:22px!important}.journal-card-body{padding:18px}.project-body{padding:20px}}
 
 /* ===== Auth Dialog & Account Switch ===== */
@@ -400,15 +442,25 @@ footer a,body>footer a{position:relative}
 
 /* ===== Location & Garage Sections ===== */
 .garage-hero,.dealer-hero,.location-hero{border-left:0!important;border-right:0!important}
-#location .tile,#location .card,#location .panel,#location .location-card,#location .location-panel,
-#location .contact-card,#location .map-card,#location .location-content,#location .location-info,
-#location .location-details,#location .location-cta{
+html:not([data-theme="light"]) #location .tile,
+html:not([data-theme="light"]) #location .card,
+html:not([data-theme="light"]) #location .panel,
+html:not([data-theme="light"]) #location .location-card,
+html:not([data-theme="light"]) #location .location-panel,
+html:not([data-theme="light"]) #location .contact-card,
+html:not([data-theme="light"]) #location .map-card,
+html:not([data-theme="light"]) #location .location-content,
+html:not([data-theme="light"]) #location .location-info,
+html:not([data-theme="light"]) #location .location-details,
+html:not([data-theme="light"]) #location .location-cta{
   background:linear-gradient(145deg,rgba(24,24,25,.30),rgba(17,17,18,.38))!important;
   border:1px solid rgba(255,255,255,.22)!important;
   box-shadow:0 14px 38px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.14)!important;
   -webkit-backdrop-filter:blur(24px) saturate(125%)!important;backdrop-filter:blur(24px) saturate(125%)!important;
 }
-#location input,#location select,#location textarea{background:rgba(20,20,21,.30)!important;border-color:rgba(255,255,255,.25)!important;-webkit-backdrop-filter:blur(16px)!important;backdrop-filter:blur(16px)!important}
+html:not([data-theme="light"]) #location input,
+html:not([data-theme="light"]) #location select,
+html:not([data-theme="light"]) #location textarea{background:rgba(20,20,21,.30)!important;border-color:rgba(255,255,255,.25)!important;-webkit-backdrop-filter:blur(16px)!important;backdrop-filter:blur(16px)!important}
 #location hr,#location .gold-line,#location .gold-divider,#location .section-divider{border:0!important;height:0!important;background:transparent!important;box-shadow:none!important}
 
 /* ===== Mobile Full Screen Scroll ===== */
@@ -566,7 +618,7 @@ body:has(#home[hidden]) #publicWhatsappFab{display:none!important}
 
 /* ===== Mobile Performance (<= 760px): Crisp Semi-Opaque Cards, Tiles & Buttons without Heavy Blur ===== */
 @media(max-width:760px){
-  :is(.card,.dealer,.listing,.vehicle-card,.story-card,.journal-card,.journal-entry,
+  html:not([data-theme="light"]) :is(.card,.dealer,.listing,.vehicle-card,.story-card,.journal-card,.journal-entry,
   .project-card,.project-intro,.journal-intro,.project-public-empty,.contact-card,.promotion-package,
   .stat,.panel,.tile,#home .tile,.tiles .tile,.garage-card,.service-card,.booking-card,
   .featured-panel,.dashboard-card,.contact-form,.filter-panel,.search-panel,
@@ -579,7 +631,7 @@ body:has(#home[hidden]) #publicWhatsappFab{display:none!important}
     background:rgba(18,20,23,.90)!important;
     background-color:rgba(18,20,23,.90)!important;
   }
-  :is(button.ghost,.btn.ghost,.button.ghost,.btn.alt,.button.alt,.journal-entry .journal-read,
+  html:not([data-theme="light"]) :is(button.ghost,.btn.ghost,.button.ghost,.btn.alt,.button.alt,.journal-entry .journal-read,
   .journal-entry .journal-share,.journal-share-actions button,.journal-share-actions a,
   .auto-quote-next,.yard-badge,.project-media-count,.account-card-save):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){
     -webkit-backdrop-filter:none!important;
@@ -587,12 +639,12 @@ body:has(#home[hidden]) #publicWhatsappFab{display:none!important}
     background:rgba(26,28,32,.92)!important;
     background-color:rgba(26,28,32,.92)!important;
   }
-  #home .hero{
+  html:not([data-theme="light"]) #home .hero{
     -webkit-backdrop-filter:blur(8px) saturate(118%)!important;
     backdrop-filter:blur(8px) saturate(118%)!important;
     background-color:rgba(18,20,23,.48)!important;
   }
-  :is(input,select,textarea):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){
+  html:not([data-theme="light"]) :is(input,select,textarea):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){
     -webkit-backdrop-filter:none!important;
     backdrop-filter:none!important;
     background:rgba(20,22,25,.90)!important;

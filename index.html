@@ -49,9 +49,9 @@ button,input,select,textarea{font:inherit;color:inherit}
 header{background:#0d0d0d;color:#fff;border-bottom:3px solid #d4a017}
 header .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:14px;padding-bottom:14px}
 .logo{font:700 27px "Playfair Display",Georgia,serif;color:#e3b341;letter-spacing:.03em;text-transform:uppercase}
-nav{display:flex;gap:4px}
-nav button{background:none;border:0;color:inherit;padding:8px 14px;border-radius:6px;cursor:pointer;font-weight:600;opacity:.8}
-nav button[aria-selected="true"]{background:#d4a017;color:#0d0d0d;opacity:1}
+nav:not(.account-sidebar){display:flex;gap:4px}
+nav:not(.account-sidebar) button{background:none;border:0;color:inherit;padding:8px 14px;border-radius:6px;cursor:pointer;font-weight:600;opacity:.8}
+nav:not(.account-sidebar) button[aria-selected="true"]{background:#d4a017;color:#0d0d0d;opacity:1}
 .hero{padding:34px 0 22px}
 .hero h1{font-size:clamp(38px,7vw,68px);max-width:12em}
 .hero h1::after{content:"";display:block;width:64px;height:5px;background:var(--gold);margin-top:12px}
@@ -99,10 +99,10 @@ label{display:block;font-weight:600;font-size:14px;margin:12px 0 4px}
 .svc b{display:block}
 .garage-hero{border-left:6px solid var(--gold);padding-left:16px}
 .note{padding:12px 14px;border-radius:6px;border:1px solid var(--ok);color:var(--ok);margin-top:14px;font-weight:600}
-dialog{border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);max-width:520px;width:calc(100% - 28px);padding:0}
-dialog::backdrop{background:rgba(0,0,0,.55)}
-dialog .swatch{height:120px}
-dialog .in{padding:18px}
+dialog:not(#accDlg):not(#accActionDlg):not(#sellerEditListingDialog){border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);max-width:520px;width:calc(100% - 28px);padding:0}
+dialog:not(#accDlg):not(#accActionDlg):not(#sellerEditListingDialog)::backdrop{background:rgba(0,0,0,.55)}
+dialog:not(#accDlg):not(#accActionDlg):not(#sellerEditListingDialog) .swatch{height:120px}
+dialog:not(#accDlg):not(#accActionDlg):not(#sellerEditListingDialog) .in{padding:18px}
 .specs{display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:flex-start!important;gap:6px!important;margin:12px 0!important;padding:0!important;width:100%!important;max-width:100%!important}.spec-row{display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;align-items:baseline!important;justify-content:flex-start!important;gap:8px!important;width:auto!important;max-width:100%!important;margin:0!important;padding:0!important}.spec-row span{display:inline-block!important;flex:0 0 auto!important;color:var(--mute);font-size:14px}.spec-row b{display:inline-block!important;flex:0 1 auto!important;margin:0!important;min-width:0!important;max-width:100%!important;overflow-wrap:anywhere!important}
 .specs span{color:var(--mute);font-size:14px}
 footer{border-top:1px solid var(--line);padding:22px 0 30px;color:var(--mute);font-size:14px}
@@ -160,14 +160,14 @@ header .wrap{min-height:76px;display:grid;grid-template-columns:auto 1fr auto;gr
 @media (hover:hover) and (pointer:fine){.account-pill button:hover{background:rgba(227,179,65,.13);transform:translateY(-5px) scale(1.08);box-shadow:0 10px 22px rgba(227,179,65,.18),inset 0 1px 0 rgba(255,255,255,.18)}}
 .account-pill button:active{transform:translateY(-1px) scale(.96)}
 .account-pill button::before{content:"";width:18px;height:18px;display:block;background:currentColor;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='8' r='4' fill='none' stroke='black' stroke-width='2'/%3E%3Cpath d='M4 21c.8-4.1 3.4-6 8-6s7.2 1.9 8 6' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='8' r='4' fill='none' stroke='black' stroke-width='2'/%3E%3Cpath d='M4 21c.8-4.1 3.4-6 8-6s7.2 1.9 8 6' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat}
-nav{grid-area:nav;display:flex;align-items:center;gap:3px;padding:4px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.11);border-radius:14px;box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 8px 24px rgba(0,0,0,.16);backdrop-filter:blur(12px)}
-nav button,nav a.navlink{--dock-scale:1;min-height:42px;display:inline-flex;align-items:center;justify-content:center;padding:9px 15px;border-radius:12px;border:1px solid transparent;background:transparent;color:#d7d9de;font-size:14px;font-weight:600;letter-spacing:.01em;line-height:1;white-space:nowrap;cursor:pointer;transform:translateY(calc((1 - var(--dock-scale))*2px)) scale(var(--dock-scale));transform-origin:center bottom;will-change:transform;transition:transform .46s cubic-bezier(.22,1,.36,1),background .32s ease,box-shadow .32s ease,border-color .32s ease,color .32s ease}
-nav button:hover,nav a.navlink:hover{background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.10);color:#fff;opacity:1;z-index:2;box-shadow:0 8px 18px rgba(0,0,0,.16)}
-nav button[aria-selected="true"]{background:linear-gradient(180deg,#e7bd57,#d4a017);color:#111;box-shadow:0 5px 16px rgba(215,169,40,.24)}
-nav a.navlink{color:#fff}
-nav.dock-active button,nav.dock-active a.navlink{transition-duration:.5s}
-@media (hover:hover) and (pointer:fine){nav button:hover,nav a.navlink:hover{--dock-scale:1.16}nav:has(button:hover) button:not(:hover),nav:has(a.navlink:hover) button:not(:hover),nav:has(button:hover) a.navlink:not(:hover),nav:has(a.navlink:hover) a.navlink:not(:hover){--dock-scale:1.04}}
-@media (prefers-reduced-motion:reduce){nav button,nav a.navlink,.account-pill,.account-icon,.account-icon span{transition:none!important;transform:none!important}}
+nav:not(.account-sidebar){grid-area:nav;display:flex;align-items:center;gap:3px;padding:4px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.11);border-radius:14px;box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 8px 24px rgba(0,0,0,.16);backdrop-filter:blur(12px)}
+nav:not(.account-sidebar) button,nav:not(.account-sidebar) a.navlink{--dock-scale:1;min-height:42px;display:inline-flex;align-items:center;justify-content:center;padding:9px 15px;border-radius:12px;border:1px solid transparent;background:transparent;color:#d7d9de;font-size:14px;font-weight:600;letter-spacing:.01em;line-height:1;white-space:nowrap;cursor:pointer;transform:translateY(calc((1 - var(--dock-scale))*2px)) scale(var(--dock-scale));transform-origin:center bottom;will-change:transform;transition:transform .46s cubic-bezier(.22,1,.36,1),background .32s ease,box-shadow .32s ease,border-color .32s ease,color .32s ease}
+nav:not(.account-sidebar) button:hover,nav:not(.account-sidebar) a.navlink:hover{background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.10);color:#fff;opacity:1;z-index:2;box-shadow:0 8px 18px rgba(0,0,0,.16)}
+nav:not(.account-sidebar) button[aria-selected="true"]{background:linear-gradient(180deg,#e7bd57,#d4a017);color:#111;box-shadow:0 5px 16px rgba(215,169,40,.24)}
+nav:not(.account-sidebar) a.navlink{color:#fff}
+nav:not(.account-sidebar).dock-active button,nav:not(.account-sidebar).dock-active a.navlink{transition-duration:.5s}
+@media (hover:hover) and (pointer:fine){nav:not(.account-sidebar) button:hover,nav:not(.account-sidebar) a.navlink:hover{--dock-scale:1.16}nav:not(.account-sidebar):has(button:hover) button:not(:hover),nav:not(.account-sidebar):has(a.navlink:hover) button:not(:hover),nav:not(.account-sidebar):has(button:hover) a.navlink:not(:hover),nav:not(.account-sidebar):has(a.navlink:hover) a.navlink:not(:hover){--dock-scale:1.04}}
+@media (prefers-reduced-motion:reduce){nav:not(.account-sidebar) button,nav:not(.account-sidebar) a.navlink,.account-pill,.account-icon,.account-icon span{transition:none!important;transform:none!important}}
 .nav-toggle{display:none;grid-area:nav-toggle;width:44px;height:44px;border:1px solid rgba(227,179,65,.3);border-radius:12px;background:rgba(255,255,255,.055);color:#fff;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,.16)}
 .nav-toggle svg{width:20px;height:20px}
 @media(max-width:980px){main{transition:filter .22s ease}body.nav-open main{filter:blur(8px)}}
@@ -222,12 +222,12 @@ form .btn{margin-top:10px}#sellForm>.btn,#bBtn{min-width:160px}
 
 @media(max-width:900px){
   header .wrap{grid-template-columns:1fr auto;grid-template-areas:"brand account" "nav nav";gap:9px 12px;padding-top:10px;padding-bottom:10px}
-  nav{justify-content:flex-start;overflow-x:auto;scrollbar-width:none}nav::-webkit-scrollbar{display:none}
+  nav:not(.account-sidebar){justify-content:flex-start;overflow-x:auto;scrollbar-width:none}nav:not(.account-sidebar)::-webkit-scrollbar{display:none}
   .account-pill{justify-self:end}
 }
 @media(max-width:600px){
   .wrap{padding-left:16px;padding-right:16px}.logo{font-size:25px}.account-pill{font-size:12px}
-  nav{width:100%}nav button,nav a.navlink{flex:1;min-width:max-content;padding-left:12px;padding-right:12px}
+  nav:not(.account-sidebar){width:100%}nav:not(.account-sidebar) button,nav:not(.account-sidebar) a.navlink{flex:1;min-width:max-content;padding-left:12px;padding-right:12px}
   .hero{padding-top:38px}.hero h1{font-size:42px}.hero>div[style*="display:flex"]{align-items:stretch}.hero>div[style*="display:flex"] .btn{flex:1}
   .tiles{grid-template-columns:1fr 1fr}.tile{min-height:120px;padding:17px}.tile h3{font-size:24px}.tile:after{right:14px;top:14px}
   .panel{padding:18px}.fab{right:16px;bottom:16px}.auth-left{left:16px;bottom:16px}.auth-left button{padding:8px 11px}
@@ -235,15 +235,15 @@ form .btn{margin-top:10px}#sellForm>.btn,#bBtn{min-width:160px}
 @media(max-width:980px){
   header .wrap{grid-template-columns:auto 1fr auto;grid-template-areas:"brand account nav-toggle"}
   .nav-toggle{display:inline-flex;justify-self:end}
-  nav{position:absolute;z-index:1001;isolation:isolate;top:calc(100% + 10px);right:24px;display:flex;flex-direction:column;align-items:stretch;gap:4px;width:min(300px,calc(100vw - 48px));padding:8px;background:rgba(18,19,21,.93);border-color:rgba(227,179,65,.42);box-shadow:0 18px 44px rgba(0,0,0,.72),inset 0 1px 0 rgba(255,255,255,.1);backdrop-filter:blur(30px) saturate(135%);-webkit-backdrop-filter:blur(30px) saturate(135%);opacity:0;visibility:hidden;transform:translateY(-8px) scale(.98);transform-origin:top right;transition:opacity .2s ease,transform .2s ease,visibility .2s ease}
-  nav button,nav a.navlink{color:#f3f0e8;text-shadow:0 1px 2px rgba(0,0,0,.45)}
-  nav.is-open{opacity:1;visibility:visible;transform:translateY(0) scale(1)}
-  nav button,nav a.navlink{width:100%;justify-content:flex-start;padding:12px 14px;min-height:44px}
-  nav button::after,nav a.navlink::after{left:auto;right:12px;bottom:50%;width:3px;height:20px;transform:translateY(50%) scaleY(0);transform-origin:center}
-  nav button:hover::after,nav a.navlink:hover::after{transform:translateY(50%) scaleY(1)}
-  nav button[aria-selected="true"]::after{display:none}
+  nav:not(.account-sidebar){position:absolute;z-index:1001;isolation:isolate;top:calc(100% + 10px);right:24px;display:flex;flex-direction:column;align-items:stretch;gap:4px;width:min(300px,calc(100vw - 48px));padding:8px;background:rgba(18,19,21,.93);border-color:rgba(227,179,65,.42);box-shadow:0 18px 44px rgba(0,0,0,.72),inset 0 1px 0 rgba(255,255,255,.1);backdrop-filter:blur(30px) saturate(135%);-webkit-backdrop-filter:blur(30px) saturate(135%);opacity:0;visibility:hidden;transform:translateY(-8px) scale(.98);transform-origin:top right;transition:opacity .2s ease,transform .2s ease,visibility .2s ease}
+  nav:not(.account-sidebar) button,nav:not(.account-sidebar) a.navlink{color:#f3f0e8;text-shadow:0 1px 2px rgba(0,0,0,.45)}
+  nav:not(.account-sidebar).is-open{opacity:1;visibility:visible;transform:translateY(0) scale(1)}
+  nav:not(.account-sidebar) button,nav:not(.account-sidebar) a.navlink{width:100%;justify-content:flex-start;padding:12px 14px;min-height:44px}
+  nav:not(.account-sidebar) button::after,nav:not(.account-sidebar) a.navlink::after{left:auto;right:12px;bottom:50%;width:3px;height:20px;transform:translateY(50%) scaleY(0);transform-origin:center}
+  nav:not(.account-sidebar) button:hover::after,nav:not(.account-sidebar) a.navlink:hover::after{transform:translateY(50%) scaleY(1)}
+  nav:not(.account-sidebar) button[aria-selected="true"]::after{display:none}
 }
-@media(max-width:430px){.tiles{grid-template-columns:1fr}.hero>div[style*="display:flex"]{flex-direction:column}.hero>div[style*="display:flex"] .btn{width:100%}.account-pill span{display:none}.wrap{padding-left:16px;padding-right:16px}nav{right:16px;width:calc(100vw - 32px)}}
+@media(max-width:430px){.tiles{grid-template-columns:1fr}.hero>div[style*="display:flex"]{flex-direction:column}.hero>div[style*="display:flex"] .btn{width:100%}.account-pill span{display:none}.wrap{padding-left:16px;padding-right:16px}nav:not(.account-sidebar){right:16px;width:calc(100vw - 32px)}}
 
 .demo{background:#fff4cf;color:#4a3a00;text-align:center;padding:9px 16px;font-size:14px;font-weight:600}
 .acts{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
@@ -407,10 +407,10 @@ footer{background:linear-gradient(180deg,transparent,rgba(0,0,0,.035));margin-to
 body{background:radial-gradient(circle at 50% -10%,rgba(183,160,106,.055),transparent 34%),var(--bg)}
 header{background:rgba(20,21,22,.88)!important;border-bottom:1px solid rgba(183,160,106,.16)!important;box-shadow:0 10px 32px rgba(0,0,0,.16)!important;backdrop-filter:blur(22px) saturate(125%);-webkit-backdrop-filter:blur(22px) saturate(125%)}
 .logo{color:#d0bc8d!important;font-weight:700}
-nav{background:rgba(255,255,255,.045)!important;border-color:rgba(255,255,255,.085)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.055),0 10px 28px rgba(0,0,0,.14)!important}
-nav button,nav a.navlink{color:#c9c8c4!important}
-nav button:hover,nav a.navlink:hover{background:rgba(255,255,255,.075)!important;color:#f4f2ec!important;border-color:rgba(255,255,255,.08)!important}
-nav button[aria-selected="true"]{background:linear-gradient(180deg,#c6b27f,#a9925f)!important;color:#171717!important;box-shadow:0 5px 18px rgba(183,160,106,.18)!important}
+nav:not(.account-sidebar){background:rgba(255,255,255,.045)!important;border-color:rgba(255,255,255,.085)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.055),0 10px 28px rgba(0,0,0,.14)!important}
+nav:not(.account-sidebar) button,nav:not(.account-sidebar) a.navlink{color:#c9c8c4!important}
+nav:not(.account-sidebar) button:hover,nav:not(.account-sidebar) a.navlink:hover{background:rgba(255,255,255,.075)!important;color:#f4f2ec!important;border-color:rgba(255,255,255,.08)!important}
+nav:not(.account-sidebar) button[aria-selected="true"]{background:linear-gradient(180deg,#c6b27f,#a9925f)!important;color:#171717!important;box-shadow:0 5px 18px rgba(183,160,106,.18)!important}
 .hero h1::after{background:linear-gradient(90deg,var(--gold),rgba(183,160,106,.18))!important;height:3px!important}
 .hero p{color:var(--mute)!important}
 .btn{box-shadow:0 4px 14px rgba(24,25,27,.07)!important}
@@ -427,9 +427,9 @@ input:focus,select:focus,textarea:focus{border-color:var(--blue)!important;box-s
 .account-pill button{color:#c9b784!important;border-color:rgba(183,160,106,.25)!important}
 .account-pill button:hover{background:rgba(183,160,106,.09)!important;box-shadow:0 10px 24px rgba(183,160,106,.11)!important}
 .garage-hero{border-top-color:rgba(183,160,106,.62)!important}
-dialog{background:var(--surface)!important;color:var(--ink)!important}
+dialog:not(#accDlg):not(#accActionDlg):not(#sellerEditListingDialog){background:var(--surface)!important;color:var(--ink)!important}
 footer{color:var(--mute)!important}
-@media(max-width:800px){header .wrap{grid-template-columns:1fr auto;grid-template-areas:"brand account" "nav nav";gap:10px}.account-pill{justify-self:end}.logo{font-size:27px!important}nav{width:100%;overflow-x:auto;justify-content:flex-start}nav button,nav a.navlink{flex:0 0 auto}}
+@media(max-width:800px){header .wrap{grid-template-columns:1fr auto;grid-template-areas:"brand account" "nav nav";gap:10px}.account-pill{justify-self:end}.logo{font-size:27px!important}nav:not(.account-sidebar){width:100%;overflow-x:auto;justify-content:flex-start}nav:not(.account-sidebar) button,nav:not(.account-sidebar) a.navlink{flex:0 0 auto}}
 @media(max-width:520px){.logo{font-size:24px!important}.account-pill{padding:3px!important}.account-pill button{width:40px!important;height:40px!important}.hero{padding-top:42px!important}.hero h1{font-size:clamp(38px,11vw,56px)!important}}
 
 /* Dealer profile / premium inventory cards */
@@ -483,9 +483,9 @@ main>section{contain:layout style}
 @media(max-width:980px){
   .wrap{width:100%;max-width:100%;padding-left:16px!important;padding-right:16px!important}
   header .wrap{padding-top:max(10px,env(safe-area-inset-top));padding-bottom:10px}
-  nav{max-width:100%;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;white-space:nowrap}
-  nav::-webkit-scrollbar{display:none}
-  nav button,nav a.navlink{flex:0 0 auto;min-height:42px}
+  nav:not(.account-sidebar){max-width:100%;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;white-space:nowrap}
+  nav:not(.account-sidebar)::-webkit-scrollbar{display:none}
+  nav:not(.account-sidebar) button,nav:not(.account-sidebar) a.navlink{flex:0 0 auto;min-height:42px}
   .hero{padding-top:30px}
 }
 @media(max-width:720px){
@@ -504,8 +504,8 @@ main>section{contain:layout style}
   .wrap{padding-left:12px!important;padding-right:12px!important}
   header .wrap{grid-template-columns:1fr auto!important}
   .logo{font-size:24px!important;max-width:calc(100vw - 90px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  nav{gap:2px!important;margin-top:2px}
-  nav button,nav a.navlink{font-size:12px!important;padding:9px 11px!important}
+  nav:not(.account-sidebar){gap:2px!important;margin-top:2px}
+  nav:not(.account-sidebar) button,nav:not(.account-sidebar) a.navlink{font-size:12px!important;padding:9px 11px!important}
   .hero{padding:28px 0 18px}
   .hero h1{font-size:clamp(36px,12vw,52px)!important}
   .btn{min-height:44px}
@@ -524,7 +524,7 @@ main>section{contain:layout style}
   .filters{grid-template-columns:1fr!important}
   .filters input{grid-column:auto!important}
   .specs{width:100%!important;gap:6px!important}.spec-row{max-width:100%!important}.spec-row b{min-width:0!important;overflow-wrap:anywhere!important}
-  dialog{max-width:calc(100vw - 20px)!important;width:calc(100vw - 20px)!important;max-height:90dvh!important}
+  dialog:not(#accDlg):not(#accActionDlg):not(#sellerEditListingDialog){max-width:calc(100vw - 20px)!important;width:calc(100vw - 20px)!important;max-height:90dvh!important}
   .thumbs{overflow-x:auto!important;display:flex!important;flex-wrap:nowrap!important}
   .thumbs button{flex:0 0 64px!important}
 }
@@ -609,10 +609,10 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 }
 </style>
 <style id="mobile-menu-compact">
-@media(max-width:980px){header .wrap{position:relative}nav,nav.is-open{width:min(280px,calc(100vw - 32px))!important;max-width:calc(100vw - 32px)!important;right:16px!important;left:auto!important;max-height:min(72dvh,440px);overflow-x:hidden!important;overflow-y:auto!important;gap:3px!important;padding:7px!important}nav button,nav a.navlink{min-height:36px!important;padding:7px 11px!important;flex:0 0 auto!important;font-size:14px!important}}
+@media(max-width:980px){header .wrap{position:relative}nav:not(.account-sidebar),nav:not(.account-sidebar).is-open{width:min(280px,calc(100vw - 32px))!important;max-width:calc(100vw - 32px)!important;right:16px!important;left:auto!important;max-height:min(72dvh,440px);overflow-x:hidden!important;overflow-y:auto!important;gap:3px!important;padding:7px!important}nav:not(.account-sidebar) button,nav:not(.account-sidebar) a.navlink{min-height:36px!important;padding:7px 11px!important;flex:0 0 auto!important;font-size:14px!important}}
 </style>
 <style id="vehicle-photo-controls">
-.gal{position:relative;touch-action:pan-y;overscroll-behavior-x:contain}.gal .main{touch-action:pan-y;user-select:none;-webkit-user-drag:none}.gal .vehicle-step{position:absolute;top:calc(50% - 24px);z-index:3;width:44px;height:54px;padding:0;border:1px solid rgba(255,255,255,.24);border-radius:10px;background:rgba(12,13,14,.72);color:#fff;font-size:32px;line-height:1;display:grid;place-items:center;cursor:pointer;backdrop-filter:blur(10px)}.gal .vehicle-prev{left:10px}.gal .vehicle-next{right:10px}.gal .vehicle-count{position:absolute;right:10px;top:10px;z-index:3;padding:5px 8px;border-radius:6px;background:rgba(12,13,14,.72);color:#fff;font-size:12px;font-weight:700}dialog{overscroll-behavior:contain;touch-action:pan-y}body{overscroll-behavior-x:none}
+.gal{position:relative;touch-action:pan-y;overscroll-behavior-x:contain}.gal .main{touch-action:pan-y;user-select:none;-webkit-user-drag:none}.gal .vehicle-step{position:absolute;top:calc(50% - 24px);z-index:3;width:44px;height:54px;padding:0;border:1px solid rgba(255,255,255,.24);border-radius:10px;background:rgba(12,13,14,.72);color:#fff;font-size:32px;line-height:1;display:grid;place-items:center;cursor:pointer;backdrop-filter:blur(10px)}.gal .vehicle-prev{left:10px}.gal .vehicle-next{right:10px}.gal .vehicle-count{position:absolute;right:10px;top:10px;z-index:3;padding:5px 8px;border-radius:6px;background:rgba(12,13,14,.72);color:#fff;font-size:12px;font-weight:700}dialog:not(#accDlg):not(#accActionDlg):not(#sellerEditListingDialog){overscroll-behavior:contain;touch-action:pan-y}body{overscroll-behavior-x:none}
 </style>
 <style id="seller-registration-styles">#authSellerUrlWrap{padding:10px 12px 12px;margin:10px 0;border:1px solid var(--line);border-radius:12px;background:linear-gradient(145deg,rgba(87,54,34,.42),rgba(26,27,29,.9))}#authSellerUrlWrap[hidden]{display:none}#authSellerUrlWrap label{display:block;margin:0 0 7px;color:var(--ink);font-weight:700}#authSellerUrlWrap input{width:100%}#authSellerUrlPreview{margin:7px 0 0;color:var(--gold);overflow-wrap:anywhere}.seller-registration #authProfileDetails{display:block}.seller-registration #authProfileDetails>summary{display:none}.seller-registration #authProfileDetails .auth-optional-inner{padding:10px 12px 12px}.seller-registration #authPhoneField{display:none}</style>
 
@@ -638,8 +638,8 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
   .account-pill{grid-area:account!important;justify-self:end!important;margin:0!important;padding:2px!important}
   .account-pill button,.nav-toggle{width:40px!important;height:40px!important;min-width:40px!important;align-self:center!important;justify-self:end!important}
   .nav-toggle{grid-area:nav-toggle!important;display:inline-flex!important;margin:0!important}
-  nav{top:calc(100% + 8px)!important;right:12px!important;left:auto!important;width:min(190px,calc(100vw - 96px))!important;max-width:calc(100vw - 96px)!important;margin:0!important;padding:6px!important;gap:2px!important}
-  nav button,nav a.navlink{min-height:36px!important;padding:7px 9px!important;font-size:13px!important}
+  nav:not(.account-sidebar){top:calc(100% + 8px)!important;right:12px!important;left:auto!important;width:min(190px,calc(100vw - 96px))!important;max-width:calc(100vw - 96px)!important;margin:0!important;padding:6px!important;gap:2px!important}
+  nav:not(.account-sidebar) button,nav:not(.account-sidebar) a.navlink{min-height:36px!important;padding:7px 9px!important;font-size:13px!important}
   .hero{padding:26px 0 16px!important}
   .hero h1{font-size:clamp(34px,9.5vw,42px)!important;line-height:1.06!important;max-width:16ch!important;letter-spacing:-.025em}
   .hero p{font-size:15px!important;line-height:1.6!important;margin-top:12px!important}
@@ -712,15 +712,15 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 }
 @media(max-width:380px){#authDlg>.in{padding-left:13px!important;padding-right:13px!important}#authDlg .in>h2{font-size:25px!important}}
 </style>
-<link rel="stylesheet" href="site-theme.css?v=20261121-modern-dashboard">
+<link rel="stylesheet" href="site-theme.css?v=20261121-ux-polish">
 <style id="account-restore-no-flash">html.account-restoring body{visibility:hidden!important;background:#0c0e12!important}html[data-theme="light"].account-restoring body{background:#f4efe4!important}html.account-restoring #accDlg[open]{visibility:visible!important}html.account-restoring #accDlg[open] #accBody{min-height:100px}#accDlg .account-refresh-status{display:none!important}</style>
 <script>try{if(sessionStorage.getItem("3pedals:account-open")==="1")document.documentElement.classList.add("account-restoring")}catch(_){}</script>
 <!-- Optional Meta Pixel is loaded by consent.js only after explicit acceptance. -->
 
-<link rel="stylesheet" href="/dashboard-glass.css?v=20261121-modern-dashboard">
-<link rel="stylesheet" href="/index-theme.css?v=20261121-modern-dashboard">
-<link rel="stylesheet" href="/account-panel.css?v=20261121-admin-parity">
-<link rel="stylesheet" href="/site-ux.css?v=20261121-admin-parity">
+<link rel="stylesheet" href="/dashboard-glass.css?v=20261121-ux-polish">
+<link rel="stylesheet" href="/index-theme.css?v=20261121-ux-polish">
+<link rel="stylesheet" href="/account-panel.css?v=20261121-ux-polish">
+<link rel="stylesheet" href="/site-ux.css?v=20261121-ux-polish">
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
@@ -900,7 +900,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 /* Shared auth state is stored only on window to avoid lexical TDZ collisions. */
 window.authMode = window.authMode || "register";
 </script>
-<script src="account-panel.js?v=20261121-admin-parity"></script>
+<script src="account-panel.js?v=20261121-ux-polish"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
@@ -1229,9 +1229,9 @@ window.ThreePedalsAccountHost={
   rerenderInventory:()=>typeof render==="function"?render():undefined
 };
 </script>
-<script src="/account-listings-crud.js?v=20261121-admin-parity"></script>
-<script src="/account-promotions.js?v=20261121-admin-parity"></script>
-<script src="/account-workspace.js?v=20261121-admin-parity"></script>
+<script src="/account-listings-crud.js?v=20261121-sidepanel-fix"></script>
+<script src="/account-promotions.js?v=20261121-sidepanel-fix"></script>
+<script src="/account-workspace.js?v=20261121-sidepanel-fix"></script>
 <script>
 async function getProjectsAdmin(){
   const {data,error}=await sb.from("projects").select("*").order("created_at",{ascending:false});
@@ -1925,6 +1925,6 @@ loadSiteSettings();
   }
 })();
 </script>
-<script src="/site-ux.js?v=20261121-osm-advisor"></script>
+<script src="/site-ux.js?v=20261121-ux-polish"></script>
 </body>
 </html>

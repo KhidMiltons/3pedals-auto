@@ -48,7 +48,7 @@ nav:not(.account-sidebar), .nav, .nav-links, .mobile-nav {
 
 /* Translucent controls; primary champagne-gold actions retain their own gradient. */
 :is(input, select, textarea):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *),
-.field, .seg, .dropdown-menu, .popover,
+body:has(#app) .field, .seg, .dropdown-menu, .popover,
 .journal-share-dialog, .journal-share-url {
   background-color: rgba(255, 255, 255, .055) !important;
   border-color: rgba(211, 185, 125, .19) !important;
@@ -179,7 +179,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
     border-color: rgba(26,27,29,.15) !important;
   }
   input::placeholder, textarea::placeholder { color: #858177 !important; }
-  .field, .seg {
+  body:has(#app) .field, .seg {
     color: #242421 !important;
     background: rgba(255,255,255,.68) !important;
     border-color: rgba(26,27,29,.12) !important;
@@ -302,7 +302,7 @@ nav:not(.account-sidebar) button[aria-selected="true"], .tab.active, .primary, .
   border-color: rgba(211,185,125,.46) !important;
   box-shadow: 0 20px 48px rgba(0,0,0,.32), inset 0 1px rgba(255,255,255,.08) !important;
 }
-:is(input, select, textarea):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *), .field, .seg,
+:is(input, select, textarea):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *), body:has(#app) .field, .seg,
 .dropdown-menu, .popover, .journal-share-dialog, .journal-share-url {
   color: #f5f1e8 !important;
   background: rgba(255,255,255,.055) !important;
@@ -738,38 +738,38 @@ main.wrap{
 section:not(.hero):not(.garage-hero):not(.journal-hero){
   scroll-margin-top:110px;
 }
-.card,.dealer,.stat,.panel,.listing,.vehicle-card,.story-card,.contact-card,
+html:not([data-theme="light"]) :is(.card,.dealer,.stat,.panel,.listing,.vehicle-card,.story-card,.contact-card,
 .promotion-package,.article-item,.project-item,.tile,.profile-card,
 .feature-card,.service-card,.booking-card,.garage-card,.filter-panel,
-.search-panel,.featured-panel,.article-card,.journal-card{
+.search-panel,.featured-panel,.article-card,.journal-card):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){
   border-color:var(--editorial-edge)!important;
   background:linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.018)),var(--editorial-glass)!important;
   box-shadow:0 14px 38px rgba(0,0,0,.19),inset 0 1px rgba(255,255,255,.085)!important;
   transition:transform .28s var(--editorial-ease),border-color .28s ease,box-shadow .28s ease,background .28s ease!important;
 }
-.card:hover,.dealer:hover,.listing:hover,.vehicle-card:hover,.story-card:hover,
-.contact-card:hover,.promotion-package:hover,.article-item:hover,.project-item:hover,
-.tile:hover,.profile-card:hover,.feature-card:hover,.service-card:hover,
-.booking-card:hover,.garage-card:hover,.journal-card:hover{
+html:not([data-theme="light"]) :is(.card,.dealer,.listing,.vehicle-card,.story-card,
+.contact-card,.promotion-package,.article-item,.project-item,
+.tile,.profile-card,.feature-card,.service-card,
+.booking-card,.garage-card,.journal-card):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):hover{
   border-color:var(--editorial-edge-hover)!important;
   box-shadow:0 20px 48px rgba(0,0,0,.25),inset 0 1px rgba(255,255,255,.12)!important;
 }
-button,a.button,.btn,.primary,.btn-primary,.button-primary,.gold-button{
+:is(button,a.button,.btn,.primary,.btn-primary,.button-primary,.gold-button):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){
   transition:transform .22s var(--editorial-ease),box-shadow .22s ease,background-color .22s ease,border-color .22s ease!important;
 }
 @media (hover:hover) and (pointer:fine){
-  button:hover,a.button:hover,.btn:hover,.primary:hover,.btn-primary:hover,
-  .button-primary:hover,.gold-button:hover{
+  :is(button,a.button,.btn,.primary,.btn-primary,
+  .button-primary,.gold-button):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):hover{
     transform:translateY(-2px);
   }
 }
-button:active,a.button:active,.btn:active{
+:is(button,a.button,.btn):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):active{
   transform:translateY(0) scale(.985);
 }
 input,select,textarea{
   border-radius:12px;
 }
-input:focus,select:focus,textarea:focus{
+:is(input,select,textarea):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):focus{
   outline:none;
   border-color:rgba(255,255,255,.42)!important;
   box-shadow:0 0 0 3px rgba(255,255,255,.075)!important;
@@ -792,8 +792,8 @@ body > header,body>.header{
 }
 @media(max-width:760px){
   main.wrap{padding-bottom:30px;}
-  .card,.dealer,.stat,.panel,.listing,.vehicle-card,.story-card,.contact-card,
-  .promotion-package,.article-item,.project-item,.tile,.profile-card{
+  html:not([data-theme="light"]) :is(.card,.dealer,.stat,.panel,.listing,.vehicle-card,.story-card,.contact-card,
+  .promotion-package,.article-item,.project-item,.tile,.profile-card):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){
     -webkit-backdrop-filter:none!important;
     backdrop-filter:none!important;
     background:rgba(18,20,23,.90)!important;
@@ -835,7 +835,7 @@ html body :is(.brand,.logo,.brand-name,.site-brand,.wordmark,header .brand,heade
   font-weight:700!important;
   letter-spacing:-.035em!important;
 }
-html body :is(button,.btn,a.button,.back,.nav a,.nav button,nav a,nav button){
+html body :is(button,.btn,a.button,.back,.nav a,.nav button,nav a,nav button):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){
   font-family:"Manrope",system-ui,sans-serif!important;
   font-weight:600!important;
 }
@@ -905,11 +905,11 @@ html body :is(.price,.amount,.vehicle-price,[data-price],.stat-value,.metric-val
 }
 
 /* Shared dark glass language — no pale/white card overlays. */
-html body :is(.card,.dealer,.stat,.panel,.listing,.vehicle-card,.story-card,
+html:not([data-theme="light"]) body :is(.card,.dealer,.stat,.panel,.listing,.vehicle-card,.story-card,
 .contact-card,.promotion-package,.article-item,.project-item,.tile,.profile-card,
 .feature-card,.service-card,.booking-card,.garage-card,.filter-panel,.search-panel,
 .featured-panel,.article-card,.journal-card,.notice,.empty,.attention-panel,
-.editor,.contact-form,.seller-card,.dashboard-card,.account-overview-panel){
+.editor,.contact-form,.seller-card,.dashboard-card,.account-overview-panel):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){
   color:var(--p3-ivory);
   background-color:var(--p3-glass)!important;
   background-image:none!important;
@@ -922,9 +922,9 @@ html body :is(.card,.dealer,.stat,.panel,.listing,.vehicle-card,.story-card,
     border-color .28s ease,box-shadow .28s ease!important;
 }
 @media (hover:hover) and (pointer:fine){
-  html body :is(.card,.dealer,.listing,.vehicle-card,.story-card,.contact-card,
+  html:not([data-theme="light"]) body :is(.card,.dealer,.listing,.vehicle-card,.story-card,.contact-card,
   .promotion-package,.article-item,.project-item,.tile,.profile-card,.feature-card,
-  .service-card,.booking-card,.garage-card,.journal-card,.seller-card,.dashboard-card):hover{
+  .service-card,.booking-card,.garage-card,.journal-card,.seller-card,.dashboard-card):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):hover{
     background-color:rgba(17,21,25,.58)!important;
     background-image:none!important;
     border-color:var(--p3-edge-gold)!important;
@@ -941,15 +941,15 @@ html body :is(body > header,.top,.site-header,.main-header,.navbar){
 html body :is(body > header,.top,.site-header,.main-header,.navbar) :is(a,button){
   -webkit-tap-highlight-color:transparent;
 }
-html body :is(.eyebrow,.section-kicker,.overline,.label-kicker){
+html:not([data-theme="light"]) body :is(.eyebrow,.section-kicker,.overline,.label-kicker):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){
   color:var(--p3-champagne)!important;
 }
-html body :is(.price,.vehicle-price,.amount,.brand,.logo,.arrow,.gold-text){
+html:not([data-theme="light"]) body :is(.price,.vehicle-price,.amount,.brand,.logo,.arrow,.gold-text):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){
   color:var(--p3-champagne)!important;
 }
 
 /* Consistent controls and restrained interactions; never flash white. */
-html body :is(button,.btn,a.button,.primary,.btn-primary,.button-primary,.gold-button){
+html body :is(button,.btn,a.button,.primary,.btn-primary,.button-primary,.gold-button):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){
   font-family:"Manrope",system-ui,sans-serif!important;
   font-weight:650;
   -webkit-tap-highlight-color:transparent;
@@ -961,22 +961,22 @@ html body a:focus-visible{
   outline:2px solid rgba(201,183,132,.78)!important;
   outline-offset:3px;
 }
-html body :is(input,select,textarea,.input,.field):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){
+html:not([data-theme="light"]) body :is(input,select,textarea,.input):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){
   color:var(--p3-ivory)!important;
   background:rgba(8,12,15,.48)!important;
   border-color:rgba(255,255,255,.13)!important;
   border-radius:var(--p3-radius-small);
   box-shadow:none;
 }
-html body :is(input,select,textarea,.input,.field)::placeholder{
+html:not([data-theme="light"]) body :is(input,select,textarea,.input)::placeholder{
   color:rgba(244,240,232,.48)!important;
 }
-html body :is(input,select,textarea,.input,.field):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):focus{
+html:not([data-theme="light"]) body :is(input,select,textarea,.input):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):focus{
   border-color:rgba(201,183,132,.58)!important;
   box-shadow:0 0 0 3px rgba(201,183,132,.10)!important;
   outline:none!important;
 }
-html body select option{
+html:not([data-theme="light"]) body select option{
   color:#f4f0e8;
   background:#171b1f;
 }
@@ -1030,8 +1030,8 @@ html body:has(#app) .tabs .tab.active{
   html{scroll-behavior:auto}
   html body{overflow-x:clip}
   html body main.wrap{padding-bottom:32px}
-  html body :is(button,.btn,a.button){min-height:40px}
-  html body :is(input,select,textarea){font-size:16px!important}
+  html body :is(button,.btn,a.button):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){min-height:40px}
+  html body :is(input,select,textarea):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){font-size:16px!important}
 }
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
@@ -1052,7 +1052,7 @@ html body:has(#app) .tabs .tab.active{
     transform: none !important;
     background-attachment: scroll !important;
   }
-  html body :is(
+  html:not([data-theme="light"]) body :is(
     .card,.dealer,.stat,.state,.empty,.error,.panel,.seller-card,
     .info,.gallery,.seller,.spec,.note,.listing,.article-item,.project-item,
     .vehicle-card,.story-card,.contact-card,.promotion-package,.tile,.profile-card,
@@ -1060,19 +1060,19 @@ html body:has(#app) .tabs .tab.active{
     .filter-panel,.search-panel,.vehicle-detail-card,.article-card,.journal-card,
     .dashboard-card,.authbox,
     .editor,.contact-form,.modal-content,.dialog-card,.settings-card,.package
-  ) {
+  ):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
     background: rgba(18, 20, 23, .90) !important;
     background-color: rgba(18, 20, 23, .90) !important;
   }
-  html body :is(.ghost,.btn.ghost,.btn.dark,.alt,.back,.icon-btn,button.secondary,.btn-secondary):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
+  html:not([data-theme="light"]) body :is(.ghost,.btn.ghost,.btn.dark,.alt,.back,.icon-btn,button.secondary,.btn-secondary):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
     background: rgba(26, 28, 32, .92) !important;
     background-color: rgba(26, 28, 32, .92) !important;
   }
-  html body :is(input, select, textarea):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
+  html:not([data-theme="light"]) body :is(input, select, textarea):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
     background: rgba(20, 22, 25, .92) !important;

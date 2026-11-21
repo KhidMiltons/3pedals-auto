@@ -8,7 +8,7 @@
 <script src="/consent.js?v=20261107-1"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/site-theme.css?v=20261121-modern-dashboard">
+<link rel="stylesheet" href="/site-theme.css?v=20261121-ux-polish">
 <style>
 :root{color-scheme:dark;--gold:#c9b783;--ink:#f4f0e8;--muted:rgba(244,240,232,.68);--glass:rgba(18,20,23,.42)}
 *{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--ink);font-family:Manrope,system-ui,sans-serif;background:linear-gradient(120deg,rgba(7,10,13,.78),rgba(7,10,13,.62)),url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72') center/cover fixed,#101316}
@@ -242,7 +242,7 @@ a{color:inherit}
   .hero p{font-size:11.5px!important;line-height:1.4!important}
 }
 </style>
-<link rel="stylesheet" href="/site-ux.css?v=20261121-modern-dashboard">
+<link rel="stylesheet" href="/site-ux.css?v=20261121-ux-polish">
 </head>
 <body>
 <header class="head"><div class="wrap headin">
@@ -574,7 +574,7 @@ html body>header .nav-toggle svg{width:20px!important;height:20px!important}
 
 <style id="dealers-header-style-match">
 /* Chauffeur Hire header: copy the Dealers page's final header shell and controls. */
-html body>header.head{
+html:not([data-theme="light"]) body>header.head{
  position:sticky!important;top:0!important;z-index:1000!important;
  box-sizing:border-box!important;width:calc(100% - 24px)!important;max-width:1160px!important;
  min-height:76px!important;margin:12px auto 12px!important;padding:0!important;
@@ -584,12 +584,18 @@ html body>header.head{
  box-shadow:none!important;-webkit-backdrop-filter:blur(18px) saturate(120%)!important;
  backdrop-filter:blur(18px) saturate(120%)!important;
 }
+html[data-theme="light"] body>header.head{
+ position:sticky!important;top:0!important;z-index:1000!important;
+ box-sizing:border-box!important;width:calc(100% - 24px)!important;max-width:1160px!important;
+ min-height:76px!important;margin:12px auto 12px!important;padding:0!important;
+ display:block!important;border-radius:16px!important;
+}
 html body>header.head>.wrap.headin{
  box-sizing:border-box!important;width:100%!important;max-width:none!important;min-height:74px!important;
  margin:0 auto!important;padding:9px 12px!important;display:flex!important;align-items:center!important;
  justify-content:space-between!important;gap:8px!important;background:transparent!important;border:0!important;box-shadow:none!important;
 }
-html body>header.head .brand{
+html:not([data-theme="light"]) body>header.head .brand{
  display:inline-flex!important;align-items:center!important;width:max-content!important;max-width:100%!important;
  min-height:46px!important;padding:4px 9px!important;border:1px solid rgba(255,255,255,.22)!important;
  border-radius:16px!important;background:rgba(255,255,255,.025)!important;
@@ -597,14 +603,30 @@ html body>header.head .brand{
  color:#e5d3a0!important;font-family:"Sora",system-ui,sans-serif!important;font-size:clamp(17px,4.5vw,22px)!important;
  font-weight:700!important;letter-spacing:-.035em!important;line-height:1!important;text-transform:none!important;white-space:nowrap!important;
 }
-html body>header.head .back{
+html[data-theme="light"] body>header.head .brand{
+ display:inline-flex!important;align-items:center!important;width:max-content!important;max-width:100%!important;
+ min-height:46px!important;padding:4px 9px!important;text-decoration:none!important;
+ color:#8c640d!important;font-family:"Sora",system-ui,sans-serif!important;font-size:clamp(17px,4.5vw,22px)!important;
+ font-weight:700!important;letter-spacing:-.035em!important;line-height:1!important;text-transform:none!important;white-space:nowrap!important;
+}
+html:not([data-theme="light"]) body>header.head .back{
  display:inline-flex!important;align-items:center!important;justify-content:center!important;
  min-height:38px!important;padding:7px 11px!important;border:1px solid rgba(255,255,255,.20)!important;
  border-radius:12px!important;background:rgba(255,255,255,.045)!important;color:#f5f5f3!important;
  font:600 12px/1.2 Manrope,system-ui,sans-serif!important;text-decoration:none!important;white-space:nowrap!important;
  box-shadow:none!important;transition:transform .3s ease,background .3s ease,border-color .3s ease,color .3s ease!important;
 }
-@media(hover:hover) and (pointer:fine){html body>header.head .back:hover{transform:translateY(-2px)!important;background:rgba(255,255,255,.10)!important;border-color:rgba(255,255,255,.32)!important;color:#fff!important}}
+html[data-theme="light"] body>header.head .back{
+ display:inline-flex!important;align-items:center!important;justify-content:center!important;
+ min-height:38px!important;padding:7px 11px!important;border:1px solid rgba(138,114,62,.38)!important;
+ border-radius:12px!important;background:rgba(255,255,255,.94)!important;color:#171512!important;
+ font:600 12px/1.2 Manrope,system-ui,sans-serif!important;text-decoration:none!important;white-space:nowrap!important;
+ box-shadow:0 2px 8px rgba(48,38,18,.06)!important;transition:transform .3s ease,background .3s ease,border-color .3s ease,color .3s ease!important;
+}
+@media(hover:hover) and (pointer:fine){
+ html:not([data-theme="light"]) body>header.head .back:hover{transform:translateY(-2px)!important;background:rgba(255,255,255,.10)!important;border-color:rgba(255,255,255,.32)!important;color:#fff!important}
+ html[data-theme="light"] body>header.head .back:hover{transform:translateY(-2px)!important;background:#ffffff!important;border-color:#9e7415!important;color:#171512!important}
+}
 @media(max-width:520px){html body>header.head{width:calc(100% - 24px)!important;min-height:76px!important;margin:12px auto!important}html body>header.head>.wrap.headin{min-height:74px!important;padding:9px 12px!important}html body>header.head .brand{font-size:clamp(17px,4.5vw,22px)!important}html body>header.head .back{min-height:38px!important;padding:7px 11px!important;font-size:12px!important}}
 @media(prefers-reduced-motion:reduce){html body>header.head .back{transition:none!important}}
 </style>
@@ -723,32 +745,32 @@ html body .hero p{
 </style>
 <style id="chauffeur-mobile-performance-override">
 @media(max-width:760px){
-  html body>header,html body>header.head,html body>header .account-pill,
-  html body>header #chauffeurNav,html body>header #chauffeurNav.mobile-menu-open,
-  html body>header #chauffeurNav.is-open,html body .hero,html body .glass,
-  html body .vehicle,html body .booking,html body .account-box,
-  html body .service-card,html body .assurance-grid article,html body .steps-grid article,
-  html body .chauffeur-assurance,html body .route-preview,html body .trip-summary,
-  html body .admin-stat,html body .calendar-day,html body .notice,
-  html body input,html body select,html body textarea,
-  html body .ghost,html body>header .back,html body>header .nav-toggle{
+  html:not([data-theme="light"]) body>header,html:not([data-theme="light"]) body>header.head,html:not([data-theme="light"]) body>header .account-pill,
+  html:not([data-theme="light"]) body>header #chauffeurNav,html:not([data-theme="light"]) body>header #chauffeurNav.mobile-menu-open,
+  html:not([data-theme="light"]) body>header #chauffeurNav.is-open,html:not([data-theme="light"]) body .hero,html:not([data-theme="light"]) body .glass,
+  html:not([data-theme="light"]) body .vehicle,html:not([data-theme="light"]) body .booking,html:not([data-theme="light"]) body .account-box,
+  html:not([data-theme="light"]) body .service-card,html:not([data-theme="light"]) body .assurance-grid article,html:not([data-theme="light"]) body .steps-grid article,
+  html:not([data-theme="light"]) body .chauffeur-assurance,html:not([data-theme="light"]) body .route-preview,html:not([data-theme="light"]) body .trip-summary,
+  html:not([data-theme="light"]) body .admin-stat,html:not([data-theme="light"]) body .calendar-day,html:not([data-theme="light"]) body .notice,
+  html:not([data-theme="light"]) body input,html:not([data-theme="light"]) body select,html:not([data-theme="light"]) body textarea,
+  html:not([data-theme="light"]) body .ghost,html:not([data-theme="light"]) body>header .back,html:not([data-theme="light"]) body>header .nav-toggle{
     -webkit-backdrop-filter:none!important;
     backdrop-filter:none!important;
   }
-  html body .hero,html body .glass,html body .vehicle,html body .booking,
-  html body .account-box,html body .service-card,html body .assurance-grid article,
-  html body .steps-grid article,html body .chauffeur-assurance,
-  html body .admin-stat,html body .calendar-day{
+  html:not([data-theme="light"]) body .hero,html:not([data-theme="light"]) body .glass,html:not([data-theme="light"]) body .vehicle,html:not([data-theme="light"]) body .booking,
+  html:not([data-theme="light"]) body .account-box,html:not([data-theme="light"]) body .service-card,html:not([data-theme="light"]) body .assurance-grid article,
+  html:not([data-theme="light"]) body .steps-grid article,html:not([data-theme="light"]) body .chauffeur-assurance,
+  html:not([data-theme="light"]) body .admin-stat,html:not([data-theme="light"]) body .calendar-day{
     background:rgba(18,20,23,.92)!important;
     background-color:rgba(18,20,23,.92)!important;
   }
-  html body>header,html body>header.head,html body>header #chauffeurNav,
-  html body input,html body select,html body textarea,
-  html body .ghost,html body>header .back,html body>header .nav-toggle{
+  html:not([data-theme="light"]) body>header,html:not([data-theme="light"]) body>header.head,html:not([data-theme="light"]) body>header #chauffeurNav,
+  html:not([data-theme="light"]) body input,html:not([data-theme="light"]) body select,html:not([data-theme="light"]) body textarea,
+  html:not([data-theme="light"]) body .ghost,html:not([data-theme="light"]) body>header .back,html:not([data-theme="light"]) body>header .nav-toggle{
     background:rgba(26,28,32,.94)!important;
     background-color:rgba(26,28,32,.94)!important;
   }
 }
 </style>
-<script src="/site-ux.js?v=20261121-osm-advisor"></script>
+<script src="/site-ux.js?v=20261121-ux-polish"></script>
 </body></html>

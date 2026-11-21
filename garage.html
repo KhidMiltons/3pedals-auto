@@ -420,7 +420,7 @@ footer{border-color:var(--line);background:linear-gradient(180deg,transparent,rg
   nav button,nav a.navlink { --dock-scale: 1 !important; }
 }
 </style>
-<link rel="stylesheet" href="site-theme.css?v=20261121-modern-dashboard">
+<link rel="stylesheet" href="site-theme.css?v=20261121-ux-polish">
 
 <style id="garage-floating-glass-whatsapp">
 /* Match the transparent, borderless champagne-glass WhatsApp icon used on the home page. */
@@ -565,7 +565,7 @@ html body h1,html body h2,html body h3,html body .logo,html body .brand{font-fam
 html body > header .logo,html body > header .brand{font-family:"Playfair Display",Georgia,serif!important;font-size:27px!important;font-weight:700!important;letter-spacing:.03em!important;text-transform:uppercase!important}
 html body > header nav a,html body > header nav button,html body > header .headnav a,html body > header .headnav button,html body > header .back{font-family:Manrope,system-ui,sans-serif!important;font-size:14px!important;font-weight:400!important;letter-spacing:0!important}
 </style>
-<link rel="stylesheet" href="/site-ux.css?v=20261121-modern-dashboard">
+<link rel="stylesheet" href="/site-ux.css?v=20261121-ux-polish">
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
@@ -2223,9 +2223,9 @@ html body input,html body select,html body textarea{
 <style id="garage-mobile-dropdown-100-percent-opaque-glass">
 /* Garage mobile dropdown: fully opaque background for maximum menu readability. */
 @media(max-width:800px){
- html body>header>.wrap>nav#garageSectionNav.is-open,
- html body>header>.wrap>nav#garageSectionNav[aria-hidden="false"],
- html body>header>.wrap>nav#garageSectionNav[style*="display: flex"]{
+ html:not([data-theme="light"]) body>header>.wrap>nav#garageSectionNav.is-open,
+ html:not([data-theme="light"]) body>header>.wrap>nav#garageSectionNav[aria-hidden="false"],
+ html:not([data-theme="light"]) body>header>.wrap>nav#garageSectionNav[style*="display: flex"]{
   background:rgb(22,23,25)!important;
   background-color:rgb(22,23,25)!important;
   background-image:none!important;
@@ -2925,11 +2925,11 @@ html body #home #garageContactCard.contact{
     box-shadow:0 22px 54px rgba(0,0,0,.30)!important;
   }
 }
-html body #home #garageContactCard.contact>h2{
+html:not([data-theme="light"]) body #home #garageContactCard.contact>h2{
   margin:0 0 18px!important;
   color:#f4efe4!important;
 }
-html body #home #garageContactCard .garage-contact-icon{
+html:not([data-theme="light"]) body #home #garageContactCard .garage-contact-icon{
   background:rgba(255,255,255,.075)!important;
   border-color:rgba(195,169,112,.24)!important;
 }
@@ -3041,32 +3041,32 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){f
 </style>
 <style id="garage-mobile-performance-override">
 @media(max-width:760px){
-  html body>header,html body .account-pill,html body header nav#garageSectionNav,
-  html body header .garage-nav-toggle,html body .card,html body .tile,html body .panel,
-  html body .mechanic-card,html body .request-hero,html body .contact,
-  html body #home #garageContactCard.contact,html body .garage-card,html body .service-card,
-  html body .booking-card,html body .contact-card,html body .stat,html body .auto-quote-rail,
-  html body .notice,html body .empty,html body .error,html body .fab,
-  html body input,html body select,html body textarea,
-  html body .btn.ghost,html body .ghost,html body>header .back{
+  html:not([data-theme="light"]) body>header,html:not([data-theme="light"]) body .account-pill,html:not([data-theme="light"]) body header nav#garageSectionNav,
+  html:not([data-theme="light"]) body header .garage-nav-toggle,html:not([data-theme="light"]) body .card,html:not([data-theme="light"]) body .tile,html:not([data-theme="light"]) body .panel,
+  html:not([data-theme="light"]) body .mechanic-card,html:not([data-theme="light"]) body .request-hero,html:not([data-theme="light"]) body .contact,
+  html:not([data-theme="light"]) body #home #garageContactCard.contact,html:not([data-theme="light"]) body .garage-card,html:not([data-theme="light"]) body .service-card,
+  html:not([data-theme="light"]) body .booking-card,html:not([data-theme="light"]) body .contact-card,html:not([data-theme="light"]) body .stat,html:not([data-theme="light"]) body .auto-quote-rail,
+  html:not([data-theme="light"]) body .notice,html:not([data-theme="light"]) body .empty,html:not([data-theme="light"]) body .error,html:not([data-theme="light"]) body .fab,
+  html:not([data-theme="light"]) body input,html:not([data-theme="light"]) body select,html:not([data-theme="light"]) body textarea,
+  html:not([data-theme="light"]) body .btn.ghost,html:not([data-theme="light"]) body .ghost,html:not([data-theme="light"]) body>header .back{
     -webkit-backdrop-filter:none!important;
     backdrop-filter:none!important;
   }
-  html body .card,html body .tile,html body .panel,html body .mechanic-card,
-  html body .request-hero,html body .contact,html body #home #garageContactCard.contact,
-  html body .garage-card,html body .service-card,html body .booking-card,
-  html body .contact-card,html body .stat,html body .auto-quote-rail{
+  html:not([data-theme="light"]) body .card,html:not([data-theme="light"]) body .tile,html:not([data-theme="light"]) body .panel,html:not([data-theme="light"]) body .mechanic-card,
+  html:not([data-theme="light"]) body .request-hero,html:not([data-theme="light"]) body .contact,html:not([data-theme="light"]) body #home #garageContactCard.contact,
+  html:not([data-theme="light"]) body .garage-card,html:not([data-theme="light"]) body .service-card,html:not([data-theme="light"]) body .booking-card,
+  html:not([data-theme="light"]) body .contact-card,html:not([data-theme="light"]) body .stat,html:not([data-theme="light"]) body .auto-quote-rail{
     background:rgba(18,20,23,.92)!important;
     background-color:rgba(18,20,23,.92)!important;
   }
-  html body>header,html body header nav#garageSectionNav,html body header .garage-nav-toggle,
-  html body .fab,html body input,html body select,html body textarea,
-  html body .btn.ghost,html body .ghost,html body>header .back{
+  html:not([data-theme="light"]) body>header,html:not([data-theme="light"]) body header nav#garageSectionNav,html:not([data-theme="light"]) body header .garage-nav-toggle,
+  html:not([data-theme="light"]) body .fab,html:not([data-theme="light"]) body input,html:not([data-theme="light"]) body select,html:not([data-theme="light"]) body textarea,
+  html:not([data-theme="light"]) body .btn.ghost,html:not([data-theme="light"]) body .ghost,html:not([data-theme="light"]) body>header .back{
     background:rgba(26,28,32,.94)!important;
     background-color:rgba(26,28,32,.94)!important;
   }
 }
 </style>
-<script src="/site-ux.js?v=20261121-osm-advisor"></script>
+<script src="/site-ux.js?v=20261121-ux-polish"></script>
 </body>
 </html>

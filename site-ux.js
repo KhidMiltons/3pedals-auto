@@ -245,7 +245,7 @@
   }
 
   function initHeaderControls() {
-    const header = document.querySelector("body > header");
+    const header = document.querySelector("body > header, body > .wrap > header.top");
     if (!header) return;
     const path = location.pathname.toLowerCase();
 

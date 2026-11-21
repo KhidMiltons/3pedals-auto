@@ -11,7 +11,7 @@
   mount.innerHTML = `
     <dialog id="accDlg" class="account-dashboard-dialog" aria-label="3 Pedals Auto KE Account Workspace">
       <div id="accountMenuBackdrop" class="account-menu-backdrop" aria-hidden="true"></div>
-      <nav id="accountMenu" class="account-sidebar" aria-label="Account navigation">
+      <aside id="accountMenu" class="account-sidebar" role="navigation" aria-label="Account navigation">
         <a class="account-sidebar-brand" href="/" aria-label="3 Pedals Auto KE home">
           <img src="favicon.svg" alt="" width="28" height="28">
           <span><strong>3 PEDALS</strong><small>Account Workspace</small></span>
@@ -44,7 +44,7 @@
           <button type="button" class="ap-btn ap-btn-ghost" id="accHomeSide">Back to site</button>
           <button type="button" class="ap-btn ap-btn-ghost" data-signout>Sign out</button>
         </div>
-      </nav>
+      </aside>
       <section class="account-dashboard-main">
         <header class="account-dialog-head">
           <div class="account-topbar-left">
