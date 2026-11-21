@@ -153,16 +153,16 @@ app.post("/api/chat", async (req, res) => {
     }
   }
 
-  let model = "gemini-4-hydrogen";
+  let model = "gemini-2.5-flash-lite";
   const config = { systemInstruction };
 
   if (effectiveMode === "fast") {
     model = "gemini-3.1-flash-lite";
   } else if (effectiveMode === "maps") {
-    model = "gemini-4-hydrogen";
+    model = "gemini-2.5-flash-lite";
     config.tools = [{ googleSearch: {} }];
   } else if (effectiveMode === "search") {
-    model = "gemini-4-hydrogen";
+    model = "gemini-2.5-flash-lite";
     config.tools = [{ googleSearch: {} }];
   }
 
