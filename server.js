@@ -237,7 +237,7 @@ async function findOpenStreetMapPlaces(queryText, location) {
     "vehicle",
     "unnamed",
   ]);
-  return (data.elements || [])
+  const places = (data.elements || [])
     .map((el) => {
       const tags = el.tags || {};
       const rawName = String(tags.name || tags.brand || "").trim();
@@ -282,6 +282,42 @@ async function findOpenStreetMapPlaces(queryText, location) {
       return true;
     })
     .slice(0, 30);
+
+  // Add approximate nearby mapped streets/localities where OSM has no address tags.
+  // This is contextual geography, not a verified business address.
+  const reverseGeocodeCache = findOpenStreetMapPlaces.reverseGeocodeCache ||
+    (findOpenStreetMapPlaces.reverseGeocodeCache = new Map());
+  const missingAddresses = places.filter((place) => !place.address);
+  for (let i = 0; i < missingAddresses.length; i += 4) {
+    await Promise.all(missingAddresses.slice(i, i + 4).map(async (place) => {
+      const key = String(place.lat.toFixed(4)) + "," + String(place.lon.toFixed(4));
+      if (reverseGeocodeCache.has(key)) {
+        place.nearbyLocation = reverseGeocodeCache.get(key);
+        return;
+      }
+      try {
+        const url = new URL("https://photon.komoot.io/reverse/");
+        url.search = new URLSearchParams({ lat: String(place.lat), lon: String(place.lon), lang: "en" });
+        const response = await fetch(url, {
+          headers: { "User-Agent": "3PedalsAutoKE/1.0 (https://3pedalsauto.co.ke)" },
+          signal: AbortSignal.timeout(6000),
+        });
+        if (!response.ok) return;
+        const props = (await response.json())?.features?.[0]?.properties || {};
+        const parts = [props.street, props.district || props.suburb || props.neighbourhood, props.city || props.town || props.village, props.county]
+          .map((value) => String(value || "").trim())
+          .filter((value, index, all) => value && all.findIndex((v) => v.toLowerCase() === value.toLowerCase()) === index);
+        const nearby = parts.join(", ");
+        if (nearby) {
+          place.nearbyLocation = nearby;
+          reverseGeocodeCache.set(key, nearby);
+        }
+      } catch (error) {
+        console.warn("Photon reverse geocoding unavailable:", error?.message || error);
+      }
+    }));
+  }
+  return places;
 }
 
 app.post("/api/chat", async (req, res) => {
@@ -342,7 +378,7 @@ app.post("/api/chat", async (req, res) => {
           "Here are the named automotive businesses returned by OpenStreetMap. The category shown is based only on each record’s OSM tags; it does not confirm the business’s actual services. Coverage and address details may be incomplete, and OSM does not verify licensing, KEBS/KRA approval, service quality, opening hours or customer ratings.",
           "",
           ...osmPlaces.slice(0, 20).map((place, index) =>
-            `${index + 1}. **${place.name}**\n   Category: ${place.category}\n   Location: ${place.address || "Address not listed in OpenStreetMap"}\n   Map: ${place.mapUrl}`
+            `${index + 1}. **${place.name}**\n   Category: ${place.category}\n   Location: ${place.address || "Address not listed in OpenStreetMap"}${place.nearbyLocation ? `\n   Nearby mapped area (approx.): ${place.nearbyLocation}` : ""}\n   Map: ${place.mapUrl}`
           ),
         ].join("\n\n")
       : "OpenStreetMap returned no matching automotive locations for this search area. Try a nearby neighbourhood or a broader search. I won't invent business names or locations.";
