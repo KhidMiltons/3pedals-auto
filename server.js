@@ -94,6 +94,21 @@ function shouldRouteToMaps(text) {
   );
 }
 
+function formatOsmAddressPart(value) {
+  return String(value || "")
+    .replace(/\s+/g, " ")
+    .replace(/^[,\s]+|[,\s]+$/g, "")
+    .split(" ")
+    .filter(Boolean)
+    .map((word) => {
+      if (/^[A-Z0-9]{2,4}$/.test(word)) return word;
+      return word.charAt(0).toLocaleUpperCase("en") + word.slice(1).toLocaleLowerCase("en");
+    })
+    .join(" ");
+}
+
+let nominatimReverseQueue = Promise.resolve();
+
 async function findOpenStreetMapPlaces(queryText, location) {
   const userLat = Number(location?.latitude);
   const userLng = Number(location?.longitude);
@@ -263,12 +278,14 @@ async function findOpenStreetMapPlaces(queryText, location) {
           tags["addr:suburb"] || tags["addr:neighbourhood"],
           tags["addr:city"] || tags["addr:town"] || tags["addr:district"],
         ]
-          .map((part) => String(part || "").replace(/\s+/g, " ").replace(/^[,\s]+|[,\s]+$/g, "").replace(/\s*,\s*,+/g, ",").trim())
+          .map(formatOsmAddressPart)
           .filter(Boolean)
-          .join(", ")
-          .replace(/\s*,\s*/g, ", ")
-          .replace(/,{2,}/g, ",")
-          .trim(),
+          .filter((part, index, parts) => parts.findIndex((item) => item.toLowerCase() === part.toLowerCase()) === index)
+          .join(", "),
+        hasAddressLocality: Boolean(
+          tags["addr:suburb"] || tags["addr:neighbourhood"] ||
+          tags["addr:city"] || tags["addr:town"] || tags["addr:district"]
+        ),
         category,
         mapUrl: `https://www.openstreetmap.org/${encodeURIComponent(String(el.type || "node"))}/${encodeURIComponent(String(el.id || ""))}`,
       };
@@ -287,7 +304,7 @@ async function findOpenStreetMapPlaces(queryText, location) {
   // These are approximate nearby map references, never business-verified addresses.
   const reverseGeocodeCache = findOpenStreetMapPlaces.reverseGeocodeCache ||
     (findOpenStreetMapPlaces.reverseGeocodeCache = new Map());
-  const missingAddresses = places.filter((place) => !place.address);
+  const missingAddresses = places.filter((place) => !place.address || !place.hasAddressLocality);
   for (let i = 0; i < missingAddresses.length; i += 4) {
     await Promise.all(missingAddresses.slice(i, i + 4).map(async (place) => {
       const key = String(place.lat.toFixed(4)) + "," + String(place.lon.toFixed(4));
@@ -315,37 +332,42 @@ async function findOpenStreetMapPlaces(queryText, location) {
         console.warn("Photon reverse geocoding unavailable:", error?.message || error);
       }
 
-      // Nominatim is a secondary source when Photon cannot identify a street.
-      // Requests are sequential and spaced to respect its public usage policy.
-      if (!nearbyStreet) {
-        try {
-          const url = new URL("https://nominatim.openstreetmap.org/reverse");
-          url.search = new URLSearchParams({
-            format: "jsonv2",
-            lat: String(place.lat),
-            lon: String(place.lon),
-            zoom: "18",
-            addressdetails: "1",
-          });
-          const response = await fetch(url, {
-            headers: {
-              "User-Agent": "3PedalsAutoKE/1.0 (https://3pedalsauto.co.ke)",
-              Accept: "application/json",
-            },
-            signal: AbortSignal.timeout(6000),
-          });
-          if (response.ok) {
-            const address = (await response.json())?.address || {};
-            nearbyStreet = String(address.road || address.pedestrian || address.residential || address.footway || "").trim();
-            nearbyArea = nearbyArea ||
-              String(address.neighbourhood || address.suburb || address.quarter || address.city_district || address.county || "").trim();
+      // Nominatim is a secondary source when Photon cannot identify a street
+      // or when a street-only OSM address still needs locality context. Serialize
+      // requests across concurrent searches to respect the public usage policy.
+      if (!nearbyStreet || !nearbyArea) {
+        const nominatimTask = nominatimReverseQueue.then(async () => {
+          try {
+            const url = new URL("https://nominatim.openstreetmap.org/reverse");
+            url.search = new URLSearchParams({
+              format: "jsonv2",
+              lat: String(place.lat),
+              lon: String(place.lon),
+              zoom: "18",
+              addressdetails: "1",
+            });
+            const response = await fetch(url, {
+              headers: {
+                "User-Agent": "3PedalsAutoKE/1.0 (https://3pedalsauto.co.ke)",
+                Accept: "application/json",
+              },
+              signal: AbortSignal.timeout(6000),
+            });
+            if (response.ok) {
+              const address = (await response.json())?.address || {};
+              nearbyStreet = nearbyStreet || String(address.road || address.pedestrian || address.residential || address.footway || "").trim();
+              nearbyArea = nearbyArea || String(
+                address.neighbourhood || address.suburb || address.quarter ||
+                address.city_district || address.city || address.town || address.county || ""
+              ).trim();
+            }
+          } catch (error) {
+            console.warn("Nominatim reverse geocoding unavailable:", error?.message || error);
           }
-        } catch (error) {
-          console.warn("Nominatim reverse geocoding unavailable:", error?.message || error);
-        }
-        if (missingAddresses.indexOf(place) < missingAddresses.length - 1) {
           await new Promise((resolve) => setTimeout(resolve, 1100));
-        }
+        });
+        nominatimReverseQueue = nominatimTask.then(() => undefined, () => undefined);
+        await nominatimTask;
       }
 
       const result = { nearbyStreet, nearbyArea };
@@ -414,7 +436,7 @@ app.post("/api/chat", async (req, res) => {
           "Here are the named automotive businesses returned by OpenStreetMap. The category shown is based only on each record’s OSM tags; it does not confirm the business’s actual services. Coverage and address details may be incomplete, and OSM does not verify licensing, KEBS/KRA approval, service quality, opening hours or customer ratings.",
           "",
           ...osmPlaces.slice(0, 20).map((place, index) =>
-            `${index + 1}. **${place.name}**\n   Category: ${place.category}\n   Location: ${place.address || "Address not listed in OpenStreetMap"}${!place.address && place.nearbyStreet ? `\n   Nearby mapped street (approx.): ${place.nearbyStreet}` : ""}${!place.address && !place.nearbyStreet && place.nearbyArea ? `\n   Nearby area (approx.): ${place.nearbyArea}` : ""}\n   Map: ${place.mapUrl}`
+            `${index + 1}. **${place.name}**\\n   Category: ${place.category}\\n   Location: ${place.address || "Address not listed in OpenStreetMap"}${place.nearbyStreet && (!place.address || !place.address.toLowerCase().includes(place.nearbyStreet.toLowerCase())) ? `\\n   Nearby mapped street (approx.): ${formatOsmAddressPart(place.nearbyStreet)}` : ""}${place.nearbyArea && (!place.address || !place.hasAddressLocality) ? `\\n   Nearby area (approx.): ${formatOsmAddressPart(place.nearbyArea)}` : ""}\\n   Map: ${place.mapUrl}`
           ),
         ].join("\n\n")
       : "OpenStreetMap returned no matching automotive locations for this search area. Try a nearby neighbourhood or a broader search. I won't invent business names or locations.";
