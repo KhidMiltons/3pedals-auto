@@ -114,23 +114,71 @@ async function findOpenStreetMapPlaces(queryText, location) {
 
   let center = null;
   if (area && !wantsNearMe) {
-    const url = new URL("https://nominatim.openstreetmap.org/search");
-    url.search = new URLSearchParams({
-      format: "jsonv2",
-      limit: "1",
-      countrycodes: "ke",
-      q: `${area}, Kenya`,
-    });
-    const response = await fetch(url, {
-      headers: {
-        "User-Agent": "3PedalsAutoKE/1.0 (https://3pedalsauto.co.ke)",
-        Accept: "application/json",
-      },
-      signal: AbortSignal.timeout(9000),
-    });
-    if (!response.ok) throw new Error("OpenStreetMap location search is unavailable.");
-    const found = await response.json();
-    if (found[0]) center = { lat: Number(found[0].lat), lon: Number(found[0].lon) };
+    // Try Nominatim first, then Photon if Nominatim is rate-limited or unavailable.
+    try {
+      const url = new URL("https://nominatim.openstreetmap.org/search");
+      url.search = new URLSearchParams({
+        format: "jsonv2",
+        limit: "1",
+        countrycodes: "ke",
+        q: `${area}, Kenya`,
+      });
+      const response = await fetch(url, {
+        headers: {
+          "User-Agent": "3PedalsAutoKE/1.0 (https://3pedalsauto.co.ke)",
+          Accept: "application/json",
+        },
+        signal: AbortSignal.timeout(7000),
+      });
+      if (response.ok) {
+        const found = await response.json();
+        const lat = Number(found?.[0]?.lat);
+        const lon = Number(found?.[0]?.lon);
+        if (Number.isFinite(lat) && Number.isFinite(lon)) center = { lat, lon };
+      }
+    } catch (error) {
+      console.warn("Nominatim geocoding unavailable; trying Photon:", error?.message || error);
+    }
+
+    if (!center) {
+      try {
+        const photonUrl = new URL("https://photon.komoot.io/api/");
+        photonUrl.search = new URLSearchParams({
+          q: `${area}, Kenya`,
+          limit: "5",
+          lang: "en",
+        });
+        const response = await fetch(photonUrl, {
+          headers: { "User-Agent": "3PedalsAutoKE/1.0 (https://3pedalsauto.co.ke)" },
+          signal: AbortSignal.timeout(9000),
+        });
+        if (response.ok) {
+          const payload = await response.json();
+          const features = Array.isArray(payload?.features) ? payload.features : [];
+          const match = features.find((feature) => {
+            const props = feature?.properties || {};
+            const coords = feature?.geometry?.coordinates || [];
+            const lon = Number(coords[0]);
+            const lat = Number(coords[1]);
+            const country = String(props.country || "").toLowerCase();
+            return country === "kenya" &&
+              Number.isFinite(lat) && Number.isFinite(lon) &&
+              lat >= -5.5 && lat <= 5.5 && lon >= 33.5 && lon <= 42.5;
+          });
+          if (match) {
+            const [lon, lat] = match.geometry.coordinates.map(Number);
+            center = { lat, lon };
+          }
+        }
+      } catch (error) {
+        console.warn("Photon fallback geocoding unavailable:", error?.message || error);
+      }
+    }
+
+    // If the user shared GPS, use it rather than failing the entire map lookup.
+    if (!center && !hasLocation) {
+      throw new Error("Could not locate that area using OpenStreetMap or the backup geocoder. Try a nearby neighbourhood or share your GPS location.");
+    }
   }
   if (!center && hasLocation) {
     center = { lat: userLat, lon: userLng };
