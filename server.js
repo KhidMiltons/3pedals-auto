@@ -140,14 +140,15 @@ async function findOpenStreetMapPlaces(queryText, location) {
   // Keep the Overpass query focused: broad name searches and a 20 km radius
   // make public instances time out, especially around dense urban areas.
   const around = `around:12000,${center.lat},${center.lon}`;
-  const query = `[out:json][timeout:20];(nwr["shop"="car_repair"](${around});nwr["craft"="car_repair"](${around});nwr["amenity"="vehicle_inspection"](${around});nwr["shop"="car"](${around}););out center tags 60;`;
+  const query = `[out:json][timeout:12];(nwr["shop"="car_repair"](${around});nwr["craft"="car_repair"](${around});nwr["amenity"="vehicle_inspection"](${around});nwr["shop"="car"](${around}););out center tags 60;`;
   let data = null;
   let lastError = null;
-  // Try two public Overpass instances. The request timeout must exceed the
-  // query's own timeout; otherwise Render can abort a valid lookup too early.
+  // Prefer the Africa-focused extract, then use independent global instances.
+  // Public Overpass endpoints are best-effort and may block or time out on some hosts.
   for (const endpoint of [
-    "https://overpass-api.de/api/interpreter",
-    "https://overpass.kumi.systems/api/interpreter",
+    "https://ovp.dresel.systems/api-af/interpreter",
+    "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
+    "https://overpass.private.coffee/api/interpreter",
   ]) {
     try {
       const response = await fetch(endpoint, {
@@ -157,7 +158,7 @@ async function findOpenStreetMapPlaces(queryText, location) {
           "User-Agent": "3PedalsAutoKE/1.0 (https://3pedalsauto.co.ke)",
         },
         body: "data=" + encodeURIComponent(query),
-        signal: AbortSignal.timeout(30000),
+        signal: AbortSignal.timeout(16000),
       });
       if (!response.ok) {
         throw new Error(`Overpass returned HTTP ${response.status}`);
