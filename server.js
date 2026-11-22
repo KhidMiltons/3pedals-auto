@@ -180,23 +180,49 @@ async function findOpenStreetMapPlaces(queryText, location) {
     throw new Error(`Both OpenStreetMap search servers failed. ${lastError?.message || "Unknown Overpass error"}`);
   }
   const seen = new Set();
+  const genericNames = new Set([
+    "garage",
+    "automotive location",
+    "automotive",
+    "car repair",
+    "car dealership",
+    "vehicle",
+    "unnamed",
+  ]);
   return (data.elements || [])
     .map((el) => {
       const tags = el.tags || {};
+      const rawName = String(tags.name || tags.brand || "").trim();
+      const shop = String(tags.shop || "").toLowerCase();
+      const craft = String(tags.craft || "").toLowerCase();
+      const amenity = String(tags.amenity || "").toLowerCase();
+      let category = "";
+      if (shop === "car_repair" || craft === "car_repair") {
+        category = "Repair garage";
+      } else if (amenity === "vehicle_inspection") {
+        category = "Vehicle inspection centre";
+      } else if (shop === "car") {
+        category = "Vehicle sales / automotive business";
+      }
       return {
-        name: tags.name || tags.brand || "Automotive location",
+        name: rawName,
         lat: Number(el.lat ?? el.center?.lat),
         lon: Number(el.lon ?? el.center?.lon),
-        address: [tags["addr:street"], tags["addr:suburb"], tags["addr:city"]]
-          .filter(Boolean)
-          .join(", "),
-        category: tags.amenity || tags.shop || tags.office || tags.craft || "automotive",
+        address: [
+          tags["addr:housenumber"],
+          tags["addr:street"],
+          tags["addr:place"],
+          tags["addr:suburb"] || tags["addr:neighbourhood"],
+          tags["addr:city"] || tags["addr:town"] || tags["addr:district"],
+        ].filter(Boolean).join(", "),
+        category,
         mapUrl: `https://www.openstreetmap.org/${encodeURIComponent(String(el.type || "node"))}/${encodeURIComponent(String(el.id || ""))}`,
       };
     })
     .filter((p) => {
-      if (!Number.isFinite(p.lat) || !Number.isFinite(p.lon)) return false;
-      const key = `${p.name}|${p.lat.toFixed(5)}|${p.lon.toFixed(5)}`;
+      if (!p.name || genericNames.has(p.name.toLowerCase())) return false;
+      if (!p.category || !Number.isFinite(p.lat) || !Number.isFinite(p.lon)) return false;
+      const key = `${p.name.toLowerCase()}|${p.lat.toFixed(5)}|${p.lon.toFixed(5)}`;
       if (seen.has(key)) return false;
       seen.add(key);
       return true;
@@ -259,7 +285,7 @@ app.post("/api/chat", async (req, res) => {
   if (effectiveMode === "maps") {
     const reply = osmPlaces.length
       ? [
-          "Here are the automotive locations returned by OpenStreetMap for this search. Listings and map coverage may be incomplete; presence in OSM does not verify licensing, KEBS/KRA approval, service quality, opening hours or customer ratings.",
+          "Here are the named automotive businesses returned by OpenStreetMap. Results are grouped by the business type recorded in OSM. Coverage and address details may be incomplete; an OSM listing does not verify licensing, KEBS/KRA approval, service quality, opening hours or customer ratings.",
           "",
           ...osmPlaces.slice(0, 20).map((place, index) =>
             `${index + 1}. **${place.name}**\n   Category: ${place.category}\n   Location: ${place.address || "No address recorded in OpenStreetMap"}\n   Map: ${place.mapUrl}`
