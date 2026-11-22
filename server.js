@@ -139,7 +139,7 @@ async function findOpenStreetMapPlaces(queryText, location) {
 
   const pattern = "car|auto|motor|vehicle|garage|inspection|ntsa|toyota|subaru|mazda|mitsubishi|nissan|dealer|showroom";
   const around = `around:20000,${center.lat},${center.lon}`;
-  const query = `[out:json][timeout:25];(nwr["shop"~"^(car|car_repair|car_parts|tyres)$"](${around});nwr["craft"="car_repair"](${around});nwr["amenity"~"^(car_rental|car_wash|vehicle_inspection)$"](${around});nwr["office"~"^(automotive|car)$"](${around});nwr["name"~"${pattern}",i](${around}););out center tags 100;`;
+  const query = `[out:json][timeout:25];(nwr["shop"~"^(car|car_repair|car_parts|tyres)$"](${around});nwr["craft"="car_repair"](${around});nwr["amenity"~"^(car_rental|car_wash|vehicle_inspection)$"](${around});nwr["office"~"^(automotive|car)$"](${around});nwr["name"~"${pattern}",i](${around}););out tags center 100;`;
   const response = await fetch("https://overpass-api.de/api/interpreter", {
     method: "POST",
     headers: {
@@ -151,6 +151,12 @@ async function findOpenStreetMapPlaces(queryText, location) {
   });
   if (!response.ok) throw new Error("OpenStreetMap place search is unavailable.");
   const data = await response.json();
+  if (data?.remark) {
+    throw new Error(`OpenStreetMap Overpass query error: ${String(data.remark).slice(0, 240)}`);
+  }
+  if (!Array.isArray(data?.elements)) {
+    throw new Error("OpenStreetMap returned an unexpected response format.");
+  }
   const seen = new Set();
   return (data.elements || [])
     .map((el) => {
