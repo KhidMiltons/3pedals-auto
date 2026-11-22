@@ -1058,6 +1058,7 @@
     const state = readChatSession();
     let userLocation = null;
     let isSending = false;
+    let editingMessageIndex = -1;
 
     const fab = document.createElement("button");
     fab.type = "button";
@@ -1157,13 +1158,26 @@
         </div>
         <div class="ux-chat-messages" id="uxChatMessages" role="log" aria-live="polite"></div>
         <form class="ux-chat-form" id="uxChatForm">
-          <textarea id="uxChatInput" rows="2" placeholder="${lbl.placeholder}" aria-label="${lbl.placeholder}"></textarea>
-          <button type="submit" id="uxChatSendBtn">${lbl.send}</button>
+          <div class="ux-chat-edit-status" id="uxChatEditStatus" hidden>
+            <span>${getLang() === "sw" ? "Unahariri ujumbe uliotangulia" : "Editing an earlier prompt"}</span>
+            <button type="button" id="uxChatCancelEditBtn">${getLang() === "sw" ? "Ghairi" : "Cancel"}</button>
+          </div>
+          <div class="ux-chat-compose-row">
+            <textarea id="uxChatInput" rows="2" placeholder="${lbl.placeholder}" aria-label="${lbl.placeholder}"></textarea>
+            <button type="submit" id="uxChatSendBtn">${lbl.send}</button>
+          </div>
         </form>
       `;
 
       renderMessages();
+      syncEditComposer();
 
+      document.getElementById("uxChatCancelEditBtn")?.addEventListener("click", () => {
+        editingMessageIndex = -1;
+        const input = document.getElementById("uxChatInput");
+        if (input) input.value = "";
+        syncEditComposer();
+      });
       document.getElementById("uxChatCloseBtn")?.addEventListener("click", () => setOpen(false));
       document.getElementById("uxChatClearBtn")?.addEventListener("click", () => {
         state.messages = [];
@@ -1249,17 +1263,78 @@
             !isUser && m.model
               ? `<span class="ux-chat-meta">${escapeHtml(m.model)}${m.groundingMode ? " · " + escapeHtml(m.groundingMode) : ""}</span>`
               : "";
+          const messageIndex = state.messages.indexOf(m);
+          const actionButtons = m.isError ? "" : `
+            <div class="ux-chat-message-actions">
+              <button type="button" class="ux-chat-icon-btn" data-chat-action="copy" data-message-index="${messageIndex}" title="${getLang() === "sw" ? "Nakili ujumbe" : "Copy to clipboard"}" aria-label="${getLang() === "sw" ? "Nakili ujumbe" : "Copy to clipboard"}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path></svg>
+                <span>${getLang() === "sw" ? "Nakili" : "Copy"}</span>
+              </button>
+              ${isUser ? `<button type="button" class="ux-chat-icon-btn" data-chat-action="edit" data-message-index="${messageIndex}" title="${getLang() === "sw" ? "Hariri swali hili" : "Edit this prompt"}" aria-label="${getLang() === "sw" ? "Hariri swali hili" : "Edit this prompt"}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"></path></svg>
+                <span>${getLang() === "sw" ? "Hariri" : "Edit"}</span>
+              </button>` : ""}
+            </div>`;
           return `
             <div class="ux-chat-msg ${isUser ? "is-user" : m.isError ? "is-error" : "is-model"}">
               <div class="ux-chat-bubble">
                 ${isUser ? `<p>${escapeHtml(m.text)}</p>` : formatChatMarkdown(m.text)}
                 ${sourcesHtml}
                 ${badge}
+                ${actionButtons}
               </div>
             </div>
           `;
         })
         .join("");
+
+      box.querySelectorAll("[data-chat-action]").forEach((button) => {
+        button.addEventListener("click", async () => {
+          const index = Number(button.dataset.messageIndex);
+          const message = state.messages[index];
+          if (!message) return;
+          if (button.dataset.chatAction === "edit" && message.role === "user") {
+            editingMessageIndex = index;
+            const input = document.getElementById("uxChatInput");
+            if (input) {
+              input.value = message.text;
+              input.focus();
+              input.setSelectionRange(input.value.length, input.value.length);
+            }
+            syncEditComposer();
+            return;
+          }
+          if (button.dataset.chatAction === "copy") {
+            try {
+              if (navigator.clipboard?.writeText && window.isSecureContext) {
+                await navigator.clipboard.writeText(message.text);
+              } else {
+                const temporary = document.createElement("textarea");
+                temporary.value = message.text;
+                temporary.style.position = "fixed";
+                temporary.style.opacity = "0";
+                document.body.appendChild(temporary);
+                temporary.select();
+                const copied = document.execCommand("copy");
+                temporary.remove();
+                if (!copied) throw new Error("Clipboard copy failed");
+              }
+              const label = button.querySelector("span");
+              if (label) {
+                const previous = label.textContent;
+                label.textContent = getLang() === "sw" ? "Imenakiliwa" : "Copied";
+                button.classList.add("is-copied");
+                window.setTimeout(() => {
+                  if (label.isConnected) label.textContent = previous;
+                  button.classList.remove("is-copied");
+                }, 1400);
+              }
+            } catch (error) {
+              console.warn("Could not copy Auto Advisor message:", error);
+            }
+          }
+        });
+      });
 
       if (isSending) {
         box.insertAdjacentHTML(
@@ -1270,6 +1345,20 @@
       box.scrollTop = box.scrollHeight;
     }
 
+    function syncEditComposer() {
+      const status = document.getElementById("uxChatEditStatus");
+      const sendBtn = document.getElementById("uxChatSendBtn");
+      const input = document.getElementById("uxChatInput");
+      const editing = editingMessageIndex >= 0;
+      if (status) status.hidden = !editing;
+      if (sendBtn && !isSending) sendBtn.textContent = editing
+        ? (getLang() === "sw" ? "Sasisha" : "Update")
+        : chatLabels().send;
+      if (input) input.placeholder = editing
+        ? (getLang() === "sw" ? "Hariri ujumbe wako, kisha utume tena…" : "Edit your prompt, then send it again…")
+        : chatLabels().placeholder;
+    }
+
     async function sendMessage(rawText) {
       const text = String(rawText || "").trim();
       if (!text || isSending) return;
@@ -1277,8 +1366,13 @@
       const sendBtn = document.getElementById("uxChatSendBtn");
       if (input) input.value = "";
 
+      if (editingMessageIndex >= 0) {
+        state.messages = state.messages.slice(0, editingMessageIndex);
+        editingMessageIndex = -1;
+      }
       state.messages.push({ role: "user", text });
       writeChatSession(state);
+      syncEditComposer();
       isSending = true;
       if (sendBtn) sendBtn.disabled = true;
       renderMessages();
@@ -1343,6 +1437,7 @@
         clearTimeout(wakeNoticeId);
         isSending = false;
         if (sendBtn) sendBtn.disabled = false;
+        syncEditComposer();
         writeChatSession(state);
         renderMessages();
       }
