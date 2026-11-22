@@ -214,7 +214,13 @@ async function findOpenStreetMapPlaces(queryText, location) {
           tags["addr:place"],
           tags["addr:suburb"] || tags["addr:neighbourhood"],
           tags["addr:city"] || tags["addr:town"] || tags["addr:district"],
-        ].filter(Boolean).join(", "),
+        ]
+          .map((part) => String(part || "").replace(/\s+/g, " ").replace(/^[,\s]+|[,\s]+$/g, "").replace(/\s*,\s*,+/g, ",").trim())
+          .filter(Boolean)
+          .join(", ")
+          .replace(/\s*,\s*/g, ", ")
+          .replace(/,{2,}/g, ",")
+          .trim(),
         category,
         mapUrl: `https://www.openstreetmap.org/${encodeURIComponent(String(el.type || "node"))}/${encodeURIComponent(String(el.id || ""))}`,
       };
@@ -288,7 +294,7 @@ app.post("/api/chat", async (req, res) => {
           "Here are the named automotive businesses returned by OpenStreetMap. Results are grouped by the business type recorded in OSM. Coverage and address details may be incomplete; an OSM listing does not verify licensing, KEBS/KRA approval, service quality, opening hours or customer ratings.",
           "",
           ...osmPlaces.slice(0, 20).map((place, index) =>
-            `${index + 1}. **${place.name}**\n   Category: ${place.category}\n   Location: ${place.address || "No address recorded in OpenStreetMap"}\n   Map: ${place.mapUrl}`
+            `${index + 1}. **${place.name}**\n   Category: ${place.category}\n   Location: ${place.address || "Address not listed in OpenStreetMap"}\n   Map: ${place.mapUrl}`
           ),
         ].join("\n\n")
       : "OpenStreetMap returned no matching automotive locations for this search area. Try a nearby neighbourhood or a broader search. I won't invent business names or locations.";
