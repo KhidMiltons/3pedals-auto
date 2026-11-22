@@ -231,9 +231,9 @@ app.post("/api/chat", async (req, res) => {
           "Here are the automotive locations returned by OpenStreetMap for this search. Listings and map coverage may be incomplete; presence in OSM does not verify licensing, KEBS/KRA approval, service quality, opening hours or customer ratings.",
           "",
           ...osmPlaces.slice(0, 20).map((place, index) =>
-            `${index + 1}. **${place.name}**\\n   Category: ${place.category}\\n   Location: ${place.address || "No address recorded in OpenStreetMap"}\\n   Map: ${place.mapUrl}`
+            `${index + 1}. **${place.name}**\n   Category: ${place.category}\n   Location: ${place.address || "No address recorded in OpenStreetMap"}\n   Map: ${place.mapUrl}`
           ),
-        ].join("\\n\\n")
+        ].join("\n\n")
       : "OpenStreetMap returned no matching automotive locations for this search area. Try a nearby neighbourhood or a broader search. I won't invent business names or locations.";
     const groundingSources = osmPlaces.slice(0, 20).map((place) => ({
       type: "osm",
