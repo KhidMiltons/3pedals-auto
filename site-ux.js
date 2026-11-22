@@ -1232,7 +1232,7 @@
         .map((m) => {
           const isUser = m.role === "user";
           const sources = Array.isArray(m.sources) ? m.sources : [];
-          const safeSources = sources.filter((s) => /^https?:\/\//i.test(String(s?.uri || "")));
+          const safeSources = sources.filter((s) => s?.type !== "osm" && /^https?:\/\//i.test(String(s?.uri || "")));
           const sourcesHtml = safeSources.length
             ? `<div class="ux-chat-sources">${safeSources
                 .map(
