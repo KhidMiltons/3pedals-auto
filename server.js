@@ -393,22 +393,35 @@ async function findOpenStreetMapPlaces(queryText, location) {
         const roads = candidates
           .filter((item) => item.tags.highway && item.tags.name)
           .map((item) => ({ name: String(item.tags.name).trim(), distance: distanceMetres(place, item) }))
-          .filter((item) => item.name && item.distance <= 500)
+          .filter((item) => item.name && item.distance <= 250)
           .sort((a, b) => a.distance - b.distance);
         const areas = candidates
-          .filter((item) => /^(neighbourhood|suburb|quarter)$/.test(String(item.tags.place || "")) && item.tags.name)
-          .map((item) => ({ name: String(item.tags.name).trim(), distance: distanceMetres(place, item) }))
-          .filter((item) => item.name && item.distance <= 1500)
-          .sort((a, b) => a.distance - b.distance);
+          .filter((item) => /^(neighbourhood|quarter|suburb)$/.test(String(item.tags.place || "")) && item.tags.name)
+          .map((item) => ({
+            name: String(item.tags.name).trim(),
+            type: String(item.tags.place || ""),
+            distance: distanceMetres(place, item),
+          }))
+          .filter((item) => item.name && item.distance <= 900)
+          // Prefer a true neighbourhood over a broader suburb when both are
+          // genuinely close; distance remains the main ranking factor.
+          .sort((a, b) => {
+            const typePriority = { neighbourhood: 0, quarter: 1, suburb: 2 };
+            const aScore = a.distance + (typePriority[a.type] * 100);
+            const bScore = b.distance + (typePriority[b.type] * 100);
+            return aScore - bScore;
+          });
         place.nearbyStreet = place.nearbyStreet || roads[0]?.name || "";
-        place.nearbyArea = place.nearbyArea || areas[0]?.name || "";
+        place.nearbyArea = areas[0]?.name || "";
       }
     }
   }
 
   for (let i = 0; i < missingAddresses.length; i += 4) {
     await Promise.all(missingAddresses.slice(i, i + 4).map(async (place) => {
-      const key = String(place.lat.toFixed(4)) + "," + String(place.lon.toFixed(4));
+      // Keep cache entries specific enough that adjacent businesses do not
+      // inherit one another's street/locality labels.
+      const key = String(place.lat.toFixed(5)) + "," + String(place.lon.toFixed(5));
       if (reverseGeocodeCache.has(key)) {
         const cached = reverseGeocodeCache.get(key) || {};
         place.nearbyStreet = place.nearbyStreet || cached.nearbyStreet || "";
@@ -543,7 +556,7 @@ app.post("/api/chat", async (req, res) => {
           "Here are the named automotive businesses returned by OpenStreetMap. The category shown is based only on each record’s OSM tags; it does not confirm the business’s actual services. Coverage and address details may be incomplete, and OSM does not verify licensing, KEBS/KRA approval, service quality, opening hours or customer ratings.",
           "",
           ...osmPlaces.slice(0, 20).map((place, index) =>
-            `${index + 1}. **${place.name}**\n   Category: ${place.category}\n   OSM-listed address: ${place.address || "Not provided in OpenStreetMap"}${place.nearbyStreet && (!place.address || !place.address.toLowerCase().replace(/[^a-z0-9]/g, "").includes(place.nearbyStreet.toLowerCase().replace(/[^a-z0-9]/g, ""))) ? `\n   Nearby mapped street (approximate, not a business address): ${formatOsmAddressPart(place.nearbyStreet)}` : ""}${place.nearbyArea && (!place.address || !place.hasAddressLocality) ? `\n   Nearby area (approximate): ${formatOsmAddressPart(place.nearbyArea)}` : ""}\n   View on OpenStreetMap: ${place.mapUrl}`
+            `${index + 1}. **${place.name}**\n   Category: ${place.category}\n   OSM-listed address: ${place.address || "Not provided in OpenStreetMap"}${place.nearbyStreet && (!place.address || !place.address.toLowerCase().replace(/[^a-z0-9]/g, "").includes(place.nearbyStreet.toLowerCase().replace(/[^a-z0-9]/g, ""))) ? `\n   Nearby mapped street (approximate, not a business address): ${formatOsmAddressPart(place.nearbyStreet)}` : ""}${place.nearbyArea && (!place.address || !place.hasAddressLocality) ? `\n   Nearby mapped area (approximate): ${formatOsmAddressPart(place.nearbyArea)}` : ""}\n   View on OpenStreetMap: ${place.mapUrl}`
           ),
         ].join("\n\n")
       : "OpenStreetMap returned no matching automotive locations for this search area. Try a nearby neighbourhood or a broader search. I won't invent business names or locations.";
