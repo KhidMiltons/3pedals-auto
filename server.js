@@ -283,8 +283,8 @@ async function findOpenStreetMapPlaces(queryText, location) {
     })
     .slice(0, 30);
 
-  // Add approximate nearby mapped streets/localities where OSM has no address tags.
-  // This is contextual geography, not a verified business address.
+  // Resolve missing OSM addresses into a street first, then a locality/ward.
+  // These are approximate nearby map references, never business-verified addresses.
   const reverseGeocodeCache = findOpenStreetMapPlaces.reverseGeocodeCache ||
     (findOpenStreetMapPlaces.reverseGeocodeCache = new Map());
   const missingAddresses = places.filter((place) => !place.address);
@@ -292,9 +292,12 @@ async function findOpenStreetMapPlaces(queryText, location) {
     await Promise.all(missingAddresses.slice(i, i + 4).map(async (place) => {
       const key = String(place.lat.toFixed(4)) + "," + String(place.lon.toFixed(4));
       if (reverseGeocodeCache.has(key)) {
-        place.nearbyLocation = reverseGeocodeCache.get(key);
+        Object.assign(place, reverseGeocodeCache.get(key));
         return;
       }
+
+      let nearbyStreet = "";
+      let nearbyArea = "";
       try {
         const url = new URL("https://photon.komoot.io/reverse/");
         url.search = new URLSearchParams({ lat: String(place.lat), lon: String(place.lon), lang: "en" });
@@ -302,19 +305,52 @@ async function findOpenStreetMapPlaces(queryText, location) {
           headers: { "User-Agent": "3PedalsAutoKE/1.0 (https://3pedalsauto.co.ke)" },
           signal: AbortSignal.timeout(6000),
         });
-        if (!response.ok) return;
-        const props = (await response.json())?.features?.[0]?.properties || {};
-        const parts = [props.street, props.district || props.suburb || props.neighbourhood, props.city || props.town || props.village, props.county]
-          .map((value) => String(value || "").trim())
-          .filter((value, index, all) => value && all.findIndex((v) => v.toLowerCase() === value.toLowerCase()) === index);
-        const nearby = parts.join(", ");
-        if (nearby) {
-          place.nearbyLocation = nearby;
-          reverseGeocodeCache.set(key, nearby);
+        if (response.ok) {
+          const props = (await response.json())?.features?.[0]?.properties || {};
+          nearbyStreet = String(props.street || "").trim();
+          nearbyArea = String(props.district || props.suburb || props.neighbourhood || "").trim();
+          if (!nearbyArea) nearbyArea = String(props.city || props.town || props.village || "").trim();
         }
       } catch (error) {
         console.warn("Photon reverse geocoding unavailable:", error?.message || error);
       }
+
+      // Nominatim is a secondary source when Photon cannot identify a street.
+      // Requests are sequential and spaced to respect its public usage policy.
+      if (!nearbyStreet) {
+        try {
+          const url = new URL("https://nominatim.openstreetmap.org/reverse");
+          url.search = new URLSearchParams({
+            format: "jsonv2",
+            lat: String(place.lat),
+            lon: String(place.lon),
+            zoom: "18",
+            addressdetails: "1",
+          });
+          const response = await fetch(url, {
+            headers: {
+              "User-Agent": "3PedalsAutoKE/1.0 (https://3pedalsauto.co.ke)",
+              Accept: "application/json",
+            },
+            signal: AbortSignal.timeout(6000),
+          });
+          if (response.ok) {
+            const address = (await response.json())?.address || {};
+            nearbyStreet = String(address.road || address.pedestrian || address.residential || address.footway || "").trim();
+            nearbyArea = nearbyArea ||
+              String(address.neighbourhood || address.suburb || address.quarter || address.city_district || address.county || "").trim();
+          }
+        } catch (error) {
+          console.warn("Nominatim reverse geocoding unavailable:", error?.message || error);
+        }
+        if (missingAddresses.indexOf(place) < missingAddresses.length - 1) {
+          await new Promise((resolve) => setTimeout(resolve, 1100));
+        }
+      }
+
+      const result = { nearbyStreet, nearbyArea };
+      Object.assign(place, result);
+      reverseGeocodeCache.set(key, result);
     }));
   }
   return places;
@@ -378,7 +414,7 @@ app.post("/api/chat", async (req, res) => {
           "Here are the named automotive businesses returned by OpenStreetMap. The category shown is based only on each record’s OSM tags; it does not confirm the business’s actual services. Coverage and address details may be incomplete, and OSM does not verify licensing, KEBS/KRA approval, service quality, opening hours or customer ratings.",
           "",
           ...osmPlaces.slice(0, 20).map((place, index) =>
-            `${index + 1}. **${place.name}**\n   Category: ${place.category}\n   Location: ${place.address || "Address not listed in OpenStreetMap"}${place.nearbyLocation ? `\n   Nearby mapped area (approx.): ${place.nearbyLocation}` : ""}\n   Map: ${place.mapUrl}`
+            `${index + 1}. **${place.name}**\n   Category: ${place.category}\n   Location: ${place.address || "Address not listed in OpenStreetMap"}${!place.address && place.nearbyStreet ? `\n   Nearby mapped street (approx.): ${place.nearbyStreet}` : ""}${!place.address && !place.nearbyStreet && place.nearbyArea ? `\n   Nearby area (approx.): ${place.nearbyArea}` : ""}\n   Map: ${place.mapUrl}`
           ),
         ].join("\n\n")
       : "OpenStreetMap returned no matching automotive locations for this search area. Try a nearby neighbourhood or a broader search. I won't invent business names or locations.";
