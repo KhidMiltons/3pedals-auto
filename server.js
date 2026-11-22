@@ -395,12 +395,15 @@ async function findOpenStreetMapPlaces(queryText, location) {
     await Promise.all(missingAddresses.slice(i, i + 4).map(async (place) => {
       const key = String(place.lat.toFixed(4)) + "," + String(place.lon.toFixed(4));
       if (reverseGeocodeCache.has(key)) {
-        Object.assign(place, reverseGeocodeCache.get(key));
-        return;
+        const cached = reverseGeocodeCache.get(key) || {};
+        place.nearbyStreet = place.nearbyStreet || cached.nearbyStreet || "";
+        place.nearbyArea = place.nearbyArea || cached.nearbyArea || "";
+        continue;
       }
 
-      let nearbyStreet = "";
-      let nearbyArea = "";
+      // Keep direct nearby-OSM matches; reverse geocoders only fill gaps.
+      let nearbyStreet = place.nearbyStreet || "";
+      let nearbyArea = place.nearbyArea || "";
       try {
         const url = new URL("https://photon.komoot.io/reverse/");
         url.search = new URLSearchParams({ lat: String(place.lat), lon: String(place.lon), lang: "en" });
@@ -458,7 +461,10 @@ async function findOpenStreetMapPlaces(queryText, location) {
         await nominatimTask;
       }
 
-      const result = { nearbyStreet, nearbyArea };
+      const result = {
+        nearbyStreet: place.nearbyStreet || nearbyStreet || "",
+        nearbyArea: place.nearbyArea || nearbyArea || "",
+      };
       Object.assign(place, result);
       reverseGeocodeCache.set(key, result);
     }));
