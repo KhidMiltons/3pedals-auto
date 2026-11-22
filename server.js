@@ -137,9 +137,10 @@ async function findOpenStreetMapPlaces(queryText, location) {
   }
   if (!center) center = { lat: -1.2921, lon: 36.8219 };
 
-  const pattern = "car|auto|motor|vehicle|garage|inspection|ntsa|toyota|subaru|mazda|mitsubishi|nissan|dealer|showroom";
-  const around = `around:20000,${center.lat},${center.lon}`;
-  const query = `[out:json][timeout:20];(nwr["shop"~"^(car|car_repair|car_parts|tyres)$"](${around});nwr["craft"="car_repair"](${around});nwr["amenity"~"^(car_rental|car_wash|vehicle_inspection)$"](${around});nwr["office"~"^(automotive|car)$"](${around});nwr["name"~"${pattern}",i](${around}););out center tags 100;`;
+  // Keep the Overpass query focused: broad name searches and a 20 km radius
+  // make public instances time out, especially around dense urban areas.
+  const around = `around:12000,${center.lat},${center.lon}`;
+  const query = `[out:json][timeout:20];(nwr["shop"="car_repair"](${around});nwr["craft"="car_repair"](${around});nwr["amenity"="vehicle_inspection"](${around});nwr["shop"="car"](${around}););out center tags 60;`;
   let data = null;
   let lastError = null;
   // Try two public Overpass instances. The request timeout must exceed the
