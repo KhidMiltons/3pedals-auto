@@ -3417,37 +3417,71 @@ html[data-theme="light"] .ux-chat-form textarea {
 
 
 
-/* Auto Advisor message actions: compact copy and prompt-edit controls */
+/* Auto Advisor prompt and answer icon actions */
+.ux-chat-msg {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+.ux-chat-msg.is-user {
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 7px;
+}
+.ux-chat-msg.is-user .ux-chat-bubble {
+  order: 2;
+  max-width: calc(88% - 38px);
+}
 .ux-chat-message-actions {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 9px;
-  padding-top: 7px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  justify-content: flex-start;
+  gap: 4px;
+  border: 0;
+  padding: 0;
+  margin: 5px 0 0;
+  width: min(88%, 100%);
 }
-html[data-theme="light"] .ux-chat-message-actions {
-  border-top-color: rgba(138, 114, 62, 0.2);
+.ux-chat-prompt-actions {
+  order: 1;
+  flex: 0 0 auto;
+  width: auto;
+  margin: 3px 0 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.16s ease, visibility 0.16s ease;
+}
+.ux-chat-msg.is-user:hover .ux-chat-prompt-actions,
+.ux-chat-msg.is-user:focus-within .ux-chat-prompt-actions {
+  opacity: 1;
+  visibility: visible;
+}
+.ux-chat-answer-actions {
+  justify-content: flex-start;
+  margin-top: 5px;
+  padding-left: 2px;
 }
 .ux-chat-icon-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
-  min-height: 28px;
-  padding: 4px 7px;
+  width: 27px;
+  height: 27px;
+  min-width: 27px;
+  min-height: 27px;
+  padding: 5px;
   border: 0;
   border-radius: 7px;
   background: transparent;
-  color: rgba(244, 240, 232, 0.78);
-  font: 600 10.5px/1 Manrope, system-ui, sans-serif;
+  color: rgba(244, 240, 232, 0.72);
   cursor: pointer;
 }
 .ux-chat-icon-btn svg {
-  width: 14px;
-  height: 14px;
+  display: block;
+  width: 16px;
+  height: 16px;
   fill: none;
   stroke: currentColor;
   stroke-width: 1.8;
@@ -3457,7 +3491,7 @@ html[data-theme="light"] .ux-chat-message-actions {
 .ux-chat-icon-btn:hover,
 .ux-chat-icon-btn.is-copied {
   color: #e9cf8d;
-  background: rgba(215, 189, 131, 0.1);
+  background: rgba(215, 189, 131, 0.12);
 }
 html[data-theme="light"] .ux-chat-icon-btn {
   color: #665633;
@@ -3503,9 +3537,23 @@ html[data-theme="light"] .ux-chat-edit-status {
 html[data-theme="light"] .ux-chat-edit-status button {
   border-color: rgba(138, 114, 62, 0.32);
 }
+@media (hover: none), (pointer: coarse) {
+  .ux-chat-prompt-actions {
+    opacity: 1;
+    visibility: visible;
+  }
+}
 @media (max-width: 560px) {
   .ux-chat-icon-btn {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
     min-height: 30px;
-    padding: 5px 6px;
+  }
+  .ux-chat-msg.is-user {
+    gap: 4px;
+  }
+  .ux-chat-msg.is-user .ux-chat-bubble {
+    max-width: calc(88% - 34px);
   }
 }
