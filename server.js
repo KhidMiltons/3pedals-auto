@@ -97,6 +97,9 @@ function shouldRouteToMaps(text) {
 function formatOsmAddressPart(value) {
   return String(value || "")
     .replace(/\s+/g, " ")
+    .replace(/\s*,\s*/g, ", ")
+    // Some reverse-geocoder records append an internal ",dc" suffix to a locality.
+    .replace(/,\s*dc$/i, "")
     .replace(/^[,\s]+|[,\s]+$/g, "")
     .split(" ")
     .filter(Boolean)
@@ -325,7 +328,9 @@ async function findOpenStreetMapPlaces(queryText, location) {
         if (response.ok) {
           const props = (await response.json())?.features?.[0]?.properties || {};
           nearbyStreet = String(props.street || "").trim();
-          nearbyArea = String(props.district || props.suburb || props.neighbourhood || "").trim();
+          // Prefer immediate neighbourhood fields. "district" can be a distant or
+          // overly broad administrative label (for example, Mariakani for a Nairobi pin).
+          nearbyArea = String(props.suburb || props.neighbourhood || "").trim();
           if (!nearbyArea) nearbyArea = String(props.city || props.town || props.village || "").trim();
         }
       } catch (error) {
@@ -358,7 +363,7 @@ async function findOpenStreetMapPlaces(queryText, location) {
               nearbyStreet = nearbyStreet || String(address.road || address.pedestrian || address.residential || address.footway || "").trim();
               nearbyArea = nearbyArea || String(
                 address.neighbourhood || address.suburb || address.quarter ||
-                address.city_district || address.city || address.town || address.county || ""
+                address.city || address.town || address.village || ""
               ).trim();
             }
           } catch (error) {
