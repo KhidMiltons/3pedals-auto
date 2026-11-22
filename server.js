@@ -198,11 +198,11 @@ async function findOpenStreetMapPlaces(queryText, location) {
       const amenity = String(tags.amenity || "").toLowerCase();
       let category = "";
       if (shop === "car_repair" || craft === "car_repair") {
-        category = "Repair garage";
+        category = "OSM classification: car repair (unverified)";
       } else if (amenity === "vehicle_inspection") {
-        category = "Vehicle inspection centre";
+        category = "OSM classification: vehicle inspection (unverified)";
       } else if (shop === "car") {
-        category = "Vehicle sales / automotive business";
+        category = "OSM classification: vehicle sales (unverified)";
       }
       return {
         name: rawName,
@@ -291,7 +291,7 @@ app.post("/api/chat", async (req, res) => {
   if (effectiveMode === "maps") {
     const reply = osmPlaces.length
       ? [
-          "Here are the named automotive businesses returned by OpenStreetMap. Results are grouped by the business type recorded in OSM. Coverage and address details may be incomplete; an OSM listing does not verify licensing, KEBS/KRA approval, service quality, opening hours or customer ratings.",
+          "Here are the named automotive businesses returned by OpenStreetMap. The category shown is based only on each record’s OSM tags; it does not confirm the business’s actual services. Coverage and address details may be incomplete, and OSM does not verify licensing, KEBS/KRA approval, service quality, opening hours or customer ratings.",
           "",
           ...osmPlaces.slice(0, 20).map((place, index) =>
             `${index + 1}. **${place.name}**\n   Category: ${place.category}\n   Location: ${place.address || "Address not listed in OpenStreetMap"}\n   Map: ${place.mapUrl}`
