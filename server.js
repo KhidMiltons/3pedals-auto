@@ -398,7 +398,7 @@ async function findOpenStreetMapPlaces(queryText, location) {
         const cached = reverseGeocodeCache.get(key) || {};
         place.nearbyStreet = place.nearbyStreet || cached.nearbyStreet || "";
         place.nearbyArea = place.nearbyArea || cached.nearbyArea || "";
-        continue;
+        return;
       }
 
       // Keep direct nearby-OSM matches; reverse geocoders only fill gaps.
