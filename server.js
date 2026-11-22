@@ -104,10 +104,11 @@ async function findOpenStreetMapPlaces(queryText, location) {
     Math.abs(userLng) <= 180;
   const rawQuery = String(queryText || "");
   const wantsNearMe = /\b(near me|nearby|around me|closest|karibu nami)\b/i.test(rawQuery);
-  const area = rawQuery
-    .replace(/\b(near me|nearby|around me|closest|karibu nami|car yards?|dealers?|dealerships?|garages?|mechanics?|inspection cent(er|re)s?|motor vehicle|ntsa|showrooms?|reputable|find|where is|directions|map|maps|kenya)\b/gi, " ")
-    .replace(/\b(in|near|around|along|at|for|to|the|of)\b/gi, " ")
-    .replace(/[^\w\s-]/g, " ")
+  // Extract the place name separately from the rest of the user's instructions.
+  // This prevents phrases such as "show their names and map links" being sent to Nominatim.
+  const explicitArea = rawQuery.match(/\b(?:in|near|around)\s+([a-z][a-z\s-]*?)(?=[,.!?]|$)/i)?.[1] || "";
+  const area = explicitArea
+    .replace(/\b(kenya|republic of kenya)\b/gi, "")
     .replace(/\s+/g, " ")
     .trim();
 
@@ -137,8 +138,8 @@ async function findOpenStreetMapPlaces(queryText, location) {
   if (!center) center = { lat: -1.2921, lon: 36.8219 };
 
   const pattern = "car|auto|motor|vehicle|garage|inspection|ntsa|toyota|subaru|mazda|mitsubishi|nissan|dealer|showroom";
-  const around = `around:12000,${center.lat},${center.lon}`;
-  const query = `[out:json][timeout:15];(nwr["shop"~"^(car|car_repair|car_parts|tyres)$"](${around});nwr["amenity"~"^(car_rental|car_wash|vehicle_inspection)$"](${around});nwr["office"="automotive"](${around});nwr["name"~"${pattern}",i](${around}););out center tags 60;`;
+  const around = `around:20000,${center.lat},${center.lon}`;
+  const query = `[out:json][timeout:25];(nwr["shop"~"^(car|car_repair|car_parts|tyres)$"](${around});nwr["craft"="car_repair"](${around});nwr["amenity"~"^(car_rental|car_wash|vehicle_inspection)$"](${around});nwr["office"~"^(automotive|car)$"](${around});nwr["name"~"${pattern}",i](${around}););out center tags 100;`;
   const response = await fetch("https://overpass-api.de/api/interpreter", {
     method: "POST",
     headers: {
@@ -176,13 +177,6 @@ async function findOpenStreetMapPlaces(queryText, location) {
 }
 
 app.post("/api/chat", async (req, res) => {
-  const apiKey = (process.env.GROQ_API_KEY || "").trim();
-  if (!apiKey) {
-    return res.status(503).json({
-      error: "Groq API key is not configured. Add GROQ_API_KEY in your Render environment variables.",
-    });
-  }
-
   const rawMessages = Array.isArray(req.body?.messages) ? req.body.messages : [];
   const cleanedHistory = rawMessages
     .filter((m) => m && typeof m.text === "string" && m.text.trim())
@@ -251,6 +245,13 @@ app.post("/api/chat", async (req, res) => {
       model: "OpenStreetMap",
       groundingMode: "OpenStreetMap",
       groundingSources,
+    });
+  }
+
+  const apiKey = (process.env.GROQ_API_KEY || "").trim();
+  if (!apiKey) {
+    return res.status(503).json({
+      error: "Groq API key is not configured. Add GROQ_API_KEY in your Render environment variables.",
     });
   }
 
