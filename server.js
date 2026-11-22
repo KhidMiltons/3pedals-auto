@@ -197,6 +197,13 @@ async function findOpenStreetMapPlaces(queryText, location) {
       }
     }
 
+    // Stable fallback for Nairobi when public geocoders are unavailable or block Render.
+    // This is the city centre, not a claimed business address; Overpass still supplies every result.
+    if (!center && /^(nairobi|nairobi county|nairobi cbd)$/i.test(area)) {
+      center = { lat: -1.2864, lon: 36.8172 };
+      console.warn("Using the built-in Nairobi map centre because external geocoding did not respond.");
+    }
+
     // If the user shared GPS, use it rather than failing the entire map lookup.
     if (!center && !hasLocation) {
       throw new Error("Could not locate that area using OpenStreetMap or the backup geocoder. Try a nearby neighbourhood or share your GPS location.");
