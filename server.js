@@ -346,7 +346,7 @@ async function findOpenStreetMapPlaces(queryText, location) {
         const lat = place.lat.toFixed(6);
         const lon = place.lon.toFixed(6);
         return [
-          `way["highway"]["name"](around:350,${lat},${lon});`,
+          `way["highway"]["name"](around:600,${lat},${lon});`,
           `nwr["place"~"^(neighbourhood|suburb|quarter)$"]["name"](around:1800,${lat},${lon});`,
         ];
       });
@@ -393,12 +393,12 @@ async function findOpenStreetMapPlaces(queryText, location) {
         const roads = candidates
           .filter((item) => item.tags.highway && item.tags.name)
           .map((item) => ({ name: String(item.tags.name).trim(), distance: distanceMetres(place, item) }))
-          .filter((item) => item.name && item.distance <= 350)
+          .filter((item) => item.name && item.distance <= 500)
           .sort((a, b) => a.distance - b.distance);
         const areas = candidates
           .filter((item) => /^(neighbourhood|suburb|quarter)$/.test(String(item.tags.place || "")) && item.tags.name)
           .map((item) => ({ name: String(item.tags.name).trim(), distance: distanceMetres(place, item) }))
-          .filter((item) => item.name && item.distance <= 1800)
+          .filter((item) => item.name && item.distance <= 1500)
           .sort((a, b) => a.distance - b.distance);
         place.nearbyStreet = place.nearbyStreet || roads[0]?.name || "";
         place.nearbyArea = place.nearbyArea || areas[0]?.name || "";
@@ -428,11 +428,10 @@ async function findOpenStreetMapPlaces(queryText, location) {
         });
         if (response.ok) {
           const props = (await response.json())?.features?.[0]?.properties || {};
-          nearbyStreet = String(props.street || "").trim();
-          // Prefer immediate neighbourhood fields. "district" can be a distant or
-          // overly broad administrative label (for example, Mariakani for a Nairobi pin).
-          nearbyArea = String(props.suburb || props.neighbourhood || "").trim();
-          if (!nearbyArea) nearbyArea = String(props.city || props.town || props.village || "").trim();
+          // Use Photon only for a nearby street. Its locality fields can resolve
+          // to distant administrative places, so nearby areas must come from
+          // distance-checked OSM neighbourhood/suburb objects below.
+          nearbyStreet = nearbyStreet || String(props.street || "").trim();
         }
       } catch (error) {
         console.warn("Photon reverse geocoding unavailable:", error?.message || error);
@@ -462,10 +461,9 @@ async function findOpenStreetMapPlaces(queryText, location) {
             if (response.ok) {
               const address = (await response.json())?.address || {};
               nearbyStreet = nearbyStreet || String(address.road || address.pedestrian || address.residential || address.footway || "").trim();
-              nearbyArea = nearbyArea || String(
-                address.neighbourhood || address.suburb || address.quarter ||
-                address.city || address.town || address.village || ""
-              ).trim();
+              // Do not use reverse-geocoder city/town/district values as a nearby
+              // neighbourhood. Area labels are accepted only from nearby OSM place
+              // objects whose mapped coordinates pass the distance check above.
             }
           } catch (error) {
             console.warn("Nominatim reverse geocoding unavailable:", error?.message || error);
