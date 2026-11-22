@@ -100,10 +100,10 @@ function formatOsmAddressPart(value) {
     .replace(/^[,\s]+|[,\s]+$/g, "")
     .split(" ")
     .filter(Boolean)
-    .map((word) => {
-      if (/^[A-Z0-9]{2,4}$/.test(word)) return word;
-      return word.charAt(0).toLocaleUpperCase("en") + word.slice(1).toLocaleLowerCase("en");
-    })
+    .map((word) => word.split("/").map((part) => {
+      if (/^[A-Z0-9]{2,4}$/.test(part)) return part;
+      return part.charAt(0).toLocaleUpperCase("en") + part.slice(1).toLocaleLowerCase("en");
+    }).join("/"))
     .join(" ");
 }
 
@@ -436,7 +436,7 @@ app.post("/api/chat", async (req, res) => {
           "Here are the named automotive businesses returned by OpenStreetMap. The category shown is based only on each record’s OSM tags; it does not confirm the business’s actual services. Coverage and address details may be incomplete, and OSM does not verify licensing, KEBS/KRA approval, service quality, opening hours or customer ratings.",
           "",
           ...osmPlaces.slice(0, 20).map((place, index) =>
-            `${index + 1}. **${place.name}**\\n   Category: ${place.category}\\n   Location: ${place.address || "Address not listed in OpenStreetMap"}${place.nearbyStreet && (!place.address || !place.address.toLowerCase().includes(place.nearbyStreet.toLowerCase())) ? `\\n   Nearby mapped street (approx.): ${formatOsmAddressPart(place.nearbyStreet)}` : ""}${place.nearbyArea && (!place.address || !place.hasAddressLocality) ? `\\n   Nearby area (approx.): ${formatOsmAddressPart(place.nearbyArea)}` : ""}\\n   Map: ${place.mapUrl}`
+            `${index + 1}. **${place.name}**\n   Category: ${place.category}\n   Location: ${place.address || "Address not listed in OpenStreetMap"}${place.nearbyStreet && (!place.address || !place.address.toLowerCase().replace(/[^a-z0-9]/g, "").includes(place.nearbyStreet.toLowerCase().replace(/[^a-z0-9]/g, ""))) ? `\n   Nearby mapped street (approx.): ${formatOsmAddressPart(place.nearbyStreet)}` : ""}${place.nearbyArea && (!place.address || !place.hasAddressLocality) ? `\n   Nearby area (approx.): ${formatOsmAddressPart(place.nearbyArea)}` : ""}\n   Map: ${place.mapUrl}`
           ),
         ].join("\n\n")
       : "OpenStreetMap returned no matching automotive locations for this search area. Try a nearby neighbourhood or a broader search. I won't invent business names or locations.";
