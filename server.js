@@ -229,6 +229,31 @@ app.post("/api/chat", async (req, res) => {
     }
   }
 
+  // Maps mode returns only records actually retrieved from OpenStreetMap.
+  // Do not ask the language model to invent missing businesses, addresses, ratings or approvals.
+  if (effectiveMode === "maps") {
+    const reply = osmPlaces.length
+      ? [
+          "Here are the automotive locations returned by OpenStreetMap for this search. Listings and map coverage may be incomplete; presence in OSM does not verify licensing, KEBS/KRA approval, service quality, opening hours or customer ratings.",
+          "",
+          ...osmPlaces.slice(0, 20).map((place, index) =>
+            `${index + 1}. **${place.name}**\\n   Category: ${place.category}\\n   Location: ${place.address || "No address recorded in OpenStreetMap"}\\n   Map: ${place.mapUrl}`
+          ),
+        ].join("\\n\\n")
+      : "OpenStreetMap returned no matching automotive locations for this search area. Try a nearby neighbourhood or a broader search. I won't invent business names or locations.";
+    const groundingSources = osmPlaces.slice(0, 20).map((place) => ({
+      type: "osm",
+      title: place.name,
+      uri: place.mapUrl,
+    }));
+    return res.json({
+      reply,
+      model: "OpenStreetMap",
+      groundingMode: "OpenStreetMap",
+      groundingSources,
+    });
+  }
+
   const model = "openai/gpt-oss-120b";
   const messages = [{ role: "system", content: systemInstruction }, ...cleanedHistory];
   const requestBody = {
