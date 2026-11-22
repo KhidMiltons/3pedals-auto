@@ -7,7 +7,7 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <title>Vehicle documents | 3 Pedals Auto KE</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
 <style>
 :root{color-scheme:dark;--bg:#101112;--panel:rgba(255,255,255,.045);--ink:#f5f1e6;--muted:#aaa494;--gold:#c7af77;--line:rgba(255,255,255,.13)}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 10% 0,rgba(183,160,106,.14),transparent 30%),linear-gradient(145deg,#171819,#0d0d0d 65%,#141516);color:var(--ink);font:15px/1.6 Manrope,Arial,sans-serif}.wrap{width:min(1080px,calc(100% - 32px));margin:auto}.top{display:flex;justify-content:space-between;align-items:center;padding:18px 0;border-bottom:1px solid var(--line)}a{color:var(--gold)}.brand{font:700 19px 'Playfair Display',Georgia,serif;color:var(--gold);text-decoration:none}.back{border:1px solid var(--line);border-radius:10px;padding:9px 13px;text-decoration:none;background:var(--panel)}.hero{padding:44px 0 20px}.eyebrow{color:var(--gold);font-size:11px;font-weight:800;letter-spacing:.16em}.hero h1{font:700 clamp(36px,6vw,60px)/1.05 'Playfair Display',Georgia,serif;margin:8px 0}.hero p,.muted{color:var(--muted)}.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}.tabs button,.btn{border:1px solid var(--line);border-radius:10px;padding:11px 15px;color:var(--ink);background:var(--panel);font:700 14px Manrope;cursor:pointer}.tabs button.active,.btn.primary{background:linear-gradient(135deg,#e2ca8a,#ae9560);color:#151515;border-color:transparent}.panel{padding:22px;border:1px solid var(--line);border-radius:17px;background:var(--panel);backdrop-filter:blur(18px);box-shadow:0 16px 40px rgba(0,0,0,.2);margin-bottom:22px}.panel h2{font:700 25px 'Playfair Display',Georgia,serif;margin:0 0 6px}.docform[hidden],#preview[hidden]{display:none}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px 16px}.full{grid-column:1/-1}label{display:block;font-size:13px;font-weight:700;margin:12px 0 5px}input,select,textarea{width:100%;background:rgba(0,0,0,.24);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:11px;font:inherit}textarea{min-height:82px;resize:vertical}option{background:#151515}.checklist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0}.check{display:flex;align-items:flex-start;gap:9px;padding:10px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.025)}.check input{width:auto;margin-top:5px}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}.note{font-size:12px;color:var(--muted)}#paper{background:#fff;color:#171717;border-radius:8px;padding:34px;margin-top:18px}#paper h1,#paper h2{font-family:Georgia,serif;color:#171717}#paper h1{font-size:27px;text-align:center}#paper h2{font-size:17px;border-bottom:1px solid #aaa;padding-bottom:5px;margin-top:24px}#paper p,#paper li{line-height:1.65}#paper .line{display:inline-block;min-width:170px;border-bottom:1px solid #555;min-height:1.3em}#paper .rows{width:100%;border-collapse:collapse}#paper .rows td,#paper .rows th{border:1px solid #aaa;padding:8px;text-align:left;vertical-align:top}#paper .signatures{display:grid;grid-template-columns:1fr 1fr;gap:50px;margin-top:45px}.source-list{font-size:12px}.footer{padding:24px 0 42px;color:var(--muted);font-size:12px}@media(max-width:640px){.grid,.checklist{grid-template-columns:1fr}.full{grid-column:auto}.panel{padding:16px}#paper{padding:20px}.top{gap:10px;flex-wrap:wrap}}@media print{body{background:#fff;color:#171717}.top,.hero,.tabs,.docform,.footer,#preview>h2,#printButton{display:none!important}.wrap{width:100%;margin:0}.panel{border:0;background:#fff;box-shadow:none;padding:0;margin:0}#preview[hidden]{display:none!important}#preview:not([hidden]){display:block!important}#paper{margin:0;padding:0;border-radius:0}.note{display:none}}
 </style>
@@ -20,8 +20,8 @@
   nav button,nav a.navlink { --dock-scale: 1 !important; }
 }
 </style>
-<link rel="stylesheet" href="site-theme.css?v=20261121-ux-polish">
-<link rel="stylesheet" href="/site-ux.css?v=20261121-ux-polish">
+<link rel="stylesheet" href="site-theme.css?v=20261122-card-matched">
+<link rel="stylesheet" href="/site-ux.css?v=20261122-card-matched">
 <style id="vehicle-documents-device-light-theme">
 @media screen and (prefers-color-scheme:light){
   :root{color-scheme:light;--bg:#f3f1ec;--panel:rgba(255,255,255,.72);--ink:#292820;--muted:#716d63;--gold:#806638;--line:rgba(91,82,63,.2)}
@@ -40,6 +40,7 @@
   .footer{border-color:rgba(91,82,63,.16)}
 }
 </style>
+<link rel="stylesheet" href="/header-modern.css?v=20261122-card-matched">
 </head>
 <body><div class="wrap">
 <header class="top"><a class="brand" href="/">3 Pedals Auto KE</a><a class="back" href="/#sell">← Back to Sell Your Car</a></header>
@@ -123,7 +124,7 @@ document.querySelectorAll(".docform").forEach(form=>form.onsubmit=e=>{e.preventD
 /* Site-wide mobile screen-by-screen scrolling. Preserve natural scrolling for long pages and forms. */
 @media(max-width:760px){
   html{scroll-behavior:smooth!important;scroll-snap-type:y proximity!important;scroll-padding-top:74px!important;overscroll-behavior-y:contain}
-  body{min-height:100%;overflow-x:hidden!important;overflow-y:auto!important}
+  body{min-height:100%;overflow-x:clip!important;overflow-y:visible!important}
   main>section,main section[id],body>section,section.page-section,section.content-section{
     scroll-snap-align:start!important;scroll-snap-stop:normal!important;scroll-margin-top:74px!important;box-sizing:border-box!important
   }
@@ -279,62 +280,6 @@ html:not([data-theme="light"]) body input,html:not([data-theme="light"]) body se
 </style>
 
 
-<style id="homepage-header-match-final">
-/* Match the homepage header shell: transparent smoked glass, a soft backdrop
-   blur, and no heavy fill, gold strip, or opaque gradient. Keep each page's
-   existing header layout, controls, spacing, and responsive behaviour. */
-html body>header,
-html body>header.head,
-html body>header.top,
-html body>header.site-header,
-html body>header .site-header{
-  background:transparent!important;
-  background-color:transparent!important;
-  background-image:none!important;
-  border-top-color:transparent!important;
-  border-right-color:transparent!important;
-  border-bottom-color:transparent!important;
-  border-left-color:transparent!important;
-  box-shadow:none!important;
-  -webkit-backdrop-filter:blur(18px) saturate(120%)!important;
-  backdrop-filter:blur(18px) saturate(120%)!important;
-}
-</style>
-
-
-
-
-
-<style id="homepage-header-rounded-outline-final">
-/* Match homepage: only the rounded left/right end edges are visible.
-   Top and bottom edges stay transparent; preserve each page's layout. */
-html body>header,
-html body>header.head,
-html body>header.top,
-html body>header.site-header,
-html body>header .site-header{
-  box-sizing:border-box!important;
-  background:transparent!important;
-  background-color:transparent!important;
-  background-image:none!important;
-  border-top:0!important;
-  border-bottom:0!important;
-  border-left:1px solid rgba(255,255,255,.18)!important;
-  border-right:1px solid rgba(255,255,255,.18)!important;
-  border-radius:22px!important;
-  box-shadow:none!important;
-  -webkit-backdrop-filter:blur(18px) saturate(120%)!important;
-  backdrop-filter:blur(18px) saturate(120%)!important;
-}
-@media(max-width:760px){
- html body>header,
- html body>header.head,
- html body>header.top,
- html body>header.site-header,
- html body>header .site-header{border-radius:16px!important}
-}
-</style>
-
 <style id="official-3pedals-typography">
 /* Official 3 Pedals Auto KE typography: Sora headings/brand, Manrope interface and body, Playfair editorial accents. */
 html body,html body button,html body input,html body select,html body textarea{font-family:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif!important;font-synthesis:none;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
@@ -365,6 +310,6 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){f
   }
 }
 </style>
-<script src="/site-ux.js?v=20261121-ux-polish"></script>
+<script src="/site-ux.js?v=20261122-card-matched"></script>
 </body>
 </html>

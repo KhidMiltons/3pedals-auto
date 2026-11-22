@@ -183,15 +183,20 @@
       { sel: '#nav a[href*="garage"]', key: "garage" },
       { sel: '#nav a[href*="chauffeur"]', key: "chauffeur" },
       { sel: '#nav a[href*="dealers"]', key: "dealers" },
-      { sel: '#nav .account-pill span', key: "account" },
-      { sel: '#garageSectionNav [data-tab="services"]', key: null, en: "Services & booking", sw: "Huduma na miadi" },
+      { sel: '.account-pill span', key: "account" },
+      { sel: '#garageSectionNav [data-tab="services"], #garageSectionNav [data-tab="book"]', key: null, en: "Services & booking", sw: "Huduma na miadi" },
       { sel: '#garageSectionNav [data-tab="roadside"]', key: null, en: "Mobile mechanic", sw: "Mekanika wa kufika" },
       { sel: '#garageSectionNav [data-tab="mechanics"]', key: null, en: "Verified mechanics", sw: "Mamekanika" },
+      { sel: '#garageSectionNav #cLink', key: "carsForSale" },
       { sel: '#q, #inventorySearch', attr: "placeholder", key: "searchVehiclesPlaceholder" },
       { sel: '#dealerSearch', attr: "placeholder", key: "searchDealersPlaceholder" },
       { sel: '#yardVehicleSearch', attr: "placeholder", key: "searchYardPlaceholder" },
       { sel: '#vehiclePrintA4Btn', key: "printSpecSheet" }
     ];
+    const accountOpenBtn = document.getElementById("accountOpen");
+    if (accountOpenBtn) {
+      accountOpenBtn.setAttribute("data-ux-account-label", DICT[code].account);
+    }
     navMap.forEach((item) => {
       document.querySelectorAll(item.sel).forEach((el) => {
         if (item.attr === "placeholder") {
@@ -263,23 +268,34 @@
         drawerDiv.innerHTML = createControlsMarkup(false);
         targetDrawer.appendChild(drawerDiv);
       }
-      // Add desktop & header-bar compact switcher before toggle button
-      if (!wrap.querySelector(".ux-header-controls-desktop")) {
+
+      // Unified right-side action cluster: [Theme + Lang] + [Account] + [Mobile Toggle]
+      let actions = wrap.querySelector(".ux-header-actions");
+      if (!actions) {
+        actions = document.createElement("div");
+        actions.className = "ux-header-actions";
+        wrap.appendChild(actions);
+      }
+      if (!actions.querySelector(".ux-header-controls-desktop")) {
         const host = document.createElement("div");
         host.className = "ux-header-controls-desktop";
         host.innerHTML = createControlsMarkup(false);
-        const toggle = wrap.querySelector("#navToggle, #garageNavToggle");
-        if (toggle) wrap.insertBefore(host, toggle);
-        else wrap.appendChild(host);
+        actions.appendChild(host);
       }
-      // Keep drawer open when user toggles theme/lang inside mobile drawer
-      targetDrawer.addEventListener("click", (e) => {
-        if (e.target.closest(".ux-drawer-controls")) {
-          e.stopPropagation();
-        }
-      });
+      const accountPill = header.querySelector(".account-pill");
+      if (accountPill && accountPill.parentElement !== actions) {
+        actions.appendChild(accountPill);
+      }
+      const accountOpenBtn = header.querySelector("#accountOpen");
+      if (accountOpenBtn) {
+        accountOpenBtn.setAttribute("data-ux-account-label", t("account"));
+      }
+      const toggle = header.querySelector("#navToggle, #garageNavToggle");
+      if (toggle && toggle.parentElement !== actions) {
+        actions.appendChild(toggle);
+      }
     } else if (!chauffeurNav) {
-      // Subpages: inventory, vehicle, dealers, yard, journal, chauffeur (when chauffeur uses .headin)
+      // Subpages: inventory, vehicle, dealers, yard, journal, chauffeur, vehicle_documents
       const container = header.querySelector(".wrap, .headin") || header;
       if (container && !container.querySelector(".ux-header-right")) {
         const isCurrent = (p) => path.endsWith(p);
@@ -293,6 +309,7 @@
           { href: "/", label: "home", cur: path === "/" || path.endsWith("/index.html") },
           { href: "/inventory.html", label: "carsForSale", cur: isCurrent("inventory.html") },
           { href: "/garage.html", label: "garage", cur: isCurrent("garage.html") },
+          { href: "/chauffeur.html", label: "chauffeur", cur: isCurrent("chauffeur.html") },
           { href: "/dealers.html", label: "dealers", cur: isCurrent("dealers.html") || isCurrent("yard.html") },
           { href: "/journal.html", label: "journal", cur: isCurrent("journal.html") }
         ];
@@ -316,11 +333,9 @@
         mobileToggle.setAttribute("aria-expanded", "false");
         mobileToggle.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>';
 
-        rightGroup.appendChild(subnav);
         rightGroup.appendChild(controls);
         if (existingBack) {
           if (existingBack.classList.contains("vehicle-header-nav") || existingBack.classList.contains("headnav")) {
-            // Keep existing back links inside mobile-safe group, avoid duplicating Home/Inventory
             const backOnly = existingBack.querySelector(".back");
             if (backOnly) {
               backOnly.style.marginLeft = "0";
@@ -333,6 +348,7 @@
           }
         }
         rightGroup.appendChild(mobileToggle);
+        container.appendChild(subnav);
         container.appendChild(rightGroup);
 
         const closeSub = () => {
@@ -351,7 +367,7 @@
         document.addEventListener("keydown", (e) => {
           if (e.key === "Escape") closeSub();
         });
-        window.matchMedia("(min-width: 861px)").addEventListener("change", (ev) => {
+        window.matchMedia("(min-width: 1024px)").addEventListener("change", (ev) => {
           if (ev.matches) closeSub();
         });
       }

@@ -1,20 +1,16 @@
 /* Shared glass styling for homepage actions and admin workspace (account workspace styled in account-panel.css) */
 .fab{display:grid!important;place-items:center;width:48px;height:48px;padding:0!important;border:1px solid rgba(255,255,255,.26)!important;border-radius:16px!important;background:rgba(28,30,32,.40)!important;color:#e4cc8d!important;box-shadow:0 12px 32px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.16)!important;-webkit-backdrop-filter:blur(18px) saturate(145%)!important;backdrop-filter:blur(18px) saturate(145%)!important;transition:transform .22s ease,border-color .22s ease,background .22s ease!important}
-body>header .logo{position:relative;display:inline-flex;align-items:center;gap:10px;max-width:none!important;padding:9px 14px 9px 10px!important;margin:0!important;overflow:visible!important;border:1px solid rgba(255,255,255,.20)!important;border-radius:16px!important;background:linear-gradient(120deg,rgba(227,196,123,.16),rgba(255,255,255,.045),rgba(0,0,0,.10))!important;box-shadow:0 8px 26px rgba(0,0,0,.14),inset 0 1px rgba(255,255,255,.12)!important;-webkit-backdrop-filter:blur(16px) saturate(135%)!important;backdrop-filter:blur(16px) saturate(135%)!important;font-size:clamp(25px,2.2vw,34px)!important;font-weight:800!important;letter-spacing:.015em!important;color:transparent!important;background-image:linear-gradient(120deg,#f3e7bd 0%,#c5a45e 42%,#f4e4ad 60%,#92713b 100%)!important;background-clip:text!important;-webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important;text-shadow:0 1px 16px rgba(205,174,103,.12)}
 @media (hover:hover) and (pointer:fine){
   .fab:hover{transform:translateY(-3px)!important;background:rgba(255,255,255,.12)!important;border-color:rgba(255,255,255,.42)!important;box-shadow:0 16px 36px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.2)!important}
-  body>header .logo:hover{transform:translateY(-1px);border-color:rgba(231,207,151,.38)!important}
 }
-@media(max-width:760px){body>header .logo{font-size:clamp(21px,5.5vw,28px)!important;padding:7px 10px!important;gap:7px}}
 @media(max-width:430px){
   #home .tiles,.tiles{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
   #home .tile,.tiles .tile{min-width:0!important;padding:12px!important;border-radius:14px!important}
   #home .tile h2,#home .tile h3,.tiles .tile h2,.tiles .tile h3{font-size:15px!important;line-height:1.25!important}
   #home .tile p,.tiles .tile p{font-size:12px!important;line-height:1.4!important}
   #home .tile .btn,.tiles .tile .btn{min-height:36px;padding:8px 10px!important;font-size:12px!important}
-  body>header .logo{font-size:clamp(18px,5vw,24px)!important;letter-spacing:0!important}
 }
-@media(prefers-reduced-motion:reduce){body>header .logo,.fab{animation:none!important;transition:none!important}}
+@media(prefers-reduced-motion:reduce){.fab{animation:none!important;transition:none!important}}
 
 /* Admin brand identity and glass action controls */
 body:has(#app) .brand{display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 15px;border:1px solid rgba(255,255,255,.20);border-radius:16px;background:linear-gradient(120deg,rgba(227,196,123,.14),rgba(255,255,255,.04),rgba(0,0,0,.10));box-shadow:0 8px 26px rgba(0,0,0,.14),inset 0 1px rgba(255,255,255,.12);-webkit-backdrop-filter:blur(16px) saturate(135%);backdrop-filter:blur(16px) saturate(135%);font-size:clamp(26px,3vw,38px);font-weight:800;letter-spacing:.015em;color:#d9bd78}
@@ -35,18 +31,4 @@ body:has(#app) .primary,body:has(#app) .tab.active{background:linear-gradient(12
 /* Explicitly restore home navigation */
 #nav a.navlink[href="/"]{display:inline-flex;align-items:center}
 body:has(#app) #homeBtn{display:inline-flex!important;visibility:visible!important;opacity:1!important}
-/* Header navigation collision fix */
-body>header>.wrap{grid-template-columns:minmax(0,auto) minmax(0,1fr) auto!important;grid-template-areas:"brand account nav"!important;column-gap:clamp(8px,1.2vw,18px)!important}
-body>header .logo{min-width:0!important;max-width:100%!important}
-body>header .account-pill{min-width:0!important;justify-self:end!important}
-body>header #nav{grid-area:nav!important;position:relative!important;inset:auto!important;display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;align-items:center!important;justify-content:flex-end!important;gap:2px!important;width:max-content!important;max-width:100%!important;min-width:0!important;padding:3px!important;overflow:visible!important;white-space:nowrap!important;z-index:1001!important}
-body>header #nav button,body>header #nav a.navlink{flex:0 1 auto!important;min-width:0!important;padding:9px clamp(7px,.8vw,13px)!important;font-size:clamp(11px,.9vw,14px)!important;transform:none!important;white-space:nowrap!important}
-body>header .nav-toggle{grid-area:nav-toggle!important}
-@media(max-width:1120px){
- body>header>.wrap{grid-template-columns:minmax(0,1fr) auto auto!important;grid-template-areas:"brand account nav-toggle"!important;gap:10px!important;position:relative!important}
- body>header .nav-toggle{display:inline-flex!important;grid-column:3!important;grid-row:1!important;width:42px!important;height:42px!important;justify-self:end!important;z-index:1002!important}
- body>header .account-pill{grid-column:2!important;grid-row:1!important}
- body>header #nav,body>header #nav.is-open,body>header #nav.mobile-menu-open{display:none!important;position:absolute!important;top:calc(100% + 8px)!important;left:auto!important;right:0!important;bottom:auto!important;grid-column:1/-1!important;grid-row:2!important;width:min(290px,calc(100vw - 32px))!important;max-width:calc(100vw - 32px)!important;max-height:min(72dvh,460px)!important;overflow-x:hidden!important;overflow-y:auto!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;flex-wrap:nowrap!important;gap:5px!important;padding:9px!important;margin:0!important;background:rgba(20,22,25,.82)!important;border:1px solid rgba(255,255,255,.20)!important;border-radius:16px!important;box-shadow:0 18px 44px rgba(0,0,0,.38)!important;backdrop-filter:blur(24px) saturate(145%)!important;-webkit-backdrop-filter:blur(24px) saturate(145%)!important}
- body>header #nav.mobile-menu-open,body>header #nav.is-open{display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}
- body>header #nav button,body>header #nav a.navlink{display:flex!important;flex:0 0 auto!important;width:100%!important;min-width:0!important;min-height:40px!important;box-sizing:border-box!important;justify-content:flex-start!important;padding:10px 12px!important;font-size:13px!important;transform:none!important}
-}
+

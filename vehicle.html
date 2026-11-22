@@ -24,7 +24,7 @@
 <meta name="twitter:description" content="Explore cars for sale in Kenya on 3 Pedals Auto KE. View vehicle photos, prices, mileage, fuel details, and contact private sellers or car yards.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#f7f5ef;--surface:#fff;--ink:#0d0d0d;--mute:#5e5848;--line:#e3dcc8;--blue:#946c00;--gold:#d4a017;--gold-ink:#0d0d0d;--alt:#0d0d0d;--alt-ink:#e3b341;--err:#b42318}
 @media(prefers-color-scheme:dark){:root{--bg:#0d0d0d;--surface:#1a1a1a;--ink:#f5f1e6;--mute:#a8a08a;--line:#333026;--blue:#e3b341;--gold:#e3b341;--gold-ink:#0d0d0d;--alt:#f5f1e6;--alt-ink:#0d0d0d;--err:#ff8a7a}}
@@ -73,7 +73,7 @@ input,select,textarea,.back{background:rgba(255,255,255,.055)!important;color:#f
 .input::placeholder{color:#aaa18e!important}input::placeholder{color:#aaa18e!important}.eyebrow{color:#c9b784!important}a{color:inherit}.logo,.brand,.price,.arrow{color:#c9b784!important}.status{background:rgba(55,112,72,.2)!important;color:#b7e0bf!important;border-color:rgba(128,194,143,.3)!important}.yard-label{background:rgba(201,183,132,.14)!important;color:#c9b784!important}footer{border-color:rgba(201,183,132,.18)!important;color:#aaa18e!important}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
 </style>
-<link rel="stylesheet" href="site-theme.css?v=20261121-ux-polish">
+<link rel="stylesheet" href="site-theme.css?v=20261122-card-matched">
 <style id="vehicle-details-device-light-theme">
 @media(prefers-color-scheme:light){
   :root{color-scheme:light!important;--bg:#f3f1ec!important;--surface:rgba(251,250,247,.88)!important;--ink:#292820!important;--mute:#716d63!important;--line:rgba(91,82,63,.18)!important;--gold:#9a7a3e!important;--blue:#806638!important;--gold-ink:#211b10!important;--alt:#292820!important;--alt-ink:#f5f1e6!important}
@@ -324,7 +324,8 @@ html body>main.wrap{padding-top:48px!important}
 
 
 
-<link rel="stylesheet" href="/site-ux.css?v=20261121-ux-polish">
+<link rel="stylesheet" href="/site-ux.css?v=20261122-card-matched">
+<link rel="stylesheet" href="/header-modern.css?v=20261122-card-matched">
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
@@ -340,7 +341,7 @@ html body>main.wrap{padding-top:48px!important}
 <footer class="ux-site-footer no-print"><div class="wrap">3 Pedals Auto KE · Prices in KES.</div></footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
-<script src="/site-ux.js?v=20261121-ux-polish"></script>
+<script src="/site-ux.js?v=20261122-card-matched"></script>
 <script>
 const CFG=window.SB_CONFIG||{};
 const sb=(CFG.url&&!/^PASTE/.test(CFG.url)&&window.supabase)?window.supabase.createClient(CFG.url,CFG.key):null;
@@ -707,7 +708,7 @@ document.addEventListener('click', function(event) {
 /* Site-wide mobile screen-by-screen scrolling. Preserve natural scrolling for long pages and forms. */
 @media(max-width:760px){
   html{scroll-behavior:smooth!important;scroll-snap-type:y proximity!important;scroll-padding-top:74px!important;overscroll-behavior-y:contain}
-  body{min-height:100%;overflow-x:hidden!important;overflow-y:auto!important}
+  body{min-height:100%;overflow-x:clip!important;overflow-y:visible!important}
   main>section,main section[id],body>section,section.page-section,section.content-section{
     scroll-snap-align:start!important;scroll-snap-stop:normal!important;scroll-margin-top:74px!important;box-sizing:border-box!important
   }
@@ -887,62 +888,6 @@ header .back{margin-left:auto!important;display:inline-flex!important;align-item
 </style>
 
 
-<style id="dealer-vehicle-home-glass-header">
-/* Match the floating Home/Garage glass header on vehicle details opened from dealer listings. */
-html body>header{
-  position:sticky!important;top:12px!important;z-index:1000!important;
-  display:block!important;box-sizing:border-box!important;
-  width:min(1160px,calc(100% - 32px))!important;max-width:1160px!important;
-  margin:18px auto 0!important;padding:0!important;
-  border:1px solid rgba(255,255,255,.18)!important;border-radius:30px!important;
-  background:rgba(34,35,38,.72)!important;background-image:none!important;
-  box-shadow:0 18px 55px rgba(0,0,0,.26),inset 0 1px 0 rgba(255,255,255,.12)!important;
-  -webkit-backdrop-filter:blur(26px) saturate(145%)!important;
-  backdrop-filter:blur(26px) saturate(145%)!important;
-}
-html body>header>.wrap.head{
-  box-sizing:border-box!important;width:100%!important;max-width:none!important;
-  min-height:82px!important;padding:10px 24px!important;margin:0!important;
-  display:flex!important;align-items:center!important;justify-content:space-between!important;
-  gap:18px!important;background:transparent!important;border:0!important;box-shadow:none!important;
-}
-html body>header .logo{
-  color:#f1eee7!important;font-family:"Playfair Display",Georgia,serif!important;
-  font-size:27px!important;font-weight:700!important;letter-spacing:.03em!important;
-}
-html body>header .back{
-  margin-left:auto!important;flex:0 0 auto!important;
-  min-height:42px!important;padding:9px 15px!important;border-radius:12px!important;
-  background:rgba(255,255,255,.07)!important;color:#f1eee7!important;
-  border:1px solid rgba(255,255,255,.2)!important;
-  box-shadow:inset 0 1px rgba(255,255,255,.09),0 8px 24px rgba(0,0,0,.18)!important;
-  -webkit-backdrop-filter:blur(18px) saturate(145%)!important;
-  backdrop-filter:blur(18px) saturate(145%)!important;
-  transition:transform .35s cubic-bezier(.22,1,.36,1),background .25s,border-color .25s!important;
-}
-@media(hover:hover) and (pointer:fine){
-  html body>header .back:hover{
-    transform:translateY(-2px)!important;background:rgba(255,255,255,.13)!important;
-    border-color:rgba(255,255,255,.32)!important;color:#fff!important;
-  }
-}
-@media(max-width:800px){
-  html body>header{
-    top:8px!important;width:calc(100% - 20px)!important;
-    margin:10px auto 0!important;border-radius:20px!important;
-  }
-  html body>header>.wrap.head{
-    min-height:64px!important;padding:8px 12px!important;gap:8px!important;
-  }
-  html body>header .logo{font-size:clamp(18px,4.8vw,23px)!important;white-space:normal!important}
-  html body>header .back{min-height:38px!important;padding:8px 10px!important;font-size:12px!important}
-}
-@media(prefers-reduced-motion:reduce){
-  html body>header .back{transition:none!important}
-}
-</style>
-
-
 <style id="dealer-vehicle-card-glass-hover">
 /* Frosted-glass surfaces and restrained hover response for dealer vehicle detail cards. */
 html body :is(.gallery,.info,.state,.seller,.specs,.spec,.related-card,.vehicle-card,.vehicle-details,.details,.info-card,.spec-card){
@@ -1053,28 +998,6 @@ html body>main.wrap{padding-top:46px!important}
 @media(prefers-reduced-motion:reduce){html body>header .vehicle-header-nav a{transition:none!important}}
 </style>
 
-<style id="vehicle-header-align-details-card">
-/* Match the Home header's exact outer width and visible straight horizontal edges. */
-html body>header{
-  width:min(1160px,calc(100% - 108px))!important;
-  max-width:1160px!important;
-  box-sizing:border-box!important;
-  margin:52px auto 10px!important;
-  border:1px solid rgba(255,255,255,.07)!important;
-  border-top-color:rgba(255,255,255,.07)!important;
-  border-bottom-color:rgba(255,255,255,.07)!important;
-  border-radius:28px!important;
-  box-shadow:0 12px 34px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.12)!important;
-}
-@media(max-width:800px){
-  html body>header{
-    width:calc(100% - 24px)!important;
-    max-width:none!important;
-    margin:12px auto 12px!important;
-    border-radius:24px!important;
-  }
-}
-</style>
 <style id="vehicle-features-dropdown-soft-borders">html body .vehicle-features-disclosure{margin:14px 0 18px;border:1px solid rgba(255,255,255,.07);border-radius:12px;background:rgba(255,255,255,.025);overflow:hidden}html body .vehicle-features-disclosure summary{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 15px;cursor:pointer;list-style:none;color:var(--ink);font:600 13px/1.4 Manrope,system-ui,sans-serif}html body .vehicle-features-disclosure summary::-webkit-details-marker{display:none}html body .vehicle-features-disclosure .feature-chevron{color:var(--mute);font-size:20px;line-height:1;transition:transform .2s ease}html body .vehicle-features-disclosure[open] .feature-chevron{transform:rotate(180deg)}html body .vehicle-features-content{padding:0 15px 15px}html body .vehicle-features-content .desc{margin:0 0 10px}html body .vehicle-feature-list{margin:0;padding-left:19px;display:grid;grid-template-columns:1fr;gap:5px;color:var(--mute);font:400 13px/1.55 Manrope,system-ui,sans-serif}html body .vehicle-tradein-note{margin:14px 0 0;color:var(--mute);font-size:12px;line-height:1.5}</style>
 <style id="restore-vehicle-wallpaper-final">
 html,body{background:transparent!important}
@@ -1082,62 +1005,6 @@ body{position:relative!important;isolation:isolate!important;min-height:100vh!im
 body:before{content:""!important;display:block!important;position:fixed!important;inset:-14px!important;z-index:-1!important;pointer-events:none!important;background:linear-gradient(180deg,rgba(5,6,8,.28),rgba(5,6,8,.42)),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72") center/cover no-repeat!important;filter:blur(3px)!important;transform:scale(1.025)!important}
 </style>
 
-
-<style id="homepage-header-match-final">
-/* Match the homepage header shell: transparent smoked glass, a soft backdrop
-   blur, and no heavy fill, gold strip, or opaque gradient. Keep each page's
-   existing header layout, controls, spacing, and responsive behaviour. */
-html body>header,
-html body>header.head,
-html body>header.top,
-html body>header.site-header,
-html body>header .site-header{
-  background:transparent!important;
-  background-color:transparent!important;
-  background-image:none!important;
-  border-top-color:transparent!important;
-  border-right-color:transparent!important;
-  border-bottom-color:transparent!important;
-  border-left-color:transparent!important;
-  box-shadow:none!important;
-  -webkit-backdrop-filter:blur(18px) saturate(120%)!important;
-  backdrop-filter:blur(18px) saturate(120%)!important;
-}
-</style>
-
-
-
-
-
-<style id="homepage-header-rounded-outline-final">
-/* Match homepage: only the rounded left/right end edges are visible.
-   Top and bottom edges stay transparent; preserve each page's layout. */
-html body>header,
-html body>header.head,
-html body>header.top,
-html body>header.site-header,
-html body>header .site-header{
-  box-sizing:border-box!important;
-  background:transparent!important;
-  background-color:transparent!important;
-  background-image:none!important;
-  border-top:0!important;
-  border-bottom:0!important;
-  border-left:1px solid rgba(255,255,255,.18)!important;
-  border-right:1px solid rgba(255,255,255,.18)!important;
-  border-radius:22px!important;
-  box-shadow:none!important;
-  -webkit-backdrop-filter:blur(18px) saturate(120%)!important;
-  backdrop-filter:blur(18px) saturate(120%)!important;
-}
-@media(max-width:760px){
- html body>header,
- html body>header.head,
- html body>header.top,
- html body>header.site-header,
- html body>header .site-header{border-radius:16px!important}
-}
-</style>
 
 <style id="official-3pedals-typography">
 /* Official 3 Pedals Auto KE typography: Sora headings/brand, Manrope interface and body, Playfair editorial accents. */

@@ -126,24 +126,17 @@ a{color:#e4ce9d}
 .btn,.button,button.primary{border-radius:12px}
 input::placeholder,textarea::placeholder{color:rgba(255,255,255,.68)!important}
 
-.hero{position:relative;isolation:isolate;overflow:hidden;border:1px solid rgba(255,255,255,.17);border-radius:30px;padding:clamp(34px,6vw,82px) clamp(22px,5vw,70px)!important;margin:26px auto 34px!important;width:min(calc(100% - 32px),1440px);min-height:clamp(360px,55vw,650px);display:flex;flex-direction:column;justify-content:center;box-shadow:0 28px 80px rgba(0,0,0,.42),inset 0 1px rgba(255,255,255,.2)!important}
+.hero{position:relative;isolation:isolate;overflow:hidden;border:1px solid rgba(255,255,255,.17);border-radius:30px;padding:7rem clamp(22px,5vw,70px) clamp(46px,6vw,78px)!important;margin:16px auto 34px!important;width:min(calc(100% - 32px),1440px);min-height:clamp(380px,55vw,650px);display:flex;flex-direction:column;justify-content:center;box-shadow:0 28px 80px rgba(0,0,0,.42),inset 0 1px rgba(255,255,255,.2)!important}
 .hero:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(135deg,rgba(255,255,255,.10),transparent 34%,rgba(215,189,131,.08));pointer-events:none}
 .hero h1{max-width:11ch!important;color:#fff!important;text-shadow:0 5px 28px rgba(0,0,0,.45)}
 .hero h1:after{background:linear-gradient(90deg,#e8d7ae,#a88b54)!important;border-radius:99px}
 .hero p{max-width:38em;color:rgba(255,255,255,.84)!important}
 @media(max-width:760px){
-  body>header{width:calc(100% - 20px);margin-top:10px!important;border-radius:16px!important}
-  .hero{width:calc(100% - 20px);margin:14px auto 24px!important;min-height:430px;border-radius:22px!important;padding:30px 22px!important}
+  .hero{width:calc(100% - 20px);margin:12px auto 24px!important;min-height:430px;border-radius:22px!important;padding:3.5rem 22px 30px!important}
   .hero h1{font-size:clamp(34px,10vw,52px)!important}
 }
 
-/* Unified glass surfaces (storefront only; exclude Account Workspace modals) */
-html:not([data-theme="light"]) body>header,
-html:not([data-theme="light"]) .site-header,
-html:not([data-theme="light"]) .navbar,
-html:not([data-theme="light"]) .nav-shell,
-html:not([data-theme="light"]) .nav-wrap,
-html:not([data-theme="light"]) #nav,
+/* Unified glass surfaces (storefront only; exclude Account Workspace modals and modern header) */
 html:not([data-theme="light"]) #dlg,
 html:not([data-theme="light"]) .authbox,
 html:not([data-theme="light"]) .modal:not(#accDlg),
@@ -180,17 +173,8 @@ html:not([data-theme="light"]) :is(.listing,.stat,.promotion-package,.account-fa
   backdrop-filter:blur(24px) saturate(125%)!important;
   border-radius:18px!important;
 }
-#nav,.hero,#home .tile,.tiles .tile,.card,.panel,.contact-card,.journal-intro,.journal-card,.project-intro,.project-card,.vehicle-card,.dealer,#autoQuoteRail{
+.hero,#home .tile,.tiles .tile,.card,.panel,.contact-card,.journal-intro,.journal-card,.project-intro,.project-card,.vehicle-card,.dealer,#autoQuoteRail{
   border-radius:18px;
-}
-html:not([data-theme="light"]) #nav{background-color:rgba(17,17,18,.56)!important}
-body>header{margin:18px auto 0!important;width:min(calc(100% - 32px),1440px);border-radius:22px!important}
-body>header,header.site-header,.site-header{
-  background:transparent!important;
-  border-top:0!important;border-bottom:0!important;border-left:0!important;border-right:0!important;
-  box-shadow:none!important;
-  -webkit-backdrop-filter:blur(18px) saturate(120%)!important;
-  backdrop-filter:blur(18px) saturate(120%)!important;
 }
 @media(max-width:800px){
   body{padding-top:0!important}
@@ -323,16 +307,7 @@ body>header,header.site-header,.site-header{
   body>header>.wrap>.logo{font-size:clamp(16px,4.6vw,19px)!important}
 }
 
-/* Contact Us nav button stays visually unfilled */
-html body header #nav button.nav-contact,
-html body header #nav button.nav-contact:hover,
-html body header #nav button.nav-contact:focus,
-html body header #nav button.nav-contact:focus-visible,
-html body header #nav button.nav-contact[aria-selected="true"],
-html body header #nav button.nav-contact[aria-selected="true"]:hover{
-  background:transparent!important;background-color:transparent!important;background-image:none!important;
-  border-color:transparent!important;box-shadow:none!important;color:inherit!important;outline:none!important;
-}
+
 
 /* ===== Home Lighter Glass, Quote Rail & Interactions ===== */
 #home .hero{display:flex!important;flex-direction:column!important;align-items:flex-start!important}
@@ -390,7 +365,7 @@ button:focus-visible,a:focus-visible,[role=button]:focus-visible{outline:2px sol
   body>header{margin-bottom:12px!important}
   body>header>.wrap{padding:0 12px!important}
   main.wrap{width:calc(100% - 20px)!important}
-  #home .hero{min-height:0!important;padding:24px 17px!important;gap:12px!important;border-radius:22px!important}
+  #home .hero{min-height:0!important;padding:3.5rem 17px 24px!important;gap:12px!important;border-radius:22px!important}
   #home .hero h1{font-size:clamp(2rem,8.5vw,2.8rem)!important;line-height:1.06!important;margin:8px 0 10px!important}
   #home .hero p{font-size:13px!important;line-height:1.5!important}
   #home .showroom-actions{gap:8px!important;flex-wrap:wrap!important}
@@ -466,7 +441,7 @@ html:not([data-theme="light"]) #location textarea{background:rgba(20,20,21,.30)!
 /* ===== Mobile Full Screen Scroll ===== */
 @media(max-width:760px){
   html{scroll-behavior:smooth!important;scroll-snap-type:y proximity!important;scroll-padding-top:74px!important;overscroll-behavior-y:contain}
-  body{min-height:100%;overflow-x:hidden!important;overflow-y:auto!important}
+  body{min-height:100%;overflow-x:clip!important;overflow-y:visible!important}
   main>section,main section[id],body>section,section.page-section,section.content-section{scroll-snap-align:start!important;scroll-snap-stop:normal!important;scroll-margin-top:74px!important;box-sizing:border-box!important}
 }
 @media(max-width:760px) and (prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}
@@ -481,8 +456,8 @@ html body :is(button,.btn,a.button,.back,nav a,nav button){font-family:"Manrope"
 html body :is(.price,.amount,.vehicle-price,[data-price]){font-family:"Manrope",system-ui,sans-serif!important;font-weight:700!important;font-variant-numeric:tabular-nums}
 html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){font-family:"Playfair Display",Georgia,serif!important;font-weight:600!important;letter-spacing:-.02em!important}
 @media(max-width:600px){.account-admin-tools{align-items:stretch!important}.account-admin-button{width:100%;justify-content:center}}
-#home .home-with-quote{padding-top:clamp(18px,2.4vw,30px)!important}
-@media(max-width:760px){#home .home-with-quote{padding-top:20px!important}}
+#home .home-with-quote{padding-top:clamp(8px,1.2vw,16px)!important}
+@media(max-width:760px){#home .home-with-quote{padding-top:8px!important}}
 
 /* ===== Account Workspace styling moved to /account-panel.css ===== */
 

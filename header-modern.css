@@ -1,0 +1,966 @@
+/* ==========================================================================
+   3 Pedals Auto KE — Card-Matched Floating Frosted-Glass Navbar
+   Matches .hero / .tile / #autoQuoteRail glass surface, 18px/15px radius,
+   rgba(255,255,255,0.22) catchlight border, favicon.svg "3." monogram,
+   h-9 utility controls, and clean <1024px frosted mobile drawer.
+   ========================================================================== */
+
+/* Keep horizontal overflow clipped without breaking position:sticky */
+html[data-ux="1"][data-theme][lang],
+html[data-ux="1"][data-theme][lang] body {
+  overflow-x: clip !important;
+}
+
+/* 1. Floating Sticky Frosted-Glass Card Container (Matched to .hero & .tile) */
+html[data-ux="1"][data-theme][lang] body > header,
+html[data-ux="1"][data-theme][lang] body > header.head,
+html[data-ux="1"][data-theme][lang] body > header.top,
+html[data-ux="1"][data-theme][lang] body > header.site-header,
+html[data-ux="1"][data-theme][lang] body > .wrap > header.top {
+  box-sizing: border-box !important;
+  position: sticky !important;
+  top: max(14px, env(safe-area-inset-top, 14px)) !important;
+  left: auto !important;
+  right: auto !important;
+  z-index: 1000 !important;
+  width: min(1132px, calc(100% - 32px)) !important;
+  max-width: 1132px !important;
+  min-height: 60px !important;
+  margin: 14px auto 12px !important;
+  padding: 0 !important;
+  border-radius: 18px !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  background-color: rgba(20, 22, 25, 0.36) !important;
+  background-image: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.09),
+    transparent 38%,
+    rgba(215, 189, 131, 0.06)
+  ) !important;
+  box-shadow:
+    0 14px 38px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(128%) !important;
+  backdrop-filter: blur(22px) saturate(128%) !important;
+  color: #f4f0e8 !important;
+  isolation: isolate !important;
+  overflow: visible !important;
+  transition: border-color 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html[data-ux="1"][data-theme][lang] body > header:hover,
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top:hover {
+    border-color: rgba(211, 181, 143, 0.44) !important;
+    box-shadow:
+      0 18px 42px rgba(0, 0, 0, 0.30),
+      inset 0 1px 0 rgba(255, 255, 255, 0.20) !important;
+  }
+}
+
+html[data-ux="1"][data-theme="light"][lang] body > header,
+html[data-ux="1"][data-theme="light"][lang] body > header.head,
+html[data-ux="1"][data-theme="light"][lang] body > header.top,
+html[data-ux="1"][data-theme="light"][lang] body > header.site-header,
+html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top {
+  background: linear-gradient(135deg, rgba(253, 250, 243, 0.92), rgba(246, 240, 227, 0.88)) !important;
+  background-color: rgba(253, 250, 243, 0.92) !important;
+  background-image: linear-gradient(135deg, rgba(253, 250, 243, 0.92), rgba(246, 240, 227, 0.88)) !important;
+  border: 1px solid rgba(138, 114, 62, 0.30) !important;
+  box-shadow:
+    0 14px 36px rgba(48, 38, 18, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+  color: #171512 !important;
+}
+
+/* Inner Row Layout (Single Horizontal Flex Row) */
+html[data-ux="1"][data-theme][lang] body > header > .wrap,
+html[data-ux="1"][data-theme][lang] body > header > .headin,
+html[data-ux="1"][data-theme][lang] body > header > .wrap.head,
+html[data-ux="1"][data-theme][lang] body > header > .wrap.headin,
+html[data-ux="1"][data-theme][lang] body > .wrap > header.top {
+  box-sizing: border-box !important;
+  position: relative !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-height: 60px !important;
+  margin: 0 !important;
+  padding: 8px 18px !important;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  border-radius: 18px !important;
+}
+
+/* Re-apply card skin on vehicle_documents.html where header.top has no inner .wrap */
+html[data-ux="1"][data-theme][lang] body > .wrap > header.top {
+  width: 100% !important;
+  margin: 14px auto 16px !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  background-color: rgba(20, 22, 25, 0.36) !important;
+  background-image: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.09),
+    transparent 38%,
+    rgba(215, 189, 131, 0.06)
+  ) !important;
+  box-shadow:
+    0 14px 38px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
+}
+
+html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top {
+  background: linear-gradient(135deg, rgba(253, 250, 243, 0.92), rgba(246, 240, 227, 0.88)) !important;
+  border: 1px solid rgba(138, 114, 62, 0.30) !important;
+  box-shadow:
+    0 14px 36px rgba(48, 38, 18, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+}
+
+/* 2. Left — Brand Identity with Dashboard/Account "3." Monogram Badge */
+html[data-ux="1"][data-theme][lang] body > header :is(.logo, .brand),
+html[data-ux="1"][data-theme][lang] body > .wrap > header.top :is(.logo, .brand) {
+  grid-area: auto !important;
+  order: 0 !important;
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  flex: 0 0 auto !important;
+  width: auto !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 2px 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  -webkit-text-fill-color: #ffffff !important;
+  color: #ffffff !important;
+  font-family: "Sora", "Manrope", system-ui, sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.045em !important;
+  line-height: 1.15 !important;
+  text-transform: uppercase !important;
+  text-decoration: none !important;
+  text-shadow: none !important;
+  white-space: nowrap !important;
+  transform: none !important;
+  cursor: pointer !important;
+}
+
+html[data-ux="1"][data-theme][lang] body > header :is(.logo, .brand)::before,
+html[data-ux="1"][data-theme][lang] body > .wrap > header.top :is(.logo, .brand)::before {
+  content: "" !important;
+  display: inline-block !important;
+  flex: 0 0 28px !important;
+  width: 28px !important;
+  height: 28px !important;
+  margin-right: 10px !important;
+  border-radius: 7px !important;
+  background: #111213 url("/favicon.svg") center/cover no-repeat !important;
+  border: 1px solid rgba(211, 181, 143, 0.42) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.30) !important;
+}
+
+html[data-ux="1"][data-theme][lang] body > header :is(.logo, .brand)::after,
+html[data-ux="1"][data-theme][lang] body > .wrap > header.top :is(.logo, .brand)::after {
+  content: none !important;
+  display: none !important;
+}
+
+html[data-ux="1"][data-theme="light"][lang] body > header :is(.logo, .brand),
+html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top :is(.logo, .brand) {
+  color: #171512 !important;
+  -webkit-text-fill-color: #171512 !important;
+}
+
+html[data-ux="1"][data-theme="light"][lang] body > header :is(.logo, .brand)::before,
+html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top :is(.logo, .brand)::before {
+  background: #111213 url("/favicon.svg") center/cover no-repeat !important;
+  border-color: rgba(138, 114, 62, 0.42) !important;
+  box-shadow: 0 2px 8px rgba(48, 38, 18, 0.16) !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html[data-ux="1"][data-theme][lang] body > header :is(.logo, .brand):hover {
+    opacity: 0.90 !important;
+    transform: none !important;
+  }
+}
+
+/* 3. Center — Streamlined Navigation Links */
+html[data-ux="1"][data-theme][lang] body > header nav#nav,
+html[data-ux="1"][data-theme][lang] body > header nav#garageSectionNav,
+html[data-ux="1"][data-theme][lang] body > header nav.ux-subnav-links,
+html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links {
+  grid-area: auto !important;
+  order: 1 !important;
+  position: static !important;
+  inset: auto !important;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 1 1 auto !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  gap: 2px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  overflow: visible !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+}
+
+html[data-ux="1"][data-theme][lang] body > header :is(
+  #nav button, #nav a.navlink,
+  #garageSectionNav button, #garageSectionNav a.navlink,
+  nav.ux-subnav-links a.ux-subnav-link
+) {
+  --dock-scale: 1 !important;
+  position: relative !important;
+  flex: 0 0 auto !important;
+  width: auto !important;
+  min-width: 0 !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  padding: 0 9px !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  color: rgba(244, 240, 232, 0.82) !important;
+  -webkit-text-fill-color: currentColor !important;
+  font-family: "Manrope", system-ui, sans-serif !important;
+  font-size: 13.5px !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.005em !important;
+  line-height: 1 !important;
+  text-decoration: none !important;
+  text-shadow: none !important;
+  white-space: nowrap !important;
+  opacity: 1 !important;
+  transform: none !important;
+  cursor: pointer !important;
+  transition: color 0.18s ease, background-color 0.18s ease !important;
+}
+
+html[data-ux="1"][data-theme="light"][lang] body > header :is(
+  #nav button, #nav a.navlink,
+  #garageSectionNav button, #garageSectionNav a.navlink,
+  nav.ux-subnav-links a.ux-subnav-link
+) {
+  color: #4b453b !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html[data-ux="1"][data-theme][lang] body > header :is(
+    #nav button:hover, #nav a.navlink:hover,
+    #garageSectionNav button:hover, #garageSectionNav a.navlink:hover,
+    nav.ux-subnav-links a.ux-subnav-link:hover
+  ) {
+    background: rgba(255, 255, 255, 0.08) !important;
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    color: #ffffff !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  html[data-ux="1"][data-theme="light"][lang] body > header :is(
+    #nav button:hover, #nav a.navlink:hover,
+    #garageSectionNav button:hover, #garageSectionNav a.navlink:hover,
+    nav.ux-subnav-links a.ux-subnav-link:hover
+  ) {
+    background: rgba(138, 114, 62, 0.10) !important;
+    background-color: rgba(138, 114, 62, 0.10) !important;
+    color: #171512 !important;
+  }
+}
+
+/* Active State — Warm Champagne Gold (#E5B96F) + Subtle Glowing Underline */
+html[data-ux="1"][data-theme][lang] body > header :is(
+  #nav button[aria-selected="true"],
+  #nav a[aria-current="page"],
+  #garageSectionNav button[aria-selected="true"],
+  #garageSectionNav a[aria-current="page"],
+  nav.ux-subnav-links a.ux-subnav-link[aria-current="page"]
+) {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  color: #E5B96F !important;
+  -webkit-text-fill-color: #E5B96F !important;
+  font-weight: 600 !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+html[data-ux="1"][data-theme][lang] body > header :is(
+  #nav button[aria-selected="true"],
+  #nav a[aria-current="page"],
+  #garageSectionNav button[aria-selected="true"],
+  #garageSectionNav a[aria-current="page"],
+  nav.ux-subnav-links a.ux-subnav-link[aria-current="page"]
+)::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 50% !important;
+  bottom: 2px !important;
+  width: 22px !important;
+  height: 2px !important;
+  border-radius: 9999px !important;
+  background: linear-gradient(90deg, #e8d7ae, #c79f4e) !important;
+  box-shadow: 0 0 10px rgba(229, 185, 111, 0.65) !important;
+  transform: translateX(-50%) !important;
+  opacity: 1 !important;
+  pointer-events: none !important;
+}
+
+html[data-ux="1"][data-theme="light"][lang] body > header :is(
+  #nav button[aria-selected="true"],
+  #nav a[aria-current="page"],
+  #garageSectionNav button[aria-selected="true"],
+  #garageSectionNav a[aria-current="page"],
+  nav.ux-subnav-links a.ux-subnav-link[aria-current="page"]
+) {
+  color: #7c5609 !important;
+  -webkit-text-fill-color: #7c5609 !important;
+}
+
+html[data-ux="1"][data-theme="light"][lang] body > header :is(
+  #nav button[aria-selected="true"],
+  #nav a[aria-current="page"],
+  #garageSectionNav button[aria-selected="true"],
+  #garageSectionNav a[aria-current="page"],
+  nav.ux-subnav-links a.ux-subnav-link[aria-current="page"]
+)::after {
+  background: #9e7415 !important;
+  box-shadow: 0 0 8px rgba(158, 116, 21, 0.35) !important;
+}
+
+/* 4. Right — Unified Utility Controls & CTA (Matched h-9 height & 12px card-button radius) */
+html[data-ux="1"][data-theme][lang] body > header .ux-header-actions,
+html[data-ux="1"][data-theme][lang] body > header .ux-header-right,
+html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-header-right {
+  grid-area: auto !important;
+  order: 2 !important;
+  display: inline-flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 8px !important;
+  flex: 0 0 auto !important;
+  margin-left: auto !important;
+  min-width: 0 !important;
+}
+
+html[data-ux="1"][data-theme][lang] body > header .ux-header-controls-desktop {
+  display: inline-flex !important;
+  align-items: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  flex: 0 0 auto !important;
+}
+
+html[data-ux="1"][data-theme][lang] body > header .ux-controls {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex: 0 0 auto !important;
+}
+
+/* Theme Button (h-9 rounded-[12px] translucent glass) */
+html[data-ux="1"][data-theme][lang] body > header .ux-theme-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  min-width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  padding: 0 12px !important;
+  margin: 0 !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(255, 255, 255, 0.20) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #f4f0e8 !important;
+  font: 600 12.5px/1 "Manrope", system-ui, sans-serif !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+  transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease !important;
+}
+
+html[data-ux="1"][data-theme][lang] body > header .ux-theme-btn svg {
+  width: 15px !important;
+  height: 15px !important;
+  flex: 0 0 15px !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html[data-ux="1"][data-theme][lang] body > header .ux-theme-btn:hover {
+    background: rgba(255, 255, 255, 0.14) !important;
+    border-color: rgba(211, 181, 143, 0.65) !important;
+    color: #ffffff !important;
+  }
+}
+
+html[data-ux="1"][data-theme="light"][lang] body > header .ux-theme-btn {
+  background: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(138, 114, 62, 0.30) !important;
+  color: #171512 !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+}
+
+/* Language Switcher (h-9 rounded-[12px] segmented glass) */
+html[data-ux="1"][data-theme][lang] body > header .ux-lang-switch {
+  display: inline-flex !important;
+  align-items: center !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  padding: 3px !important;
+  gap: 2px !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(255, 255, 255, 0.20) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+}
+
+html[data-ux="1"][data-theme][lang] body > header .ux-lang-switch button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 31px !important;
+  height: 28px !important;
+  min-height: 28px !important;
+  padding: 0 8px !important;
+  border: 0 !important;
+  border-radius: 9px !important;
+  background: transparent !important;
+  color: rgba(244, 240, 232, 0.78) !important;
+  font: 700 11px/1 "Manrope", system-ui, sans-serif !important;
+  letter-spacing: 0.04em !important;
+  cursor: pointer !important;
+  transition: background-color 0.18s ease, color 0.18s ease !important;
+}
+
+html[data-ux="1"][data-theme][lang] body > header .ux-lang-switch button[aria-pressed="true"] {
+  background: linear-gradient(180deg, #e8c775, #cfa140) !important;
+  color: #121214 !important;
+}
+
+html[data-ux="1"][data-theme="light"][lang] body > header .ux-lang-switch {
+  background: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(138, 114, 62, 0.30) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+}
+
+html[data-ux="1"][data-theme="light"][lang] body > header .ux-lang-switch button {
+  color: #5b5446 !important;
+}
+
+html[data-ux="1"][data-theme="light"][lang] body > header .ux-lang-switch button[aria-pressed="true"] {
+  background: #9e7415 !important;
+  color: #ffffff !important;
+}
+
+/* Primary Account CTA Pill (h-9, matched champagne glass button) */
+html[data-ux="1"][data-theme][lang] body > header .account-pill {
+  grid-area: auto !important;
+  position: static !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  width: auto !important;
+  height: auto !important;
+  flex: 0 0 auto !important;
+}
+
+html[data-ux="1"][data-theme][lang] body > header .account-pill > span {
+  display: none !important;
+}
+
+html[data-ux="1"][data-theme][lang] body > header #accountOpen,
+html[data-ux="1"][data-theme][lang] body > header .account-pill > button {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+  width: auto !important;
+  max-width: none !important;
+  min-width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  padding: 0 14px !important;
+  margin: 0 !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(229, 185, 111, 0.48) !important;
+  background: rgba(229, 185, 111, 0.16) !important;
+  background-color: rgba(229, 185, 111, 0.16) !important;
+  color: #f3d792 !important;
+  font: 600 12.5px/1 "Manrope", system-ui, sans-serif !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
+  transform: none !important;
+  cursor: pointer !important;
+  transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease !important;
+}
+
+html[data-ux="1"][data-theme][lang] body > header #accountOpen > svg {
+  display: none !important;
+}
+
+html[data-ux="1"][data-theme][lang] body > header #accountOpen::before {
+  content: "" !important;
+  display: block !important;
+  flex: 0 0 15px !important;
+  width: 15px !important;
+  height: 15px !important;
+  background-color: currentColor !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='8' r='4' fill='none' stroke='black' stroke-width='2'/%3E%3Cpath d='M4 21c.8-4.1 3.4-6 8-6s7.2 1.9 8 6' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='8' r='4' fill='none' stroke='black' stroke-width='2'/%3E%3Cpath d='M4 21c.8-4.1 3.4-6 8-6s7.2 1.9 8 6' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat !important;
+}
+
+html[data-ux="1"][data-theme][lang] body > header #accountOpen::after {
+  content: attr(data-ux-account-label) !important;
+  display: inline-block !important;
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  color: inherit !important;
+  font: 600 12.5px/1 "Manrope", system-ui, sans-serif !important;
+  white-space: nowrap !important;
+  background: transparent !important;
+  transform: none !important;
+  opacity: 1 !important;
+}
+
+html[data-ux="1"][data-theme="light"][lang] body > header #accountOpen,
+html[data-ux="1"][data-theme="light"][lang] body > header .account-pill > button {
+  background: rgba(229, 185, 111, 0.22) !important;
+  background-color: rgba(229, 185, 111, 0.22) !important;
+  border-color: rgba(158, 116, 21, 0.45) !important;
+  color: #7c5609 !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html[data-ux="1"][data-theme][lang] body > header #accountOpen:hover {
+    background: #E5B96F !important;
+    background-color: #E5B96F !important;
+    border-color: #E5B96F !important;
+    color: #121214 !important;
+    transform: none !important;
+    box-shadow: 0 8px 22px rgba(229, 185, 111, 0.26) !important;
+  }
+
+  html[data-ux="1"][data-theme="light"][lang] body > header #accountOpen:hover {
+    background: #9e7415 !important;
+    background-color: #9e7415 !important;
+    border-color: #9e7415 !important;
+    color: #ffffff !important;
+  }
+}
+
+/* Subpage Back Pill (h-9 rounded-[12px]) */
+html[data-ux="1"][data-theme][lang] body > header .back,
+html[data-ux="1"][data-theme][lang] body > .wrap > header.top .back {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  padding: 0 14px !important;
+  margin: 0 !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(229, 185, 111, 0.48) !important;
+  background: rgba(229, 185, 111, 0.16) !important;
+  color: #f3d792 !important;
+  font: 600 12.5px/1 "Manrope", system-ui, sans-serif !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
+  transform: none !important;
+  cursor: pointer !important;
+  transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html[data-ux="1"][data-theme][lang] body > header .back:hover,
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top .back:hover {
+    background: #E5B96F !important;
+    border-color: #E5B96F !important;
+    color: #121214 !important;
+  }
+}
+
+html[data-ux="1"][data-theme="light"][lang] body > header .back,
+html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top .back {
+  background: rgba(229, 185, 111, 0.22) !important;
+  border-color: rgba(158, 116, 21, 0.45) !important;
+  color: #7c5609 !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html[data-ux="1"][data-theme="light"][lang] body > header .back:hover,
+  html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top .back:hover {
+    background: #9e7415 !important;
+    border-color: #9e7415 !important;
+    color: #ffffff !important;
+  }
+}
+
+/* Mobile Toggle Button (Hidden on >= 1024px) */
+html[data-ux="1"][data-theme][lang] body > header :is(#navToggle, #garageNavToggle, .ux-mobile-subtoggle),
+html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-mobile-subtoggle {
+  display: none !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 36px !important;
+  min-width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(255, 255, 255, 0.20) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #f4f0e8 !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+  cursor: pointer !important;
+  transition: background-color 0.18s ease, border-color 0.18s ease !important;
+}
+
+html[data-ux="1"][data-theme="light"][lang] body > header :is(#navToggle, #garageNavToggle, .ux-mobile-subtoggle),
+html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top .ux-mobile-subtoggle {
+  background: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(138, 114, 62, 0.30) !important;
+  color: #171512 !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+}
+
+html[data-ux="1"][data-theme][lang] body > header :is(#navToggle, #garageNavToggle, .ux-mobile-subtoggle) svg {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+/* Compact Desktop Fit (1024px - 1200px): clean 1-line layout within 1132px/1024px card width */
+@media (min-width: 1024px) and (max-width: 1200px) {
+  html[data-ux="1"][data-theme][lang] body > header > .wrap,
+  html[data-ux="1"][data-theme][lang] body > header > .headin {
+    padding: 8px 14px !important;
+    gap: 8px !important;
+  }
+  html[data-ux="1"][data-theme][lang] body > header :is(.logo, .brand) {
+    font-size: 13.5px !important;
+    letter-spacing: 0.035em !important;
+  }
+  html[data-ux="1"][data-theme][lang] body > header :is(.logo, .brand)::before {
+    width: 24px !important;
+    height: 24px !important;
+    flex-basis: 24px !important;
+    margin-right: 7px !important;
+  }
+  html[data-ux="1"][data-theme][lang] body > header :is(
+    #nav button, #nav a.navlink,
+    #garageSectionNav button, #garageSectionNav a.navlink,
+    nav.ux-subnav-links a.ux-subnav-link
+  ) {
+    padding: 0 6px !important;
+    font-size: 12.25px !important;
+  }
+  html[data-ux="1"][data-theme][lang] body > header .ux-theme-btn .ux-theme-text {
+    display: none !important;
+  }
+  html[data-ux="1"][data-theme][lang] body > header .ux-theme-btn {
+    width: 36px !important;
+    padding: 0 !important;
+  }
+  html[data-ux="1"][data-theme][lang] body > header #accountOpen {
+    padding: 0 11px !important;
+  }
+}
+
+/* Drawer utility controls stay hidden on desktop (>= 1024px) */
+html[data-ux="1"][data-theme][lang] body > header .ux-drawer-controls,
+html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-controls {
+  display: none !important;
+}
+
+/* 5. Responsive Mobile & Tablet Drawer (< 1024px) */
+@media (max-width: 1023px) {
+  html[data-ux="1"][data-theme][lang] body > header,
+  html[data-ux="1"][data-theme][lang] body > header.head,
+  html[data-ux="1"][data-theme][lang] body > header.top,
+  html[data-ux="1"][data-theme][lang] body > header.site-header,
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top {
+    width: calc(100% - 20px) !important;
+    top: max(10px, env(safe-area-inset-top, 10px)) !important;
+    margin: 10px auto 8px !important;
+    min-height: 54px !important;
+    border-radius: 15px !important;
+    background: rgba(18, 20, 23, 0.88) !important;
+    background-color: rgba(18, 20, 23, 0.88) !important;
+    border-color: rgba(255, 255, 255, 0.20) !important;
+    box-shadow:
+      0 12px 30px rgba(0, 0, 0, 0.34),
+      inset 0 1px 0 rgba(255, 255, 255, 0.14) !important;
+  }
+
+  html[data-ux="1"][data-theme="light"][lang] body > header,
+  html[data-ux="1"][data-theme="light"][lang] body > header.head,
+  html[data-ux="1"][data-theme="light"][lang] body > header.top,
+  html[data-ux="1"][data-theme="light"][lang] body > header.site-header,
+  html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top {
+    background: rgba(253, 250, 243, 0.94) !important;
+    background-color: rgba(253, 250, 243, 0.94) !important;
+    border-color: rgba(138, 114, 62, 0.30) !important;
+    box-shadow:
+      0 12px 28px rgba(48, 38, 18, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header > .wrap,
+  html[data-ux="1"][data-theme][lang] body > header > .headin,
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top {
+    min-height: 54px !important;
+    padding: 6px 12px !important;
+    gap: 8px !important;
+    border-radius: 15px !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header :is(.logo, .brand),
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top :is(.logo, .brand) {
+    font-size: clamp(13px, 3.6vw, 15px) !important;
+    max-width: calc(100vw - 140px) !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header :is(.logo, .brand)::before,
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top :is(.logo, .brand)::before {
+    width: 24px !important;
+    height: 24px !important;
+    flex-basis: 24px !important;
+    margin-right: 7px !important;
+    border-radius: 6px !important;
+  }
+
+  /* Hide header utility toggles behind hamburger drawer on < 1024px */
+  html[data-ux="1"][data-theme][lang] body > header .ux-header-controls-desktop,
+  html[data-ux="1"][data-theme][lang] body > header .ux-header-right .ux-controls,
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-header-right .ux-controls {
+    display: none !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header #accountOpen::after {
+    display: none !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header #accountOpen {
+    width: 36px !important;
+    min-width: 36px !important;
+    padding: 0 !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header .back,
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top .back {
+    height: 36px !important;
+    min-height: 36px !important;
+    padding: 0 11px !important;
+    font-size: 12px !important;
+  }
+
+  /* Show Hamburger Toggle on < 1024px */
+  html[data-ux="1"][data-theme][lang] body > header :is(#navToggle, #garageNavToggle, .ux-mobile-subtoggle),
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-mobile-subtoggle {
+    display: inline-flex !important;
+  }
+
+  /* Card-Matched Frosted Mobile Drawer */
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links),
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links {
+    display: none !important;
+    position: absolute !important;
+    top: calc(100% + 10px) !important;
+    right: 0 !important;
+    left: auto !important;
+    bottom: auto !important;
+    z-index: 1250 !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    flex-wrap: nowrap !important;
+    width: min(280px, 100%) !important;
+    max-width: 100% !important;
+    max-height: min(76dvh, 520px) !important;
+    overflow-y: auto !important;
+    padding: 10px !important;
+    gap: 4px !important;
+    border-radius: 18px !important;
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+    background: rgba(18, 20, 23, 0.95) !important;
+    background-color: rgba(18, 20, 23, 0.95) !important;
+    box-shadow:
+      0 22px 54px rgba(0, 0, 0, 0.62),
+      inset 0 1px 0 rgba(255, 255, 255, 0.14) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(140%) !important;
+    backdrop-filter: blur(22px) saturate(140%) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+
+  html[data-ux="1"][data-theme="light"][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links),
+  html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top nav.ux-subnav-links {
+    background: rgba(253, 250, 243, 0.97) !important;
+    background-color: rgba(253, 250, 243, 0.97) !important;
+    border-color: rgba(138, 114, 62, 0.34) !important;
+    box-shadow:
+      0 20px 48px rgba(48, 38, 18, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav.is-open, nav#nav.mobile-menu-open, nav#garageSectionNav.is-open, nav.ux-subnav-links.is-open),
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links.is-open {
+    display: flex !important;
+    animation: uxDrawerIn 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) :is(button, a.navlink, a.ux-subnav-link),
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links a.ux-subnav-link {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 40px !important;
+    justify-content: flex-start !important;
+    padding: 9px 12px !important;
+    border-radius: 11px !important;
+    font-size: 14px !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) :is(button[aria-selected="true"], a[aria-current="page"]),
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links a[aria-current="page"] {
+    background: rgba(229, 185, 111, 0.16) !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) :is(button, a.navlink, a.ux-subnav-link)::after,
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links a.ux-subnav-link::after {
+    display: none !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) .ux-drawer-controls,
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links .ux-drawer-controls {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    margin-top: 6px !important;
+    padding: 10px 4px 2px !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.14) !important;
+  }
+
+  html[data-ux="1"][data-theme="light"][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) .ux-drawer-controls,
+  html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top nav.ux-subnav-links .ux-drawer-controls {
+    border-top-color: rgba(138, 114, 62, 0.24) !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header .ux-drawer-controls .ux-controls {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    gap: 8px !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header .ux-drawer-controls .ux-theme-btn {
+    width: auto !important;
+    min-width: 0 !important;
+    padding: 0 12px !important;
+    height: 36px !important;
+    min-height: 36px !important;
+    font-size: 12px !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header .ux-drawer-controls .ux-theme-btn .ux-theme-text {
+    display: inline !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header .ux-drawer-controls .ux-lang-switch {
+    display: inline-flex !important;
+    height: 36px !important;
+    min-height: 36px !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header .ux-drawer-controls .ux-lang-switch button {
+    height: 28px !important;
+    min-height: 28px !important;
+    padding: 0 9px !important;
+    font-size: 11px !important;
+  }
+}
+
+@keyframes uxDrawerIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-ux="1"][data-theme][lang] body > header * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@media print {
+  html[data-ux="1"][data-theme][lang] body > header.no-print,
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top {
+    display: none !important;
+  }
+}

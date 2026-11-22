@@ -199,7 +199,7 @@ input,select,textarea,.back{background:rgba(255,255,255,.055)!important;color:#f
 .btn{transition:transform .25s var(--ease),filter .25s,box-shadow .25s!important}@media(hover:hover) and (pointer:fine){.btn:hover{transform:translateY(-2px)!important;filter:brightness(1.08)!important;box-shadow:0 10px 24px rgba(0,0,0,.28)!important}}.btn:focus-visible{transform:translateY(-2px)!important;filter:brightness(1.08)!important;box-shadow:0 10px 24px rgba(0,0,0,.28)!important}.input::placeholder{color:#aaa18e!important}input::placeholder{color:#aaa18e!important}.eyebrow{color:#c9b784!important}a{color:inherit}.logo,.brand,.price,.arrow{color:#c9b784!important}.status{background:rgba(55,112,72,.2)!important;color:#b7e0bf!important;border-color:rgba(128,194,143,.3)!important}.yard-label{background:rgba(201,183,132,.14)!important;color:#c9b784!important}footer{border-color:rgba(201,183,132,.18)!important;color:#aaa18e!important}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
 </style>
-<link rel="stylesheet" href="site-theme.css?v=20261121-ux-polish">
+<link rel="stylesheet" href="site-theme.css?v=20261122-card-matched">
 
 <style id="inventory-speed-and-compact-featured">
 /* Compact featured cards on desktop; keep touch layouts comfortable. */
@@ -364,7 +364,7 @@ input,select,textarea,.back{background:rgba(255,255,255,.055)!important;color:#f
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
 <style id="buy-page-fleet-header-and-intro-match">
 /* Match the Fleet page header, typography, right-aligned back control and glass introduction. */
 html body>header{
@@ -455,7 +455,8 @@ main.wrap>.inventory-intro-compact p{
 }
 </style>
 
-<link rel="stylesheet" href="/site-ux.css?v=20261121-ux-polish">
+<link rel="stylesheet" href="/site-ux.css?v=20261122-card-matched">
+<link rel="stylesheet" href="/header-modern.css?v=20261122-card-matched">
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
@@ -502,7 +503,7 @@ main.wrap>.inventory-intro-compact p{
 </section>
 <section id="recentlyViewedSection" hidden></section></main><footer class="ux-site-footer no-print"><div class="wrap">3 Pedals Auto KE · Prices in KES.</div></footer>
 <dialog id="dlg"></dialog><aside id="compareTrayBar" class="ux-compare-dock no-print" aria-live="polite" hidden></aside><dialog id="compareModal" aria-label="Side-by-side vehicle comparison"></dialog>
-<script src="/site-ux.js?v=20261121-ux-polish"></script>
+<script src="/site-ux.js?v=20261122-card-matched"></script>
 <script>
 const $=id=>document.getElementById(id),CFG=window.SB_CONFIG||{};const sb=CFG.url&&window.supabase?window.supabase.createClient(CFG.url,CFG.key):null;let cars=[];
 const inventoryOpenedFromAccount=new URLSearchParams(location.search).get("from")==="account";
@@ -1300,62 +1301,6 @@ html body input,html body select,html body textarea{
 </style>
 
 <style id="inventory-save-controls">.inventory-save-button{display:block;width:calc(100% - 24px);margin:0 12px 12px;padding:9px 12px;border:1px solid rgba(255,255,255,.18);border-radius:999px;background:rgba(255,255,255,.07);color:inherit;font:600 12px Manrope,Arial,sans-serif;cursor:pointer;transition:background .18s ease,border-color .18s ease}.inventory-save-button:hover,.inventory-save-button[aria-pressed="true"]{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.36)}.inventory-save-button:disabled{opacity:.55;cursor:wait}#inventoryBackButton{white-space:nowrap}</style>
-
-<style id="homepage-header-match-final">
-/* Match the homepage header shell: transparent smoked glass, a soft backdrop
-   blur, and no heavy fill, gold strip, or opaque gradient. Keep each page's
-   existing header layout, controls, spacing, and responsive behaviour. */
-html body>header,
-html body>header.head,
-html body>header.top,
-html body>header.site-header,
-html body>header .site-header{
-  background:transparent!important;
-  background-color:transparent!important;
-  background-image:none!important;
-  border-top-color:transparent!important;
-  border-right-color:transparent!important;
-  border-bottom-color:transparent!important;
-  border-left-color:transparent!important;
-  box-shadow:none!important;
-  -webkit-backdrop-filter:blur(18px) saturate(120%)!important;
-  backdrop-filter:blur(18px) saturate(120%)!important;
-}
-</style>
-
-
-
-
-
-<style id="homepage-header-rounded-outline-final">
-/* Match homepage: only the rounded left/right end edges are visible.
-   Top and bottom edges stay transparent; preserve each page's layout. */
-html body>header,
-html body>header.head,
-html body>header.top,
-html body>header.site-header,
-html body>header .site-header{
-  box-sizing:border-box!important;
-  background:transparent!important;
-  background-color:transparent!important;
-  background-image:none!important;
-  border-top:0!important;
-  border-bottom:0!important;
-  border-left:1px solid rgba(255,255,255,.18)!important;
-  border-right:1px solid rgba(255,255,255,.18)!important;
-  border-radius:22px!important;
-  box-shadow:none!important;
-  -webkit-backdrop-filter:blur(18px) saturate(120%)!important;
-  backdrop-filter:blur(18px) saturate(120%)!important;
-}
-@media(max-width:760px){
- html body>header,
- html body>header.head,
- html body>header.top,
- html body>header.site-header,
- html body>header .site-header{border-radius:16px!important}
-}
-</style>
 
 <style id="official-3pedals-typography">
 /* Official 3 Pedals Auto KE typography: Sora headings/brand, Manrope interface and body, Playfair editorial accents. */

@@ -7,8 +7,8 @@
 <script>(function(){try{var t=localStorage.getItem("3pedals:theme")||"dark";document.documentElement.setAttribute("data-theme",t==="light"?"light":"dark");document.documentElement.dataset.ux="1";}catch(e){}})();</script>
 <script src="/consent.js?v=20261107-1"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/site-theme.css?v=20261121-ux-polish">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/site-theme.css?v=20261122-card-matched">
 <style>
 :root{color-scheme:dark;--gold:#c9b783;--ink:#f4f0e8;--muted:rgba(244,240,232,.68);--glass:rgba(18,20,23,.42)}
 *{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--ink);font-family:Manrope,system-ui,sans-serif;background:linear-gradient(120deg,rgba(7,10,13,.78),rgba(7,10,13,.62)),url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72') center/cover fixed,#101316}
@@ -242,7 +242,8 @@ a{color:inherit}
   .hero p{font-size:11.5px!important;line-height:1.4!important}
 }
 </style>
-<link rel="stylesheet" href="/site-ux.css?v=20261121-ux-polish">
+<link rel="stylesheet" href="/site-ux.css?v=20261122-card-matched">
+<link rel="stylesheet" href="/header-modern.css?v=20261122-card-matched">
 </head>
 <body>
 <header class="head"><div class="wrap headin">
@@ -532,105 +533,6 @@ $('requestForm').onsubmit=async e=>{e.preventDefault();hide('bookingNotice');con
  if(account&&!account.dataset.bound){account.dataset.bound='1';account.addEventListener('click',()=>document.getElementById('booking')?.scrollIntoView({behavior:'smooth',block:'start'}))}
 })();
 </script>
-<style id="home-header-exact-match">
-/* Home screen header dimensions, dock, account control and mobile menu */
-html body>header{position:sticky!important;top:0!important;z-index:1000!important;background:rgba(8,10,13,.78)!important;color:#fff!important;border-bottom:1px solid rgba(227,179,65,.18)!important;box-shadow:0 8px 30px rgba(0,0,0,.22)!important;-webkit-backdrop-filter:blur(18px) saturate(140%)!important;backdrop-filter:blur(18px) saturate(140%)!important}
-html body>header>.wrap{width:100%!important;max-width:1180px!important;margin:0 auto!important;padding:10px 24px!important;min-height:76px!important;display:grid!important;grid-template-columns:auto 1fr auto!important;grid-template-areas:"brand account nav"!important;align-items:center!important;gap:18px!important;flex-wrap:nowrap!important}
-html body>header .logo{grid-area:brand!important;display:block!important;cursor:pointer!important;font:700 30px/1.12 "Playfair Display",Georgia,serif!important;color:#d0bc8d!important;letter-spacing:.055em!important;text-transform:uppercase!important;white-space:nowrap!important}
-html body>header .account-pill{grid-area:account!important;justify-self:end!important;display:flex!important;align-items:center!important;margin-left:auto!important;padding:4px!important;border:1px solid rgba(255,255,255,.11)!important;border-radius:15px!important;background:rgba(255,255,255,.045)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 8px 22px rgba(0,0,0,.13)!important;-webkit-backdrop-filter:blur(16px) saturate(145%)!important;backdrop-filter:blur(16px) saturate(145%)!important}
-html body>header .account-pill span{display:none!important}
-html body>header .account-pill button{width:42px!important;height:42px!important;display:grid!important;place-items:center!important;padding:0!important;border:1px solid rgba(183,160,106,.25)!important;border-radius:11px!important;background:rgba(255,255,255,.035)!important;color:#c9b784!important;cursor:pointer!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 4px 12px rgba(0,0,0,.12)!important;transition:transform .22s cubic-bezier(.2,.8,.2,1),box-shadow .22s ease,background .22s ease!important}
-html body>header .account-pill button:before{content:""!important;width:18px!important;height:18px!important;display:block!important;background:currentColor!important;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='8' r='4' fill='none' stroke='black' stroke-width='2'/%3E%3Cpath d='M4 21c.8-4.1 3.4-6 8-6s7.2 1.9 8 6' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat!important;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='8' r='4' fill='none' stroke='black' stroke-width='2'/%3E%3Cpath d='M4 21c.8-4.1 3.4-6 8-6s7.2 1.9 8 6' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat!important}
-@media(hover:hover) and (pointer:fine){html body>header .account-pill button:hover{background:rgba(183,160,106,.09)!important;transform:translateY(-5px) scale(1.08)!important;box-shadow:0 10px 24px rgba(183,160,106,.11)!important}}
-html body>header .account-pill button:active{transform:translateY(-1px) scale(.96)!important}
-html body>header #chauffeurNav{grid-area:nav!important;display:flex!important;align-items:center!important;gap:3px!important;padding:4px!important;background:rgba(255,255,255,.045)!important;border:1px solid rgba(255,255,255,.085)!important;border-radius:14px!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.055),0 10px 28px rgba(0,0,0,.14)!important;-webkit-backdrop-filter:blur(12px)!important;backdrop-filter:blur(12px)!important;position:static!important;width:auto!important;max-width:none!important;max-height:none!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important;transform:none!important}
-html body>header #chauffeurNav a.navlink{--dock-scale:1;min-height:42px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;padding:9px 15px!important;border-radius:12px!important;border:1px solid transparent!important;background:transparent!important;color:#c9c8c4!important;font:600 14px/1 Manrope,system-ui,sans-serif!important;letter-spacing:.01em!important;white-space:nowrap!important;text-decoration:none!important;transform:translateY(calc((1 - var(--dock-scale))*2px)) scale(var(--dock-scale))!important;transform-origin:center bottom!important;will-change:transform!important;transition:transform .46s cubic-bezier(.22,1,.36,1),background .32s ease,box-shadow .32s ease,border-color .32s ease,color .32s ease!important}
-html body>header #chauffeurNav a.navlink:hover{background:rgba(255,255,255,.075)!important;border-color:rgba(255,255,255,.08)!important;color:#f4f2ec!important;z-index:2!important;box-shadow:0 8px 18px rgba(0,0,0,.16)!important}
-html body>header #chauffeurNav a.navlink.active{background:linear-gradient(180deg,#c6b27f,#a9925f)!important;color:#171717!important;box-shadow:0 5px 18px rgba(183,160,106,.18)!important}
-@media(hover:hover) and (pointer:fine){html body>header #chauffeurNav a.navlink:hover{--dock-scale:1.16}html body>header #chauffeurNav:has(a.navlink:hover) a.navlink:not(:hover){--dock-scale:1.04}}
-html body>header .nav-toggle{display:none!important;grid-area:nav-toggle!important;width:44px!important;height:44px!important;border:1px solid rgba(227,179,65,.3)!important;border-radius:12px!important;background:rgba(255,255,255,.055)!important;color:#fff!important;cursor:pointer!important;align-items:center!important;justify-content:center!important;box-shadow:0 6px 18px rgba(0,0,0,.16)!important}
-html body>header .nav-toggle svg{width:20px!important;height:20px!important}
-@media(max-width:980px){html body>header>.wrap{padding-top:max(10px,env(safe-area-inset-top))!important;padding-bottom:10px!important}}
-@media(max-width:760px){
- html body>header>.wrap{display:grid!important;grid-template-columns:minmax(0,1fr) auto auto!important;grid-template-areas:"brand account nav-toggle"!important;align-items:center!important;gap:10px!important;position:relative!important;padding-left:16px!important;padding-right:16px!important}
- html body>header .nav-toggle{display:inline-flex!important;grid-column:3!important;grid-row:1!important;width:42px!important;height:42px!important;min-width:42px!important;visibility:visible!important;opacity:1!important;z-index:1002!important}
- html body>header .account-pill{grid-column:2!important;grid-row:1!important;margin:0!important;padding:2px!important}
- html body>header .account-pill button{width:40px!important;height:40px!important;min-width:40px!important}
- html body>header #chauffeurNav{display:none!important;position:absolute!important;top:calc(100% + 8px)!important;left:0!important;right:0!important;z-index:1001!important;grid-column:1/-1!important;grid-row:2!important;width:min(190px,calc(100vw - 96px))!important;max-width:min(190px,calc(100vw - 96px))!important;max-height:min(72dvh,440px)!important;overflow-x:hidden!important;overflow-y:auto!important;padding:6px!important;margin:0!important;gap:2px!important;flex-direction:column!important;align-items:stretch!important;flex-wrap:nowrap!important;background:rgba(22,23,25,.34)!important;border:1px solid rgba(255,255,255,.2)!important;border-radius:14px!important;box-shadow:0 18px 44px rgba(0,0,0,.58),inset 0 1px 0 rgba(255,255,255,.09)!important;-webkit-backdrop-filter:blur(32px) saturate(165%)!important;backdrop-filter:blur(32px) saturate(165%)!important;opacity:0!important;visibility:hidden!important;pointer-events:none!important;transform:translateY(-8px) scale(.98)!important;transform-origin:top right!important;transition:opacity .2s ease,transform .2s ease,visibility .2s ease!important}
- html body>header #chauffeurNav.mobile-menu-open,html body>header #chauffeurNav.is-open{display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;transform:translateY(0) scale(1)!important}
- html body>header #chauffeurNav a.navlink{display:flex!important;visibility:visible!important;opacity:1!important;flex:0 0 auto!important;width:100%!important;min-height:36px!important;box-sizing:border-box!important;justify-content:flex-start!important;align-items:center!important;padding:7px 9px!important;border-radius:9px!important;font-size:13px!important;color:#f3f0e8!important;background:rgba(255,255,255,.035)!important}
- html body>header #chauffeurNav a.navlink.active{background:linear-gradient(180deg,#c6b27f,#a9925f)!important;color:#171717!important}
-}
-@media(max-width:600px){
- html body>header>.wrap{padding-left:12px!important;padding-right:12px!important;gap:8px!important}
- html body>header .logo{font-size:clamp(18px,5.5vw,23px)!important;line-height:1.12!important;max-width:100%!important;overflow:hidden!important;text-overflow:ellipsis!important}
- html body>header .account-pill button,html body>header .nav-toggle{width:40px!important;height:40px!important;min-width:40px!important}
- html body>header #chauffeurNav{top:calc(100% + 6px)!important;right:10px!important;left:auto!important;width:min(184px,calc(100vw - 76px))!important;max-width:min(184px,calc(100vw - 76px))!important;max-height:min(60dvh,340px)!important;padding:5px!important;gap:2px!important;border-radius:12px!important}
- html body>header #chauffeurNav a.navlink{min-height:32px!important;padding:5px 8px!important;font-size:12px!important;line-height:1.2!important;border-radius:8px!important}
-}
-@media(max-width:380px){html body>header>.wrap{grid-template-columns:minmax(0,1fr) 38px 38px!important;gap:6px!important}html body>header .account-pill button,html body>header .nav-toggle{width:38px!important;height:38px!important;min-width:38px!important}html body>header .logo{font-size:18px!important}}
-@media(prefers-reduced-motion:reduce){html body>header #chauffeurNav a.navlink,html body>header .account-pill,html body>header .account-pill button{transition:none!important;transform:none!important}}
-</style>
-
-<style id="dealers-header-style-match">
-/* Chauffeur Hire header: copy the Dealers page's final header shell and controls. */
-html:not([data-theme="light"]) body>header.head{
- position:sticky!important;top:0!important;z-index:1000!important;
- box-sizing:border-box!important;width:calc(100% - 24px)!important;max-width:1160px!important;
- min-height:76px!important;margin:12px auto 12px!important;padding:0!important;
- display:block!important;border:0!important;border-left:1px solid rgba(255,255,255,.18)!important;
- border-right:1px solid rgba(255,255,255,.18)!important;border-radius:16px!important;
- background:transparent!important;background-color:transparent!important;background-image:none!important;
- box-shadow:none!important;-webkit-backdrop-filter:blur(18px) saturate(120%)!important;
- backdrop-filter:blur(18px) saturate(120%)!important;
-}
-html[data-theme="light"] body>header.head{
- position:sticky!important;top:0!important;z-index:1000!important;
- box-sizing:border-box!important;width:calc(100% - 24px)!important;max-width:1160px!important;
- min-height:76px!important;margin:12px auto 12px!important;padding:0!important;
- display:block!important;border-radius:16px!important;
-}
-html body>header.head>.wrap.headin{
- box-sizing:border-box!important;width:100%!important;max-width:none!important;min-height:74px!important;
- margin:0 auto!important;padding:9px 12px!important;display:flex!important;align-items:center!important;
- justify-content:space-between!important;gap:8px!important;background:transparent!important;border:0!important;box-shadow:none!important;
-}
-html:not([data-theme="light"]) body>header.head .brand{
- display:inline-flex!important;align-items:center!important;width:max-content!important;max-width:100%!important;
- min-height:46px!important;padding:4px 9px!important;border:1px solid rgba(255,255,255,.22)!important;
- border-radius:16px!important;background:rgba(255,255,255,.025)!important;
- box-shadow:inset 0 1px 0 rgba(255,255,255,.08)!important;text-decoration:none!important;
- color:#e5d3a0!important;font-family:"Sora",system-ui,sans-serif!important;font-size:clamp(17px,4.5vw,22px)!important;
- font-weight:700!important;letter-spacing:-.035em!important;line-height:1!important;text-transform:none!important;white-space:nowrap!important;
-}
-html[data-theme="light"] body>header.head .brand{
- display:inline-flex!important;align-items:center!important;width:max-content!important;max-width:100%!important;
- min-height:46px!important;padding:4px 9px!important;text-decoration:none!important;
- color:#8c640d!important;font-family:"Sora",system-ui,sans-serif!important;font-size:clamp(17px,4.5vw,22px)!important;
- font-weight:700!important;letter-spacing:-.035em!important;line-height:1!important;text-transform:none!important;white-space:nowrap!important;
-}
-html:not([data-theme="light"]) body>header.head .back{
- display:inline-flex!important;align-items:center!important;justify-content:center!important;
- min-height:38px!important;padding:7px 11px!important;border:1px solid rgba(255,255,255,.20)!important;
- border-radius:12px!important;background:rgba(255,255,255,.045)!important;color:#f5f5f3!important;
- font:600 12px/1.2 Manrope,system-ui,sans-serif!important;text-decoration:none!important;white-space:nowrap!important;
- box-shadow:none!important;transition:transform .3s ease,background .3s ease,border-color .3s ease,color .3s ease!important;
-}
-html[data-theme="light"] body>header.head .back{
- display:inline-flex!important;align-items:center!important;justify-content:center!important;
- min-height:38px!important;padding:7px 11px!important;border:1px solid rgba(138,114,62,.38)!important;
- border-radius:12px!important;background:rgba(255,255,255,.94)!important;color:#171512!important;
- font:600 12px/1.2 Manrope,system-ui,sans-serif!important;text-decoration:none!important;white-space:nowrap!important;
- box-shadow:0 2px 8px rgba(48,38,18,.06)!important;transition:transform .3s ease,background .3s ease,border-color .3s ease,color .3s ease!important;
-}
-@media(hover:hover) and (pointer:fine){
- html:not([data-theme="light"]) body>header.head .back:hover{transform:translateY(-2px)!important;background:rgba(255,255,255,.10)!important;border-color:rgba(255,255,255,.32)!important;color:#fff!important}
- html[data-theme="light"] body>header.head .back:hover{transform:translateY(-2px)!important;background:#ffffff!important;border-color:#9e7415!important;color:#171512!important}
-}
-@media(max-width:520px){html body>header.head{width:calc(100% - 24px)!important;min-height:76px!important;margin:12px auto!important}html body>header.head>.wrap.headin{min-height:74px!important;padding:9px 12px!important}html body>header.head .brand{font-size:clamp(17px,4.5vw,22px)!important}html body>header.head .back{min-height:38px!important;padding:7px 11px!important;font-size:12px!important}}
-@media(prefers-reduced-motion:reduce){html body>header.head .back{transition:none!important}}
-</style>
-
 <style id="chauffeur-intro-compact-final">
 /* Match the Inventory introduction card: compact, image-free dark glass with clean stacked typography. */
 html body .hero{
@@ -772,5 +674,5 @@ html body .hero p{
   }
 }
 </style>
-<script src="/site-ux.js?v=20261121-ux-polish"></script>
+<script src="/site-ux.js?v=20261122-card-matched"></script>
 </body></html>
