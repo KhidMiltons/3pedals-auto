@@ -186,10 +186,10 @@ app.post("/api/chat", async (req, res) => {
   const rawMessages = Array.isArray(req.body?.messages) ? req.body.messages : [];
   const cleanedHistory = rawMessages
     .filter((m) => m && typeof m.text === "string" && m.text.trim())
-    .slice(-16)
+    .slice(-8)
     .map((m) => ({
       role: m.role === "model" || m.role === "assistant" ? "assistant" : "user",
-      content: m.text.trim().slice(0, 4000),
+      content: m.text.trim().slice(0, 1600),
     }));
 
   if (!cleanedHistory.length) {
@@ -211,7 +211,7 @@ app.post("/api/chat", async (req, res) => {
 
   let effectiveMode = requestedMode;
   if (effectiveMode === "auto") {
-    effectiveMode = roleKey === "yard_locator" || shouldRouteToMaps(lastUserMsg) ? "maps" : "search";
+    effectiveMode = roleKey === "yard_locator" || shouldRouteToMaps(lastUserMsg) ? "maps" : "chat";
   }
 
   let osmPlaces = [];
@@ -235,11 +235,11 @@ app.post("/api/chat", async (req, res) => {
     model,
     messages,
     temperature: 0.4,
-    max_completion_tokens: 1800,
+    max_completion_tokens: 900,
   };
 
   // Groq's browser_search tool replaces Gemini/Google Search grounding for Search mode.
-  if (effectiveMode === "search" || effectiveMode === "maps") {
+  if (effectiveMode === "search") {
     requestBody.tools = [{ type: "browser_search" }];
   }
 
