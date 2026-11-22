@@ -139,23 +139,43 @@ async function findOpenStreetMapPlaces(queryText, location) {
 
   const pattern = "car|auto|motor|vehicle|garage|inspection|ntsa|toyota|subaru|mazda|mitsubishi|nissan|dealer|showroom";
   const around = `around:20000,${center.lat},${center.lon}`;
-  const query = `[out:json][timeout:25];(nwr["shop"~"^(car|car_repair|car_parts|tyres)$"](${around});nwr["craft"="car_repair"](${around});nwr["amenity"~"^(car_rental|car_wash|vehicle_inspection)$"](${around});nwr["office"~"^(automotive|car)$"](${around});nwr["name"~"${pattern}",i](${around}););out tags center 100;`;
-  const response = await fetch("https://overpass-api.de/api/interpreter", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-      "User-Agent": "3PedalsAutoKE/1.0 (https://3pedalsauto.co.ke)",
-    },
-    body: "data=" + encodeURIComponent(query),
-    signal: AbortSignal.timeout(12000),
-  });
-  if (!response.ok) throw new Error("OpenStreetMap place search is unavailable.");
-  const data = await response.json();
-  if (data?.remark) {
-    throw new Error(`OpenStreetMap Overpass query error: ${String(data.remark).slice(0, 240)}`);
+  const query = `[out:json][timeout:20];(nwr["shop"~"^(car|car_repair|car_parts|tyres)$"](${around});nwr["craft"="car_repair"](${around});nwr["amenity"~"^(car_rental|car_wash|vehicle_inspection)$"](${around});nwr["office"~"^(automotive|car)$"](${around});nwr["name"~"${pattern}",i](${around}););out center tags 100;`;
+  let data = null;
+  let lastError = null;
+  // Try two public Overpass instances. The request timeout must exceed the
+  // query's own timeout; otherwise Render can abort a valid lookup too early.
+  for (const endpoint of [
+    "https://overpass-api.de/api/interpreter",
+    "https://overpass.kumi.systems/api/interpreter",
+  ]) {
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+          "User-Agent": "3PedalsAutoKE/1.0 (https://3pedalsauto.co.ke)",
+        },
+        body: "data=" + encodeURIComponent(query),
+        signal: AbortSignal.timeout(30000),
+      });
+      if (!response.ok) {
+        throw new Error(`Overpass returned HTTP ${response.status}`);
+      }
+      const payload = await response.json();
+      if (payload?.remark) {
+        throw new Error(String(payload.remark).slice(0, 240));
+      }
+      if (!Array.isArray(payload?.elements)) {
+        throw new Error("Unexpected Overpass response format.");
+      }
+      data = payload;
+      break;
+    } catch (error) {
+      lastError = error;
+    }
   }
-  if (!Array.isArray(data?.elements)) {
-    throw new Error("OpenStreetMap returned an unexpected response format.");
+  if (!data) {
+    throw new Error(`Both OpenStreetMap search servers failed. ${lastError?.message || "Unknown Overpass error"}`);
   }
   const seen = new Set();
   return (data.elements || [])
@@ -219,7 +239,10 @@ app.post("/api/chat", async (req, res) => {
     try {
       osmPlaces = await findOpenStreetMapPlaces(lastUserMsg, req.body?.location);
     } catch (error) {
-      console.warn("OpenStreetMap lookup failed:", error);
+      console.error("OpenStreetMap lookup failed:", error);
+      return res.status(502).json({
+        error: `OpenStreetMap lookup failed: ${error?.message || "Unknown error"}. Please try again shortly.`,
+      });
     }
     if (osmPlaces.length) {
       const last = cleanedHistory[cleanedHistory.length - 1];
