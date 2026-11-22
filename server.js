@@ -89,7 +89,7 @@ const ROLE_INSTRUCTIONS = {
 };
 
 function shouldRouteToMaps(text) {
-  return /\b(near me|nearby|directions|route|distance|how far|map|maps|where is|locate|location|yards? in|showrooms? in|dealers? in|garages? in|mechanics? near|inspection cent(er|re)|ntsa|nairobi|mombasa|kisumu|nakuru|eldoret|westlands|kilimani|kiambu|thika|karen|ngong)\b/i.test(
+  return /\\b(near me|nearby|directions|route|distance|how far|map|maps|where is|locate|location|yards? in|showrooms? in|dealers? in|garages? in|mechanics? near|inspection cent(er|re)|ntsa|nairobi|mombasa|kisumu|nakuru|eldoret|westlands|kilimani|kiambu|thika|karen|ngong)\\b/i.test(
     String(text || "")
   );
 }
@@ -103,12 +103,12 @@ async function findOpenStreetMapPlaces(queryText, location) {
     Math.abs(userLat) <= 90 &&
     Math.abs(userLng) <= 180;
   const rawQuery = String(queryText || "");
-  const wantsNearMe = /\b(near me|nearby|around me|closest|karibu nami)\b/i.test(rawQuery);
+  const wantsNearMe = /\\b(near me|nearby|around me|closest|karibu nami)\\b/i.test(rawQuery);
   const area = rawQuery
-    .replace(/\b(near me|nearby|around me|closest|karibu nami|car yards?|dealers?|dealerships?|garages?|mechanics?|inspection cent(er|re)s?|motor vehicle|ntsa|showrooms?|reputable|find|where is|directions|map|maps|kenya)\b/gi, " ")
-    .replace(/\b(in|near|around|along|at|for|to|the|of)\b/gi, " ")
-    .replace(/[^\w\s-]/g, " ")
-    .replace(/\s+/g, " ")
+    .replace(/\\b(near me|nearby|around me|closest|karibu nami|car yards?|dealers?|dealerships?|garages?|mechanics?|inspection cent(er|re)s?|motor vehicle|ntsa|showrooms?|reputable|find|where is|directions|map|maps|kenya)\\b/gi, " ")
+    .replace(/\\b(in|near|around|along|at|for|to|the|of)\\b/gi, " ")
+    .replace(/[^\\w\\s-]/g, " ")
+    .replace(/\\s+/g, " ")
     .trim();
 
   let center = null;
@@ -224,7 +224,7 @@ app.post("/api/chat", async (req, res) => {
     if (osmPlaces.length) {
       const last = cleanedHistory[cleanedHistory.length - 1];
       if (last?.role === "user") {
-        last.content += "\n\nOpenStreetMap place data (coverage may be incomplete; do not invent ratings or opening hours): " + JSON.stringify(osmPlaces);
+        last.content += "\\n\\nOpenStreetMap place data (coverage may be incomplete; do not invent ratings or opening hours): " + JSON.stringify(osmPlaces);
       }
     }
   }
@@ -235,7 +235,11 @@ app.post("/api/chat", async (req, res) => {
     model,
     messages,
     temperature: 0.4,
-    max_completion_tokens: 900,
+    // GPT-OSS spends part of its completion budget on internal reasoning.
+    // Low effort leaves more room for a visible answer on the free tier.
+    reasoning_effort: "low",
+    reasoning_format: "hidden",
+    max_completion_tokens: 1400,
   };
 
   // Groq's browser_search tool replaces Gemini/Google Search grounding for Search mode.
