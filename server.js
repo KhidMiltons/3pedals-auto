@@ -324,57 +324,72 @@ async function findOpenStreetMapPlaces(queryText, location) {
   // This avoids relying solely on third-party reverse-geocoding services, which may
   // throttle or omit street/locality fields. Returned references remain approximate.
   if (missingAddresses.length) {
-    const selectors = missingAddresses.flatMap((place) => {
-      const lat = place.lat.toFixed(6);
-      const lon = place.lon.toFixed(6);
-      return [
-        `way["highway"]["name"](around:350,${lat},${lon});`,
-        `nwr["place"~"^(neighbourhood|suburb|quarter)$"]["name"](around:1800,${lat},${lon});`,
-      ];
-    });
-    const nearbyQuery = `[out:json][timeout:12];(${selectors.join("")});out center tags;`;
-    let nearbyData = null;
-    for (const endpoint of [
+    // Keep Overpass requests small. A single query containing many around()
+    // selectors can overwhelm public instances and return HTTP 504.
+    const distanceMetres = (a, b) => {
+      const radians = (value) => value * Math.PI / 180;
+      const dLat = radians(b.lat - a.lat);
+      const dLon = radians(b.lon - a.lon);
+      const value = Math.sin(dLat / 2) ** 2 + Math.cos(radians(a.lat)) * Math.cos(radians(b.lat)) * Math.sin(dLon / 2) ** 2;
+      return 6371000 * 2 * Math.atan2(Math.sqrt(value), Math.sqrt(1 - value));
+    };
+    const endpoints = [
       "https://ovp.dresel.systems/api-af/interpreter",
       "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
       "https://overpass.private.coffee/api/interpreter",
-    ]) {
-      try {
-        const response = await fetch(endpoint, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-            "User-Agent": "3PedalsAutoKE/1.0 (https://3pedalsauto.co.ke)",
-          },
-          body: "data=" + encodeURIComponent(nearbyQuery),
-          signal: AbortSignal.timeout(14000),
-        });
-        if (!response.ok) throw new Error(`Overpass nearby lookup returned HTTP ${response.status}`);
-        const payload = await response.json();
-        if (payload?.remark || !Array.isArray(payload?.elements)) {
-          throw new Error(String(payload?.remark || "Unexpected nearby Overpass response").slice(0, 180));
-        }
-        nearbyData = payload;
-        break;
-      } catch (error) {
-        console.warn("Nearby OSM enrichment unavailable:", error?.message || error);
-      }
-    }
+    ];
 
-    if (nearbyData) {
+    // Four business pins per request keeps each Overpass query manageable.
+    for (let offset = 0; offset < missingAddresses.length; offset += 4) {
+      const batch = missingAddresses.slice(offset, offset + 4);
+      const selectors = batch.flatMap((place) => {
+        const lat = place.lat.toFixed(6);
+        const lon = place.lon.toFixed(6);
+        return [
+          `way["highway"]["name"](around:350,${lat},${lon});`,
+          `nwr["place"~"^(neighbourhood|suburb|quarter)$"]["name"](around:1800,${lat},${lon});`,
+        ];
+      });
+      const nearbyQuery = `[out:json][timeout:10];(${selectors.join("")});out center tags;`;
+      let nearbyData = null;
+      let lastNearbyError = null;
+
+      for (const endpoint of endpoints) {
+        try {
+          const response = await fetch(endpoint, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+              "User-Agent": "3PedalsAutoKE/1.0 (https://3pedalsauto.co.ke)",
+            },
+            body: "data=" + encodeURIComponent(nearbyQuery),
+            signal: AbortSignal.timeout(9000),
+          });
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          const payload = await response.json();
+          if (payload?.remark || !Array.isArray(payload?.elements)) {
+            throw new Error(String(payload?.remark || "Unexpected nearby Overpass response").slice(0, 180));
+          }
+          nearbyData = payload;
+          break;
+        } catch (error) {
+          lastNearbyError = error;
+          console.warn("Nearby OSM enrichment endpoint failed:", endpoint, error?.message || error);
+        }
+      }
+
+      if (!nearbyData) {
+        console.warn("Nearby OSM enrichment skipped for this batch:", lastNearbyError?.message || "All Overpass endpoints failed");
+        continue;
+      }
+
       const candidates = nearbyData.elements.map((el) => ({
         tags: el.tags || {},
         lat: Number(el.lat ?? el.center?.lat),
         lon: Number(el.lon ?? el.center?.lon),
       })).filter((item) => Number.isFinite(item.lat) && Number.isFinite(item.lon));
-      const distanceMetres = (a, b) => {
-        const radians = (value) => value * Math.PI / 180;
-        const dLat = radians(b.lat - a.lat);
-        const dLon = radians(b.lon - a.lon);
-        const value = Math.sin(dLat / 2) ** 2 + Math.cos(radians(a.lat)) * Math.cos(radians(b.lat)) * Math.sin(dLon / 2) ** 2;
-        return 6371000 * 2 * Math.atan2(Math.sqrt(value), Math.sqrt(1 - value));
-      };
-      for (const place of missingAddresses) {
+
+      for (const place of batch) {
         const roads = candidates
           .filter((item) => item.tags.highway && item.tags.name)
           .map((item) => ({ name: String(item.tags.name).trim(), distance: distanceMetres(place, item) }))
