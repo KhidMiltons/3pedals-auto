@@ -6,9 +6,13 @@
 <meta name="description" content="Request premium chauffeur-driven travel with 3 Pedals Auto KE. Explore available vehicles, choose your hire arrangement and receive a confirmed quotation before payment.">
 <script>(function(){try{var t=localStorage.getItem("3pedals:theme")||"dark";document.documentElement.setAttribute("data-theme",t==="light"?"light":"dark");document.documentElement.dataset.ux="1";}catch(e){}})();</script>
 <script src="/consent.js?v=20261107-1"></script>
+<link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=60" media="(max-width: 760px)" fetchpriority="high">
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72" media="(min-width: 761px)" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/site-theme.css?v=20261122-card-matched">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="/site-theme.css?v=20261122-perf">
 <style>
 :root{color-scheme:dark;--gold:#c9b783;--ink:#f4f0e8;--muted:rgba(244,240,232,.68);--glass:rgba(18,20,23,.42)}
 *{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--ink);font-family:Manrope,system-ui,sans-serif;background:linear-gradient(120deg,rgba(7,10,13,.78),rgba(7,10,13,.62)),url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72') center/cover fixed,#101316}
@@ -242,8 +246,8 @@ a{color:inherit}
   .hero p{font-size:11.5px!important;line-height:1.4!important}
 }
 </style>
-<link rel="stylesheet" href="/site-ux.css?v=20261122-card-matched">
-<link rel="stylesheet" href="/header-modern.css?v=20261122-card-matched">
+<link rel="stylesheet" href="/site-ux.css?v=20261122-perf">
+<link rel="stylesheet" href="/header-modern.css?v=20261122-header-fix">
 </head>
 <body>
 <header class="head"><div class="wrap headin">
@@ -588,6 +592,17 @@ html body .hero p{
 .fleet-footnote{color:var(--chauffeur-muted);font-size:10px;line-height:1.6;margin:8px 2px}
 .service-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:18px}
 .service-card,.assurance-grid article,.steps-grid article{padding:19px;border:1px solid rgba(255,255,255,.10);border-radius:16px;background:rgba(18,20,23,.34);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+@media(max-width:760px){
+  html:not([data-theme="light"]) body{
+    background:linear-gradient(120deg,rgba(7,10,13,.80),rgba(7,10,13,.66)),url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=60') center/cover scroll,#101316!important;
+    background-attachment:scroll!important;
+  }
+  html:not([data-theme="light"]) :is(.hero,.glass,.vehicle,.booking,.account-box,.service-card,.assurance-grid article,.steps-grid article,.chauffeur-assurance){
+    -webkit-backdrop-filter:none!important;
+    backdrop-filter:none!important;
+    background:rgba(18,20,23,.90)!important;
+  }
+}
 .service-icon{width:36px;height:36px;display:grid;place-items:center;border-radius:11px;background:rgba(183,160,106,.10);color:#e0ca91;font-size:19px;margin-bottom:14px}
 .service-card h3,.assurance-grid h3,.steps-grid h3{margin:0 0 7px;color:var(--chauffeur-ink);font:600 18px "Playfair Display",Georgia,serif}
 .service-card p,.assurance-grid p,.steps-grid p{margin:0;color:var(--chauffeur-muted);font-size:12px;line-height:1.7}
@@ -674,5 +689,5 @@ html body .hero p{
   }
 }
 </style>
-<script src="/site-ux.js?v=20261122-card-matched"></script>
+<script defer src="/site-ux.js?v=20261122-perf"></script>
 </body></html>

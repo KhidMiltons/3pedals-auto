@@ -146,7 +146,7 @@
       .map(
         (m, idx) => `
       <div class="article-photo-choice">
-        <img src="${esc(m.url)}" alt="Article photo ${idx + 1}">
+        <img src="${esc(m.url)}" alt="Article photo ${idx + 1}" loading="lazy" decoding="async">
         <label>
           <input type="radio" name="articleCoverPick" value="${idx}" ${idx === coverIdx ? "checked" : ""}>
           <span>Cover #${idx + 1}</span>
@@ -200,7 +200,7 @@
           const photoNum = Number(photoMatch[1]);
           const pic = ordered[photoNum - 1];
           return pic?.url
-            ? `<img src="${esc(pic.url)}" alt="Article figure ${photoNum}">`
+            ? `<img src="${esc(pic.url)}" alt="Article figure ${photoNum}" loading="lazy" decoding="async">`
             : `<p class="meta">[Photo placeholder #${photoNum}]</p>`;
         }
         return `<p>${esc(line)}</p>`;
@@ -275,7 +275,7 @@
           <div style="display:flex;gap:14px;align-items:flex-start;min-width:0;flex:1">
             ${
               cover
-                ? `<img src="${esc(cover)}" alt="" class="listing-thumb">`
+                ? `<img src="${esc(cover)}" alt="" class="listing-thumb" loading="lazy" decoding="async">`
                 : `<div class="listing-thumb" style="display:grid;place-items:center;font-size:11px;color:var(--ad-mute)">No img</div>`
             }
             <div style="min-width:0;flex:1">
@@ -575,7 +575,7 @@
           ${
             isVid
               ? `<video muted preload="none" src="${esc(safeUrl(m.url))}"></video>`
-              : `<img src="${esc(safeUrl(m.url))}" alt="Project media ${idx + 1}">`
+              : `<img src="${esc(safeUrl(m.url))}" alt="Project media ${idx + 1}" loading="lazy" decoding="async">`
           }
           <button type="button" class="media-remove" data-proj-remove="${idx}" aria-label="Remove item ${
           idx + 1
@@ -641,7 +641,7 @@
                     .map((m) =>
                       m.type === "video" || String(m.mime || "").startsWith("video/")
                         ? `<video muted preload="none" src="${esc(safeUrl(m.url))}"></video>`
-                        : `<img src="${esc(safeUrl(m.url))}" alt="" loading="lazy">`
+                        : `<img src="${esc(safeUrl(m.url))}" alt="" loading="lazy" decoding="async">`
                     )
                     .join("")}</div>`
                 : ""

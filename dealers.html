@@ -6,7 +6,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
-<link rel="preload" as="image" href="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72" fetchpriority="high">
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=60" media="(max-width: 760px)" fetchpriority="high">
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72" media="(min-width: 761px)" fetchpriority="high">
 <link rel="preconnect" href="https://dlejmelyeaaxcvelvzia.supabase.co" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <meta name="theme-color" content="#0d0d0d">
@@ -23,7 +24,8 @@
 <meta name="twitter:title" content="Car Dealers in Kenya | 3 Pedals Auto KE">
 <meta name="twitter:description" content="Find dealer profiles and available vehicles on 3 Pedals Auto KE.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet"></noscript>
 <title>Car Dealers in Kenya | 3 Pedals Auto KE</title>
 <style>
 :root{color-scheme:dark;--bg:#0d0d0d;--surface:#1a1a1a;--surface2:#202123;--ink:#f5f1e6;--mute:#a8a08a;--line:#333026;--gold:#e3b341;--ease:cubic-bezier(.22,1,.36,1)}
@@ -33,8 +35,8 @@ main{padding:34px 0 60px}.eyebrow{color:var(--gold);font-size:11px;font-weight:8
 @media(max-width:850px){.tools{grid-template-columns:repeat(2,minmax(0,1fr))}.tools input{grid-column:1/-1}.tools .search-label{grid-column:1/-1}}@media(max-width:520px){.wrap{width:calc(100% - 24px)}.headin{min-height:60px}.brand{font-size:19px}.back{padding:8px 10px;font-size:13px}main{padding-top:25px}.summary{gap:8px}.stat{flex:1 1 135px;padding:11px 13px}.dealer{min-height:112px;padding:15px}.logo{width:46px;height:46px;flex-basis:46px}.tools{grid-template-columns:1fr}.tools input{grid-column:auto}.tools .search-label{grid-column:auto}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
 </style>
-<link rel="stylesheet" href="site-theme.css?v=20261122-card-matched">
-<link rel="stylesheet" href="/site-ux.css?v=20261122-card-matched">
+<link rel="stylesheet" href="site-theme.css?v=20261122-perf">
+<link rel="stylesheet" href="/site-ux.css?v=20261122-perf">
 <!-- Meta Pixel loads only after explicit optional-cookie consent. -->
 <style id="dealers-clean-shell">
 /* Unified dual-theme glass shell for Car Dealers directory (Dark Obsidian & Light Parchment) */
@@ -260,7 +262,14 @@ html body > footer.ux-site-footer {
   }
 }
 @media (max-width: 760px) {
-  html body :is(.dealer, .stat, .state) {
+  html:not([data-theme="light"]) #dealers-blurred-wallpaper {
+    background-image:
+      linear-gradient(110deg, rgba(4, 6, 9, 0.72), rgba(6, 8, 12, 0.56) 48%, rgba(4, 6, 9, 0.74)),
+      url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=60") !important;
+    filter: none !important;
+    transform: none !important;
+  }
+  html body :is(.dealer, .stat, .state, .tools input, .tools select) {
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
   }
@@ -279,7 +288,7 @@ html body > footer.ux-site-footer {
   }
 }
 </style>
-<link rel="stylesheet" href="/header-modern.css?v=20261122-card-matched">
+<link rel="stylesheet" href="/header-modern.css?v=20261122-header-fix">
 </head>
 <body>
 <div id="dealers-blurred-wallpaper" aria-hidden="true"></div>
@@ -415,6 +424,6 @@ document.addEventListener('click', function(event) {
 })();
 </script>
 
-<script src="/site-ux.js?v=20261122-card-matched"></script>
+<script defer src="/site-ux.js?v=20261122-perf"></script>
 </body>
 </html>

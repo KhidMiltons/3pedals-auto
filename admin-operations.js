@@ -193,7 +193,7 @@
           </div>
           <div class="details" style="display:block">
             ${b.details ? `<p class="meta" style="margin:0 0 12px;white-space:pre-wrap"><strong>Notes:</strong> ${esc(b.details)}</p>` : ""}
-            <div class="editor-grid" style="grid-template-columns:repeat(3,minmax(0,1fr));align-items:end">
+            <div class="editor-grid ops-inline-grid">
               <div>
                 <label for="gb-st-${id}">Booking status</label>
                 <select id="gb-st-${id}" data-gb-status="${id}">
@@ -761,7 +761,7 @@
           <div class="details" style="display:block">
             ${b.customer_notes ? `<p class="meta" style="margin:0 0 10px;white-space:pre-wrap"><strong>Trip notes:</strong> ${esc(b.customer_notes)}</p>` : ""}
             <p class="meta" style="margin:0 0 12px">${esc(waSummary)}</p>
-            <div class="editor-grid" style="grid-template-columns:repeat(3,minmax(0,1fr));align-items:end">
+            <div class="editor-grid ops-inline-grid">
               <div>
                 <label for="ch-q-${id}">Confirmed quote (KES)</label>
                 <input id="ch-q-${id}" type="number" min="0" step="1" data-ch-quote="${id}" value="${esc(quote)}">
@@ -1111,7 +1111,7 @@
           <div style="display:flex;gap:14px;align-items:flex-start;min-width:0;flex:1">
             ${
               safeUrl(item.photo_url)
-                ? `<img src="${esc(safeUrl(item.photo_url))}" alt="" class="listing-thumb">`
+                ? `<img src="${esc(safeUrl(item.photo_url))}" alt="" class="listing-thumb" loading="lazy" decoding="async">`
                 : `<div class="listing-thumb" style="display:grid;place-items:center;font-size:11px;color:var(--ad-mute)">No photo</div>`
             }
             <div style="min-width:0;flex:1">
@@ -1725,7 +1725,7 @@
           <div style="display:flex;gap:14px;align-items:flex-start;min-width:0;flex:1">
             ${
               photo
-                ? `<img src="${esc(photo)}" alt="" class="listing-thumb" style="width:68px;height:68px;flex:0 0 68px">`
+                ? `<img src="${esc(photo)}" alt="" class="listing-thumb" loading="lazy" decoding="async" style="width:68px;height:68px;flex:0 0 68px">`
                 : `<div class="listing-thumb" style="width:68px;height:68px;flex:0 0 68px;display:grid;place-items:center;font-size:12px;color:var(--ad-mute)">Tech</div>`
             }
             <div style="min-width:0;flex:1">

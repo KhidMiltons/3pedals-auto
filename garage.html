@@ -6,7 +6,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
-<link rel="preload" as="image" href="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72" fetchpriority="high">
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=60" media="(max-width: 760px)" fetchpriority="high">
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72" media="(min-width: 761px)" fetchpriority="high">
 <link rel="preconnect" href="https://dlejmelyeaaxcvelvzia.supabase.co" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <meta name="theme-color" content="#0d0d0d">
@@ -55,7 +56,8 @@
   }
 }
 </script>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet"></noscript>
 <style>
 :root{--bg:#f7f5ef;--surface:#fff;--ink:#0d0d0d;--mute:#5e5848;--line:#e3dcc8;--blue:#946c00;--gold:#d4a017;--gold-ink:#0d0d0d;--alt:#0d0d0d;--alt-ink:#e3b341;--err:#b42318;--ok:#2b7a3d;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -420,7 +422,7 @@ footer{border-color:var(--line);background:linear-gradient(180deg,transparent,rg
   nav button,nav a.navlink { --dock-scale: 1 !important; }
 }
 </style>
-<link rel="stylesheet" href="site-theme.css?v=20261122-card-matched">
+<link rel="stylesheet" href="site-theme.css?v=20261122-perf">
 
 <style id="garage-floating-glass-whatsapp">
 /* Match the transparent, borderless champagne-glass WhatsApp icon used on the home page. */
@@ -565,8 +567,8 @@ html body h1,html body h2,html body h3,html body .logo,html body .brand{font-fam
 html body > header .logo,html body > header .brand{font-family:"Playfair Display",Georgia,serif!important;font-size:27px!important;font-weight:700!important;letter-spacing:.03em!important;text-transform:uppercase!important}
 html body > header nav a,html body > header nav button,html body > header .headnav a,html body > header .headnav button,html body > header .back{font-family:Manrope,system-ui,sans-serif!important;font-size:14px!important;font-weight:400!important;letter-spacing:0!important}
 </style>
-<link rel="stylesheet" href="/site-ux.css?v=20261122-card-matched">
-<link rel="stylesheet" href="/header-modern.css?v=20261122-card-matched">
+<link rel="stylesheet" href="/site-ux.css?v=20261122-perf">
+<link rel="stylesheet" href="/header-modern.css?v=20261122-header-fix">
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
@@ -2051,6 +2053,6 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){f
   }
 }
 </style>
-<script src="/site-ux.js?v=20261122-card-matched"></script>
+<script defer src="/site-ux.js?v=20261122-perf"></script>
 </body>
 </html>

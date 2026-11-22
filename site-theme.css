@@ -1,1072 +1,280 @@
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&family=Sora:wght@400;500;600;700;800&display=swap");
-
-/* Site-wide glassmorphism layer: preserves the existing graphite + champagne-gold identity. */
-:root {
-  --glass-surface: rgba(19, 20, 23, .68);
-  --glass-surface-soft: rgba(255, 255, 255, .045);
-  --glass-edge: rgba(211, 185, 125, .22);
-  --glass-edge-hover: rgba(211, 185, 125, .42);
-  --glass-shadow: 0 16px 42px rgba(0, 0, 0, .20), inset 0 1px rgba(255, 255, 255, .07);
-  --champagne-gradient: linear-gradient(135deg, #f1dfb0 0%, #c9a45c 52%, #9b773b 100%);
-}
-
-/* Shared chrome and navigation */
-body > header, .head, .top, .site-header, .navbar, .nav-shell, .nav-wrap {
-  background: rgba(18, 19, 22, .66) !important;
-  border-color: var(--glass-edge) !important;
-  box-shadow: 0 10px 34px rgba(0, 0, 0, .16), inset 0 1px rgba(255, 255, 255, .055) !important;
-  -webkit-backdrop-filter: blur(22px) saturate(150%) !important;
-  backdrop-filter: blur(22px) saturate(150%) !important;
-}
-nav:not(.account-sidebar), .nav, .nav-links, .mobile-nav {
-  background: rgba(22, 23, 26, .58) !important;
-  border-color: rgba(211, 185, 125, .16) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(145%) !important;
-  backdrop-filter: blur(20px) saturate(145%) !important;
-}
-
-/* Shared cards, content panels, forms and dashboards */
-.card, .dealer, .stat, .state, .empty, .error, .panel, .seller-card,
-.info, .gallery, .seller, .spec, .note, .listing, .article-item,
-.project-item, .vehicle-card, .story-card, .contact-card, .promotion-package,
-.auto-quote-rail, .authbox,
-#login, .editor, .contact-form, .modal-content, .dialog-card,
-.settings-card, .package, .featured-panel, .filter-panel, .search-panel,
-.vehicle-detail-card, .article-card, .dashboard-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, .075), rgba(255, 255, 255, .025)), var(--glass-surface) !important;
-  border-color: var(--glass-edge) !important;
-  box-shadow: var(--glass-shadow) !important;
-  -webkit-backdrop-filter: blur(18px) saturate(135%) !important;
-  backdrop-filter: blur(18px) saturate(135%) !important;
-}
-.card:hover, .dealer:hover, .listing:hover, .article-item:hover,
-.project-item:hover, .vehicle-card:hover, .story-card:hover,
-.contact-card:hover, .promotion-package:hover {
-  border-color: var(--glass-edge-hover) !important;
-  box-shadow: 0 18px 46px rgba(0, 0, 0, .24), inset 0 1px rgba(255, 255, 255, .08) !important;
-}
-
-/* Translucent controls; primary champagne-gold actions retain their own gradient. */
-:is(input, select, textarea):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *),
-body:has(#app) .field, .seg, .dropdown-menu, .popover,
-.journal-share-dialog, .journal-share-url {
-  background-color: rgba(255, 255, 255, .055) !important;
-  border-color: rgba(211, 185, 125, .19) !important;
-  -webkit-backdrop-filter: blur(14px) saturate(130%) !important;
-  backdrop-filter: blur(14px) saturate(130%) !important;
-}
-:is(input, select, textarea):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):focus {
-  border-color: rgba(211, 185, 125, .62) !important;
-  box-shadow: 0 0 0 3px rgba(201, 164, 92, .12) !important;
-}
-button:not(.primary):not(.btn-primary):not(.button-primary):not(.gold-button),
-.btn:not(.primary):not(.btn-primary):not(.button-primary):not(.gold-button),
-a.navlink {
-  -webkit-tap-highlight-color: transparent;
-}
-button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
-  outline: 2px solid rgba(211, 185, 125, .72);
-  outline-offset: 3px;
-}
-
-/* Keep the glass refined on mobile and respect reduced-motion preferences. */
-@media (max-width: 640px) {
-  body > header, .head, .top, .site-header, .navbar, .nav-shell, .nav-wrap,
-  nav:not(.account-sidebar), .nav, .nav-links, .mobile-nav,
-  .card, .dealer, .stat, .panel, .listing, .vehicle-card, .story-card,
-  .contact-card, .promotion-package, .authbox,
-  .modal-content, .dialog-card, .settings-card, .featured-panel {
-    -webkit-backdrop-filter: blur(11px) saturate(125%) !important;
-    backdrop-filter: blur(11px) saturate(125%) !important;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .card, .dealer, .listing, .article-item, .project-item,
-  .vehicle-card, .story-card, .contact-card, .promotion-package {
-    transition-duration: .01ms !important;
-    animation-duration: .01ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-/* Follow the visitor's device theme across the public site and admin pages. */
-@media (prefers-color-scheme: light) {
-  :root {
-    color-scheme: light !important;
-    --bg: #f3f1ec !important;
-    --surface: #fbfaf7 !important;
-    --surface-2: #f6f4ef !important;
-    --surface2: #f6f4ef !important;
-    --card: rgba(251, 250, 247, .9) !important;
-    --panel: rgba(251, 250, 247, .9) !important;
-    --ink: #1a1b1d !important;
-    --text: #1a1b1d !important;
-    --mute: #6f6c64 !important;
-    --muted: #6f6c64 !important;
-    --line: #dedbd3 !important;
-    --gold: #9a7a3e !important;
-    --blue: #806638 !important;
-    --gold-ink: #171717 !important;
-    --alt: #1b1c1e !important;
-    --alt-ink: #f5f2ea !important;
-    --shadow-sm: 0 2px 10px rgba(24,25,27,.055) !important;
-    --shadow: 0 16px 38px rgba(24,25,27,.10) !important;
-  }
-
-  html { color-scheme: light !important; }
-  body {
-    color: #1a1b1d !important;
-    background-color: #f3f1ec !important;
-    background-image: radial-gradient(ellipse at 14% -8%, rgba(183,160,106,.12), transparent 34%), linear-gradient(145deg,#f8f6f1,#efede7 62%,#f5f3ee) !important;
-  }
-
-  body > header, .head, .top {
-    color: #1a1b1d !important;
-    background: rgba(251,250,247,.84) !important;
-    border-color: rgba(154,122,62,.22) !important;
-    box-shadow: 0 10px 30px rgba(24,25,27,.09) !important;
-    -webkit-backdrop-filter: blur(22px) saturate(135%) !important;
-    backdrop-filter: blur(22px) saturate(135%) !important;
-  }
-  .logo, .brand, .back, .account-pill, .eyebrow, .arrow, .price { color: #806638 !important; }
-  nav:not(.account-sidebar) {
-    background: rgba(255,255,255,.58) !important;
-    border-color: rgba(26,27,29,.1) !important;
-    box-shadow: 0 8px 24px rgba(24,25,27,.08) !important;
-  }
-  nav:not(.account-sidebar) button, nav:not(.account-sidebar) a, nav:not(.account-sidebar) a.navlink, nav:not(.account-sidebar) button[aria-selected="false"] {
-    color: #363530 !important;
-    border-color: transparent !important;
-  }
-  nav:not(.account-sidebar) button:hover, nav:not(.account-sidebar) a:hover, nav:not(.account-sidebar) a.navlink:hover {
-    color: #171717 !important;
-    background: rgba(154,122,62,.1) !important;
-    border-color: rgba(154,122,62,.18) !important;
-  }
-  nav:not(.account-sidebar) button[aria-selected="true"], .tab.active, .primary, .btn.primary {
-    color: #171717 !important;
-    background: linear-gradient(135deg,#d8c497,#b7a06a) !important;
-    border-color: rgba(154,122,62,.35) !important;
-  }
-
-  .card, .dealer, .stat, .state, .empty, .error, .panel, .seller-card,
-  .info, .gallery, .seller, .spec, .note, .listing, .article-item,
-  .project-item, .vehicle-card, .story-card, .contact-card, .promotion-package,
-  .auto-quote-rail, .authbox,
-  #login, .editor, .contact-form {
-    color: #1a1b1d !important;
-    background: linear-gradient(145deg,rgba(255,255,255,.9),rgba(247,245,239,.86)) !important;
-    border-color: rgba(154,122,62,.2) !important;
-    box-shadow: 0 12px 34px rgba(24,25,27,.09), inset 0 1px rgba(255,255,255,.75) !important;
-    -webkit-backdrop-filter: blur(18px) saturate(125%) !important;
-    backdrop-filter: blur(18px) saturate(125%) !important;
-  }
-  .card:hover, .dealer:hover, .listing:hover, .article-item:hover, .project-item:hover,
-  .vehicle-card:hover, .story-card:hover {
-    border-color: rgba(154,122,62,.48) !important;
-    box-shadow: 0 18px 42px rgba(24,25,27,.14) !important;
-  }
-  .meta, .muted, .mute, .hero p, .intro p, footer, .stat span, .dealer p,
-  .card p, .story-card p, .vehicle-card .vehicle-description, .body p,
-  .contact-card small, .contact-form p, .notice, .state, .summary p {
-    color: #6f6c64 !important;
-  }
-  :is(input, select, textarea):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *), .back, .ghost, .tab:not(.active), .article-share,
-  .journal-share-dialog .journal-share-url {
-    color: #242421 !important;
-    background: rgba(255,255,255,.78) !important;
-    border-color: rgba(26,27,29,.15) !important;
-  }
-  input::placeholder, textarea::placeholder { color: #858177 !important; }
-  body:has(#app) .field, .seg {
-    color: #242421 !important;
-    background: rgba(255,255,255,.68) !important;
-    border-color: rgba(26,27,29,.12) !important;
-  }
-  a { color: #765c2d; }
-  .badge, .status { color: #62502c !important; }
-  .badge.published, .status.approved { color: #176b3a !important; }
-  .badge.draft, .status.pending { color: #765900 !important; }
-  .status.rejected { color: #9b2525 !important; }
-
-  .auth-left button, .account-pill button {
-    color: #62502c !important;
-  }
-  .journal-share-dialog {
-    background: rgba(250,249,245,.9) !important;
-    color: #1a1b1d !important;
-    border-color: rgba(154,122,62,.35) !important;
-  }
-  .article-share:hover, .journal-share-actions button:hover,
-  .journal-share-actions a:hover {
-    background: rgba(183,160,106,.2) !important;
-    color: #624b1d !important;
-  }
-  .journal-share-dialog h2, .journal-share-dialog label,
-  .journal-share-dialog .journal-copy-status { color: #62502c !important; }
-  .journal-share-dialog .journal-share-close { color: #272621 !important; background: rgba(26,27,29,.06) !important; }
-  .auto-quote-text, .auto-quote-author, .auto-quote-source,
-  .auto-quote-updated, .quote-text, .quote-author { color: #292822 !important; }
-  .fab, .auth-left button { background: rgba(250,249,245,.9) !important; }
-
-  /* Keep imagery and image-viewer overlays legible while page chrome changes. */
-  .swatch.has, .swatch-photo, .gal .main, .photos img, .article-photo-choice img,
-  .project-thumbs img, .media-current img, .story-visual img { background-color: #e9e6df !important; }
-  .photo-lightbox { background: rgba(20,20,20,.88) !important; }
-  #paper { background: #fff !important; color: #171717 !important; }
-  #paper h1, #paper h2, #paper p, #paper li { color: #171717 !important; }
-}
-
-
-/* FINAL SITE-WIDE GLASS OVERRIDES
-   Intentionally placed after device-light rules so the whole brand keeps the
-   dark graphite + champagne glass look shown in the design direction. */
+/* 3 Pedals Auto KE — Consolidated Glassmorphism & Responsive Performance Layer */
 :root {
   color-scheme: dark;
-  --bg: #0b0c0e;
+  --bg: #08090b;
   --surface: #141518;
   --surface-2: #191a1e;
   --surface2: #191a1e;
-  --card: rgba(24, 25, 29, .72);
-  --panel: rgba(24, 25, 29, .72);
+  --card: rgba(20, 22, 25, .64);
+  --panel: rgba(20, 22, 25, .64);
   --ink: #f5f1e8;
   --text: #f5f1e8;
   --mute: #b6b1a6;
   --muted: #b6b1a6;
   --line: rgba(225, 203, 153, .18);
-  --gold: #d1b474;
-  --blue: #d1b474;
+  --gold: #d7bd83;
+  --blue: #d7bd83;
   --gold-ink: #171512;
   --alt: #111214;
   --alt-ink: #f5f1e8;
+  --p3-graphite: #111417;
+  --p3-graphite-soft: #191d21;
+  --p3-glass: rgba(13, 17, 21, .48);
+  --p3-glass-strong: rgba(10, 13, 16, .64);
+  --p3-glass-soft: rgba(255, 255, 255, .035);
+  --p3-champagne: #c9b784;
+  --p3-champagne-bright: #dfc995;
+  --p3-ivory: #f4f0e8;
+  --p3-muted: rgba(244, 240, 232, .70);
+  --p3-edge: rgba(255, 255, 255, .12);
+  --p3-edge-gold: rgba(201, 183, 132, .26);
+  --p3-shadow: 0 16px 42px rgba(0, 0, 0, .24);
+  --p3-radius: 18px;
+  --p3-radius-small: 12px;
+  --p3-ease: cubic-bezier(.22, 1, .36, 1);
 }
-html { color-scheme: dark !important; }
+
+html {
+  scroll-behavior: smooth;
+  max-width: 100%;
+  overscroll-behavior-x: none;
+}
+
 body {
-  color: #f5f1e8 !important;
-  background-color: #0b0c0e !important;
-  background-image:
-    radial-gradient(ellipse at 12% 0%, rgba(201,164,92,.17), transparent 34%),
-    radial-gradient(ellipse at 88% 24%, rgba(201,164,92,.075), transparent 30%),
-    linear-gradient(145deg, #101114 0%, #090a0c 55%, #141311 100%) !important;
+  min-height: 100vh;
+  max-width: 100%;
+  overscroll-behavior-x: none;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  isolation: isolate;
+  font-family: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
-body > header, .head, .top, .site-header, .navbar, .nav-shell, .nav-wrap {
-  color: #f5f1e8 !important;
-  background: rgba(14, 15, 17, .68) !important;
-  border-color: rgba(211,185,125,.24) !important;
-  box-shadow: 0 12px 38px rgba(0,0,0,.28), inset 0 1px rgba(255,255,255,.07) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(155%) !important;
-  backdrop-filter: blur(24px) saturate(155%) !important;
-}
-nav:not(.account-sidebar), nav.dock-active, .nav, .nav-links, .mobile-nav {
-  color: #f5f1e8 !important;
-  background: rgba(22,23,26,.66) !important;
-  border-color: rgba(211,185,125,.22) !important;
-  box-shadow: 0 10px 32px rgba(0,0,0,.22), inset 0 1px rgba(255,255,255,.055) !important;
-  -webkit-backdrop-filter: blur(22px) saturate(145%) !important;
-  backdrop-filter: blur(22px) saturate(145%) !important;
-}
-nav:not(.account-sidebar) button, nav:not(.account-sidebar) a, nav:not(.account-sidebar) a.navlink, nav:not(.account-sidebar) button[aria-selected="false"] {
-  color: #e6e0d3 !important;
-  background-color: transparent !important;
-}
-nav:not(.account-sidebar) button:hover, nav:not(.account-sidebar) a:hover, nav:not(.account-sidebar) a.navlink:hover {
-  color: #f7e7be !important;
-  background: rgba(201,164,92,.10) !important;
-}
-nav:not(.account-sidebar) button[aria-selected="true"], .tab.active, .primary, .btn.primary,
-.btn-primary, .button-primary, .gold-button {
-  color: #171512 !important;
-  background: linear-gradient(135deg,#f1dfb0 0%,#c9a45c 52%,#9b773b 100%) !important;
-  border-color: rgba(241,223,176,.45) !important;
-}
-.card, .dealer, .stat, .state, .empty, .error, .panel, .seller-card,
-.info, .gallery, .seller, .spec, .note, .listing, .article-item,
-.project-item, .vehicle-card, .story-card, .contact-card, .promotion-package,
-.auto-quote-rail, .authbox,
-#login, .editor, .contact-form, .modal-content, .dialog-card,
-.settings-card, .package, .featured-panel, .filter-panel, .search-panel,
-.vehicle-detail-card, .article-card, .dashboard-card,
-.tile, .featured-section, .journal-card,
-.journal-card-top, .journal-card-body {
-  color: #f5f1e8 !important;
-  background: linear-gradient(135deg, rgba(255,255,255,.075), rgba(255,255,255,.022)), rgba(19,20,23,.72) !important;
-  border-color: rgba(211,185,125,.22) !important;
-  box-shadow: 0 16px 42px rgba(0,0,0,.24), inset 0 1px rgba(255,255,255,.065) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(140%) !important;
-  backdrop-filter: blur(20px) saturate(140%) !important;
-}
-.card:hover, .dealer:hover, .listing:hover, .article-item:hover,
-.project-item:hover, .vehicle-card:hover, .story-card:hover,
-.contact-card:hover, .promotion-package:hover, .journal-card:hover {
-  border-color: rgba(211,185,125,.46) !important;
-  box-shadow: 0 20px 48px rgba(0,0,0,.32), inset 0 1px rgba(255,255,255,.08) !important;
-}
-:is(input, select, textarea):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *), body:has(#app) .field, .seg,
-.dropdown-menu, .popover, .journal-share-dialog, .journal-share-url {
-  color: #f5f1e8 !important;
-  background: rgba(255,255,255,.055) !important;
-  border-color: rgba(211,185,125,.24) !important;
-}
-input::placeholder, textarea::placeholder { color: #aaa397 !important; }
-.meta, .muted, .mute, .hero p, .intro p, footer, .stat span,
-.dealer p, .card p, .story-card p, .vehicle-card .vehicle-description,
-.body p, .contact-card small, .contact-form p, .notice, .summary p {
-  color: #b6b1a6 !important;
-}
-.logo, .brand, .back, .account-pill, .eyebrow, .arrow, .price,
-.hero .eyebrow, .hero .kicker {
-  color: #d8bd7b !important;
-}
-a { color: #e0c37f; }
-.journal-share-dialog,
-.modal:not(#accDlg), .dialog:not(#accDlg):not(#accActionDlg):not(#sellerEditListingDialog), .popover-content {
-  color: #f5f1e8 !important;
-  background: rgba(16,17,19,.88) !important;
-  border-color: rgba(211,185,125,.28) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(145%) !important;
-  backdrop-filter: blur(24px) saturate(145%) !important;
-}
-.fab { background: rgba(20,21,24,.72) !important; color: #e0c37f !important; }
-.photo-lightbox { background: rgba(5,6,7,.92) !important; }
 
-/* Home hero: atmospheric gold glow, glass content and legible copy. */
-.hero, .garage-hero, .journal-hero {
-  color: #f7f2e8 !important;
-  background-color: transparent !important;
+html:not([data-theme="light"]) {
+  color-scheme: dark;
+  background: #08090b;
 }
-.hero h1, .hero h2, .garage-hero h1, .journal-hero h1 {
-  color: #f8f3e9 !important;
-  text-shadow: 0 4px 28px rgba(0,0,0,.30);
+
+html:not([data-theme="light"]) body {
+  color: var(--p3-ivory);
+  background-color: #08090b;
 }
-.hero p, .garage-hero p, .journal-hero p { color: #c7c0b2 !important; }
-.hero:before {
-  background: radial-gradient(ellipse at 50% 25%, rgba(201,164,92,.14), transparent 62%) !important;
+
+main {
+  flex: 1 0 auto;
+  min-width: 0;
 }
-@media (max-width: 640px) {
-  body > header, .head, .top, .site-header, .navbar, .nav-shell, .nav-wrap,
-  nav:not(.account-sidebar), .nav, .nav-links, .mobile-nav,
-  .card, .dealer, .stat, .panel, .listing, .vehicle-card, .story-card,
-  .contact-card, .promotion-package, .authbox,
-  .modal-content, .dialog-card, .settings-card, .featured-panel {
-    -webkit-backdrop-filter: blur(11px) saturate(125%) !important;
-    backdrop-filter: blur(11px) saturate(125%) !important;
+
+main.wrap {
+  padding-bottom: clamp(28px, 5vw, 64px);
+}
+
+/* Official Typography */
+html body :is(h1, h2, h3, h4, h5, h6) {
+  font-family: "Sora", "Manrope", system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -.035em;
+  line-height: 1.18;
+  text-wrap: balance;
+}
+
+html body h1 {
+  font-weight: 700;
+  letter-spacing: -.045em;
+}
+
+html body :is(p, li, label, small, .description, .muted, .meta, .subtitle, .section-subtitle, .eyebrow, .lead) {
+  font-family: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  text-wrap: pretty;
+}
+
+html body :is(.brand, .logo, .brand-name, .site-brand, .wordmark, header .brand, header .logo) {
+  font-family: "Sora", system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -.035em;
+}
+
+html body :is(.price, .amount, .vehicle-price, [data-price], .stat-value, .metric-value) {
+  font-family: "Manrope", system-ui, sans-serif;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+html body :is(.journal-title, .article-title, .editorial-title, .article-head h2) {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 600;
+  letter-spacing: -.02em;
+}
+
+/* Storefront Dark Glass Surfaces (exclude Account Workspace modals & modern navbar overrides) */
+html:not([data-theme="light"]) body :is(
+  .card, .dealer, .stat, .state, .empty, .error, .panel, .seller-card,
+  .info, .gallery, .seller, .spec, .note, .listing, .article-item,
+  .project-item, .vehicle-card, .story-card, .contact-card, .promotion-package,
+  .auto-quote-rail, .authbox, .editor, .contact-form, .modal-content, .dialog-card,
+  .settings-card, .package, .featured-panel, .filter-panel, .search-panel,
+  .vehicle-detail-card, .article-card, .dashboard-card, .tile, .featured-section,
+  .journal-card, .profile-card, .feature-card, .service-card, .booking-card,
+  .garage-card, .attention-panel, .account-overview-panel
+):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
+  color: var(--p3-ivory);
+  background-color: var(--p3-glass);
+  border-color: var(--p3-edge);
+  border-radius: var(--p3-radius);
+  box-shadow: var(--p3-shadow), inset 0 1px rgba(255, 255, 255, .04);
+  -webkit-backdrop-filter: blur(18px) saturate(130%);
+  backdrop-filter: blur(18px) saturate(130%);
+  transition: transform .24s var(--p3-ease), background-color .24s ease, border-color .24s ease, box-shadow .24s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html:not([data-theme="light"]) body :is(
+    .card, .dealer, .listing, .vehicle-card, .story-card, .contact-card,
+    .promotion-package, .article-item, .project-item, .tile, .profile-card,
+    .feature-card, .service-card, .booking-card, .garage-card, .journal-card,
+    .seller-card, .dashboard-card
+  ):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):hover {
+    background-color: rgba(17, 21, 25, .62);
+    border-color: var(--p3-edge-gold);
+    box-shadow: 0 20px 46px rgba(0, 0, 0, .28), inset 0 1px rgba(201, 183, 132, .08);
+    transform: translateY(-2px);
   }
 }
 
-
-/* 3 Pedals — luxury glass showroom refresh */
-:root{color-scheme:dark;--bg:#090a0c;--surface:rgba(25,27,30,.68);--ink:#f7f4ed;--mute:#b9b3a7;--line:rgba(225,203,155,.22);--gold:#d7bd83;--gold-ink:#111}
-html{min-height:100%;background:#090a0c}
-body{min-height:100vh;display:flex;flex-direction:column;position:relative;isolation:isolate;background:#090a0c!important;color:#f7f4ed}
-body:before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;background:linear-gradient(180deg,rgba(5,6,8,.80),rgba(5,6,8,.90)),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=2400&q=85") center/cover no-repeat;transform:scale(1.02)}
-body:after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 75% 12%,rgba(214,184,119,.13),transparent 38%),linear-gradient(90deg,rgba(0,0,0,.24),transparent 45%,rgba(0,0,0,.18))}
-main{flex:1 0 auto;min-width:0}
-footer{margin-top:auto!important;width:100%;position:relative!important;inset:auto!important;clear:both;background:rgba(14,15,17,.74)!important;color:#c7c0b2!important;border:0!important;border-top:0!important;padding:20px 0 calc(20px + env(safe-area-inset-bottom,0px))!important;-webkit-backdrop-filter:blur(24px) saturate(140%);backdrop-filter:blur(24px) saturate(140%)}
-body>header,.site-header,.navbar,.nav-shell,.nav-wrap{background:rgba(15,16,18,.56)!important;border:1px solid rgba(255,255,255,.12)!important;border-radius:22px!important;box-shadow:0 18px 55px rgba(0,0,0,.26),inset 0 1px rgba(255,255,255,.12)!important;-webkit-backdrop-filter:blur(24px) saturate(145%)!important;backdrop-filter:blur(24px) saturate(145%)!important}
-body>header{margin:18px auto 0!important;width:min( calc(100% - 32px), 1440px)}
-.hero{position:relative;isolation:isolate;overflow:hidden;border:1px solid rgba(255,255,255,.17);border-radius:30px;padding:clamp(34px,6vw,82px) clamp(22px,5vw,70px)!important;margin:26px auto 34px!important;width:min(calc(100% - 32px),1440px);min-height:clamp(360px,55vw,650px);display:flex;flex-direction:column;justify-content:center;background:linear-gradient(90deg,rgba(5,6,8,.82) 0%,rgba(5,6,8,.54) 46%,rgba(5,6,8,.12) 100%),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=2200&q=88") center 58%/cover no-repeat!important;box-shadow:0 28px 80px rgba(0,0,0,.42),inset 0 1px rgba(255,255,255,.2)!important}
-.hero:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(135deg,rgba(255,255,255,.10),transparent 34%,rgba(215,189,131,.08));pointer-events:none}
-.hero h1{max-width:11ch!important;font-family:Manrope,system-ui,sans-serif!important;font-weight:750!important;letter-spacing:-.045em!important;font-size:clamp(38px,6vw,76px)!important;color:#fff!important;text-shadow:0 5px 28px rgba(0,0,0,.45)}
-.hero h1:after{background:linear-gradient(90deg,#e8d7ae,#a88b54)!important;border-radius:99px}
-.hero p{max-width:38em;color:rgba(255,255,255,.84)!important}
-button,.btn,.button{transition:transform .22s ease,border-color .22s ease,background .22s ease}
-.btn,.button,button.primary{border-radius:12px}
-.card,.dealer,.listing,.vehicle-card,.story-card,.contact-card,.promotion-package,.panel,.tile,.dashboard-card,.featured-panel,.journal-card,.contact-form,.filter-panel,.search-panel{background:linear-gradient(135deg,rgba(255,255,255,.085),rgba(255,255,255,.025)),rgba(18,19,21,.67)!important;border:1px solid rgba(215,189,131,.19)!important;border-radius:18px!important;box-shadow:0 18px 46px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.08)!important;-webkit-backdrop-filter:blur(18px) saturate(135%)!important;backdrop-filter:blur(18px) saturate(135%)!important}
-:is(input,select,textarea):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){background:rgba(255,255,255,.065)!important;color:#f7f4ed!important;border-color:rgba(215,189,131,.25)!important;border-radius:11px!important}
-input::placeholder,textarea::placeholder{color:#aaa397!important}
-a{color:#e4ce9d}
-@media(max-width:760px){
- body:before{background-image:linear-gradient(180deg,rgba(5,6,8,.83),rgba(5,6,8,.92)),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=75")}
- body>header{width:calc(100% - 20px);margin-top:10px!important;border-radius:16px!important}
- .hero{width:calc(100% - 20px);margin:14px auto 24px!important;min-height:430px;border-radius:22px!important;background-position:58% center!important;padding:30px 22px!important}
- .hero h1{font-size:clamp(34px,10vw,52px)!important}
- footer{padding-bottom:calc(22px + env(safe-area-inset-bottom,0px))!important}
-}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
-
-
-/* Background image stays behind the page; content cards remain opaque. */
-body {
-  background-color: #090a0c !important;
-  background-image:
-    linear-gradient(180deg, rgba(5,6,8,.72), rgba(5,6,8,.88)),
-    url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=2400&q=85") !important;
-  background-position: center top, center top !important;
-  background-size: cover, cover !important;
-  background-repeat: no-repeat, no-repeat !important;
-  background-attachment: fixed, fixed !important;
-}
-/* Do not use negative-z-index pseudo-elements for the background image. */
-body:before { background-image: linear-gradient(120deg, transparent 0%, rgba(255,255,255,.025) 45%, transparent 70%) !important; }
-/* Opaque graphite surfaces prevent the page wallpaper showing through cards. */
-.card, .dealer, .stat, .state, .empty, .error, .panel, .seller-card, .listing,
-.article-item, .project-item, .vehicle-card, .story-card, .contact-card,
-.promotion-package, .authbox, .editor,
-.contact-form, .settings-card, .package, .featured-panel, .filter-panel,
-.search-panel, .vehicle-detail-card, .article-card, .dashboard-card {
-  background: #17191c !important;
-  -webkit-backdrop-filter: none !important;
-  backdrop-filter: none !important;
+/* Chrome & Headers */
+html:not([data-theme="light"]) :is(body > header, .head, .top, .site-header, .main-header, .navbar, .nav-shell, .nav-wrap) {
+  color: var(--p3-ivory);
+  background: rgba(14, 16, 19, .68);
+  border-color: rgba(211, 185, 125, .20);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  backdrop-filter: blur(20px) saturate(140%);
 }
 
-
-/* Homepage: framed cinematic luxury-showroom hero inspired by the supplied reference */
-#home { padding-top: clamp(22px, 4vw, 56px) !important; }
-#home .home-with-quote { display:block !important; }
-#home .auto-quote-rail { margin:0 0 16px auto !important; max-width:360px; }
-#home .hero {
-  position:relative !important;
-  isolation:isolate;
-  display:flex !important;
-  flex-direction:column !important;
-  justify-content:center !important;
-  align-items:flex-start !important;
-  min-height:clamp(470px, 64vw, 720px) !important;
-  padding:clamp(30px, 5.2vw, 78px) !important;
-  margin:0 0 28px !important;
-  overflow:hidden !important;
-  border:1px solid rgba(232,224,207,.5) !important;
-  border-radius:clamp(22px, 3.2vw, 42px) !important;
-  background:
-    linear-gradient(90deg,rgba(5,6,8,.86) 0%,rgba(5,6,8,.60) 42%,rgba(5,6,8,.12) 100%),
-    linear-gradient(0deg,rgba(5,6,8,.35),transparent 55%),
-    url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=2400&q=85") center 55%/cover no-repeat !important;
-  box-shadow:0 28px 90px rgba(0,0,0,.38), inset 0 0 0 8px rgba(255,255,255,.035) !important;
-  -webkit-backdrop-filter:none !important;
-  backdrop-filter:none !important;
-}
-#home .hero:before {
-  content:"" !important;
-  position:absolute !important;
-  inset:0 !important;
-  z-index:-1 !important;
-  pointer-events:none !important;
-  background:linear-gradient(120deg,rgba(255,255,255,.10),transparent 24%,transparent 72%,rgba(255,255,255,.035)) !important;
-}
-#home .hero h1 {
-  max-width:720px !important;
-  margin:0 0 16px !important;
-  color:#fbfaf7 !important;
-  font-size:clamp(2.35rem,5.4vw,5rem) !important;
-  line-height:1.02 !important;
-  letter-spacing:-.055em !important;
-  font-weight:750 !important;
-  text-wrap:balance;
-  text-shadow:0 3px 28px rgba(0,0,0,.32);
-}
-#home .hero h1 em, #home .hero h1 strong { color:#c9a98b !important; }
-#home .hero p {
-  max-width:570px !important;
-  color:rgba(255,255,255,.88) !important;
-  font-size:clamp(1rem,1.35vw,1.2rem) !important;
-  line-height:1.65 !important;
-  text-shadow:0 2px 18px rgba(0,0,0,.65);
-}
-#home .hero .btn { min-height:46px; border-radius:12px !important; padding:12px 24px !important; }
-#home .hero .btn:first-child { background:#f8f7f3 !important; color:#111 !important; border:1px solid #f8f7f3 !important; }
-#home .hero .btn:nth-child(2) { background:rgba(255,255,255,.13) !important; color:#fff !important; border:1px solid rgba(255,255,255,.65) !important; -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px); }
-#home .tiles { gap:14px !important; }
-#home .tile { background:rgba(20,21,23,.94) !important; border:1px solid rgba(225,203,155,.18) !important; -webkit-backdrop-filter:none !important; backdrop-filter:none !important; }
-@media(max-width:700px) {
-  #home { padding-top:16px !important; }
-  #home .auto-quote-rail { max-width:none; margin-bottom:12px !important; }
-  #home .hero { min-height:560px !important; padding:28px 22px !important; border-radius:24px !important; background-position:60% center !important; }
-  #home .hero h1 { font-size:clamp(2.35rem,10vw,3.5rem) !important; max-width:12ch !important; }
-  #home .hero p { max-width:34ch !important; }
+html body :is(body > header, .top, .site-header, .main-header, .navbar) :is(a, button) {
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* === 3 Pedals homepage: match the supplied framed luxury showroom reference === */
-body { background-color:#08090b !important; }
-body:before { opacity:.22 !important; }
-body:after { background:linear-gradient(180deg,rgba(0,0,0,.2),rgba(0,0,0,.65)) !important; }
-body > header {
-  width:min(calc(100% - 48px),1160px) !important;
-  margin:clamp(22px,5vw,72px) auto 0 !important;
-  padding:0 !important;
-  border:1px solid rgba(232,228,220,.55) !important;
-  border-radius:30px 30px 0 0 !important;
-  border-bottom:0 !important;
-  background:rgba(23,24,26,.62) !important;
-  box-shadow:none !important;
-  -webkit-backdrop-filter:blur(22px) saturate(120%) !important;
-  backdrop-filter:blur(22px) saturate(120%) !important;
-}
-body > header > .wrap {
-  width:100% !important;
-  max-width:none !important;
-  min-height:82px !important;
-  box-sizing:border-box !important;
-  padding:0 clamp(20px,4.5vw,62px) !important;
-  display:grid !important;
-  grid-template-columns:minmax(110px,1fr) auto minmax(110px,1fr) !important;
-  align-items:center !important;
-  gap:24px !important;
-}
-body > header .logo {
-  color:#fff !important;
-  font-size:15px !important;
-  font-weight:850 !important;
-  line-height:.95 !important;
-  letter-spacing:-.045em !important;
-  max-width:95px !important;
-  text-transform:uppercase !important;
-}
-body > header #nav {
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  gap:clamp(16px,2.6vw,42px) !important;
-  width:auto !important;
-  position:static !important;
-  padding:0 !important;
-  margin:0 !important;
-  background:transparent !important;
-  border:0 !important;
-  box-shadow:none !important;
-  white-space:nowrap !important;
-}
-body > header #nav button,
-body > header #nav a {
-  appearance:none !important;
-  padding:8px 0 !important;
-  margin:0 !important;
-  border:0 !important;
-  border-radius:0 !important;
-  background:transparent !important;
-  color:rgba(255,255,255,.88) !important;
-  font:400 12px/1.3 Manrope,Arial,sans-serif !important;
-  text-decoration:none !important;
-  box-shadow:none !important;
-  cursor:pointer !important;
-}
-body > header #nav button:hover,
-body > header #nav a:hover { color:#d9bda4 !important; }
-body > header #nav .nav-contact {
-  justify-self:end !important;
-  padding:12px 19px !important;
-  border:1px solid rgba(255,255,255,.8) !important;
-  border-radius:11px !important;
-  background:rgba(255,255,255,.07) !important;
-}
-body > header .account-pill { justify-self:end !important; background:transparent !important; border:0 !important; padding:0 !important; }
-body > header #accountText { display:none !important; }
-body > header #accountOpen { width:28px !important; height:28px !important; opacity:.75 !important; }
-body > header .nav-toggle { display:none !important; }
-main.wrap { width:min(calc(100% - 48px),1160px) !important; max-width:1160px !important; padding:0 !important; margin:0 auto !important; }
-#home { padding:0 !important; }
-#home .home-with-quote { display:block !important; }
-#home #autoQuoteRail { display:none !important; }
-#home .home-with-quote > div { display:block !important; min-width:0 !important; }
-#home .hero {
-  position:relative !important;
-  isolation:isolate !important;
-  width:100% !important;
-  max-width:none !important;
-  min-height:clamp(520px,58vw,790px) !important;
-  margin:0 auto 38px !important;
-  padding:clamp(38px,5vw,68px) clamp(24px,4.5vw,62px) !important;
-  display:flex !important;
-  flex-direction:column !important;
-  justify-content:center !important;
-  align-items:flex-start !important;
-  overflow:hidden !important;
-  box-sizing:border-box !important;
-  border:1px solid rgba(232,228,220,.55) !important;
-  border-top:0 !important;
-  border-radius:0 0 30px 30px !important;
-  background:
-    linear-gradient(90deg,rgba(5,6,8,.82) 0%,rgba(5,6,8,.56) 42%,rgba(5,6,8,.08) 100%),
-    linear-gradient(0deg,rgba(5,6,8,.20),transparent 48%),
-    url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=2400&q=85") center 55%/cover no-repeat !important;
-  box-shadow:0 25px 80px rgba(0,0,0,.4),inset 0 0 0 8px rgba(255,255,255,.035) !important;
-  -webkit-backdrop-filter:none !important; backdrop-filter:none !important;
-}
-#home .showroom-copy { max-width:610px !important; position:relative !important; z-index:2 !important; }
-#home .showroom-kicker { display:block !important; color:#d1b49a !important; font-size:10px !important; letter-spacing:.22em !important; margin-bottom:18px !important; font-weight:700 !important; }
-#home .hero h1 {
-  max-width:650px !important; margin:0 0 18px !important; color:#fff !important;
-  font-size:clamp(2.55rem,5.3vw,4.2rem) !important; font-weight:760 !important;
-  line-height:1.03 !important; letter-spacing:-.05em !important; text-wrap:balance !important;
-  text-shadow:0 3px 28px rgba(0,0,0,.3) !important;
-}
-#home .hero h1 span { display:block !important; color:#c8a58a !important; }
-#home .hero p { max-width:500px !important; margin:0 !important; color:rgba(255,255,255,.92) !important; font-size:15px !important; line-height:1.6 !important; text-shadow:0 2px 15px rgba(0,0,0,.75) !important; }
-#home .showroom-actions { display:flex !important; gap:12px !important; flex-wrap:wrap !important; margin-top:30px !important; }
-#home .showroom-actions .btn { min-width:116px !important; min-height:44px !important; display:inline-flex !important; align-items:center !important; justify-content:center !important; box-sizing:border-box !important; padding:12px 22px !important; border-radius:11px !important; font-size:14px !important; text-decoration:none !important; }
-#home .showroom-actions .showroom-primary { color:#111 !important; background:#fff !important; border:1px solid #fff !important; }
-#home .showroom-actions .showroom-secondary { color:#fff !important; background:rgba(255,255,255,.13) !important; border:1px solid rgba(255,255,255,.72) !important; -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px); }
-#home .showroom-vehicle-note {
-  position:absolute !important; z-index:3 !important; right:clamp(18px,3vw,38px) !important; bottom:clamp(18px,4vw,48px) !important;
-  display:flex !important; align-items:flex-start !important; gap:12px !important; width:220px !important; padding:14px !important;
-  color:#fff !important; text-decoration:none !important; border:1px solid rgba(255,255,255,.58) !important; border-radius:12px !important;
-  background:rgba(30,31,32,.52) !important; box-shadow:0 10px 30px rgba(0,0,0,.2) !important;
-  -webkit-backdrop-filter:blur(16px) saturate(125%) !important; backdrop-filter:blur(16px) saturate(125%) !important;
-}
-#home .showroom-note-dot { flex:0 0 11px !important; width:11px !important; height:11px !important; margin-top:4px !important; border-radius:50% !important; background:#fff !important; box-shadow:0 0 0 6px rgba(255,255,255,.12) !important; }
-#home .showroom-note-content { display:flex !important; flex-direction:column !important; gap:6px !important; }
-#home .showroom-note-content strong { font-size:12px !important; font-weight:600 !important; }
-#home .showroom-note-content small { font-size:11px !important; color:rgba(255,255,255,.82) !important; }
-#home .showroom-more { font-size:10px !important; text-decoration:underline !important; text-underline-offset:3px !important; }
-#home .tiles { gap:14px !important; }
-#home .tile { background:#17191c !important; border:1px solid rgba(225,203,155,.18) !important; -webkit-backdrop-filter:none !important; backdrop-filter:none !important; }
-@media(max-width:760px) {
- body > header { width:calc(100% - 20px) !important; margin-top:10px !important; border-radius:20px 20px 0 0 !important; }
- body > header > .wrap { grid-template-columns:1fr auto !important; min-height:68px !important; padding:0 18px !important; gap:10px !important; }
- body > header #nav { grid-column:1/-1 !important; grid-row:2 !important; flex-wrap:wrap !important; gap:12px 18px !important; padding:0 0 14px !important; white-space:normal !important; }
- body > header #nav button, body > header #nav a { font-size:11px !important; }
- body > header .account-pill { grid-column:2 !important; grid-row:1 !important; }
- body > header .nav-toggle { display:none !important; }
- main.wrap { width:calc(100% - 20px) !important; }
- #home .hero { min-height:620px !important; padding:32px 22px 170px !important; border-radius:0 0 20px 20px !important; background-position:59% center !important; }
- #home .hero h1 { font-size:clamp(2.4rem,10vw,3.5rem) !important; max-width:12ch !important; }
- #home .hero p { max-width:34ch !important; font-size:14px !important; }
- #home .showroom-vehicle-note { width:calc(100% - 44px) !important; box-sizing:border-box !important; right:22px !important; bottom:20px !important; }
-}
-@media(max-width:420px) {
- body > header #nav { gap:8px 13px !important; }
- #home .hero { min-height:650px !important; }
+html:not([data-theme="light"]) body :is(.eyebrow, .section-kicker, .overline, .label-kicker):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
+  color: var(--p3-champagne);
 }
 
-
-/* === Full-screen cinematic wallpaper + text-only glass panels (home and garage) === */
-html { min-height:100%; background:#08090b !important; }
-body {
-  background-color:#08090b !important;
-  background-image:
-    linear-gradient(90deg,rgba(4,5,7,.70) 0%,rgba(4,5,7,.38) 55%,rgba(4,5,7,.48) 100%),
-    linear-gradient(180deg,rgba(4,5,7,.25) 0%,rgba(4,5,7,.10) 45%,rgba(4,5,7,.76) 100%),
-    url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=2400&q=90") !important;
-  background-position:center,center,center center !important;
-  background-size:cover,cover,cover !important;
-  background-repeat:no-repeat,no-repeat,no-repeat !important;
-  background-attachment:fixed,fixed,fixed !important;
-}
-body:before { content:none !important; display:none !important; }
-body:after { background:radial-gradient(ellipse at 70% 20%,rgba(210,179,143,.08),transparent 48%) !important; }
-body > header {
-  background:rgba(18,19,22,.34) !important;
-  border:1px solid rgba(255,255,255,.48) !important;
-  border-radius:28px !important;
-  -webkit-backdrop-filter:blur(26px) saturate(130%) !important;
-  backdrop-filter:blur(26px) saturate(130%) !important;
-}
-main.wrap { position:relative !important; z-index:1 !important; }
-#home .hero, #home .garage-hero, .garage-hero {
-  background:rgba(22,23,26,.24) !important;
-  border:1px solid rgba(255,255,255,.50) !important;
-  border-radius:0 0 30px 30px !important;
-  box-shadow:0 25px 80px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.10) !important;
-  -webkit-backdrop-filter:blur(22px) saturate(125%) !important;
-  backdrop-filter:blur(22px) saturate(125%) !important;
-}
-/* Remove the car photo from the hero panel: the only photo is the page wallpaper. */
-#home .hero {
-  background-image:linear-gradient(110deg,rgba(15,16,18,.24),rgba(255,255,255,.035)) !important;
-  border-top:1px solid rgba(255,255,255,.50) !important;
-  border-radius:30px !important;
-  min-height:calc(100svh - 180px) !important;
-}
-#home .showroom-vehicle-note {
-  background:rgba(18,19,22,.34) !important;
-  border:1px solid rgba(255,255,255,.54) !important;
-  -webkit-backdrop-filter:blur(24px) saturate(140%) !important;
-  backdrop-filter:blur(24px) saturate(140%) !important;
-}
-#home .tile, #home .tiles .tile, .tiles .tile, .card, .panel, .service-card,
-.booking-card, .garage-card, .contact-card, .feature-card {
-  background:rgba(19,20,23,.36) !important;
-  border:1px solid rgba(255,255,255,.20) !important;
-  box-shadow:0 12px 34px rgba(0,0,0,.16),inset 0 1px rgba(255,255,255,.07) !important;
-  -webkit-backdrop-filter:blur(22px) saturate(135%) !important;
-  backdrop-filter:blur(22px) saturate(135%) !important;
-}
-#home .tile:hover, .tiles .tile:hover {
-  background:rgba(37,38,41,.48) !important;
-  border-color:rgba(221,192,160,.48) !important;
-}
-body > footer { background:rgba(10,11,13,.42) !important; -webkit-backdrop-filter:blur(22px); backdrop-filter:blur(22px); }
-@media(max-width:760px) {
-  body { background-attachment:scroll,scroll,scroll !important; background-position:center,center,58% center !important; }
-  #home .hero { min-height:calc(100svh - 145px) !important; }
+html:not([data-theme="light"]) body :is(.price, .vehicle-price, .amount, .brand, .logo, .arrow, .gold-text):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
+  color: var(--p3-champagne);
 }
 
-
-/* Glass Dashboard V2: admin dashboard only (account workspace is in account-panel.css). */
-:root{--workspace-glass:rgba(31,32,34,.43);--workspace-border:rgba(255,255,255,.19);--workspace-shadow:0 18px 48px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.11);--workspace-ease:cubic-bezier(.22,1,.36,1)}
-@media (hover:hover) and (pointer:fine){
-  body:has(#app) .tabs .tab:hover,body:has(#app) .ghost:hover{background:rgba(255,255,255,.12)!important;border-color:rgba(255,255,255,.30)!important;transform:translateY(-2px)}
-}
-body:has(#app) .wrap{max-width:1480px!important}
-body:has(#app) .top{background:rgba(24,25,27,.44)!important;border:1px solid rgba(255,255,255,.19)!important;border-radius:20px!important;box-shadow:var(--workspace-shadow)!important;-webkit-backdrop-filter:blur(24px) saturate(145%)!important;backdrop-filter:blur(24px) saturate(145%)!important}
-body:has(#app) .stat,body:has(#app) .listing,body:has(#app) .notice,body:has(#app) .empty,body:has(#app) .attention-panel,body:has(#app) .editor,body:has(#app) .contact-form,body:has(#app) .article-item,body:has(#app) .project-item,body:has(#app) .field{color:#f7f4ed!important;background:linear-gradient(135deg,rgba(255,255,255,.10),rgba(255,255,255,.025)),rgba(30,31,33,.43)!important;border:1px solid rgba(255,255,255,.18)!important;border-radius:16px!important;box-shadow:var(--workspace-shadow)!important;-webkit-backdrop-filter:blur(20px) saturate(140%)!important;backdrop-filter:blur(20px) saturate(140%)!important;transition:transform .28s var(--workspace-ease),border-color .28s ease,box-shadow .28s ease!important}
-body:has(#app) .stat:hover,body:has(#app) .listing:hover,body:has(#app) .attention-panel:hover,body:has(#app) .article-item:hover,body:has(#app) .project-item:hover{border-color:rgba(255,255,255,.32)!important;box-shadow:0 22px 52px rgba(0,0,0,.27),inset 0 1px rgba(255,255,255,.13)!important}
-body:has(#app) .tabs .tab,body:has(#app) .admin-listing-tools input,body:has(#app) .ghost{color:#f7f4ed!important;background:rgba(255,255,255,.055)!important;border:1px solid rgba(255,255,255,.17)!important;border-radius:11px!important}
-body:has(#app) .tabs .tab.active{color:#fff!important;background:rgba(255,255,255,.16)!important;border-color:rgba(255,255,255,.34)!important;box-shadow:inset 0 1px rgba(255,255,255,.15),0 8px 24px rgba(0,0,0,.14)!important}
-body:has(#app) .brand span,body:has(#app) .stat span,body:has(#app) .meta,body:has(#app) .attention-copy span{color:rgba(245,242,234,.70)!important}
-body:has(#app) input,body:has(#app) select,body:has(#app) textarea{color:#f7f4ed!important;background:rgba(255,255,255,.06)!important;border-color:rgba(255,255,255,.18)!important}
-body:has(#app) .photos img{border-color:rgba(255,255,255,.22)!important}
-@media(max-width:760px){body:has(#app) .stat,body:has(#app) .listing,body:has(#app) .attention-panel{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background:rgba(18,20,23,.90)!important}}
-@media(prefers-reduced-motion:reduce){body:has(#app) *{transition-duration:.01ms!important;animation-duration:.01ms!important}}
-
-
-/* 3 Pedals editorial polish — cleaner hierarchy, calmer spacing and consistent controls.
-   Deliberately leaves the existing Porsche wallpaper, page layouts and glass identity intact. */
-:root{
-  --editorial-ink:#f7f4ed;
-  --editorial-muted:rgba(239,235,225,.72);
-  --editorial-edge:rgba(255,255,255,.19);
-  --editorial-edge-hover:rgba(255,255,255,.34);
-  --editorial-glass:rgba(20,22,25,.38);
-  --editorial-ease:cubic-bezier(.22,1,.36,1);
-}
-body{
-  text-rendering:optimizeLegibility;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-}
-h1,h2,h3,h4{
-  text-wrap:balance;
-  letter-spacing:-.025em;
-}
-p,li,.muted,.meta,.description{
-  text-wrap:pretty;
-}
-main.wrap{
-  padding-bottom:clamp(28px,5vw,64px);
-}
-section:not(.hero):not(.garage-hero):not(.journal-hero){
-  scroll-margin-top:110px;
-}
-html:not([data-theme="light"]) :is(.card,.dealer,.stat,.panel,.listing,.vehicle-card,.story-card,.contact-card,
-.promotion-package,.article-item,.project-item,.tile,.profile-card,
-.feature-card,.service-card,.booking-card,.garage-card,.filter-panel,
-.search-panel,.featured-panel,.article-card,.journal-card):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){
-  border-color:var(--editorial-edge)!important;
-  background:linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.018)),var(--editorial-glass)!important;
-  box-shadow:0 14px 38px rgba(0,0,0,.19),inset 0 1px rgba(255,255,255,.085)!important;
-  transition:transform .28s var(--editorial-ease),border-color .28s ease,box-shadow .28s ease,background .28s ease!important;
-}
-html:not([data-theme="light"]) :is(.card,.dealer,.listing,.vehicle-card,.story-card,
-.contact-card,.promotion-package,.article-item,.project-item,
-.tile,.profile-card,.feature-card,.service-card,
-.booking-card,.garage-card,.journal-card):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):hover{
-  border-color:var(--editorial-edge-hover)!important;
-  box-shadow:0 20px 48px rgba(0,0,0,.25),inset 0 1px rgba(255,255,255,.12)!important;
-}
-:is(button,a.button,.btn,.primary,.btn-primary,.button-primary,.gold-button):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){
-  transition:transform .22s var(--editorial-ease),box-shadow .22s ease,background-color .22s ease,border-color .22s ease!important;
-}
-@media (hover:hover) and (pointer:fine){
-  :is(button,a.button,.btn,.primary,.btn-primary,
-  .button-primary,.gold-button):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):hover{
-    transform:translateY(-2px);
-  }
-}
-:is(button,a.button,.btn):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):active{
-  transform:translateY(0) scale(.985);
-}
-input,select,textarea{
-  border-radius:12px;
-}
-:is(input,select,textarea):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):focus{
-  outline:none;
-  border-color:rgba(255,255,255,.42)!important;
-  box-shadow:0 0 0 3px rgba(255,255,255,.075)!important;
-}
-a{
-  text-underline-offset:4px;
-}
-a:not(.button):not(.btn):not(.navlink):hover{
-  text-decoration-color:rgba(255,255,255,.55);
-}
-body > header,body>.header{
-  -webkit-backdrop-filter:blur(18px) saturate(135%)!important;
-  backdrop-filter:blur(18px) saturate(135%)!important;
-}
-@media(min-width:761px){
-  main.wrap{width:min( calc(100% - 56px), 1440px);}
-  .card,.dealer,.panel,.listing,.vehicle-card,.story-card,.contact-card{
-    border-radius:18px;
-  }
-}
-@media(max-width:760px){
-  main.wrap{padding-bottom:30px;}
-  html:not([data-theme="light"]) :is(.card,.dealer,.stat,.panel,.listing,.vehicle-card,.story-card,.contact-card,
-  .promotion-package,.article-item,.project-item,.tile,.profile-card):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){
-    -webkit-backdrop-filter:none!important;
-    backdrop-filter:none!important;
-    background:rgba(18,20,23,.90)!important;
-    background-color:rgba(18,20,23,.90)!important;
-  }
-  button:hover,a.button:hover,.btn:hover,.primary:hover,.btn-primary:hover,
-  .button-primary:hover,.gold-button:hover{transform:none;}
-}
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important;}
+html:not([data-theme="light"]) body a {
+  color: #e0c37f;
 }
 
-/* Consistent modern typography across pages using the shared theme. */
-html body,html body button,html body input,html body select,html body textarea{font-family:Manrope,Inter,system-ui,-apple-system,"Segoe UI",sans-serif!important}
-html body :is(h1,h2,h3,h4,h5,h6){font-family:Manrope,Inter,system-ui,-apple-system,"Segoe UI",sans-serif!important;font-weight:650!important;letter-spacing:-.025em!important;line-height:1.2!important}
-
-
-/* Official 3 Pedals Auto KE typography: Sora + Manrope, with Playfair Display for editorial accents. */
-html body,
-html body button,html body input,html body select,html body textarea{
-  font-family:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif!important;
-  font-synthesis:none;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-}
-html body :is(h1,h2,h3,h4,h5,h6){
-  font-family:"Sora","Manrope",system-ui,sans-serif!important;
-  font-weight:600!important;
-  letter-spacing:-.035em!important;
-  line-height:1.18!important;
-}
-html body :is(h1){font-weight:700!important;letter-spacing:-.045em!important}
-html body :is(h2,h3){font-weight:600!important}
-html body :is(p,li,label,small,.description,.muted,.meta,.subtitle,.section-subtitle,.eyebrow,.lead){
-  font-family:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif!important;
-}
-html body :is(.brand,.logo,.brand-name,.site-brand,.wordmark,header .brand,header .logo){
-  font-family:"Sora",system-ui,sans-serif!important;
-  font-weight:700!important;
-  letter-spacing:-.035em!important;
-}
-html body :is(button,.btn,a.button,.back,.nav a,.nav button,nav a,nav button):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){
-  font-family:"Manrope",system-ui,sans-serif!important;
-  font-weight:600!important;
-}
-html body :is(.price,.amount,.vehicle-price,[data-price]){
-  font-family:"Manrope",system-ui,sans-serif!important;
-  font-weight:700!important;
-  font-variant-numeric:tabular-nums;
-}
-html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){
-  font-family:"Playfair Display",Georgia,serif!important;
-  font-weight:600!important;
-  letter-spacing:-.02em!important;
+/* Interactive Controls & Forms */
+html body :is(button, .btn, a.button, .primary, .btn-primary, .button-primary, .gold-button, .back, nav a, nav button):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
+  font-family: "Manrope", system-ui, sans-serif;
+  font-weight: 600;
+  -webkit-tap-highlight-color: transparent;
 }
 
-
-/* ==========================================================
-   3 PEDALS AUTO KE — PREMIUM DESIGN SYSTEM / NOV 2026
-   Shared finishing layer. Preserves each page's existing
-   automotive wallpaper, layout, imagery and functionality.
-   ========================================================== */
-:root{
-  color-scheme:dark;
-  --p3-graphite:#111417;
-  --p3-graphite-soft:#191d21;
-  --p3-glass:rgba(13,17,21,.48);
-  --p3-glass-strong:rgba(10,13,16,.64);
-  --p3-glass-soft:rgba(255,255,255,.035);
-  --p3-champagne:#c9b784;
-  --p3-champagne-bright:#dfc995;
-  --p3-ivory:#f4f0e8;
-  --p3-muted:rgba(244,240,232,.70);
-  --p3-edge:rgba(255,255,255,.105);
-  --p3-edge-gold:rgba(201,183,132,.24);
-  --p3-shadow:0 16px 42px rgba(0,0,0,.24);
-  --p3-radius:18px;
-  --p3-radius-small:12px;
-  --p3-ease:cubic-bezier(.22,1,.36,1);
-}
-html{color-scheme:dark;scroll-behavior:smooth}
-html,body{max-width:100%;overscroll-behavior-x:none}
-html body{
-  color:var(--p3-ivory);
-  font-family:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif!important;
-  font-synthesis:none;
-  text-rendering:optimizeLegibility;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-}
-html body :is(h1,h2,h3,h4,h5,h6){
-  font-family:"Sora","Manrope",system-ui,sans-serif!important;
-  font-weight:600!important;
-  letter-spacing:-.035em!important;
-  line-height:1.18!important;
-  text-wrap:balance;
-}
-html body :is(p,li,label,small,.description,.muted,.meta,.subtitle,.section-subtitle,.eyebrow,.lead){
-  font-family:"Manrope",system-ui,sans-serif!important;
-  text-wrap:pretty;
-}
-html body :is(.brand,.logo,.brand-name,.site-brand,.wordmark){
-  font-family:"Sora",system-ui,sans-serif!important;
-  letter-spacing:-.035em!important;
-}
-html body :is(.price,.amount,.vehicle-price,[data-price],.stat-value,.metric-value){
-  font-variant-numeric:tabular-nums;
-  font-feature-settings:"tnum" 1;
+html body :is(button, .btn, a.button):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):focus-visible,
+html body a:focus-visible {
+  outline: 2px solid rgba(201, 183, 132, .78);
+  outline-offset: 3px;
 }
 
-/* Shared dark glass language — no pale/white card overlays. */
-html:not([data-theme="light"]) body :is(.card,.dealer,.stat,.panel,.listing,.vehicle-card,.story-card,
-.contact-card,.promotion-package,.article-item,.project-item,.tile,.profile-card,
-.feature-card,.service-card,.booking-card,.garage-card,.filter-panel,.search-panel,
-.featured-panel,.article-card,.journal-card,.notice,.empty,.attention-panel,
-.editor,.contact-form,.seller-card,.dashboard-card,.account-overview-panel):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){
-  color:var(--p3-ivory);
-  background-color:var(--p3-glass)!important;
-  background-image:none!important;
-  border-color:var(--p3-edge)!important;
-  border-radius:var(--p3-radius);
-  box-shadow:var(--p3-shadow),inset 0 1px rgba(255,255,255,.035)!important;
-  -webkit-backdrop-filter:blur(20px) saturate(132%);
-  backdrop-filter:blur(20px) saturate(132%);
-  transition:transform .28s var(--p3-ease),background-color .28s ease,
-    border-color .28s ease,box-shadow .28s ease!important;
-}
-@media (hover:hover) and (pointer:fine){
-  html:not([data-theme="light"]) body :is(.card,.dealer,.listing,.vehicle-card,.story-card,.contact-card,
-  .promotion-package,.article-item,.project-item,.tile,.profile-card,.feature-card,
-  .service-card,.booking-card,.garage-card,.journal-card,.seller-card,.dashboard-card):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):hover{
-    background-color:rgba(17,21,25,.58)!important;
-    background-image:none!important;
-    border-color:var(--p3-edge-gold)!important;
-    box-shadow:0 21px 48px rgba(0,0,0,.30),inset 0 1px rgba(201,183,132,.07)!important;
-    transform:translateY(-2px);
-  }
+html:not([data-theme="light"]) :is(input, select, textarea, .input):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
+  color: var(--p3-ivory);
+  background: rgba(12, 15, 18, .54);
+  border-color: rgba(255, 255, 255, .15);
+  border-radius: var(--p3-radius-small);
 }
 
-/* Unified header glass while retaining the individual page's header geometry. */
-html body :is(body > header,.top,.site-header,.main-header,.navbar){
-  -webkit-backdrop-filter:blur(22px) saturate(138%);
-  backdrop-filter:blur(22px) saturate(138%);
-}
-html body :is(body > header,.top,.site-header,.main-header,.navbar) :is(a,button){
-  -webkit-tap-highlight-color:transparent;
-}
-html:not([data-theme="light"]) body :is(.eyebrow,.section-kicker,.overline,.label-kicker):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){
-  color:var(--p3-champagne)!important;
-}
-html:not([data-theme="light"]) body :is(.price,.vehicle-price,.amount,.brand,.logo,.arrow,.gold-text):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){
-  color:var(--p3-champagne)!important;
+html:not([data-theme="light"]) :is(input, select, textarea, .input)::placeholder {
+  color: rgba(244, 240, 232, .52);
 }
 
-/* Consistent controls and restrained interactions; never flash white. */
-html body :is(button,.btn,a.button,.primary,.btn-primary,.button-primary,.gold-button):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){
-  font-family:"Manrope",system-ui,sans-serif!important;
-  font-weight:650;
-  -webkit-tap-highlight-color:transparent;
-  transition:transform .22s var(--p3-ease),background-color .22s ease,
-    border-color .22s ease,box-shadow .22s ease,filter .22s ease!important;
-}
-html body :is(button,.btn,a.button,.primary,.btn-primary,.button-primary,.gold-button):focus-visible,
-html body a:focus-visible{
-  outline:2px solid rgba(201,183,132,.78)!important;
-  outline-offset:3px;
-}
-html:not([data-theme="light"]) body :is(input,select,textarea,.input):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){
-  color:var(--p3-ivory)!important;
-  background:rgba(8,12,15,.48)!important;
-  border-color:rgba(255,255,255,.13)!important;
-  border-radius:var(--p3-radius-small);
-  box-shadow:none;
-}
-html:not([data-theme="light"]) body :is(input,select,textarea,.input)::placeholder{
-  color:rgba(244,240,232,.48)!important;
-}
-html:not([data-theme="light"]) body :is(input,select,textarea,.input):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):focus{
-  border-color:rgba(201,183,132,.58)!important;
-  box-shadow:0 0 0 3px rgba(201,183,132,.10)!important;
-  outline:none!important;
-}
-html:not([data-theme="light"]) body select option{
-  color:#f4f0e8;
-  background:#171b1f;
+html:not([data-theme="light"]) :is(input, select, textarea, .input):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):focus {
+  border-color: rgba(201, 183, 132, .60);
+  box-shadow: 0 0 0 3px rgba(201, 183, 132, .12);
+  outline: none;
 }
 
-/* Tables, labels and status chips share a quieter contrast system. */
-html body :is(th,thead){
-  color:rgba(244,240,232,.82)!important;
-}
-html body :is(td,tbody){
-  color:rgba(244,240,232,.88);
-}
-html body :is(.status,.badge,.chip,.tag,.yard-label,.pill){
-  box-shadow:none!important;
-}
-html body :is(footer,.site-footer){
-  color:rgba(244,240,232,.62);
-  border:0!important;
-  border-top:0!important;
-}
-html body img,html body video{
-  max-width:100%;
-}
-html body :is(.vehicle-card,.listing,.dealer,.story-card,.journal-card) img{
-  backface-visibility:hidden;
+html:not([data-theme="light"]) select option {
+  color: #f4f0e8;
+  background: #171b1f;
 }
 
-/* Account workspace styling moved to /account-panel.css */
-
-/* Admin workspace: premium graphite surfaces without changing data layouts. */
-html body:has(#app) .wrap{max-width:1480px}
-html body:has(#app) :is(.top,.stat,.listing,.notice,.empty,.attention-panel,
-.editor,.contact-form,.article-item,.project-item,.field,.panel,.card){
-  background-color:rgba(12,16,20,.46)!important;
-  background-image:none!important;
-  border-color:rgba(255,255,255,.11)!important;
-  box-shadow:0 13px 34px rgba(0,0,0,.20)!important;
-}
-html body:has(#app) :is(.tabs .tab,.ghost,.admin-listing-tools input){
-  color:var(--p3-ivory)!important;
-  background:rgba(10,14,18,.42)!important;
-  border-color:rgba(255,255,255,.13)!important;
-}
-html body:has(#app) .tabs .tab.active{
-  color:#f7e8c5!important;
-  background:rgba(201,183,132,.12)!important;
-  border-color:rgba(201,183,132,.30)!important;
+/* Modals (excluding isolated Account Workspace dialogs) */
+html:not([data-theme="light"]) :is(.journal-share-dialog, .modal:not(#accDlg), .dialog:not(#accDlg):not(#accActionDlg):not(#sellerEditListingDialog), .popover-content) {
+  color: var(--p3-ivory);
+  background: rgba(16, 17, 19, .92);
+  border-color: rgba(211, 185, 125, .28);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  backdrop-filter: blur(20px) saturate(140%);
 }
 
-/* Responsive polish: preserve existing grids, improve containment and legibility. */
-@media(max-width:760px){
-  html{scroll-behavior:auto}
-  html body{overflow-x:clip}
-  html body main.wrap{padding-bottom:32px}
-  html body :is(button,.btn,a.button):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){min-height:40px}
-  html body :is(input,select,textarea):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){font-size:16px!important}
-}
-@media(prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  html body *,html body *::before,html body *::after{
-    animation-duration:.01ms!important;
-    animation-iteration-count:1!important;
-    transition-duration:.01ms!important;
-  }
+html body img,
+html body video {
+  max-width: 100%;
 }
 
-/* MOBILE PERFORMANCE LAYER — replace heavy blur on repeating cards, tiles, and secondary buttons
-   with crisp semi-opaque graphite surfaces while preserving primary champagne gold CTAs. */
+html body :is(.vehicle-card, .listing, .dealer, .story-card, .journal-card) img {
+  backface-visibility: hidden;
+}
+
+html body :is(footer, .site-footer) {
+  margin-top: auto;
+  color: rgba(244, 240, 232, .68);
+  border: 0;
+  border-top: 0;
+}
+
+/* Admin Workspace Glass Layer */
+html:not([data-theme="light"]) body:has(#app) .wrap {
+  max-width: 1480px;
+}
+
+html:not([data-theme="light"]) body:has(#app) :is(
+  .top, .stat, .listing, .notice, .empty, .attention-panel,
+  .editor, .contact-form, .article-item, .project-item, .field, .panel, .card
+) {
+  background-color: rgba(14, 18, 22, .64);
+  border-color: rgba(255, 255, 255, .12);
+  box-shadow: 0 13px 34px rgba(0, 0, 0, .20);
+}
+
+/* Mobile Phone Performance Layer (<= 760px) */
 @media (max-width: 760px) {
-  html { scroll-behavior: auto !important; }
-  body { background-attachment: scroll !important; }
+  html {
+    scroll-behavior: auto !important;
+  }
+  body {
+    overflow-x: clip;
+    background-attachment: scroll !important;
+  }
   html body::before {
     filter: none !important;
     transform: none !important;
     background-attachment: scroll !important;
   }
   html:not([data-theme="light"]) body :is(
-    .card,.dealer,.stat,.state,.empty,.error,.panel,.seller-card,
-    .info,.gallery,.seller,.spec,.note,.listing,.article-item,.project-item,
-    .vehicle-card,.story-card,.contact-card,.promotion-package,.tile,.profile-card,
-    .feature-card,.service-card,.booking-card,.garage-card,.featured-panel,
-    .filter-panel,.search-panel,.vehicle-detail-card,.article-card,.journal-card,
-    .dashboard-card,.authbox,
-    .editor,.contact-form,.modal-content,.dialog-card,.settings-card,.package
+    .card, .dealer, .stat, .state, .empty, .error, .panel, .seller-card,
+    .info, .gallery, .seller, .spec, .note, .listing, .article-item, .project-item,
+    .vehicle-card, .story-card, .contact-card, .promotion-package, .tile, .profile-card,
+    .feature-card, .service-card, .booking-card, .garage-card, .featured-panel,
+    .filter-panel, .search-panel, .vehicle-detail-card, .article-card, .journal-card,
+    .dashboard-card, .authbox, .editor, .contact-form, .modal-content, .dialog-card,
+    .settings-card, .package
   ):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
     background: rgba(18, 20, 23, .90) !important;
     background-color: rgba(18, 20, 23, .90) !important;
   }
-  html:not([data-theme="light"]) body :is(.ghost,.btn.ghost,.btn.dark,.alt,.back,.icon-btn,button.secondary,.btn-secondary):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
+  html:not([data-theme="light"]) body :is(.ghost, .btn.ghost, .btn.dark, .alt, .back, .icon-btn, button.secondary, .btn-secondary):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
     background: rgba(26, 28, 32, .92) !important;
@@ -1076,18 +284,31 @@ html body:has(#app) .tabs .tab.active{
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
     background: rgba(20, 22, 25, .92) !important;
+    font-size: 16px !important;
+  }
+  html body :is(button, .btn, a.button):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
+    min-height: 40px;
+  }
+  main.wrap {
+    padding-bottom: 32px;
   }
 }
+
 @media (hover: none) {
-  html body .card:hover,
-  html body .dealer:hover,
-  html body .listing:hover,
-  html body .article-item:hover,
-  html body .project-item:hover,
-  html body .vehicle-card:hover,
-  html body .story-card:hover,
-  html body .contact-card:hover,
-  html body .promotion-package:hover {
+  html body :is(.card, .dealer, .listing, .article-item, .project-item, .vehicle-card, .story-card, .contact-card, .promotion-package):hover {
     transform: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+  html body *,
+  html body *::before,
+  html body *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
   }
 }

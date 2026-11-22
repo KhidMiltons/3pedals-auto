@@ -54,6 +54,17 @@ html[data-theme="light"] body #dealers-blurred-wallpaper {
   filter: blur(6px) saturate(0.7) brightness(1.06) !important;
 }
 
+@media (max-width: 760px) {
+  html[data-theme="light"] body:before,
+  html[data-theme="light"] body #dealers-blurred-wallpaper {
+    background:
+      linear-gradient(125deg, rgba(246, 241, 230, 0.90), rgba(243, 237, 224, 0.82) 50%, rgba(246, 241, 230, 0.92)),
+      url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=60") center center / cover no-repeat !important;
+    filter: none !important;
+    transform: none !important;
+  }
+}
+
 html[data-theme="light"] body a {
   color: #7c580a;
 }
@@ -3395,5 +3406,12 @@ html[data-theme="light"] .ux-chat-form textarea {
     bottom: calc(122px + env(safe-area-inset-bottom, 0px)) !important;
     height: min(460px, calc(100dvh - 150px));
   }
+}
+
+.dealer,
+#grid > .card,
+.story-card {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 280px;
 }
 

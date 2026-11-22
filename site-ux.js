@@ -1390,10 +1390,18 @@
   function boot() {
     applyTheme(getTheme());
     initHeaderControls();
-    initBackToTop();
-    initFooterNewsletter();
-    initGeminiAdvisorChat();
     applyLanguage(getLang());
+    const initDeferredUi = () => {
+      initBackToTop();
+      initFooterNewsletter();
+      initGeminiAdvisorChat();
+      applyLanguage(getLang());
+    };
+    if (typeof window.requestIdleCallback === "function") {
+      window.requestIdleCallback(initDeferredUi, { timeout: 800 });
+    } else {
+      window.setTimeout(initDeferredUi, 120);
+    }
   }
 
   if (document.readyState === "loading") {

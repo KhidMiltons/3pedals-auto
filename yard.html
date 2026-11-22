@@ -5,7 +5,8 @@
 <script src="/consent.js?v=20261107-1"></script>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
-<link rel="preload" as="image" href="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72" fetchpriority="high">
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=60" media="(max-width: 760px)" fetchpriority="high">
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72" media="(min-width: 761px)" fetchpriority="high">
 <link rel="preconnect" href="https://dlejmelyeaaxcvelvzia.supabase.co" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -19,7 +20,9 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Car Yard | 3 Pedals Auto KE">
 <meta name="twitter:description" content="Explore approved vehicles and contact details for car yards listed on 3 Pedals Auto KE.">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet"></noscript>
 <style>
 :root{--ink:#171717;--mute:#6d6d6d;--line:#e7e3da;--surface:#fff;--soft:#f7f5f0;--gold:#d4a017;--blue:#172b4d}*{box-sizing:border-box}body{margin:0;background:var(--soft);color:var(--ink);font-family:Manrope,Arial,sans-serif}.wrap{width:min(1380px,calc(100% - 36px));margin:auto}.head{background:rgba(255,255,255,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}.headin{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:14px}.logo{font:700 24px 'Playfair Display',Georgia,serif}.back{color:var(--ink);text-decoration:none;border:1px solid var(--line);border-radius:9px;padding:9px 13px;background:#fff;font-weight:800}.hero{padding:52px 0 28px}.eyebrow{font-size:11px;font-weight:800;letter-spacing:.16em;color:var(--blue)}h1{font:700 clamp(40px,6vw,70px)/1.02 'Playfair Display',Georgia,serif;margin:8px 0 10px}.hero p{color:var(--mute);max-width:720px}.profile{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr);gap:18px;margin-bottom:30px}.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 14px 38px rgba(0,0,0,.06)}.yardmark{width:72px;height:72px;border-radius:18px;background:var(--ink);color:var(--gold);display:grid;place-items:center;font-size:32px;float:left;margin:0 18px 12px 0}.details{min-height:118px}.details h2{margin:0 0 7px;font:700 30px 'Playfair Display',Georgia,serif}.yard-contact-title,.yard-actions-title{font-size:12px;text-transform:uppercase;letter-spacing:.12em;font-weight:800;color:var(--blue);margin:18px 0 9px;clear:both}.yard-actions-title{margin-top:18px}.detail{margin:7px 0;padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:var(--soft);color:var(--mute);overflow-wrap:anywhere}.detail a{color:var(--ink);font-weight:800;overflow-wrap:anywhere}.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.actions .btn{flex:1 1 150px;min-width:0}.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border-radius:9px;padding:11px 14px;font-weight:800;border:1px solid var(--line);background:#fff;color:var(--ink)}.btn.primary{background:var(--ink);color:#fff;border-color:var(--ink)}.btn.gold{background:var(--gold);color:#1c1605;border-color:var(--gold)}.statgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--soft)}.stat b{display:block;font-size:24px}.stat span{color:var(--mute);font-size:12px}.sectionhead{display:flex;justify-content:space-between;align-items:end;gap:14px;margin:18px 0 14px}.sectionhead h2{font:700 32px 'Playfair Display',Georgia,serif;margin:0}.sectionhead span{color:var(--mute);font-size:13px}.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;padding-bottom:50px}.card{background:#fff;border:1px solid var(--line);border-radius:15px;overflow:hidden;text-decoration:none;color:inherit;display:block;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}.photo{aspect-ratio:4/3;background:#ddd;overflow:hidden}.photo img{width:100%;height:100%;object-fit:contain;display:block;transition:transform .45s ease}@media(hover:hover) and (pointer:fine){.card:hover{transform:translateY(-6px);box-shadow:0 18px 38px rgba(0,0,0,.1);border-color:#d7c59a}.card:hover img{transform:scale(1.045)}}.cardbody{padding:13px}.cardbody h3{font-size:16px;margin:0 0 6px}.price{font:700 19px 'Playfair Display',Georgia,serif;color:var(--blue)}.tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:9px}.tag{font-size:10px;padding:5px 7px;border-radius:999px;background:var(--soft);color:var(--mute)}.empty{text-align:center;padding:50px;color:var(--mute)}footer{padding:26px 0 42px;color:var(--mute);font-size:12px}@media(max-width:1100px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}@media(max-width:850px){.profile{grid-template-columns:1fr}.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:600px){.wrap{width:min(100% - 24px,1380px)}.hero{padding-top:34px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.panel{padding:18px}.headin{min-height:64px}.logo{font-size:21px}.back{font-size:12px}.stat b{font-size:20px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important}}
@@ -115,7 +118,7 @@ input,select,textarea,.back{background:rgba(255,255,255,.055)!important;color:#f
 .btn{transition:transform .25s var(--ease),filter .25s,box-shadow .25s!important}.btn:focus-visible{filter:brightness(1.08)!important;box-shadow:0 10px 24px rgba(0,0,0,.28)!important}.input::placeholder{color:#aaa18e!important}input::placeholder{color:#aaa18e!important}.eyebrow{color:#c9b784!important}a{color:inherit}.logo,.brand,.price,.arrow{color:#c9b784!important}.status{background:rgba(55,112,72,.2)!important;color:#b7e0bf!important;border-color:rgba(128,194,143,.3)!important}.yard-label{background:rgba(201,183,132,.14)!important;color:#c9b784!important}footer{border-color:rgba(201,183,132,.18)!important;color:#aaa18e!important}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
 </style>
-<link rel="stylesheet" href="site-theme.css?v=20261122-card-matched">
+<link rel="stylesheet" href="site-theme.css?v=20261122-perf">
 <style id="compact-mobile-yard-vehicle-cards">
 @media(max-width:600px){
   .grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
@@ -663,8 +666,8 @@ html body h1,html body h2,html body h3,html body .logo,html body .brand{font-fam
 html body > header .logo,html body > header .brand{font-family:"Playfair Display",Georgia,serif!important;font-size:27px!important;font-weight:700!important;letter-spacing:.03em!important;text-transform:uppercase!important}
 html body > header nav a,html body > header nav button,html body > header .headnav a,html body > header .headnav button,html body > header .back{font-family:Manrope,system-ui,sans-serif!important;font-size:14px!important;font-weight:400!important;letter-spacing:0!important}
 </style>
-<link rel="stylesheet" href="/site-ux.css?v=20261122-card-matched">
-<link rel="stylesheet" href="/header-modern.css?v=20261122-card-matched">
+<link rel="stylesheet" href="/site-ux.css?v=20261122-perf">
+<link rel="stylesheet" href="/header-modern.css?v=20261122-header-fix">
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
@@ -866,11 +869,13 @@ html body input,html body select,html body textarea{
   backdrop-filter:blur(12px)!important;
 }
 @media(max-width:760px){
-  html body:before{
+  html:not([data-theme="light"]) body:before{
     background-image:
       linear-gradient(180deg,rgba(8,9,11,.38),rgba(8,9,11,.50)),
-      url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72")!important;
+      url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=60")!important;
     background-position:center,58% center!important;
+    filter:none!important;
+    transform:none!important;
   }
 }
 @media(prefers-reduced-motion:reduce){
@@ -912,6 +917,6 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){f
   }
 }
 </style>
-<script src="/site-ux.js?v=20261122-card-matched"></script>
+<script defer src="/site-ux.js?v=20261122-perf"></script>
 </body>
 </html>

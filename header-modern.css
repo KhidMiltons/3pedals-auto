@@ -23,7 +23,7 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top {
   left: auto !important;
   right: auto !important;
   z-index: 1000 !important;
-  width: min(1132px, calc(100% - 32px)) !important;
+  width: min(1132px, calc(100% - 48px)) !important;
   max-width: 1132px !important;
   min-height: 60px !important;
   margin: 14px auto 12px !important;
@@ -46,6 +46,17 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top {
   isolation: isolate !important;
   overflow: visible !important;
   transition: border-color 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease !important;
+}
+
+@media (min-width: 1280px) {
+  html[data-ux="1"][data-theme][lang] body > header,
+  html[data-ux="1"][data-theme][lang] body > header.head,
+  html[data-ux="1"][data-theme][lang] body > header.top,
+  html[data-ux="1"][data-theme][lang] body > header.site-header {
+    width: min(1232px, calc(100% - 48px)) !important;
+    max-width: 1232px !important;
+    margin: 16px auto 14px !important;
+  }
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -101,6 +112,7 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top {
 /* Re-apply card skin on vehicle_documents.html where header.top has no inner .wrap */
 html[data-ux="1"][data-theme][lang] body > .wrap > header.top {
   width: 100% !important;
+  max-width: 100% !important;
   margin: 14px auto 16px !important;
   border: 1px solid rgba(255, 255, 255, 0.22) !important;
   background-color: rgba(20, 22, 25, 0.36) !important;
@@ -238,9 +250,9 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-link
 }
 
 html[data-ux="1"][data-theme][lang] body > header :is(
-  #nav button, #nav a.navlink,
-  #garageSectionNav button, #garageSectionNav a.navlink,
-  nav.ux-subnav-links a.ux-subnav-link
+  #nav > button, #nav > a.navlink,
+  #garageSectionNav > button, #garageSectionNav > a.navlink,
+  nav.ux-subnav-links > a.ux-subnav-link
 ) {
   --dock-scale: 1 !important;
   position: relative !important;
@@ -253,14 +265,16 @@ html[data-ux="1"][data-theme][lang] body > header :is(
   align-items: center !important;
   justify-content: center !important;
   margin: 0 !important;
-  padding: 0 9px !important;
+  padding: 0 10px !important;
   border: 0 !important;
   border-radius: 10px !important;
   background: transparent !important;
   background-color: transparent !important;
   background-image: none !important;
   box-shadow: none !important;
-  color: rgba(244, 240, 232, 0.82) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  color: rgba(244, 240, 232, 0.84) !important;
   -webkit-text-fill-color: currentColor !important;
   font-family: "Manrope", system-ui, sans-serif !important;
   font-size: 13.5px !important;
@@ -276,32 +290,55 @@ html[data-ux="1"][data-theme][lang] body > header :is(
   transition: color 0.18s ease, background-color 0.18s ease !important;
 }
 
+@media (min-width: 1280px) {
+  html[data-ux="1"][data-theme][lang] body > header > .wrap,
+  html[data-ux="1"][data-theme][lang] body > header > .headin {
+    padding: 8px 22px !important;
+    gap: 16px !important;
+  }
+  html[data-ux="1"][data-theme][lang] body > header nav#nav,
+  html[data-ux="1"][data-theme][lang] body > header nav#garageSectionNav,
+  html[data-ux="1"][data-theme][lang] body > header nav.ux-subnav-links {
+    gap: 4px !important;
+  }
+  html[data-ux="1"][data-theme][lang] body > header :is(
+    #nav > button, #nav > a.navlink,
+    #garageSectionNav > button, #garageSectionNav > a.navlink,
+    nav.ux-subnav-links > a.ux-subnav-link
+  ) {
+    padding: 0 11px !important;
+    font-size: 14px !important;
+  }
+}
+
 html[data-ux="1"][data-theme="light"][lang] body > header :is(
-  #nav button, #nav a.navlink,
-  #garageSectionNav button, #garageSectionNav a.navlink,
-  nav.ux-subnav-links a.ux-subnav-link
+  #nav > button, #nav > a.navlink,
+  #garageSectionNav > button, #garageSectionNav > a.navlink,
+  nav.ux-subnav-links > a.ux-subnav-link
 ) {
   color: #4b453b !important;
 }
 
 @media (hover: hover) and (pointer: fine) {
   html[data-ux="1"][data-theme][lang] body > header :is(
-    #nav button:hover, #nav a.navlink:hover,
-    #garageSectionNav button:hover, #garageSectionNav a.navlink:hover,
-    nav.ux-subnav-links a.ux-subnav-link:hover
+    #nav > button:hover, #nav > a.navlink:hover,
+    #garageSectionNav > button:hover, #garageSectionNav > a.navlink:hover,
+    nav.ux-subnav-links > a.ux-subnav-link:hover
   ) {
     background: rgba(255, 255, 255, 0.08) !important;
     background-color: rgba(255, 255, 255, 0.08) !important;
     color: #ffffff !important;
     border: 0 !important;
     box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
     transform: none !important;
   }
 
   html[data-ux="1"][data-theme="light"][lang] body > header :is(
-    #nav button:hover, #nav a.navlink:hover,
-    #garageSectionNav button:hover, #garageSectionNav a.navlink:hover,
-    nav.ux-subnav-links a.ux-subnav-link:hover
+    #nav > button:hover, #nav > a.navlink:hover,
+    #garageSectionNav > button:hover, #garageSectionNav > a.navlink:hover,
+    nav.ux-subnav-links > a.ux-subnav-link:hover
   ) {
     background: rgba(138, 114, 62, 0.10) !important;
     background-color: rgba(138, 114, 62, 0.10) !important;
@@ -311,11 +348,11 @@ html[data-ux="1"][data-theme="light"][lang] body > header :is(
 
 /* Active State — Warm Champagne Gold (#E5B96F) + Subtle Glowing Underline */
 html[data-ux="1"][data-theme][lang] body > header :is(
-  #nav button[aria-selected="true"],
-  #nav a[aria-current="page"],
-  #garageSectionNav button[aria-selected="true"],
-  #garageSectionNav a[aria-current="page"],
-  nav.ux-subnav-links a.ux-subnav-link[aria-current="page"]
+  #nav > button[aria-selected="true"],
+  #nav > a[aria-current="page"],
+  #garageSectionNav > button[aria-selected="true"],
+  #garageSectionNav > a[aria-current="page"],
+  nav.ux-subnav-links > a.ux-subnav-link[aria-current="page"]
 ) {
   background: transparent !important;
   background-color: transparent !important;
@@ -325,14 +362,16 @@ html[data-ux="1"][data-theme][lang] body > header :is(
   font-weight: 600 !important;
   border: 0 !important;
   box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
 }
 
 html[data-ux="1"][data-theme][lang] body > header :is(
-  #nav button[aria-selected="true"],
-  #nav a[aria-current="page"],
-  #garageSectionNav button[aria-selected="true"],
-  #garageSectionNav a[aria-current="page"],
-  nav.ux-subnav-links a.ux-subnav-link[aria-current="page"]
+  #nav > button[aria-selected="true"],
+  #nav > a[aria-current="page"],
+  #garageSectionNav > button[aria-selected="true"],
+  #garageSectionNav > a[aria-current="page"],
+  nav.ux-subnav-links > a.ux-subnav-link[aria-current="page"]
 )::after {
   content: "" !important;
   position: absolute !important;
@@ -349,22 +388,22 @@ html[data-ux="1"][data-theme][lang] body > header :is(
 }
 
 html[data-ux="1"][data-theme="light"][lang] body > header :is(
-  #nav button[aria-selected="true"],
-  #nav a[aria-current="page"],
-  #garageSectionNav button[aria-selected="true"],
-  #garageSectionNav a[aria-current="page"],
-  nav.ux-subnav-links a.ux-subnav-link[aria-current="page"]
+  #nav > button[aria-selected="true"],
+  #nav > a[aria-current="page"],
+  #garageSectionNav > button[aria-selected="true"],
+  #garageSectionNav > a[aria-current="page"],
+  nav.ux-subnav-links > a.ux-subnav-link[aria-current="page"]
 ) {
   color: #7c5609 !important;
   -webkit-text-fill-color: #7c5609 !important;
 }
 
 html[data-ux="1"][data-theme="light"][lang] body > header :is(
-  #nav button[aria-selected="true"],
-  #nav a[aria-current="page"],
-  #garageSectionNav button[aria-selected="true"],
-  #garageSectionNav a[aria-current="page"],
-  nav.ux-subnav-links a.ux-subnav-link[aria-current="page"]
+  #nav > button[aria-selected="true"],
+  #nav > a[aria-current="page"],
+  #garageSectionNav > button[aria-selected="true"],
+  #garageSectionNav > a[aria-current="page"],
+  nav.ux-subnav-links > a.ux-subnav-link[aria-current="page"]
 )::after {
   background: #9e7415 !important;
   box-shadow: 0 0 8px rgba(158, 116, 21, 0.35) !important;
@@ -421,6 +460,8 @@ html[data-ux="1"][data-theme][lang] body > header .ux-theme-btn {
   white-space: nowrap !important;
   cursor: pointer !important;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
   transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease !important;
 }
 
@@ -457,19 +498,27 @@ html[data-ux="1"][data-theme][lang] body > header .ux-lang-switch {
   border: 1px solid rgba(255, 255, 255, 0.20) !important;
   background: rgba(255, 255, 255, 0.08) !important;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
 }
 
 html[data-ux="1"][data-theme][lang] body > header .ux-lang-switch button {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
+  width: auto !important;
   min-width: 31px !important;
   height: 28px !important;
   min-height: 28px !important;
   padding: 0 8px !important;
+  margin: 0 !important;
   border: 0 !important;
   border-radius: 9px !important;
   background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
   color: rgba(244, 240, 232, 0.78) !important;
   font: 700 11px/1 "Manrope", system-ui, sans-serif !important;
   letter-spacing: 0.04em !important;
@@ -541,6 +590,8 @@ html[data-ux="1"][data-theme][lang] body > header .account-pill > button {
   color: #f3d792 !important;
   font: 600 12.5px/1 "Manrope", system-ui, sans-serif !important;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
   transform: none !important;
   cursor: pointer !important;
   transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease !important;
@@ -620,6 +671,8 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .back {
   text-decoration: none !important;
   white-space: nowrap !important;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
   transform: none !important;
   cursor: pointer !important;
   transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease !important;
@@ -668,6 +721,8 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-mobile-subtogg
   background: rgba(255, 255, 255, 0.08) !important;
   color: #f4f0e8 !important;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
   cursor: pointer !important;
   transition: background-color 0.18s ease, border-color 0.18s ease !important;
 }
@@ -703,9 +758,9 @@ html[data-ux="1"][data-theme][lang] body > header :is(#navToggle, #garageNavTogg
     margin-right: 7px !important;
   }
   html[data-ux="1"][data-theme][lang] body > header :is(
-    #nav button, #nav a.navlink,
-    #garageSectionNav button, #garageSectionNav a.navlink,
-    nav.ux-subnav-links a.ux-subnav-link
+    #nav > button, #nav > a.navlink,
+    #garageSectionNav > button, #garageSectionNav > a.navlink,
+    nav.ux-subnav-links > a.ux-subnav-link
   ) {
     padding: 0 6px !important;
     font-size: 12.25px !important;
@@ -733,9 +788,8 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
   html[data-ux="1"][data-theme][lang] body > header,
   html[data-ux="1"][data-theme][lang] body > header.head,
   html[data-ux="1"][data-theme][lang] body > header.top,
-  html[data-ux="1"][data-theme][lang] body > header.site-header,
-  html[data-ux="1"][data-theme][lang] body > .wrap > header.top {
-    width: calc(100% - 20px) !important;
+  html[data-ux="1"][data-theme][lang] body > header.site-header {
+    width: calc(100% - 32px) !important;
     top: max(10px, env(safe-area-inset-top, 10px)) !important;
     margin: 10px auto 8px !important;
     min-height: 54px !important;
@@ -823,7 +877,7 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links {
     display: none !important;
     position: absolute !important;
-    top: calc(100% + 10px) !important;
+    top: calc(100% + 8px) !important;
     right: 0 !important;
     left: auto !important;
     bottom: auto !important;
@@ -832,16 +886,17 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     align-items: stretch !important;
     justify-content: flex-start !important;
     flex-wrap: nowrap !important;
-    width: min(280px, 100%) !important;
+    width: min(320px, 100%) !important;
     max-width: 100% !important;
-    max-height: min(76dvh, 520px) !important;
+    max-height: min(76dvh, 540px) !important;
+    overflow-x: hidden !important;
     overflow-y: auto !important;
     padding: 10px !important;
     gap: 4px !important;
-    border-radius: 18px !important;
+    border-radius: 16px !important;
     border: 1px solid rgba(255, 255, 255, 0.22) !important;
-    background: rgba(18, 20, 23, 0.95) !important;
-    background-color: rgba(18, 20, 23, 0.95) !important;
+    background: rgba(18, 20, 23, 0.96) !important;
+    background-color: rgba(18, 20, 23, 0.96) !important;
     box-shadow:
       0 22px 54px rgba(0, 0, 0, 0.62),
       inset 0 1px 0 rgba(255, 255, 255, 0.14) !important;
@@ -854,8 +909,8 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
 
   html[data-ux="1"][data-theme="light"][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links),
   html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top nav.ux-subnav-links {
-    background: rgba(253, 250, 243, 0.97) !important;
-    background-color: rgba(253, 250, 243, 0.97) !important;
+    background: rgba(253, 250, 243, 0.98) !important;
+    background-color: rgba(253, 250, 243, 0.98) !important;
     border-color: rgba(138, 114, 62, 0.34) !important;
     box-shadow:
       0 20px 48px rgba(48, 38, 18, 0.22),
@@ -868,24 +923,45 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     animation: uxDrawerIn 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
   }
 
-  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) :is(button, a.navlink, a.ux-subnav-link),
-  html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links a.ux-subnav-link {
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) > :is(button, a.navlink, a.ux-subnav-link),
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links > a.ux-subnav-link {
     width: 100% !important;
     height: auto !important;
-    min-height: 40px !important;
+    min-height: 44px !important;
     justify-content: flex-start !important;
-    padding: 9px 12px !important;
-    border-radius: 11px !important;
-    font-size: 14px !important;
+    padding: 10px 14px !important;
+    border: 1px solid transparent !important;
+    border-radius: 12px !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    text-shadow: none !important;
+    font-size: 14.5px !important;
+    font-weight: 500 !important;
   }
 
-  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) :is(button[aria-selected="true"], a[aria-current="page"]),
-  html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links a[aria-current="page"] {
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) > :is(button[aria-selected="true"], a[aria-current="page"]),
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links > a[aria-current="page"] {
     background: rgba(229, 185, 111, 0.16) !important;
+    background-color: rgba(229, 185, 111, 0.16) !important;
+    border-color: rgba(229, 185, 111, 0.32) !important;
+    color: #E5B96F !important;
+    font-weight: 600 !important;
   }
 
-  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) :is(button, a.navlink, a.ux-subnav-link)::after,
-  html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links a.ux-subnav-link::after {
+  html[data-ux="1"][data-theme="light"][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) > :is(button[aria-selected="true"], a[aria-current="page"]),
+  html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top nav.ux-subnav-links > a[aria-current="page"] {
+    background: rgba(158, 116, 21, 0.14) !important;
+    background-color: rgba(158, 116, 21, 0.14) !important;
+    border-color: rgba(158, 116, 21, 0.30) !important;
+    color: #7c5609 !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) > :is(button, a.navlink, a.ux-subnav-link)::after,
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links > a.ux-subnav-link::after {
     display: none !important;
   }
 
@@ -895,6 +971,7 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     align-items: center !important;
     justify-content: space-between !important;
     width: 100% !important;
+    box-sizing: border-box !important;
     margin-top: 6px !important;
     padding: 10px 4px 2px !important;
     border-top: 1px solid rgba(255, 255, 255, 0.14) !important;
@@ -913,30 +990,58 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     gap: 8px !important;
   }
 
-  html[data-ux="1"][data-theme][lang] body > header .ux-drawer-controls .ux-theme-btn {
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) .ux-drawer-controls .ux-theme-btn {
     width: auto !important;
+    flex: 0 0 auto !important;
     min-width: 0 !important;
     padding: 0 12px !important;
     height: 36px !important;
     min-height: 36px !important;
     font-size: 12px !important;
+    justify-content: center !important;
   }
 
   html[data-ux="1"][data-theme][lang] body > header .ux-drawer-controls .ux-theme-btn .ux-theme-text {
     display: inline !important;
   }
 
-  html[data-ux="1"][data-theme][lang] body > header .ux-drawer-controls .ux-lang-switch {
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) .ux-drawer-controls .ux-lang-switch {
     display: inline-flex !important;
+    width: auto !important;
+    flex: 0 0 auto !important;
     height: 36px !important;
     min-height: 36px !important;
+    padding: 3px !important;
+    border-radius: 12px !important;
   }
 
-  html[data-ux="1"][data-theme][lang] body > header .ux-drawer-controls .ux-lang-switch button {
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) .ux-drawer-controls .ux-lang-switch button {
+    width: auto !important;
+    flex: 0 0 auto !important;
+    min-width: 31px !important;
     height: 28px !important;
     min-height: 28px !important;
     padding: 0 9px !important;
     font-size: 11px !important;
+    justify-content: center !important;
+    border-radius: 9px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  html[data-ux="1"][data-theme][lang] body > header,
+  html[data-ux="1"][data-theme][lang] body > header.head,
+  html[data-ux="1"][data-theme][lang] body > header.top,
+  html[data-ux="1"][data-theme][lang] body > header.site-header {
+    width: calc(100% - 24px) !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links),
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links {
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
   }
 }
 

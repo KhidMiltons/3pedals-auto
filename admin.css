@@ -327,6 +327,7 @@ textarea {
 
 .admin-nav-count {
   font-family: var(--ad-font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 11px;
   font-weight: 700;
   color: var(--ad-mute);
@@ -806,6 +807,7 @@ input[type="radio"] {
 .overview-content-stats strong {
   display: block;
   font-family: var(--ad-font-display);
+  font-variant-numeric: tabular-nums;
   font-size: clamp(17px, 1.8vw, 22px);
   font-weight: 700;
   color: var(--ad-gold);
@@ -859,6 +861,7 @@ input[type="radio"] {
   background: var(--ad-gold-soft);
   color: var(--ad-gold);
   font-family: var(--ad-font-mono);
+  font-variant-numeric: tabular-nums;
   font-weight: 700;
 }
 
@@ -1307,6 +1310,7 @@ input[type="radio"] {
 .admin-table-wrap {
   width: 100%;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   border: 1px solid var(--ad-line);
   border-radius: 12px;
   background: var(--ad-surface);
@@ -1355,6 +1359,11 @@ input[type="radio"] {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 4px 16px;
+}
+
+.editor-grid.ops-inline-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: end;
 }
 
 .editor-grid .full,
@@ -1522,6 +1531,7 @@ input[type="radio"] {
 .chauffeur-schedule-metrics strong {
   display: block;
   font-family: var(--ad-font-display);
+  font-variant-numeric: tabular-nums;
   font-size: 20px;
   color: var(--ad-gold);
 }
@@ -1564,6 +1574,7 @@ input[type="radio"] {
 .funnel-step strong {
   display: block;
   font-family: var(--ad-font-display);
+  font-variant-numeric: tabular-nums;
   font-size: 22px;
   color: var(--ad-gold);
 }
@@ -1953,11 +1964,72 @@ dialog.admin-dialog::backdrop {
   .grid,
   .fields,
   .editor-grid,
+  .editor-grid.ops-inline-grid,
   .contact-grid,
   .request-inbox-controls,
   .overview-revenue,
   .overview-content-stats {
     grid-template-columns: minmax(0, 1fr);
+  }
+  .admin-listing-tools,
+  .booking-workspace-tools {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .admin-listing-tools input,
+  .admin-listing-tools select,
+  .booking-workspace-tools input,
+  .booking-workspace-tools select {
+    width: 100%;
+    min-width: 0;
+  }
+  .tools-count {
+    margin-left: 0;
+  }
+  input:not([type="checkbox"]):not([type="radio"]),
+  select,
+  textarea {
+    font-size: 16px;
+    min-height: 44px;
+  }
+  button.primary,
+  button.ghost,
+  button.danger,
+  button.approve,
+  button.reject,
+  a.ghost,
+  .segmented-bar .seg-tab,
+  .preset-btn,
+  .admin-nav-btn,
+  #adminMenuToggle,
+  .admin-dialog-close {
+    min-height: 44px;
+  }
+  .admin-dialog-close,
+  #adminMenuToggle {
+    min-width: 44px;
+  }
+  .bulk-action-bar {
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+  }
+  .admin-toast-host {
+    right: 14px;
+    left: 14px;
+    width: auto;
+    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  }
+  .photo-lightbox {
+    padding: 54px 16px;
+  }
+  .photo-lightbox-nav {
+    width: 42px;
+    height: 42px;
+  }
+  .photo-lightbox-prev {
+    left: 8px;
+  }
+  .photo-lightbox-next {
+    right: 8px;
   }
   .listing .summary,
   .article-item,

@@ -147,7 +147,7 @@
         const name = x.seller_name || x.yard_name || "Private seller";
         const phone = x.seller_phone || x.phone || x.whatsapp || "—";
         const thumb = photos[0]
-          ? `<img src="${esc(photos[0])}" alt="" class="listing-thumb" loading="lazy">`
+          ? `<img src="${esc(photos[0])}" alt="" class="listing-thumb" loading="lazy" decoding="async">`
           : `<div class="listing-thumb" style="display:grid;place-items:center;font-size:11px;color:var(--ad-mute)">No photo</div>`;
         return `
         <article class="listing" data-id="${esc(idStr)}">
@@ -226,7 +226,7 @@
                                 i + 1
                               }"><img src="${esc(p)}" alt="Vehicle photo ${
                                 i + 1
-                              }" loading="lazy"></a>`
+                              }" loading="lazy" decoding="async"></a>`
                           )
                           .join("")
                       : '<span class="meta">No photos uploaded.</span>'
@@ -391,7 +391,7 @@
                 (p, i) =>
                   `<a href="${esc(p)}" class="admin-photo-open" data-photo-index="${i}"><img src="${esc(
                     p
-                  )}" alt="Vehicle photo ${i + 1}"></a>`
+                  )}" alt="Vehicle photo ${i + 1}" loading="lazy" decoding="async"></a>`
               )
               .join("")}</div>`
           : '<p class="meta">No photos uploaded.</p>'

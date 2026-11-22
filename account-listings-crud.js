@@ -193,7 +193,7 @@
       editPhotoGallery.innerHTML = editPhotoItems
         .map(
           (item, index) =>
-            `<div class="edit-photo-item"><img src="${esc(item.preview || item.url)}" alt="Vehicle photo ${index + 1}"><button type="button" class="btn ghost" data-remove-edit-photo="${index}" aria-label="Remove photo ${index + 1}">Remove</button></div>`
+            `<div class="edit-photo-item"><img src="${esc(item.preview || item.url)}" alt="Vehicle photo ${index + 1}" loading="lazy" decoding="async"><button type="button" class="btn ghost" data-remove-edit-photo="${index}" aria-label="Remove photo ${index + 1}">Remove</button></div>`
         )
         .join("");
       editPhotosInput.disabled = editPhotoItems.length >= 15;

@@ -453,7 +453,7 @@
       if (avatarBox) {
         const url = profileAvatarUrl();
         avatarBox.innerHTML = url
-          ? '<img src="' + esc(url) + '" alt="Profile picture">'
+          ? '<img src="' + esc(url) + '" alt="Profile picture" loading="lazy" decoding="async">'
           : esc(initialsFor(profileName(), getMe().email));
       }
       if ($("accRemovePhoto") && !profileAvatarUrl()) $("accRemovePhoto").remove();
@@ -775,6 +775,10 @@
           signOutFromAccount();
           return;
         }
+        if (event.target.closest("[data-open-admin], #accAdmin")) {
+          window.location.href = "/admin.html";
+          return;
+        }
         if (event.target.closest("[data-buying]")) {
           host().openCurrentInventory?.(true);
           return;
@@ -915,6 +919,10 @@
         else accountDialog.close();
       });
       accountDialog.addEventListener("click", (event) => {
+        if (event.target.closest("[data-open-admin], #accAdmin")) {
+          window.location.href = "/admin.html";
+          return;
+        }
         if (
           globalResults &&
           !globalResults.hidden &&
@@ -954,7 +962,7 @@
   async function openAccount(options = {}) {
     const client = sb();
     const me = getMe();
-    const profile = getProfile();
+    let profile = getProfile();
     const renderVersion = ++accountRenderVersion;
     const d = $("accDlg");
     const box = $("accBody");
@@ -1025,14 +1033,32 @@
       return;
     }
 
+    const profileRequest =
+      !profile || options.refresh
+        ? Promise.resolve(
+            client.from("profiles").select("*").eq("id", me.id).maybeSingle()
+          ).catch(() => ({ data: null }))
+        : Promise.resolve({ data: profile });
+
     let accountResults = null;
+    let profileRes = null;
     if (accountDataPrefetch && accountDataPrefetchUserId === me.id) {
       const pending = accountDataPrefetch;
       accountDataPrefetch = null;
       accountDataPrefetchUserId = null;
-      accountResults = await pending;
+      [accountResults, profileRes] = await Promise.all([pending, profileRequest]);
+    } else {
+      [accountResults, profileRes] = await Promise.all([
+        fetchAccountData(me.id),
+        profileRequest,
+      ]);
     }
     if (!accountResults) accountResults = await fetchAccountData(me.id);
+    if (profileRes?.data) {
+      profile = profileRes.data;
+      setProfile(profile);
+    }
+    const isAdmin = Boolean(profile && profile.is_admin);
 
     if (renderVersion !== accountRenderVersion || !d.open) return;
 
@@ -1153,7 +1179,7 @@
           .slice(0, 6)
           .map(
             (item) =>
-              `<div class="ap-activity-row"><span class="ap-activity-icon ${esc(item.kind)}">${esc(activityCode[item.kind] || "AC")}</span><div><strong>${esc(item.title)}</strong><span>${esc(item.detail)}</span></div><time datetime="${esc(item.time)}">${esc(new Date(item.time).toLocaleDateString("en-KE", { day: "numeric", month: "short", year: "numeric" }))}</time></div>`
+              `<div class="ap-activity-row"><div class="ap-activity-icon ${esc(item.kind)}">${esc(activityCode[item.kind] || "AC")}</div><div><strong>${esc(item.title)}</strong><span>${esc(item.detail)}</span></div><time datetime="${esc(item.time)}">${esc(new Date(item.time).toLocaleDateString("en-KE", { day: "numeric", month: "short", year: "numeric" }))}</time></div>`
           )
           .join("")
       : '<div class="ap-empty">Your recent account activity will appear here.</div>';
@@ -1162,7 +1188,7 @@
       ? allActivityItems
           .map(
             (item) =>
-              `<div class="ap-activity-row"><span class="ap-activity-icon ${esc(item.kind)}">${esc(activityCode[item.kind] || "AC")}</span><div><strong>${esc(item.title)}</strong><span>${esc(item.detail)}</span></div><time datetime="${esc(item.time)}">${esc(new Date(item.time).toLocaleString("en-KE", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" }))}</time></div>`
+              `<div class="ap-activity-row"><div class="ap-activity-icon ${esc(item.kind)}">${esc(activityCode[item.kind] || "AC")}</div><div><strong>${esc(item.title)}</strong><span>${esc(item.detail)}</span></div><time datetime="${esc(item.time)}">${esc(new Date(item.time).toLocaleString("en-KE", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" }))}</time></div>`
           )
           .join("")
       : '<div class="ap-empty">Your recent account activity will appear here as you use the marketplace.</div>';
@@ -1176,7 +1202,7 @@
           <div class="ap-dealer-content">
             ${
               avatar
-                ? `<img src="${esc(avatar)}" alt="Dealership logo">`
+                ? `<img src="${esc(avatar)}" alt="Dealership logo" loading="lazy" decoding="async">`
                 : `<span class="ap-dealer-monogram">${esc(initialsFor(yardProfile.yard_name || yardProfile.seller_name || me.user_metadata?.dealer_name || name, me.email))}</span>`
             }
             <div class="ap-dealer-name">
@@ -1202,6 +1228,22 @@
           <button type="button" class="ap-btn ap-btn-primary" data-overview-buying>Explore inventory</button>
         </div>
       </div>
+
+      ${
+        isAdmin
+          ? `<div class="account-admin-tools account-admin-tools--overview">
+              <div>
+                <span class="ap-eyebrow">Site Administration</span>
+                <h3>Admin Panel</h3>
+                <p class="meta">Manage vehicle approvals, garage bookings, chauffeur dispatch, website contact details, and published content.</p>
+              </div>
+              <button class="ap-btn ap-btn-primary account-admin-button" type="button" data-open-admin>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 6v5c0 4.6-2.9 7.8-7 10-4.1-2.2-7-5.4-7-10V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg>
+                <span>Open Admin Panel</span>
+              </button>
+            </div>`
+          : ""
+      }
 
       <div class="ap-stats" aria-label="Account summary">
         <button type="button" class="ap-stat" data-overview-page="listings"><b>${L.length}</b><span>My listings</span></button>
@@ -1555,7 +1597,7 @@
               <div><span class="ap-eyebrow">Identity</span><h2>Your business profile</h2><p class="meta">Your name, contact details, and seller profile image.</p></div>
             </div>
             <div class="profile-card">
-              <div class="profile-avatar">${avatar ? `<img src="${esc(avatar)}" alt="Profile picture">` : esc(initialsFor(name, me.email))}</div>
+              <div class="profile-avatar">${avatar ? `<img src="${esc(avatar)}" alt="Profile picture" loading="lazy" decoding="async">` : esc(initialsFor(name, me.email))}</div>
               <div>
                 <h3 style="margin:0 0 4px">Your profile</h3>
                 <p class="meta" style="margin:0">${esc(me.email)}</p>
@@ -1568,8 +1610,8 @@
             </div>
 
             ${
-              profile && profile.is_admin
-                ? `<div class="account-admin-tools"><div><h3 style="margin:0 0 4px">Administration</h3><p class="meta" style="margin:0">Manage vehicle approvals, garage bookings, website contact details, and published content.</p></div><button class="ap-btn ap-btn-ghost account-admin-button" type="button" id="accAdmin"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 6v5c0 4.6-2.9 7.8-7 10-4.1-2.2-7-5.4-7-10V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg><span>Open Admin Dashboard</span></button></div>`
+              isAdmin
+                ? `<div class="account-admin-tools"><div><span class="ap-eyebrow">Site Administration</span><h3>Admin Panel</h3><p class="meta">Manage vehicle approvals, garage bookings, website contact details, and published content.</p></div><button class="ap-btn ap-btn-primary account-admin-button" type="button" id="accAdmin" data-open-admin><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 6v5c0 4.6-2.9 7.8-7 10-4.1-2.2-7-5.4-7-10V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg><span>Open Admin Panel</span></button></div>`
                 : ""
             }
 
@@ -1735,7 +1777,7 @@
       document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
     menu.innerHTML = `
       <a class="account-sidebar-brand" href="/" aria-label="3 Pedals Auto KE home">
-        <img src="favicon.svg" alt="" width="28" height="28">
+        <img src="favicon.svg" alt="" width="28" height="28" decoding="async">
         <span><strong>3 PEDALS</strong><small>Account Workspace</small></span>
       </a>
       <div class="seller-nav-identity">
@@ -1761,6 +1803,12 @@
       <button type="button" class="account-nav-btn" data-page="settings" data-account-tab="business"><span>Profile</span></button>
       <button type="button" class="account-nav-btn" data-page="settings" data-account-tab="account"><span>Settings</span></button>
       <button type="button" class="account-nav-btn" data-seller-signup><span>Seller store URL</span></button>
+      ${
+        isAdmin
+          ? `<div class="seller-nav-label">Administration</div>
+             <button type="button" class="account-nav-btn account-nav-admin" data-open-admin><span>Open Admin Panel</span><span class="account-nav-badge">Admin</span></button>`
+          : ""
+      }
       <div class="account-sidebar-footer">
         <button type="button" class="ap-btn ap-btn-ghost" id="accThemeToggle">${currentThemeMode === "light" ? "Dark theme" : "Light theme"}</button>
         <button type="button" class="ap-btn ap-btn-ghost" id="accHomeSide">Back to site</button>
@@ -1906,6 +1954,9 @@
     });
 
     const baseSearchItems = [
+      ...(isAdmin
+        ? [{ title: "Open Admin Panel", subtitle: "Moderation, garage dispatch, chauffeur & site controls", kind: "Admin", search: "open admin panel dashboard console moderation approvals dispatch", onSelect: () => { window.location.href = "/admin.html"; } }]
+        : []),
       { title: "Overview", subtitle: "Workspace summary & activity", kind: "Section", search: "overview home workspace", onSelect: () => showSellerAccountPage("overview") },
       { title: "Buying workspace", subtitle: "Saved vehicles shortlist", kind: "Section", search: "buying workspace saved vehicles shortlist", onSelect: () => showSellerAccountPage("buying") },
       { title: "Insights", subtitle: "Seller analytics & reported sales", kind: "Section", search: "insights analytics views whatsapp sales", onSelect: () => showSellerAccountPage("dashboard") },
@@ -2417,28 +2468,36 @@
     }
 
     document.documentElement.classList.remove("account-restoring");
-    try {
-      const snapshot = box.cloneNode(true);
-      snapshot
-        .querySelectorAll(
-          'input[type="password"],input[type="email"],input[type="tel"],input[type="file"],#prefBankDetails,textarea,#sellerEditListingDialog'
-        )
-        .forEach((field) => {
-          if (field.id === "sellerEditListingDialog") {
-            field.remove();
-            return;
-          }
-          field.value = "";
-          field.removeAttribute("value");
-          field.textContent = "";
-          field.removeAttribute("checked");
-          if ("checked" in field) field.checked = false;
-        });
-      snapshot
-        .querySelectorAll("#accProfileErr,.account-refresh-status,[role='alert']")
-        .forEach((node) => node.remove());
-      sessionStorage.setItem("3pedals:account-view-cache", snapshot.innerHTML);
-    } catch (_) {}
+    const persistViewSnapshot = () => {
+      try {
+        if (!box.isConnected) return;
+        const snapshot = box.cloneNode(true);
+        snapshot
+          .querySelectorAll(
+            'input[type="password"],input[type="email"],input[type="tel"],input[type="file"],#prefBankDetails,textarea,#sellerEditListingDialog'
+          )
+          .forEach((field) => {
+            if (field.id === "sellerEditListingDialog") {
+              field.remove();
+              return;
+            }
+            field.value = "";
+            field.removeAttribute("value");
+            field.textContent = "";
+            field.removeAttribute("checked");
+            if ("checked" in field) field.checked = false;
+          });
+        snapshot
+          .querySelectorAll("#accProfileErr,.account-refresh-status,[role='alert']")
+          .forEach((node) => node.remove());
+        sessionStorage.setItem("3pedals:account-view-cache", snapshot.innerHTML);
+      } catch (_) {}
+    };
+    if (typeof window.requestIdleCallback === "function") {
+      window.requestIdleCallback(persistViewSnapshot, { timeout: 600 });
+    } else {
+      window.setTimeout(persistViewSnapshot, 40);
+    }
   }
 
   bindDialogChromeListeners();

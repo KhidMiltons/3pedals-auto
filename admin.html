@@ -9,7 +9,8 @@
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700&display=swap" rel="stylesheet"></noscript>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <title>3 Pedals Auto KE — Admin Console</title>
 <script>
@@ -19,9 +20,9 @@ try {
   document.documentElement.setAttribute("data-theme", t);
 } catch (_) {}
 </script>
-<link rel="stylesheet" href="admin.css?v=20261121-admin-v2">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js"></script>
+<link rel="stylesheet" href="admin.css?v=20261122-perf">
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script defer src="config.js"></script>
 <script defer src="/vendor/jspdf.umd.min.js"></script>
 </head>
 <body>
@@ -716,12 +717,12 @@ try {
 <!-- Toast Host -->
 <div id="adminToastHost" class="admin-toast-host" aria-live="polite"></div>
 
-<script src="admin-core.js?v=20261121-admin-v2"></script>
-<script src="admin-overview.js?v=20261121-admin-v2"></script>
-<script src="admin-requests.js?v=20261121-admin-v2"></script>
-<script src="admin-listings.js?v=20261121-admin-v2"></script>
-<script src="admin-operations.js?v=20261121-admin-v2"></script>
-<script src="admin-content.js?v=20261121-admin-v2"></script>
-<script src="admin-insights.js?v=20261121-admin-v2"></script>
+<script defer src="admin-core.js?v=20261122-perf"></script>
+<script defer src="admin-overview.js?v=20261122-perf"></script>
+<script defer src="admin-requests.js?v=20261122-perf"></script>
+<script defer src="admin-listings.js?v=20261122-perf"></script>
+<script defer src="admin-operations.js?v=20261122-perf"></script>
+<script defer src="admin-content.js?v=20261122-perf"></script>
+<script defer src="admin-insights.js?v=20261122-perf"></script>
 </body>
 </html>

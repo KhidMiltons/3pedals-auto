@@ -13,7 +13,7 @@
       <div id="accountMenuBackdrop" class="account-menu-backdrop" aria-hidden="true"></div>
       <aside id="accountMenu" class="account-sidebar" role="navigation" aria-label="Account navigation">
         <a class="account-sidebar-brand" href="/" aria-label="3 Pedals Auto KE home">
-          <img src="favicon.svg" alt="" width="28" height="28">
+          <img src="favicon.svg" alt="" width="28" height="28" decoding="async">
           <span><strong>3 PEDALS</strong><small>Account Workspace</small></span>
         </a>
         <div class="seller-nav-identity">

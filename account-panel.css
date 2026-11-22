@@ -952,6 +952,7 @@ html[data-theme="light"] .acc-toast-host {
   font-size: 12px;
   font-weight: 700;
   color: var(--ap-gold);
+  font-variant-numeric: tabular-nums;
 }
 
 #accDlg .ap-metric-row-3 {
@@ -966,6 +967,7 @@ html[data-theme="light"] .acc-toast-host {
   font-size: clamp(17px, 1.8vw, 22px);
   font-weight: 700;
   color: var(--ap-gold);
+  font-variant-numeric: tabular-nums;
   overflow-wrap: anywhere;
 }
 
@@ -1027,6 +1029,7 @@ html[data-theme="light"] .acc-toast-host {
   font-family: var(--ap-font-mono);
   font-weight: 700;
   font-size: 13px;
+  font-variant-numeric: tabular-nums;
 }
 
 #accDlg .ap-task-copy strong {
@@ -1054,6 +1057,10 @@ html[data-theme="light"] .acc-toast-host {
   border-top: 1px solid var(--ap-line);
 }
 
+#accDlg .ap-activity-row > div {
+  min-width: 0;
+}
+
 #accDlg .ap-activity-row:first-child {
   border-top: 0;
   padding-top: 0;
@@ -1067,8 +1074,10 @@ html[data-theme="light"] .acc-toast-host {
   width: 34px;
   height: 34px;
   border-radius: 9px;
-  display: grid;
-  place-items: center;
+  display: grid !important;
+  place-items: center !important;
+  line-height: 1;
+  flex-shrink: 0;
   background: var(--ap-gold-soft);
   color: var(--ap-gold);
   font-family: var(--ap-font-mono);
@@ -1095,18 +1104,23 @@ html[data-theme="light"] .acc-toast-host {
   display: block;
   font-size: 13px;
   color: var(--ap-ink-strong);
+  overflow-wrap: anywhere;
 }
 
-#accDlg .ap-activity-row span {
+#accDlg .ap-activity-row > div > span {
   display: block;
   font-size: 12px;
   color: var(--ap-mute);
+  overflow-wrap: anywhere;
 }
 
 #accDlg .ap-activity-row time {
+  justify-self: end;
+  text-align: right;
   font-size: 12px;
   color: var(--ap-mute);
   white-space: nowrap;
+  flex-shrink: 0;
   font-variant-numeric: tabular-nums;
 }
 
@@ -1698,11 +1712,21 @@ html[data-theme="light"] .acc-toast-host {
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 14px;
-  padding: 16px;
-  border-radius: 12px;
+  padding: 16px 18px;
+  border-radius: var(--ap-radius);
   background: var(--ap-gold-soft);
   border: 1px solid var(--ap-gold-border);
-  margin: 14px 0;
+  margin: 0 0 18px;
+}
+
+#accDlg .account-admin-tools h3 {
+  font-size: 16px;
+  margin: 0 0 4px;
+}
+
+#accDlg .account-admin-tools p.meta {
+  margin: 0;
+  max-width: 620px;
 }
 
 #accDlg .account-admin-button svg {
@@ -1711,6 +1735,33 @@ html[data-theme="light"] .acc-toast-host {
   fill: none;
   stroke: currentColor;
   stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+#accDlg #accountMenu button.account-nav-admin {
+  background: var(--ap-gold-soft);
+  border-color: var(--ap-gold-border);
+  color: var(--ap-gold);
+  font-weight: 700;
+}
+
+#accDlg #accountMenu button.account-nav-admin:hover {
+  background: var(--ap-gold-btn);
+  border-color: var(--ap-gold-border);
+  color: var(--ap-gold-ink);
+}
+
+#accDlg .account-nav-badge {
+  padding: 2px 7px;
+  border-radius: 6px;
+  font-family: var(--ap-font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: rgba(223, 184, 103, 0.18);
+  color: currentColor;
 }
 
 #accDlg .profile-grid,
@@ -2172,10 +2223,33 @@ html[data-theme="light"] .acc-toast-host {
     justify-self: start;
   }
   #accDlg .ap-activity-row {
-    grid-template-columns: 32px minmax(0, 1fr);
+    grid-template-columns: 34px minmax(0, 1fr);
   }
   #accDlg .ap-activity-row time {
     grid-column: 2;
+    justify-self: start;
+    text-align: left;
+  }
+  #accDlg .ap-tools-bar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+  #accDlg .ap-tools-bar input[type="search"],
+  #accDlg .ap-tools-bar select {
+    flex: none;
+    min-width: 0;
+    width: 100%;
+  }
+  #accDlg .tools-count {
+    margin-left: 0;
+  }
+  #accDlg .account-admin-tools {
+    align-items: stretch;
+  }
+  #accDlg .account-admin-button {
+    width: 100%;
+    justify-content: center;
   }
   #accDlg .account-sync-label,
   #accDlg #accHomeTop {
@@ -2183,6 +2257,23 @@ html[data-theme="light"] .acc-toast-host {
   }
   #accDlg :is(input, select, textarea) {
     font-size: 16px !important;
+  }
+  #accDlg :is(.ap-btn, .btn, .ap-seg-tab, .account-nav-btn, input:not([type="checkbox"]):not([type="radio"]), select),
+  #sellerEditListingDialog :is(input:not([type="checkbox"]):not([type="radio"]), select, .btn),
+  #accActionDlg :is(input, .ap-btn) {
+    min-height: 44px;
+  }
+  #accDlg #accMenuToggle,
+  #accDlg .ap-icon-close,
+  #accActionDlg .acc-action-x {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  .acc-toast-host {
+    left: 12px;
+    right: 12px;
+    width: auto;
+    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
   }
 
   /* Header mobile account pill alignment (outside dialog) */

@@ -170,7 +170,7 @@ nav:not(.account-sidebar).dock-active button,nav:not(.account-sidebar).dock-acti
 @media (prefers-reduced-motion:reduce){nav:not(.account-sidebar) button,nav:not(.account-sidebar) a.navlink,.account-pill,.account-icon,.account-icon span{transition:none!important;transform:none!important}}
 .nav-toggle{display:none;grid-area:nav-toggle;width:44px;height:44px;border:1px solid rgba(227,179,65,.3);border-radius:12px;background:rgba(255,255,255,.055);color:#fff;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,.16)}
 .nav-toggle svg{width:20px;height:20px}
-@media(max-width:980px){main{transition:filter .22s ease}body.nav-open main{filter:blur(8px)}}
+@media(max-width:980px){main{transition:opacity .18s ease}body.nav-open main{filter:none!important}}
 .hero{padding:54px 0 28px}.hero h1{font-size:clamp(42px,6vw,72px);max-width:13em;letter-spacing:-.015em}.hero h1::after{width:72px;height:4px;margin-top:18px;border-radius:99px}.hero p{font-size:17px;line-height:1.65;max-width:46em;margin-top:15px}
 .hero>div[style*="display:flex"]{gap:10px!important;margin-top:24px!important;align-items:center}
 .btn{min-height:44px;padding:11px 18px;border-radius:9px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;box-shadow:var(--shadow-sm);font-size:14px;font-weight:700;letter-spacing:.01em;transition:transform .16s ease,box-shadow .16s ease,background .16s ease,border-color .16s ease}
@@ -712,16 +712,16 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 }
 @media(max-width:380px){#authDlg>.in{padding-left:13px!important;padding-right:13px!important}#authDlg .in>h2{font-size:25px!important}}
 </style>
-<link rel="stylesheet" href="site-theme.css?v=20261122-card-matched">
+<link rel="stylesheet" href="site-theme.css?v=20261122-perf">
 <style id="account-restore-no-flash">html.account-restoring body{visibility:hidden!important;background:#0c0e12!important}html[data-theme="light"].account-restoring body{background:#f4efe4!important}html.account-restoring #accDlg[open]{visibility:visible!important}html.account-restoring #accDlg[open] #accBody{min-height:100px}#accDlg .account-refresh-status{display:none!important}</style>
 <script>try{if(sessionStorage.getItem("3pedals:account-open")==="1")document.documentElement.classList.add("account-restoring")}catch(_){}</script>
 <!-- Optional Meta Pixel is loaded by consent.js only after explicit acceptance. -->
 
 <link rel="stylesheet" href="/dashboard-glass.css?v=20261122-card-matched">
-<link rel="stylesheet" href="/index-theme.css?v=20261122-card-matched">
-<link rel="stylesheet" href="/account-panel.css?v=20261122-card-matched">
-<link rel="stylesheet" href="/site-ux.css?v=20261122-card-matched">
-<link rel="stylesheet" href="/header-modern.css?v=20261122-card-matched">
+<link rel="stylesheet" href="/index-theme.css?v=20261122-header-fix">
+<link rel="stylesheet" href="/account-panel.css?v=20261122-perf">
+<link rel="stylesheet" href="/site-ux.css?v=20261122-perf">
+<link rel="stylesheet" href="/header-modern.css?v=20261122-header-fix">
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
@@ -738,12 +738,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <nav id="nav" aria-label="Main navigation">
     <div class="account-pill" aria-label="Account"><span id="accountText">Not signed in</span><button id="accountOpen" aria-label="Open account" title="Account"></button></div>
     <button type="button" class="navlink" role="tab" data-tab="home" aria-selected="true" aria-label="Home">Home</button>
-    <button type="button" role="tab" data-tab="about" aria-selected="false">About Us</button>
+    <button type="button" class="navlink" role="tab" data-tab="about" aria-selected="false">About Us</button>
     <a class="navlink" href="/inventory.html">Buy a car</a>
     <a class="navlink" href="/garage.html">3 Pedals Garage</a>
     <a class="navlink" href="/chauffeur.html">Chauffeur Hire</a>
     <a class="navlink" href="/dealers.html">Dealers</a>
-    <button type="button" role="tab" data-tab="contact" aria-selected="false" class="nav-contact">Contact Us</button>
+    <button type="button" role="tab" data-tab="contact" aria-selected="false" class="navlink nav-contact">Contact Us</button>
   </nav>
 </div></header>
 <div class="demo" id="demoBar" hidden>Demo mode: these are sample cars. Accounts, listings and bookings switch on once the site is connected to its database (see SETUP.md).</div>
@@ -901,7 +901,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 /* Shared auth state is stored only on window to avoid lexical TDZ collisions. */
 window.authMode = window.authMode || "register";
 </script>
-<script src="account-panel.js?v=20261122-card-matched"></script>
+<script src="account-panel.js?v=20261122-perf"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
@@ -995,11 +995,11 @@ if(navDock){
   navDock.addEventListener("pointerleave",()=>navDock.classList.remove("dock-active"));
 }
 const navToggle=$("navToggle");
-function closeNav(){if(navToggle){navToggle.setAttribute("aria-expanded","false");navToggle.setAttribute("aria-label","Open navigation");$("nav").classList.remove("is-open");document.body.classList.remove("nav-open")}}
-if(navToggle){navToggle.onclick=()=>{const open=navToggle.getAttribute("aria-expanded")==="true";navToggle.setAttribute("aria-expanded",String(!open));navToggle.setAttribute("aria-label",open?"Open navigation":"Close navigation");$("nav").classList.toggle("is-open",!open);document.body.classList.toggle("nav-open",!open&&innerWidth<=980)}}
+function closeNav(){if(navToggle){navToggle.setAttribute("aria-expanded","false");navToggle.setAttribute("aria-label","Open navigation");$("nav").classList.remove("is-open","mobile-menu-open");document.body.classList.remove("nav-open")}}
+if(navToggle){navToggle.onclick=()=>{const open=navToggle.getAttribute("aria-expanded")==="true";navToggle.setAttribute("aria-expanded",String(!open));navToggle.setAttribute("aria-label",open?"Open navigation":"Close navigation");$("nav").classList.toggle("is-open",!open);document.body.classList.toggle("nav-open",!open&&innerWidth<=1023)}}
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeNav()});
-document.addEventListener("click",e=>{if(navToggle&&innerWidth<=980&&!$("nav").contains(e.target)&&!navToggle.contains(e.target))closeNav()});
-window.addEventListener("resize",()=>{if(innerWidth>980)closeNav()});
+document.addEventListener("click",e=>{if(navToggle&&innerWidth<=1023&&!$("nav").contains(e.target)&&!navToggle.contains(e.target))closeNav()});
+window.addEventListener("resize",()=>{if(innerWidth>=1024)closeNav()});
 let projectsSectionRequested=false,journalSectionRequested=false;
 function openCurrentInventory(fromAccount=false){
   if(fromAccount){try{sessionStorage.setItem("3pedals:account-open","1")}catch(_){}}
@@ -1230,9 +1230,9 @@ window.ThreePedalsAccountHost={
   rerenderInventory:()=>typeof render==="function"?render():undefined
 };
 </script>
-<script src="/account-listings-crud.js?v=20261121-sidepanel-fix"></script>
-<script src="/account-promotions.js?v=20261121-sidepanel-fix"></script>
-<script src="/account-workspace.js?v=20261121-sidepanel-fix"></script>
+<script src="/account-listings-crud.js?v=20261122-perf"></script>
+<script src="/account-promotions.js?v=20261122-perf"></script>
+<script src="/account-workspace.js?v=20261122-perf"></script>
 <script>
 async function getProjectsAdmin(){
   const {data,error}=await sb.from("projects").select("*").order("created_at",{ascending:false});
@@ -1931,6 +1931,6 @@ loadSiteSettings();
   }
 })();
 </script>
-<script src="/site-ux.js?v=20261122-card-matched"></script>
+<script defer src="/site-ux.js?v=20261122-perf"></script>
 </body>
 </html>

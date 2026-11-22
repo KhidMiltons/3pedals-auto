@@ -6,7 +6,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
-<link rel="preload" as="image" href="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72" fetchpriority="high">
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=60" media="(max-width: 760px)" fetchpriority="high">
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72" media="(min-width: 761px)" fetchpriority="high">
 <link rel="preconnect" href="https://dlejmelyeaaxcvelvzia.supabase.co" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <meta name="theme-color" content="#0d0d0d">
@@ -24,7 +25,8 @@
 <meta name="twitter:description" content="Explore cars for sale in Kenya on 3 Pedals Auto KE. View vehicle photos, prices, mileage, fuel details, and contact private sellers or car yards.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet"></noscript>
 <style>
 :root{--bg:#f7f5ef;--surface:#fff;--ink:#0d0d0d;--mute:#5e5848;--line:#e3dcc8;--blue:#946c00;--gold:#d4a017;--gold-ink:#0d0d0d;--alt:#0d0d0d;--alt-ink:#e3b341;--err:#b42318}
 @media(prefers-color-scheme:dark){:root{--bg:#0d0d0d;--surface:#1a1a1a;--ink:#f5f1e6;--mute:#a8a08a;--line:#333026;--blue:#e3b341;--gold:#e3b341;--gold-ink:#0d0d0d;--alt:#f5f1e6;--alt-ink:#0d0d0d;--err:#ff8a7a}}
@@ -73,7 +75,7 @@ input,select,textarea,.back{background:rgba(255,255,255,.055)!important;color:#f
 .input::placeholder{color:#aaa18e!important}input::placeholder{color:#aaa18e!important}.eyebrow{color:#c9b784!important}a{color:inherit}.logo,.brand,.price,.arrow{color:#c9b784!important}.status{background:rgba(55,112,72,.2)!important;color:#b7e0bf!important;border-color:rgba(128,194,143,.3)!important}.yard-label{background:rgba(201,183,132,.14)!important;color:#c9b784!important}footer{border-color:rgba(201,183,132,.18)!important;color:#aaa18e!important}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
 </style>
-<link rel="stylesheet" href="site-theme.css?v=20261122-card-matched">
+<link rel="stylesheet" href="site-theme.css?v=20261122-perf">
 <style id="vehicle-details-device-light-theme">
 @media(prefers-color-scheme:light){
   :root{color-scheme:light!important;--bg:#f3f1ec!important;--surface:rgba(251,250,247,.88)!important;--ink:#292820!important;--mute:#716d63!important;--line:rgba(91,82,63,.18)!important;--gold:#9a7a3e!important;--blue:#806638!important;--gold-ink:#211b10!important;--alt:#292820!important;--alt-ink:#f5f1e6!important}
@@ -324,8 +326,8 @@ html body>main.wrap{padding-top:48px!important}
 
 
 
-<link rel="stylesheet" href="/site-ux.css?v=20261122-card-matched">
-<link rel="stylesheet" href="/header-modern.css?v=20261122-card-matched">
+<link rel="stylesheet" href="/site-ux.css?v=20261122-perf">
+<link rel="stylesheet" href="/header-modern.css?v=20261122-header-fix">
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
@@ -341,7 +343,7 @@ html body>main.wrap{padding-top:48px!important}
 <footer class="ux-site-footer no-print"><div class="wrap">3 Pedals Auto KE · Prices in KES.</div></footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
-<script src="/site-ux.js?v=20261122-card-matched"></script>
+<script defer src="/site-ux.js?v=20261122-perf"></script>
 <script>
 const CFG=window.SB_CONFIG||{};
 const sb=(CFG.url&&!/^PASTE/.test(CFG.url)&&window.supabase)?window.supabase.createClient(CFG.url,CFG.key):null;
@@ -851,11 +853,13 @@ html body input,html body select,html body textarea{
   backdrop-filter:blur(12px)!important;
 }
 @media(max-width:760px){
-  html body:before{
+  html:not([data-theme="light"]) body:before{
     background-image:
       linear-gradient(180deg,rgba(8,9,11,.38),rgba(8,9,11,.50)),
-      url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72")!important;
+      url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=60")!important;
     background-position:center,58% center!important;
+    filter:none!important;
+    transform:none!important;
   }
 }
 @media(prefers-reduced-motion:reduce){
@@ -1019,6 +1023,11 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){f
 </style>
 <style id="vehicle-mobile-performance-override">
 @media(max-width:760px){
+  html:not([data-theme="light"]) body:before{
+    background:linear-gradient(180deg,rgba(5,6,8,.34),rgba(5,6,8,.48)),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=60") center/cover no-repeat!important;
+    filter:none!important;
+    transform:none!important;
+  }
   html:not([data-theme="light"]) body :is(.card,.panel,.dealer,.stat,.state,.info,.gallery,.seller,.specs,.spec,.note,.related-card,.vehicle-card,.vehicle-details,.details,.info-card,.spec-card){
     -webkit-backdrop-filter:none!important;
     backdrop-filter:none!important;
