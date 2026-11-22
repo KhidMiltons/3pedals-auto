@@ -1265,24 +1265,24 @@
               : "";
           const messageIndex = state.messages.indexOf(m);
           const actionButtons = m.isError ? "" : `
-            <div class="ux-chat-message-actions">
-              <button type="button" class="ux-chat-icon-btn" data-chat-action="copy" data-message-index="${messageIndex}" title="${getLang() === "sw" ? "Nakili ujumbe" : "Copy to clipboard"}" aria-label="${getLang() === "sw" ? "Nakili ujumbe" : "Copy to clipboard"}">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path></svg>
+            <div class="ux-chat-message-actions" style="display:flex!important;visibility:visible!important;opacity:1!important;align-items:center!important;justify-content:flex-end!important;gap:8px!important;flex-wrap:wrap!important;width:100%!important;margin-top:7px!important;position:relative!important;z-index:2!important;">
+              <button type="button" class="ux-chat-icon-btn" data-chat-action="copy" data-message-index="${messageIndex}" title="${getLang() === "sw" ? "Nakili ujumbe" : "Copy to clipboard"}" aria-label="${getLang() === "sw" ? "Nakili ujumbe" : "Copy to clipboard"}" style="display:inline-flex!important;visibility:visible!important;opacity:1!important;align-items:center!important;gap:5px!important;min-height:30px!important;padding:5px 9px!important;border:1px solid currentColor!important;border-radius:7px!important;background:transparent!important;color:inherit!important;font:600 11px/1.2 Manrope,system-ui,sans-serif!important;cursor:pointer!important;">
+                <svg viewBox="0 0 24 24" aria-hidden="true" style="display:block!important;width:15px!important;height:15px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.8!important;stroke-linecap:round!important;stroke-linejoin:round!important;"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path></svg>
                 <span>${getLang() === "sw" ? "Nakili" : "Copy"}</span>
               </button>
-              ${isUser ? `<button type="button" class="ux-chat-icon-btn" data-chat-action="edit" data-message-index="${messageIndex}" title="${getLang() === "sw" ? "Hariri swali hili" : "Edit this prompt"}" aria-label="${getLang() === "sw" ? "Hariri swali hili" : "Edit this prompt"}">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"></path></svg>
+              ${isUser ? `<button type="button" class="ux-chat-icon-btn" data-chat-action="edit" data-message-index="${messageIndex}" title="${getLang() === "sw" ? "Hariri swali hili" : "Edit this prompt"}" aria-label="${getLang() === "sw" ? "Hariri swali hili" : "Edit this prompt"}" style="display:inline-flex!important;visibility:visible!important;opacity:1!important;align-items:center!important;gap:5px!important;min-height:30px!important;padding:5px 9px!important;border:1px solid currentColor!important;border-radius:7px!important;background:transparent!important;color:inherit!important;font:600 11px/1.2 Manrope,system-ui,sans-serif!important;cursor:pointer!important;">
+                <svg viewBox="0 0 24 24" aria-hidden="true" style="display:block!important;width:15px!important;height:15px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.8!important;stroke-linecap:round!important;stroke-linejoin:round!important;"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"></path></svg>
                 <span>${getLang() === "sw" ? "Hariri" : "Edit"}</span>
               </button>` : ""}
             </div>`;
           return `
-            <div class="ux-chat-msg ${isUser ? "is-user" : m.isError ? "is-error" : "is-model"}">
+            <div class="ux-chat-msg ${isUser ? "is-user" : m.isError ? "is-error" : "is-model"}" style="display:flex!important;flex-direction:column!important;align-items:${isUser ? "flex-end" : "flex-start"}!important;width:100%!important;">
               <div class="ux-chat-bubble">
                 ${isUser ? `<p>${escapeHtml(m.text)}</p>` : formatChatMarkdown(m.text)}
                 ${sourcesHtml}
                 ${badge}
-                ${actionButtons}
               </div>
+              ${actionButtons}
             </div>
           `;
         })
