@@ -125,7 +125,11 @@ async function findOpenStreetMapPlaces(queryText, location) {
   // Extract the place name separately from the rest of the user's instructions.
   // This prevents phrases such as "show their names and map links" being sent to Nominatim.
   const explicitArea = rawQuery.match(/\b(?:in|near|around)\s+([a-z][a-z\s-]*?)(?=[,.!?]|$)/i)?.[1] || "";
+  // Stop the place-name capture before common follow-up instructions. Without
+  // this, "garages in Nairobi and show map links" is sent to the geocoder as
+  // "Nairobi and show map links", which can fail to resolve.
   const area = explicitArea
+    .split(/\b(?:and|with|show|find|list|give|include|display|provide|return|for|that|which)\b/i)[0]
     .replace(/\b(kenya|republic of kenya)\b/gi, "")
     .replace(/\s+/g, " ")
     .trim();
