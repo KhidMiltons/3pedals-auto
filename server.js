@@ -1,7 +1,6 @@
 import express from "express";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { GoogleGenAI } from "@google/genai";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -77,19 +76,6 @@ app.use((req, res, next) => {
   }
   next();
 });
-
-function getGenAiClient() {
-  const apiKey = (process.env.GEMINI_API_KEY || process.env.API_KEY || "").trim();
-  if (!apiKey) return null;
-  return new GoogleGenAI({
-    apiKey,
-    httpOptions: {
-      headers: {
-        "User-Agent": "aistudio-build",
-      },
-    },
-  });
-}
 
 const ROLE_INSTRUCTIONS = {
   buyer_advisor:
@@ -190,10 +176,10 @@ async function findOpenStreetMapPlaces(queryText, location) {
 }
 
 app.post("/api/chat", async (req, res) => {
-  const ai = getGenAiClient();
-  if (!ai) {
+  const apiKey = (process.env.GROQ_API_KEY || "").trim();
+  if (!apiKey) {
     return res.status(503).json({
-      error: "Gemini API key is not configured yet. Set GEMINI_API_KEY in Settings > Secrets.",
+      error: "Groq API key is not configured. Add GROQ_API_KEY in your Render environment variables.",
     });
   }
 
@@ -202,8 +188,8 @@ app.post("/api/chat", async (req, res) => {
     .filter((m) => m && typeof m.text === "string" && m.text.trim())
     .slice(-16)
     .map((m) => ({
-      role: m.role === "model" ? "model" : "user",
-      parts: [{ text: m.text.trim().slice(0, 4000) }],
+      role: m.role === "model" || m.role === "assistant" ? "assistant" : "user",
+      content: m.text.trim().slice(0, 4000),
     }));
 
   if (!cleanedHistory.length) {
@@ -211,7 +197,7 @@ app.post("/api/chat", async (req, res) => {
   }
 
   const lastUserMsg =
-    [...cleanedHistory].reverse().find((m) => m.role === "user")?.parts?.[0]?.text || "";
+    [...cleanedHistory].reverse().find((m) => m.role === "user")?.content || "";
   const requestedMode = String(req.body?.mode || "auto").toLowerCase();
   const roleKey = String(req.body?.role || "buyer_advisor");
   const lang = req.body?.lang === "sw" ? "sw" : "en";
@@ -227,51 +213,73 @@ app.post("/api/chat", async (req, res) => {
   if (effectiveMode === "auto") {
     effectiveMode = roleKey === "yard_locator" || shouldRouteToMaps(lastUserMsg) ? "maps" : "search";
   }
+
   let osmPlaces = [];
   if (effectiveMode === "maps") {
-    try { osmPlaces = await findOpenStreetMapPlaces(lastUserMsg, req.body?.location); }
-    catch (error) { console.warn("OpenStreetMap lookup failed:", error); }
+    try {
+      osmPlaces = await findOpenStreetMapPlaces(lastUserMsg, req.body?.location);
+    } catch (error) {
+      console.warn("OpenStreetMap lookup failed:", error);
+    }
     if (osmPlaces.length) {
       const last = cleanedHistory[cleanedHistory.length - 1];
-      if (last?.role === "user") last.parts[0].text += "\n\nOpenStreetMap place data (coverage may be incomplete; do not invent ratings or opening hours): " + JSON.stringify(osmPlaces);
+      if (last?.role === "user") {
+        last.content += "\n\nOpenStreetMap place data (coverage may be incomplete; do not invent ratings or opening hours): " + JSON.stringify(osmPlaces);
+      }
     }
   }
 
-  let model = "gemini-3.5-flash-lite";
-  const config = { systemInstruction };
+  const model = "openai/gpt-oss-120b";
+  const messages = [{ role: "system", content: systemInstruction }, ...cleanedHistory];
+  const requestBody = {
+    model,
+    messages,
+    temperature: 0.4,
+    max_completion_tokens: 1800,
+  };
 
-  if (effectiveMode === "fast") {
-    model = "gemini-3.5-flash-lite";
-  } else if (effectiveMode === "maps") {
-    model = "gemini-3.5-flash-lite";
-    config.tools = [{ googleSearch: {} }];
-  } else if (effectiveMode === "search") {
-    model = "gemini-3.5-flash-lite";
-    config.tools = [{ googleSearch: {} }];
+  // Groq's browser_search tool replaces Gemini/Google Search grounding for Search mode.
+  if (effectiveMode === "search" || effectiveMode === "maps") {
+    requestBody.tools = [{ type: "browser_search" }];
   }
 
   try {
-    const response = await ai.models.generateContent({
-      model,
-      contents: cleanedHistory,
-      config,
+    const groqResponse = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+      signal: AbortSignal.timeout(60000),
     });
 
-    const reply = (response.text || "").trim();
-    const rawChunks = response.candidates?.[0]?.groundingMetadata?.groundingChunks || [];
+    const payload = await groqResponse.json().catch(() => ({}));
+    if (!groqResponse.ok) {
+      const apiMessage = payload?.error?.message || payload?.message || `Groq API request failed (${groqResponse.status}).`;
+      const error = new Error(apiMessage);
+      error.status = groqResponse.status;
+      throw error;
+    }
+
+    const answer = payload?.choices?.[0]?.message;
+    const reply = String(answer?.content || "").trim();
     const groundingSources = [];
     const seenUris = new Set();
 
-    for (const chunk of rawChunks) {
-      if (chunk?.web?.uri && !seenUris.has(chunk.web.uri)) {
-        seenUris.add(chunk.web.uri);
+    for (const annotation of answer?.annotations || []) {
+      const citation = annotation?.url_citation || annotation?.urlCitation || annotation;
+      const uri = citation?.url || citation?.uri;
+      if (uri && !seenUris.has(uri)) {
+        seenUris.add(uri);
         groundingSources.push({
           type: "web",
-          title: chunk.web.title || chunk.web.uri,
-          uri: chunk.web.uri,
+          title: citation.title || uri,
+          uri,
         });
       }
     }
+
     if (effectiveMode === "maps") {
       for (const place of osmPlaces.slice(0, 8)) {
         if (place.mapUrl && !seenUris.has(place.mapUrl)) {
@@ -289,20 +297,13 @@ app.post("/api/chat", async (req, res) => {
     });
   } catch (err) {
     const status = Number(err?.status) || 500;
-    let message = err?.message || "Failed to generate response from Gemini.";
-    try {
-      const parsed = JSON.parse(message);
-      if (parsed?.error?.message) {
-        message = parsed.error.message;
-      }
-    } catch (_) {}
-    if (/api key not valid|api_key_invalid/i.test(message)) {
-      message =
-        "Gemini API key is invalid or not yet activated in Settings > Secrets (GEMINI_API_KEY).";
+    let message = err?.message || "Failed to generate response from Groq.";
+    if (/invalid_api_key|authentication|unauthorized/i.test(message)) {
+      message = "Groq API key was rejected. Check that GROQ_API_KEY in Render is correct and active.";
+    } else if (/rate_limit|rate limit|tokens per day|requests per day/i.test(message)) {
+      message = `Groq rate limit reached: ${message}`;
     }
-    res.status(status >= 400 && status < 600 ? status : 500).json({
-      error: message,
-    });
+    res.status(status >= 400 && status < 600 ? status : 500).json({ error: message });
   }
 });
 
