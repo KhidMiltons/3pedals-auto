@@ -287,7 +287,7 @@ async function findOpenStreetMapPlaces(queryText, location) {
           tags["addr:city"] || tags["addr:town"] || tags["addr:district"]
         ),
         category,
-        mapUrl: `https://www.openstreetmap.org/${encodeURIComponent(String(el.type || "node"))}/${encodeURIComponent(String(el.id || ""))}#map=19/${Number(el.lat ?? el.center?.lat)}/${Number(el.lon ?? el.center?.lon))}`,
+        mapUrl: `https://www.openstreetmap.org/${encodeURIComponent(String(el.type || "node"))}/${encodeURIComponent(String(el.id || ""))}#map=19/${Number(el.lat ?? el.center?.lat)}/${Number(el.lon ?? el.center?.lon)}`,
       };
     })
     .filter((p) => {
