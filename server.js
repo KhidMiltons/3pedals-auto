@@ -391,10 +391,26 @@ async function findOpenStreetMapPlaces(queryText, location) {
 
       for (const place of batch) {
         const roads = candidates
-          .filter((item) => item.tags.highway && item.tags.name)
-          .map((item) => ({ name: String(item.tags.name).trim(), distance: distanceMetres(place, item) }))
+          .filter((item) => {
+            const highway = String(item.tags.highway || "");
+            // Major controlled-access roads and junction features are poor
+            // neighbourhood references, even when they are the closest OSM way.
+            return item.tags.name &&
+              !/^(motorway|motorway_link|trunk|trunk_link|raceway|construction|proposed)$/i.test(highway) &&
+              String(item.tags.junction || "").toLowerCase() !== "roundabout";
+          })
+          .map((item) => ({
+            name: String(item.tags.name).trim(),
+            highway: String(item.tags.highway || ""),
+            distance: distanceMetres(place, item),
+          }))
           .filter((item) => item.name && item.distance <= 250)
-          .sort((a, b) => a.distance - b.distance);
+          .sort((a, b) => {
+            const localRoads = new Set(["residential", "living_street", "unclassified", "service", "tertiary", "tertiary_link", "secondary", "secondary_link"]);
+            const aScore = a.distance + (localRoads.has(a.highway) ? 0 : 80);
+            const bScore = b.distance + (localRoads.has(b.highway) ? 0 : 80);
+            return aScore - bScore;
+          });
         const areas = candidates
           .filter((item) => /^(neighbourhood|quarter)$/.test(String(item.tags.place || "")) && item.tags.name)
           .map((item) => ({
