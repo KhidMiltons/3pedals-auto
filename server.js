@@ -286,6 +286,8 @@ async function findOpenStreetMapPlaces(queryText, location) {
         address: (() => {
           // Prefer an explicit full address when the OSM mapper supplied one.
           const fullAddress = formatOsmAddressPart(tags["addr:full"]);
+          const postcode = formatOsmAddressPart(tags["addr:postcode"]);
+          const country = formatOsmAddressPart(tags["addr:country"]);
           const parts = fullAddress
             ? [fullAddress]
             : [
@@ -297,8 +299,11 @@ async function findOpenStreetMapPlaces(queryText, location) {
                 tags["addr:city"] || tags["addr:town"] || tags["addr:municipality"] || tags["addr:district"],
                 tags["addr:county"],
                 tags["addr:province"],
-                tags["addr:postcode"],
-                tags["addr:country"],
+                // Kenyan postal codes are five digits; discard malformed short values.
+                /^\\d{5}$/.test(postcode) ? postcode : "",
+                // OSM country values should be a country name or ISO alpha-2 code,
+                // never a numeric calling code such as 254.
+                /^[A-Za-z]{2}$/.test(country) || /^[A-Za-z][A-Za-z .'-]+$/.test(country) ? country : "",
               ].map(formatOsmAddressPart).filter(Boolean);
           return parts
             .map(formatOsmAddressPart)
