@@ -169,7 +169,7 @@ html:not([data-theme="light"]) body :is(.price, .vehicle-price, .amount, .brand,
   color: var(--p3-champagne);
 }
 
-html:not([data-theme="light"]) body a {
+html:not([data-theme="light"]) body a:not(.btn):not(.button):not(.gold-button):not(.primary):not(.btn-primary):not(.button-primary):not(.showroom-secondary) {
   color: #e0c37f;
 }
 

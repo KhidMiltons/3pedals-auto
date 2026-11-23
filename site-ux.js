@@ -222,7 +222,7 @@
     if (sellCta && !sellCta.dataset.origEn) sellCta.dataset.origEn = sellCta.textContent.trim();
 
     if (browseCta && browseCta.dataset.origEn) {
-      browseCta.textContent = code === "sw" ? "Tazama Magari" : browseCta.dataset.origEn;
+      browseCta.textContent = code === "sw" ? DICT.sw.carsForSale : browseCta.dataset.origEn;
     }
     if (sellCta && sellCta.dataset.origEn) {
       sellCta.textContent = code === "sw" ? "Uza Gari" : sellCta.dataset.origEn;
