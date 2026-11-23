@@ -764,8 +764,8 @@ app.post("/api/chat", async (req, res) => {
     }
 
     const finalReply = reply || "I could not generate a response for that request. Please try rephrasing.";
-    const hasInlineCitations = /【\\s*\\d+\\s*†[^】]*】/.test(finalReply);
-    const hasMarkdownSourceLinks = /\\[[^\\]]+\\]\\(https?:\\/\\/[^)]+\\)/i.test(finalReply);
+    const hasInlineCitations = /【\s*\d+\s*†[^】]*】/.test(finalReply);
+    const hasMarkdownSourceLinks = /\[[^\]]+\]\(https?:\/\/[^)]+\)/i.test(finalReply);
     const searchReply = effectiveMode === "search" && groundingSources.length === 0 && !hasInlineCitations && !hasMarkdownSourceLinks
       ? `${finalReply}\n\n**Source verification warning:** Search mode did not return source metadata, inline citations or clickable source links for this response. Treat specific rates, legal requirements, dates and numerical claims as unverified until checked against the relevant official authority.`
       : finalReply;
