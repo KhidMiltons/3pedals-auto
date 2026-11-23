@@ -769,20 +769,49 @@ app.post("/api/chat", async (req, res) => {
 
     const groundingSources = [];
     const seenUris = new Set();
+    const addGroundingSource = (candidate) => {
+      if (!candidate || typeof candidate !== "object") return;
+      const rawUri = candidate.url || candidate.uri || candidate.link;
+      if (typeof rawUri !== "string") return;
+      let parsed;
+      try { parsed = new URL(rawUri); } catch { return; }
+      if (!["http:", "https:"].includes(parsed.protocol) || seenUris.has(parsed.href)) return;
+      seenUris.add(parsed.href);
+      groundingSources.push({
+        type: "web",
+        title: String(candidate.title || candidate.name || parsed.hostname).slice(0, 240),
+        uri: parsed.href,
+      });
+    };
 
+    // Groq browser_search sources are returned under message.executed_tools,
+    // not necessarily message.annotations. Support both documented result shapes.
     for (const annotation of answer?.annotations || []) {
-      const citation = annotation?.url_citation || annotation?.urlCitation || annotation;
-      const uri = citation?.url || citation?.uri;
-      if (uri && !seenUris.has(uri)) {
-        seenUris.add(uri);
-        groundingSources.push({
-          type: "web",
-          title: citation.title || uri,
-          uri,
-        });
+      addGroundingSource(annotation?.url_citation || annotation?.urlCitation || annotation);
+    }
+    for (const executedTool of answer?.executed_tools || []) {
+      for (const result of executedTool?.search_results?.results || []) addGroundingSource(result);
+      for (const result of executedTool?.browser_results || []) addGroundingSource(result);
+      // Some API versions expose the search payload as JSON text in output.
+      if (typeof executedTool?.output === "string") {
+        try {
+          const parsedOutput = JSON.parse(executedTool.output);
+          const results = Array.isArray(parsedOutput) ? parsedOutput
+            : parsedOutput?.results || parsedOutput?.search_results?.results || parsedOutput?.browser_results || [];
+          for (const result of results) addGroundingSource(result);
+        } catch { /* Non-JSON tool output is not a structured source list. */ }
       }
     }
 
+    // Safe diagnostics: field names and counts only; never log source contents or prompts.
+    if (effectiveMode === "search") {
+      console.info("Groq browser-search source diagnostics:", {
+        annotationCount: Array.isArray(answer?.annotations) ? answer.annotations.length : 0,
+        executedToolCount: Array.isArray(answer?.executed_tools) ? answer.executed_tools.length : 0,
+        sourceCount: groundingSources.length,
+        executedToolFields: [...new Set((answer?.executed_tools || []).flatMap((item) => Object.keys(item || {})))],
+      });
+    }
     if (effectiveMode === "maps") {
       for (const place of osmPlaces.slice(0, 8)) {
         if (place.mapUrl && !seenUris.has(place.mapUrl)) {
@@ -793,11 +822,13 @@ app.post("/api/chat", async (req, res) => {
     }
 
     const finalReply = reply || "I could not generate a response for that request. Please try rephrasing.";
-    const hasInlineCitations = /【\s*\d+\s*†[^】]*】/.test(finalReply);
-    const hasMarkdownSourceLinks = /\[[^\]]+\]\(https?:\/\/[^)]+\)/i.test(finalReply);
+    const hasMarkdownSourceLinks = /\\[[^\\]]+\\]\\(https?:\\/\\/[^)]+\\)/i.test(finalReply);
+    const sourceList = groundingSources.length
+      ? "\\n\\n**Sources returned by browser search**\\n" + groundingSources.slice(0, 8).map((source) => `- [${source.title.replace(/[\\[\\]\\n]/g, "")}](${source.uri})`).join("\\n")
+      : "";
     const searchReply = effectiveMode === "search" && groundingSources.length === 0 && !hasMarkdownSourceLinks
-      ? `${finalReply}\n\n**Source verification warning:** Search mode did not return verifiable source metadata or clickable source links. Citation markers alone are not sufficient. Treat specific rates, legal requirements, dates and numerical claims as unverified until checked against the relevant official authority.`
-      : finalReply;
+      ? `${finalReply}\\n\\n**Source verification warning:** Browser search did not return extractable source URLs. Treat legal, tax, date and numerical claims as unverified; do not rely on citation markers alone.`
+      : `${finalReply}${sourceList}`;
 
     res.json({
       reply: searchReply,
