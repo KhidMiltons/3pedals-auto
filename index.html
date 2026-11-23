@@ -720,8 +720,8 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 <link rel="stylesheet" href="/dashboard-glass.css?v=20261122-card-matched">
 <link rel="stylesheet" href="/index-theme.css?v=20261123-fix8">
 <link rel="stylesheet" href="/account-panel.css?v=20261123-fix8">
-<link rel="stylesheet" href="/site-ux.css?v=20261123-fix11">
-<link rel="stylesheet" href="/header-modern.css?v=20261123-fix8">
+<link rel="stylesheet" href="/site-ux.css?v=20261123-fix12">
+<link rel="stylesheet" href="/header-modern.css?v=20261123-fix12">
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
@@ -966,11 +966,12 @@ async function loadSiteSettings(){
   siteSettings={...siteSettings,...data};renderAboutSettings();const digits=String(siteSettings.whatsapp_number||"").replace(/\D/g,"");
   const wa=`https://wa.me/${digits}`;const setHref=(id,url)=>{const a=$(id);if(a&&url)a.href=url};
   setHref("publicWhatsapp",wa);setHref("publicWhatsappFab",`${wa}?text=${encodeURIComponent("Hello 3 Pedals Auto KE")}`);setHref("publicWhatsappHero",`${wa}?text=${encodeURIComponent("Hello 3 Pedals Auto KE, I'd like to enquire.")}`);
-  setHref("publicEmailLink",`mailto:${siteSettings.contact_email||""}`);$("publicEmail").textContent=siteSettings.contact_email||"Email us";
-  $("publicAddress").textContent=siteSettings.postal_address||"Contact us for our address";
+  setHref("publicEmailLink",`mailto:${siteSettings.contact_email||""}`);
+  const pubEmail=$("publicEmail");if(pubEmail)pubEmail.textContent=siteSettings.contact_email||"Email us";
+  const pubAddr=$("publicAddress");if(pubAddr)pubAddr.textContent=siteSettings.postal_address||"Contact us for our address";
   const cleanFooterNote=String(siteSettings.footer_note||"").replace(/^\s*Prices in KES\.?\s*$/i,"").trim();
-  $("footerBrand").textContent=siteSettings.footer_brand||"";
-  $("footerNote").textContent=cleanFooterNote;
+  const footBrand=$("footerBrand");if(footBrand)footBrand.textContent=siteSettings.footer_brand||"";
+  const footNote=$("footerNote");if(footNote)footNote.textContent=cleanFooterNote;
   const noteWrap=$("footerNoteWrap");if(noteWrap)noteWrap.hidden=!cleanFooterNote;
   [["publicInstagram","instagram_url"],["publicFacebook","facebook_url"],["publicTwitter","twitter_url"],["publicTiktok","tiktok_url"]].forEach(([id,key])=>{const a=$(id),url=String(siteSettings[key]||"").trim();if(a){a.hidden=!url;if(url)a.href=url}});
 }
@@ -1934,6 +1935,6 @@ loadSiteSettings();
   }
 })();
 </script>
-<script defer src="/site-ux.js?v=20261123-fix11"></script>
+<script defer src="/site-ux.js?v=20261123-fix12"></script>
 </body>
 </html>

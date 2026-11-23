@@ -249,12 +249,11 @@ a{color:inherit}
 }
 </style>
 <link rel="stylesheet" href="/site-ux.css?v=20261123-fix8">
-<link rel="stylesheet" href="/header-modern.css?v=20261123-fix8">
+<link rel="stylesheet" href="/header-modern.css?v=20261123-fix12">
 </head>
 <body>
 <header class="head"><div class="wrap headin">
   <a class="brand" href="/" aria-label="3 Pedals Auto KE home">3 Pedals Auto KE</a>
-  <a class="back" href="/" aria-label="Return to the 3 Pedals Auto KE home page">← Home</a>
 </div></header>
 <div class="shell">
 <section class="hero"><div class="eyebrow">ARRIVE WITH CONFIDENCE</div><h1>Every journey,<br>beautifully driven.</h1><p>Book a chauffeur-driven vehicle for city travel, business, airport transfers and longer journeys. Choose your vehicle and preferred hire arrangement; our team will review your request and confirm the price before payment.</p></section>
@@ -665,28 +664,20 @@ html body .hero p{
 </style>
 <style id="chauffeur-mobile-performance-override">
 @media(max-width:760px){
-  html:not([data-theme="light"]) body>header,html:not([data-theme="light"]) body>header.head,html:not([data-theme="light"]) body>header .account-pill,
-  html:not([data-theme="light"]) body>header #chauffeurNav,html:not([data-theme="light"]) body>header #chauffeurNav.mobile-menu-open,
-  html:not([data-theme="light"]) body>header #chauffeurNav.is-open,html:not([data-theme="light"]) body .hero,html:not([data-theme="light"]) body .glass,
-  html:not([data-theme="light"]) body .vehicle,html:not([data-theme="light"]) body .booking,html:not([data-theme="light"]) body .account-box,
-  html:not([data-theme="light"]) body .service-card,html:not([data-theme="light"]) body .assurance-grid article,html:not([data-theme="light"]) body .steps-grid article,
-  html:not([data-theme="light"]) body .chauffeur-assurance,html:not([data-theme="light"]) body .route-preview,html:not([data-theme="light"]) body .trip-summary,
-  html:not([data-theme="light"]) body .admin-stat,html:not([data-theme="light"]) body .calendar-day,html:not([data-theme="light"]) body .notice,
-  html:not([data-theme="light"]) body input,html:not([data-theme="light"]) body select,html:not([data-theme="light"]) body textarea,
-  html:not([data-theme="light"]) body .ghost,html:not([data-theme="light"]) body>header .back,html:not([data-theme="light"]) body>header .nav-toggle{
+  html:not([data-theme="light"]) body :is(.hero,.glass,.vehicle,.booking,.account-box,
+  .service-card,.assurance-grid article,.steps-grid article,.chauffeur-assurance,
+  .route-preview,.trip-summary,.admin-stat,.calendar-day,.notice,
+  input,select,textarea,.ghost){
     -webkit-backdrop-filter:none!important;
     backdrop-filter:none!important;
   }
-  html:not([data-theme="light"]) body .hero,html:not([data-theme="light"]) body .glass,html:not([data-theme="light"]) body .vehicle,html:not([data-theme="light"]) body .booking,
-  html:not([data-theme="light"]) body .account-box,html:not([data-theme="light"]) body .service-card,html:not([data-theme="light"]) body .assurance-grid article,
-  html:not([data-theme="light"]) body .steps-grid article,html:not([data-theme="light"]) body .chauffeur-assurance,
-  html:not([data-theme="light"]) body .admin-stat,html:not([data-theme="light"]) body .calendar-day{
+  html:not([data-theme="light"]) body :is(.hero,.glass,.vehicle,.booking,.account-box,
+  .service-card,.assurance-grid article,.steps-grid article,.chauffeur-assurance,
+  .admin-stat,.calendar-day){
     background:rgba(18,20,23,.92)!important;
     background-color:rgba(18,20,23,.92)!important;
   }
-  html:not([data-theme="light"]) body>header,html:not([data-theme="light"]) body>header.head,html:not([data-theme="light"]) body>header #chauffeurNav,
-  html:not([data-theme="light"]) body input,html:not([data-theme="light"]) body select,html:not([data-theme="light"]) body textarea,
-  html:not([data-theme="light"]) body .ghost,html:not([data-theme="light"]) body>header .back,html:not([data-theme="light"]) body>header .nav-toggle{
+  html:not([data-theme="light"]) body :is(input,select,textarea,.ghost){
     background:rgba(26,28,32,.94)!important;
     background-color:rgba(26,28,32,.94)!important;
   }

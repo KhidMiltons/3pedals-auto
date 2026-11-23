@@ -869,7 +869,7 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
   display: none !important;
 }
 
-/* 5. Responsive Mobile & Tablet Header (Anchored at top:0) + Compact Drawer (< 1024px) */
+/* 5. Responsive Mobile & Tablet Floating Frosted-Glass Header (< 1024px) */
 @media (max-width: 1023px) {
   html[data-ux="1"][data-theme][lang] {
     height: auto !important;
@@ -890,7 +890,7 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     overflow-y: visible !important;
     scroll-snap-type: none !important;
     overscroll-behavior-y: auto !important;
-    padding-top: calc(56px + env(safe-area-inset-top, 0px)) !important;
+    padding-top: calc(70px + env(safe-area-inset-top, 0px)) !important;
   }
 
   html[data-ux="1"][data-theme][lang] body:not(:has(#app)) > main.wrap,
@@ -899,7 +899,7 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     box-sizing: border-box !important;
     width: 100% !important;
     max-width: 100% !important;
-    padding-top: 12px !important;
+    padding-top: 8px !important;
     padding-left: 14px !important;
     padding-right: 14px !important;
     margin-top: 0 !important;
@@ -917,26 +917,40 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
   html[data-ux="1"][data-theme][lang] body > header.site-header,
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top {
     position: fixed !important;
-    top: 0 !important;
+    top: max(10px, env(safe-area-inset-top, 10px)) !important;
     left: 0 !important;
     right: 0 !important;
     z-index: 1200 !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    min-height: calc(54px + env(safe-area-inset-top, 0px)) !important;
-    margin: 0 !important;
-    padding: env(safe-area-inset-top, 0px) 0 0 0 !important;
-    border-radius: 0 !important;
-    border-top: 0 !important;
-    border-left: 0 !important;
-    border-right: 0 !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.14) !important;
-    background: rgba(18, 18, 20, 0.88) !important;
-    background-color: rgba(18, 18, 20, 0.88) !important;
-    background-image: none !important;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.34) !important;
-    -webkit-backdrop-filter: blur(18px) saturate(140%) !important;
-    backdrop-filter: blur(18px) saturate(140%) !important;
+    width: calc(100% - 28px) !important;
+    max-width: none !important;
+    min-height: 52px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    border-radius: 16px !important;
+    border: 1px solid rgba(255, 255, 255, 0.24) !important;
+    background: rgba(24, 27, 32, 0.28) !important;
+    background-color: rgba(24, 27, 32, 0.28) !important;
+    background-image: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.16),
+      rgba(255, 255, 255, 0.04) 44%,
+      rgba(215, 189, 131, 0.09)
+    ) !important;
+    box-shadow:
+      0 10px 28px rgba(0, 0, 0, 0.16),
+      inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(145%) !important;
+    backdrop-filter: blur(20px) saturate(145%) !important;
+  }
+
+  @media (max-width: 640px) {
+    html[data-ux="1"][data-theme][lang] body > header,
+    html[data-ux="1"][data-theme][lang] body > header.head,
+    html[data-ux="1"][data-theme][lang] body > header.top,
+    html[data-ux="1"][data-theme][lang] body > header.site-header,
+    html[data-ux="1"][data-theme][lang] body > .wrap > header.top {
+      width: calc(100% - 24px) !important;
+    }
   }
 
   html[data-ux="1"][data-theme="light"][lang] body > header,
@@ -944,20 +958,22 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
   html[data-ux="1"][data-theme="light"][lang] body > header.top,
   html[data-ux="1"][data-theme="light"][lang] body > header.site-header,
   html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top {
-    background: rgba(253, 250, 243, 0.94) !important;
-    background-color: rgba(253, 250, 243, 0.94) !important;
-    background-image: none !important;
-    border-bottom: 1px solid rgba(138, 114, 62, 0.26) !important;
-    box-shadow: 0 8px 24px rgba(48, 38, 18, 0.12) !important;
+    background: linear-gradient(135deg, rgba(255, 253, 248, 0.84), rgba(248, 242, 230, 0.78)) !important;
+    background-color: rgba(255, 253, 248, 0.82) !important;
+    background-image: linear-gradient(135deg, rgba(255, 253, 248, 0.84), rgba(248, 242, 230, 0.78)) !important;
+    border: 1px solid rgba(138, 114, 62, 0.28) !important;
+    box-shadow:
+      0 10px 26px rgba(48, 38, 18, 0.10),
+      inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
   }
 
   html[data-ux="1"][data-theme][lang] body > header > .wrap,
   html[data-ux="1"][data-theme][lang] body > header > .headin,
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top {
-    min-height: 54px !important;
-    padding: 6px 14px !important;
+    min-height: 52px !important;
+    padding: 6px 12px !important;
     gap: 8px !important;
-    border-radius: 0 !important;
+    border-radius: 16px !important;
   }
 
   html[data-ux="1"][data-theme][lang] body > header :is(.logo, .brand),
@@ -1026,16 +1042,17 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
   html[data-ux="1"][data-theme][lang] body > header :is(#navToggle, #garageNavToggle, .ux-mobile-subtoggle),
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-mobile-subtoggle {
     display: inline-flex !important;
+    background: rgba(255, 255, 255, 0.12) !important;
   }
 
-  /* Compact, sleek frosted floating menu card anchored top-right */
+  /* Compact, sleek frosted floating menu card aligned to floating header */
   html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links),
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links {
     display: none !important;
     box-sizing: border-box !important;
     position: absolute !important;
-    top: calc(100% + 6px) !important;
-    right: 10px !important;
+    top: calc(100% + 8px) !important;
+    right: 0 !important;
     left: auto !important;
     bottom: auto !important;
     z-index: 1250 !important;
@@ -1050,15 +1067,15 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     overflow-y: auto !important;
     padding: 5px !important;
     gap: 1px !important;
-    border-radius: 12px !important;
-    border: 1px solid rgba(255, 255, 255, 0.20) !important;
-    background: rgba(18, 20, 23, 0.96) !important;
-    background-color: rgba(18, 20, 23, 0.96) !important;
+    border-radius: 14px !important;
+    border: 1px solid rgba(255, 255, 255, 0.24) !important;
+    background: rgba(24, 27, 32, 0.78) !important;
+    background-color: rgba(24, 27, 32, 0.78) !important;
     box-shadow:
-      0 18px 42px rgba(0, 0, 0, 0.56),
-      inset 0 1px 0 rgba(255, 255, 255, 0.14) !important;
-    -webkit-backdrop-filter: blur(22px) saturate(140%) !important;
-    backdrop-filter: blur(22px) saturate(140%) !important;
+      0 16px 38px rgba(0, 0, 0, 0.36),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(145%) !important;
+    backdrop-filter: blur(22px) saturate(145%) !important;
     opacity: 1 !important;
     visibility: visible !important;
     transform: none !important;
@@ -1066,11 +1083,11 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
 
   html[data-ux="1"][data-theme="light"][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links),
   html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top nav.ux-subnav-links {
-    background: rgba(253, 250, 243, 0.98) !important;
-    background-color: rgba(253, 250, 243, 0.98) !important;
+    background: rgba(253, 250, 243, 0.96) !important;
+    background-color: rgba(253, 250, 243, 0.96) !important;
     border-color: rgba(138, 114, 62, 0.34) !important;
     box-shadow:
-      0 16px 38px rgba(48, 38, 18, 0.22),
+      0 16px 38px rgba(48, 38, 18, 0.20),
       inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
   }
 

@@ -634,12 +634,20 @@
       const temp = document.createElement("div");
       temp.innerHTML = existingLegal;
       const brandSpan = temp.querySelector("#footerBrand");
+      const noteWrap = temp.querySelector("#footerNoteWrap");
       const noteSpan = temp.querySelector("#footerNote");
-      if (brandSpan || noteSpan) {
+      if (brandSpan || noteSpan || noteWrap) {
         const b = brandSpan ? brandSpan.outerHTML : '<span id="footerBrand">3 Pedals Auto KE</span>';
         const noteText = (noteSpan?.textContent || "").replace(/^\s*Prices in KES\.?\s*$/i, "").trim();
         if (noteSpan) noteSpan.textContent = noteText;
-        brandHtml = noteText ? `${b} · ${noteSpan.outerHTML}` : b;
+        if (noteWrap) {
+          noteWrap.hidden = !noteText;
+          brandHtml = `${b}${noteWrap.outerHTML}`;
+        } else if (noteSpan) {
+          brandHtml = `${b}<span id="footerNoteWrap"${noteText ? "" : " hidden"}> · ${noteSpan.outerHTML}</span>`;
+        } else {
+          brandHtml = b;
+        }
       } else {
         temp.querySelectorAll(".legal-footer-links, a, button, br").forEach((el) => el.remove());
         const cleanText = temp.textContent
