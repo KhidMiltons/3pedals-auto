@@ -85,6 +85,7 @@ const FAST_MODE_INSTRUCTIONS = [
   "Do not invent or assume common faults, rust patterns, component lifespans, mileage thresholds, maintenance schedules, parts prices, or service costs. Distinguish routine wear items from documented model-specific defects. If a model-specific weakness is not supported by evidence in the conversation, do not attribute it to that model.",
   "Do not provide precise or narrow numerical claims for Kenyan used-car prices, maintenance costs, component life, or real-world fuel consumption without evidence. Do not label any fuel-economy figure WLTP, NEDC, JC08, EPA, or another test cycle unless that cycle is documented for the exact market and variant in the conversation. If no basis is available, say a dependable figure cannot be established in Fast mode.",
   "Do not use labels such as 'confirmed fact', 'verified', 'manufacturer-backed', 'factory data', 'official', or 'based on owner reports' unless the supporting source is present in the conversation and directly supports that claim. Do not imply that a claim is verified merely because it sounds plausible or is commonly repeated online.",
+  "For general used-car inspection advice, give qualitative checks only unless a source for the exact vehicle or current Kenyan rule is available. Never invent mileage thresholds, component wear limits, brake-disc thickness limits, tyre legal limits, service intervals, repair prices, or failure-after-X-kilometres claims. State that brake/disc wear must be compared with the manufacturer's minimum specification and that tyre legal limits must be checked against current Kenyan requirements; do not supply a universal number. Do not present MOT stickers, KRA clearance certificates, import declarations, or any named document as universally required for every private used-car sale. Distinguish identity/ownership checks from import-tax paperwork, and advise verifying the applicable documents and transfer process through NTSA/KRA or a qualified professional before payment.",
   "When correcting a previous answer, independently reassess each claim. Do not automatically accept a user's correction and do not replace one unsupported precise claim with another. Explicitly withdraw unsupported claims and preserve uncertainty.",
   "Check model-year and vehicle-age calculations against the current date. Keep the response concise and practical. For current Kenyan legal, tax, import, registration, safety requirements, or live market prices, explain that Fast mode cannot verify them and recommend Search mode for current official-source research."
 ].join(" ");
@@ -112,6 +113,52 @@ function shouldUseFastVehicleSafetyFallback(text) {
   const asksVehicleSpecs =
     /\b(engine code|engine type|timing (?:chain|belt|system)|fuel (?:economy|consumption)|consumption|fuel efficiency|horsepower|\bhp\b|\bkw\b|transmission|gearbox|generation|chassis|specifications?|maintenance (?:cost|interval|concern)|common faults|used[- ]car price|market price|compare|comparison)\b/i.test(value);
   return hasModelYear && asksVehicleSpecs;
+}
+
+function shouldUseFastInspectionSafetyFallback(text) {
+  const value = String(text || "");
+  const asksInspectionAdvice =
+    /\b(inspect|inspection|checklist|pre[- ]purchase|what should i check|what should i look for)\b/i.test(value);
+  const aboutUsedCar =
+    /\b(used[- ]car|second[- ]hand car|buying a car|buy a car|before buying|before i buy)\b/i.test(value);
+  return asksInspectionAdvice && aboutUsedCar;
+}
+
+function buildFastInspectionSafetyReply(lang) {
+  if (lang === "sw") {
+    return [
+      "**Orodha ya ukaguzi wa gari lililotumika**",
+      "",
+      "- **Umiliki na nyaraka:** linganisha VIN/chassis na namba ya injini kwenye gari na nyaraka. Thibitisha mmiliki na uhamisho kupitia njia rasmi za NTSA kabla ya kulipa. Nyaraka za uagizaji hutegemea historia ya gari; usidhani kila gari linahitaji hati zilezile.",
+      "- **Mwili na chassis:** tafuta mapengo yasiyo sawa, rangi isiyolingana, welds, filler, dalili za ajali na kutu, hasa chini ya gari na sehemu za kubeba mzigo.",
+      "- **Injini na fluids:** sikiliza cold start, angalia moshi usio wa kawaida, uvujaji wa mafuta au coolant, na dalili za kuchanganyika kwa fluids. Usihitimishe hali ya timing chain/belt kwa kuangalia sehemu inayoonekana pekee.",
+      "- **Cooling system:** kagua radiator, hoses, coolant na dalili za overheating. Fundi athibitishe mfumo wa feni na thermostat kulingana na muundo wa gari.",
+      "- **Gearbox na clutch:** jaribu gia zote na uangalie kuchelewa, kuteleza, vibration, grinding au sauti zisizo za kawaida.",
+      "- **Brakes, steering na suspension:** angalia pulling, vibration, clunks, leaks na braking isiyo sawa. Fundi alinganishe brake/disc wear na kiwango cha mtengenezaji; usitumie kipimo kimoja kwa magari yote.",
+      "- **Tyres na umeme:** tafuta uchakavu usio sawa, nyufa na bulges; jaribu taa, AC, madirisha, locks na dashboard warnings.",
+      "- **Test drive na mileage:** endesha kwenye mazingira tofauti inapowezekana. Linganisha odometer na service records na hali ya gari; mileage pekee si uthibitisho.",
+      "",
+      "**Kabla ya kusaini au kulipa:** pata ukaguzi huru wa fundi, andika kasoro na pata makadirio ya maandishi ya gharama za matengenezo. Thibitisha mahitaji ya sasa ya kisheria na nyaraka husika kupitia NTSA/KRA; Fast mode haiwezi kuthibitisha sheria au viwango vya sasa.",
+      "",
+      "Usitumie namba za jumla za unene wa brake discs, kina cha tyre, mileage ya hitilafu au gharama za matengenezo bila specification ya gari au chanzo cha sasa."
+    ].join("\n\n");
+  }
+  return [
+    "**Used-car inspection checklist**",
+    "",
+    "- **Ownership and documents:** match the VIN/chassis and engine number on the vehicle to its documents. Verify the seller's ownership and the official NTSA transfer process before paying. Import paperwork depends on the vehicle's history; do not assume the same documents apply to every sale.",
+    "- **Body and chassis:** look for uneven panel gaps, mismatched paint, welds, filler, signs of collision repair and corrosion, especially underneath and around structural mounting points.",
+    "- **Engine and fluids:** listen to a cold start; check for unusual smoke, oil or coolant leaks, and signs of fluid contamination. Do not infer timing-chain or belt condition from a visible glance alone.",
+    "- **Cooling system:** inspect the radiator, hoses, coolant and signs of overheating. Have a mechanic check fan and thermostat operation for that vehicle.",
+    "- **Transmission and clutch:** test all gears and watch for delayed engagement, slipping, shudder, grinding or abnormal noises.",
+    "- **Brakes, steering and suspension:** check for pulling, vibration, clunks, leaks and uneven braking. Have a mechanic compare disc/pad wear with the manufacturer's specification; there is no single disc-thickness limit for every car.",
+    "- **Tyres and electrical systems:** look for uneven wear, cracks and bulges; test lights, air conditioning, windows, locks and dashboard warnings.",
+    "- **Test drive and mileage:** drive in varied conditions where safe. Compare the odometer with service records and the vehicle's condition; mileage alone is not proof.",
+    "",
+    "**Before signing or paying:** arrange an independent mechanical inspection, document defects and obtain written repair estimates. Verify the current legal requirements and applicable paperwork through NTSA/KRA; Fast mode cannot confirm current rules.",
+    "",
+    "Do not rely on universal brake-disc thickness, tyre-depth, failure-mileage or repair-cost figures without the exact vehicle specification or a current source."
+  ].join("\n\n");
 }
 
 function buildFastVehicleSafetyReply(lang) {
@@ -612,6 +659,17 @@ app.post("/api/chat", async (req, res) => {
   if (requestedMode === "fast" && shouldUseFastVehicleSafetyFallback(lastUserMsg)) {
     return res.json({
       reply: buildFastVehicleSafetyReply(lang),
+      model: "3 Pedals Auto safety check",
+      groundingMode: "fast",
+      groundingSources: [],
+    });
+  }
+
+  // General used-car inspection questions receive a conservative checklist.
+  // This prevents unsupported universal wear limits, mileage thresholds and legal-document claims.
+  if (requestedMode === "fast" && shouldUseFastInspectionSafetyFallback(lastUserMsg)) {
+    return res.json({
+      reply: buildFastInspectionSafetyReply(lang),
       model: "3 Pedals Auto safety check",
       groundingMode: "fast",
       groundingSources: [],
