@@ -520,7 +520,9 @@ app.post("/api/chat", async (req, res) => {
     lang === "sw"
       ? " Respond primarily in natural Kenyan Swahili (keeping automotive model names and KES currency clear) unless the user writes purely in English."
       : "";
-  const modeInstruction = requestedMode === "fast" ? FAST_MODE_INSTRUCTIONS : "";\n  const currentDate = new Date().toLocaleDateString("en-CA", { timeZone: "Africa/Nairobi" });\n  const systemInstruction = `${baseInstruction}${langInstruction} Current date in Kenya: ${currentDate}. ${modeInstruction}`;
+  const modeInstruction = requestedMode === "fast" ? FAST_MODE_INSTRUCTIONS : "";
+  const currentDate = new Date().toLocaleDateString("en-CA", { timeZone: "Africa/Nairobi" });
+  const systemInstruction = `${baseInstruction}${langInstruction} Current date in Kenya: ${currentDate}. ${modeInstruction}`;
 
   let effectiveMode = requestedMode;
   if (effectiveMode === "auto") {
