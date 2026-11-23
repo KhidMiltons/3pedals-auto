@@ -121,7 +121,14 @@ const SEARCH_MODE_INSTRUCTIONS = [
   "Before finishing, check that every requested section has been answered, the response is not cut off, and all figures and documents have supporting sources. Prefer a concise complete answer over a long answer that ends mid-sentence.",
   "Search response length control: answer the exact question first. Normally use no more than 4 short sections and about 6-10 concise bullets total. Avoid repeating the same rule in the summary, explanation and conclusion. Do not add generic background, lengthy introductions, duplicated caveats, or an unsolicited checklist. Include only the most relevant verified sources, grouped beside the claims they support.",
   "For a broad or multi-part request, prioritize all essential answers over exhaustive detail: state the confirmed rule, its scope/effective date, the key exception or conflict, and the practical next step. Put unresolved details in a brief 'Not verified' note rather than expanding into speculative explanation. Never omit a requested part merely to meet a length target.",
-  "Do not create extra numbered sections beyond those needed to answer the user's request. End with a complete sentence; if evidence is insufficient, say what could not be verified instead of filling space."
+  "Do not create extra numbered sections beyond those needed to answer the user's request. End with a complete sentence; if evidence is insufficient, say what could not be verified instead of filling space.",
+  "Correction priority for legal/import answers: do not present an unresolved point as a binding rule. Use the labels \"Confirmed by the source checked\", \"Not established by the source checked\" and \"Requires confirmation\" where appropriate. A lack of evidence is not a legal exemption or proof that an obligation does not apply.",
+  "RHD rule: state the ordinary passenger-car RHD requirement only to the extent the current applicable official source supports it. Do not list diplomatic, ambulance, hearse, special-purpose or other exemptions unless a final, currently effective official provision explicitly exempts that exact class from the RHD requirement. If the evidence is only a draft, say it is a draft and do not describe the exemption as current law. Never contradict this distinction in the summary.",
+  "Destination inspection: never conclude that a used motor vehicle is exempt from destination inspection merely because a general-goods manual excludes motor vehicles. Never conclude that a valid PVoC certificate automatically removes all destination inspection, or that a missing/invalid certificate requires a new PVoC, unless a current vehicle-specific KEBS rule explicitly says so. If no vehicle-specific rule establishes the process for the vehicle origin and certificate status, state that the destination-inspection position and next procedure are not established by the source checked and require written confirmation from KEBS.",
+  "Tax bases and order: report each levy rate separately from its tax base. For every rate, identify the exact applicable statutory/KRA provision supporting the base and calculation order. Do not infer CIF/customs value, VAT-inclusive bases, or a formula from a rate table or a source that merely lists percentages. If a base or order is not explicitly supported, mark that element not verified and do not calculate a total import-tax figure.",
+  "Import documents: preserve the exact scope and qualifying words in KRA lists, including \"including but not limited to\". Do not say that a document is not required for customs merely because another authority uses it after clearance, and do not say a list is exhaustive unless the official source says it is. Separate documents expressly listed by KRA, documents required by KEBS for conformity assessment, and documents required by NTSA for registration; if the legal stage or necessity is unclear, mark it for confirmation rather than reclassifying it.",
+  "Source integrity: do not invent or normalize source titles, dates, version numbers, quoted text, line references, links or legal effect. Include a publication/effective date only when visible on the actual official source. Link directly to the exact official page or document actually checked. If you cannot provide a verifiable clickable official link for a material claim, do not present that claim as confirmed. Never use a bare citation token as a substitute for a source link.",
+  "Consistency check before sending: compare the main answer, table, comments/conflicts and summary. Remove any contradiction—for example, never call an exemption both binding and draft-only. Do not claim \"no conflict\" or \"no newer guidance\" unless current official sources were actually checked. If the response is long, shorten it without dropping any requested question, and ensure the final sentence and every table row are complete."
 ].join(" ");
 
 const ROLE_INSTRUCTIONS = {
@@ -733,6 +740,9 @@ app.post("/api/chat", async (req, res) => {
   // Groq's browser_search tool replaces Gemini/Google Search grounding for Search mode.
   if (effectiveMode === "search") {
     requestBody.tools = [{ type: "browser_search" }];
+    // Search mode is explicitly a research mode: require the browser tool to run.
+    requestBody.tool_choice = "required";
+    requestBody.citation_options = "enabled";
   }
 
   try {
@@ -805,8 +815,8 @@ app.post("/api/chat", async (req, res) => {
     const finalReply = reply || "I could not generate a response for that request. Please try rephrasing.";
     const hasInlineCitations = /【\s*\d+\s*†[^】]*】/.test(finalReply);
     const hasMarkdownSourceLinks = /\[[^\]]+\]\(https?:\/\/[^)]+\)/i.test(finalReply);
-    const searchReply = effectiveMode === "search" && groundingSources.length === 0 && !hasInlineCitations && !hasMarkdownSourceLinks
-      ? `${finalReply}\n\n**Source verification warning:** Search mode did not return source metadata, inline citations or clickable source links for this response. Treat specific rates, legal requirements, dates and numerical claims as unverified until checked against the relevant official authority.`
+    const searchReply = effectiveMode === "search" && groundingSources.length === 0 && !hasMarkdownSourceLinks
+      ? `${finalReply}\n\n**Source verification warning:** Search mode did not return verifiable source metadata or clickable source links. Citation markers alone are not sufficient. Treat specific rates, legal requirements, dates and numerical claims as unverified until checked against the relevant official authority.`
       : finalReply;
 
     res.json({
