@@ -110,8 +110,6 @@ function formatOsmAddressPart(value) {
     .join(" ");
 }
 
-let nominatimReverseQueue = Promise.resolve();
-
 async function findOpenStreetMapPlaces(queryText, location) {
   const userLat = Number(location?.latitude);
   const userLng = Number(location?.longitude);
@@ -314,15 +312,15 @@ async function findOpenStreetMapPlaces(queryText, location) {
     })
     .slice(0, 30);
 
-  // Resolve missing OSM addresses into a street first, then a locality/ward.
+  // Resolve missing OSM addresses only from distance-checked nearby OSM objects.
   // These are approximate nearby map references, never business-verified addresses.
   const reverseGeocodeCache = findOpenStreetMapPlaces.reverseGeocodeCache ||
     (findOpenStreetMapPlaces.reverseGeocodeCache = new Map());
   const missingAddresses = places.filter((place) => !place.address || !place.hasAddressLocality);
 
-  // First enrich missing addresses directly from OpenStreetMap's road and place objects.
-  // This avoids relying solely on third-party reverse-geocoding services, which may
-  // throttle or omit street/locality fields. Returned references remain approximate.
+  // Enrich missing addresses only from nearby OpenStreetMap road and place objects.
+  // Reverse-geocoder fallbacks are excluded because they do not pass the same explicit
+  // distance and road-type checks. Returned references remain approximate.
   if (missingAddresses.length) {
     // Keep Overpass requests small. A single query containing many around()
     // selectors can overwhelm public instances and return HTTP 504.
@@ -346,8 +344,8 @@ async function findOpenStreetMapPlaces(queryText, location) {
         const lat = place.lat.toFixed(6);
         const lon = place.lon.toFixed(6);
         return [
-          `way["highway"]["name"](around:600,${lat},${lon});`,
-          `nwr["place"~"^(neighbourhood|suburb|quarter)$"]["name"](around:1800,${lat},${lon});`,
+          `way["highway"]["name"](around:250,${lat},${lon});`,
+          `nwr["place"~"^(neighbourhood|quarter)$"]["name"](around:350,${lat},${lon});`,
         ];
       });
       const nearbyQuery = `[out:json][timeout:10];(${selectors.join("")});out center tags;`;
@@ -433,84 +431,7 @@ async function findOpenStreetMapPlaces(queryText, location) {
     }
   }
 
-  for (let i = 0; i < missingAddresses.length; i += 4) {
-    await Promise.all(missingAddresses.slice(i, i + 4).map(async (place) => {
-      // Keep cache entries specific enough that adjacent businesses do not
-      // inherit one another's street/locality labels.
-      const key = String(place.lat.toFixed(5)) + "," + String(place.lon.toFixed(5));
-      if (reverseGeocodeCache.has(key)) {
-        const cached = reverseGeocodeCache.get(key) || {};
-        place.nearbyStreet = place.nearbyStreet || cached.nearbyStreet || "";
-        place.nearbyArea = place.nearbyArea || cached.nearbyArea || "";
-        return;
-      }
 
-      // Keep direct nearby-OSM matches; reverse geocoders only fill gaps.
-      let nearbyStreet = place.nearbyStreet || "";
-      let nearbyArea = place.nearbyArea || "";
-      try {
-        const url = new URL("https://photon.komoot.io/reverse/");
-        url.search = new URLSearchParams({ lat: String(place.lat), lon: String(place.lon), lang: "en" });
-        const response = await fetch(url, {
-          headers: { "User-Agent": "3PedalsAutoKE/1.0 (https://3pedalsauto.co.ke)" },
-          signal: AbortSignal.timeout(6000),
-        });
-        if (response.ok) {
-          const props = (await response.json())?.features?.[0]?.properties || {};
-          // Use Photon only for a nearby street. Its locality fields can resolve
-          // to distant administrative places, so nearby areas must come from
-          // distance-checked OSM neighbourhood/suburb objects below.
-          nearbyStreet = nearbyStreet || String(props.street || "").trim();
-        }
-      } catch (error) {
-        console.warn("Photon reverse geocoding unavailable:", error?.message || error);
-      }
-
-      // Nominatim is a secondary source when Photon cannot identify a street
-      // or when a street-only OSM address still needs locality context. Serialize
-      // requests across concurrent searches to respect the public usage policy.
-      if (!nearbyStreet || !nearbyArea) {
-        const nominatimTask = nominatimReverseQueue.then(async () => {
-          try {
-            const url = new URL("https://nominatim.openstreetmap.org/reverse");
-            url.search = new URLSearchParams({
-              format: "jsonv2",
-              lat: String(place.lat),
-              lon: String(place.lon),
-              zoom: "18",
-              addressdetails: "1",
-            });
-            const response = await fetch(url, {
-              headers: {
-                "User-Agent": "3PedalsAutoKE/1.0 (https://3pedalsauto.co.ke)",
-                Accept: "application/json",
-              },
-              signal: AbortSignal.timeout(6000),
-            });
-            if (response.ok) {
-              const address = (await response.json())?.address || {};
-              nearbyStreet = nearbyStreet || String(address.road || address.pedestrian || address.residential || address.footway || "").trim();
-              // Do not use reverse-geocoder city/town/district values as a nearby
-              // neighbourhood. Area labels are accepted only from nearby OSM place
-              // objects whose mapped coordinates pass the distance check above.
-            }
-          } catch (error) {
-            console.warn("Nominatim reverse geocoding unavailable:", error?.message || error);
-          }
-          await new Promise((resolve) => setTimeout(resolve, 1100));
-        });
-        nominatimReverseQueue = nominatimTask.then(() => undefined, () => undefined);
-        await nominatimTask;
-      }
-
-      const result = {
-        nearbyStreet: place.nearbyStreet || nearbyStreet || "",
-        nearbyArea: place.nearbyArea || nearbyArea || "",
-      };
-      Object.assign(place, result);
-      reverseGeocodeCache.set(key, result);
-    }));
-  }
   return places;
 }
 
