@@ -296,7 +296,7 @@ async function findOpenStreetMapPlaces(queryText, location) {
         lon: Number(el.lon ?? el.center?.lon),
         address: (() => {
           // Prefer an explicit full address when the OSM mapper supplied one.
-          const fullAddress = formatOsmAddressPart(tags["addr:full"]);
+          const fullAddress = formatOsmAddressPart(tags["addr:full"]).replace(/\bP\.?\s*O\.?\s*Box\b[^,]*/i, "").replace(/\s*,\s*,/g, ",").replace(/^[,\s]+|[,\s]+$/g, "");
           const postcode = formatOsmAddressPart(tags["addr:postcode"]);
           const country = formatOsmAddressPart(tags["addr:country"]);
           const parts = (fullAddress
@@ -310,18 +310,19 @@ async function findOpenStreetMapPlaces(queryText, location) {
                 tags["addr:city"] || tags["addr:town"] || tags["addr:municipality"] || tags["addr:district"],
                 tags["addr:county"],
                 tags["addr:province"],
-                /^\\d{5}$/.test(postcode) ? postcode : "",
+                /^\d{5}$/.test(postcode) ? postcode : "",
                 /^[A-Za-z]{2}$/.test(country) || /^[A-Za-z][A-Za-z .'-]+$/.test(country) ? country : "",
               ])
             .map(formatOsmAddressPart)
             .filter(Boolean)
             // Postal-box text is contact/mailing information, not a street address.
-            .filter((part) => !/\\bP\\.?\\s*O\\.?\\s*Box\\b/i.test(part));
+            .filter((part) => !/\bP\.?\s*O\.?\s*Box\b/i.test(part));
           return parts.reduce((clean, part) => {
-            const normalized = part.toLowerCase().replace(/[^a-z0-9]/g, "");
+            const normalizeAddress = (value) => value.toLowerCase().replace(/\\brd\\b/g, "road").replace(/\\bst\\b/g, "street").replace(/[^a-z0-9]/g, "");
+            const normalized = normalizeAddress(part);
             if (!normalized) return clean;
             const overlaps = clean.some((existing) => {
-              const prior = existing.toLowerCase().replace(/[^a-z0-9]/g, "");
+              const prior = normalizeAddress(existing);
               return prior === normalized || prior.includes(normalized) || normalized.includes(prior);
             });
             if (!overlaps) clean.push(part);
