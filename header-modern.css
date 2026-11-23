@@ -48,6 +48,33 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top {
   transition: border-color 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease !important;
 }
 
+/* Desktop horizontal width parity: Header, Hero, Card grids, and Footer align edge-to-edge */
+@media (min-width: 1024px) {
+  html[data-ux="1"][data-theme][lang] body:not(:has(#app)) > main.wrap,
+  html[data-ux="1"][data-theme][lang] body:not(:has(#app)) > .shell,
+  html[data-ux="1"][data-theme][lang] body:not(:has(#app)) > .wrap {
+    box-sizing: border-box !important;
+    width: min(1132px, calc(100% - 48px)) !important;
+    max-width: 1132px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body:not(:has(#app)) > main.wrap > #home,
+  html[data-ux="1"][data-theme][lang] body:not(:has(#app)) > main.wrap > #home > .home-with-quote,
+  html[data-ux="1"][data-theme][lang] body:not(:has(#app)) > main.wrap > #home > .home-with-quote > div {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body:not(:has(#app)) > footer .ux-footer-inner {
+    width: min(1132px, calc(100% - 48px)) !important;
+    max-width: 1132px !important;
+  }
+}
+
 @media (min-width: 1280px) {
   html[data-ux="1"][data-theme][lang] body > header,
   html[data-ux="1"][data-theme][lang] body > header.head,
@@ -56,6 +83,18 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top {
     width: min(1232px, calc(100% - 48px)) !important;
     max-width: 1232px !important;
     margin: 16px auto 14px !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body:not(:has(#app)) > main.wrap,
+  html[data-ux="1"][data-theme][lang] body:not(:has(#app)) > .shell,
+  html[data-ux="1"][data-theme][lang] body:not(:has(#app)) > .wrap {
+    width: min(1232px, calc(100% - 48px)) !important;
+    max-width: 1232px !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body:not(:has(#app)) > footer .ux-footer-inner {
+    width: min(1232px, calc(100% - 48px)) !important;
+    max-width: 1232px !important;
   }
 }
 
@@ -783,23 +822,74 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
   display: none !important;
 }
 
-/* 5. Responsive Mobile & Tablet Drawer (< 1024px) */
+/* 5. Responsive Mobile & Tablet Header (Anchored at top:0) + Compact Drawer (< 1024px) */
 @media (max-width: 1023px) {
+  html[data-ux="1"][data-theme][lang] {
+    height: auto !important;
+    max-height: none !important;
+    min-height: 100dvh !important;
+    padding-top: 0 !important;
+    overflow-x: clip !important;
+    overflow-y: visible !important;
+    scroll-snap-type: none !important;
+    overscroll-behavior-y: auto !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body:not(:has(#app)) {
+    height: auto !important;
+    max-height: none !important;
+    min-height: 100dvh !important;
+    overflow-x: clip !important;
+    overflow-y: visible !important;
+    scroll-snap-type: none !important;
+    overscroll-behavior-y: auto !important;
+    padding-top: calc(56px + env(safe-area-inset-top, 0px)) !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body:not(:has(#app)) > main.wrap,
+  html[data-ux="1"][data-theme][lang] body:not(:has(#app)) > .shell,
+  html[data-ux="1"][data-theme][lang] body:not(:has(#app)) > .wrap {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-top: 12px !important;
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+    margin-top: 0 !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body:not(:has(#app)) #home .hero {
+    margin-top: 4px !important;
+    margin-bottom: 18px !important;
+    padding: 28px 18px 24px !important;
+  }
+
   html[data-ux="1"][data-theme][lang] body > header,
   html[data-ux="1"][data-theme][lang] body > header.head,
   html[data-ux="1"][data-theme][lang] body > header.top,
-  html[data-ux="1"][data-theme][lang] body > header.site-header {
-    width: calc(100% - 32px) !important;
-    top: max(10px, env(safe-area-inset-top, 10px)) !important;
-    margin: 10px auto 8px !important;
-    min-height: 54px !important;
-    border-radius: 15px !important;
-    background: rgba(18, 20, 23, 0.88) !important;
-    background-color: rgba(18, 20, 23, 0.88) !important;
-    border-color: rgba(255, 255, 255, 0.20) !important;
-    box-shadow:
-      0 12px 30px rgba(0, 0, 0, 0.34),
-      inset 0 1px 0 rgba(255, 255, 255, 0.14) !important;
+  html[data-ux="1"][data-theme][lang] body > header.site-header,
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 1200 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: calc(54px + env(safe-area-inset-top, 0px)) !important;
+    margin: 0 !important;
+    padding: env(safe-area-inset-top, 0px) 0 0 0 !important;
+    border-radius: 0 !important;
+    border-top: 0 !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14) !important;
+    background: rgba(18, 18, 20, 0.88) !important;
+    background-color: rgba(18, 18, 20, 0.88) !important;
+    background-image: none !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.34) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(140%) !important;
+    backdrop-filter: blur(18px) saturate(140%) !important;
   }
 
   html[data-ux="1"][data-theme="light"][lang] body > header,
@@ -809,19 +899,18 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
   html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top {
     background: rgba(253, 250, 243, 0.94) !important;
     background-color: rgba(253, 250, 243, 0.94) !important;
-    border-color: rgba(138, 114, 62, 0.30) !important;
-    box-shadow:
-      0 12px 28px rgba(48, 38, 18, 0.12),
-      inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+    background-image: none !important;
+    border-bottom: 1px solid rgba(138, 114, 62, 0.26) !important;
+    box-shadow: 0 8px 24px rgba(48, 38, 18, 0.12) !important;
   }
 
   html[data-ux="1"][data-theme][lang] body > header > .wrap,
   html[data-ux="1"][data-theme][lang] body > header > .headin,
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top {
     min-height: 54px !important;
-    padding: 6px 12px !important;
+    padding: 6px 14px !important;
     gap: 8px !important;
-    border-radius: 15px !important;
+    border-radius: 0 !important;
   }
 
   html[data-ux="1"][data-theme][lang] body > header :is(.logo, .brand),
@@ -841,7 +930,7 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     border-radius: 6px !important;
   }
 
-  /* Hide header utility toggles behind hamburger drawer on < 1024px */
+  /* Hide desktop utility toggles behind hamburger drawer on < 1024px */
   html[data-ux="1"][data-theme][lang] body > header .ux-header-controls-desktop,
   html[data-ux="1"][data-theme][lang] body > header .ux-header-right .ux-controls,
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-header-right .ux-controls {
@@ -872,13 +961,14 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     display: inline-flex !important;
   }
 
-  /* Card-Matched Frosted Mobile Drawer */
+  /* Compact, sleek frosted floating menu card anchored top-right */
   html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links),
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links {
     display: none !important;
+    box-sizing: border-box !important;
     position: absolute !important;
-    top: calc(100% + 8px) !important;
-    right: 0 !important;
+    top: calc(100% + 6px) !important;
+    right: 10px !important;
     left: auto !important;
     bottom: auto !important;
     z-index: 1250 !important;
@@ -886,19 +976,19 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     align-items: stretch !important;
     justify-content: flex-start !important;
     flex-wrap: nowrap !important;
-    width: min(320px, 100%) !important;
-    max-width: 100% !important;
-    max-height: min(76dvh, 540px) !important;
+    width: min(226px, calc(100vw - 20px)) !important;
+    max-width: calc(100vw - 20px) !important;
+    max-height: min(72dvh, 410px) !important;
     overflow-x: hidden !important;
     overflow-y: auto !important;
-    padding: 10px !important;
-    gap: 4px !important;
-    border-radius: 16px !important;
-    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+    padding: 6px !important;
+    gap: 2px !important;
+    border-radius: 14px !important;
+    border: 1px solid rgba(255, 255, 255, 0.20) !important;
     background: rgba(18, 20, 23, 0.96) !important;
     background-color: rgba(18, 20, 23, 0.96) !important;
     box-shadow:
-      0 22px 54px rgba(0, 0, 0, 0.62),
+      0 18px 42px rgba(0, 0, 0, 0.56),
       inset 0 1px 0 rgba(255, 255, 255, 0.14) !important;
     -webkit-backdrop-filter: blur(22px) saturate(140%) !important;
     backdrop-filter: blur(22px) saturate(140%) !important;
@@ -913,25 +1003,25 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     background-color: rgba(253, 250, 243, 0.98) !important;
     border-color: rgba(138, 114, 62, 0.34) !important;
     box-shadow:
-      0 20px 48px rgba(48, 38, 18, 0.22),
+      0 16px 38px rgba(48, 38, 18, 0.22),
       inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
   }
 
   html[data-ux="1"][data-theme][lang] body > header :is(nav#nav.is-open, nav#nav.mobile-menu-open, nav#garageSectionNav.is-open, nav.ux-subnav-links.is-open),
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links.is-open {
     display: flex !important;
-    animation: uxDrawerIn 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    animation: uxDrawerIn 0.16s cubic-bezier(0.16, 1, 0.3, 1) !important;
   }
 
   html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) > :is(button, a.navlink, a.ux-subnav-link),
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links > a.ux-subnav-link {
     width: 100% !important;
     height: auto !important;
-    min-height: 44px !important;
+    min-height: 36px !important;
     justify-content: flex-start !important;
-    padding: 10px 14px !important;
+    padding: 7px 11px !important;
     border: 1px solid transparent !important;
-    border-radius: 12px !important;
+    border-radius: 9px !important;
     background: transparent !important;
     background-color: transparent !important;
     background-image: none !important;
@@ -939,15 +1029,15 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
     text-shadow: none !important;
-    font-size: 14.5px !important;
+    font-size: 13px !important;
     font-weight: 500 !important;
   }
 
   html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) > :is(button[aria-selected="true"], a[aria-current="page"]),
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links > a[aria-current="page"] {
-    background: rgba(229, 185, 111, 0.16) !important;
-    background-color: rgba(229, 185, 111, 0.16) !important;
-    border-color: rgba(229, 185, 111, 0.32) !important;
+    background: rgba(229, 185, 111, 0.14) !important;
+    background-color: rgba(229, 185, 111, 0.14) !important;
+    border-color: rgba(229, 185, 111, 0.30) !important;
     color: #E5B96F !important;
     font-weight: 600 !important;
   }
@@ -972,8 +1062,8 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     justify-content: space-between !important;
     width: 100% !important;
     box-sizing: border-box !important;
-    margin-top: 6px !important;
-    padding: 10px 4px 2px !important;
+    margin-top: 4px !important;
+    padding: 7px 2px 2px !important;
     border-top: 1px solid rgba(255, 255, 255, 0.14) !important;
   }
 
@@ -987,17 +1077,19 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     align-items: center !important;
     justify-content: space-between !important;
     width: 100% !important;
-    gap: 8px !important;
+    min-width: 0 !important;
+    gap: 6px !important;
   }
 
   html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) .ux-drawer-controls .ux-theme-btn {
     width: auto !important;
     flex: 0 0 auto !important;
     min-width: 0 !important;
-    padding: 0 12px !important;
-    height: 36px !important;
-    min-height: 36px !important;
-    font-size: 12px !important;
+    padding: 0 9px !important;
+    height: 30px !important;
+    min-height: 30px !important;
+    font-size: 11.5px !important;
+    border-radius: 8px !important;
     justify-content: center !important;
   }
 
@@ -1009,39 +1101,31 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     display: inline-flex !important;
     width: auto !important;
     flex: 0 0 auto !important;
-    height: 36px !important;
-    min-height: 36px !important;
-    padding: 3px !important;
-    border-radius: 12px !important;
+    height: 30px !important;
+    min-height: 30px !important;
+    padding: 2px !important;
+    border-radius: 8px !important;
   }
 
   html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) .ux-drawer-controls .ux-lang-switch button {
     width: auto !important;
     flex: 0 0 auto !important;
-    min-width: 31px !important;
-    height: 28px !important;
-    min-height: 28px !important;
-    padding: 0 9px !important;
-    font-size: 11px !important;
+    min-width: 28px !important;
+    height: 24px !important;
+    min-height: 24px !important;
+    padding: 0 7px !important;
+    font-size: 10.5px !important;
     justify-content: center !important;
-    border-radius: 9px !important;
+    border-radius: 6px !important;
   }
 }
 
 @media (max-width: 640px) {
-  html[data-ux="1"][data-theme][lang] body > header,
-  html[data-ux="1"][data-theme][lang] body > header.head,
-  html[data-ux="1"][data-theme][lang] body > header.top,
-  html[data-ux="1"][data-theme][lang] body > header.site-header {
-    width: calc(100% - 24px) !important;
-  }
-
-  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links),
-  html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links {
-    left: 0 !important;
-    right: 0 !important;
-    width: 100% !important;
-    max-width: 100% !important;
+  html[data-ux="1"][data-theme][lang] body:not(:has(#app)) > main.wrap,
+  html[data-ux="1"][data-theme][lang] body:not(:has(#app)) > .shell,
+  html[data-ux="1"][data-theme][lang] body:not(:has(#app)) > .wrap {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
   }
 }
 

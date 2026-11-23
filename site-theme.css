@@ -71,6 +71,7 @@ main {
 }
 
 main.wrap {
+  width: 100%;
   padding-bottom: clamp(28px, 5vw, 64px);
 }
 
