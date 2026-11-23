@@ -215,7 +215,7 @@ async function findOpenStreetMapPlaces(queryText, location) {
   // Keep the Overpass query focused: broad name searches and a 20 km radius
   // make public instances time out, especially around dense urban areas.
   const around = `around:12000,${center.lat},${center.lon}`;
-  const query = `[out:json][timeout:12];(nwr["shop"="car_repair"](${around});nwr["craft"="car_repair"](${around});nwr["amenity"="vehicle_inspection"](${around});nwr["shop"="car"](${around});nwr["amenity"="fuel"](${around});nwr["shop"="tyres"](${around});nwr["shop"="car_parts"](${around});nwr["shop"="motorcycle"](${around});nwr["shop"="vehicle"](${around}););out center tags 60;`;
+  const query = `[out:json][timeout:12];(nwr["shop"="car_repair"](${around});nwr["craft"="car_repair"](${around});nwr["amenity"="vehicle_inspection"](${around});nwr["shop"="car"](${around});nwr["amenity"="fuel"](${around});nwr["shop"="tyres"](${around});nwr["shop"="car_parts"](${around});nwr["shop"="motorcycle"](${around});nwr["shop"="vehicle"](${around}););out center tags 120;`;
   let data = null;
   let lastError = null;
   // Prefer the Africa-focused extract, then use independent global instances.
@@ -299,7 +299,7 @@ async function findOpenStreetMapPlaces(queryText, location) {
           const fullAddress = formatOsmAddressPart(tags["addr:full"]);
           const postcode = formatOsmAddressPart(tags["addr:postcode"]);
           const country = formatOsmAddressPart(tags["addr:country"]);
-          const parts = fullAddress
+          const parts = (fullAddress
             ? [fullAddress]
             : [
                 tags["addr:housenumber"],
@@ -310,17 +310,23 @@ async function findOpenStreetMapPlaces(queryText, location) {
                 tags["addr:city"] || tags["addr:town"] || tags["addr:municipality"] || tags["addr:district"],
                 tags["addr:county"],
                 tags["addr:province"],
-                // Kenyan postal codes are five digits; discard malformed short values.
                 /^\\d{5}$/.test(postcode) ? postcode : "",
-                // OSM country values should be a country name or ISO alpha-2 code,
-                // never a numeric calling code such as 254.
                 /^[A-Za-z]{2}$/.test(country) || /^[A-Za-z][A-Za-z .'-]+$/.test(country) ? country : "",
-              ].map(formatOsmAddressPart).filter(Boolean);
-          return parts
+              ])
             .map(formatOsmAddressPart)
             .filter(Boolean)
-            .filter((part, index, all) => all.findIndex((item) => item.toLowerCase() === part.toLowerCase()) === index)
-            .join(", ");
+            // Postal-box text is contact/mailing information, not a street address.
+            .filter((part) => !/\\bP\\.?\\s*O\\.?\\s*Box\\b/i.test(part));
+          return parts.reduce((clean, part) => {
+            const normalized = part.toLowerCase().replace(/[^a-z0-9]/g, "");
+            if (!normalized) return clean;
+            const overlaps = clean.some((existing) => {
+              const prior = existing.toLowerCase().replace(/[^a-z0-9]/g, "");
+              return prior === normalized || prior.includes(normalized) || normalized.includes(prior);
+            });
+            if (!overlaps) clean.push(part);
+            return clean;
+          }, []).join(", ");
         })(),
         hasAddressLocality: Boolean(
           tags["addr:suburb"] || tags["addr:neighbourhood"] ||
@@ -339,8 +345,24 @@ async function findOpenStreetMapPlaces(queryText, location) {
       if (seen.has(key)) return false;
       seen.add(key);
       return true;
-    })
-    .slice(0, 30);
+    });
+
+  // Balance the visible sample across OSM categories instead of allowing one
+  // common category (often fuel stations) to occupy every result slot.
+  const categoryBuckets = new Map();
+  for (const place of places) {
+    if (!categoryBuckets.has(place.category)) categoryBuckets.set(place.category, []);
+    categoryBuckets.get(place.category).push(place);
+  }
+  const balancedPlaces = [];
+  const categoryQueues = [...categoryBuckets.values()];
+  while (balancedPlaces.length < 30 && categoryQueues.some((queue) => queue.length)) {
+    for (const queue of categoryQueues) {
+      if (queue.length && balancedPlaces.length < 30) balancedPlaces.push(queue.shift());
+    }
+  }
+  places.length = 0;
+  places.push(...balancedPlaces);
 
   // Resolve missing OSM addresses only from distance-checked nearby OSM objects.
   // These are approximate nearby map references, never business-verified addresses.
