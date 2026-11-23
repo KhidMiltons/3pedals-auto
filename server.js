@@ -736,8 +736,29 @@ app.post("/api/chat", async (req, res) => {
       throw error;
     }
 
-    const answer = payload?.choices?.[0]?.message;
+    const choice = payload?.choices?.[0];
+    const answer = choice?.message;
     const reply = String(answer?.content || "").trim();
+
+    // Log response metadata only. Never log prompts, generated content or API credentials.
+    const usage = payload?.usage || {};
+    console.info("Groq completion diagnostics:", {
+      mode: effectiveMode,
+      finishReason: choice?.finish_reason || "not provided",
+      promptTokens: usage.prompt_tokens ?? null,
+      completionTokens: usage.completion_tokens ?? null,
+      totalTokens: usage.total_tokens ?? null,
+      hasToolCalls: Array.isArray(answer?.tool_calls) && answer.tool_calls.length > 0,
+      hasContent: Boolean(reply),
+    });
+
+    if (choice?.finish_reason === "length") {
+      console.warn("Groq completion stopped at the configured token limit.", {
+        mode: effectiveMode,
+        completionTokens: usage.completion_tokens ?? null,
+      });
+    }
+
     const groundingSources = [];
     const seenUris = new Set();
 
