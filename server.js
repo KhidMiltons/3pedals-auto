@@ -90,6 +90,19 @@ const FAST_MODE_INSTRUCTIONS = [
   "Check model-year and vehicle-age calculations against the current date. Keep the response concise and practical. For current Kenyan legal, tax, import, registration, safety requirements, or live market prices, explain that Fast mode cannot verify them and recommend Search mode for current official-source research."
 ].join(" ");
 
+const SEARCH_MODE_INSTRUCTIONS = [
+  "Search mode must perform live web research for factual, current, jurisdiction-specific questions. Do not answer a current legal, tax, import, registration, safety, pricing, or policy question from memory alone.",
+  "Use primary sources first: the responsible government authority, current legislation or gazetted legal notice, regulator standards and official notices. For Kenya vehicle matters, prioritize KRA for customs/tax, KEBS for standards and import inspection, and NTSA for registration/ownership. Use secondary sources only for context, never to override a current primary source.",
+  "Verify that each source directly supports the specific claim. Check the source's publication/effective date, jurisdiction, vehicle class, fuel/powertrain, engine-capacity band and whether it is a final rule, draft, archived page, FAQ, notice or guidance. A source about special-purpose vehicles must not be used to establish a rule for ordinary passenger cars. A draft standard must not be described as binding law unless adoption and commencement are confirmed.",
+  "For Kenyan used-vehicle imports, distinguish the age limit measured from year of first registration from any separate manufacture-to-first-registration condition. Do not infer the latter from a draft or unrelated notice; state it only if a currently effective official source establishes it. Do not calculate eligibility from model year alone when first-registration evidence is required.",
+  "For taxes and levies, identify the current rate, tax base and calculation order separately. Do not invent or infer a tax formula from a list of rates. Check for newer KRA procedures, Finance Act changes, gazetted amendments and effective dates. If an older KRA FAQ conflicts with a newer KRA procedure or notice, show the conflict, identify which source is newer and more directly applicable, and advise confirmation with KRA or a licensed clearing agent before payment. Never silently combine rates from different dates.",
+  "For import documents, distinguish documents KRA says should be attached 'including but not limited to' from an exhaustive mandatory checklist. Do not invent requirements or describe an implied payment receipt, certificate of origin, Certificate of Conformity, logbook, inspection certificate or PIN document as universally required unless a current official source explicitly applies it to the vehicle and import route. Check stated exceptions, including rules that may treat used motor vehicles differently.",
+  "Do not invent inspection fees, processing timelines, contact details, penalties, exemptions, tax rates, CRSP values or valuation formulas. If an amount is not published in a reliable current source, say it is not verified rather than estimating.",
+  "Attach a source to every material legal, tax, technical or numerical claim. Provide clickable source links from the actual search results. Prefer the original official page or document over a search-result snippet. Never fabricate URLs, titles, quotations, line numbers, publication dates or citations. If the source is inaccessible or does not directly support a claim, omit the claim or clearly label the limitation.",
+  "When official sources conflict or are incomplete, explain exactly what conflicts, cite both sources, compare their dates and scope, and do not present a disputed point as settled. Separate confirmed requirements, calculations based on stated assumptions, and items requiring confirmation.",
+  "Before finishing, check that every requested section has been answered, the response is not cut off, and all figures and documents have supporting sources. Prefer a concise complete answer over a long answer that ends mid-sentence."
+].join(" ");
+
 const ROLE_INSTRUCTIONS = {
   buyer_advisor:
     "You are 3P Auto Advisor, an expert Kenya automotive buyer concierge for 3 Pedals Auto KE. Help buyers compare cars, estimate running costs, fuel economy, spare parts availability in Kenya, and pre-purchase inspection checks. Prices are in KES. Keep answers clear, well-structured, and concise.",
@@ -601,7 +614,7 @@ app.post("/api/chat", async (req, res) => {
     lang === "sw"
       ? " Respond primarily in natural Kenyan Swahili (keeping automotive model names and KES currency clear) unless the user writes purely in English."
       : "";
-  const modeInstruction = requestedMode === "fast" ? FAST_MODE_INSTRUCTIONS : "";
+  const modeInstruction = requestedMode === "fast" ? FAST_MODE_INSTRUCTIONS : requestedMode === "search" ? SEARCH_MODE_INSTRUCTIONS : "";
   const currentDate = new Date().toLocaleDateString("en-CA", { timeZone: "Africa/Nairobi" });
   const systemInstruction = `${baseInstruction}${langInstruction} Current date in Kenya: ${currentDate}. ${modeInstruction}`;
 
@@ -693,7 +706,7 @@ app.post("/api/chat", async (req, res) => {
     // Low effort leaves more room for a visible answer on the free tier.
     reasoning_effort: "low",
     reasoning_format: "hidden",
-    max_completion_tokens: 1400,
+    max_completion_tokens: effectiveMode === "search" ? 1800 : 1400,
   };
 
   // Groq's browser_search tool replaces Gemini/Google Search grounding for Search mode.
@@ -747,10 +760,15 @@ app.post("/api/chat", async (req, res) => {
       }
     }
 
+    const finalReply = reply || "I could not generate a response for that request. Please try rephrasing.";
+    const searchReply = effectiveMode === "search" && groundingSources.length === 0
+      ? `${finalReply}\n\n**Source verification warning:** Search mode did not return usable source links for this response. Treat specific rates, legal requirements, dates and numerical claims as unverified until checked against the relevant official authority.`
+      : finalReply;
+
     res.json({
-      reply: reply || "I could not generate a response for that request. Please try rephrasing.",
+      reply: searchReply,
       model,
-      groundingMode: effectiveMode === "maps" ? "OpenStreetMap" : effectiveMode,
+      groundingMode: effectiveMode,
       groundingSources,
     });
   } catch (err) {
