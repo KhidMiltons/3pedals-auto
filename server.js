@@ -283,20 +283,34 @@ async function findOpenStreetMapPlaces(queryText, location) {
         name: rawName,
         lat: Number(el.lat ?? el.center?.lat),
         lon: Number(el.lon ?? el.center?.lon),
-        address: [
-          tags["addr:housenumber"],
-          tags["addr:street"],
-          tags["addr:place"],
-          tags["addr:suburb"] || tags["addr:neighbourhood"],
-          tags["addr:city"] || tags["addr:town"] || tags["addr:district"],
-        ]
-          .map(formatOsmAddressPart)
-          .filter(Boolean)
-          .filter((part, index, parts) => parts.findIndex((item) => item.toLowerCase() === part.toLowerCase()) === index)
-          .join(", "),
+        address: (() => {
+          // Prefer an explicit full address when the OSM mapper supplied one.
+          const fullAddress = formatOsmAddressPart(tags["addr:full"]);
+          const parts = fullAddress
+            ? [fullAddress]
+            : [
+                tags["addr:housenumber"],
+                tags["addr:street"],
+                tags["addr:place"],
+                tags["addr:suburb"] || tags["addr:neighbourhood"],
+                tags["addr:hamlet"] || tags["addr:village"],
+                tags["addr:city"] || tags["addr:town"] || tags["addr:municipality"] || tags["addr:district"],
+                tags["addr:county"],
+                tags["addr:province"],
+                tags["addr:postcode"],
+                tags["addr:country"],
+              ].map(formatOsmAddressPart).filter(Boolean);
+          return parts
+            .map(formatOsmAddressPart)
+            .filter(Boolean)
+            .filter((part, index, all) => all.findIndex((item) => item.toLowerCase() === part.toLowerCase()) === index)
+            .join(", ");
+        })(),
         hasAddressLocality: Boolean(
           tags["addr:suburb"] || tags["addr:neighbourhood"] ||
-          tags["addr:city"] || tags["addr:town"] || tags["addr:district"]
+          tags["addr:hamlet"] || tags["addr:village"] ||
+          tags["addr:city"] || tags["addr:town"] || tags["addr:municipality"] ||
+          tags["addr:district"] || tags["addr:county"] || tags["addr:province"]
         ),
         category,
         mapUrl: `https://www.openstreetmap.org/${encodeURIComponent(String(el.type || "node"))}/${encodeURIComponent(String(el.id || ""))}#map=19/${Number(el.lat ?? el.center?.lat)}/${Number(el.lon ?? el.center?.lon)}`,
@@ -314,8 +328,6 @@ async function findOpenStreetMapPlaces(queryText, location) {
 
   // Resolve missing OSM addresses only from distance-checked nearby OSM objects.
   // These are approximate nearby map references, never business-verified addresses.
-  const reverseGeocodeCache = findOpenStreetMapPlaces.reverseGeocodeCache ||
-    (findOpenStreetMapPlaces.reverseGeocodeCache = new Map());
   const missingAddresses = places.filter((place) => !place.address || !place.hasAddressLocality);
 
   // Enrich missing addresses only from nearby OpenStreetMap road and place objects.
