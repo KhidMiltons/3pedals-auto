@@ -821,14 +821,14 @@ app.post("/api/chat", async (req, res) => {
       }
     }
 
-    const finalReply = reply || "I could not generate a response for that request. Please try rephrasing.";
-    const hasMarkdownSourceLinks = /\\[[^\\]]+\\]\\(https?:\\/\\/[^)]+\\)/i.test(finalReply);
+    const finalReply = reply || "I could not generate a response for that request. Please try rephrasing."; 
+    const hasMarkdownSourceLinks = /\[[^\]]+\]\(https?:\/\/[^)]+\)/i.test(finalReply);
     const sourceList = groundingSources.length
-      ? "\\n\\n**Sources returned by browser search**\\n" + groundingSources.slice(0, 8).map((source) => `- [${source.title.replace(/[\\[\\]\\n]/g, "")}](${source.uri})`).join("\\n")
+      ? "\n\n**Sources returned by browser search**\n" + groundingSources.slice(0, 8).map((source) => "- [" + source.title.replace(/[\[\]\n]/g, "") + "](" + source.uri + ")").join("\n")
       : "";
     const searchReply = effectiveMode === "search" && groundingSources.length === 0 && !hasMarkdownSourceLinks
-      ? `${finalReply}\\n\\n**Source verification warning:** Browser search did not return extractable source URLs. Treat legal, tax, date and numerical claims as unverified; do not rely on citation markers alone.`
-      : `${finalReply}${sourceList}`;
+      ? finalReply + "\n\n**Source verification warning:** Browser search did not return extractable source URLs. Treat legal, tax, date and numerical claims as unverified; do not rely on citation markers alone."
+      : finalReply + sourceList;
 
     res.json({
       reply: searchReply,
