@@ -2917,6 +2917,45 @@ dialog#compareModal[open]::backdrop {
   color: #f7e6bd;
 }
 
+.ux-saved-filter > #savedOnlyFilterText {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.ux-saved-count-indicator {
+  flex: 0 0 auto;
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 8px;
+  border-radius: 7px;
+  border: 1px solid rgba(201, 183, 132, 0.28);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(244, 240, 232, 0.84);
+  font: 700 11.5px/1.15 Manrope, system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  white-space: nowrap !important;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.22s ease;
+}
+
+.ux-saved-count-indicator[data-has-saved="true"] {
+  border-color: rgba(223, 190, 111, 0.72);
+  background: rgba(215, 189, 131, 0.22);
+  color: #f6df9d;
+}
+
+.ux-saved-count-indicator.is-count-updated {
+  animation: uxSavedCountPulse 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes uxSavedCountPulse {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
 html[data-theme="light"] .ux-saved-filter,
 html[data-theme="light"] .ux-compare-filter {
   background: rgba(255, 255, 255, 0.92);
@@ -2934,6 +2973,18 @@ html[data-theme="light"] .ux-compare-filter.is-active {
   border-color: rgba(158, 116, 21, 0.72);
   background: rgba(223, 190, 111, 0.24);
   color: #171512;
+}
+
+html[data-theme="light"] .ux-saved-count-indicator {
+  border-color: rgba(138, 114, 62, 0.32);
+  background: rgba(138, 114, 62, 0.1);
+  color: #54472c;
+}
+
+html[data-theme="light"] .ux-saved-count-indicator[data-has-saved="true"] {
+  border-color: rgba(158, 116, 21, 0.7);
+  background: rgba(199, 159, 62, 0.22);
+  color: #5c4004;
 }
 
 @media (max-width: 980px) {
@@ -2974,11 +3025,17 @@ html[data-theme="light"] .ux-compare-filter.is-active {
     line-height: 1.15 !important;
     border-radius: 10px !important;
   }
-  html[data-ux="1"] .filters .ux-saved-filter span,
+  html[data-ux="1"] .filters .ux-saved-filter span:not(.ux-saved-count-indicator),
   html[data-ux="1"] .filters .ux-compare-filter span {
     min-width: 0 !important;
     white-space: normal !important;
     overflow-wrap: break-word !important;
+  }
+  html[data-ux="1"] .filters .ux-saved-count-indicator {
+    padding: 2px 6px !important;
+    font-size: 10.5px !important;
+    border-radius: 6px !important;
+    white-space: nowrap !important;
   }
 }
 
@@ -2994,6 +3051,10 @@ html[data-theme="light"] .ux-compare-filter.is-active {
   html[data-ux="1"] .filters .ux-compare-filter {
     font-size: 11px !important;
     padding: 4px 7px !important;
+  }
+  html[data-ux="1"] .filters .ux-saved-count-indicator {
+    font-size: 10px !important;
+    padding: 2px 5px !important;
   }
 }
 
