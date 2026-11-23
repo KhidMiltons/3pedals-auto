@@ -106,6 +106,37 @@ function shouldRouteToMaps(text) {
   );
 }
 
+function shouldUseFastVehicleSafetyFallback(text) {
+  const value = String(text || "");
+  const hasModelYear = /\b(?:19|20)\d{2}\b/.test(value);
+  const asksVehicleSpecs =
+    /\b(engine code|engine type|timing (?:chain|belt|system)|fuel (?:economy|consumption)|consumption|fuel efficiency|horsepower|\bhp\b|\bkw\b|transmission|gearbox|generation|chassis|specifications?|maintenance (?:cost|interval|concern)|common faults|used[- ]car price|market price|compare|comparison)\b/i.test(value);
+  return hasModelYear && asksVehicleSpecs;
+}
+
+function buildFastVehicleSafetyReply(lang) {
+  if (lang === "sw") {
+    return [
+      "Siwezi kuthibitisha kwa usahihi vipimo vya gari hili katika Fast mode. Mwaka wa kutengenezwa na ukubwa wa injini pekee havitoshi kutambua toleo halisi, hasa kwa magari yaliyoagizwa kutoka masoko tofauti.",
+      "",
+      "**Taarifa zinazohitaji uthibitisho:** engine code, generation/chassis code, mfumo wa timing chain au belt, transmission, nguvu ya injini, takwimu rasmi za matumizi ya mafuta, na bei ya sasa Kenya. Sitakisia taarifa hizi.",
+      "",
+      "**Ukaguzi wa jumla kabla ya kununua:** thibitisha VIN/chassis na engine number kwenye gari na nyaraka; kagua historia ya service; fanya cold start na uchunguzi wa uvujaji; kagua gearbox, suspension, brakes, tyres, body repairs na kutu; pata ukaguzi huru wa fundi na uthibitisho wa umiliki.",
+      "",
+      "**Hatua inayofuata:** tumia Search mode kwa vyanzo vya mtengenezaji na bei za sasa. Ukiwa na chassis/model code au engine code kutoka kwenye logbook/plate, itasaidia kutambua toleo husika."
+    ].join("\n\n");
+  }
+  return [
+    "I can't reliably verify this exact vehicle variant in Fast mode. Model year and engine size alone are not enough to identify the correct specification, especially for imported vehicles that may come from different markets.",
+    "",
+    "**Not verified here:** engine code, generation/chassis code, timing-chain or belt configuration, transmission, engine output, official fuel-economy test figures, model-specific faults and current Kenyan market prices. I won't guess these details.",
+    "",
+    "**General pre-purchase checks:** match the VIN/chassis and engine number to the vehicle documents; review service records; inspect a cold start and check for leaks; test the gearbox; inspect suspension, brakes, tyres, body repairs and corrosion; and arrange an independent mechanical inspection and ownership verification.",
+    "",
+    "**Next step:** use Search mode for manufacturer documentation and current Kenyan listings. A chassis/model code or engine code from the vehicle plate or logbook will help identify the exact variant."
+  ].join("\n\n");
+}
+
 function formatOsmAddressPart(value) {
   return String(value || "")
     .replace(/\s+/g, " ")
@@ -572,6 +603,18 @@ app.post("/api/chat", async (req, res) => {
       model: "OpenStreetMap",
       groundingMode: "OpenStreetMap",
       groundingSources,
+    });
+  }
+
+  // For year-specific vehicle specification or price questions, fail closed in Fast mode.
+  // Fast mode has no verified specification database or live search, so returning a model-generated
+  // comparison here would risk presenting plausible but unsupported details as facts.
+  if (requestedMode === "fast" && shouldUseFastVehicleSafetyFallback(lastUserMsg)) {
+    return res.json({
+      reply: buildFastVehicleSafetyReply(lang),
+      model: "3 Pedals Auto safety check",
+      groundingMode: "fast",
+      groundingSources: [],
     });
   }
 
