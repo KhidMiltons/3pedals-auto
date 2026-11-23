@@ -318,7 +318,7 @@ async function findOpenStreetMapPlaces(queryText, location) {
             // Postal-box text is contact/mailing information, not a street address.
             .filter((part) => !/\bP\.?\s*O\.?\s*Box\b/i.test(part));
           return parts.reduce((clean, part) => {
-            const normalizeAddress = (value) => value.toLowerCase().replace(/\\brd\\b/g, "road").replace(/\\bst\\b/g, "street").replace(/[^a-z0-9]/g, "");
+            const normalizeAddress = (value) => value.toLowerCase().replace(/\brd\b/g, "road").replace(/\bst\b/g, "street").replace(/[^a-z0-9]/g, "");
             const normalized = normalizeAddress(part);
             if (!normalized) return clean;
             const overlaps = clean.some((existing) => {
