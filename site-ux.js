@@ -1117,7 +1117,7 @@
           { value: "auto", label: sw ? "Otomatiki (Search/OpenStreetMap)" : "Auto (Search / OpenStreetMap)" },
           { value: "search", label: "Google Search" },
           { value: "maps", label: "OpenStreetMap" },
-          { value: "fast", label: sw ? "Haraka (Flash Lite)" : "Fast (Flash Lite)" }
+          { value: "fast", label: sw ? "Haraka (Bila utafutaji wa moja kwa moja)" : "Fast (No live search)" }
         ]
       };
     }
