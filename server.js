@@ -742,7 +742,6 @@ app.post("/api/chat", async (req, res) => {
     requestBody.tools = [{ type: "browser_search" }];
     // Search mode is explicitly a research mode: require the browser tool to run.
     requestBody.tool_choice = "required";
-    requestBody.citation_options = "enabled";
   }
 
   try {
