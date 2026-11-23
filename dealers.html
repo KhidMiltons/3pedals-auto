@@ -35,8 +35,8 @@ main{padding:34px 0 60px}.eyebrow{color:var(--gold);font-size:11px;font-weight:8
 @media(max-width:850px){.tools{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.tools input{grid-column:auto}.tools .search-label{grid-column:1/-1}}@media(max-width:520px){.wrap{width:calc(100% - 24px)}.headin{min-height:60px}.brand{font-size:19px}.back{padding:8px 10px;font-size:13px}main{padding-top:25px}.summary{gap:8px}.stat{flex:1 1 135px;padding:11px 13px}.dealer{min-height:112px;padding:15px}.logo{width:46px;height:46px;flex-basis:46px}.tools{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.tools input{grid-column:auto}.tools .search-label{grid-column:1/-1}.tools input,.tools select,.tools .back{min-height:40px;height:40px;padding:7px 9px;font-size:12.5px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
 </style>
-<link rel="stylesheet" href="site-theme.css?v=20261123-fix5">
-<link rel="stylesheet" href="/site-ux.css?v=20261123-fix5">
+<link rel="stylesheet" href="site-theme.css?v=20261123-fix8">
+<link rel="stylesheet" href="/site-ux.css?v=20261123-fix8">
 <!-- Meta Pixel loads only after explicit optional-cookie consent. -->
 <style id="dealers-clean-shell">
 /* Unified dual-theme glass shell for Car Dealers directory (Dark Obsidian & Light Parchment) */
@@ -288,7 +288,7 @@ html body > footer.ux-site-footer {
   }
 }
 </style>
-<link rel="stylesheet" href="/header-modern.css?v=20261123-fix5">
+<link rel="stylesheet" href="/header-modern.css?v=20261123-fix8">
 </head>
 <body>
 <div id="dealers-blurred-wallpaper" aria-hidden="true"></div>
@@ -298,7 +298,7 @@ html body > footer.ux-site-footer {
 
 <!-- End Google Tag Manager (noscript) -->
 
-<header class="head"><div class="wrap headin"><a class="brand" href="/">3 Pedals Auto KE</a><a class="back" href="/" aria-label="Return to the 3 Pedals Auto KE home page">← Home</a></div></header>
+<header class="head"><div class="wrap headin"><a class="brand" href="/">3 Pedals Auto KE</a><a class="back" id="dealersHomeButton" href="/" aria-label="Return to the 3 Pedals Auto KE home page">← Home</a></div></header>
 <main class="wrap">
   <section class="intro"><span class="eyebrow">3 PEDALS AUTO KE · DEALER DIRECTORY</span><h1>Car dealers in Kenya</h1><p>Explore dealer collections, see how many vehicles each dealer has available, and open a dealer’s full inventory.</p></section>
   <div class="summary" aria-live="polite"><div class="stat"><strong id="dealerTotal">—</strong><span>dealers</span></div><div class="stat"><strong id="vehicleTotal">—</strong><span>available vehicles</span></div></div>
@@ -424,6 +424,6 @@ document.addEventListener('click', function(event) {
 })();
 </script>
 
-<script defer src="/site-ux.js?v=20261123-fix5"></script>
+<script defer src="/site-ux.js?v=20261123-fix8"></script>
 </body>
 </html>

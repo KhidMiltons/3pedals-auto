@@ -20,7 +20,7 @@ try {
   document.documentElement.setAttribute("data-theme", t);
 } catch (_) {}
 </script>
-<link rel="stylesheet" href="admin.css?v=20261123-fix3">
+<link rel="stylesheet" href="admin.css?v=20261123-fix4">
 <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script defer src="config.js"></script>
 <script defer src="/vendor/jspdf.umd.min.js"></script>
@@ -68,6 +68,7 @@ try {
 
     <div class="admin-nav-group">Garage &amp; Fleet</div>
     <button type="button" class="admin-nav-btn" data-section="bookingsPanel" data-label="Garage bookings"><span>Garage bookings</span><span class="admin-nav-count" id="newBookingBadge"></span></button>
+    <button type="button" class="admin-nav-btn" data-section="garageServicesPanel" data-label="Garage services &amp; prices"><span>Services &amp; prices</span></button>
     <button type="button" class="admin-nav-btn" data-section="chauffeurPanel" data-label="Chauffeur hire"><span>Chauffeur hire</span></button>
     <button type="button" class="admin-nav-btn" data-section="mechanicsPanel" data-label="Mechanics directory"><span>Mechanics</span></button>
 
@@ -296,6 +297,7 @@ try {
             <p class="meta">Assign mechanics, update check-in progress, generate A4/PDF job sheets, and manage completed history.</p>
           </div>
           <div class="actions">
+            <button class="ghost" type="button" data-jump-section="garageServicesPanel">Manage services &amp; prices</button>
             <button class="ghost" id="exportGarageBookings" type="button">Export CSV</button>
             <button class="ghost" id="refreshBookings" type="button">Refresh</button>
             <button class="danger" id="clearCompletedBookings" type="button" disabled>Clear completed (0)</button>
@@ -321,6 +323,48 @@ try {
         </div>
         <div id="bookingList"></div>
         <div id="bookingsPagination" class="pagination-bar hidden"></div>
+      </section>
+
+      <!-- 4b. Garage Services & Prices -->
+      <section id="garageServicesPanel" class="section-hidden" tabindex="-1">
+        <div class="panel-title">
+          <div>
+            <span class="panel-eyebrow">Garage Catalogue</span>
+            <h1>Garage services &amp; prices</h1>
+            <p class="meta">Add services, update KES pricing and estimated duration, or toggle availability shown on 3 Pedals Garage.</p>
+          </div>
+          <div class="actions">
+            <button class="ghost" id="seedGarageServices" type="button">Load 6 default services</button>
+            <button class="primary" id="newGarageService" type="button">+ Add service</button>
+          </div>
+        </div>
+        <div class="booking-workspace-tools">
+          <input id="garageServiceSearch" type="search" placeholder="Search service name, description or duration…" aria-label="Search garage services">
+          <select id="garageServiceStatus" aria-label="Filter service visibility">
+            <option value="all">All services</option>
+            <option value="active">Active on website</option>
+            <option value="hidden">Hidden</option>
+          </select>
+          <span id="garageServiceCount" class="tools-count" aria-live="polite"></span>
+        </div>
+        <form id="garageServiceForm" class="editor section-hidden">
+          <input id="gsId" type="hidden">
+          <input id="gsDefaultIdx" type="hidden">
+          <div class="editor-grid">
+            <div><label for="gsName">Service name</label><input id="gsName" maxlength="140" required placeholder="e.g. Full service"></div>
+            <div><label for="gsPrice">Price (KES)</label><input id="gsPrice" type="number" min="0" step="50" required placeholder="e.g. 8500"></div>
+            <div><label for="gsDuration">Estimated duration</label><input id="gsDuration" maxlength="60" required placeholder="e.g. 3 hrs or 45 min"></div>
+            <div><label for="gsOrder">Display order</label><input id="gsOrder" type="number" min="1" step="1" value="1"></div>
+            <div class="full"><label for="gsDescription">Short description (optional)</label><textarea id="gsDescription" rows="2" maxlength="320" placeholder="Optional details shown under the service name on the booking page"></textarea></div>
+          </div>
+          <label style="display:flex;gap:9px;align-items:center;margin-top:12px"><input id="gsActive" type="checkbox" checked> Active on public 3 Pedals Garage page</label>
+          <p id="gsError" class="notice err hidden" role="alert"></p>
+          <div class="editor-actions">
+            <button class="primary" id="saveGarageService" type="submit">Save service</button>
+            <button class="ghost" id="cancelGarageService" type="button">Cancel</button>
+          </div>
+        </form>
+        <div id="garageServicesList"></div>
       </section>
 
       <!-- 5. Chauffeur Hire (Split into 3 Sub-Tabs) -->
@@ -529,7 +573,7 @@ try {
             <div><label for="garageAddress">Garage postal address</label><input id="garageAddress"></div>
             <div><label for="garageHours">Garage hours</label><input id="garageHours"></div>
             <div><label for="footerBrand">Footer brand text</label><input id="footerBrand" maxlength="80" placeholder="3 Pedals Auto KE"></div>
-            <div><label for="footerNote">Footer closing text</label><input id="footerNote" maxlength="120" placeholder="Prices in KES."></div>
+            <div><label for="footerNote">Footer closing text</label><input id="footerNote" maxlength="120" placeholder="Optional footer note"></div>
             <div><label for="instagramUrl">Instagram URL</label><input id="instagramUrl" type="url"></div>
             <div><label for="facebookUrl">Facebook URL</label><input id="facebookUrl" type="url"></div>
             <div><label for="twitterUrl">X / Twitter URL</label><input id="twitterUrl" type="url"></div>
@@ -654,6 +698,7 @@ try {
             <option value="all">All entities</option>
             <option value="vehicle_listing">Vehicle listings</option>
             <option value="garage_booking">Garage bookings</option>
+            <option value="garage_service">Garage services</option>
             <option value="chauffeur_booking">Chauffeur bookings</option>
             <option value="customer_request">Customer requests</option>
             <option value="content">Journal &amp; projects</option>
@@ -717,12 +762,12 @@ try {
 <!-- Toast Host -->
 <div id="adminToastHost" class="admin-toast-host" aria-live="polite"></div>
 
-<script defer src="admin-core.js?v=20261122-perf"></script>
-<script defer src="admin-overview.js?v=20261122-perf"></script>
-<script defer src="admin-requests.js?v=20261122-perf"></script>
-<script defer src="admin-listings.js?v=20261122-perf"></script>
-<script defer src="admin-operations.js?v=20261122-perf"></script>
-<script defer src="admin-content.js?v=20261122-perf"></script>
-<script defer src="admin-insights.js?v=20261122-perf"></script>
+<script defer src="admin-core.js?v=20261123-fix4"></script>
+<script defer src="admin-overview.js?v=20261123-fix4"></script>
+<script defer src="admin-requests.js?v=20261123-fix4"></script>
+<script defer src="admin-listings.js?v=20261123-fix4"></script>
+<script defer src="admin-operations.js?v=20261123-fix4"></script>
+<script defer src="admin-content.js?v=20261123-fix4"></script>
+<script defer src="admin-insights.js?v=20261123-fix4"></script>
 </body>
 </html>

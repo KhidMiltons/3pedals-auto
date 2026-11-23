@@ -712,16 +712,16 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 }
 @media(max-width:380px){#authDlg>.in{padding-left:13px!important;padding-right:13px!important}#authDlg .in>h2{font-size:25px!important}}
 </style>
-<link rel="stylesheet" href="site-theme.css?v=20261123-fix5">
+<link rel="stylesheet" href="site-theme.css?v=20261123-fix8">
 <style id="account-restore-no-flash">html.account-restoring body{visibility:hidden!important;background:#0c0e12!important}html[data-theme="light"].account-restoring body{background:#f4efe4!important}html.account-restoring #accDlg[open]{visibility:visible!important}html.account-restoring #accDlg[open] #accBody{min-height:100px}#accDlg .account-refresh-status{display:none!important}</style>
 <script>try{if(sessionStorage.getItem("3pedals:account-open")==="1")document.documentElement.classList.add("account-restoring")}catch(_){}</script>
 <!-- Optional Meta Pixel is loaded by consent.js only after explicit acceptance. -->
 
 <link rel="stylesheet" href="/dashboard-glass.css?v=20261122-card-matched">
-<link rel="stylesheet" href="/index-theme.css?v=20261123-fix5">
-<link rel="stylesheet" href="/account-panel.css?v=20261123-fix5">
-<link rel="stylesheet" href="/site-ux.css?v=20261123-fix5">
-<link rel="stylesheet" href="/header-modern.css?v=20261123-fix5">
+<link rel="stylesheet" href="/index-theme.css?v=20261123-fix8">
+<link rel="stylesheet" href="/account-panel.css?v=20261123-fix8">
+<link rel="stylesheet" href="/site-ux.css?v=20261123-fix8">
+<link rel="stylesheet" href="/header-modern.css?v=20261123-fix8">
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
@@ -739,7 +739,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="account-pill" aria-label="Account"><span id="accountText">Not signed in</span><button id="accountOpen" aria-label="Open account" title="Account"></button></div>
     <button type="button" class="navlink" role="tab" data-tab="home" aria-selected="true" aria-label="Home">Home</button>
     <button type="button" class="navlink" role="tab" data-tab="about" aria-selected="false">About Us</button>
-    <a class="navlink" href="/inventory.html">Buy a car</a>
+    <a class="navlink" href="/inventory.html">Inventory</a>
     <a class="navlink" href="/garage.html">3 Pedals Garage</a>
     <a class="navlink" href="/chauffeur.html">Chauffeur Hire</a>
     <a class="navlink" href="/dealers.html">Dealers</a>
@@ -889,7 +889,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 </main>
 
-<footer class="ux-site-footer no-print"><div class="wrap">© <span data-ux-year>2026</span> <span id="footerBrand">3 Pedals Auto KE</span> · <span id="footerNote">Prices in KES.</span><span class="legal-footer-links"> · <a href="/privacy.html">Privacy Policy</a> · <a href="/terms.html">Terms of Service</a> · <button type="button" onclick="window.ThreePedalsConsent?.open()">Cookie preferences</button></span></div></footer>
+<footer class="ux-site-footer no-print"><div class="wrap">© <span data-ux-year>2026</span> <span id="footerBrand">3 Pedals Auto KE</span><span id="footerNoteWrap" hidden> · <span id="footerNote"></span></span><span class="legal-footer-links"> · <a href="/privacy.html">Privacy Policy</a> · <a href="/terms.html">Terms of Service</a> · <button type="button" onclick="window.ThreePedalsConsent?.open()">Cookie preferences</button></span></div></footer>
 
 <a class="fab glass-icon-btn" id="publicWhatsappFab" href="https://wa.me/254791961807?text=Hello%203%20Pedals%20Auto%20KE" target="_blank" rel="noopener" aria-label="Chat on WhatsApp" title="Chat on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.8a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.4-4.9A8.4 8.4 0 1 1 20.5 11.8Z"/><path d="M8.4 7.7c.2-.5.4-.5.7-.5h.5c.2 0 .4.1.5.4l.8 1.8c.1.2.1.4-.1.6l-.6.7c-.2.2-.2.4 0 .7.5.8 1.2 1.5 2.1 2 .2.1.4.1.6-.1l.8-.9c.2-.2.4-.2.6-.1l1.7.8c.3.1.4.3.4.5 0 .4-.2 1.1-.7 1.5-.5.5-1.2.7-2 .5-1-.2-2.3-.8-3.5-1.9-1.4-1.2-2.3-2.7-2.5-3.8-.2-.9.1-1.5.7-2.2Z"/></svg></a>
 
@@ -926,7 +926,7 @@ let me=null,profile=null,sellerPreferences={};
 const colors=["#111111","#8a6508","#2a2a2a","#a67c00","#1c1c1c","#6b5206","#3b3b3b","#7d5a00"];
 const HOUSE={type:"yard",name:"3 Pedals Auto KE",contact:"",location:"P.O. Box 462-00516",phone:"+254791961807",email:"3pedalsautoke@gmail.com",web:"",whatsapp:"254791961807"};
 const ABOUT_DEFAULTS={about_title:"3 Pedals Auto KE",about_intro:"We bring vehicle sales, honest advice and professional garage services together under one automotive brand.",about_what_title:"What we do",about_what_body:"We help clients buy and sell vehicles while giving them access to servicing, repairs and pre-purchase inspections through 3 Pedals Garage.",about_focus_body:"Our focus is straightforward communication, careful vehicle checks and a professional experience from enquiry to ownership.",about_approach_title:"Our approach",about_transparent_title:"Transparent",about_transparent_body:"Clear information before you decide.",about_practical_title:"Practical",about_practical_body:"Advice based on the actual vehicle and your needs.",about_connected_title:"Connected",about_connected_body:"Sales and garage support in one place."};
-let siteSettings={contact_email:"3pedalsautoke@gmail.com",whatsapp_number:"254791961807",postal_address:"P.O. Box 462-00516",instagram_url:"https://instagram.com/3pedalsauto",facebook_url:"https://facebook.com/3pedalsauto",twitter_url:"https://twitter.com/3pedalsauto",tiktok_url:"https://tiktok.com/@3pedalsauto",footer_note:"Prices in KES.",footer_brand:"3 Pedals Auto KE",...ABOUT_DEFAULTS};
+let siteSettings={contact_email:"3pedalsautoke@gmail.com",whatsapp_number:"254791961807",postal_address:"P.O. Box 462-00516",instagram_url:"https://instagram.com/3pedalsauto",facebook_url:"https://facebook.com/3pedalsauto",twitter_url:"https://twitter.com/3pedalsauto",tiktok_url:"https://tiktok.com/@3pedalsauto",footer_note:"",footer_brand:"3 Pedals Auto KE",...ABOUT_DEFAULTS};
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 function normWa(raw){
@@ -968,7 +968,10 @@ async function loadSiteSettings(){
   setHref("publicWhatsapp",wa);setHref("publicWhatsappFab",`${wa}?text=${encodeURIComponent("Hello 3 Pedals Auto KE")}`);setHref("publicWhatsappHero",`${wa}?text=${encodeURIComponent("Hello 3 Pedals Auto KE, I'd like to enquire.")}`);
   setHref("publicEmailLink",`mailto:${siteSettings.contact_email||""}`);$("publicEmail").textContent=siteSettings.contact_email||"Email us";
   $("publicAddress").textContent=siteSettings.postal_address||"Contact us for our address";
-  $("footerBrand").textContent=siteSettings.footer_brand||"";$("footerNote").textContent=siteSettings.footer_note||"";
+  const cleanFooterNote=String(siteSettings.footer_note||"").replace(/^\s*Prices in KES\.?\s*$/i,"").trim();
+  $("footerBrand").textContent=siteSettings.footer_brand||"";
+  $("footerNote").textContent=cleanFooterNote;
+  const noteWrap=$("footerNoteWrap");if(noteWrap)noteWrap.hidden=!cleanFooterNote;
   [["publicInstagram","instagram_url"],["publicFacebook","facebook_url"],["publicTwitter","twitter_url"],["publicTiktok","tiktok_url"]].forEach(([id,key])=>{const a=$(id),url=String(siteSettings[key]||"").trim();if(a){a.hidden=!url;if(url)a.href=url}});
 }
 let cars=[
@@ -1270,7 +1273,7 @@ function journalUrlFor(article){const slug=String(article.title||"story").normal
 function journalPublicUrl(article){const base=location.protocol==="file:"?"https://3pedalsauto.co.ke/":location.href;return new URL(journalUrlFor(article),base).href}
 function showJournalShare(article){const url=journalPublicUrl(article),dialog=document.createElement("dialog");dialog.className="journal-share-dialog";dialog.innerHTML=`<form method="dialog"><button class="journal-share-close" aria-label="Close">×</button></form><h2>Share this journal</h2><p>${esc(article.title)}</p><label>Public article link<input class="journal-share-url" readonly></label><div class="journal-share-actions"><button type="button" class="journal-copy-link">Copy link</button><a class="journal-whatsapp-link" target="_blank" rel="noopener">WhatsApp</a></div><small class="journal-copy-status" aria-live="polite">Copy the link to share it anywhere.</small>`;document.body.append(dialog);const input=dialog.querySelector(".journal-share-url");input.value=url;dialog.querySelector(".journal-whatsapp-link").href="https://wa.me/?text="+encodeURIComponent(article.title+" — "+url);dialog.querySelector(".journal-copy-link").onclick=async()=>{let copied=false;try{await navigator.clipboard.writeText(url);copied=true}catch{}if(!copied){input.focus();input.select();try{copied=document.execCommand("copy")}catch{}}dialog.querySelector(".journal-copy-status").textContent=copied?"Link copied. You can paste it anywhere.":"Select the link above and copy it."};dialog.addEventListener("click",event=>{if(event.target===dialog)dialog.close()});dialog.addEventListener("close",()=>dialog.remove(),{once:true});dialog.showModal()}
 function renderJournal(list){
-  const box=$("journalGrid"),articles=(list||[]).filter(p=>p.type==="article"&&p.body);
+  const box=$("journalGrid"),articles=(list||[]).filter(p=>p.type==="article"&&p.category!=="garage_service"&&p.body);
   if(!articles.length){box.innerHTML='<div class="project-public-empty" style="grid-column:1/-1"><h3>The Journal is coming soon.</h3><p class="meta">Our first automotive stories will appear here once published by the 3 Pedals team.</p></div>';return}
   box.innerHTML=articles.map(p=>{const photos=mediaItemsForProject(p).filter(m=>m.type!=="video"&&!String(m.mime||"").startsWith("video/")),cover=photos.find(m=>m.is_cover===true||m.cover===true)||photos[0],url=journalUrlFor(p);const words=String([p.title,p.description,p.body].filter(Boolean).join(" ")).replace(/\[\[\s*photo\s*:\s*\d+\s*\]\]/gi," ").trim().split(/\s+/).filter(Boolean).length;const mins=Math.max(1,Math.ceil(words/200));return `<article class="project-card project-featured journal-entry"><a class="journal-entry-media" href="${esc(url)}" aria-label="Read ${esc(p.title)}">${cover?`<img src="${esc(cover.url)}" alt="${esc(p.title)}" loading="lazy">`:'<span class="journal-entry-empty">3 Pedals Journal</span>'}</a><div class="project-body"><span class="project-kicker">${esc(p.category||"Automotive Journal")}</span><h2><a href="${esc(url)}">${esc(p.title)}</a></h2><div class="journal-meta"><span>3 PEDALS JOURNAL</span>${p.created_at?`<span>·</span><span>${esc(new Date(p.created_at).toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"}))}</span>`:""}<span>·</span><span>${mins} min read</span>${photos.length?`<span>·</span><span>${photos.length} photos</span>`:""}</div><p>${esc(p.description||"A story for people who love cars.")}</p><div class="journal-card-actions"><a class="journal-read" href="${esc(url)}">Read more</a><button class="journal-read journal-share" type="button" data-share-journal="${esc(p.id)}">Share story</button></div></div></article>`}).join("");
   box.querySelectorAll("[data-share-journal]").forEach(button=>button.addEventListener("click",event=>{event.preventDefault();event.stopPropagation();const article=articles.find(item=>String(item.id)===String(button.dataset.shareJournal));if(article)showJournalShare(article)}));
@@ -1931,6 +1934,6 @@ loadSiteSettings();
   }
 })();
 </script>
-<script defer src="/site-ux.js?v=20261123-fix5"></script>
+<script defer src="/site-ux.js?v=20261123-fix8"></script>
 </body>
 </html>

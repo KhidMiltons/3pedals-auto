@@ -18,7 +18,7 @@
       about: "About Us",
       contact: "Contact Us",
       buyCar: "Buy Car",
-      carsForSale: "Cars for Sale",
+      carsForSale: "Inventory",
       garage: "Garage",
       chauffeur: "Chauffeur",
       dealers: "Dealers",
@@ -64,7 +64,7 @@
       about: "Kuhusu Sisi",
       contact: "Wasiliana Nasi",
       buyCar: "Nunua Gari",
-      carsForSale: "Magari Yanayouzwa",
+      carsForSale: "Orodha ya Magari",
       garage: "Gereji",
       chauffeur: "Huduma ya Dereva",
       dealers: "Wauzaji",
@@ -345,6 +345,35 @@
       if (toggle && toggle.parentElement !== actions) {
         actions.appendChild(toggle);
       }
+
+      const syncAccountPlacement = () => {
+        if (!accountPill) return;
+        const isCompact = window.matchMedia && window.matchMedia("(max-width: 1023px)").matches;
+        const drawerControlsRow = targetDrawer.querySelector(".ux-drawer-controls .ux-controls");
+        if (isCompact && drawerControlsRow) {
+          if (accountPill.parentElement !== drawerControlsRow) {
+            drawerControlsRow.appendChild(accountPill);
+          }
+        } else if (actions) {
+          if (toggle && toggle.parentElement === actions) {
+            actions.insertBefore(accountPill, toggle);
+          } else if (accountPill.parentElement !== actions) {
+            actions.appendChild(accountPill);
+          }
+        }
+      };
+
+      if (accountOpenBtn && accountOpenBtn.dataset.uxDrawerCloseBound !== "1") {
+        accountOpenBtn.dataset.uxDrawerCloseBound = "1";
+        accountOpenBtn.addEventListener("click", () => {
+          targetDrawer.classList.remove("is-open", "mobile-menu-open");
+          document.body.classList.remove("nav-open");
+          if (toggle) toggle.setAttribute("aria-expanded", "false");
+        });
+      }
+
+      syncAccountPlacement();
+      window.matchMedia?.("(max-width: 1023px)")?.addEventListener("change", syncAccountPlacement);
     } else if (!chauffeurNav) {
       // Subpages: inventory, vehicle, dealers, yard, journal, chauffeur, vehicle_documents
       const container = header.querySelector(".wrap, .headin") || header;
@@ -600,7 +629,7 @@
 
     const year = String(new Date().getFullYear());
     const existingLegal = footer.innerHTML;
-    let brandHtml = '3 Pedals Auto KE · Prices in KES.';
+    let brandHtml = '3 Pedals Auto KE';
     if (existingLegal && existingLegal.trim()) {
       const temp = document.createElement("div");
       temp.innerHTML = existingLegal;
@@ -608,12 +637,14 @@
       const noteSpan = temp.querySelector("#footerNote");
       if (brandSpan || noteSpan) {
         const b = brandSpan ? brandSpan.outerHTML : '<span id="footerBrand">3 Pedals Auto KE</span>';
-        const n = noteSpan ? noteSpan.outerHTML : '<span id="footerNote">Prices in KES.</span>';
-        brandHtml = `${b} · ${n}`;
+        const noteText = (noteSpan?.textContent || "").replace(/^\s*Prices in KES\.?\s*$/i, "").trim();
+        if (noteSpan) noteSpan.textContent = noteText;
+        brandHtml = noteText ? `${b} · ${noteSpan.outerHTML}` : b;
       } else {
         temp.querySelectorAll(".legal-footer-links, a, button, br").forEach((el) => el.remove());
         const cleanText = temp.textContent
           .replace(/\s+/g, " ")
+          .replace(/(?:\s*·\s*)?Prices in KES\.?/gi, "")
           .replace(/^©\s*(?:\d{4}\s*)?/, "")
           .replace(/[·|\-\s]+$/g, "")
           .trim();

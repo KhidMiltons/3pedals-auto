@@ -1950,13 +1950,428 @@
     }
   });
 
+  /* =========================================================
+     4. GARAGE SERVICES & PRICES CATALOGUE
+     ========================================================= */
+  const GARAGE_SERVICES_CACHE_KEY = "3pedals:garage-services:v1";
+  const DEFAULT_GARAGE_SERVICES = [
+    { name: "Oil and filter change", price_kes: 3500, duration: "45 min", sort_order: 1, description: "" },
+    { name: "Full service", price_kes: 8500, duration: "3 hrs", sort_order: 2, description: "" },
+    { name: "Brake pads and discs check", price_kes: 6000, duration: "2 hrs", sort_order: 3, description: "" },
+    { name: "Wheel alignment and balancing", price_kes: 3000, duration: "1 hr", sort_order: 4, description: "" },
+    { name: "Computer diagnostics", price_kes: 2500, duration: "1 hr", sort_order: 5, description: "" },
+    { name: "Pre-purchase inspection", price_kes: 5000, duration: "2 hrs", sort_order: 6, description: "" },
+  ];
+
+  function invalidateGarageServicesCache() {
+    try {
+      localStorage.removeItem(GARAGE_SERVICES_CACHE_KEY);
+      sessionStorage.removeItem(GARAGE_SERVICES_CACHE_KEY);
+    } catch (_) {}
+  }
+
+  function parseGarageServiceRow(row, fallbackIdx = 0) {
+    const gallery = Array.isArray(row?.media_gallery) ? row.media_gallery : [];
+    const meta = gallery.find((entry) => entry && typeof entry === "object") || {};
+    const priceNum = Number(meta.price_kes);
+    const orderNum = Number(meta.sort_order);
+    return {
+      id: row?.id,
+      name: String(row?.title || meta.name || "Garage service").trim(),
+      price_kes: Number.isFinite(priceNum) && priceNum >= 0 ? priceNum : 0,
+      duration: String(meta.duration || "1 hr").trim(),
+      sort_order: Number.isFinite(orderNum) && orderNum > 0 ? orderNum : fallbackIdx + 1,
+      description: String(row?.description || meta.description || "").trim(),
+      active: row?.published !== false,
+      created_at: row?.created_at || null,
+    };
+  }
+
+  function buildGarageServicePayload({ name, price_kes, duration, sort_order, description, active }, includeAuthor = false) {
+    const cleanName = String(name || "").trim();
+    const cleanDuration = String(duration || "1 hr").trim();
+    const cleanDesc = String(description || "").trim() || null;
+    const cleanPrice = Math.max(0, Math.round(Number(price_kes) || 0));
+    const cleanOrder = Math.max(1, Math.round(Number(sort_order) || 1));
+    const payload = {
+      type: "article",
+      category: "garage_service",
+      title: cleanName,
+      description: cleanDesc,
+      body: null,
+      published: !!active,
+      media_gallery: [
+        {
+          kind: "garage_service",
+          price_kes: cleanPrice,
+          duration: cleanDuration,
+          sort_order: cleanOrder,
+          description: cleanDesc,
+        },
+      ],
+      updated_at: new Date().toISOString(),
+    };
+    if (includeAuthor && state.adminUserId) payload.author_id = state.adminUserId;
+    return payload;
+  }
+
+  function renderGarageServices() {
+    const box = $("garageServicesList");
+    if (!box) return;
+
+    const usingBuiltInPreview = state.garageServices.length === 0;
+    const sourceList = usingBuiltInPreview
+      ? DEFAULT_GARAGE_SERVICES.map((d, idx) => ({
+          ...d,
+          id: "",
+          active: true,
+          isDefaultPreview: true,
+          defaultIdx: idx,
+        }))
+      : state.garageServices;
+
+    const q = String($("garageServiceSearch")?.value || "").trim().toLowerCase();
+    const vis = $("garageServiceStatus")?.value || "all";
+
+    const filtered = sourceList.filter((s) => {
+      if (vis === "active" && s.active === false) return false;
+      if (vis === "hidden" && s.active !== false) return false;
+      if (!q) return true;
+      return [s.name, s.duration, s.description, s.price_kes].join(" ").toLowerCase().includes(q);
+    });
+
+    if ($("garageServiceCount")) {
+      $("garageServiceCount").textContent = usingBuiltInPreview
+        ? `Showing ${filtered.length} built-in defaults`
+        : `${filtered.length} of ${sourceList.length} services`;
+    }
+
+    if ($("seedGarageServices")) {
+      $("seedGarageServices").hidden = !usingBuiltInPreview;
+    }
+
+    const noticeHtml = usingBuiltInPreview
+      ? `<div class="notice" style="margin-bottom:14px">Using the 6 built-in default services on 3 Pedals Garage. Edit any item below or click <strong>Load 6 default services</strong> to customise prices and add new services.</div>`
+      : "";
+
+    if (!filtered.length) {
+      box.innerHTML = `${noticeHtml}<div class="empty">${
+        sourceList.length
+          ? "No garage services match your search or filter."
+          : "No garage services configured yet."
+      }</div>`;
+      return;
+    }
+
+    box.innerHTML =
+      noticeHtml +
+      filtered
+        .map((s) => {
+          const isPreview = !!s.isDefaultPreview;
+          return `
+          <article class="article-item">
+            <div style="min-width:0;flex:1">
+              <div class="meta-line" style="margin-bottom:4px">
+                <span class="mono">#${esc(s.sort_order)}</span>
+                <span class="sep">·</span>
+                <span>Duration: ${esc(s.duration || "—")}</span>
+                <span class="sep">·</span>
+                <span style="font-weight:700;color:var(--ad-gold)">${esc(moneyKES(s.price_kes))}</span>
+              </div>
+              <h3>${esc(s.name)}</h3>
+              ${s.description ? `<p class="meta" style="margin:6px 0 0">${esc(s.description)}</p>` : ""}
+              <div class="actions" style="margin-top:8px">
+                <span class="status ${s.active !== false ? "available" : "inactive"}">${
+                  isPreview ? "Built-in default" : s.active !== false ? "Active on website" : "Hidden"
+                }</span>
+              </div>
+            </div>
+            <div class="actions">
+              ${
+                isPreview
+                  ? `<button type="button" class="ghost" data-gs-customize="${esc(s.defaultIdx)}">Edit price / details</button>`
+                  : `<button type="button" class="ghost" data-gs-edit="${esc(s.id)}">Edit</button>
+                     <button type="button" class="ghost" data-gs-toggle="${esc(s.id)}">${
+                       s.active !== false ? "Hide" : "Activate"
+                     }</button>
+                     <button type="button" class="danger" data-gs-delete="${esc(s.id)}">Delete</button>`
+              }
+            </div>
+          </article>`;
+        })
+        .join("");
+  }
+
+  function openGarageServiceForm(item = null, defaultIdx = "") {
+    const nextOrder =
+      item?.sort_order ??
+      (state.garageServices.length
+        ? Math.max(...state.garageServices.map((x) => Number(x.sort_order) || 0)) + 1
+        : DEFAULT_GARAGE_SERVICES.length + 1);
+    $("gsId").value = item?.id || "";
+    $("gsDefaultIdx").value = defaultIdx === "" || defaultIdx == null ? "" : String(defaultIdx);
+    $("gsName").value = item?.name || "";
+    $("gsPrice").value = item?.price_kes != null ? String(item.price_kes) : "";
+    $("gsDuration").value = item?.duration || "";
+    $("gsOrder").value = String(nextOrder);
+    $("gsDescription").value = item?.description || "";
+    $("gsActive").checked = item ? item.active !== false : true;
+    $("gsError")?.classList.add("hidden");
+    $("garageServiceForm")?.classList.remove("section-hidden");
+    $("gsName")?.focus();
+  }
+
+  function closeGarageServiceForm() {
+    $("garageServiceForm")?.classList.add("section-hidden");
+    $("garageServiceForm")?.reset();
+    if ($("gsId")) $("gsId").value = "";
+    if ($("gsDefaultIdx")) $("gsDefaultIdx").value = "";
+    $("gsError")?.classList.add("hidden");
+    markDirty("garageService", false);
+  }
+
+  async function seedDefaultGarageServices(silent = false) {
+    if (!sb || !state.adminUserId) return false;
+    if (state.garageServices.length > 0) {
+      if (!silent) toast("Custom garage services are already loaded.", "info");
+      return true;
+    }
+    const rows = DEFAULT_GARAGE_SERVICES.map((svc) =>
+      buildGarageServicePayload({ ...svc, active: true }, true)
+    );
+    const { error } = await sb.from("projects").insert(rows);
+    if (error) {
+      if (!silent) showNotice("Could not load default garage services: " + error.message, "err");
+      return false;
+    }
+    invalidateGarageServicesCache();
+    await recordAdminAudit(
+      "seed_garage_services",
+      "garage_service",
+      "defaults",
+      "Loaded 6 default garage services into live catalogue"
+    );
+    if (!silent) toast("6 default garage services loaded.", "ok");
+    await loadGarageServices({ silent: true });
+    return true;
+  }
+
+  async function loadGarageServices(opts = {}) {
+    if (!sb) return;
+    if (!opts.silent && $("garageServicesList")) {
+      $("garageServicesList").innerHTML = '<div class="empty">Loading garage services…</div>';
+    }
+    const { data, error } = await sb
+      .from("projects")
+      .select("id,title,description,media_gallery,published,created_at,updated_at")
+      .eq("type", "article")
+      .eq("category", "garage_service")
+      .order("created_at", { ascending: true });
+    if (error) {
+      showNotice("Could not load garage services: " + error.message, "err");
+      return;
+    }
+    state.garageServices = (data || [])
+      .map((row, idx) => parseGarageServiceRow(row, idx))
+      .sort((a, b) => a.sort_order - b.sort_order || String(a.name).localeCompare(String(b.name)));
+    renderGarageServices();
+  }
+
+  $("newGarageService")?.addEventListener("click", () => openGarageServiceForm(null, ""));
+  $("cancelGarageService")?.addEventListener("click", closeGarageServiceForm);
+  $("garageServiceForm")?.addEventListener("input", () => markDirty("garageService", true));
+  $("garageServiceSearch")?.addEventListener("input", debounce(renderGarageServices, 140));
+  $("garageServiceStatus")?.addEventListener("change", renderGarageServices);
+
+  $("seedGarageServices")?.addEventListener("click", async () => {
+    const btn = $("seedGarageServices");
+    if (btn) btn.disabled = true;
+    await seedDefaultGarageServices(false);
+    if (btn && btn.isConnected) btn.disabled = false;
+  });
+
+  $("garageServiceForm")?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const errEl = $("gsError");
+    errEl?.classList.add("hidden");
+
+    const id = $("gsId")?.value.trim() || "";
+    const defaultIdxRaw = $("gsDefaultIdx")?.value.trim() || "";
+    const name = $("gsName")?.value.trim() || "";
+    const priceRaw = $("gsPrice")?.value;
+    const price_kes = Number(priceRaw);
+    const duration = $("gsDuration")?.value.trim() || "";
+    const sort_order = Math.max(1, Number($("gsOrder")?.value || 1) || 1);
+    const description = $("gsDescription")?.value.trim() || "";
+    const active = !!$("gsActive")?.checked;
+
+    if (!name || priceRaw === "" || !Number.isFinite(price_kes) || price_kes < 0 || !duration) {
+      if (errEl) {
+        errEl.textContent = "Service name, valid KES price, and estimated duration are required.";
+        errEl.classList.remove("hidden");
+      }
+      return;
+    }
+
+    const btn = $("saveGarageService");
+    if (btn) btn.disabled = true;
+    try {
+      if (id) {
+        const payload = buildGarageServicePayload(
+          { name, price_kes, duration, sort_order, description, active },
+          false
+        );
+        const { error } = await sb.from("projects").update(payload).eq("id", id);
+        if (error) throw error;
+        await recordAdminAudit(
+          "update_garage_service",
+          "garage_service",
+          id,
+          `Updated garage service ${name} (${moneyKES(price_kes)}, ${duration})`
+        );
+      } else if (state.garageServices.length === 0 && defaultIdxRaw !== "") {
+        const idx = Number(defaultIdxRaw);
+        const rows = DEFAULT_GARAGE_SERVICES.map((svc, i) =>
+          buildGarageServicePayload(
+            i === idx ? { name, price_kes, duration, sort_order, description, active } : { ...svc, active: true },
+            true
+          )
+        );
+        const { error } = await sb.from("projects").insert(rows);
+        if (error) throw error;
+        await recordAdminAudit(
+          "customize_default_garage_service",
+          "garage_service",
+          String(idx),
+          `Initialised garage catalogue and updated ${name} (${moneyKES(price_kes)})`
+        );
+      } else {
+        let batch = [];
+        if (state.garageServices.length === 0) {
+          const includeDefaults = await confirm({
+            eyebrow: "GARAGE CATALOGUE",
+            title: "Keep the 6 default services too?",
+            message:
+              "Once you save a custom service, the Garage page displays your database catalogue. Include the 6 standard services alongside this new service?",
+            confirmText: "Include 6 defaults + new",
+            cancelText: "Save only this service",
+          });
+          if (includeDefaults) {
+            batch = DEFAULT_GARAGE_SERVICES.map((svc) =>
+              buildGarageServicePayload({ ...svc, active: true }, true)
+            );
+          }
+        }
+        batch.push(
+          buildGarageServicePayload(
+            { name, price_kes, duration, sort_order, description, active },
+            true
+          )
+        );
+        const { data, error } = await sb.from("projects").insert(batch).select("id");
+        if (error) throw error;
+        await recordAdminAudit(
+          "create_garage_service",
+          "garage_service",
+          data?.[data.length - 1]?.id || null,
+          `Added garage service ${name} (${moneyKES(price_kes)}, ${duration})`
+        );
+      }
+
+      invalidateGarageServicesCache();
+      closeGarageServiceForm();
+      toast(`Garage service "${name}" saved.`, "ok");
+      await loadGarageServices({ silent: true });
+    } catch (err) {
+      if (errEl) {
+        errEl.textContent = err?.message || "Could not save garage service.";
+        errEl.classList.remove("hidden");
+      }
+    } finally {
+      if (btn) btn.disabled = false;
+    }
+  });
+
+  $("garageServicesList")?.addEventListener("click", async (e) => {
+    const customize = e.target.closest("[data-gs-customize]");
+    if (customize) {
+      const idx = Number(customize.dataset.gsCustomize);
+      const def = DEFAULT_GARAGE_SERVICES[idx];
+      if (def) openGarageServiceForm({ ...def, active: true }, idx);
+      return;
+    }
+
+    const edit = e.target.closest("[data-gs-edit]");
+    if (edit) {
+      const item = state.garageServices.find((x) => String(x.id) === edit.dataset.gsEdit);
+      if (item) openGarageServiceForm(item, "");
+      return;
+    }
+
+    const tog = e.target.closest("[data-gs-toggle]");
+    if (tog) {
+      const item = state.garageServices.find((x) => String(x.id) === tog.dataset.gsToggle);
+      if (!item) return;
+      const next = item.active === false;
+      const { error } = await sb
+        .from("projects")
+        .update({ published: next, updated_at: new Date().toISOString() })
+        .eq("id", item.id);
+      if (error) {
+        showNotice("Could not update service visibility: " + error.message, "err");
+        return;
+      }
+      invalidateGarageServicesCache();
+      await recordAdminAudit(
+        "toggle_garage_service",
+        "garage_service",
+        item.id,
+        `${next ? "Activated" : "Hid"} garage service ${item.name}`
+      );
+      toast(`${item.name} ${next ? "activated on website" : "hidden"}.`, "ok");
+      await loadGarageServices({ silent: true });
+      return;
+    }
+
+    const del = e.target.closest("[data-gs-delete]");
+    if (del) {
+      const item = state.garageServices.find((x) => String(x.id) === del.dataset.gsDelete);
+      if (!item) return;
+      const ok = await confirm({
+        eyebrow: "GARAGE SERVICES · DELETE",
+        title: `Delete "${item.name}"?`,
+        message: "This removes the service and its listed price from the Garage booking page.",
+        confirmText: "Delete service",
+        danger: true,
+      });
+      if (!ok) return;
+      const { error } = await sb.from("projects").delete().eq("id", item.id);
+      if (error) {
+        showNotice("Could not delete service: " + error.message, "err");
+        return;
+      }
+      invalidateGarageServicesCache();
+      await recordAdminAudit(
+        "delete_garage_service",
+        "garage_service",
+        item.id,
+        `Deleted garage service ${item.name}`
+      );
+      toast(`Deleted "${item.name}".`, "ok");
+      await loadGarageServices({ silent: true });
+    }
+  });
+
   A.registerLoader("bookingsPanel", loadBookings);
+  A.registerLoader("garageServicesPanel", loadGarageServices);
   A.registerLoader("chauffeurPanel", loadChauffeur);
   A.registerLoader("mechanicsPanel", loadMechanics);
 
   window.ThreePedalsAdminOps = {
     loadBookings,
     filterGarage: renderGarageBookings,
+    loadGarageServices,
+    filterGarageServices: renderGarageServices,
     loadChauffeur,
     filterChauffeur: renderChauffeurBookings,
     setChauffeurTab,

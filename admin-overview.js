@@ -272,7 +272,7 @@
       moneyKES(ss.reduce((a, x) => a + Number(x.reported_sale_price || 0), 0))
     );
 
-    const articles = js.filter((x) => x.type === "article");
+    const articles = js.filter((x) => x.type === "article" && x.category !== "garage_service");
     const projects = js.filter((x) => ["photo", "video"].includes(x.type));
     set("ovArticles", articles.filter((x) => x.published === true).length);
     set("ovDrafts", articles.filter((x) => x.published !== true).length);

@@ -318,7 +318,7 @@
       return;
     }
     const rows = data || [];
-    state.journalItems = rows.filter((r) => r.type === "article");
+    state.journalItems = rows.filter((r) => r.type === "article" && r.category !== "garage_service");
     state.projectItems = rows.filter((r) => ["photo", "video"].includes(r.type));
     renderJournalList();
     renderProjectsList();

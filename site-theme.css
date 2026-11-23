@@ -284,11 +284,12 @@ html:not([data-theme="light"]) body:has(#app) :is(
     background: rgba(18, 20, 23, .90) !important;
     background-color: rgba(18, 20, 23, .90) !important;
   }
-  html:not([data-theme="light"]) body :is(.ghost, .btn.ghost, .btn.dark, .alt, .back, .icon-btn, button.secondary, .btn-secondary):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
+  html:not([data-theme="light"]) body :is(.ghost, .btn.ghost, .btn.dark, .alt, .back, .icon-btn, button.secondary, .btn-secondary):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):not(#bBtn):not(#roadSubmit) {
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
     background: rgba(26, 28, 32, .92) !important;
     background-color: rgba(26, 28, 32, .92) !important;
+    color: #f5f1e8 !important;
   }
   html:not([data-theme="light"]) body :is(input, select, textarea):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):not(#uxChatDrawer *) {
     -webkit-backdrop-filter: none !important;

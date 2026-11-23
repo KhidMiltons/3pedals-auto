@@ -422,7 +422,7 @@ footer{border-color:var(--line);background:linear-gradient(180deg,transparent,rg
   nav button,nav a.navlink { --dock-scale: 1 !important; }
 }
 </style>
-<link rel="stylesheet" href="site-theme.css?v=20261123-fix5">
+<link rel="stylesheet" href="site-theme.css?v=20261123-fix8">
 
 <style id="garage-floating-glass-whatsapp">
 /* Match the transparent, borderless champagne-glass WhatsApp icon used on the home page. */
@@ -567,8 +567,8 @@ html body h1,html body h2,html body h3,html body .logo,html body .brand{font-fam
 html body > header .logo,html body > header .brand{font-family:"Playfair Display",Georgia,serif!important;font-size:27px!important;font-weight:700!important;letter-spacing:.03em!important;text-transform:uppercase!important}
 html body > header nav a,html body > header nav button,html body > header .headnav a,html body > header .headnav button,html body > header .back{font-family:Manrope,system-ui,sans-serif!important;font-size:14px!important;font-weight:400!important;letter-spacing:0!important}
 </style>
-<link rel="stylesheet" href="/site-ux.css?v=20261123-fix5">
-<link rel="stylesheet" href="/header-modern.css?v=20261123-fix5">
+<link rel="stylesheet" href="/site-ux.css?v=20261123-fix8">
+<link rel="stylesheet" href="/header-modern.css?v=20261123-fix8">
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
@@ -586,7 +586,7 @@ html body > header nav a,html body > header nav button,html body > header .headn
     <button role="tab" data-tab="book" aria-selected="false">Services &amp; booking</button>
     <button role="tab" data-tab="roadside" aria-selected="false">Mobile mechanic</button>
     <button role="tab" data-tab="mechanics" aria-selected="false">Verified mechanics</button>
-    <a class="navlink" id="cLink" href="/">Cars for sale</a>
+    <a class="navlink" id="cLink" href="/">Inventory</a>
   </nav>
 </div></header>
 
@@ -595,14 +595,15 @@ html body > header nav a,html body > header nav button,html body > header .headn
   <div class="hero garage-hero"><h1>Servicing, repairs and inspections you can trust.</h1>
   <p>Book a slot online, message us on WhatsApp, or call. We confirm every booking personally.</p>
   <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
-    <a class="btn alt" id="garageWhatsAppCta" href="https://wa.me/254791961807?text=Hello%203%20Pedals%20Garage%2C%20I%27d%20like%20to%20book%20a%20service." target="_blank" rel="noopener">Chat on WhatsApp</a>
+    <button class="btn" type="button" data-go="book">Book a service</button>
+    <a class="btn ghost" id="garageWhatsAppCta" href="https://wa.me/254791961807?text=Hello%203%20Pedals%20Garage%2C%20I%27d%20like%20to%20book%20a%20service." target="_blank" rel="noopener">Chat on WhatsApp</a>
   </div></div>
   <div class="tiles">
     <button class="tile" data-go="book"><h3>Book a service</h3><span class="meta">Pick a service and a date</span></button>
     <button class="tile" data-go="roadside"><h3>Roadside assistance</h3><span class="meta">Request a mobile mechanic at your location</span></button>
     <button class="tile" data-go="mechanics"><h3>Verified mechanics</h3><span class="meta">Find a specialist for your car</span></button>
     <button class="tile" id="inspTile"><h3>Pre-purchase inspection</h3><span class="meta">Get a car checked before you buy</span></button>
-    <a class="tile" id="cTile" href="/"><h3>Cars for sale</h3><span class="meta">Browse 3 Pedals Auto KE listings</span></a>
+    <a class="tile" id="cTile" href="/"><h3>Inventory</h3><span class="meta">Browse 3 Pedals Auto KE listings</span></a>
   </div>
   <div id="garageContactCard" class="contact"><h2>Visit or contact the garage</h2>
     <div class="svc garage-contact-row">
@@ -619,6 +620,11 @@ html body > header nav a,html body > header nav button,html body > header .headn
       <span class="garage-contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
       <div class="garage-contact-copy"><b>Postal address</b><span class="meta">Send letters and documents here</span></div>
       <span id="garageAddressContact">P.O. Box 462-00516</span>
+    </div>
+    <div class="svc garage-contact-row">
+      <span class="garage-contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+      <div class="garage-contact-copy"><b>Opening hours</b><span class="meta">Workshop &amp; inspection hours · Closed Sundays</span></div>
+      <span id="garageHoursContact">Mon–Sat, 8am–6pm</span>
     </div>
   </div>
 </section>
@@ -638,7 +644,7 @@ html body > header nav a,html body > header nav button,html body > header .headn
         <label for="bPhone">Phone</label><input id="bPhone" type="tel">
         <input id="hp2" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
         <p id="bErr" class="meta" style="color:var(--err)" role="alert"></p>
-        <button class="btn alt" id="bBtn">Book service</button>
+        <button class="btn" id="bBtn">Book service</button>
       </form>
       <div class="note" id="bOk" hidden></div>
       <div id="mineBox" hidden><h3 style="margin-top:20px">Your bookings</h3><div id="mine"></div></div>
@@ -646,11 +652,11 @@ html body > header nav a,html body > header nav button,html body > header .headn
     </div>
   </div>
 </section>
-<section id="roadside" hidden><div class="hero garage-hero"><h1>Help where you are.</h1><p>Request a verified mobile mechanic for a breakdown, inspection, or repair at your location.</p></div><div class="cols"><div class="panel request-hero"><span class="tag">MOBILE MECHANIC</span><h2 style="margin:10px 0">Roadside assistance</h2><p class="meta">Tell us where the vehicle is and what happened. The garage team will contact you to confirm availability and the call-out fee.</p><p class="meta">Sign in before making a request so it appears in your booking history.</p></div><div class="panel request-form" style="margin:0"><h2>Request a mechanic</h2><p class="note" id="roadLoginNote" hidden></p><form id="roadForm"><div class="request-grid"><div class="full"><label for="rService">What do you need?</label><select id="rService"><option>Breakdown diagnosis</option><option>Battery or starting problem</option><option>Tyre or wheel assistance</option><option>Mobile vehicle inspection</option><option>Minor roadside repair</option><option>Other mechanical help</option></select></div><div><label for="rCar">Vehicle / car</label><input id="rCar" required placeholder="e.g. 2015 Toyota Fielder"></div><div><label for="rDate">Preferred date</label><input id="rDate" type="date" required></div><div class="full"><label for="rLocation">Current location or map pin link</label><input id="rLocation" required placeholder="Area, street, landmark, or Google Maps link"></div><div class="full"><label for="rDetails">Describe the issue</label><textarea id="rDetails" rows="4" placeholder="What happened? Is the car safe to move?"></textarea></div><div><label for="rName">Your name</label><input id="rName" required></div><div><label for="rPhone">Phone number</label><input id="rPhone" type="tel" required></div></div><input id="roadHoneypot" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px"><p id="roadError" class="meta" role="alert"></p><button class="btn alt" id="roadSubmit" type="submit">Request mobile mechanic</button></form><div id="roadSuccess" class="note request-status" hidden></div></div></div></section>
+<section id="roadside" hidden><div class="hero garage-hero"><h1>Help where you are.</h1><p>Request a verified mobile mechanic for a breakdown, inspection, or repair at your location.</p></div><div class="cols"><div class="panel request-hero"><span class="tag">MOBILE MECHANIC</span><h2 style="margin:10px 0">Roadside assistance</h2><p class="meta">Tell us where the vehicle is and what happened. The garage team will contact you to confirm availability and the call-out fee.</p><p class="meta">Sign in before making a request so it appears in your booking history.</p></div><div class="panel request-form" style="margin:0"><h2>Request a mechanic</h2><p class="note" id="roadLoginNote" hidden></p><form id="roadForm"><div class="request-grid"><div class="full"><label for="rService">What do you need?</label><select id="rService"><option>Breakdown diagnosis</option><option>Battery or starting problem</option><option>Tyre or wheel assistance</option><option>Mobile vehicle inspection</option><option>Minor roadside repair</option><option>Other mechanical help</option></select></div><div><label for="rCar">Vehicle / car</label><input id="rCar" required placeholder="e.g. 2015 Toyota Fielder"></div><div><label for="rDate">Preferred date</label><input id="rDate" type="date" required></div><div class="full"><label for="rLocation">Current location or map pin link</label><input id="rLocation" required placeholder="Area, street, landmark, or Google Maps link"></div><div class="full"><label for="rDetails">Describe the issue</label><textarea id="rDetails" rows="4" placeholder="What happened? Is the car safe to move?"></textarea></div><div><label for="rName">Your name</label><input id="rName" required></div><div><label for="rPhone">Phone number</label><input id="rPhone" type="tel" required></div></div><input id="roadHoneypot" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px"><p id="roadError" class="meta" role="alert"></p><button class="btn" id="roadSubmit" type="submit">Request mobile mechanic</button></form><div id="roadSuccess" class="note request-status" hidden></div></div></div></section>
 <section id="mechanics" hidden><div class="hero garage-hero"><h1>Verified specialists for your car.</h1><p>Meet garage technicians and mobile mechanics with experience across specific makes and models.</p></div><div id="mechanicDirectory" class="directory-grid"><div class="empty-state">Loading verified mechanics…</div></div></section>
 </main>
 
-<footer class="ux-site-footer no-print"><div class="wrap">© <span data-ux-year>2026</span> 3 Pedals Garage · Prices in KES.</div></footer>
+<footer class="ux-site-footer no-print"><div class="wrap">© <span data-ux-year>2026</span> 3 Pedals Garage.</div></footer>
 <a class="fab" id="garageFab" href="https://wa.me/254791961807?text=Hello%203%20Pedals%20Garage" target="_blank" rel="noopener" aria-label="Chat on WhatsApp" title="Chat on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.8a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.4-4.9A8.4 8.4 0 1 1 20.5 11.8Z"/><path d="M8.4 7.7c.2-.5.4-.5.7-.5h.5c.2 0 .4.1.5.4l.8 1.8c.1.2.1.4-.1.6l-.6.7c-.2.2-.2.4 0 .7.5.8 1.2 1.5 2.1 2 .2.1.4.1.6-.1l.8-.9c.2-.2.4-.2.6-.1l1.7.8c.3.1.4.3.4.5 0 .4-.2 1.1-.7 1.5-.5.5-1.2.7-2 .5-1-.2-2.3-.8-3.5-1.9-1.4-1.2-2.3-2.7-2.5-3.8-.2-.9.1-1.5.7-2.2Z"/></svg></a>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -670,7 +676,7 @@ let garageSettings={garage_email:"miltonangwenyi@gmail.com",garage_whatsapp:"254
 function localDateString(){const d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,10)}
 function prettyGaragePhone(value){const raw=String(value||"").trim(),digits=raw.replace(/\D/g,"");if(digits.length===12&&digits.startsWith("254"))return "+254 "+digits.slice(3,6)+" "+digits.slice(6,9)+" "+digits.slice(9);if(digits.length===10&&digits.startsWith("0"))return "+254 "+digits.slice(1,4)+" "+digits.slice(4,7)+" "+digits.slice(7);return raw}
 const GARAGE_SETTINGS_CACHE_KEY="3pedals:garage-settings:v1";
-function applyGarageSettings(){const digits=String(garageSettings.garage_whatsapp||"").replace(/\D/g,"");const phone=String(garageSettings.garage_phone||"");const wa="https://wa.me/"+digits;const waContact=$("garageWhatsappContact");if(waContact)waContact.textContent=prettyGaragePhone(garageSettings.garage_whatsapp);[["garageWhatsAppCta",wa+"?text="+encodeURIComponent("Hello 3 Pedals Garage, I would like to book a service.")],["garageWhatsappContact",wa],["garageFab",wa+"?text="+encodeURIComponent("Hello 3 Pedals Garage")]].forEach(([id,url])=>{const a=$(id);if(a)a.href=url});[["garagePhoneCta",phone],["garagePhoneContact",phone]].forEach(([id,value])=>{const a=$(id);if(a){a.href="tel:"+value.replace(/[^+0-9]/g,"");a.textContent=value}});const email=$("garageEmailContact"),bookEmail=$("garageEmailBooking");if(email){email.href="mailto:"+garageSettings.garage_email;email.textContent=garageSettings.garage_email}if(bookEmail){bookEmail.href="mailto:"+garageSettings.garage_email;bookEmail.textContent=garageSettings.garage_email}$("garageAddressContact").textContent=garageSettings.garage_address||"";$("garageHoursContact").textContent=garageSettings.garage_hours||"";$("garageHoursBooking").textContent=(garageSettings.garage_hours||"")+" · Closed Sundays"}
+function applyGarageSettings(){const digits=String(garageSettings.garage_whatsapp||"").replace(/\D/g,"");const phone=String(garageSettings.garage_phone||"");const wa="https://wa.me/"+digits;const waContact=$("garageWhatsappContact");if(waContact)waContact.textContent=prettyGaragePhone(garageSettings.garage_whatsapp);[["garageWhatsAppCta",wa+"?text="+encodeURIComponent("Hello 3 Pedals Garage, I would like to book a service.")],["garageWhatsappContact",wa],["garageFab",wa+"?text="+encodeURIComponent("Hello 3 Pedals Garage")]].forEach(([id,url])=>{const a=$(id);if(a)a.href=url});[["garagePhoneCta",phone],["garagePhoneContact",phone]].forEach(([id,value])=>{const a=$(id);if(a){a.href="tel:"+value.replace(/[^+0-9]/g,"");a.textContent=value}});const email=$("garageEmailContact"),bookEmail=$("garageEmailBooking");if(email){email.href="mailto:"+garageSettings.garage_email;email.textContent=garageSettings.garage_email}if(bookEmail){bookEmail.href="mailto:"+garageSettings.garage_email;bookEmail.textContent=garageSettings.garage_email}if($("garageAddressContact"))$("garageAddressContact").textContent=garageSettings.garage_address||"";if($("garageHoursContact"))$("garageHoursContact").textContent=garageSettings.garage_hours||"";if($("garageHoursBooking"))$("garageHoursBooking").textContent=(garageSettings.garage_hours||"")+" · Closed Sundays"}
 async function loadGarageSettings(){
  try{const saved=JSON.parse(localStorage.getItem(GARAGE_SETTINGS_CACHE_KEY)||"null");if(saved&&saved.data&&Date.now()-saved.at<60*60*1000){garageSettings={...garageSettings,...saved.data};applyGarageSettings()}}catch(_){}
  if(!sb)return;
@@ -739,12 +745,126 @@ function refreshAccount(){
   renderMine();
 }
 $("accountOpen").onclick=async()=>{if(me&&sb)await sb.auth.signOut();else window.location.href=authUrl("login")};
-const services=[
- ["Oil and filter change",3500,"45 min"],["Full service",8500,"3 hrs"],["Brake pads and discs check",6000,"2 hrs"],
- ["Wheel alignment and balancing",3000,"1 hr"],["Computer diagnostics",2500,"1 hr"],["Pre-purchase inspection",5000,"2 hrs"]
+const GARAGE_SERVICES_CACHE_KEY="3pedals:garage-services:v1";
+const DEFAULT_GARAGE_SERVICES=[
+  {name:"Oil and filter change",price_kes:3500,duration:"45 min",sort_order:1,description:""},
+  {name:"Full service",price_kes:8500,duration:"3 hrs",sort_order:2,description:""},
+  {name:"Brake pads and discs check",price_kes:6000,duration:"2 hrs",sort_order:3,description:""},
+  {name:"Wheel alignment and balancing",price_kes:3000,duration:"1 hr",sort_order:4,description:""},
+  {name:"Computer diagnostics",price_kes:2500,duration:"1 hr",sort_order:5,description:""},
+  {name:"Pre-purchase inspection",price_kes:5000,duration:"2 hrs",sort_order:6,description:""}
 ];
-$("svcList").innerHTML=services.map(s=>`<div class="svc"><div><b>${s[0]}</b><span class="meta">About ${s[2]}</span></div><b>KES ${fmt(s[1])}</b></div>`).join("");
-$("bSvc").innerHTML=services.map(s=>`<option>${s[0]}</option>`).join("");
+let garageServices=DEFAULT_GARAGE_SERVICES.slice();
+
+function parseGarageServiceRow(row,fallbackIdx=0){
+  const gallery=Array.isArray(row?.media_gallery)?row.media_gallery:[];
+  const meta=gallery.find(entry=>entry&&typeof entry==="object")||{};
+  const priceNum=Number(meta.price_kes);
+  const orderNum=Number(meta.sort_order);
+  return {
+    name:String(row?.title||meta.name||"Garage service").trim(),
+    price_kes:Number.isFinite(priceNum)&&priceNum>=0?priceNum:0,
+    duration:String(meta.duration||"1 hr").trim(),
+    sort_order:Number.isFinite(orderNum)&&orderNum>0?orderNum:fallbackIdx+1,
+    description:String(row?.description||meta.description||"").trim()
+  };
+}
+
+function syncGarageServiceSelection(serviceName){
+  const bSvc=$("bSvc"),svcList=$("svcList");
+  if(!bSvc)return;
+  if(serviceName&&garageServices.some(s=>s.name===serviceName)){
+    bSvc.value=serviceName;
+  }
+  const activeName=bSvc.value;
+  if(svcList){
+    svcList.querySelectorAll(".garage-svc-item").forEach(btn=>{
+      const match=btn.dataset.svcName===activeName;
+      btn.classList.toggle("is-selected",match);
+      btn.setAttribute("aria-pressed",String(match));
+    });
+  }
+}
+
+function updateGarageOfferSchema(){
+  try{
+    const ld=document.querySelector('script[type="application/ld+json"]');
+    if(!ld)return;
+    const obj=JSON.parse(ld.textContent||"{}");
+    if(obj.hasOfferCatalog){
+      obj.hasOfferCatalog.itemListElement=garageServices.map(s=>({
+        "@type":"Offer",
+        "priceCurrency":"KES",
+        "price":String(Math.round(Number(s.price_kes)||0)),
+        "itemOffered":{"@type":"Service","name":s.name,"description":s.description||undefined}
+      }));
+      ld.textContent=JSON.stringify(obj,null,2);
+    }
+  }catch(_){}
+}
+
+function renderGarageServices(nextServices,preferredName=""){
+  const list=Array.isArray(nextServices)&&nextServices.length?nextServices:DEFAULT_GARAGE_SERVICES;
+  garageServices=list.slice().sort((a,b)=>a.sort_order-b.sort_order||String(a.name).localeCompare(String(b.name)));
+  const svcList=$("svcList"),bSvc=$("bSvc");
+  const prevChoice=preferredName||(bSvc?bSvc.value:"");
+  if(svcList){
+    svcList.innerHTML=garageServices.map(s=>`<button type="button" class="svc garage-svc-item" data-svc-name="${esc(s.name)}" aria-pressed="false"><div class="garage-svc-copy"><b>${esc(s.name)}</b>${s.description?`<span class="garage-svc-desc">${esc(s.description)}</span>`:""}<span class="meta">About ${esc(s.duration)}</span></div><b class="garage-svc-price">KES ${fmt(s.price_kes)}</b></button>`).join("");
+  }
+  if(bSvc){
+    bSvc.innerHTML=garageServices.map(s=>`<option value="${esc(s.name)}">${esc(s.name)} — KES ${fmt(s.price_kes)}</option>`).join("");
+    if(prevChoice&&garageServices.some(s=>s.name===prevChoice)){
+      bSvc.value=prevChoice;
+    }else if(garageServices.length){
+      bSvc.value=garageServices[0].name;
+    }
+  }
+  syncGarageServiceSelection(bSvc?bSvc.value:"");
+  updateGarageOfferSchema();
+}
+
+async function loadGarageServices(){
+  try{
+    const cached=JSON.parse(localStorage.getItem(GARAGE_SERVICES_CACHE_KEY)||"null");
+    if(cached&&Array.isArray(cached.rows)&&cached.rows.length&&Date.now()-cached.at<15*60*1000){
+      renderGarageServices(cached.rows);
+    }
+  }catch(_){}
+  if(!sb)return;
+  try{
+    const {data,error}=await sb
+      .from("projects")
+      .select("id,title,description,media_gallery,published,created_at")
+      .eq("type","article")
+      .eq("category","garage_service")
+      .eq("published",true)
+      .order("created_at",{ascending:true});
+    if(error)throw error;
+    if(Array.isArray(data)&&data.length){
+      const parsed=data.map((r,i)=>parseGarageServiceRow(r,i));
+      try{localStorage.setItem(GARAGE_SERVICES_CACHE_KEY,JSON.stringify({at:Date.now(),rows:parsed}))}catch(_){}
+      renderGarageServices(parsed);
+    }else{
+      try{localStorage.removeItem(GARAGE_SERVICES_CACHE_KEY)}catch(_){}
+      renderGarageServices(DEFAULT_GARAGE_SERVICES);
+    }
+  }catch(err){
+    console.warn("Garage services catalogue unavailable; built-in defaults shown.",err);
+  }
+}
+
+renderGarageServices(DEFAULT_GARAGE_SERVICES);
+
+$("svcList")?.addEventListener("click",e=>{
+  const item=e.target.closest(".garage-svc-item");
+  if(!item)return;
+  syncGarageServiceSelection(item.dataset.svcName);
+  if(window.innerWidth<=860){
+    $("bCar")?.focus({preventScroll:false});
+  }
+});
+$("bSvc")?.addEventListener("change",()=>syncGarageServiceSelection($("bSvc").value));
+
 const garageSlots=["08:00–09:30","09:30–11:00","11:00–12:30","13:30–15:00","15:00–16:30","16:30–18:00"];
 async function loadAvailableGarageSlots(){const date=$("bDate").value,select=$("bTime"),old=select.value;let available=new Set(garageSlots);if(sb&&date){const {data,error}=await sb.rpc("get_available_garage_slots",{p_date:date});if(!error&&Array.isArray(data))available=new Set(data.map(x=>x.time_slot))}select.innerHTML='<option value="">Choose a time</option>'+garageSlots.map(slot=>`<option value="${slot}"${available.has(slot)?"":" disabled"}>${slot}${available.has(slot)?"":" · Booked"}</option>`).join("");if(available.has(old))select.value=old}
 $("bDate").addEventListener("change",loadAvailableGarageSlots);
@@ -766,12 +886,16 @@ document.querySelectorAll("nav button, nav a.navlink").forEach((item,index,items
 });
 document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>show(b.dataset.tab));
 document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>show(b.dataset.go));
-$("inspTile").onclick=()=>{show("book");$("bSvc").value="Pre-purchase inspection"};
+$("inspTile").onclick=()=>{
+  show("book");
+  const insp=garageServices.find(s=>/pre-?purchase|inspection/i.test(s.name))||garageServices[0];
+  if(insp)syncGarageServiceSelection(insp.name);
+};
 
 // Deep links open booking, while Back first returns to the Garage home section.
 try{
   const current=new URL(window.location.href),sv=current.searchParams.get("service"),car=current.searchParams.get("car"),requested=current.searchParams.get("section")==="book"||!!sv||!!car,route=current.hash.slice(1);
-  if(requested){const target=new URL(current);target.searchParams.delete("section");const base=new URL(target);base.searchParams.delete("service");base.searchParams.delete("car");base.hash="";history.replaceState({garageSection:"home"},"",base.pathname+base.search);if(sv&&services.some(s=>s[0]===sv))$("bSvc").value=sv;if(car)$("bCar").value=car.slice(0,120);const query=new URLSearchParams();if(sv)query.set("service",sv);if(car)query.set("car",car);const suffix=query.toString()?`?${query}`:"";history.pushState({garageSection:"book"},"",location.pathname+suffix+"#book");show("book",{updateUrl:false})}
+  if(requested){const target=new URL(current);target.searchParams.delete("section");const base=new URL(target);base.searchParams.delete("service");base.searchParams.delete("car");base.hash="";history.replaceState({garageSection:"home"},"",base.pathname+base.search);if(sv&&garageServices.some(s=>s.name===sv))syncGarageServiceSelection(sv);if(car)$("bCar").value=car.slice(0,120);const query=new URLSearchParams();if(sv)query.set("service",sv);if(car)query.set("car",car);const suffix=query.toString()?`?${query}`:"";history.pushState({garageSection:"book"},"",location.pathname+suffix+"#book");show("book",{updateUrl:false})}
   else if(["book","roadside","mechanics"].includes(route)){history.replaceState({garageSection:route},"",location.href);show(route,{updateUrl:false,scroll:false})}
   else history.replaceState({garageSection:"home"},"",location.href);
 }catch(_){}
@@ -811,7 +935,7 @@ $("roadForm").onsubmit=async e=>{
 $("rDate").min=localDateString();
 if(sb)sb.auth.onAuthStateChange(()=>setTimeout(loadSession,0));
 loadSession();
-loadGarageSettings();loadPublicMechanics();
+loadGarageSettings();loadGarageServices();loadPublicMechanics();
 </script>
 
 <script>
@@ -886,305 +1010,6 @@ document.addEventListener('click', function(event) {
 })();
 </script>
 
-<style id="final-background-wallpaper-fix">
-html:not([data-theme="light"]),html:not([data-theme="light"]) body{background-color:#08090b!important}
-body{background-image:linear-gradient(90deg,rgba(4,5,7,.56),rgba(4,5,7,.28) 55%,rgba(4,5,7,.40)),linear-gradient(180deg,rgba(4,5,7,.10),rgba(4,5,7,.18) 55%,rgba(4,5,7,.55)),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72")!important;background-position:center,center,center center!important;background-size:cover,cover,cover!important;background-repeat:no-repeat,no-repeat,no-repeat!important;background-attachment:fixed,fixed,fixed!important}
-body:before{content:none!important;display:none!important}
-body:after{background:linear-gradient(90deg,rgba(0,0,0,.10),transparent 48%,rgba(0,0,0,.10))!important}
-#home .hero, .garage-hero{background:rgba(18,19,22,.28)!important;background-image:linear-gradient(110deg,rgba(15,16,18,.22),rgba(255,255,255,.025))!important;backdrop-filter:blur(22px) saturate(130%)!important;-webkit-backdrop-filter:blur(22px) saturate(130%)!important}
-#home .tile,.tiles .tile,.showroom-vehicle-note,.garage-hero ~ .tiles .tile{background:rgba(19,20,23,.32)!important;backdrop-filter:blur(22px) saturate(135%)!important;-webkit-backdrop-filter:blur(22px) saturate(135%)!important}
-@media(max-width:760px){body{background-attachment:scroll,scroll,scroll!important;background-position:center,center,58% center!important}}
-</style>
-
-<style id="borderless-glass-footer-and-garage">
-/* Borderless translucent glass for Garage page sections (shared footer styled by site-ux.css). */
-.garage-hero,.garage-section,.garage-panel,.garage-card,
-.tiles .tile,.tile,.card,.panel,.service-card,.booking-card,.contact-card,.stat,.showroom-vehicle-note,
-.garage .tile,.garage .card,.garage .panel{
-  border:0!important;border-top:0!important;border-bottom:0!important;outline:0!important;
-  background:rgba(20,22,25,.28)!important;
-  -webkit-backdrop-filter:blur(24px) saturate(145%)!important;
-  backdrop-filter:blur(24px) saturate(145%)!important;
-  box-shadow:0 16px 42px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.07)!important;
-}
-</style>
-
-
-<style id="dealer-garage-location-borderless-glass">
-#dealer,.dealer-section,.dealer-card,.dealer-panel,.dealer-hero,.dealer-location,
-#garage,.garage-section,.garage-card,.garage-panel,.garage-hero,
-#location,.location-section,.location-card,.location-panel,.location-hero,
-.tiles .tile,.tile,.card,.panel,.service-card,.booking-card,.contact-card,.stat{
- border:0!important;border-top:0!important;border-bottom:0!important;outline:0!important;
- background:rgba(20,22,25,.28)!important;
- -webkit-backdrop-filter:blur(24px) saturate(145%)!important;
- backdrop-filter:blur(24px) saturate(145%)!important;
- box-shadow:0 16px 42px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.06)!important;
-}
-.garage-hero,.dealer-hero,.location-hero{border-left:0!important;border-right:0!important}
-</style>
-
-
-<style id="garage-match-home-about-glass">
-/* Match Home/About: a softly blurred automotive wallpaper behind readable translucent glass surfaces. */
-html,body{background:transparent!important;background-color:transparent!important}
-html{min-height:100%;background-color:#0d0d0d!important}
-body{position:relative!important;isolation:isolate!important;min-height:100vh!important}
-body:before{
- content:""!important;display:block!important;position:fixed!important;inset:-10px!important;z-index:-1!important;pointer-events:none!important;
- background:linear-gradient(110deg,rgba(8,9,11,.42),rgba(8,9,11,.18) 48%,rgba(8,9,11,.42)),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72") center center/cover no-repeat!important;
- filter:blur(4px)!important;transform:scale(1.025)!important
-}
-body:after{content:none!important;display:none!important}
-.garage-hero,.garage-section,.garage-panel,.garage-card,.service-card,.booking-card,.contact-card,.stat,.svc,.rating-box,
-main section,.panel,.card{
- background:linear-gradient(145deg,rgba(24,24,25,.30),rgba(17,17,18,.38))!important;
- border-color:rgba(255,255,255,.22)!important;
- box-shadow:0 14px 38px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.14)!important;
- -webkit-backdrop-filter:blur(24px) saturate(125%)!important;
- backdrop-filter:blur(24px) saturate(125%)!important
-}
-input,select,textarea{
- background:rgba(20,20,21,.30)!important;border-color:rgba(255,255,255,.25)!important;
- -webkit-backdrop-filter:blur(16px)!important;backdrop-filter:blur(16px)!important
-}
-@media(max-width:760px){
- body:before{background-image:linear-gradient(180deg,rgba(8,9,11,.38),rgba(8,9,11,.50)),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72")!important}
-}
-</style>
-
-<style id="garage-visible-wallpaper-glass">
-/* Borderless standalone glass cards; lighter blur keeps the wallpaper visible. */
-.garage-hero,.garage-section,.garage-panel,.garage-card,.service-card,.booking-card,
-.contact-card,.stat,.svc,.rating-box,.tiles .tile,.tile,.panel,.card,
-main section,main article,main .section,.garage .tile,.garage .card,.garage .panel{
- background:linear-gradient(145deg,rgba(34,36,39,.16),rgba(17,18,20,.24))!important;
- background-image:linear-gradient(145deg,rgba(34,36,39,.16),rgba(17,18,20,.24))!important;
- border:0!important;outline:0!important;
- box-shadow:0 14px 30px rgba(0,0,0,.16)!important;
- -webkit-backdrop-filter:blur(12px) saturate(130%)!important;
- backdrop-filter:blur(12px) saturate(130%)!important
-}
-.garage-hero{background-color:rgba(24,25,27,.16)!important}
-body:before{filter:blur(2px)!important}
-</style>
-<style id="garage-compact-home-hero">
-/* Explicitly constrain the opening message card, overriding the original hero sizing. */
-#home>.hero.garage-hero{
- display:block!important;
- box-sizing:border-box!important;
- width:100%!important;
- max-width:none!important;
- min-width:0!important;
- min-height:0!important;
- height:auto!important;
- margin:18px auto 20px!important;
- padding:18px 22px!important;
- border:0!important;
- border-radius:18px!important;
-}
-#home>.hero.garage-hero h1{
- max-width:17em!important;
- margin:0 0 8px!important;
- font-size:clamp(25px,2.8vw,34px)!important;
- line-height:1.12!important;
-}
-#home>.hero.garage-hero p{
- max-width:54ch!important;
- margin:0!important;
- font-size:14px!important;
- line-height:1.5!important;
-}
-#home>.hero.garage-hero>div{margin-top:12px!important}
-#home>.hero.garage-hero .btn{padding:9px 13px!important;font-size:13px!important}
-@media(max-width:760px){
- #home>.hero.garage-hero{width:100%!important;max-width:100%!important;margin:14px auto 18px!important;padding:17px!important}
- #home>.hero.garage-hero h1{font-size:clamp(24px,6.5vw,30px)!important}
-}
-</style>
-
-<style id="garage-standalone-home-glass-sections">
-/* Match the compact, borderless glass cards used on the Garage home screen. */
-#book,#roadside,#mechanics{
-  display:block;
-  background:transparent!important;
-  background-image:none!important;
-  border:0!important;outline:0!important;
-  box-shadow:none!important;
-  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
-  padding:0!important;
-}
-#book[hidden],#roadside[hidden],#mechanics[hidden]{display:none!important}
-#book>.hero.garage-hero,
-#roadside>.hero.garage-hero,
-#mechanics>.hero.garage-hero{
-  display:block!important;box-sizing:border-box!important;
-  width:100%!important;max-width:none!important;min-width:0!important;
-  min-height:0!important;height:auto!important;
-  margin:18px 0 20px!important;padding:18px 22px!important;
-  border:0!important;border-radius:18px!important;
-  background:linear-gradient(145deg,rgba(34,36,39,.16),rgba(17,18,20,.24))!important;
-  box-shadow:0 14px 30px rgba(0,0,0,.16)!important;
-  -webkit-backdrop-filter:blur(12px) saturate(130%)!important;
-  backdrop-filter:blur(12px) saturate(130%)!important;
-}
-#book>.hero.garage-hero h1,
-#roadside>.hero.garage-hero h1,
-#mechanics>.hero.garage-hero h1{
-  max-width:17em!important;margin:0 0 8px!important;
-  font-size:clamp(25px,2.8vw,34px)!important;line-height:1.12!important;
-}
-#book>.hero.garage-hero p,
-#roadside>.hero.garage-hero p,
-#mechanics>.hero.garage-hero p{
-  max-width:54ch!important;margin:0!important;font-size:14px!important;line-height:1.5!important;
-}
-/* Keep service list, booking form, roadside intro and request form as separate cards. */
-#book>.cols,#roadside>.cols{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:16px!important;padding:0 0 28px!important}
-#book>.cols>.panel,#roadside>.cols>.panel{
-  box-sizing:border-box!important;min-width:0!important;height:auto!important;
-  margin:0!important;padding:20px!important;border:0!important;border-radius:18px!important;
-  background:linear-gradient(145deg,rgba(34,36,39,.16),rgba(17,18,20,.24))!important;
-  box-shadow:0 14px 30px rgba(0,0,0,.16)!important;
-  -webkit-backdrop-filter:blur(12px) saturate(130%)!important;
-  backdrop-filter:blur(12px) saturate(130%)!important;
-}
-#book>.cols>.panel h2,#roadside>.cols>.panel h2{font-size:26px!important;margin-top:0}
-#book #svcList .svc{border-bottom:1px solid rgba(255,255,255,.12)!important}
-#book #svcList .svc:last-child{border-bottom:0!important}
-#mechanics #mechanicDirectory{
-  display:grid!important;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))!important;
-  gap:16px!important;padding:0 0 28px!important;background:transparent!important;
-  border:0!important;box-shadow:none!important;backdrop-filter:none!important;
-}
-#mechanics #mechanicDirectory>.empty-state,
-#mechanics #mechanicDirectory>.card,
-#mechanics #mechanicDirectory>.tile,
-#mechanics #mechanicDirectory>article,
-#mechanics #mechanicDirectory>div{
-  border:0!important;border-radius:16px!important;
-  background:linear-gradient(145deg,rgba(34,36,39,.16),rgba(17,18,20,.24))!important;
-  box-shadow:0 14px 30px rgba(0,0,0,.16)!important;
-  -webkit-backdrop-filter:blur(12px) saturate(130%)!important;
-  backdrop-filter:blur(12px) saturate(130%)!important;
-}
-@media(max-width:760px){
- #book>.hero.garage-hero,#roadside>.hero.garage-hero,#mechanics>.hero.garage-hero{
-  width:100%!important;max-width:100%!important;margin:14px 0 18px!important;padding:17px!important
- }
- #book>.hero.garage-hero h1,#roadside>.hero.garage-hero h1,#mechanics>.hero.garage-hero h1{font-size:clamp(24px,6.5vw,30px)!important}
- #book>.cols,#roadside>.cols{grid-template-columns:minmax(0,1fr)!important;gap:14px!important}
- #book>.cols>.panel,#roadside>.cols>.panel{padding:17px!important}
-}
-</style>
-
-
-<style id="garage-actually-compact-section-cards">
-/* Reduce the physical height and padding of these cards, not just their glass styling. */
-#book>.hero.garage-hero,
-#roadside>.hero.garage-hero,
-#mechanics>.hero.garage-hero{
-  padding:14px 18px!important;
-  margin:12px 0 14px!important;
-}
-#book>.hero.garage-hero h1,
-#roadside>.hero.garage-hero h1,
-#mechanics>.hero.garage-hero h1{
-  font-size:clamp(22px,2.2vw,29px)!important;
-  line-height:1.12!important;
-  margin:0 0 5px!important;
-}
-#book>.hero.garage-hero p,
-#roadside>.hero.garage-hero p,
-#mechanics>.hero.garage-hero p{
-  font-size:13px!important;line-height:1.4!important;
-}
-#book>.cols,#roadside>.cols{gap:12px!important;padding-bottom:20px!important}
-#book>.cols>.panel,#roadside>.cols>.panel{
-  padding:15px!important;border-radius:16px!important;
-}
-#book>.cols>.panel h2,#roadside>.cols>.panel h2{
-  font-size:21px!important;line-height:1.2!important;margin-bottom:7px!important;
-}
-#book #svcList .svc{padding:9px 0!important;gap:8px!important}
-#book #svcList .svc b{font-size:14px!important}
-#book #svcList .svc .meta{font-size:12px!important}
-#book>.cols .note,#roadside>.cols .note{padding:10px 12px!important;margin-top:10px!important}
-#book>.cols label,#roadside>.cols label{margin:10px 0 4px!important;font-size:12px!important}
-#book>.cols input,#book>.cols select,#book>.cols textarea,
-#roadside>.cols input,#roadside>.cols select,#roadside>.cols textarea{
-  min-height:39px!important;padding:8px 10px!important;font-size:13px!important;
-}
-#book>.cols textarea,#roadside>.cols textarea{min-height:74px!important}
-#book>.cols .btn,#roadside>.cols .btn{min-height:39px!important;padding:9px 13px!important;font-size:13px!important}
-#mechanics #mechanicDirectory{gap:12px!important;padding-bottom:20px!important}
-#mechanics #mechanicDirectory>.empty-state,
-#mechanics #mechanicDirectory>.card,
-#mechanics #mechanicDirectory>.tile,
-#mechanics #mechanicDirectory>article{padding:14px!important;border-radius:15px!important}
-@media(max-width:760px){
- #book>.hero.garage-hero,#roadside>.hero.garage-hero,#mechanics>.hero.garage-hero{
-  padding:13px 15px!important;margin:10px 0 12px!important
- }
- #book>.hero.garage-hero h1,#roadside>.hero.garage-hero h1,#mechanics>.hero.garage-hero h1{
-  font-size:clamp(21px,5.8vw,26px)!important
- }
- #book>.cols,#roadside>.cols{gap:10px!important}
- #book>.cols>.panel,#roadside>.cols>.panel{padding:13px!important}
-}
-</style>
-
-
-<style id="garage-consistent-glass-hover">
-/* One restrained glass hover interaction across every Garage card and interactive tile. */
-#home>.hero.garage-hero,
-#book>.hero.garage-hero,#roadside>.hero.garage-hero,#mechanics>.hero.garage-hero,
-#book>.cols>.panel,#roadside>.cols>.panel,
-#mechanics #mechanicDirectory>.empty-state,
-#mechanics #mechanicDirectory>.card,
-#mechanics #mechanicDirectory>.tile,
-#mechanics #mechanicDirectory>article,
-#mechanics #mechanicDirectory>div,
-#book #svcList .svc,
-.garage-card,.service-card,.booking-card,.contact-card,.stat,.tiles .tile,
-main section .panel,main section .card,main section article {
-  transition:transform .24s ease, background-color .24s ease, box-shadow .24s ease, opacity .24s ease!important;
-  transform:translateY(0);
-}
-@media (hover:hover) and (pointer:fine) {
-  #home>.hero.garage-hero:hover,
-  #book>.hero.garage-hero:hover,#roadside>.hero.garage-hero:hover,#mechanics>.hero.garage-hero:hover,
-  #book>.cols>.panel:hover,#roadside>.cols>.panel:hover,
-  #mechanics #mechanicDirectory>.empty-state:hover,
-  #mechanics #mechanicDirectory>.card:hover,
-  #mechanics #mechanicDirectory>.tile:hover,
-  #mechanics #mechanicDirectory>article:hover,
-  #mechanics #mechanicDirectory>div:hover,
-  .garage-card:hover,.service-card:hover,.booking-card:hover,.contact-card:hover,.stat:hover,.tiles .tile:hover,
-  main section .panel:hover,main section .card:hover,main section article:hover {
-    transform:translateY(-4px);
-    background-color:rgba(255,255,255,.035)!important;
-    box-shadow:0 19px 38px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.07)!important;
-  }
-  #book #svcList .svc:hover {
-    transform:translateX(3px);
-    background:rgba(255,255,255,.035)!important;
-  }
-}
-#home>.hero.garage-hero:focus-within,
-#book>.hero.garage-hero:focus-within,#roadside>.hero.garage-hero:focus-within,#mechanics>.hero.garage-hero:focus-within,
-#book>.cols>.panel:focus-within,#roadside>.cols>.panel:focus-within {
-  box-shadow:0 17px 34px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.08)!important;
-}
-@media(prefers-reduced-motion:reduce) {
-  #home>.hero.garage-hero,#book>.hero.garage-hero,#roadside>.hero.garage-hero,#mechanics>.hero.garage-hero,
-  #book>.cols>.panel,#roadside>.cols>.panel,#mechanics #mechanicDirectory>*,
-  #book #svcList .svc,.garage-card,.service-card,.booking-card,.contact-card,.stat,.tiles .tile,
-  main section .panel,main section .card,main section article {transition:none!important}
-}
-</style>
-
-
 <script id="garage-mobile-dashboard-menu-behavior">
 (function(){
   const toggle=document.getElementById('garageNavToggle');
@@ -1214,841 +1039,597 @@ main section .panel,main section .card,main section article {
 </script>
 
 
-<style id="garage-mobile-transparent-status-area">
-/* Let the mobile top safe-area/status region blend into the glass header instead of a solid dark strip. */
-@media(max-width:800px){
-  html{background:rgba(15,17,20,.12)!important}
-  body{padding-top:0!important}
-  header{
-    padding-top:env(safe-area-inset-top,0px)!important;
-    background:rgba(15,17,20,.18)!important;
-    border-bottom-color:rgba(255,255,255,.12)!important;
-    -webkit-backdrop-filter:blur(26px) saturate(145%)!important;
-    backdrop-filter:blur(26px) saturate(145%)!important;
-  }
-  header .wrap{padding-top:8px!important}
-  @supports(padding: constant(safe-area-inset-top)){
-    header{padding-top:constant(safe-area-inset-top)!important}
-  }
+<style id="garage-refined-polish">
+/* Unified Garage surface, typography, container width & dual-theme polish */
+html:not([data-theme="light"]),
+html:not([data-theme="light"]) body {
+  background-color: #08090b !important;
+  color: #f4f0e8 !important;
+  color-scheme: dark;
 }
-</style>
 
+html body {
+  position: relative !important;
+  isolation: isolate !important;
+  min-height: 100vh !important;
+  background-image: none !important;
+  font-family: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif !important;
+  font-size: 15px !important;
+  line-height: 1.58 !important;
+  -webkit-font-smoothing: antialiased;
+}
 
-<style id="garage-account-adjacent-compact-cards">
-/* Keep account and menu controls as a tight pair; reduce oversized Garage cards on mobile. */
-@media(max-width:800px){
-  header .wrap{
-    grid-template-columns:minmax(0,1fr) 38px 38px!important;
-    grid-template-areas:"brand account menu"!important;
-    column-gap:7px!important;
-  }
-  header .account-pill{
-    grid-area:account!important;
-    width:38px!important;min-width:38px!important;
-    margin:0!important;padding:0!important;
-    display:flex!important;align-items:center!important;justify-content:center!important;
-  }
-  header #accountOpen,.garage-nav-toggle{
-    width:38px!important;height:38px!important;min-width:38px!important;
-    margin:0!important;padding:0!important;flex:0 0 38px!important;
-  }
-  header .logo{max-width:100%!important;min-width:0!important}
-  .tiles{gap:10px!important;margin:8px 0 18px!important}
-  .tile{
-    min-height:94px!important;
-    padding:13px!important;
-    gap:3px!important;
-    border-radius:13px!important;
-  }
-  .tile h3{font-size:21px!important;line-height:1.2!important;margin:0 0 3px!important}
-  .tile p,.tile .meta{font-size:12px!important;line-height:1.45!important;margin-top:2px!important}
-  .panel,main section .panel{
-    padding:15px!important;
-    margin-bottom:18px!important;
-    border-radius:13px!important;
-  }
-  .panel h2{font-size:22px!important;line-height:1.25!important;margin-bottom:7px!important}
-  .panel h3{font-size:17px!important}
-  .cols{gap:12px!important}
-  .svc,.service-card,.booking-card,.contact-card,.garage-card{
-    padding:12px!important;
-    border-radius:12px!important;
-  }
-  .stat{padding:11px!important}
-}
-@media(max-width:430px){
-  header .wrap{padding-left:12px!important;padding-right:12px!important;column-gap:6px!important}
-  header .logo{font-size:21px!important;letter-spacing:.02em!important}
-  .tiles{grid-template-columns:1fr 1fr!important}
-  .tile{min-height:86px!important;padding:11px!important}
-  .tile h3{font-size:19px!important}
-  .panel,main section .panel{padding:13px!important}
-}
-</style>
-
-
-<style id="garage-mobile-full-screen-scroll">
-/* Mobile full-screen vertical section scrolling, while allowing long sections to remain fully readable. */
-@media(max-width:760px){
-  html{
-    scroll-behavior:smooth!important;
-    scroll-snap-type:y proximity!important;
-    scroll-padding-top:74px!important;
-    overscroll-behavior-y:contain;
-  }
-  body{min-height:100%;overflow-x:clip!important;overflow-y:visible!important}
-  body>header{scroll-snap-align:start!important;scroll-snap-stop:normal!important}
-  main.wrap>section{
-    min-height:calc(100svh - 74px)!important;
-    scroll-snap-align:start!important;
-    scroll-snap-stop:normal!important;
-    scroll-margin-top:74px!important;
-    box-sizing:border-box!important;
-    padding-bottom:max(20px,env(safe-area-inset-bottom,0px))!important;
-  }
-  @supports not (height:100svh){
-    main.wrap>section{min-height:calc(100vh - 74px)!important}
-  }
-  /* Keep content-driven sections scrollable rather than clipping tall booking forms. */
-  main.wrap>section>*{max-width:100%}
-}
-@media(max-width:760px) and (prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto!important}
-}
-</style>
-
-<style id="site-wide-mobile-glass-status-area">
-/* Transparent mobile status/safe-area and header edge; keep the page wallpaper visible while scrolling. */
-@media(max-width:800px){
-  html{background:transparent!important}
-  body{padding-top:0!important}
-  body>header,header.site-header,.site-header,header{
-    padding-top:env(safe-area-inset-top,0px)!important;
-    background:transparent!important;
-    border-top:0!important;
-    border-bottom:0!important;
-    box-shadow:none!important;
-    -webkit-backdrop-filter:blur(18px) saturate(120%)!important;
-    backdrop-filter:blur(18px) saturate(120%)!important;
-  }
-  @supports(padding:constant(safe-area-inset-top)){
-    body>header,header.site-header,.site-header,header{padding-top:constant(safe-area-inset-top)!important}
-  }
-}
-</style>
-
-<style id="site-wide-transparent-status-header">
-/* Keep the header/status-area visually transparent on desktop and mobile. */
-html{background:transparent!important}
-body>header,header.site-header,.site-header,header{
-  background:transparent!important;
-  border-top:0!important;
-  border-bottom:0!important;
-  box-shadow:none!important;
-  -webkit-backdrop-filter:blur(18px) saturate(120%)!important;
-  backdrop-filter:blur(18px) saturate(120%)!important;
-}
-@media(max-width:800px){
-  body{padding-top:0!important}
-  body>header,header.site-header,.site-header,header{padding-top:env(safe-area-inset-top,0px)!important}
-  @supports(padding:constant(safe-area-inset-top)){
-    body>header,header.site-header,.site-header,header{padding-top:constant(safe-area-inset-top)!important}
-  }
-}
-</style>
-
-
-<style id="garage-desktop-larger-typography">
-/* Improve Garage readability on desktop only; preserve the existing mobile scale and layout. */
-@media(min-width:801px){
-  body{font-size:18px;line-height:1.58}
-  .wrap{max-width:1160px}
-  .logo{font-size:34px}
-  nav button,nav a{font-size:17px}
-  .hero h1{font-size:clamp(52px,5.5vw,76px)}
-  .hero p{font-size:19px;line-height:1.65}
-  h2{font-size:36px}
-  .card h3{font-size:26px}
-  .price{font-size:28px}
-  .meta,.tag,.specs span{font-size:16px}
-  label{font-size:16px}
-  input,select,textarea{font-size:17px}
-  .btn{font-size:17px}
-  .tile h3{font-size:30px}
-  .panel{font-size:18px}
-  .svc{font-size:18px}
-}
-</style>
-
-<style id="garage-desktop-larger-typography">
-/* Further enlarge Garage typography on desktop only; mobile remains unchanged. */
-@media(min-width:801px){
-  body{font-size:20px;line-height:1.62}
-  .wrap{max-width:1200px}
-  .logo{font-size:40px}
-  nav button,nav a{font-size:19px;padding:10px 16px}
-  .hero{padding:42px 0 28px}
-  .hero h1{font-size:clamp(60px,6vw,86px)}
-  .hero p{font-size:21px;line-height:1.7}
-  h2{font-size:42px}
-  .card h3{font-size:30px}
-  .price{font-size:32px}
-  .meta,.tag,.specs span{font-size:18px}
-  label{font-size:18px}
-  input,select,textarea{font-size:19px;padding:12px 14px}
-  .btn{font-size:19px;padding:13px 21px}
-  .tile h3{font-size:34px}
-  .panel{font-size:20px;padding:24px}
-  .svc{font-size:20px;padding:15px 0}
-  .count{font-size:18px}
-}
-</style>
-
-<style id="garage-contact-no-blur-edge-aligned">
-/* Final override: keep the contact panel dark and subtle, with no white wash or blur.
-   Its outer edges align with the other full-width Garage content cards. */
-html body #home #garageContactCard.contact{
-  display:block!important;
-  box-sizing:border-box!important;
-  width:100%!important;
-  max-width:none!important;
-  margin:28px 0 42px!important;
-  padding:clamp(20px,2.8vw,30px)!important;
-  background:rgba(19,20,23,.24)!important;
-  background-color:rgba(19,20,23,.24)!important;
-  background-image:none!important;
-  border:1px solid rgba(255,255,255,.16)!important;
-  border-radius:20px!important;
-  box-shadow:0 12px 34px rgba(0,0,0,.16),inset 0 1px rgba(255,255,255,.045)!important;
-  -webkit-backdrop-filter:none!important;
-  backdrop-filter:none!important;
-  transition:transform .28s ease,border-color .28s ease,box-shadow .28s ease!important;
-}
-@media(hover:hover) and (pointer:fine){
-  html body #home #garageContactCard.contact:hover{
-    transform:translateY(-3px)!important;
-    border-color:rgba(255,255,255,.25)!important;
-    box-shadow:0 18px 42px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.06)!important;
-  }
-}
-@media(max-width:650px){
-  html body #home #garageContactCard.contact{
-    width:100%!important;
-    margin:22px 0 32px!important;
-    padding:18px 14px!important;
-    border-radius:18px!important;
-  }
-}
-</style>
-
-
-<style id="shared-home-wallpaper-glass-treatment">
-/* Match the homepage: softly blurred Porsche wallpaper, restrained dark overlay,
-   translucent surfaces and crisp foreground content. */
-html{background:#08090b!important}
-html body{
-  position:relative!important;
-  isolation:isolate!important;
-  background:transparent!important;
-  background-color:transparent!important;
-}
-html body:before{
-  content:""!important;
-  display:block!important;
-  position:fixed!important;
-  inset:-10px!important;
-  z-index:-1!important;
-  pointer-events:none!important;
+/* Fixed locked wallpaper on ::before (works identically with site-ux.css 100lvh mobile lock) */
+html:not([data-theme="light"]) body::before {
+  content: "" !important;
+  display: block !important;
+  position: fixed !important;
+  inset: -12px !important;
+  z-index: -1 !important;
+  pointer-events: none !important;
   background:
-    linear-gradient(110deg,rgba(8,9,11,.42),rgba(8,9,11,.18) 48%,rgba(8,9,11,.42)),
-    url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72") center center/cover no-repeat!important;
-  filter:blur(4px)!important;
-  transform:scale(1.025)!important;
+    linear-gradient(110deg, rgba(8, 9, 11, 0.46), rgba(8, 9, 11, 0.22) 48%, rgba(8, 9, 11, 0.48)),
+    url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72") center center / cover no-repeat !important;
+  filter: blur(2px) !important;
+  transform: translate3d(0, 0, 0) scale(1.02) !important;
 }
-html body:after{content:none!important;display:none!important}
-html body header,html body .head,html body .top,html body .site-header,
-html body .navbar,html body .nav-shell,html body .nav-wrap{
-  background:rgba(17,18,20,.42)!important;
-  border-color:rgba(255,255,255,.18)!important;
-  box-shadow:0 14px 38px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.10)!important;
-  -webkit-backdrop-filter:blur(22px) saturate(135%)!important;
-  backdrop-filter:blur(22px) saturate(135%)!important;
-}
-html body .card,html body .panel,html body .dealer,html body .stat,
-html body .state,html body .empty,html body .error,html body .seller-card,
-html body .info,html body .gallery,html body .seller,html body .spec,
-html body .note,html body .listing,html body .article-item,
-html body .project-item,html body .vehicle-card,html body .story-card,
-html body .contact-card,html body .promotion-package,html body .dashboard-card,
-html body .featured-panel,html body .filter-panel,html body .search-panel,
-html body .vehicle-detail-card,html body .article-card,html body .account-page,
-html body .editor,html body .contact-form,html body .package,html body .notice,
-html body .booking-card,html body .service-card,html body .yard-card{
-  background-color:rgba(24,25,27,.30)!important;
-  border-color:rgba(255,255,255,.18)!important;
-  box-shadow:0 14px 38px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.09)!important;
-  -webkit-backdrop-filter:blur(18px) saturate(130%)!important;
-  backdrop-filter:blur(18px) saturate(130%)!important;
-}
-html body input,html body select,html body textarea{
-  background-color:rgba(20,21,23,.34)!important;
-  border-color:rgba(255,255,255,.20)!important;
-  -webkit-backdrop-filter:blur(12px)!important;
-  backdrop-filter:blur(12px)!important;
-}
-@media(max-width:760px){
-  html body:before{
-    background-image:
-      linear-gradient(180deg,rgba(8,9,11,.38),rgba(8,9,11,.50)),
-      url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72")!important;
-    background-position:center,58% center!important;
-  }
-}
-@media(prefers-reduced-motion:reduce){
-  html body:before{filter:none!important}
-}
-</style>
 
+html body::after {
+  content: none !important;
+  display: none !important;
+}
 
-<script id="mobile-pull-down-to-refresh">
-(()=> {
- if(window.__threePedalsPullRefreshInstalled)return;
- window.__threePedalsPullRefreshInstalled=true;
- let startX=0,startY=0,tracking=false;
- const isMobile=()=>window.matchMedia('(max-width: 800px)').matches;
- const ignored=el=>!!el?.closest('input,textarea,select,button,a,[role="dialog"],dialog,[contenteditable="true"],#nav,#garageSectionNav,#accountMenu');
- window.addEventListener('touchstart',e=>{
-  if(!isMobile()||e.touches.length!==1||window.scrollY>2||ignored(e.target)){tracking=false;return}
-  startX=e.touches[0].clientX;startY=e.touches[0].clientY;tracking=true;
- },{passive:true});
- window.addEventListener('touchmove',e=>{
-  if(!tracking||e.touches.length!==1)return;
-  const dx=e.touches[0].clientX-startX,dy=e.touches[0].clientY-startY;
-  if(Math.abs(dx)>Math.abs(dy)*.8||dy<0){tracking=false;return}
- },{passive:true});
- window.addEventListener('touchend',e=>{
-  if(!tracking)return;tracking=false;
-  if(!isMobile()||window.scrollY>2||!e.changedTouches.length)return;
-  const t=e.changedTouches[0],dx=t.clientX-startX,dy=t.clientY-startY;
-  if(dy>=110&&Math.abs(dx)<Math.abs(dy)*.65)window.location.reload();
- },{passive:true});
-})();
-</script>
+html body :is(h1, h2, h3, h4) {
+  font-family: "Sora", "Manrope", system-ui, sans-serif !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.025em !important;
+  line-height: 1.18 !important;
+}
 
+html body main.wrap {
+  box-sizing: border-box !important;
+  padding-top: 6px !important;
+  padding-bottom: 24px !important;
+}
 
+@media (max-width: 1023px) {
+  html body main.wrap {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}
 
-<!-- Desktop Garage header aligned with the Home screen: compact brand, account and menu controls. -->
-<style id="garage-desktop-home-header-refresh">
-@media(min-width:801px){
-  header{background:rgba(13,15,18,.42)!important;border:0!important;box-shadow:0 8px 28px rgba(0,0,0,.16)!important;-webkit-backdrop-filter:blur(22px) saturate(145%)!important;backdrop-filter:blur(22px) saturate(145%)!important}
-  header .wrap{
-    min-height:72px!important;
-    display:grid!important;
-    grid-template-columns:minmax(0,1fr) 46px 46px!important;
-    grid-template-areas:"brand account menu"!important;
-    align-items:center!important;
-    gap:12px!important;
-    padding:10px 28px!important;
-  }
-  header .logo{
-    grid-area:brand!important;
-    min-width:0!important;
-    width:max-content!important;
-    max-width:100%!important;
-    font-family:"Playfair Display",Georgia,serif!important;
-    font-size:clamp(19px,1.65vw,23px)!important;
-    line-height:1.15!important;
-    font-weight:700!important;
-    letter-spacing:.025em!important;
-    text-transform:none!important;
-    white-space:nowrap!important;
-    color:#f4f1e9!important;
-  }
-  header .account-pill{
-    grid-area:account!important;justify-self:end!important;
-    width:42px!important;height:42px!important;padding:0!important;margin:0!important;
-    display:grid!important;place-items:center!important;
-    border:1px solid rgba(255,255,255,.22)!important;border-radius:13px!important;
-    background:rgba(255,255,255,.07)!important;
-    -webkit-backdrop-filter:blur(18px) saturate(145%)!important;backdrop-filter:blur(18px) saturate(145%)!important;
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.10)!important;
-  }
-  header #accountOpen{width:40px!important;height:40px!important;padding:0!important;display:grid!important;place-items:center!important;color:#f5f5f3!important}
-  header #accountOpen svg{width:20px!important;height:20px!important;stroke:currentColor!important;stroke-width:1.7!important}
-  header .garage-nav-toggle{
-    grid-area:menu!important;display:flex!important;align-items:center!important;justify-content:center!important;
-    width:42px!important;height:42px!important;padding:0!important;
-    border:1px solid rgba(255,255,255,.22)!important;border-radius:13px!important;
-    color:#f5f5f3!important;background:rgba(255,255,255,.07)!important;cursor:pointer!important;
-    -webkit-backdrop-filter:blur(18px) saturate(145%)!important;backdrop-filter:blur(18px) saturate(145%)!important;
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.10)!important;
-    transition:background .2s ease,border-color .2s ease,transform .2s ease!important;
-  }
-  header .garage-nav-toggle svg{width:20px!important;height:20px!important}
-  header .account-pill:hover,header .garage-nav-toggle:hover{
-    background:rgba(255,255,255,.13)!important;border-color:rgba(255,255,255,.38)!important;
-  }
-  header nav#garageSectionNav{
-    display:none!important;position:absolute!important;top:calc(100% + 9px)!important;right:28px!important;left:auto!important;
-    width:min(340px,calc(100vw - 56px))!important;max-width:none!important;
-    flex-direction:column!important;align-items:stretch!important;gap:5px!important;padding:10px!important;margin:0!important;
-    border:1px solid rgba(255,255,255,.20)!important;border-radius:17px!important;
-    background:rgba(22,24,27,.82)!important;color:#f5f5f3!important;
-    -webkit-backdrop-filter:blur(34px) saturate(165%)!important;backdrop-filter:blur(34px) saturate(165%)!important;
-    box-shadow:0 18px 48px rgba(0,0,0,.36),inset 0 1px 0 rgba(255,255,255,.10)!important;
-    overflow:visible!important;z-index:1001!important;
-  }
-  header nav#garageSectionNav.is-open{display:flex!important}
-  header nav#garageSectionNav button,header nav#garageSectionNav a.navlink{
-    width:100%!important;min-height:44px!important;justify-content:flex-start!important;text-align:left!important;
-    padding:11px 13px!important;border:1px solid transparent!important;border-radius:11px!important;
-    background:transparent!important;color:#f5f5f3!important;font-size:14px!important;font-weight:600!important;
-    box-shadow:none!important;transform:none!important;transition:background .2s ease,border-color .2s ease!important;
-  }
-  header nav#garageSectionNav button:hover,header nav#garageSectionNav a.navlink:hover{
-    background:rgba(255,255,255,.10)!important;border-color:rgba(255,255,255,.10)!important
-  }
-  header nav#garageSectionNav button[aria-selected="true"]{
-    background:rgba(255,255,255,.14)!important;border-color:rgba(255,255,255,.12)!important;color:#fff!important
-  }
-  header nav#garageSectionNav a.navlink{border-color:transparent!important}
-  /* Home-style desktop buttons and action controls throughout Garage. */
-  .btn{
-    min-height:44px!important;padding:11px 18px!important;border-radius:10px!important;
-    display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;
-    font-family:Manrope,system-ui,sans-serif!important;font-size:14px!important;font-weight:700!important;
-    letter-spacing:.01em!important;border:1px solid rgba(255,255,255,.16)!important;
-    box-shadow:0 4px 14px rgba(0,0,0,.14)!important;
-    transition:transform .18s ease,background .18s ease,border-color .18s ease,box-shadow .18s ease!important;
-  }
-  .btn.alt{background:rgba(255,255,255,.12)!important;color:#f5f5f3!important;border-color:rgba(255,255,255,.24)!important}
-  .btn.ghost{background:rgba(255,255,255,.06)!important;color:var(--ink)!important;border-color:rgba(255,255,255,.22)!important}
-  .btn.wa{background:#f2f1ed!important;color:#17191c!important;border-color:rgba(255,255,255,.5)!important}
-  .tile,.panel{border-radius:16px!important}
+/* Clear section layout */
+#home, #book, #roadside, #mechanics {
+  background: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  padding: 0 !important;
+  min-height: 0 !important;
 }
-@media(min-width:801px) and (hover:hover) and (pointer:fine){
-  header .account-pill:hover,header .garage-nav-toggle:hover{transform:translateY(-1px)!important}
-  .btn:hover{transform:translateY(-2px)!important;box-shadow:0 9px 22px rgba(0,0,0,.20)!important}
-  .tile:hover{transform:translateY(-3px)!important}
-}
-@media(prefers-reduced-motion:reduce){
-  header .garage-nav-toggle,.btn,.tile{transition:none!important}
-}
-</style>
 
+/* Unified frosted glass card surface */
+.garage-hero,
+#home > .hero.garage-hero,
+#book > .hero.garage-hero,
+#roadside > .hero.garage-hero,
+#mechanics > .hero.garage-hero,
+.tiles .tile,
+#book > .cols > .panel,
+#roadside > .cols > .panel,
+#home #garageContactCard.contact,
+#mechanics #mechanicDirectory > article,
+#mechanics #mechanicDirectory > .empty-state {
+  box-sizing: border-box !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  border-radius: 18px !important;
+  background: linear-gradient(145deg, rgba(28, 30, 34, 0.42), rgba(16, 18, 21, 0.50)) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(135%) !important;
+  backdrop-filter: blur(18px) saturate(135%) !important;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease !important;
+}
 
-<!-- Mobile header parity and lighter rendering for faster Garage loading on every device. -->
-<style id="garage-mobile-home-performance-refresh">
-/* Use the same compact glass header and controls on phones and tablets. */
-@media(max-width:800px){
-  body>header{
-    background:rgba(18,20,23,.42)!important;
-    border:1px solid rgba(255,255,255,.24)!important;
-    border-radius:20px!important;
-    box-shadow:0 8px 24px rgba(0,0,0,.18)!important;
-    -webkit-backdrop-filter:blur(14px) saturate(135%)!important;
-    backdrop-filter:blur(14px) saturate(135%)!important;
-  }
-  body>header>.wrap{
-    min-height:64px!important;
-    padding:10px 14px!important;
-    display:grid!important;
-    grid-template-columns:minmax(0,1fr) 38px 38px!important;
-    grid-template-areas:"brand account menu"!important;
-    align-items:center!important;
-    gap:8px!important;
-  }
-  body>header .logo{
-    grid-area:brand!important;
-    min-width:0!important;
-    max-width:100%!important;
-    width:auto!important;
-    overflow:hidden!important;
-    text-overflow:ellipsis!important;
-    white-space:nowrap!important;
-    font-family:"Playfair Display",Georgia,serif!important;
-    font-size:clamp(17px,4.6vw,21px)!important;
-    line-height:1.15!important;
-    font-weight:700!important;
-    letter-spacing:.015em!important;
-    text-transform:none!important;
-    color:#f4f1e9!important;
-  }
-  body>header .account-pill{
-    grid-area:account!important;
-    width:38px!important;height:38px!important;min-width:38px!important;
-    margin:0!important;padding:0!important;
-    display:grid!important;place-items:center!important;
-    border:1px solid rgba(255,255,255,.22)!important;
-    border-radius:12px!important;
-    background:rgba(255,255,255,.07)!important;
-    box-shadow:inset 0 1px rgba(255,255,255,.10)!important;
-  }
-  body>header #accountOpen{
-    width:36px!important;height:36px!important;padding:0!important;
-    display:grid!important;place-items:center!important;
-    color:#f5f5f3!important;background:transparent!important;border:0!important;
-  }
-  body>header #accountOpen svg{width:19px!important;height:19px!important}
-  body>header .garage-nav-toggle{
-    grid-area:menu!important;
-    display:flex!important;align-items:center!important;justify-content:center!important;
-    width:38px!important;height:38px!important;min-width:38px!important;
-    padding:0!important;border:1px solid rgba(255,255,255,.22)!important;
-    border-radius:12px!important;color:#f5f5f3!important;
-    background:rgba(255,255,255,.07)!important;
-    box-shadow:inset 0 1px rgba(255,255,255,.10)!important;
-  }
-  body>header .garage-nav-toggle svg{width:19px!important;height:19px!important}
-  body>header nav#garageSectionNav{
-    top:calc(100% + 8px)!important;right:0!important;left:auto!important;
-    width:min(280px,calc(100vw - 32px))!important;
-    max-width:min(280px,calc(100vw - 32px))!important;
-    max-height:min(70dvh,420px)!important;
-    padding:8px!important;gap:4px!important;
-    border:1px solid rgba(255,255,255,.20)!important;
-    border-radius:15px!important;
-    background:rgba(20,22,25,.88)!important;
-    -webkit-backdrop-filter:blur(16px) saturate(145%)!important;
-    backdrop-filter:blur(16px) saturate(145%)!important;
-    box-shadow:0 16px 38px rgba(0,0,0,.34),inset 0 1px rgba(255,255,255,.09)!important;
-  }
-  body>header nav#garageSectionNav button,
-  body>header nav#garageSectionNav a.navlink{
-    width:100%!important;min-height:42px!important;
-    justify-content:flex-start!important;text-align:left!important;
-    padding:10px 12px!important;border:1px solid transparent!important;
-    border-radius:10px!important;background:transparent!important;
-    color:#f5f5f3!important;font:600 13px/1.3 Manrope,system-ui,sans-serif!important;
-    transform:none!important;box-shadow:none!important;
-  }
-  body>header nav#garageSectionNav button:hover,
-  body>header nav#garageSectionNav a.navlink:hover,
-  body>header nav#garageSectionNav button:focus-visible,
-  body>header nav#garageSectionNav a.navlink:focus-visible{
-    background:rgba(255,255,255,.10)!important;
-    border-color:rgba(255,255,255,.12)!important;color:#fff!important;
-  }
-  body>header nav#garageSectionNav button[aria-selected="true"]{
-    background:rgba(255,255,255,.14)!important;
-    border-color:rgba(255,255,255,.13)!important;color:#fff!important;
-  }
-  /* Home-style button hierarchy, sized for touch rather than hover. */
-  main .btn{
-    min-height:44px!important;padding:11px 16px!important;
-    border-radius:11px!important;display:inline-flex!important;
-    align-items:center!important;justify-content:center!important;gap:8px!important;
-    font:700 13px/1.25 Manrope,system-ui,sans-serif!important;
-    box-shadow:0 4px 12px rgba(0,0,0,.14)!important;
-    transform:none!important;
-  }
-  main .btn.alt{background:rgba(255,255,255,.12)!important;color:#f5f5f3!important;border:1px solid rgba(255,255,255,.24)!important}
-  main .btn.ghost{background:rgba(255,255,255,.07)!important;color:#f5f5f3!important;border:1px solid rgba(255,255,255,.20)!important}
-  main .btn.wa{background:#f2f1ed!important;color:#17191c!important;border:1px solid rgba(255,255,255,.5)!important}
-  main .tile,main .panel{border-radius:15px!important}
+html[data-theme="light"] .garage-hero,
+html[data-theme="light"] #home > .hero.garage-hero,
+html[data-theme="light"] #book > .hero.garage-hero,
+html[data-theme="light"] #roadside > .hero.garage-hero,
+html[data-theme="light"] #mechanics > .hero.garage-hero,
+html[data-theme="light"] .tiles .tile,
+html[data-theme="light"] #book > .cols > .panel,
+html[data-theme="light"] #roadside > .cols > .panel,
+html[data-theme="light"] #home #garageContactCard.contact,
+html[data-theme="light"] #mechanics #mechanicDirectory > article,
+html[data-theme="light"] #mechanics #mechanicDirectory > .empty-state {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(246, 240, 228, 0.94)) !important;
+  border: 1px solid rgba(138, 114, 62, 0.28) !important;
+  color: #171512 !important;
+  box-shadow: 0 12px 32px rgba(48, 38, 18, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
 }
-@media(max-width:380px){
-  body>header>.wrap{grid-template-columns:minmax(0,1fr) 36px 36px!important;gap:6px!important;padding-left:11px!important;padding-right:11px!important}
-  body>header .account-pill,body>header #accountOpen,body>header .garage-nav-toggle{width:36px!important;height:36px!important;min-width:36px!important}
-  body>header .logo{font-size:16px!important}
-  main .btn{padding-left:12px!important;padding-right:12px!important}
-}
-/* Reduce expensive duplicate wallpaper painting and blur work without changing the photo. */
-body{background-image:none!important;background-attachment:scroll!important}
-body:before{
-  background-image:linear-gradient(110deg,rgba(8,9,11,.48),rgba(8,9,11,.22) 48%,rgba(8,9,11,.48)),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72")!important;
-  filter:blur(1px)!important;transform:scale(1.012)!important;
-}
-@media(max-width:760px){
-  body:before{
-    background-image:linear-gradient(180deg,rgba(8,9,11,.42),rgba(8,9,11,.54)),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72")!important;
-    filter:none!important;transform:none!important;
-  }
-  .garage-hero,.garage-section,.garage-panel,.garage-card,.service-card,.booking-card,
-  .contact-card,.stat,.svc,.rating-box,.tiles .tile,.tile,.panel,.card,main section,main article,main .section{
-    -webkit-backdrop-filter:blur(8px) saturate(120%)!important;
-    backdrop-filter:blur(8px) saturate(120%)!important;
-  }
-}
-@media(min-width:761px){
-  .garage-hero,.garage-section,.garage-panel,.garage-card,.service-card,.booking-card,
-  .contact-card,.stat,.svc,.rating-box,.tiles .tile,.tile,.panel,.card,main section,main article,main .section{
-    -webkit-backdrop-filter:blur(12px) saturate(125%)!important;
-    backdrop-filter:blur(12px) saturate(125%)!important;
-  }
-}
-@media(prefers-reduced-motion:reduce){
-  body>header .garage-nav-toggle,main .btn,main .tile{transition:none!important}
-}
-</style>
 
-<style id="garage-refresh-mobile-type-neutral">
-/* Final refresh-safe overrides: neutral white typography and compact mobile sizing. */
-html:not([data-theme="light"]),html:not([data-theme="light"]) body{background-color:#08090b!important;color:#f5f5f3!important;color-scheme:dark}
-body>header .logo{color:#f5f5f3!important}
-body>header nav#garageSectionNav button,
-body>header nav#garageSectionNav a.navlink{color:rgba(248,247,243,.88)!important}
-body>header nav#garageSectionNav button[aria-selected="true"]{
-  color:#fff!important;background:rgba(255,255,255,.14)!important;border-color:rgba(255,255,255,.16)!important
+/* Hero Banner */
+#home > .hero.garage-hero,
+#book > .hero.garage-hero,
+#roadside > .hero.garage-hero,
+#mechanics > .hero.garage-hero {
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 0 !important;
+  margin: 10px 0 18px !important;
+  padding: clamp(20px, 2.8vw, 30px) !important;
 }
-body>header .account-pill,body>header #accountOpen,body>header .garage-nav-toggle{color:#f5f5f3!important}
-@media(max-width:800px){
-  body>header .logo{font-size:clamp(12px,3vw,13px)!important;line-height:1.08!important}
-  body>header nav#garageSectionNav button,
-  body>header nav#garageSectionNav a.navlink{font-size:10px!important;line-height:1.2!important}
-  body>header nav#garageSectionNav{background:rgba(16,18,21,.94)!important}
-  .hero h1,.garage-hero h1,h1,h2,h3{color:#f5f5f3!important}
-}
-/* Keep the original Porsche wallpaper; the dark fallback prevents a white paint flash while it loads. */
-html:not([data-theme="light"]) body{background-color:#08090b!important}
-</style>
 
-<style id="garage-contact-modern-type">
-/* Keep the Garage typography aligned with the Home page. */
-html body,html body button,html body input,html body select,html body textarea,
-html body :is(h1,h2,h3,h4,h5,h6),
-html body #garageContactCard :is(a,span,b){
-  font-family:Manrope,Inter,system-ui,-apple-system,"Segoe UI",sans-serif!important;
+.garage-hero h1,
+#home > .hero.garage-hero h1,
+#book > .hero.garage-hero h1,
+#roadside > .hero.garage-hero h1,
+#mechanics > .hero.garage-hero h1 {
+  font-size: clamp(26px, 2.7vw, 36px) !important;
+  max-width: 19em !important;
+  margin: 0 0 8px !important;
+  text-wrap: balance;
 }
-html body :is(h1,h2,h3,h4,h5,h6){font-weight:650!important;letter-spacing:-.025em!important;line-height:1.2!important}
-html body>header .logo,html body>header .brand{font-family:Manrope,Inter,system-ui,-apple-system,"Segoe UI",sans-serif!important;font-weight:750!important;letter-spacing:-.025em!important;text-transform:none!important}
-</style>
 
-<style id="garage-visit-contact-plain-final">
-/* This is intentionally plain content, not a card/panel. Keep this exact appearance after reload. */
-html body #home #garageContactCard,
-html body #home #garageContactCard.contact{
-  display:block!important;position:static!important;isolation:auto!important;overflow:visible!important;
-  width:100%!important;max-width:none!important;margin:0 0 40px!important;padding:0!important;
-  background:transparent!important;background-color:transparent!important;background-image:none!important;
-  border:0!important;border-radius:0!important;outline:0!important;box-shadow:none!important;
-  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+.garage-hero h1::after {
+  width: 52px !important;
+  height: 3px !important;
+  margin-top: 12px !important;
+  background: linear-gradient(90deg, #dfc073, rgba(223, 192, 115, 0.25)) !important;
 }
-html body #home #garageContactCard::before,
-html body #home #garageContactCard::after{content:none!important;display:none!important}
-html body #home #garageContactCard .svc,
-html body #home #garageContactCard .svc:last-child{
-  display:flex!important;align-items:center!important;justify-content:space-between!important;
-  gap:14px!important;padding:15px 0!important;
-  background:transparent!important;border:0!important;box-shadow:none!important;
-}
-</style>
 
-<style id="garage-contact-rows-aligned-icons">
-/* Align contact details in a consistent icon / label / value grid. */
-html body #home #garageContactCard .garage-contact-row{
-  display:grid!important;
-  grid-template-columns:42px minmax(180px,1fr) minmax(190px,auto)!important;
-  align-items:center!important;
-  justify-content:initial!important;
-  column-gap:16px!important;
-  row-gap:5px!important;
-  padding:17px 0!important;
-  text-align:left!important;
+.garage-hero p,
+#home > .hero.garage-hero p,
+#book > .hero.garage-hero p,
+#roadside > .hero.garage-hero p,
+#mechanics > .hero.garage-hero p {
+  font-size: 15px !important;
+  line-height: 1.55 !important;
+  max-width: 58ch !important;
+  margin: 0 !important;
+  color: #c8c1b4 !important;
 }
-html body #home #garageContactCard .garage-contact-icon{
-  width:40px!important;height:40px!important;display:grid!important;place-items:center!important;
-  border-radius:12px!important;background:rgba(255,255,255,.075)!important;
-  border:1px solid rgba(255,255,255,.11)!important;color:inherit!important;
-}
-html body #home #garageContactCard .garage-contact-icon svg{
-  width:19px!important;height:19px!important;display:block!important;
-  fill:none!important;stroke:currentColor!important;stroke-width:1.7!important;
-  stroke-linecap:round!important;stroke-linejoin:round!important;
-}
-html body #home #garageContactCard .garage-contact-copy{
-  display:flex!important;flex-direction:column!important;align-items:flex-start!important;
-  gap:3px!important;min-width:0!important;
-}
-html body #home #garageContactCard .garage-contact-copy b{font-weight:650!important}
-html body #home #garageContactCard .garage-contact-row>a,
-html body #home #garageContactCard .garage-contact-row>#garageAddressContact{
-  justify-self:end!important;text-align:right!important;overflow-wrap:anywhere!important;
-}
-@media(max-width:600px){
-  html body #home #garageContactCard .garage-contact-row{
-    grid-template-columns:38px minmax(0,1fr)!important;
-    column-gap:12px!important;padding:14px 0!important;
-  }
-  html body #home #garageContactCard .garage-contact-icon{width:36px!important;height:36px!important}
-  html body #home #garageContactCard .garage-contact-row>a,
-  html body #home #garageContactCard .garage-contact-row>#garageAddressContact{
-    grid-column:2!important;justify-self:start!important;text-align:left!important;
-  }
-}
-</style>
 
-<style id="garage-contact-content-inset">
-/* Give the contact details comfortable breathing room without restoring a card background. */
-html body #home #garageContactCard{
-  box-sizing:border-box!important;
-  padding-inline:clamp(16px,3.2vw,34px)!important;
+html[data-theme="light"] .garage-hero p {
+  color: #4f483d !important;
 }
-html body #home #garageContactCard>h2{
-  margin-inline:0!important;
-}
-html body #home #garageContactCard .garage-contact-row{
-  padding-inline:0!important;
-}
-</style>
 
-<style id="garage-contact-glass-justified-final">
-/* Final contact panel: inset glass surface, balanced alignment and restrained hover motion. */
-html body #home #garageContactCard.contact{
-  display:block!important;box-sizing:border-box!important;width:min(100%,1080px)!important;max-width:1080px!important;
-  margin:28px auto 42px!important;padding:clamp(22px,3.5vw,38px)!important;position:relative!important;
-  isolation:isolate!important;overflow:hidden!important;
-  background:linear-gradient(135deg,rgba(255,255,255,.13),rgba(255,255,255,.065))!important;
-  background-color:rgba(255,255,255,.075)!important;background-image:linear-gradient(135deg,rgba(255,255,255,.105),rgba(255,255,255,.035))!important;
-  border:1px solid rgba(255,255,255,.16)!important;border-radius:24px!important;outline:0!important;
-  box-shadow:0 18px 55px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.10)!important;
-  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
-  transition:transform .28s ease,border-color .28s ease,box-shadow .28s ease!important;
+/* Primary & Secondary CTAs */
+html[data-theme] body main .btn:not(.ghost),
+html[data-theme] body main .btn.alt,
+html[data-theme] body main #bBtn,
+html[data-theme] body main #roadSubmit {
+  min-height: 44px !important;
+  padding: 11px 20px !important;
+  border-radius: 11px !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  background: linear-gradient(135deg, #e5c67a, #b89545) !important;
+  background-color: #d6b25c !important;
+  color: #171512 !important;
+  -webkit-text-fill-color: #171512 !important;
+  border: 1px solid rgba(229, 198, 122, 0.55) !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22) !important;
+  opacity: 1 !important;
 }
-@media(hover:hover) and (pointer:fine){html body #home #garageContactCard.contact:hover{transform:translateY(-4px)!important;border-color:rgba(255,255,255,.25)!important;box-shadow:0 25px 65px rgba(0,0,0,.29),inset 0 1px 0 rgba(255,255,255,.14)!important}}
-html body #home #garageContactCard.contact>h2{margin:0 0 18px!important;padding:0!important;text-align:left!important;letter-spacing:-.035em!important}
-html body #home #garageContactCard .garage-contact-row,html body #home #garageContactCard .svc.garage-contact-row{
-  box-sizing:border-box!important;display:grid!important;grid-template-columns:42px minmax(0,1fr) minmax(210px,auto)!important;
-  align-items:center!important;justify-content:stretch!important;column-gap:18px!important;row-gap:6px!important;
-  width:100%!important;min-width:0!important;margin:0!important;padding:17px 12px!important;
-  border:1px solid transparent!important;border-bottom-color:rgba(255,255,255,.10)!important;border-radius:14px!important;
-  background:transparent!important;box-shadow:none!important;transition:background .22s ease,border-color .22s ease,transform .22s ease!important;
-}
-html body #home #garageContactCard .garage-contact-row:last-child{border-bottom-color:transparent!important}
-html body #home #garageContactCard .garage-contact-row:hover{background:rgba(255,255,255,.065)!important;border-color:rgba(255,255,255,.10)!important;transform:translateX(3px)!important}
-html body #home #garageContactCard .garage-contact-copy{min-width:0!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:4px!important;text-align:justify!important;overflow-wrap:anywhere!important}
-html body #home #garageContactCard .garage-contact-copy b{font-weight:650!important;text-align:left!important}
-html body #home #garageContactCard .garage-contact-copy .meta{max-width:100%!important;text-align:justify!important;line-height:1.5!important}
-html body #home #garageContactCard .garage-contact-row>a,html body #home #garageContactCard .garage-contact-row>#garageAddressContact{
-  min-width:0!important;max-width:100%!important;justify-self:end!important;text-align:right!important;overflow-wrap:anywhere!important;word-break:break-word!important;line-height:1.5!important
-}
-html body #home #garageContactCard .garage-contact-icon{flex:none!important;width:40px!important;height:40px!important;border-radius:12px!important;background:rgba(255,255,255,.075)!important;border:1px solid rgba(255,255,255,.14)!important;transition:background .22s ease,border-color .22s ease,transform .22s ease!important}
-html body #home #garageContactCard .garage-contact-row:hover .garage-contact-icon{background:rgba(255,255,255,.13)!important;border-color:rgba(255,255,255,.23)!important;transform:scale(1.04)!important}
-@media(max-width:650px){
- html body #home #garageContactCard.contact{width:100%!important;margin:22px auto 32px!important;padding:20px 14px!important;border-radius:20px!important}
- html body #home #garageContactCard .garage-contact-row,html body #home #garageContactCard .svc.garage-contact-row{grid-template-columns:36px minmax(0,1fr)!important;column-gap:12px!important;row-gap:7px!important;padding:14px 8px!important}
- html body #home #garageContactCard .garage-contact-icon{width:36px!important;height:36px!important}
- html body #home #garageContactCard .garage-contact-row>a,html body #home #garageContactCard .garage-contact-row>#garageAddressContact{grid-column:2!important;justify-self:start!important;text-align:left!important;max-width:100%!important}
-}
-@media(prefers-reduced-motion:reduce){html body #home #garageContactCard.contact,html body #home #garageContactCard .garage-contact-row,html body #home #garageContactCard .garage-contact-icon{transition:none!important}}
-</style>
 
-<style id="garage-contact-match-home-contact-cards">
-/* Match the Garage contact panel to the dark smoked-glass Contact Us cards on Home. */
-html body #home #garageContactCard.contact{
-  display:block!important;
-  box-sizing:border-box!important;
-  width:100%!important;
-  max-width:none!important;
-  margin:28px 0 42px!important;
-  padding:clamp(22px,3.2vw,30px)!important;
-  position:relative!important;
-  isolation:isolate!important;
-  overflow:hidden!important;
-  background:linear-gradient(145deg,rgba(35,37,39,.82),rgba(15,17,18,.78))!important;
-  background-color:rgba(20,22,25,.38)!important;
-  background-image:linear-gradient(145deg,rgba(35,37,39,.82),rgba(15,17,18,.78))!important;
-  border:1px solid rgba(195,169,112,.24)!important;
-  border-radius:18px!important;
-  outline:0!important;
-  box-shadow:0 16px 44px rgba(0,0,0,.18)!important;
-  -webkit-backdrop-filter:blur(16px) saturate(140%)!important;
-  backdrop-filter:blur(16px) saturate(140%)!important;
-  transition:transform .28s ease,border-color .28s ease,box-shadow .28s ease!important;
+html[data-theme] body main .btn.ghost {
+  min-height: 44px !important;
+  padding: 11px 18px !important;
+  border-radius: 11px !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #f4f0e8 !important;
+  -webkit-text-fill-color: #f4f0e8 !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
 }
-@media(hover:hover) and (pointer:fine){
-  html body #home #garageContactCard.contact:hover{
-    transform:translateY(-3px)!important;
-    border-color:rgba(195,169,112,.62)!important;
-    box-shadow:0 22px 54px rgba(0,0,0,.30)!important;
+
+html[data-theme="light"] body main .btn.ghost {
+  background: rgba(255, 255, 255, 0.88) !important;
+  color: #171512 !important;
+  -webkit-text-fill-color: #171512 !important;
+  border-color: rgba(138, 114, 62, 0.34) !important;
+}
+
+/* 5 Quick Action Tiles: balanced crisp 5-column desktop row & 2-column mobile grid */
+.tiles {
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  gap: 14px !important;
+  margin: 0 0 22px !important;
+}
+
+.tiles .tile {
+  min-height: 116px !important;
+  padding: 18px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  gap: 6px !important;
+  color: inherit !important;
+}
+
+.tiles .tile h3 {
+  font-size: 17.5px !important;
+  line-height: 1.24 !important;
+  margin: 0 !important;
+  color: #f4f0e8 !important;
+}
+
+html[data-theme="light"] .tiles .tile h3 {
+  color: #171512 !important;
+}
+
+.tiles .tile .meta {
+  font-size: 13px !important;
+  line-height: 1.42 !important;
+  color: #b7b0a2 !important;
+  margin: 0 !important;
+}
+
+html[data-theme="light"] .tiles .tile .meta {
+  color: #575145 !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tiles .tile:hover,
+  #mechanics #mechanicDirectory > article:hover {
+    transform: translateY(-3px) !important;
+    border-color: rgba(215, 189, 131, 0.48) !important;
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
   }
 }
-html:not([data-theme="light"]) body #home #garageContactCard.contact>h2{
-  margin:0 0 18px!important;
-  color:#f4efe4!important;
-}
-html:not([data-theme="light"]) body #home #garageContactCard .garage-contact-icon{
-  background:rgba(255,255,255,.075)!important;
-  border-color:rgba(195,169,112,.24)!important;
-}
-@media(max-width:650px){
-  html body #home #garageContactCard.contact{
-    width:100%!important;
-    margin:22px 0 32px!important;
-    padding:18px 14px!important;
-    border-radius:16px!important;
+
+@media (max-width: 1023px) {
+  .tiles {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   }
 }
-@media(prefers-reduced-motion:reduce){
-  html body #home #garageContactCard.contact{transition:none!important}
-}
-</style>
 
-<style id="garage-contact-soft-transparent-glass">
-/* Light smoked-glass finish: translucent, gently blurred, with a quiet edge. */
-html body #home #garageContactCard.contact{
-  background:linear-gradient(135deg,rgba(31,34,37,.34),rgba(15,17,19,.24))!important;
-  background-color:rgba(20,22,25,.28)!important;
-  background-image:linear-gradient(135deg,rgba(31,34,37,.34),rgba(15,17,19,.24))!important;
-  border:1px solid rgba(255,255,255,.16)!important;
-  box-shadow:0 14px 38px rgba(0,0,0,.16),inset 0 1px 0 rgba(255,255,255,.09)!important;
-  -webkit-backdrop-filter:blur(10px) saturate(125%)!important;
-  backdrop-filter:blur(10px) saturate(125%)!important;
-}
-html body #home #garageContactCard.contact:hover{
-  background:linear-gradient(135deg,rgba(38,41,44,.40),rgba(18,20,22,.30))!important;
-  border-color:rgba(255,255,255,.24)!important;
-  box-shadow:0 18px 44px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.12)!important;
-}
-html body #home #garageContactCard .garage-contact-icon{
-  background:rgba(255,255,255,.055)!important;
-  border-color:rgba(255,255,255,.13)!important;
-}
-@media(prefers-reduced-motion:reduce){
-  html body #home #garageContactCard.contact{ -webkit-backdrop-filter:none!important;backdrop-filter:none!important }
-}
-</style>
-
-
-<style id="official-3pedals-typography">
-/* Official 3 Pedals Auto KE typography: Sora headings/brand, Manrope interface and body, Playfair editorial accents. */
-html body,html body button,html body input,html body select,html body textarea{font-family:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif!important;font-synthesis:none;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-html body :is(h1,h2,h3,h4,h5,h6){font-family:"Sora","Manrope",system-ui,sans-serif!important;font-weight:600!important;letter-spacing:-.035em!important;line-height:1.18!important}
-html body :is(h1){font-weight:700!important;letter-spacing:-.045em!important}
-html body :is(p,li,label,small,.description,.muted,.meta,.subtitle,.section-subtitle,.eyebrow,.lead){font-family:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif!important}
-html body :is(.brand,.logo,.brand-name,.site-brand,.wordmark,header .brand,header .logo){font-family:"Sora",system-ui,sans-serif!important;font-weight:700!important;letter-spacing:-.035em!important}
-html body :is(button,.btn,a.button,.back,nav a,nav button){font-family:"Manrope",system-ui,sans-serif!important;font-weight:600!important}
-html body :is(.price,.amount,.vehicle-price,[data-price]){font-family:"Manrope",system-ui,sans-serif!important;font-weight:700!important;font-variant-numeric:tabular-nums}
-html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){font-family:"Playfair Display",Georgia,serif!important;font-weight:600!important;letter-spacing:-.02em!important}
-</style>
-<style id="garage-mobile-performance-override">
-@media(max-width:760px){
-  html:not([data-theme="light"]) body>header,html:not([data-theme="light"]) body .account-pill,html:not([data-theme="light"]) body header nav#garageSectionNav,
-  html:not([data-theme="light"]) body header .garage-nav-toggle,html:not([data-theme="light"]) body .card,html:not([data-theme="light"]) body .tile,html:not([data-theme="light"]) body .panel,
-  html:not([data-theme="light"]) body .mechanic-card,html:not([data-theme="light"]) body .request-hero,html:not([data-theme="light"]) body .contact,
-  html:not([data-theme="light"]) body #home #garageContactCard.contact,html:not([data-theme="light"]) body .garage-card,html:not([data-theme="light"]) body .service-card,
-  html:not([data-theme="light"]) body .booking-card,html:not([data-theme="light"]) body .contact-card,html:not([data-theme="light"]) body .stat,html:not([data-theme="light"]) body .auto-quote-rail,
-  html:not([data-theme="light"]) body .notice,html:not([data-theme="light"]) body .empty,html:not([data-theme="light"]) body .error,html:not([data-theme="light"]) body .fab,
-  html:not([data-theme="light"]) body input,html:not([data-theme="light"]) body select,html:not([data-theme="light"]) body textarea,
-  html:not([data-theme="light"]) body .btn.ghost,html:not([data-theme="light"]) body .ghost,html:not([data-theme="light"]) body>header .back{
-    -webkit-backdrop-filter:none!important;
-    backdrop-filter:none!important;
+@media (max-width: 760px) {
+  .tiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    margin-bottom: 16px !important;
   }
-  html:not([data-theme="light"]) body .card,html:not([data-theme="light"]) body .tile,html:not([data-theme="light"]) body .panel,html:not([data-theme="light"]) body .mechanic-card,
-  html:not([data-theme="light"]) body .request-hero,html:not([data-theme="light"]) body .contact,html:not([data-theme="light"]) body #home #garageContactCard.contact,
-  html:not([data-theme="light"]) body .garage-card,html:not([data-theme="light"]) body .service-card,html:not([data-theme="light"]) body .booking-card,
-  html:not([data-theme="light"]) body .contact-card,html:not([data-theme="light"]) body .stat,html:not([data-theme="light"]) body .auto-quote-rail{
-    background:rgba(18,20,23,.92)!important;
-    background-color:rgba(18,20,23,.92)!important;
+  .tiles > :last-child:nth-child(odd) {
+    grid-column: 1 / -1 !important;
   }
-  html:not([data-theme="light"]) body>header,html:not([data-theme="light"]) body header nav#garageSectionNav,html:not([data-theme="light"]) body header .garage-nav-toggle,
-  html:not([data-theme="light"]) body .fab,html:not([data-theme="light"]) body input,html:not([data-theme="light"]) body select,html:not([data-theme="light"]) body textarea,
-  html:not([data-theme="light"]) body .btn.ghost,html:not([data-theme="light"]) body .ghost,html:not([data-theme="light"]) body>header .back{
-    background:rgba(26,28,32,.94)!important;
-    background-color:rgba(26,28,32,.94)!important;
+  .tiles .tile {
+    min-height: 92px !important;
+    padding: 14px !important;
+  }
+  .tiles .tile h3 {
+    font-size: 15.5px !important;
+  }
+  .tiles .tile .meta {
+    font-size: 12px !important;
+  }
+}
+
+/* Visit or Contact the Garage Card */
+#home #garageContactCard.contact {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 0 28px !important;
+  padding: clamp(20px, 2.8vw, 28px) !important;
+}
+
+#home #garageContactCard.contact > h2 {
+  font-size: clamp(20px, 2vw, 24px) !important;
+  margin: 0 0 12px !important;
+  text-align: left !important;
+}
+
+#home #garageContactCard .garage-contact-row {
+  display: grid !important;
+  grid-template-columns: 40px minmax(0, 1fr) auto !important;
+  align-items: center !important;
+  column-gap: 14px !important;
+  row-gap: 4px !important;
+  padding: 14px 8px !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 10px !important;
+}
+
+#home #garageContactCard .garage-contact-row:last-child {
+  border-bottom: 0 !important;
+}
+
+html[data-theme="light"] #home #garageContactCard .garage-contact-row {
+  border-bottom-color: rgba(138, 114, 62, 0.20) !important;
+}
+
+#home #garageContactCard .garage-contact-icon {
+  width: 38px !important;
+  height: 38px !important;
+  display: grid !important;
+  place-items: center !important;
+  border-radius: 11px !important;
+  background: rgba(255, 255, 255, 0.07) !important;
+  border: 1px solid rgba(215, 189, 131, 0.26) !important;
+  color: #dfc073 !important;
+}
+
+#home #garageContactCard .garage-contact-icon svg {
+  width: 18px !important;
+  height: 18px !important;
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 1.75 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+}
+
+html[data-theme="light"] #home #garageContactCard .garage-contact-icon {
+  background: rgba(158, 116, 21, 0.12) !important;
+  border-color: rgba(138, 114, 62, 0.28) !important;
+  color: #8c6510 !important;
+}
+
+#home #garageContactCard .garage-contact-copy {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  min-width: 0 !important;
+}
+
+#home #garageContactCard .garage-contact-copy b {
+  font-size: 14.5px !important;
+  font-weight: 700 !important;
+}
+
+#home #garageContactCard .garage-contact-copy .meta {
+  font-size: 13px !important;
+  color: #afa899 !important;
+}
+
+html[data-theme="light"] #home #garageContactCard .garage-contact-copy .meta {
+  color: #575145 !important;
+}
+
+#home #garageContactCard .garage-contact-row > a,
+#home #garageContactCard .garage-contact-row > span:last-child {
+  justify-self: end !important;
+  text-align: right !important;
+  font-size: 14.5px !important;
+  font-weight: 600 !important;
+  color: #dfc073 !important;
+  text-decoration: none !important;
+  overflow-wrap: anywhere !important;
+}
+
+html[data-theme="light"] #home #garageContactCard .garage-contact-row > a,
+html[data-theme="light"] #home #garageContactCard .garage-contact-row > span:last-child {
+  color: #8c6510 !important;
+}
+
+@media (max-width: 640px) {
+  #home #garageContactCard.contact {
+    padding: 16px 14px !important;
+  }
+  #home #garageContactCard .garage-contact-row {
+    grid-template-columns: 36px minmax(0, 1fr) !important;
+    column-gap: 12px !important;
+    padding: 12px 4px !important;
+  }
+  #home #garageContactCard .garage-contact-icon {
+    width: 36px !important;
+    height: 36px !important;
+  }
+  #home #garageContactCard .garage-contact-row > a,
+  #home #garageContactCard .garage-contact-row > span:last-child {
+    grid-column: 2 !important;
+    justify-self: start !important;
+    text-align: left !important;
+    margin-top: 2px !important;
+  }
+}
+
+/* Services & Booking + Roadside Columns */
+#book > .cols,
+#roadside > .cols {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr) !important;
+  gap: 18px !important;
+  align-items: start !important;
+  padding: 0 0 28px !important;
+}
+
+#book > .cols > .panel,
+#roadside > .cols > .panel {
+  padding: 22px !important;
+  margin: 0 !important;
+  height: auto !important;
+}
+
+#book > .cols > .panel h2,
+#roadside > .cols > .panel h2 {
+  font-size: 21px !important;
+  margin: 0 0 12px !important;
+}
+
+@media (max-width: 860px) {
+  #book > .cols,
+  #roadside > .cols {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 14px !important;
+  }
+  #book > .cols > .panel,
+  #roadside > .cols > .panel {
+    padding: 16px !important;
+  }
+}
+
+/* Interactive Garage Services Catalogue Rows */
+#svcList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#book #svcList .garage-svc-item {
+  width: 100%;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+  gap: 14px !important;
+  padding: 13px 14px !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 12px !important;
+  background: rgba(255, 255, 255, 0.035) !important;
+  text-align: left !important;
+  color: inherit !important;
+  cursor: pointer !important;
+  box-shadow: none !important;
+  transition: background-color 0.18s ease, border-color 0.18s ease, transform 0.18s ease !important;
+}
+
+html[data-theme="light"] #book #svcList .garage-svc-item {
+  background: rgba(255, 255, 255, 0.72) !important;
+  border-color: rgba(138, 114, 62, 0.22) !important;
+}
+
+#book #svcList .garage-svc-item:hover {
+  background: rgba(255, 255, 255, 0.075) !important;
+  border-color: rgba(215, 189, 131, 0.36) !important;
+}
+
+html[data-theme="light"] #book #svcList .garage-svc-item:hover {
+  background: rgba(255, 255, 255, 0.96) !important;
+  border-color: rgba(138, 114, 62, 0.44) !important;
+}
+
+#book #svcList .garage-svc-item.is-selected {
+  background: rgba(215, 189, 131, 0.14) !important;
+  border-color: rgba(215, 189, 131, 0.56) !important;
+}
+
+html[data-theme="light"] #book #svcList .garage-svc-item.is-selected {
+  background: rgba(158, 116, 21, 0.10) !important;
+  border-color: rgba(158, 116, 21, 0.56) !important;
+}
+
+#book #svcList .garage-svc-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+#book #svcList .garage-svc-copy b {
+  font-size: 14.5px !important;
+  font-weight: 700 !important;
+  line-height: 1.3 !important;
+}
+
+#book #svcList .garage-svc-desc {
+  font-size: 12.5px !important;
+  line-height: 1.4 !important;
+  color: #cbc4b6;
+}
+
+html[data-theme="light"] #book #svcList .garage-svc-desc {
+  color: #4f483d;
+}
+
+#book #svcList .garage-svc-copy .meta {
+  font-size: 12px !important;
+  color: #9e9789 !important;
+}
+
+html[data-theme="light"] #book #svcList .garage-svc-copy .meta {
+  color: #6b6356 !important;
+}
+
+#book #svcList .garage-svc-price {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  font-size: 14.5px !important;
+  font-weight: 700 !important;
+  font-variant-numeric: tabular-nums;
+  color: #dfc073 !important;
+}
+
+html[data-theme="light"] #book #svcList .garage-svc-price {
+  color: #8c6510 !important;
+}
+
+/* Booking & Roadside Inputs */
+#book form label,
+#roadside form label {
+  margin: 12px 0 5px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+}
+
+#book input, #book select, #book textarea,
+#roadside input, #roadside select, #roadside textarea {
+  min-height: 42px !important;
+  padding: 9px 12px !important;
+  font-size: 14px !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(255, 255, 255, 0.20) !important;
+  background: rgba(16, 18, 22, 0.52) !important;
+  color: #f4f0e8 !important;
+}
+
+html[data-theme="light"] #book input,
+html[data-theme="light"] #book select,
+html[data-theme="light"] #book textarea,
+html[data-theme="light"] #roadside input,
+html[data-theme="light"] #roadside select,
+html[data-theme="light"] #roadside textarea {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border-color: rgba(138, 114, 62, 0.30) !important;
+  color: #171512 !important;
+}
+
+/* Mechanics Directory Grid */
+#mechanics #mechanicDirectory {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)) !important;
+  gap: 16px !important;
+  padding: 0 0 28px !important;
+}
+
+#mechanics #mechanicDirectory > article,
+#mechanics #mechanicDirectory > .empty-state {
+  padding: 18px !important;
+}
+
+@media (max-width: 760px) {
+  #book > .hero.garage-hero,
+  #roadside > .hero.garage-hero,
+  #mechanics > .hero.garage-hero,
+  #home > .hero.garage-hero {
+    padding: 17px 15px !important;
+    margin: 8px 0 14px !important;
+  }
+  .garage-hero h1,
+  #home > .hero.garage-hero h1,
+  #book > .hero.garage-hero h1,
+  #roadside > .hero.garage-hero h1,
+  #mechanics > .hero.garage-hero h1 {
+    font-size: clamp(23px, 6.2vw, 29px) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .garage-hero, .tiles .tile, #book > .cols > .panel, #roadside > .cols > .panel,
+  #home #garageContactCard.contact, #book #svcList .garage-svc-item, main .btn {
+    transition: none !important;
   }
 }
 </style>
-<script defer src="/site-ux.js?v=20261123-fix5"></script>
+<script defer src="/site-ux.js?v=20261123-fix8"></script>
 </body>
 </html>

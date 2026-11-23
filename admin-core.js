@@ -15,6 +15,7 @@
     "requestsPanel",
     "listingsPanel",
     "bookingsPanel",
+    "garageServicesPanel",
     "chauffeurPanel",
     "mechanicsPanel",
     "journalPanel",
@@ -88,6 +89,7 @@
     activeSection: "overviewPanel",
     listings: [],
     garageBookings: [],
+    garageServices: [],
     chauffeurBookings: [],
     chauffeurDrivers: [],
     chauffeurFleet: [],
@@ -614,6 +616,21 @@
           onSelect: () => {
             if ($("garageBookingSearch")) $("garageBookingSearch").value = b.ref || b.name || query;
             window.ThreePedalsAdminOps?.filterGarage?.();
+          },
+        });
+      }
+    }
+
+    for (const s of state.garageServices) {
+      if ([s.name, s.duration, s.description, s.price_kes].join(" ").toLowerCase().includes(q)) {
+        hits.push({
+          title: s.name || "Garage service",
+          sub: `${moneyKES(s.price_kes || 0)} · ${s.duration || ""} · ${s.active !== false ? "Active" : "Hidden"}`,
+          kind: "Service",
+          section: "garageServicesPanel",
+          onSelect: () => {
+            if ($("garageServiceSearch")) $("garageServiceSearch").value = s.name || query;
+            window.ThreePedalsAdminOps?.filterGarageServices?.();
           },
         });
       }
