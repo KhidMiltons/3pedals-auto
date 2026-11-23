@@ -215,7 +215,7 @@ async function findOpenStreetMapPlaces(queryText, location) {
   // Keep the Overpass query focused: broad name searches and a 20 km radius
   // make public instances time out, especially around dense urban areas.
   const around = `around:12000,${center.lat},${center.lon}`;
-  const query = `[out:json][timeout:12];(nwr["shop"="car_repair"](${around});nwr["craft"="car_repair"](${around});nwr["amenity"="vehicle_inspection"](${around});nwr["shop"="car"](${around}););out center tags 60;`;
+  const query = `[out:json][timeout:12];(nwr["shop"="car_repair"](${around});nwr["craft"="car_repair"](${around});nwr["amenity"="vehicle_inspection"](${around});nwr["shop"="car"](${around});nwr["amenity"="fuel"](${around});nwr["shop"="tyres"](${around});nwr["shop"="car_parts"](${around});nwr["shop"="motorcycle"](${around});nwr["shop"="vehicle"](${around}););out center tags 60;`;
   let data = null;
   let lastError = null;
   // Prefer the Africa-focused extract, then use independent global instances.
@@ -272,12 +272,23 @@ async function findOpenStreetMapPlaces(queryText, location) {
       const craft = String(tags.craft || "").toLowerCase();
       const amenity = String(tags.amenity || "").toLowerCase();
       let category = "";
-      if (shop === "car_repair" || craft === "car_repair") {
+      // Use the most specific mapped OSM tag; never infer services from the name.
+      if (amenity === "fuel") {
+        category = "OSM classification: fuel station (unverified)";
+      } else if (shop === "tyres") {
+        category = "OSM classification: tyre shop (unverified)";
+      } else if (shop === "car_parts") {
+        category = "OSM classification: automotive parts shop (unverified)";
+      } else if (shop === "car_repair" || craft === "car_repair") {
         category = "OSM classification: car repair (unverified)";
       } else if (amenity === "vehicle_inspection") {
         category = "OSM classification: vehicle inspection (unverified)";
+      } else if (shop === "motorcycle") {
+        category = "OSM classification: motorcycle dealer (unverified)";
       } else if (shop === "car") {
-        category = "OSM classification: vehicle sales (unverified)";
+        category = "OSM classification: car dealership or showroom (unverified)";
+      } else if (shop === "vehicle") {
+        category = "OSM classification: vehicle shop (unverified)";
       }
       return {
         name: rawName,
