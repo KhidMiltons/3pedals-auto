@@ -27,6 +27,7 @@
       myAccount: "My Account",
       backHome: "← Home",
       backDealers: "← Back to Dealers",
+      backCompact: "← Back",
       themeDark: "Dark mode",
       themeLight: "Daylight mode",
       backToTop: "Back to top",
@@ -72,6 +73,7 @@
       myAccount: "Akaunti Yangu",
       backHome: "← Mwanzo",
       backDealers: "← Rudi kwa Wauzaji",
+      backCompact: "← Rudi",
       themeDark: "Mandhari ya Usiku",
       themeLight: "Mandhari ya Mchana",
       backToTop: "Rudi juu",
@@ -143,6 +145,10 @@
       return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
     }
     return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>';
+  }
+
+  function homeIconSvg() {
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5L12 3l9 7.5"/><path d="M5.5 9.8V19.5A1.5 1.5 0 0 0 7 21h3.5v-5a1.5 1.5 0 0 1 3 0v5H17a1.5 1.5 0 0 0 1.5-1.5V9.8"/></svg>';
   }
 
   function syncThemeButtons(theme) {
@@ -229,7 +235,52 @@
     if (topBtn) topBtn.setAttribute("aria-label", t("backToTop"));
 
     refreshFooterNewsletterCopy();
+    syncBackButtonsForViewport();
     window.dispatchEvent(new CustomEvent("3pedals:lang-changed", { detail: { lang: code } }));
+  }
+
+  function syncBackButtonsForViewport() {
+    const isCompact = window.matchMedia && window.matchMedia("(max-width: 1023px)").matches;
+    document.querySelectorAll("body > header .back, body > .wrap > header.top .back").forEach((el) => {
+      if (!el.dataset.uxFullLabel) {
+        const raw = el.textContent.replace(/\s+/g, " ").trim();
+        if (raw) el.dataset.uxFullLabel = raw;
+      }
+      const full = el.dataset.uxFullLabel || el.textContent.replace(/\s+/g, " ").trim();
+      const href = (el.getAttribute("href") || "").toLowerCase();
+      const isHomeBack =
+        el.classList.contains("ux-home-icon-btn") ||
+        el.classList.contains("home-link") ||
+        /^\s*(?:←|\u2190|&larr;)?\s*(?:home|nyumbani|mwanzo)\s*$/i.test(full);
+
+      if (isHomeBack) {
+        el.classList.add("ux-home-icon-btn");
+        const homeLabel = t("home");
+        el.setAttribute("aria-label", homeLabel);
+        el.setAttribute("title", homeLabel);
+        if (!el.querySelector("svg")) {
+          el.innerHTML = homeIconSvg();
+        }
+        return;
+      }
+
+      if (/(?:^|\/)dealers\.html(?:[?#]|$)/.test(href) || /\bback\s+to\s+dealers?\b/i.test(full)) {
+        el.classList.add("ux-back-dealers");
+      }
+      if (/^\s*(?:←|&larr;)?\s*back\s+to\b/i.test(full)) {
+        if (!el.getAttribute("aria-label")) {
+          el.setAttribute("aria-label", full.replace(/^[←\u2190]\s*/, ""));
+        }
+        el.textContent = isCompact ? t("backCompact") : full;
+      }
+    });
+  }
+
+  function syncFooterCopyrightYears() {
+    const year = String(new Date().getFullYear());
+    document.querySelectorAll("[data-ux-year]").forEach((el) => {
+      if (el.textContent !== year) el.textContent = year;
+    });
   }
 
   function createControlsMarkup(compactOnly) {
@@ -369,9 +420,13 @@
         });
         window.matchMedia("(min-width: 1024px)").addEventListener("change", (ev) => {
           if (ev.matches) closeSub();
+          syncBackButtonsForViewport();
         });
       }
     }
+
+    syncBackButtonsForViewport();
+    window.matchMedia?.("(max-width: 1023px)")?.addEventListener("change", syncBackButtonsForViewport);
 
     // Bind global delegated clicks for theme & language switchers
     document.addEventListener("click", (e) => {
@@ -527,23 +582,52 @@
   }
 
   function initFooterNewsletter() {
-    let footer = document.querySelector("body > footer");
+    let footer =
+      document.querySelector("body > footer") ||
+      document.querySelector("footer:not(.a4-bottom-row)");
     if (!footer) {
       footer = document.createElement("footer");
       footer.className = "ux-site-footer no-print";
       document.body.appendChild(footer);
     } else {
+      if (footer.parentElement !== document.body) {
+        document.body.appendChild(footer);
+      }
       footer.classList.add("ux-site-footer", "no-print");
     }
 
     if (footer.querySelector(".ux-footer-newsletter")) return;
 
+    const year = String(new Date().getFullYear());
     const existingLegal = footer.innerHTML;
+    let brandHtml = '3 Pedals Auto KE · Prices in KES.';
+    if (existingLegal && existingLegal.trim()) {
+      const temp = document.createElement("div");
+      temp.innerHTML = existingLegal;
+      const brandSpan = temp.querySelector("#footerBrand");
+      const noteSpan = temp.querySelector("#footerNote");
+      if (brandSpan || noteSpan) {
+        const b = brandSpan ? brandSpan.outerHTML : '<span id="footerBrand">3 Pedals Auto KE</span>';
+        const n = noteSpan ? noteSpan.outerHTML : '<span id="footerNote">Prices in KES.</span>';
+        brandHtml = `${b} · ${n}`;
+      } else {
+        temp.querySelectorAll(".legal-footer-links, a, button, br").forEach((el) => el.remove());
+        const cleanText = temp.textContent
+          .replace(/\s+/g, " ")
+          .replace(/^©\s*(?:\d{4}\s*)?/, "")
+          .replace(/[·|\-\s]+$/g, "")
+          .trim();
+        if (cleanText) {
+          brandHtml = escapeHtml(cleanText);
+        }
+      }
+    }
+
     footer.innerHTML = `
       <div class="ux-footer-inner">
         <section class="ux-footer-newsletter" aria-label="Auto Market Briefing Newsletter"></section>
         <div class="ux-footer-legal">
-          <div>${existingLegal.includes("3 Pedals") ? "" : "3 Pedals Auto KE · Prices in KES"}</div>
+          <div>© <span data-ux-year>${year}</span> ${brandHtml}</div>
           <div class="legal-footer-links">
             <a href="/privacy.html">Privacy Policy</a> ·
             <a href="/terms.html">Terms of Service</a> ·
@@ -553,18 +637,7 @@
       </div>
     `;
 
-    // Preserve existing brand text inside legal bar cleanly if it had text
-    const firstCol = footer.querySelector(".ux-footer-legal > div:first-child");
-    if (existingLegal && existingLegal.trim()) {
-      const temp = document.createElement("div");
-      temp.innerHTML = existingLegal;
-      const hasLinks = !!temp.querySelector(".legal-footer-links, a[href*='privacy']");
-      if (hasLinks) {
-        footer.querySelector(".ux-footer-legal").innerHTML = temp.innerHTML;
-      } else {
-        firstCol.textContent = temp.textContent.trim();
-      }
-    }
+    syncFooterCopyrightYears();
 
     const box = footer.querySelector(".ux-footer-newsletter");
     renderNewsletterBox(box);
@@ -997,7 +1070,9 @@
         return {
           role: String(parsed.role || "buyer_advisor"),
           mode: String(parsed.mode || "auto"),
-          messages: parsed.messages.filter((m) => m && typeof m.text === "string").slice(-24)
+          messages: parsed.messages
+            .filter((m) => m && typeof m.text === "string" && m.text.trim().length > 0)
+            .slice(-24)
         };
       }
     } catch (_) {}
@@ -1089,8 +1164,8 @@
         close: sw ? "Funga" : "Close",
         locBtn: userLocation ? (sw ? "Eneo ✓" : "GPS ✓") : (sw ? "Tumia eneo" : "Use GPS"),
         placeholder: sw
-          ? "Uliza kuhusu magari, ushuru wa KRA, au yadi karibu nawe…"
-          : "Ask about cars in Kenya, import duties, or nearby yards…",
+          ? "Uliza magari, ushuru au yadi…"
+          : "Ask about cars, KRA duty, or yards…",
         send: sw ? "Tuma" : "Send",
         thinking: sw ? "Inachakata…" : "Thinking…",
         emptyTitle: sw
@@ -1114,7 +1189,7 @@
           { value: "inspection_tech", label: sw ? "Ukaguzi wa Kiufundi" : "Inspection Tech" }
         ],
         modes: [
-          { value: "auto", label: sw ? "Otomatiki (Search/OpenStreetMap)" : "Auto (Search / OpenStreetMap)" },
+          { value: "auto", label: sw ? "Otomatiki (Tafuta / Ramani)" : "Auto (Search / Maps)" },
           { value: "search", label: "Google Search" },
           { value: "maps", label: "OpenStreetMap" },
           { value: "fast", label: sw ? "Haraka (Bila utafutaji wa moja kwa moja)" : "Fast (No live search)" }
@@ -1163,7 +1238,7 @@
             <button type="button" id="uxChatCancelEditBtn">${getLang() === "sw" ? "Ghairi" : "Cancel"}</button>
           </div>
           <div class="ux-chat-compose-row">
-            <textarea id="uxChatInput" rows="2" placeholder="${lbl.placeholder}" aria-label="${lbl.placeholder}"></textarea>
+            <textarea id="uxChatInput" rows="1" placeholder="${lbl.placeholder}" aria-label="${lbl.placeholder}"></textarea>
             <button type="submit" id="uxChatSendBtn">${lbl.send}</button>
           </div>
         </form>
@@ -1172,11 +1247,19 @@
       renderMessages();
       syncEditComposer();
 
+      const resizeChatInput = () => {
+        const el = document.getElementById("uxChatInput");
+        if (!el) return;
+        el.style.height = "auto";
+        el.style.height = `${Math.min(Math.max(el.scrollHeight, 38), 88)}px`;
+      };
+
       document.getElementById("uxChatCancelEditBtn")?.addEventListener("click", () => {
         editingMessageIndex = -1;
         const input = document.getElementById("uxChatInput");
         if (input) input.value = "";
         syncEditComposer();
+        resizeChatInput();
       });
       document.getElementById("uxChatCloseBtn")?.addEventListener("click", () => setOpen(false));
       document.getElementById("uxChatClearBtn")?.addEventListener("click", () => {
@@ -1210,6 +1293,7 @@
 
       const form = document.getElementById("uxChatForm");
       const input = document.getElementById("uxChatInput");
+      input?.addEventListener("input", resizeChatInput);
       form?.addEventListener("submit", (e) => {
         e.preventDefault();
         sendMessage(input?.value || "");
@@ -1357,7 +1441,10 @@
       if (!text || isSending) return;
       const input = document.getElementById("uxChatInput");
       const sendBtn = document.getElementById("uxChatSendBtn");
-      if (input) input.value = "";
+      if (input) {
+        input.value = "";
+        input.style.height = "auto";
+      }
 
       if (editingMessageIndex >= 0) {
         state.messages = state.messages.slice(0, editingMessageIndex);
@@ -1406,10 +1493,18 @@
           }
           throw new Error(data.error || `Request failed (${res.status})`);
         }
+        const replyText = String(data.reply || data.text || data.message || "").trim();
+        if (!replyText) {
+          throw new Error(
+            getLang() === "sw"
+              ? "Mshauri hakurudisha jibu. Tafadhali jaribu tena."
+              : "The Auto Advisor returned an empty response. Please try again."
+          );
+        }
         state.messages.push({
           role: "model",
-          text: String(data.reply || ""),
-          model: data.model || "gemini-4-hydrogen",
+          text: replyText,
+          model: data.model || "3P Auto Advisor",
           groundingMode: data.groundingMode || "",
           sources: Array.isArray(data.groundingSources) ? data.groundingSources : []
         });
@@ -1478,12 +1573,13 @@
   function boot() {
     applyTheme(getTheme());
     initHeaderControls();
+    initFooterNewsletter();
+    syncFooterCopyrightYears();
     applyLanguage(getLang());
     const initDeferredUi = () => {
       initBackToTop();
-      initFooterNewsletter();
       initGeminiAdvisorChat();
-      applyLanguage(getLang());
+      syncFooterCopyrightYears();
     };
     if (typeof window.requestIdleCallback === "function") {
       window.requestIdleCallback(initDeferredUi, { timeout: 800 });

@@ -69,7 +69,7 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top {
     max-width: 100% !important;
   }
 
-  html[data-ux="1"][data-theme][lang] body:not(:has(#app)) > footer .ux-footer-inner {
+  html[data-ux="1"][data-theme][lang] body:not(:has(#adminSidebar)) > footer .ux-footer-inner {
     width: min(1132px, calc(100% - 48px)) !important;
     max-width: 1132px !important;
   }
@@ -92,7 +92,7 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top {
     max-width: 1232px !important;
   }
 
-  html[data-ux="1"][data-theme][lang] body:not(:has(#app)) > footer .ux-footer-inner {
+  html[data-ux="1"][data-theme][lang] body:not(:has(#adminSidebar)) > footer .ux-footer-inner {
     width: min(1232px, calc(100% - 48px)) !important;
     max-width: 1232px !important;
   }
@@ -742,7 +742,53 @@ html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top .back {
     color: #ffffff !important;
   }
 }
+/* Explicit right-cluster flex order: [Theme + Lang] -> [Home / Back] -> [Mobile Menu Toggle] */
+html[data-ux="1"][data-theme][lang] body > header .ux-header-right > .ux-controls,
+html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-header-right > .ux-controls {
+  order: 0 !important;
+}
 
+html[data-ux="1"][data-theme][lang] body > header .ux-header-right > .back,
+html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-header-right > .back {
+  order: 1 !important;
+}
+
+html[data-ux="1"][data-theme][lang] body > header .ux-header-right > .ux-mobile-subtoggle,
+html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-header-right > .ux-mobile-subtoggle {
+  order: 2 !important;
+}
+
+/* Home Icon Button (36x36 square glass icon matching #accountOpen & hamburger button) */
+html[data-ux="1"][data-theme][lang] body > header .back.ux-home-icon-btn,
+html[data-ux="1"][data-theme][lang] body > .wrap > header.top .back.ux-home-icon-btn {
+  width: 36px !important;
+  min-width: 36px !important;
+  max-width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  padding: 0 !important;
+  gap: 0 !important;
+  border-radius: 12px !important;
+  line-height: 0 !important;
+}
+
+html[data-ux="1"][data-theme][lang] body > header .back.ux-home-icon-btn svg,
+html[data-ux="1"][data-theme][lang] body > .wrap > header.top .back.ux-home-icon-btn svg {
+  width: 17px !important;
+  height: 17px !important;
+  display: block !important;
+  flex: 0 0 17px !important;
+}
+
+/* Hide redundant Back to dealers link on wide desktop where top nav already includes Dealers */
+@media (min-width: 1024px) {
+  html[data-ux="1"][data-theme][lang] body > header .back.ux-back-dealers,
+  html[data-ux="1"][data-theme][lang] body > header .back[href*="dealers"],
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top .back.ux-back-dealers,
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top .back[href*="dealers"] {
+    display: none !important;
+  }
+}
 /* Mobile Toggle Button (Hidden on >= 1024px) */
 html[data-ux="1"][data-theme][lang] body > header :is(#navToggle, #garageNavToggle, .ux-mobile-subtoggle),
 html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-mobile-subtoggle {
@@ -915,10 +961,18 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
 
   html[data-ux="1"][data-theme][lang] body > header :is(.logo, .brand),
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top :is(.logo, .brand) {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
     font-size: clamp(13px, 3.6vw, 15px) !important;
-    max-width: calc(100vw - 140px) !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header :is(.ux-header-right, .ux-header-actions),
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-header-right {
+    flex: 0 0 auto !important;
+    gap: 8px !important;
   }
 
   html[data-ux="1"][data-theme][lang] body > header :is(.logo, .brand)::before,
@@ -947,12 +1001,24 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     padding: 0 !important;
   }
 
-  html[data-ux="1"][data-theme][lang] body > header .back,
-  html[data-ux="1"][data-theme][lang] body > .wrap > header.top .back {
+  html[data-ux="1"][data-theme][lang] body > header .back:not(.ux-home-icon-btn),
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top .back:not(.ux-home-icon-btn) {
     height: 36px !important;
     min-height: 36px !important;
     padding: 0 11px !important;
-    font-size: 12px !important;
+    border-radius: 12px !important;
+    font-size: 11.5px !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header .back.ux-home-icon-btn,
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top .back.ux-home-icon-btn {
+    width: 36px !important;
+    min-width: 36px !important;
+    max-width: 36px !important;
+    height: 36px !important;
+    min-height: 36px !important;
+    padding: 0 !important;
+    border-radius: 12px !important;
   }
 
   /* Show Hamburger Toggle on < 1024px */
@@ -976,14 +1042,14 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     align-items: stretch !important;
     justify-content: flex-start !important;
     flex-wrap: nowrap !important;
-    width: min(226px, calc(100vw - 20px)) !important;
-    max-width: calc(100vw - 20px) !important;
-    max-height: min(72dvh, 410px) !important;
+    width: min(178px, calc(100vw - 24px)) !important;
+    max-width: calc(100vw - 24px) !important;
+    max-height: min(60dvh, 300px) !important;
     overflow-x: hidden !important;
     overflow-y: auto !important;
-    padding: 6px !important;
-    gap: 2px !important;
-    border-radius: 14px !important;
+    padding: 5px !important;
+    gap: 1px !important;
+    border-radius: 12px !important;
     border: 1px solid rgba(255, 255, 255, 0.20) !important;
     background: rgba(18, 20, 23, 0.96) !important;
     background-color: rgba(18, 20, 23, 0.96) !important;
@@ -1017,11 +1083,11 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links > a.ux-subnav-link {
     width: 100% !important;
     height: auto !important;
-    min-height: 36px !important;
+    min-height: 30px !important;
     justify-content: flex-start !important;
-    padding: 7px 11px !important;
+    padding: 4px 9px !important;
     border: 1px solid transparent !important;
-    border-radius: 9px !important;
+    border-radius: 7px !important;
     background: transparent !important;
     background-color: transparent !important;
     background-image: none !important;
@@ -1029,7 +1095,8 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
     text-shadow: none !important;
-    font-size: 13px !important;
+    font-size: 12px !important;
+    line-height: 1.2 !important;
     font-weight: 500 !important;
   }
 
@@ -1062,8 +1129,8 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     justify-content: space-between !important;
     width: 100% !important;
     box-sizing: border-box !important;
-    margin-top: 4px !important;
-    padding: 7px 2px 2px !important;
+    margin-top: 3px !important;
+    padding: 5px 2px 1px !important;
     border-top: 1px solid rgba(255, 255, 255, 0.14) !important;
   }
 
@@ -1078,18 +1145,18 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     justify-content: space-between !important;
     width: 100% !important;
     min-width: 0 !important;
-    gap: 6px !important;
+    gap: 5px !important;
   }
 
   html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) .ux-drawer-controls .ux-theme-btn {
     width: auto !important;
     flex: 0 0 auto !important;
     min-width: 0 !important;
-    padding: 0 9px !important;
-    height: 30px !important;
-    min-height: 30px !important;
-    font-size: 11.5px !important;
-    border-radius: 8px !important;
+    padding: 0 7px !important;
+    height: 26px !important;
+    min-height: 26px !important;
+    font-size: 10.5px !important;
+    border-radius: 7px !important;
     justify-content: center !important;
   }
 
@@ -1101,22 +1168,22 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     display: inline-flex !important;
     width: auto !important;
     flex: 0 0 auto !important;
-    height: 30px !important;
-    min-height: 30px !important;
+    height: 26px !important;
+    min-height: 26px !important;
     padding: 2px !important;
-    border-radius: 8px !important;
+    border-radius: 7px !important;
   }
 
   html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) .ux-drawer-controls .ux-lang-switch button {
     width: auto !important;
     flex: 0 0 auto !important;
-    min-width: 28px !important;
-    height: 24px !important;
-    min-height: 24px !important;
-    padding: 0 7px !important;
-    font-size: 10.5px !important;
+    min-width: 24px !important;
+    height: 20px !important;
+    min-height: 20px !important;
+    padding: 0 6px !important;
+    font-size: 10px !important;
     justify-content: center !important;
-    border-radius: 6px !important;
+    border-radius: 5px !important;
   }
 }
 

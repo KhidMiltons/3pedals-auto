@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <script>(function(){try{var t=localStorage.getItem("3pedals:theme")||"dark";document.documentElement.setAttribute("data-theme",t==="light"?"light":"dark");document.documentElement.dataset.ux="1";}catch(e){}})();</script>
+<script src="/consent.js?v=20261107-1"></script>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0d0d0d">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -20,8 +21,8 @@
   nav button,nav a.navlink { --dock-scale: 1 !important; }
 }
 </style>
-<link rel="stylesheet" href="site-theme.css?v=20261123-fix">
-<link rel="stylesheet" href="/site-ux.css?v=20261123-fix">
+<link rel="stylesheet" href="site-theme.css?v=20261123-fix5">
+<link rel="stylesheet" href="/site-ux.css?v=20261123-fix5">
 <style id="vehicle-documents-device-light-theme">
 @media screen and (prefers-color-scheme:light){
   :root{color-scheme:light;--bg:#f3f1ec;--panel:rgba(255,255,255,.72);--ink:#292820;--muted:#716d63;--gold:#806638;--line:rgba(91,82,63,.2)}
@@ -40,7 +41,7 @@
   .footer{border-color:rgba(91,82,63,.16)}
 }
 </style>
-<link rel="stylesheet" href="/header-modern.css?v=20261123-fix">
+<link rel="stylesheet" href="/header-modern.css?v=20261123-fix5">
 </head>
 <body><div class="wrap">
 <header class="top"><a class="brand" href="/">3 Pedals Auto KE</a><a class="back" href="/#sell">← Back to Sell Your Car</a></header>
@@ -66,8 +67,8 @@
 </section>
 <section id="preview" class="panel" hidden><h2>Print preview</h2><div id="paper"></div><div class="actions" id="printButton"><button class="btn primary" type="button" onclick="window.print()">Print / Save as PDF</button></div></section>
 <p class="note">These editable templates are general transaction aids, not legal advice. Confirm current NTSA requirements and obtain independent legal or mechanical advice where appropriate. Do not sign a blank or incomplete agreement.</p>
-<footer class="footer">3 Pedals Auto KE · Vehicle documents</footer>
 </div>
+<footer class="ux-site-footer no-print"><div class="wrap">© <span data-ux-year>2026</span> 3 Pedals Auto KE · Vehicle documents · Prices in KES.</div></footer>
 <script>
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const pretty=s=>String(s||"").replaceAll("_"," ");
@@ -312,6 +313,6 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){f
   }
 }
 </style>
-<script defer src="/site-ux.js?v=20261122-perf"></script>
+<script defer src="/site-ux.js?v=20261123-fix5"></script>
 </body>
 </html>

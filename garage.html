@@ -422,7 +422,7 @@ footer{border-color:var(--line);background:linear-gradient(180deg,transparent,rg
   nav button,nav a.navlink { --dock-scale: 1 !important; }
 }
 </style>
-<link rel="stylesheet" href="site-theme.css?v=20261123-fix">
+<link rel="stylesheet" href="site-theme.css?v=20261123-fix5">
 
 <style id="garage-floating-glass-whatsapp">
 /* Match the transparent, borderless champagne-glass WhatsApp icon used on the home page. */
@@ -567,8 +567,8 @@ html body h1,html body h2,html body h3,html body .logo,html body .brand{font-fam
 html body > header .logo,html body > header .brand{font-family:"Playfair Display",Georgia,serif!important;font-size:27px!important;font-weight:700!important;letter-spacing:.03em!important;text-transform:uppercase!important}
 html body > header nav a,html body > header nav button,html body > header .headnav a,html body > header .headnav button,html body > header .back{font-family:Manrope,system-ui,sans-serif!important;font-size:14px!important;font-weight:400!important;letter-spacing:0!important}
 </style>
-<link rel="stylesheet" href="/site-ux.css?v=20261123-fix">
-<link rel="stylesheet" href="/header-modern.css?v=20261123-fix">
+<link rel="stylesheet" href="/site-ux.css?v=20261123-fix5">
+<link rel="stylesheet" href="/header-modern.css?v=20261123-fix5">
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
@@ -650,7 +650,7 @@ html body > header nav a,html body > header nav button,html body > header .headn
 <section id="mechanics" hidden><div class="hero garage-hero"><h1>Verified specialists for your car.</h1><p>Meet garage technicians and mobile mechanics with experience across specific makes and models.</p></div><div id="mechanicDirectory" class="directory-grid"><div class="empty-state">Loading verified mechanics…</div></div></section>
 </main>
 
-<footer><div class="wrap" style="text-align:center">3 Pedals Garage</div></footer>
+<footer class="ux-site-footer no-print"><div class="wrap">© <span data-ux-year>2026</span> 3 Pedals Garage · Prices in KES.</div></footer>
 <a class="fab" id="garageFab" href="https://wa.me/254791961807?text=Hello%203%20Pedals%20Garage" target="_blank" rel="noopener" aria-label="Chat on WhatsApp" title="Chat on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.8a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.4-4.9A8.4 8.4 0 1 1 20.5 11.8Z"/><path d="M8.4 7.7c.2-.5.4-.5.7-.5h.5c.2 0 .4.1.5.4l.8 1.8c.1.2.1.4-.1.6l-.6.7c-.2.2-.2.4 0 .7.5.8 1.2 1.5 2.1 2 .2.1.4.1.6-.1l.8-.9c.2-.2.4-.2.6-.1l1.7.8c.3.1.4.3.4.5 0 .4-.2 1.1-.7 1.5-.5.5-1.2.7-2 .5-1-.2-2.3-.8-3.5-1.9-1.4-1.2-2.3-2.7-2.5-3.8-.2-.9.1-1.5.7-2.2Z"/></svg></a>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -887,7 +887,7 @@ document.addEventListener('click', function(event) {
 </script>
 
 <style id="final-background-wallpaper-fix">
-html,body{background-color:#08090b!important}
+html:not([data-theme="light"]),html:not([data-theme="light"]) body{background-color:#08090b!important}
 body{background-image:linear-gradient(90deg,rgba(4,5,7,.56),rgba(4,5,7,.28) 55%,rgba(4,5,7,.40)),linear-gradient(180deg,rgba(4,5,7,.10),rgba(4,5,7,.18) 55%,rgba(4,5,7,.55)),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72")!important;background-position:center,center,center center!important;background-size:cover,cover,cover!important;background-repeat:no-repeat,no-repeat,no-repeat!important;background-attachment:fixed,fixed,fixed!important}
 body:before{content:none!important;display:none!important}
 body:after{background:linear-gradient(90deg,rgba(0,0,0,.10),transparent 48%,rgba(0,0,0,.10))!important}
@@ -897,8 +897,8 @@ body:after{background:linear-gradient(90deg,rgba(0,0,0,.10),transparent 48%,rgba
 </style>
 
 <style id="borderless-glass-footer-and-garage">
-/* Borderless translucent glass for Garage page sections and footer. */
-footer,body>footer,.site-footer,#footer,.garage-hero,.garage-section,.garage-panel,.garage-card,
+/* Borderless translucent glass for Garage page sections (shared footer styled by site-ux.css). */
+.garage-hero,.garage-section,.garage-panel,.garage-card,
 .tiles .tile,.tile,.card,.panel,.service-card,.booking-card,.contact-card,.stat,.showroom-vehicle-note,
 .garage .tile,.garage .card,.garage .panel{
   border:0!important;border-top:0!important;border-bottom:0!important;outline:0!important;
@@ -907,13 +907,10 @@ footer,body>footer,.site-footer,#footer,.garage-hero,.garage-section,.garage-pan
   backdrop-filter:blur(24px) saturate(145%)!important;
   box-shadow:0 16px 42px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.07)!important;
 }
-footer::before,footer::after,body>footer::before,body>footer::after{border:0!important;box-shadow:none!important}
-@media(max-width:760px){footer,body>footer{padding-bottom:calc(80px + env(safe-area-inset-bottom,0px))!important}}
 </style>
 
 
 <style id="dealer-garage-location-borderless-glass">
-footer,body>footer,.site-footer,#footer,
 #dealer,.dealer-section,.dealer-card,.dealer-panel,.dealer-hero,.dealer-location,
 #garage,.garage-section,.garage-card,.garage-panel,.garage-hero,
 #location,.location-section,.location-card,.location-panel,.location-hero,
@@ -925,7 +922,6 @@ footer,body>footer,.site-footer,#footer,
  box-shadow:0 16px 42px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.06)!important;
 }
 .garage-hero,.dealer-hero,.location-hero{border-left:0!important;border-right:0!important}
-footer::before,footer::after,body>footer::before,body>footer::after{border:0!important;box-shadow:none!important}
 </style>
 
 
@@ -1374,7 +1370,7 @@ body>header,header.site-header,.site-header,header{
   h2{font-size:36px}
   .card h3{font-size:26px}
   .price{font-size:28px}
-  .meta,.tag,.specs span,footer{font-size:16px}
+  .meta,.tag,.specs span{font-size:16px}
   label{font-size:16px}
   input,select,textarea{font-size:17px}
   .btn{font-size:17px}
@@ -1397,7 +1393,7 @@ body>header,header.site-header,.site-header,header{
   h2{font-size:42px}
   .card h3{font-size:30px}
   .price{font-size:32px}
-  .meta,.tag,.specs span,footer{font-size:18px}
+  .meta,.tag,.specs span{font-size:18px}
   label{font-size:18px}
   input,select,textarea{font-size:19px;padding:12px 14px}
   .btn{font-size:19px;padding:13px 21px}
@@ -1788,7 +1784,7 @@ body:before{
 
 <style id="garage-refresh-mobile-type-neutral">
 /* Final refresh-safe overrides: neutral white typography and compact mobile sizing. */
-html,body{background-color:#08090b!important;color:#f5f5f3!important;color-scheme:dark}
+html:not([data-theme="light"]),html:not([data-theme="light"]) body{background-color:#08090b!important;color:#f5f5f3!important;color-scheme:dark}
 body>header .logo{color:#f5f5f3!important}
 body>header nav#garageSectionNav button,
 body>header nav#garageSectionNav a.navlink{color:rgba(248,247,243,.88)!important}
@@ -1804,7 +1800,7 @@ body>header .account-pill,body>header #accountOpen,body>header .garage-nav-toggl
   .hero h1,.garage-hero h1,h1,h2,h3{color:#f5f5f3!important}
 }
 /* Keep the original Porsche wallpaper; the dark fallback prevents a white paint flash while it loads. */
-body{background-color:#08090b!important}
+html:not([data-theme="light"]) body{background-color:#08090b!important}
 </style>
 
 <style id="garage-contact-modern-type">
@@ -2053,6 +2049,6 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){f
   }
 }
 </style>
-<script defer src="/site-ux.js?v=20261122-perf"></script>
+<script defer src="/site-ux.js?v=20261123-fix5"></script>
 </body>
 </html>

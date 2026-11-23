@@ -80,7 +80,7 @@ footer{border-top:1px solid var(--line);color:var(--mute)}
 @media(max-width:520px){.wrap{width:calc(100% - 24px)}.headin{min-height:66px}.logo{font-size:19px}.back{padding:9px 10px;font-size:11px}.hero{padding-top:32px}.grid{grid-template-columns:1fr;gap:12px}.cardbody{padding:14px}.profile{gap:12px}.sectionhead{align-items:flex-start;flex-direction:column;gap:4px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.hero,.profile,.card{animation:none!important}.hero h1:after,.back,.panel,.btn,.card,.card img{transition:none!important}}
 .actions #shareYardProfile{cursor:pointer;font:inherit}.actions #shareYardProfile:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
-.yard-inventory-tools{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(140px,1fr) minmax(150px,1fr) auto;gap:10px;margin:0 0 16px}.yard-inventory-tools input,.yard-inventory-tools select{width:100%;min-width:0;border:1px solid var(--line);border-radius:9px;padding:11px 12px;background:var(--surface);color:var(--ink);font:inherit}.yard-inventory-tools select option{background:#292929!important;color:#fff!important}.yard-inventory-tools .btn{margin:0;white-space:nowrap}.grid [data-yard-car][hidden],#yardNoMatches[hidden]{display:none!important}@media(max-width:760px){.yard-inventory-tools{grid-template-columns:1fr 1fr}.yard-inventory-tools input{grid-column:1/-1}.yard-inventory-tools .btn{width:100%}}
+.yard-inventory-tools{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(140px,1fr) minmax(150px,1fr) auto;gap:10px;margin:0 0 16px}.yard-inventory-tools input,.yard-inventory-tools select{width:100%;min-width:0;border:1px solid var(--line);border-radius:9px;padding:11px 12px;background:var(--surface);color:var(--ink);font:inherit}.yard-inventory-tools select option{background:#292929!important;color:#fff!important}.yard-inventory-tools .btn{margin:0;white-space:nowrap}.grid [data-yard-car][hidden],#yardNoMatches[hidden]{display:none!important}@media(max-width:760px){.yard-inventory-tools{grid-template-columns:1fr 1fr;gap:8px}.yard-inventory-tools input{grid-column:auto}.yard-inventory-tools .btn{width:100%}}
 </style>
 <style id="dealer-branding-polish">
 #profile>.panel:first-child{position:relative;overflow:hidden;background:linear-gradient(145deg,#fff 0%,#fbfaf6 100%)}
@@ -118,7 +118,7 @@ input,select,textarea,.back{background:rgba(255,255,255,.055)!important;color:#f
 .btn{transition:transform .25s var(--ease),filter .25s,box-shadow .25s!important}.btn:focus-visible{filter:brightness(1.08)!important;box-shadow:0 10px 24px rgba(0,0,0,.28)!important}.input::placeholder{color:#aaa18e!important}input::placeholder{color:#aaa18e!important}.eyebrow{color:#c9b784!important}a{color:inherit}.logo,.brand,.price,.arrow{color:#c9b784!important}.status{background:rgba(55,112,72,.2)!important;color:#b7e0bf!important;border-color:rgba(128,194,143,.3)!important}.yard-label{background:rgba(201,183,132,.14)!important;color:#c9b784!important}footer{border-color:rgba(201,183,132,.18)!important;color:#aaa18e!important}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
 </style>
-<link rel="stylesheet" href="site-theme.css?v=20261123-fix">
+<link rel="stylesheet" href="site-theme.css?v=20261123-fix5">
 <style id="compact-mobile-yard-vehicle-cards">
 @media(max-width:600px){
   .grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
@@ -666,8 +666,8 @@ html body h1,html body h2,html body h3,html body .logo,html body .brand{font-fam
 html body > header .logo,html body > header .brand{font-family:"Playfair Display",Georgia,serif!important;font-size:27px!important;font-weight:700!important;letter-spacing:.03em!important;text-transform:uppercase!important}
 html body > header nav a,html body > header nav button,html body > header .headnav a,html body > header .headnav button,html body > header .back{font-family:Manrope,system-ui,sans-serif!important;font-size:14px!important;font-weight:400!important;letter-spacing:0!important}
 </style>
-<link rel="stylesheet" href="/site-ux.css?v=20261123-fix">
-<link rel="stylesheet" href="/header-modern.css?v=20261123-fix">
+<link rel="stylesheet" href="/site-ux.css?v=20261123-fix5">
+<link rel="stylesheet" href="/header-modern.css?v=20261123-fix5">
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
@@ -681,7 +681,7 @@ html body > header nav a,html body > header nav button,html body > header .headn
 <section class="hero"><span class="eyebrow">3 PEDALS AUTO KE · DEALER PROFILE</span><h1 id="title">Car Yard</h1><p>Explore vehicles currently listed by this car yard. Contact the yard directly or open a vehicle to see its full details.</p></section>
 <section id="profile" class="profile"><div class="panel details"><div class="yardmark">🏢</div><h2 id="yardName">Loading…</h2><h3 class="yard-contact-title">Dealer details</h3><div id="contacts"></div><h3 class="yard-actions-title">Contact this yard</h3><div class="actions" id="actions"></div></div><div class="panel"><div class="statgrid"><div class="stat"><b id="vehicleCount">0</b><span>Available vehicles</span></div><div class="stat"><b id="priceRange">—</b><span>Price range</span></div></div><p class="detail" style="margin-top:18px">Every vehicle shown here is an approved listing currently available through 3 Pedals Auto KE.</p></div></section>
 <section><div class="sectionhead"><h2>Vehicles from this yard</h2><span id="countText">Loading inventory…</span></div><div class="yard-inventory-tools"><input id="yardVehicleSearch" type="search" placeholder="Search this yard’s vehicles" aria-label="Search this yard’s vehicles"><select id="yardFuelFilter" aria-label="Filter this yard by fuel type"><option value="">All fuel types</option></select><select id="yardSort" aria-label="Sort this yard’s vehicles"><option value="new">Newest first</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option><option value="km">Lowest mileage</option></select><button class="btn" id="yardClearFilters" type="button">Clear filters</button></div><div id="grid" class="grid"><div class="panel empty">Loading yard inventory…</div></div></section>
-</main><footer><div class="wrap">3 Pedals Auto KE · Automotive Excellence Reimagined, For Those Who Appreciate the Drive.</div></footer>
+</main><footer class="ux-site-footer no-print"><div class="wrap">© <span data-ux-year>2026</span> 3 Pedals Auto KE · Automotive Excellence Reimagined, For Those Who Appreciate the Drive.</div></footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
 <script>
@@ -917,6 +917,6 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){f
   }
 }
 </style>
-<script defer src="/site-ux.js?v=20261122-perf"></script>
+<script defer src="/site-ux.js?v=20261123-fix5"></script>
 </body>
 </html>

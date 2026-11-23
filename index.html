@@ -57,7 +57,7 @@ nav:not(.account-sidebar) button[aria-selected="true"]{background:#d4a017;color:
 .hero h1::after{content:"";display:block;width:64px;height:5px;background:var(--gold);margin-top:12px}
 .hero p{color:var(--mute);max-width:34em;margin:10px 0 0}
 .filters{display:grid;grid-template-columns:2fr repeat(3,1fr);gap:10px;margin:18px 0 8px}
-@media(max-width:700px){.filters{grid-template-columns:1fr 1fr}.filters input{grid-column:1/-1}}
+@media(max-width:700px){.filters{grid-template-columns:1fr 1fr}.filters input{grid-column:auto}}
 input,select,textarea{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 12px}
 label{display:block;font-weight:600;font-size:14px;margin:12px 0 4px}
 .count{color:var(--mute);margin:8px 0 14px}
@@ -521,7 +521,7 @@ main>section{contain:layout style}
   #buy #grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
   #buy .card .swatch{height:clamp(112px,32vw,150px)!important}
   #buy .card .body{padding:9px!important}
-  .filters{grid-template-columns:1fr!important}
+  .filters{grid-template-columns:repeat(2,minmax(0,1fr))!important}
   .filters input{grid-column:auto!important}
   .specs{width:100%!important;gap:6px!important}.spec-row{max-width:100%!important}.spec-row b{min-width:0!important;overflow-wrap:anywhere!important}
   dialog:not(#accDlg):not(#accActionDlg):not(#sellerEditListingDialog){max-width:calc(100vw - 20px)!important;width:calc(100vw - 20px)!important;max-height:90dvh!important}
@@ -609,7 +609,7 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 }
 </style>
 <style id="mobile-menu-compact">
-@media(max-width:980px){header .wrap{position:relative}nav:not(.account-sidebar),nav:not(.account-sidebar).is-open{width:min(280px,calc(100vw - 32px))!important;max-width:calc(100vw - 32px)!important;right:16px!important;left:auto!important;max-height:min(72dvh,440px);overflow-x:hidden!important;overflow-y:auto!important;gap:3px!important;padding:7px!important}nav:not(.account-sidebar) button,nav:not(.account-sidebar) a.navlink{min-height:36px!important;padding:7px 11px!important;flex:0 0 auto!important;font-size:14px!important}}
+@media(max-width:980px){header .wrap{position:relative}nav:not(.account-sidebar),nav:not(.account-sidebar).is-open{width:min(178px,calc(100vw - 24px))!important;max-width:calc(100vw - 24px)!important;right:10px!important;left:auto!important;max-height:min(60dvh,300px);overflow-x:hidden!important;overflow-y:auto!important;gap:1px!important;padding:5px!important}nav:not(.account-sidebar) button,nav:not(.account-sidebar) a.navlink{min-height:30px!important;padding:4px 9px!important;flex:0 0 auto!important;font-size:12px!important}}
 </style>
 <style id="vehicle-photo-controls">
 .gal{position:relative;touch-action:pan-y;overscroll-behavior-x:contain}.gal .main{touch-action:pan-y;user-select:none;-webkit-user-drag:none}.gal .vehicle-step{position:absolute;top:calc(50% - 24px);z-index:3;width:44px;height:54px;padding:0;border:1px solid rgba(255,255,255,.24);border-radius:10px;background:rgba(12,13,14,.72);color:#fff;font-size:32px;line-height:1;display:grid;place-items:center;cursor:pointer;backdrop-filter:blur(10px)}.gal .vehicle-prev{left:10px}.gal .vehicle-next{right:10px}.gal .vehicle-count{position:absolute;right:10px;top:10px;z-index:3;padding:5px 8px;border-radius:6px;background:rgba(12,13,14,.72);color:#fff;font-size:12px;font-weight:700}dialog:not(#accDlg):not(#accActionDlg):not(#sellerEditListingDialog){overscroll-behavior:contain;touch-action:pan-y}body{overscroll-behavior-x:none}
@@ -638,8 +638,8 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
   .account-pill{grid-area:account!important;justify-self:end!important;margin:0!important;padding:2px!important}
   .account-pill button,.nav-toggle{width:40px!important;height:40px!important;min-width:40px!important;align-self:center!important;justify-self:end!important}
   .nav-toggle{grid-area:nav-toggle!important;display:inline-flex!important;margin:0!important}
-  nav:not(.account-sidebar){top:calc(100% + 8px)!important;right:12px!important;left:auto!important;width:min(190px,calc(100vw - 96px))!important;max-width:calc(100vw - 96px)!important;margin:0!important;padding:6px!important;gap:2px!important}
-  nav:not(.account-sidebar) button,nav:not(.account-sidebar) a.navlink{min-height:36px!important;padding:7px 9px!important;font-size:13px!important}
+  nav:not(.account-sidebar){top:calc(100% + 6px)!important;right:10px!important;left:auto!important;width:min(178px,calc(100vw - 24px))!important;max-width:calc(100vw - 24px)!important;margin:0!important;padding:5px!important;gap:1px!important}
+  nav:not(.account-sidebar) button,nav:not(.account-sidebar) a.navlink{min-height:30px!important;padding:4px 9px!important;font-size:12px!important}
   .hero{padding:26px 0 16px!important}
   .hero h1{font-size:clamp(34px,9.5vw,42px)!important;line-height:1.06!important;max-width:16ch!important;letter-spacing:-.025em}
   .hero p{font-size:15px!important;line-height:1.6!important;margin-top:12px!important}
@@ -676,8 +676,8 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 
 <style id="mobile-nav-glass-compact-override">
 @media(max-width:600px){
-  #nav,#nav.is-open{top:calc(100% + 8px)!important;right:12px!important;left:auto!important;width:min(190px,calc(100vw - 96px))!important;max-width:min(190px,calc(100vw - 96px))!important;max-height:min(72dvh,440px)!important;padding:6px!important;gap:2px!important;overflow-x:hidden!important;overflow-y:auto!important;background:rgba(22,23,25,.56)!important;border:1px solid rgba(201,183,132,.38)!important;border-radius:14px!important;box-shadow:0 18px 44px rgba(0,0,0,.58),inset 0 1px 0 rgba(255,255,255,.09)!important;backdrop-filter:blur(24px) saturate(145%)!important;-webkit-backdrop-filter:blur(24px) saturate(145%)!important}
-  #nav button,#nav a.navlink{width:100%!important;min-height:36px!important;flex:0 0 auto!important;padding:7px 9px!important;font-size:13px!important;border:1px solid transparent!important;border-radius:9px!important;background:transparent!important;color:rgba(243,240,232,.84)!important;transition:background .2s ease,border-color .2s ease,color .2s ease,transform .2s ease,box-shadow .2s ease!important}
+  #nav,#nav.is-open{top:calc(100% + 6px)!important;right:10px!important;left:auto!important;width:min(178px,calc(100vw - 24px))!important;max-width:min(178px,calc(100vw - 24px))!important;max-height:min(60dvh,300px)!important;padding:5px!important;gap:1px!important;overflow-x:hidden!important;overflow-y:auto!important;background:rgba(22,23,25,.56)!important;border:1px solid rgba(201,183,132,.38)!important;border-radius:12px!important;box-shadow:0 18px 44px rgba(0,0,0,.58),inset 0 1px 0 rgba(255,255,255,.09)!important;backdrop-filter:blur(24px) saturate(145%)!important;-webkit-backdrop-filter:blur(24px) saturate(145%)!important}
+  #nav button,#nav a.navlink{width:100%!important;min-height:30px!important;flex:0 0 auto!important;padding:4px 9px!important;font-size:12px!important;border:1px solid transparent!important;border-radius:7px!important;background:transparent!important;color:rgba(243,240,232,.84)!important;transition:background .2s ease,border-color .2s ease,color .2s ease,transform .2s ease,box-shadow .2s ease!important}
   #nav button:hover,#nav button:focus-visible,#nav a.navlink:hover,#nav a.navlink:focus-visible{transform:translateX(2px);border-color:rgba(201,183,132,.42)!important;background:linear-gradient(110deg,rgba(198,178,127,.2),rgba(169,146,95,.11))!important;color:#f1d995!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.055),0 5px 14px rgba(0,0,0,.16)!important;outline:none}
   #nav button[aria-selected="true"]{border-color:rgba(201,183,132,.55)!important;background:linear-gradient(110deg,#c6b27f,#a9925f)!important;color:#171717!important;box-shadow:0 5px 16px rgba(183,160,106,.2),inset 0 1px 0 rgba(255,255,255,.28)!important}
 }
@@ -712,16 +712,16 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 }
 @media(max-width:380px){#authDlg>.in{padding-left:13px!important;padding-right:13px!important}#authDlg .in>h2{font-size:25px!important}}
 </style>
-<link rel="stylesheet" href="site-theme.css?v=20261123-fix">
+<link rel="stylesheet" href="site-theme.css?v=20261123-fix5">
 <style id="account-restore-no-flash">html.account-restoring body{visibility:hidden!important;background:#0c0e12!important}html[data-theme="light"].account-restoring body{background:#f4efe4!important}html.account-restoring #accDlg[open]{visibility:visible!important}html.account-restoring #accDlg[open] #accBody{min-height:100px}#accDlg .account-refresh-status{display:none!important}</style>
 <script>try{if(sessionStorage.getItem("3pedals:account-open")==="1")document.documentElement.classList.add("account-restoring")}catch(_){}</script>
 <!-- Optional Meta Pixel is loaded by consent.js only after explicit acceptance. -->
 
 <link rel="stylesheet" href="/dashboard-glass.css?v=20261122-card-matched">
-<link rel="stylesheet" href="/index-theme.css?v=20261123-fix">
-<link rel="stylesheet" href="/account-panel.css?v=20261122-perf">
-<link rel="stylesheet" href="/site-ux.css?v=20261123-fix">
-<link rel="stylesheet" href="/header-modern.css?v=20261123-fix">
+<link rel="stylesheet" href="/index-theme.css?v=20261123-fix5">
+<link rel="stylesheet" href="/account-panel.css?v=20261123-fix5">
+<link rel="stylesheet" href="/site-ux.css?v=20261123-fix5">
+<link rel="stylesheet" href="/header-modern.css?v=20261123-fix5">
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
@@ -889,7 +889,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 </main>
 
-<footer><div class="wrap"><span id="footerBrand">3 Pedals Auto KE</span> · <span id="footerNote">Prices in KES.</span><span class="legal-footer-links"> · <a href="/privacy.html">Privacy Policy</a> · <a href="/terms.html">Terms of Service</a> · <button type="button" onclick="window.ThreePedalsConsent?.open()">Cookie preferences</button></span></div></footer>
+<footer class="ux-site-footer no-print"><div class="wrap">© <span data-ux-year>2026</span> <span id="footerBrand">3 Pedals Auto KE</span> · <span id="footerNote">Prices in KES.</span><span class="legal-footer-links"> · <a href="/privacy.html">Privacy Policy</a> · <a href="/terms.html">Terms of Service</a> · <button type="button" onclick="window.ThreePedalsConsent?.open()">Cookie preferences</button></span></div></footer>
 
 <a class="fab glass-icon-btn" id="publicWhatsappFab" href="https://wa.me/254791961807?text=Hello%203%20Pedals%20Auto%20KE" target="_blank" rel="noopener" aria-label="Chat on WhatsApp" title="Chat on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.8a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.4-4.9A8.4 8.4 0 1 1 20.5 11.8Z"/><path d="M8.4 7.7c.2-.5.4-.5.7-.5h.5c.2 0 .4.1.5.4l.8 1.8c.1.2.1.4-.1.6l-.6.7c-.2.2-.2.4 0 .7.5.8 1.2 1.5 2.1 2 .2.1.4.1.6-.1l.8-.9c.2-.2.4-.2.6-.1l1.7.8c.3.1.4.3.4.5 0 .4-.2 1.1-.7 1.5-.5.5-1.2.7-2 .5-1-.2-2.3-.8-3.5-1.9-1.4-1.2-2.3-2.7-2.5-3.8-.2-.9.1-1.5.7-2.2Z"/></svg></a>
 
@@ -1931,6 +1931,6 @@ loadSiteSettings();
   }
 })();
 </script>
-<script defer src="/site-ux.js?v=20261122-perf"></script>
+<script defer src="/site-ux.js?v=20261123-fix5"></script>
 </body>
 </html>

@@ -257,9 +257,18 @@ html:not([data-theme="light"]) body:has(#app) :is(
     background-attachment: scroll !important;
   }
   html body::before {
+    top: -12px !important;
+    left: -12px !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: calc(100vw + 24px) !important;
+    height: calc(100vh + 24px) !important;
+    height: calc(100lvh + 24px) !important;
     filter: none !important;
-    transform: none !important;
+    transform: translate3d(0, 0, 0) !important;
     background-attachment: scroll !important;
+    background-position: center center !important;
+    background-size: cover !important;
   }
   html:not([data-theme="light"]) body :is(
     .card, .dealer, .stat, .state, .empty, .error, .panel, .seller-card,
@@ -281,7 +290,7 @@ html:not([data-theme="light"]) body:has(#app) :is(
     background: rgba(26, 28, 32, .92) !important;
     background-color: rgba(26, 28, 32, .92) !important;
   }
-  html:not([data-theme="light"]) body :is(input, select, textarea):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
+  html:not([data-theme="light"]) body :is(input, select, textarea):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):not(#uxChatDrawer *) {
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
     background: rgba(20, 22, 25, .92) !important;
