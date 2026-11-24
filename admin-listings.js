@@ -29,6 +29,46 @@
   let currentPage = 1;
   const selectedIds = new Set();
 
+  const GARAGE_CHECK_TAG = "[3P-GARAGE-CHECKED]";
+
+  function isGarageChecked(x) {
+    if (!x) return false;
+    const boolFlags = [
+      x.garage_inspected,
+      x.pre_purchase_inspected,
+      x.inspection_verified,
+      x.garage_checked,
+      x.is_inspected,
+    ];
+    if (
+      boolFlags.some(
+        (v) => v === true || v === 1 || /^(true|yes|1|verified|passed|checked)$/i.test(String(v || "").trim())
+      )
+    ) {
+      return true;
+    }
+    const statusVal = String(x.inspection_status || x.garage_inspection_status || "")
+      .trim()
+      .toLowerCase();
+    if (["verified", "passed", "checked", "inspected", "approved"].includes(statusVal)) return true;
+    return /\[\s*3p[- ]garage[- ]checked\s*\]|verified\s+3\s*pedals\s+garage\s+pre[- ]purchase\s+inspection/i.test(
+      String(x.description || "")
+    );
+  }
+
+  function stripGarageCheckMarker(raw) {
+    return String(raw || "")
+      .replace(/\s*\[\s*3p[- ]garage[- ]checked\s*\]\s*/gi, "\n")
+      .replace(/\n{3,}/g, "\n\n")
+      .trim();
+  }
+
+  function applyGarageCheckMarker(raw, checked) {
+    const clean = stripGarageCheckMarker(raw);
+    if (!checked) return clean;
+    return clean ? `${clean}\n\n${GARAGE_CHECK_TAG}` : GARAGE_CHECK_TAG;
+  }
+
   function photosOf(x) {
     return Array.isArray(x?.photos) ? x.photos.map(safeUrl).filter(Boolean) : [];
   }
@@ -165,9 +205,13 @@
                   <span>${esc(x.fuel || "Fuel not specified")}</span><span class="sep">·</span>
                   <span>${esc(name)}</span>
                 </div>
-                <div style="margin-top:8px"><span class="status ${esc(
+                <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;align-items:center"><span class="status ${esc(
                   statusClass(x.status || "pending")
-                )}">${esc(x.status || "pending")}</span></div>
+                )}">${esc(x.status || "pending")}</span>${
+                  isGarageChecked(x)
+                    ? `<span class="status approved" title="Verified 3 Pedals Garage Pre-Purchase Inspection">✓ 3P Garage Checked</span>`
+                    : ""
+                }</div>
               </div>
             </div>
             <div class="actions">
@@ -210,7 +254,7 @@
                   )}</div>
                 </div>
                 <div class="field" style="margin-top:10px"><strong>Description</strong><div class="desc">${esc(
-                  x.description || "No description provided."
+                  stripGarageCheckMarker(x.description) || "No description provided."
                 )}</div></div>
               </div>
               <div>
@@ -420,8 +464,14 @@
             x.yard_location || ""
           )}"></div>
           <div class="full"><label for="dlDesc">Description</label><textarea id="dlDesc" rows="4">${esc(
-            x.description || ""
+            stripGarageCheckMarker(x.description)
           )}</textarea></div>
+          <div class="full" style="margin-top:6px">
+            <label for="dlGarageChecked" style="display:flex;align-items:center;gap:9px;padding:10px 12px;border:1px solid var(--ad-line);border-radius:10px;background:var(--ad-surface-2);cursor:pointer;text-transform:none;letter-spacing:0;font-size:13px;font-weight:600;color:var(--ad-ink)">
+              <input id="dlGarageChecked" type="checkbox" ${isGarageChecked(x) ? "checked" : ""} style="width:16px;height:16px;margin:0;accent-color:#44b96e;flex:0 0 auto">
+              <span>Verified 3 Pedals Garage Pre-Purchase Inspection (displays &ldquo;Checked&rdquo; badge)</span>
+            </label>
+          </div>
         </div>
         <div class="editor-actions">
           <button type="submit" class="primary" id="dlSaveSpecs">Save spec edits</button>
@@ -452,6 +502,7 @@
           ev.preventDefault();
           const saveBtn = drawer.querySelector("#dlSaveSpecs");
           if (saveBtn) saveBtn.disabled = true;
+          const garageChecked = Boolean(drawer.querySelector("#dlGarageChecked")?.checked);
           const payload = {
             year: Number(drawer.querySelector("#dlYear")?.value) || x.year,
             price: Number(drawer.querySelector("#dlPrice")?.value) || x.price,
@@ -460,7 +511,7 @@
             km: Number(drawer.querySelector("#dlKm")?.value || 0),
             fuel: drawer.querySelector("#dlFuel")?.value.trim() || "",
             yard_location: drawer.querySelector("#dlLocation")?.value.trim() || "",
-            description: drawer.querySelector("#dlDesc")?.value.trim() || "",
+            description: applyGarageCheckMarker(drawer.querySelector("#dlDesc")?.value || "", garageChecked),
           };
           const { error } = await sb.from("listings").update(payload).eq("id", x.id);
           if (saveBtn) saveBtn.disabled = false;

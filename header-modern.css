@@ -1045,7 +1045,7 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     background: rgba(255, 255, 255, 0.12) !important;
   }
 
-  /* Compact, sleek frosted floating menu card aligned to floating header */
+  /* Crisp, readable frosted floating menu card aligned to floating header */
   html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links),
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links {
     display: none !important;
@@ -1060,22 +1060,28 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     align-items: stretch !important;
     justify-content: flex-start !important;
     flex-wrap: nowrap !important;
-    width: min(210px, calc(100vw - 24px)) !important;
+    width: min(226px, calc(100vw - 24px)) !important;
     max-width: calc(100vw - 24px) !important;
-    max-height: min(60dvh, 300px) !important;
+    max-height: min(74dvh, 430px) !important;
     overflow-x: hidden !important;
     overflow-y: auto !important;
-    padding: 5px !important;
-    gap: 1px !important;
-    border-radius: 14px !important;
-    border: 1px solid rgba(255, 255, 255, 0.24) !important;
-    background: rgba(24, 27, 32, 0.78) !important;
-    background-color: rgba(24, 27, 32, 0.78) !important;
+    padding: 8px !important;
+    gap: 3px !important;
+    border-radius: 16px !important;
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+    background: rgba(14, 16, 20, 0.94) !important;
+    background-color: rgba(14, 16, 20, 0.94) !important;
+    background-image: linear-gradient(
+      155deg,
+      rgba(255, 255, 255, 0.06),
+      rgba(255, 255, 255, 0.01) 50%,
+      rgba(215, 189, 131, 0.04)
+    ) !important;
     box-shadow:
-      0 16px 38px rgba(0, 0, 0, 0.36),
-      inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
-    -webkit-backdrop-filter: blur(22px) saturate(145%) !important;
-    backdrop-filter: blur(22px) saturate(145%) !important;
+      0 20px 46px rgba(0, 0, 0, 0.62),
+      inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
+    -webkit-backdrop-filter: blur(26px) saturate(150%) !important;
+    backdrop-filter: blur(26px) saturate(150%) !important;
     opacity: 1 !important;
     visibility: visible !important;
     transform: none !important;
@@ -1083,12 +1089,13 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
 
   html[data-ux="1"][data-theme="light"][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links),
   html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top nav.ux-subnav-links {
-    background: rgba(253, 250, 243, 0.96) !important;
-    background-color: rgba(253, 250, 243, 0.96) !important;
+    background: rgba(253, 250, 243, 0.97) !important;
+    background-color: rgba(253, 250, 243, 0.97) !important;
+    background-image: linear-gradient(155deg, rgba(255, 255, 255, 0.85), rgba(246, 240, 227, 0.92)) !important;
     border-color: rgba(138, 114, 62, 0.34) !important;
     box-shadow:
-      0 16px 38px rgba(48, 38, 18, 0.20),
-      inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+      0 20px 44px rgba(48, 38, 18, 0.24),
+      inset 0 1px 0 rgba(255, 255, 255, 0.96) !important;
   }
 
   html[data-ux="1"][data-theme][lang] body > header :is(nav#nav.is-open, nav#nav.mobile-menu-open, nav#garageSectionNav.is-open, nav.ux-subnav-links.is-open),
@@ -1101,11 +1108,11 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links > a.ux-subnav-link {
     width: 100% !important;
     height: auto !important;
-    min-height: 30px !important;
+    min-height: 36px !important;
     justify-content: flex-start !important;
-    padding: 4px 9px !important;
+    padding: 7px 11px !important;
     border: 1px solid transparent !important;
-    border-radius: 7px !important;
+    border-radius: 9px !important;
     background: transparent !important;
     background-color: transparent !important;
     background-image: none !important;
@@ -1113,16 +1120,22 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
     text-shadow: none !important;
-    font-size: 12px !important;
-    line-height: 1.2 !important;
+    color: #f4f0e8 !important;
+    font-size: 13px !important;
+    line-height: 1.25 !important;
     font-weight: 500 !important;
+  }
+
+  html[data-ux="1"][data-theme="light"][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) > :is(button, a.navlink, a.ux-subnav-link),
+  html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top nav.ux-subnav-links > a.ux-subnav-link {
+    color: #171512 !important;
   }
 
   html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) > :is(button[aria-selected="true"], a[aria-current="page"]),
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links > a[aria-current="page"] {
-    background: rgba(229, 185, 111, 0.14) !important;
-    background-color: rgba(229, 185, 111, 0.14) !important;
-    border-color: rgba(229, 185, 111, 0.30) !important;
+    background: rgba(229, 185, 111, 0.16) !important;
+    background-color: rgba(229, 185, 111, 0.16) !important;
+    border-color: rgba(229, 185, 111, 0.34) !important;
     color: #E5B96F !important;
     font-weight: 600 !important;
   }
@@ -1131,7 +1144,7 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
   html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top nav.ux-subnav-links > a[aria-current="page"] {
     background: rgba(158, 116, 21, 0.14) !important;
     background-color: rgba(158, 116, 21, 0.14) !important;
-    border-color: rgba(158, 116, 21, 0.30) !important;
+    border-color: rgba(158, 116, 21, 0.32) !important;
     color: #7c5609 !important;
   }
 
@@ -1140,15 +1153,62 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     display: none !important;
   }
 
+  /* Account icon placed directly below Contact Us inside the mobile menu drawer */
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav) > .account-pill {
+    order: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    max-width: none !important;
+    margin: 2px 0 3px !important;
+    padding: 2px 11px 4px !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav) > .account-pill > span {
+    display: none !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav) > .account-pill > #accountOpen {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 34px !important;
+    width: 34px !important;
+    min-width: 34px !important;
+    max-width: 34px !important;
+    height: 34px !important;
+    min-height: 34px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 10px !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav) > .account-pill > #accountOpen::before {
+    flex: 0 0 15px !important;
+    width: 15px !important;
+    height: 15px !important;
+  }
+
   html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) .ux-drawer-controls,
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links .ux-drawer-controls {
+    order: 1 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
     width: 100% !important;
     box-sizing: border-box !important;
-    margin-top: 3px !important;
-    padding: 5px 2px 1px !important;
+    margin-top: 4px !important;
+    padding: 7px 3px 2px !important;
     border-top: 1px solid rgba(255, 255, 255, 0.14) !important;
   }
 
@@ -1163,18 +1223,18 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     justify-content: space-between !important;
     width: 100% !important;
     min-width: 0 !important;
-    gap: 5px !important;
+    gap: 6px !important;
   }
 
   html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) .ux-drawer-controls .ux-theme-btn {
     width: auto !important;
     flex: 0 0 auto !important;
     min-width: 0 !important;
-    padding: 0 7px !important;
-    height: 26px !important;
-    min-height: 26px !important;
-    font-size: 10.5px !important;
-    border-radius: 7px !important;
+    padding: 0 8px !important;
+    height: 28px !important;
+    min-height: 28px !important;
+    font-size: 11px !important;
+    border-radius: 8px !important;
     justify-content: center !important;
   }
 
@@ -1186,53 +1246,22 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     display: inline-flex !important;
     width: auto !important;
     flex: 0 0 auto !important;
-    height: 26px !important;
-    min-height: 26px !important;
+    height: 28px !important;
+    min-height: 28px !important;
     padding: 2px !important;
-    border-radius: 7px !important;
+    border-radius: 8px !important;
   }
 
   html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) .ux-drawer-controls .ux-lang-switch button {
     width: auto !important;
     flex: 0 0 auto !important;
-    min-width: 24px !important;
-    height: 20px !important;
-    min-height: 20px !important;
-    padding: 0 6px !important;
-    font-size: 10px !important;
+    min-width: 26px !important;
+    height: 22px !important;
+    min-height: 22px !important;
+    padding: 0 7px !important;
+    font-size: 10.5px !important;
     justify-content: center !important;
-    border-radius: 5px !important;
-  }
-
-  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav) .ux-drawer-controls .account-pill {
-    display: inline-flex !important;
-    flex: 0 0 auto !important;
-    width: auto !important;
-    min-width: 0 !important;
-    max-width: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border: 0 !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
-  }
-
-  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav) .ux-drawer-controls .account-pill > #accountOpen {
-    width: 28px !important;
-    min-width: 28px !important;
-    max-width: 28px !important;
-    height: 26px !important;
-    min-height: 26px !important;
-    padding: 0 !important;
-    border-radius: 7px !important;
-  }
-
-  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav) .ux-drawer-controls .account-pill > #accountOpen::before {
-    flex: 0 0 14px !important;
-    width: 14px !important;
-    height: 14px !important;
+    border-radius: 6px !important;
   }
 }
 

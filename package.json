@@ -11,8 +11,13 @@
     "lint": "node --check server.js"
   },
   "dependencies": {
+    "@google/genai": "^3.6.1",
     "express": "^4.21.2",
-    "jspdf": "^4.2.1"
+    "jspdf": "^4.2.1",
+    "prop-types": "^15.8.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "recharts": "2.15.3"
   },
   "engines": {
     "node": ">=20"

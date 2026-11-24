@@ -349,10 +349,10 @@
       const syncAccountPlacement = () => {
         if (!accountPill) return;
         const isCompact = window.matchMedia && window.matchMedia("(max-width: 1023px)").matches;
-        const drawerControlsRow = targetDrawer.querySelector(".ux-drawer-controls .ux-controls");
-        if (isCompact && drawerControlsRow) {
-          if (accountPill.parentElement !== drawerControlsRow) {
-            drawerControlsRow.appendChild(accountPill);
+        const drawerControlsWrap = targetDrawer.querySelector(".ux-drawer-controls");
+        if (isCompact && drawerControlsWrap) {
+          if (accountPill.parentElement !== targetDrawer || accountPill.nextElementSibling !== drawerControlsWrap) {
+            targetDrawer.insertBefore(accountPill, drawerControlsWrap);
           }
         } else if (actions) {
           if (toggle && toggle.parentElement === actions) {

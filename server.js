@@ -1,6 +1,7 @@
 import express from "express";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { GoogleGenAI } from "@google/genai";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -632,6 +633,95 @@ async function findOpenStreetMapPlaces(queryText, location) {
   return places;
 }
 
+const GEMINI_SEARCH_MODEL = "gemini-4-hydrogen";
+
+function getGeminiClient() {
+  const apiKey = (process.env.GEMINI_API_KEY || "").trim();
+  if (!apiKey) return null;
+  return new GoogleGenAI({
+    apiKey,
+    httpOptions: {
+      headers: {
+        "User-Agent": "aistudio-build",
+      },
+    },
+  });
+}
+
+function extractGeminiSearchSources(response) {
+  const chunks = response?.candidates?.[0]?.groundingMetadata?.groundingChunks;
+  if (!Array.isArray(chunks)) return [];
+  const sources = [];
+  const seen = new Set();
+  for (const chunk of chunks) {
+    const web = chunk?.web;
+    const rawUri = web?.uri;
+    if (typeof rawUri !== "string") continue;
+    let parsed;
+    try {
+      parsed = new URL(rawUri);
+    } catch {
+      continue;
+    }
+    if (!["http:", "https:"].includes(parsed.protocol) || seen.has(parsed.href)) continue;
+    seen.add(parsed.href);
+    sources.push({
+      type: "web",
+      title: String(web?.title || parsed.hostname).slice(0, 240),
+      uri: parsed.href,
+    });
+  }
+  return sources;
+}
+
+function formatGeminiError(err) {
+  const rawStatus = Number(err?.status || err?.code || 0);
+  const message = String(err?.message || "Failed to generate grounded response from Gemini.");
+  if (rawStatus === 403 || rawStatus === 400 || /PERMISSION_DENIED|API_KEY_INVALID|API key not valid/i.test(message)) {
+    return {
+      status: rawStatus === 400 ? 400 : 403,
+      message: "Gemini API key was not accepted. Check your GEMINI_API_KEY in Settings > Secrets.",
+    };
+  }
+  if (rawStatus === 429 || /RESOURCE_EXHAUSTED|quota|rate limit/i.test(message)) {
+    return {
+      status: 429,
+      message: "Gemini rate limit or quota reached right now. Please try again in a moment or review Settings > Secrets.",
+    };
+  }
+  if (rawStatus === 404 || /NOT_FOUND/i.test(message)) {
+    return {
+      status: 404,
+      message: `Requested Gemini model (${GEMINI_SEARCH_MODEL}) was not found.`,
+    };
+  }
+  return {
+    status: rawStatus >= 400 && rawStatus < 600 ? rawStatus : 502,
+    message,
+  };
+}
+
+function parseJsonObjectFromModelText(text) {
+  const raw = String(text || "").trim();
+  if (!raw) return null;
+  const fenced = raw.match(/```(?:json)?\s*([\s\S]*?)```/i);
+  const candidate = fenced ? fenced[1].trim() : raw;
+  try {
+    return JSON.parse(candidate);
+  } catch {
+    const start = candidate.indexOf("{");
+    const end = candidate.lastIndexOf("}");
+    if (start >= 0 && end > start) {
+      try {
+        return JSON.parse(candidate.slice(start, end + 1));
+      } catch {
+        return null;
+      }
+    }
+    return null;
+  }
+}
+
 app.post("/api/chat", async (req, res) => {
   const rawMessages = Array.isArray(req.body?.messages) ? req.body.messages : [];
   const cleanedHistory = rawMessages
@@ -741,10 +831,59 @@ app.post("/api/chat", async (req, res) => {
     });
   }
 
-  const apiKey = (process.env.GROQ_API_KEY || "").trim();
+  const geminiClient = getGeminiClient();
+  const groqApiKey = (process.env.GROQ_API_KEY || "").trim();
+  const shouldUseGeminiSearch = Boolean(geminiClient) && (effectiveMode === "search" || !groqApiKey);
+
+  if (shouldUseGeminiSearch) {
+    try {
+      const contents = cleanedHistory.map((m) => ({
+        role: m.role === "assistant" ? "model" : "user",
+        parts: [{ text: m.content }],
+      }));
+      const config = {
+        systemInstruction,
+        ...(effectiveMode === "search" ? { tools: [{ googleSearch: {} }] } : {}),
+      };
+      const geminiResponse = await geminiClient.models.generateContent({
+        model: GEMINI_SEARCH_MODEL,
+        contents,
+        config,
+      });
+      const reply = String(geminiResponse?.text || "").trim();
+      const groundingSources = extractGeminiSearchSources(geminiResponse);
+      const finalReply =
+        reply || "I could not generate a response for that request. Please try rephrasing.";
+      const hasMarkdownSourceLinks = /\[[^\]]+\]\(https?:\/\/[^)]+\)/i.test(finalReply);
+      const sourceList = groundingSources.length
+        ? "\n\n**Google Search sources**\n" +
+          groundingSources
+            .slice(0, 8)
+            .map((source) => "- [" + source.title.replace(/[\[\]\n]/g, "") + "](" + source.uri + ")")
+            .join("\n")
+        : "";
+      const responseReply =
+        effectiveMode === "search" && groundingSources.length === 0 && !hasMarkdownSourceLinks
+          ? finalReply +
+            "\n\n**Source verification note:** Google Search did not return extractable web URLs for this query. Verify legal, tax, date, and pricing claims with official KRA/KEBS/NTSA sources."
+          : finalReply + sourceList;
+
+      return res.json({
+        reply: responseReply,
+        model: GEMINI_SEARCH_MODEL,
+        groundingMode: effectiveMode === "search" ? "Google Search" : effectiveMode,
+        groundingSources,
+      });
+    } catch (err) {
+      const formatted = formatGeminiError(err);
+      return res.status(formatted.status).json({ error: formatted.message });
+    }
+  }
+
+  const apiKey = groqApiKey;
   if (!apiKey) {
     return res.status(503).json({
-      error: "Groq API key is not configured. Add GROQ_API_KEY in your Render environment variables.",
+      error: "AI advisor key is not configured. Check GEMINI_API_KEY in Settings > Secrets.",
     });
   }
 
@@ -915,8 +1054,140 @@ app.post("/api/chat", async (req, res) => {
   }
 });
 
+app.post("/api/compare-market-trends", async (req, res) => {
+  const geminiClient = getGeminiClient();
+  if (!geminiClient) {
+    return res.status(503).json({
+      error: "Gemini API key is not configured. Check GEMINI_API_KEY in Settings > Secrets to enable live Google Search market trends.",
+    });
+  }
+
+  const rawVehicles = Array.isArray(req.body?.vehicles) ? req.body.vehicles.slice(0, 4) : [];
+  const vehicles = rawVehicles
+    .filter((v) => v && (v.id || v.title || (v.make && v.model)))
+    .map((v) => ({
+      id: String(v.id || "").slice(0, 80),
+      title: String(v.title || `${v.year || ""} ${v.make || ""} ${v.model || ""}`.trim()).slice(0, 120),
+      year: Number(v.year || 0) || null,
+      make: String(v.make || "").slice(0, 60),
+      model: String(v.model || "").slice(0, 60),
+      price: Math.max(0, Number(v.price || 0)),
+      km: Math.max(0, Number(v.km || 0)),
+      fuel: String(v.fuel || "").slice(0, 40),
+    }));
+
+  if (!vehicles.length) {
+    return res.status(400).json({ error: "Select at least one vehicle to research market trends." });
+  }
+
+  const lang = req.body?.lang === "sw" ? "sw" : "en";
+  const currentDate = new Date().toLocaleDateString("en-CA", { timeZone: "Africa/Nairobi" });
+  const vehicleSummaryList = vehicles
+    .map(
+      (v, idx) =>
+        `${idx + 1}. id="${v.id}", vehicle="${v.title}", listedPriceKes=${Math.round(v.price)}, mileageKm=${Math.round(v.km)}, fuel="${v.fuel || "Unspecified"}"`
+    )
+    .join("\n");
+
+  const prompt = [
+    `Today's date in Kenya: ${currentDate}.`,
+    "Use Google Search to check current Kenyan used-car market prices and 6-month market value trends (in KES) for these specific vehicles:",
+    vehicleSummaryList,
+    "",
+    "Return ONLY valid JSON (no markdown commentary outside JSON) with this exact shape:",
+    '{',
+    '  "vehicles": [',
+    '    {',
+    '      "id": "exact input id",',
+    '      "estimatedBandKes": "e.g. KES 1.65M - 1.95M",',
+    '      "trendDirection": "up | steady | softening",',
+    '      "summary": "1 concise sentence grounded in current Kenyan market listings/import trends",',
+    '      "points": [',
+    '        { "label": "6m ago", "valueKes": 1850000 },',
+    '        { "label": "5m", "valueKes": 1830000 },',
+    '        { "label": "4m", "valueKes": 1810000 },',
+    '        { "label": "3m", "valueKes": 1795000 },',
+    '        { "label": "1m", "valueKes": 1780000 },',
+    '        { "label": "Now", "valueKes": 1770000 }',
+    '      ]',
+    '    }',
+    '  ]',
+    '}',
+    lang === "sw"
+      ? "Write each vehicle's `summary` in natural Swahili while keeping KES figures clear."
+      : "Write each vehicle's `summary` in clear English with KES figures.",
+    "Base price bands on real Kenyan automotive classifieds/market sources found via Google Search; never invent URLs.",
+  ].join("\n");
+
+  try {
+    const geminiResponse = await geminiClient.models.generateContent({
+      model: GEMINI_SEARCH_MODEL,
+      contents: prompt,
+      config: {
+        systemInstruction:
+          "You are a Kenyan automotive market analyst. Always search current Kenyan market data with Google Search and return strict, clean JSON with 6 monthly KES market value trend points per requested vehicle.",
+        tools: [{ googleSearch: {} }],
+      },
+    });
+
+    const parsed = parseJsonObjectFromModelText(geminiResponse?.text);
+    const groundingSources = extractGeminiSearchSources(geminiResponse);
+    const searchQueries = Array.isArray(geminiResponse?.candidates?.[0]?.groundingMetadata?.webSearchQueries)
+      ? geminiResponse.candidates[0].groundingMetadata.webSearchQueries.slice(0, 6)
+      : [];
+
+    const normalizedVehicles = Array.isArray(parsed?.vehicles)
+      ? parsed.vehicles.map((entry) => ({
+          id: String(entry?.id || ""),
+          estimatedBandKes: String(entry?.estimatedBandKes || "").slice(0, 80),
+          trendDirection: ["up", "steady", "softening"].includes(String(entry?.trendDirection || "").toLowerCase())
+            ? String(entry.trendDirection).toLowerCase()
+            : "steady",
+          summary: String(entry?.summary || "").slice(0, 320),
+          points: Array.isArray(entry?.points)
+            ? entry.points
+                .slice(0, 8)
+                .map((pt) => ({
+                  label: String(pt?.label || "").slice(0, 20),
+                  valueKes: Math.max(0, Math.round(Number(pt?.valueKes || 0))),
+                }))
+                .filter((pt) => pt.label && pt.valueKes > 0)
+            : [],
+        }))
+      : [];
+
+    res.json({
+      model: GEMINI_SEARCH_MODEL,
+      grounded: true,
+      vehicles: normalizedVehicles,
+      rawNote: normalizedVehicles.length ? "" : String(geminiResponse?.text || "").trim().slice(0, 600),
+      groundingSources,
+      searchQueries,
+    });
+  } catch (err) {
+    const formatted = formatGeminiError(err);
+    res.status(formatted.status).json({ error: formatted.message });
+  }
+});
+
 app.get("/vendor/jspdf.umd.min.js", (_req, res) => {
   res.sendFile(path.join(__dirname, "node_modules/jspdf/dist/jspdf.umd.min.js"));
+});
+
+app.get("/vendor/react.production.min.js", (_req, res) => {
+  res.sendFile(path.join(__dirname, "node_modules/react/umd/react.production.min.js"));
+});
+
+app.get("/vendor/react-dom.production.min.js", (_req, res) => {
+  res.sendFile(path.join(__dirname, "node_modules/react-dom/umd/react-dom.production.min.js"));
+});
+
+app.get("/vendor/prop-types.min.js", (_req, res) => {
+  res.sendFile(path.join(__dirname, "node_modules/prop-types/prop-types.min.js"));
+});
+
+app.get("/vendor/Recharts.js", (_req, res) => {
+  res.sendFile(path.join(__dirname, "node_modules/recharts/umd/Recharts.js"));
 });
 
 app.use(
