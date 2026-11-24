@@ -884,7 +884,7 @@ app.post("/api/chat", async (req, res) => {
           inferred_individual_tax_bases: "the individual tax bases",
           unsupported_exhaustive_rhd_claim: "an exhaustive claim about RHD exceptions",
         };
-        const flaggedTopics = detectedIssues.map((code) => issueLabels[code] || code).join("; ");
+        const flaggedTopics = detectedIssues.map((code) => (issueLabels[code] || code) + " [" + code + "]").join("; ");
         finalReply = "I withheld this Search answer because the safety check found a potentially unsupported statement about: " + flaggedTopics + ". This identifies a wording risk, not a legal finding that the statement is false. The affected point(s) need confirmation from the applicable current KRA/KEBS instrument before being presented as settled. The browser-search source links are retained below; the other parts of the answer were not independently certified by this check.";
       }
     }
