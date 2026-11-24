@@ -885,11 +885,11 @@ app.post("/api/chat", async (req, res) => {
     model,
     messages,
     temperature: requestedMode === "fast" ? 0.1 : 0.4,
-    // GPT-OSS spends part of its completion budget on internal reasoning.
-    // Low effort leaves more room for a visible answer on the free tier.
+    // GPT-OSS 120B supports only low/medium/high; low is already its minimum.
+    // Keep Search's total completion budget tight to reduce daily token use.
     reasoning_effort: "low",
     reasoning_format: "hidden",
-    max_completion_tokens: effectiveMode === "search" ? 900 : 1400,
+    max_completion_tokens: effectiveMode === "search" ? 650 : 1400,
   };
 
   // Groq's browser_search tool replaces Gemini/Google Search grounding for Search mode.
