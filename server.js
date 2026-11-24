@@ -134,16 +134,35 @@ function isKenyaVehicleImportQuestion(text) {
 }
 
 function findKenyaImportAnswerIssues(text) {
-  const value = String(text || "");
-  const issues = [];
-  if (/no earlier than.{0,100}(?:eight|8) years before|more than (?:eight|8) years before|(?:import|year of import).{0,90}(?:minus|subtract|eight years before)|(?:>=|≥)\s*8/i.test(value)) issues.push("unsupported_age_formula");
-  if (/special[- ]purpose.{0,100}(?:waiver|exemption).{0,100}(?:ordinary|standard|normal) passenger car|(?:ordinary|standard|normal) passenger car.{0,100}(?:apply for|seek|obtain).{0,80}(?:waiver|exemption)/i.test(value)) issues.push("ordinary_car_special_purpose_waiver");
-  if (/(?:only|solely).{0,100}(?:not covered|outside|non[- ]?PVoC|no appointed inspection agent)|(?:not on|not among|outside).{0,100}(?:appointed agent|PVoC).{0,180}(?:without|no valid).{0,50}CoC/i.test(value)) issues.push("overstated_destination_inspection_trigger");
-  if (/KRA.{0,100}(?:ties|links|applies).{0,80}all taxes.{0,80}customs value|all taxes.{0,80}based on customs value/i.test(value)) issues.push("inferred_individual_tax_bases");
-  if (/no current (?:KEBS|KRA).{0,100}(?:any|a).{0,50}(?:RHD|right.hand.drive).{0,80}(?:exception|exemption)|there are no (?:possible )?exceptions.{0,60}(?:RHD|right.hand.drive)/i.test(value)) issues.push("unsupported_exhaustive_rhd_claim");
-  return issues;
-}
+  const value = String(text || "").replace(/\r/g, "");
+  const issues = new Set();
+  const sentences = value.split(/(?<=[.!?])\s+|\n+/).map((part) => part.trim()).filter(Boolean);
 
+  // Check each claim in isolation. This avoids flagging safe wording that
+  // explicitly rejects an unsupported formula, exemption or legal conclusion.
+  const isAffirmativeClaim = (sentence, matchIndex) => {
+    const leadIn = sentence.slice(0, matchIndex);
+    return !/(?:\bdo not\b|\bdon't\b|\bnever\b|\bnot\b|\bcannot\b|\bcan't\b|\bno evidence\b|\bnot established\b|\bunclear\b|\bavoid\b|\bmust not\b|\bshould not\b)[^.!?]{0,100}$/i.test(leadIn);
+  };
+  const detect = (code, pattern) => {
+    for (const sentence of sentences) {
+      pattern.lastIndex = 0;
+      const match = pattern.exec(sentence);
+      if (match && isAffirmativeClaim(sentence, match.index)) {
+        issues.add(code);
+        break;
+      }
+    }
+  };
+
+  detect("unsupported_age_formula", /(?:\b(?:import|importation) year\b|\byear of import\b).{0,90}\b(?:minus|less|subtract(?:ing)?|deduct(?:ing)?)\b.{0,40}\b(?:8|eight)\b|\b(?:subtract|deduct)(?:ing)?\b.{0,45}\b(?:8|eight)[ -]?years?\b.{0,80}\b(?:import|registration)\b|\b(?:19|20)\d{2}\s*[-−]\s*8\b|\b(?:at least|greater than or equal to|>=|≥)\s*8 years?\b/i);
+  detect("ordinary_car_special_purpose_waiver", /(?:\b(?:ordinary|standard|normal) passenger car\b.{0,100}\b(?:apply for|seek|obtain|qualif(?:y|ies) for)\b.{0,70}\b(?:special[- ]purpose )?(?:waiver|exemption)\b|\bspecial[- ]purpose (?:waiver|exemption)\b.{0,100}\b(?:ordinary|standard|normal) passenger car\b)/i);
+  detect("overstated_destination_inspection_trigger", /\b(?:destination inspection|inspection at destination)\b.{0,100}\b(?:only|solely|exclusively)\b.{0,100}\b(?:not covered|outside|non[- ]?PVoC|no appointed inspection agent|countries? without)\b|\b(?:only|solely|exclusively)\b.{0,100}\b(?:not covered|outside|non[- ]?PVoC|no appointed inspection agent)\b.{0,100}\b(?:destination inspection|inspection at destination)\b|\b(?:age|LHD|left[- ]hand drive|right[- ]hand drive)\b.{0,80}\bnever\b.{0,50}\b(?:trigger|require)\b.{0,40}\bdestination inspection\b/i);
+  detect("inferred_individual_tax_bases", /\b(?:all|every) (?:the )?(?:vehicle import )?taxes\b.{0,70}\b(?:are|is)\b.{0,30}\b(?:calculated|charged|based)\b.{0,40}\b(?:only )?customs value\b|\b(?:VAT|excise|IDF|RDL)\b.{0,100}\b(?:all|each)\b.{0,40}\b(?:based on|calculated on)\b.{0,40}\bcustoms value\b/i);
+  detect("unsupported_exhaustive_rhd_claim", /\b(?:there are|there're) no (?:possible )?(?:current )?(?:RHD|right[- ]hand drive) (?:exceptions|exemptions)\b|\bno (?:current )?(?:RHD|right[- ]hand drive) (?:exceptions|exemptions) (?:exist|apply)\b|\b(?:RHD|right[- ]hand drive)\b.{0,70}\bno exceptions or exemptions\b/i);
+
+  return [...issues];
+}
 function shouldUseFastVehicleSafetyFallback(text) {
   const value = String(text || "");
   const hasModelYear = /\b(?:19|20)\d{2}\b/.test(value);
@@ -858,7 +877,15 @@ app.post("/api/chat", async (req, res) => {
         console.warn("Kenya import answer guard triggered; unsafe answer withheld:", {
           issueCodes: detectedIssues
         });
-        finalReply = "The generated answer contained claims that failed the Kenya import safety checks. I won't present those claims as verified. Please confirm the exact vehicle-age cutoff, applicable RHD rule, individual tax bases and destination-inspection trigger directly with KRA/KEBS before relying on an import decision. The original browser-search source links are provided below for checking.";
+        const issueLabels = {
+          unsupported_age_formula: "the eight-year vehicle-age calculation",
+          ordinary_car_special_purpose_waiver: "a special-purpose waiver being applied to an ordinary passenger car",
+          overstated_destination_inspection_trigger: "the destination-inspection trigger",
+          inferred_individual_tax_bases: "the individual tax bases",
+          unsupported_exhaustive_rhd_claim: "an exhaustive claim about RHD exceptions",
+        };
+        const flaggedTopics = detectedIssues.map((code) => issueLabels[code] || code).join("; ");
+        finalReply = "I withheld this Search answer because the safety check found a potentially unsupported statement about: " + flaggedTopics + ". This identifies a wording risk, not a legal finding that the statement is false. The affected point(s) need confirmation from the applicable current KRA/KEBS instrument before being presented as settled. The browser-search source links are retained below; the other parts of the answer were not independently certified by this check.";
       }
     }
 
