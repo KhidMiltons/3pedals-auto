@@ -126,6 +126,56 @@ function shouldRouteToMaps(text) {
   );
 }
 
+function isKenyaVehicleImportQuestion(text) {
+  const value = String(text || "");
+  return /\bkenya\b/i.test(value) &&
+    /\b(import(?:ing|ed)?|customs|kebs|kra)\b/i.test(value) &&
+    /\b(vehicle|car|motor vehicle|passenger car|used car)\b/i.test(value);
+}
+
+function findKenyaImportAnswerIssues(text) {
+  const value = String(text || "");
+  const issues = [];
+  if (/no earlier than.{0,100}(?:eight|8) years before|more than (?:eight|8) years before|(?:import|year of import).{0,90}(?:minus|subtract|eight years before)|(?:>=|≥)\s*8/i.test(value)) issues.push("unsupported_age_formula");
+  if (/special[- ]purpose.{0,100}(?:waiver|exemption).{0,100}(?:ordinary|standard|normal) passenger car|(?:ordinary|standard|normal) passenger car.{0,100}(?:apply for|seek|obtain).{0,80}(?:waiver|exemption)/i.test(value)) issues.push("ordinary_car_special_purpose_waiver");
+  if (/(?:only|solely).{0,100}(?:not covered|outside|non[- ]?PVoC|no appointed inspection agent)|(?:not on|not among|outside).{0,100}(?:appointed agent|PVoC).{0,180}(?:without|no valid).{0,50}CoC/i.test(value)) issues.push("overstated_destination_inspection_trigger");
+  if (/KRA.{0,100}(?:ties|links|applies).{0,80}all taxes.{0,80}customs value|all taxes.{0,80}based on customs value/i.test(value)) issues.push("inferred_individual_tax_bases");
+  if (/no current (?:KEBS|KRA).{0,100}(?:any|a).{0,50}(?:RHD|right.hand.drive).{0,80}(?:exception|exemption)|there are no (?:possible )?exceptions.{0,60}(?:RHD|right.hand.drive)/i.test(value)) issues.push("unsupported_exhaustive_rhd_claim");
+  return issues;
+}
+
+async function attemptKenyaImportCorrection({ question, draft, sources, apiKey, model }) {
+  const sourceLines = sources.slice(0, 8).map((item) => "- " + item.title + ": " + item.uri).join("\n");
+  const correctionMessages = [
+    {
+      role: "system",
+      content: "You are a strict legal-research answer auditor for Kenya vehicle imports. Correct the draft using only claims directly supported by the cited source material in the draft and the source URLs supplied. You cannot open URLs in this correction pass. If the evidence shown is insufficient, explicitly mark the point not established and advise written confirmation; never fill gaps from memory. Do not calculate an eight-year calendar cutoff, do not advise ordinary passenger cars to seek special-purpose waivers, do not invent an exhaustive destination-inspection trigger, do not infer individual tax bases from a general customs-value statement, and do not claim an exhaustive absence of RHD exceptions. Preserve accurate rates only when directly supported. Return a concise complete corrected answer, with no fabricated citations or source details."
+    },
+    {
+      role: "user",
+      content: "Original question:\n" + String(question || "").slice(0, 2200) +
+        "\n\nDraft to audit and correct:\n" + String(draft || "").slice(0, 9000) +
+        "\n\nSource URLs returned by the original browser search (URLs only; their contents are not available in this pass):\n" + sourceLines
+    }
+  ];
+  const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+    method: "POST",
+    headers: { Authorization: "Bearer " + apiKey, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model,
+      messages: correctionMessages,
+      temperature: 0.1,
+      reasoning_effort: "low",
+      reasoning_format: "hidden",
+      max_completion_tokens: 900
+    }),
+    signal: AbortSignal.timeout(30000)
+  });
+  if (!response.ok) throw new Error("Correction pass failed with HTTP " + response.status);
+  const payload = await response.json();
+  return String(payload?.choices?.[0]?.message?.content || "").trim();
+}
+
 function shouldUseFastVehicleSafetyFallback(text) {
   const value = String(text || "");
   const hasModelYear = /\b(?:19|20)\d{2}\b/.test(value);
@@ -827,7 +877,43 @@ app.post("/api/chat", async (req, res) => {
       }
     }
 
-    const finalReply = reply || "I could not generate a response for that request. Please try rephrasing."; 
+    let finalReply = reply || "I could not generate a response for that request. Please try rephrasing.";
+
+    // Targeted second-pass audit for Kenya vehicle-import research. This runs only
+    // when the first answer contains a known unsafe conclusion; it does not repeat
+    // browser search and uses a small completion budget to limit free-tier usage.
+    if (effectiveMode === "search" && isKenyaVehicleImportQuestion(lastUserMsg)) {
+      const initialIssues = findKenyaImportAnswerIssues(finalReply);
+      if (initialIssues.length) {
+        console.warn("Kenya import answer guard triggered:", { issueCodes: initialIssues });
+        try {
+          const corrected = await attemptKenyaImportCorrection({
+            question: lastUserMsg,
+            draft: finalReply,
+            sources: groundingSources,
+            apiKey,
+            model
+          });
+          const remainingIssues = findKenyaImportAnswerIssues(corrected);
+          if (corrected && remainingIssues.length === 0) {
+            finalReply = corrected;
+            console.info("Kenya import correction pass accepted.", { remainingIssueCount: 0 });
+          } else {
+            console.warn("Kenya import correction pass rejected.", {
+              hasCorrectedContent: Boolean(corrected),
+              issueCodes: remainingIssues
+            });
+            finalReply = "I found claims in the generated answer that could not be safely verified, and the correction check did not resolve them. I won't present that answer as reliable. Please confirm the exact vehicle-age cutoff, applicable RHD rule, individual tax bases and destination-inspection trigger directly with KRA/KEBS before relying on an import decision. The original browser-search source links are provided below for checking.";
+          }
+        } catch (correctionError) {
+          console.warn("Kenya import correction pass unavailable.", {
+            message: String(correctionError?.message || "unknown error").slice(0, 180)
+          });
+          finalReply = "The generated answer contained claims that failed the Kenya import safety checks, and the correction check could not be completed. I won't present those claims as verified. Please confirm the exact vehicle-age cutoff, applicable RHD rule, individual tax bases and destination-inspection trigger directly with KRA/KEBS before relying on an import decision. The original browser-search source links are provided below for checking.";
+        }
+      }
+    }
+
     const hasMarkdownSourceLinks = /\[[^\]]+\]\(https?:\/\/[^)]+\)/i.test(finalReply);
     const sourceList = groundingSources.length
       ? "\n\n**Sources returned by browser search**\n" + groundingSources.slice(0, 8).map((source) => "- [" + source.title.replace(/[\[\]\n]/g, "") + "](" + source.uri + ")").join("\n")
