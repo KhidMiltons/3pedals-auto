@@ -138,11 +138,11 @@ function findKenyaImportAnswerIssues(text) {
   const issues = new Set();
   const sentences = value.split(/(?<=[.!?])\s+|\n+/).map((part) => part.trim()).filter(Boolean);
 
-  // Check each claim in isolation. This avoids flagging safe wording that
-  // explicitly rejects an unsupported formula, exemption or legal conclusion.
+  // Evaluate each statement separately so a clear warning against a claim is
+  // not treated as though the answer itself asserted that claim.
   const isAffirmativeClaim = (sentence, matchIndex) => {
     const leadIn = sentence.slice(0, matchIndex);
-    return !/(?:\bdo not\b|\bdon't\b|\bnever\b|\bnot\b|\bcannot\b|\bcan't\b|\bno evidence\b|\bnot established\b|\bunclear\b|\bavoid\b|\bmust not\b|\bshould not\b)[^.!?]{0,100}$/i.test(leadIn);
+    return !/(?:\bdo not\b|\bdon't\b|\bnever\b|\bnot\b|\bcannot\b|\bcan't\b|\bno evidence\b|\bnot established\b|\bunclear\b|\bavoid\b|\bmust not\b|\bshould not\b)[^.!?]{0,120}$/i.test(leadIn);
   };
   const detect = (code, pattern) => {
     for (const sentence of sentences) {
@@ -155,11 +155,11 @@ function findKenyaImportAnswerIssues(text) {
     }
   };
 
-  detect("unsupported_age_formula", /(?:\b(?:import|importation) year\b|\byear of import\b).{0,90}\b(?:minus|less|subtract(?:ing)?|deduct(?:ing)?)\b.{0,40}\b(?:8|eight)\b|\b(?:subtract|deduct)(?:ing)?\b.{0,45}\b(?:8|eight)[ -]?years?\b.{0,80}\b(?:import|registration)\b|\b(?:19|20)\d{2}\s*[-−]\s*8\b|\b(?:at least|greater than or equal to|>=|≥)\s*8 years?\b/i);
+  detect("unsupported_age_formula", /(?:\b(?:import|importation) year\b|\byear of import\b).{0,90}\b(?:minus|less|subtract(?:ing)?|deduct(?:ing)?)\b.{0,40}\b(?:8|eight)\b|\b(?:subtract|deduct)(?:ing)?\b.{0,45}\b(?:8|eight)[ -]?years?\b.{0,80}\b(?:import|registration)\b|\b(?:19|20)\d{2}\s*[-−]\s*8\b|\b(?:at least|greater than or equal to|>=|≥)\s*8 years?\b|\b(?:19|20)\d{2}\s*[-−]\s*(?:19|20)\d{2}\s*=\s*\d+\b|\b(?:within|inside) (?:the )?(?:eight|8)[ -]?year window\b|\b(?:first registered|year of first registration|YoR).{0,100}\b(?:eligible|acceptable|ineligible)\b.{0,70}\b(?:20)\d{2}\b/i);
   detect("ordinary_car_special_purpose_waiver", /(?:\b(?:ordinary|standard|normal) passenger car\b.{0,100}\b(?:apply for|seek|obtain|qualif(?:y|ies) for)\b.{0,70}\b(?:special[- ]purpose )?(?:waiver|exemption)\b|\bspecial[- ]purpose (?:waiver|exemption)\b.{0,100}\b(?:ordinary|standard|normal) passenger car\b)/i);
-  detect("overstated_destination_inspection_trigger", /\b(?:destination inspection|inspection at destination)\b.{0,100}\b(?:only|solely|exclusively)\b.{0,100}\b(?:not covered|outside|non[- ]?PVoC|no appointed inspection agent|countries? without)\b|\b(?:only|solely|exclusively)\b.{0,100}\b(?:not covered|outside|non[- ]?PVoC|no appointed inspection agent)\b.{0,100}\b(?:destination inspection|inspection at destination)\b|\b(?:age|LHD|left[- ]hand drive|right[- ]hand drive)\b.{0,80}\bnever\b.{0,50}\b(?:trigger|require)\b.{0,40}\bdestination inspection\b/i);
+  detect("overstated_destination_inspection_trigger", /\b(?:destination inspection|inspection at destination)\b.{0,120}\b(?:only|solely|exclusively)\b.{0,120}\b(?:not covered|outside|non[- ]?PVoC|no appointed inspection agent|countries? without|absence|lack|without a valid? CoR|no CoR)\b|\b(?:only|solely|exclusively)\b.{0,120}\b(?:absence|lack|without a valid? CoR|no CoR)\b.{0,100}\b(?:destination inspection|inspection at destination)\b|\b(?:valid|existing) CoR\b.{0,100}\b(?:exempt|exemption|not subject)\b.{0,100}\b(?:regardless|irrespective) of\b.{0,80}\b(?:age|RHD|drive[- ]side|left[- ]hand drive)\b|\b(?:age|LHD|left[- ]hand drive|right[- ]hand drive)\b.{0,80}\bnever\b.{0,50}\b(?:trigger|require)\b.{0,40}\bdestination inspection\b/i);
   detect("inferred_individual_tax_bases", /\b(?:all|every) (?:the )?(?:vehicle import )?taxes\b.{0,70}\b(?:are|is)\b.{0,30}\b(?:calculated|charged|based)\b.{0,40}\b(?:only )?customs value\b|\b(?:VAT|excise|IDF|RDL)\b.{0,100}\b(?:all|each)\b.{0,40}\b(?:based on|calculated on)\b.{0,40}\bcustoms value\b/i);
-  detect("unsupported_exhaustive_rhd_claim", /\b(?:there are|there're) no (?:possible )?(?:current )?(?:RHD|right[- ]hand drive) (?:exceptions|exemptions)\b|\bno (?:current )?(?:RHD|right[- ]hand drive) (?:exceptions|exemptions) (?:exist|apply)\b|\b(?:RHD|right[- ]hand drive)\b.{0,70}\bno exceptions or exemptions\b/i);
+  detect("unsupported_exhaustive_rhd_claim", /\b(?:there are|there're) no (?:possible )?(?:current )?(?:RHD|right[- ]hand drive) (?:exceptions|exemptions)\b|\bno (?:current )?(?:RHD|right[- ]hand drive) (?:exceptions|exemptions) (?:exist|apply)\b|\b(?:RHD|right[- ]hand drive)\b.{0,70}\bno exceptions or exemptions\b|\b(?:only|sole) (?:official )?(?:RHD )?(?:exception|exemption)\b|\bno other (?:official )?(?:RHD )?(?:exception|exemption)\b|\b(?:only exception|no other exception)\b.{0,100}\b(?:RHD|right[- ]hand drive)\b/i);
 
   return [...issues];
 }
