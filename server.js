@@ -145,11 +145,13 @@ function findKenyaImportAnswerIssues(text) {
 }
 
 async function attemptKenyaImportCorrection({ question, draft, sources, apiKey, model }) {
-  const sourceLines = sources.slice(0, 8).map((item) => "- " + item.title + ": " + item.uri).join("\n");
+  const sourceLines = sources.slice(0, 8).map((item) =>
+    "- " + item.title + ": " + item.uri + (item.snippet ? "\n  Search-result excerpt (not the full source): " + item.snippet : "")
+  ).join("\n");
   const correctionMessages = [
     {
       role: "system",
-      content: "You are a strict legal-research answer auditor for Kenya vehicle imports. Correct the draft using only claims directly supported by the cited source material in the draft and the source URLs supplied. You cannot open URLs in this correction pass. If the evidence shown is insufficient, explicitly mark the point not established and advise written confirmation; never fill gaps from memory. Do not calculate an eight-year calendar cutoff, do not advise ordinary passenger cars to seek special-purpose waivers, do not invent an exhaustive destination-inspection trigger, do not infer individual tax bases from a general customs-value statement, and do not claim an exhaustive absence of RHD exceptions. Preserve accurate rates only when directly supported. Return a concise complete corrected answer, with no fabricated citations or source details."
+      content: "You are a strict legal-research answer auditor for Kenya vehicle imports. Correct the draft using only claims directly supported by the draft and the search-result excerpts supplied. The excerpts are not full documents; URLs are for traceability, not evidence you have opened. If the evidence shown is insufficient, explicitly mark the point not established and advise written confirmation; never fill gaps from memory. Do not calculate an eight-year calendar cutoff, do not advise ordinary passenger cars to seek special-purpose waivers, do not invent an exhaustive destination-inspection trigger, do not infer individual tax bases from a general customs-value statement, and do not claim an exhaustive absence of RHD exceptions. Preserve rates only when directly supported by an excerpt. Return a concise complete corrected answer, with no fabricated citations or source details."
     },
     {
       role: "user",
@@ -837,6 +839,7 @@ app.post("/api/chat", async (req, res) => {
         type: "web",
         title: String(candidate.title || candidate.name || parsed.hostname).slice(0, 240),
         uri: parsed.href,
+        snippet: String(candidate.snippet || candidate.description || candidate.text || "").slice(0, 700),
       });
     };
 
