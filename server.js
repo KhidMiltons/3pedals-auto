@@ -92,14 +92,14 @@ const FAST_MODE_INSTRUCTIONS = [
 ].join(" ");
 
 const SEARCH_MODE_INSTRUCTIONS = [
-  "Research the user's current question with live web search. Be token-efficient: use up to 3 focused searches, open only the most relevant 4-5 sources, and stop once authoritative evidence answers the question. Prefer primary official sources; use secondary sources only to explain a clearly labelled conflict.",
-  "For current Kenyan legal, tax, import or registration questions, prioritize KRA, KEBS and NTSA. Match the exact jurisdiction, vehicle class, fuel type, engine-capacity band and effective date. Distinguish binding law, official guidance, archived material and drafts; never present a draft as binding.",
-  "Never invent sources, titles, dates, quotations, clauses, exemptions, rates, tax bases, URLs or legal interpretations. Link material claims to the exact source checked. If a point is not established, say so rather than infer it. Do not treat source silence as proof that a rule does not apply.",
-  "Kenya used-car age: KRA's vehicle procedure says 'less than 8 years old from the year of first registration'. Do not calculate a cutoff by subtracting 8 from the import year or decide the exactly-eight-year boundary unless a current binding source expressly defines the method. KRA's 2023 first-registration notice concerns the EAC depreciation schedule; disclose conflicting KRA wording referring to manufacture year/first-registration date where relevant.",
-  "RHD and exemptions: state only what a current binding source expressly establishes for the exact vehicle class. Do not infer ordinary passenger-car exemptions from special-purpose notices, duty relief or drafts; do not claim an exhaustive absence of exceptions without an authoritative basis.",
-  "Inspection: distinguish pre-export roadworthiness inspection/CoR, PVoC conformity certification and destination inspection. KRA describes inspection by a KEBS-appointed agent in the export country. Do not infer an exhaustive destination-inspection trigger from a general manual or from CoR absence alone; state uncertainty and recommend written KEBS confirmation when the applicable trigger is unclear.",
-  "Taxes: verify each rate, individual tax base and calculation order separately against current legislation or KRA. The KRA vehicle-procedure page lists import duty 25%, VAT 16%, IDF 3.5%, RDL 2%, and 20% excise for petrol spark-ignition vehicles over 1,000cc up to 1,500cc. Do not assume the page's general customs-value wording establishes every individual base. Flag conflicts with older KRA FAQs (IDF 2%, RDL 1.5%) and do not calculate a total where current bases/rates are unresolved.",
-  "Answer every part of the user's question in no more than four concise sections. Use compact tables only when helpful, cite source title/date/link, identify conflicts and drafts separately, and give one practical next step. Avoid repeating caveats."
+  "Use live browser search, but conserve tokens: make one focused search first; use at most one follow-up search only if a material gap remains. Open no more than 3 relevant pages. Stop when the best available primary sources answer the question. Do not browse broadly or repeat equivalent searches.",
+  "Prefer current primary sources (for Kenya: KRA, KEBS, NTSA and legislation). Match jurisdiction, vehicle class, fuel, engine band and effective date. Separate binding law, official guidance, archived material and drafts.",
+  "Never invent sources, titles, dates, quotations, clauses, exemptions, rates, tax bases, URLs or legal interpretations. Cite the exact source checked. Source silence is not proof. If evidence is missing or conflicting, state that clearly.",
+  "Kenya used-car age: KRA's procedure says 'less than 8 years old from the year of first registration'. Never calculate a cutoff by subtracting 8 from the import year or decide the exactly-eight-year boundary without an express binding rule. The 2023 KRA first-registration notice concerns the EAC depreciation schedule; disclose conflicting manufacture-year wording where relevant.",
+  "RHD: report only what a current binding source establishes for this vehicle class. Do not infer ordinary-car exemptions from special-purpose notices, duty relief or drafts; do not claim no exceptions exist unless an authoritative source says so.",
+  "Inspection: distinguish pre-export roadworthiness inspection/CoR, PVoC and destination inspection. KRA describes inspection by a KEBS-appointed agent in the export country. Do not infer an exhaustive destination-inspection trigger from CoR absence or a general manual; state uncertainty.",
+  "Taxes: verify every rate and each individual tax base separately against current legislation or KRA. KRA's vehicle procedure lists import duty 25%, VAT 16%, IDF 3.5%, RDL 2%, and 20% excise for petrol spark-ignition vehicles over 1,000cc up to 1,500cc. Do not infer each tax base from general customs-value wording. Flag older KRA FAQ conflicts (IDF 2%, RDL 1.5%); do not calculate a total if current rates/bases are unresolved.",
+  "Answer every part in concise sections. Include source title, date and clickable link when available. Identify conflicts and drafts separately. Never trade accuracy for brevity."
 ].join(" ");
 
 const ROLE_INSTRUCTIONS = {
@@ -736,7 +736,7 @@ app.post("/api/chat", async (req, res) => {
     // consumes the free-tier daily token allowance. Keep only the latest user turn.
     const latestUserTurn = [...cleanedHistory].reverse().find((m) => m.role === "user");
     if (latestUserTurn) {
-      latestUserTurn.content = latestUserTurn.content.slice(-2200);
+      latestUserTurn.content = latestUserTurn.content.slice(-1400);
       cleanedHistory.splice(0, cleanedHistory.length, latestUserTurn);
     }
   }
@@ -889,13 +889,15 @@ app.post("/api/chat", async (req, res) => {
     // Low effort leaves more room for a visible answer on the free tier.
     reasoning_effort: "low",
     reasoning_format: "hidden",
-    max_completion_tokens: effectiveMode === "search" ? 1300 : 1400,
+    max_completion_tokens: effectiveMode === "search" ? 900 : 1400,
   };
 
   // Groq's browser_search tool replaces Gemini/Google Search grounding for Search mode.
   if (effectiveMode === "search") {
     requestBody.tools = [{ type: "browser_search" }];
-    // Search mode is explicitly a research mode: require the browser tool to run.
+    // Avoid parallel browser actions; the prompt also limits the search to one
+    // initial query and at most one follow-up. Groq controls the internal browsing loop.
+    requestBody.parallel_tool_calls = false;
     requestBody.tool_choice = "required";
   }
 
@@ -955,7 +957,7 @@ app.post("/api/chat", async (req, res) => {
         type: "web",
         title: String(candidate.title || candidate.name || parsed.hostname).slice(0, 240),
         uri: parsed.href,
-        snippet: String(candidate.snippet || candidate.description || candidate.text || "").slice(0, 700),
+        snippet: String(candidate.snippet || candidate.description || candidate.text || "").slice(0, 350),
       });
     };
 
@@ -1022,7 +1024,7 @@ app.post("/api/chat", async (req, res) => {
 
     const hasMarkdownSourceLinks = /\[[^\]]+\]\(https?:\/\/[^)]+\)/i.test(finalReply);
     const sourceList = groundingSources.length
-      ? "\n\n**Sources returned by browser search**\n" + groundingSources.slice(0, 8).map((source) => "- [" + source.title.replace(/[\[\]\n]/g, "") + "](" + source.uri + ")").join("\n")
+      ? "\n\n**Sources returned by browser search**\n" + groundingSources.slice(0, 5).map((source) => "- [" + source.title.replace(/[\[\]\n]/g, "") + "](" + source.uri + ")").join("\n")
       : "";
     const searchReply = effectiveMode === "search" && groundingSources.length === 0 && !hasMarkdownSourceLinks
       ? finalReply + "\n\n**Source verification warning:** Browser search did not return extractable source URLs. Treat legal, tax, date and numerical claims as unverified; do not rely on citation markers alone."
