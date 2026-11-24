@@ -279,29 +279,48 @@ html:not([data-theme="light"]) body:has(#app) :is(
     .dashboard-card, .authbox, .editor, .contact-form, .modal-content, .dialog-card,
     .settings-card, .package
   ):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
-    background: rgba(18, 20, 23, .90) !important;
-    background-color: rgba(18, 20, 23, .90) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(130%) !important;
+    backdrop-filter: blur(14px) saturate(130%) !important;
+    background-color: rgba(18, 20, 25, .54) !important;
+    background-image: linear-gradient(145deg, rgba(255, 255, 255, .09), rgba(255, 255, 255, .02)) !important;
+    border-color: rgba(255, 255, 255, .20) !important;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, .24), inset 0 1px 0 rgba(255, 255, 255, .14) !important;
+  }
+  html[data-theme="light"] body :is(
+    .card, .dealer, .stat, .state, .empty, .error, .panel, .seller-card,
+    .info, .gallery, .seller, .spec, .note, .listing, .article-item, .project-item,
+    .vehicle-card, .story-card, .contact-card, .promotion-package, .tile, .profile-card,
+    .feature-card, .service-card, .booking-card, .garage-card, .featured-panel,
+    .filter-panel, .search-panel, .vehicle-detail-card, .article-card, .journal-card,
+    .dashboard-card, .authbox, .editor, .contact-form, .modal-content, .dialog-card,
+    .settings-card, .package
+  ):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
+    -webkit-backdrop-filter: blur(14px) saturate(130%) !important;
+    backdrop-filter: blur(14px) saturate(130%) !important;
+    background-color: rgba(255, 252, 246, .76) !important;
+    background-image: linear-gradient(145deg, rgba(255, 255, 255, .74), rgba(247, 241, 228, .60)) !important;
+    border-color: rgba(138, 114, 62, .26) !important;
+    box-shadow: 0 10px 26px rgba(48, 38, 18, .09), inset 0 1px 0 rgba(255, 255, 255, .88) !important;
   }
   html:not([data-theme="light"]) body :is(.ghost, .btn.ghost, .btn.dark, .alt, .back, .icon-btn, button.secondary, .btn-secondary):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):not(#bBtn):not(#roadSubmit) {
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
-    background: rgba(26, 28, 32, .92) !important;
-    background-color: rgba(26, 28, 32, .92) !important;
+    -webkit-backdrop-filter: blur(12px) saturate(125%) !important;
+    backdrop-filter: blur(12px) saturate(125%) !important;
+    background-color: rgba(255, 255, 255, .085) !important;
+    background-image: none !important;
+    border-color: rgba(255, 255, 255, .22) !important;
     color: #f5f1e8 !important;
   }
   html:not([data-theme="light"]) body :is(input, select, textarea):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):not(#uxChatDrawer *) {
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
-    background: rgba(20, 22, 25, .92) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    backdrop-filter: blur(10px) !important;
+    background: rgba(18, 20, 24, .56) !important;
     font-size: 16px !important;
   }
   html body :is(button, .btn, a.button):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
     min-height: 40px;
   }
   main.wrap {
-    padding-bottom: 32px;
+    padding-bottom: 72px;
   }
 }
 

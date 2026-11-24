@@ -351,8 +351,8 @@
         const isCompact = window.matchMedia && window.matchMedia("(max-width: 1023px)").matches;
         const drawerControlsWrap = targetDrawer.querySelector(".ux-drawer-controls");
         if (isCompact && drawerControlsWrap) {
-          if (accountPill.parentElement !== targetDrawer || accountPill.nextElementSibling !== drawerControlsWrap) {
-            targetDrawer.insertBefore(accountPill, drawerControlsWrap);
+          if (accountPill.parentElement !== drawerControlsWrap || accountPill !== drawerControlsWrap.firstElementChild) {
+            drawerControlsWrap.insertBefore(accountPill, drawerControlsWrap.firstElementChild);
           }
         } else if (actions) {
           if (toggle && toggle.parentElement === actions) {
@@ -440,6 +440,9 @@
           e.stopPropagation();
           const open = subnav.classList.toggle("is-open");
           mobileToggle.setAttribute("aria-expanded", String(open));
+        });
+        subnav.addEventListener("click", (e) => {
+          if (!e.target.closest(".ux-drawer-controls") && e.target.closest("a")) closeSub();
         });
         document.addEventListener("click", (e) => {
           if (!subnav.contains(e.target) && !mobileToggle.contains(e.target)) closeSub();

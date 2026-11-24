@@ -1045,7 +1045,7 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     background: rgba(255, 255, 255, 0.12) !important;
   }
 
-  /* Crisp, readable frosted floating menu card aligned to floating header */
+  /* Modern Classic Frosted Floating Menu Panel (zero bleed-through, compact spacing, aligned under header) */
   html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links),
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links {
     display: none !important;
@@ -1060,48 +1060,50 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     align-items: stretch !important;
     justify-content: flex-start !important;
     flex-wrap: nowrap !important;
-    width: min(226px, calc(100vw - 24px)) !important;
+    width: min(384px, 100%) !important;
     max-width: calc(100vw - 24px) !important;
-    max-height: min(74dvh, 430px) !important;
+    max-height: min(78dvh, 480px) !important;
     overflow-x: hidden !important;
     overflow-y: auto !important;
-    padding: 8px !important;
-    gap: 3px !important;
-    border-radius: 16px !important;
-    border: 1px solid rgba(255, 255, 255, 0.22) !important;
-    background: rgba(14, 16, 20, 0.94) !important;
-    background-color: rgba(14, 16, 20, 0.94) !important;
+    padding: 10px 12px !important;
+    gap: 4px !important;
+    border-radius: 14px !important;
+    border: 1px solid rgba(229, 185, 111, 0.28) !important;
+    background: rgba(14, 14, 17, 0.96) !important;
+    background-color: rgba(14, 14, 17, 0.96) !important;
     background-image: linear-gradient(
-      155deg,
-      rgba(255, 255, 255, 0.06),
-      rgba(255, 255, 255, 0.01) 50%,
-      rgba(215, 189, 131, 0.04)
+      165deg,
+      rgba(255, 255, 255, 0.045),
+      rgba(14, 14, 17, 0.98) 54%,
+      rgba(229, 185, 111, 0.035)
     ) !important;
     box-shadow:
-      0 20px 46px rgba(0, 0, 0, 0.62),
-      inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
-    -webkit-backdrop-filter: blur(26px) saturate(150%) !important;
-    backdrop-filter: blur(26px) saturate(150%) !important;
+      0 25px 50px -12px rgba(0, 0, 0, 0.78),
+      0 0 0 1px rgba(255, 255, 255, 0.07),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(145%) !important;
+    backdrop-filter: blur(24px) saturate(145%) !important;
     opacity: 1 !important;
     visibility: visible !important;
+    transform-origin: top right !important;
     transform: none !important;
   }
 
   html[data-ux="1"][data-theme="light"][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links),
   html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top nav.ux-subnav-links {
-    background: rgba(253, 250, 243, 0.97) !important;
-    background-color: rgba(253, 250, 243, 0.97) !important;
-    background-image: linear-gradient(155deg, rgba(255, 255, 255, 0.85), rgba(246, 240, 227, 0.92)) !important;
+    background: rgba(253, 250, 243, 0.98) !important;
+    background-color: rgba(253, 250, 243, 0.98) !important;
+    background-image: linear-gradient(165deg, rgba(255, 255, 255, 0.92), rgba(246, 240, 227, 0.97)) !important;
     border-color: rgba(138, 114, 62, 0.34) !important;
     box-shadow:
-      0 20px 44px rgba(48, 38, 18, 0.24),
+      0 25px 50px -12px rgba(48, 38, 18, 0.28),
       inset 0 1px 0 rgba(255, 255, 255, 0.96) !important;
   }
 
   html[data-ux="1"][data-theme][lang] body > header :is(nav#nav.is-open, nav#nav.mobile-menu-open, nav#garageSectionNav.is-open, nav.ux-subnav-links.is-open),
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links.is-open {
     display: flex !important;
-    animation: uxDrawerIn 0.16s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    animation: uxDrawerIn 0.18s cubic-bezier(0.16, 1, 0.3, 1) both !important;
   }
 
   html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) > :is(button, a.navlink, a.ux-subnav-link),
@@ -1110,9 +1112,10 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     height: auto !important;
     min-height: 36px !important;
     justify-content: flex-start !important;
-    padding: 7px 11px !important;
+    margin: 0 !important;
+    padding: 8px 12px !important;
     border: 1px solid transparent !important;
-    border-radius: 9px !important;
+    border-radius: 8px !important;
     background: transparent !important;
     background-color: transparent !important;
     background-image: none !important;
@@ -1121,9 +1124,11 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     backdrop-filter: none !important;
     text-shadow: none !important;
     color: #f4f0e8 !important;
-    font-size: 13px !important;
+    font-size: 14px !important;
     line-height: 1.25 !important;
     font-weight: 500 !important;
+    letter-spacing: 0.015em !important;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease !important;
   }
 
   html[data-ux="1"][data-theme="light"][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) > :is(button, a.navlink, a.ux-subnav-link),
@@ -1131,11 +1136,30 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     color: #171512 !important;
   }
 
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) > :is(button, a.navlink, a.ux-subnav-link):hover,
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) > :is(button, a.navlink, a.ux-subnav-link):focus-visible,
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links > a.ux-subnav-link:hover,
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links > a.ux-subnav-link:focus-visible {
+    background: rgba(255, 255, 255, 0.06) !important;
+    background-color: rgba(255, 255, 255, 0.06) !important;
+    color: #ffffff !important;
+    transform: none !important;
+  }
+
+  html[data-ux="1"][data-theme="light"][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) > :is(button, a.navlink, a.ux-subnav-link):hover,
+  html[data-ux="1"][data-theme="light"][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) > :is(button, a.navlink, a.ux-subnav-link):focus-visible,
+  html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top nav.ux-subnav-links > a.ux-subnav-link:hover,
+  html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top nav.ux-subnav-links > a.ux-subnav-link:focus-visible {
+    background: rgba(158, 116, 21, 0.09) !important;
+    background-color: rgba(158, 116, 21, 0.09) !important;
+    color: #171512 !important;
+  }
+
   html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) > :is(button[aria-selected="true"], a[aria-current="page"]),
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links > a[aria-current="page"] {
-    background: rgba(229, 185, 111, 0.16) !important;
-    background-color: rgba(229, 185, 111, 0.16) !important;
-    border-color: rgba(229, 185, 111, 0.34) !important;
+    background: rgba(229, 185, 111, 0.15) !important;
+    background-color: rgba(229, 185, 111, 0.15) !important;
+    border-color: rgba(229, 185, 111, 0.30) !important;
     color: #E5B96F !important;
     font-weight: 600 !important;
   }
@@ -1153,18 +1177,38 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     display: none !important;
   }
 
-  /* Account icon placed directly below Contact Us inside the mobile menu drawer */
-  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav) > .account-pill {
-    order: 0 !important;
+  /* Unified Sleek Utility Footer Row inside Mobile Menu: [Account] + [Light/Dark] + [EN | SW] */
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) .ux-drawer-controls,
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links .ux-drawer-controls {
+    order: 2 !important;
     display: flex !important;
     align-items: center !important;
-    justify-content: flex-start !important;
+    justify-content: space-between !important;
+    flex-wrap: wrap !important;
     gap: 8px !important;
     width: 100% !important;
+    box-sizing: border-box !important;
+    margin-top: 6px !important;
+    padding: 10px 2px 2px !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.10) !important;
+  }
+
+  html[data-ux="1"][data-theme="light"][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) .ux-drawer-controls,
+  html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top nav.ux-subnav-links .ux-drawer-controls {
+    border-top-color: rgba(138, 114, 62, 0.22) !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header .ux-drawer-controls > .account-pill {
+    order: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    width: auto !important;
+    min-width: 0 !important;
     min-height: 0 !important;
     max-width: none !important;
-    margin: 2px 0 3px !important;
-    padding: 2px 11px 4px !important;
+    flex: 0 0 auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
     border: 0 !important;
     border-radius: 0 !important;
     background: transparent !important;
@@ -1174,55 +1218,50 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     backdrop-filter: none !important;
   }
 
-  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav) > .account-pill > span {
+  html[data-ux="1"][data-theme][lang] body > header .ux-drawer-controls > .account-pill > span {
     display: none !important;
   }
 
-  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav) > .account-pill > #accountOpen {
+  html[data-ux="1"][data-theme][lang] body > header .ux-drawer-controls > .account-pill > #accountOpen {
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    flex: 0 0 34px !important;
-    width: 34px !important;
-    min-width: 34px !important;
-    max-width: 34px !important;
-    height: 34px !important;
-    min-height: 34px !important;
+    flex: 0 0 auto !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: 32px !important;
+    min-height: 32px !important;
     margin: 0 !important;
-    padding: 0 !important;
-    border-radius: 10px !important;
+    padding: 0 10px !important;
+    gap: 6px !important;
+    border-radius: 8px !important;
+    font-size: 11.5px !important;
+    font-weight: 600 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
   }
 
-  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav) > .account-pill > #accountOpen::before {
-    flex: 0 0 15px !important;
-    width: 15px !important;
-    height: 15px !important;
+  html[data-ux="1"][data-theme][lang] body > header .ux-drawer-controls > .account-pill > #accountOpen::before {
+    flex: 0 0 14px !important;
+    width: 14px !important;
+    height: 14px !important;
   }
 
-  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) .ux-drawer-controls,
-  html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links .ux-drawer-controls {
-    order: 1 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-    margin-top: 4px !important;
-    padding: 7px 3px 2px !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.14) !important;
-  }
-
-  html[data-ux="1"][data-theme="light"][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) .ux-drawer-controls,
-  html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top nav.ux-subnav-links .ux-drawer-controls {
-    border-top-color: rgba(138, 114, 62, 0.24) !important;
+  html[data-ux="1"][data-theme][lang] body > header .ux-drawer-controls > .account-pill > #accountOpen::after {
+    content: attr(data-ux-account-label) !important;
+    display: inline !important;
   }
 
   html[data-ux="1"][data-theme][lang] body > header .ux-drawer-controls .ux-controls {
-    display: flex !important;
+    order: 1 !important;
+    display: inline-flex !important;
     align-items: center !important;
-    justify-content: space-between !important;
-    width: 100% !important;
+    justify-content: flex-end !important;
+    width: auto !important;
     min-width: 0 !important;
+    flex: 0 1 auto !important;
+    margin-left: auto !important;
     gap: 6px !important;
   }
 
@@ -1230,10 +1269,10 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     width: auto !important;
     flex: 0 0 auto !important;
     min-width: 0 !important;
-    padding: 0 8px !important;
-    height: 28px !important;
-    min-height: 28px !important;
-    font-size: 11px !important;
+    padding: 0 9px !important;
+    height: 32px !important;
+    min-height: 32px !important;
+    font-size: 11.5px !important;
     border-radius: 8px !important;
     justify-content: center !important;
   }
@@ -1246,8 +1285,8 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     display: inline-flex !important;
     width: auto !important;
     flex: 0 0 auto !important;
-    height: 28px !important;
-    min-height: 28px !important;
+    height: 32px !important;
+    min-height: 32px !important;
     padding: 2px !important;
     border-radius: 8px !important;
   }
@@ -1255,11 +1294,11 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
   html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) .ux-drawer-controls .ux-lang-switch button {
     width: auto !important;
     flex: 0 0 auto !important;
-    min-width: 26px !important;
-    height: 22px !important;
-    min-height: 22px !important;
-    padding: 0 7px !important;
-    font-size: 10.5px !important;
+    min-width: 28px !important;
+    height: 26px !important;
+    min-height: 26px !important;
+    padding: 0 8px !important;
+    font-size: 11px !important;
     justify-content: center !important;
     border-radius: 6px !important;
   }
@@ -1277,11 +1316,11 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
 @keyframes uxDrawerIn {
   from {
     opacity: 0;
-    transform: translateY(-6px);
+    transform: translateY(-8px) scale(0.985);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
