@@ -779,7 +779,7 @@ html[data-ux="1"] body > .wrap > header.top {
     left: auto !important;
     right: -1px !important;
     z-index: 1200 !important;
-    width: 260px !important;
+    width: 215px !important;
     max-width: 85vw !important;
     max-height: min(74dvh, 420px) !important;
     margin: 0 !important;
@@ -839,14 +839,14 @@ html[data-ux="1"] body > .wrap > header.top {
   }
 }
 
-/* Keep drawer utility controls balanced cleanly across the footer row */
+/* Keep drawer utility controls tightly grouped next to each other */
 html[data-ux="1"] body > header :is(#nav, #garageSectionNav, #chauffeurNav, nav.ux-subnav-links) .ux-drawer-controls .ux-controls {
-  width: 100% !important;
-  display: flex !important;
+  width: auto !important;
+  display: inline-flex !important;
   align-items: center !important;
-  justify-content: space-between !important;
+  justify-content: flex-start !important;
   flex-wrap: nowrap !important;
-  gap: 6px !important;
+  gap: 8px !important;
   margin-left: 0 !important;
 }
 
@@ -929,7 +929,7 @@ html[data-ux="1"] body > header :is(#nav, #garageSectionNav, #chauffeurNav, nav.
     justify-content: flex-start !important;
     left: auto !important;
     right: -1px !important;
-    width: 260px !important;
+    width: 215px !important;
     max-width: 85vw !important;
     max-height: min(74dvh, 420px) !important;
     margin: 0 !important;

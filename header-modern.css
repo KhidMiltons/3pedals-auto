@@ -1060,7 +1060,7 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     align-items: stretch !important;
     justify-content: flex-start !important;
     flex-wrap: nowrap !important;
-    width: 260px !important;
+    width: 215px !important;
     max-width: 85vw !important;
     max-height: min(74dvh, 420px) !important;
     margin: 0 !important;
@@ -1288,15 +1288,15 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     white-space: nowrap !important;
   }
 
-  /* Unified Compact Single-Row Utility Footer below Divider: [Light/Dark] + [EN | SW] */
+  /* Unified Compact Single-Row Utility Footer below Divider: grouped [Light/Dark] + [EN | SW] */
   html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav#chauffeurNav, nav.ux-subnav-links) .ux-drawer-controls,
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links .ux-drawer-controls {
     order: 2 !important;
     display: flex !important;
     align-items: center !important;
-    justify-content: space-between !important;
+    justify-content: flex-start !important;
     flex-wrap: nowrap !important;
-    gap: 6px !important;
+    gap: 8px !important;
     width: 100% !important;
     box-sizing: border-box !important;
     margin-top: 8px !important;
@@ -1312,15 +1312,15 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
   html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav#chauffeurNav, nav.ux-subnav-links) .ux-drawer-controls .ux-controls,
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links .ux-drawer-controls .ux-controls {
     order: 1 !important;
-    display: flex !important;
+    display: inline-flex !important;
     align-items: center !important;
-    justify-content: space-between !important;
+    justify-content: flex-start !important;
     flex-wrap: nowrap !important;
-    width: 100% !important;
+    width: auto !important;
     min-width: 0 !important;
-    flex: 1 1 auto !important;
+    flex: 0 0 auto !important;
     margin-left: 0 !important;
-    gap: 6px !important;
+    gap: 8px !important;
   }
 
   html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav#chauffeurNav, nav.ux-subnav-links) .ux-drawer-controls .ux-theme-btn,

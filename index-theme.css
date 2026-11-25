@@ -241,7 +241,7 @@ html:not([data-theme="light"]) :is(.listing,.stat,.promotion-package,.account-fa
     visibility:visible!important;opacity:1!important;z-index:1002!important;
   }
   body>header #nav{
-    left:auto!important;right:-1px!important;width:260px!important;max-width:85vw!important;top:calc(100% + 8px)!important;
+    left:auto!important;right:-1px!important;width:215px!important;max-width:85vw!important;top:calc(100% + 8px)!important;
     align-items:stretch!important;
   }
 }
