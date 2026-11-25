@@ -195,6 +195,7 @@ function sanitizeKenyaRhdClaims(text) {
     /\b(?:there are|there're) no (?:possible )?(?:current )?(?:RHD|right[- ]hand drive)[ -]?(?:exceptions|exemptions)\b/i,
     /\bno (?:current )?(?:RHD|right[- ]hand drive)[ -]?(?:exceptions|exemptions) (?:exist|apply)\b/i,
     /\b(?:RHD|right[- ]hand drive)\b[^.!?]{0,90}\bno exceptions or exemptions\b/i,
+    /\b(?:the )?(?:KRA )?page\b[^.!?]{0,100}\b(?:does not|gives no|makes no)\b[^.!?]{0,80}\b(?:mention|discuss|set out|provide)\b[^.!?]{0,50}\b(?:RHD )?(?:exceptions?|exemptions?)\b/i,
     /\b(?:only|sole) (?:official )?(?:RHD )?(?:exception|exemption)\b/i,
     /\bno other (?:official )?(?:RHD )?(?:exception|exemption)\b/i,
     /\bno separate (?:KEBS|NTSA|official) notice\b[^.!?]{0,160}\b(?:provides?|lists?|contains?)\b[^.!?]{0,80}\bexemptions?\b/i,
@@ -209,8 +210,21 @@ function sanitizeKenyaRhdClaims(text) {
       return /\b(?:RHD|right[- ]hand drive|exemptions?|exceptions?|waivers?)\b/i.test(sentence) ? safeRhdStatement : safeAgeStatement;
     }
     return sentence;
-  }).join("\n");
+  }).filter((sentence, index, all) => index === 0 || sentence.trim() !== all[index - 1].trim()).join("\n");
   return { text: output, changed };
+}
+
+
+function sanitizeKenyaTaxAndFaqClaims(text) {
+  let value = String(text || "");
+  value = value.replace(/customs value\s*\(\s*implied\s*\)/gi, "individual tax base not specified in this source");
+  value = value.replace(/\b(customs value)\s*[-–—]?\s*(implied|inferred)\b/gi, "individual tax base not specified in this source");
+  value = value.replace(/\b(?:archived|archived,?\s+undated)\b/gi, "older");
+  value = value.replace(/\b(?:this )?older FAQ (?:is|was) (?:not )?the current binding instrument\b/gi,
+    "this older KRA FAQ lists different IDF and RDL rates; the status and legal effect of the difference are not established by these sources");
+  value = value.replace(/\bnot the current binding instrument\b/gi,
+    "its status and legal effect are not established by the sources checked");
+  return value;
 }
 
 function findKenyaImportAnswerIssues(text) {
@@ -948,6 +962,7 @@ app.post("/api/chat", async (req, res) => {
         reply || "I could not generate a response for that request. Please try rephrasing.";
       if (effectiveMode === "search" && isKenyaVehicleImportQuestion(lastUserMsg)) {
         finalReply = sanitizeKenyaRhdClaims(finalReply).text;
+        finalReply = sanitizeKenyaTaxAndFaqClaims(finalReply);
       }
       const hasMarkdownSourceLinks = /\[[^\]]+\]\(https?:\/\/[^)]+\)/i.test(finalReply);
       const displayedSources = effectiveMode === "search" && isKenyaVehicleImportQuestion(lastUserMsg)
@@ -1158,6 +1173,7 @@ app.post("/api/chat", async (req, res) => {
     let finalReply = reply || "I could not generate a response for that request. Please try rephrasing.";
     if (isKenyaImportSearch) {
       finalReply = sanitizeKenyaRhdClaims(finalReply).text;
+      finalReply = sanitizeKenyaTaxAndFaqClaims(finalReply);
     }
     if (isKenyaImportSearch) {
       finalReply = removeUnverifiedKenyaMarkdownLinks(finalReply, groundingSources);
