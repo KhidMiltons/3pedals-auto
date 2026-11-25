@@ -928,20 +928,48 @@ app.post("/api/chat", async (req, res) => {
   }
 
   try {
-    const groqResponse = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestBody),
-      signal: AbortSignal.timeout(60000),
-    });
+    const sendGroqRequest = async (body) => {
+      const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+        signal: AbortSignal.timeout(60000),
+      });
+      const data = await response.json().catch(() => ({}));
+      return { response, data };
+    };
 
-    const payload = await groqResponse.json().catch(() => ({}));
+    let { response: groqResponse, data: payload } = await sendGroqRequest(requestBody);
+
+    // Groq can reject malformed model-generated browser-search tool arguments.
+    // Retry that specific parse failure once at a lower temperature, as its
+    // tool-use guidance recommends. Do not retry rate limits or other errors.
+    if (
+      !groqResponse.ok &&
+      groqResponse.status === 400 &&
+      payload?.error?.failed_generation
+    ) {
+      console.warn("Groq rejected a generated tool call; retrying once at lower temperature.", {
+        mode: effectiveMode,
+        hasFailedGenerationDetails: true,
+      });
+      const retryBody = {
+        ...requestBody,
+        temperature: Math.max(0.1, Number(requestBody.temperature || 0.4) - 0.2),
+      };
+      ({ response: groqResponse, data: payload } = await sendGroqRequest(retryBody));
+    }
+
     if (!groqResponse.ok) {
       const apiMessage = payload?.error?.message || payload?.message || `Groq API request failed (${groqResponse.status}).`;
-      const error = new Error(apiMessage);
+      const error = new Error(
+        payload?.error?.failed_generation
+          ? "Groq could not parse the generated Search tool call after one retry. Please retry Search shortly."
+          : apiMessage
+      );
       error.status = groqResponse.status;
       throw error;
     }
