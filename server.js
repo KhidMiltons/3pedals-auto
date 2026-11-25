@@ -102,6 +102,16 @@ const SEARCH_MODE_INSTRUCTIONS = [
   "Answer every part in concise sections. Include source title, date and clickable link when available. Identify conflicts and drafts separately. Never trade accuracy for brevity."
 ].join(" ");
 
+const KENYA_IMPORT_SEARCH_INSTRUCTIONS = [
+  "Answer only the four questions in the user's Kenya 2026 ordinary used 1,500cc petrol passenger-car import request: (1) binding age wording and first-registration calculation; (2) RHD and exceptions; (3) import duty, excise, VAT, IDF and RDL rates, with bases only where expressly supported; (4) pre-export inspection and exact destination-inspection triggers.",
+  "Use current official KRA/KEBS sources first. Search narrowly and open only the most relevant official pages. Keep the complete answer under 700 words, with four numbered sections. For each section give the official document title, displayed publication/revision date (or say 'undated live page'), and a clickable source URL. Separate draft/conflicting guidance.",
+  "Age: quote KRA's exact phrase 'less than 8 years old from the year of first registration'. Do not calculate, derive, or illustrate a cutoff; do not define 'older than eight'; do not resolve the exactly-eight-year boundary or invent a calendar-year or anniversary method. State that the source does not specify the calculation method and that the boundary is unresolved if no binding instrument resolves it.",
+  "RHD: say only that KRA's procedure states the vehicle must be right-hand drive and that this page does not set out an exemption process or discuss exceptions. Do not claim no exceptions exist or that no other notice was found.",
+  "Taxes: verify rates against current KRA/legal sources. KRA procedure lists import duty 25%, VAT 16%, IDF 3.5%, RDL 2%, and 20% excise for petrol spark-ignition vehicles over 1,000cc up to 1,500cc. Do not attach a tax base unless the source assigns it to that specific tax. Flag older KRA FAQ rates IDF 2% and RDL 1.5% as conflicting; do not silently resolve. Do not claim a publication date for an undated page.",
+  "Inspection: distinguish pre-export roadworthiness inspection/CoR from destination inspection. State only the exact destination-inspection circumstances expressly set out in the current KEBS notice; do not infer that missing CoR is the sole trigger or that CoR guarantees exemption.",
+  "Do not invent legal interpretations, dates, source titles, exceptions, bases or destination-inspection triggers. If evidence is incomplete, say so. Prioritise finishing all four sections over detail."
+].join(" ");
+
 const ROLE_INSTRUCTIONS = {
   buyer_advisor:
     "You are 3P Auto Advisor, an expert Kenya automotive buyer concierge for 3 Pedals Auto KE. Help buyers compare cars, estimate running costs, fuel economy, spare parts availability in Kenya, and pre-purchase inspection checks. Prices are in KES. Keep answers clear, well-structured, and concise.",
@@ -748,9 +758,12 @@ app.post("/api/chat", async (req, res) => {
     lang === "sw"
       ? " Respond primarily in natural Kenyan Swahili (keeping automotive model names and KES currency clear) unless the user writes purely in English."
       : "";
-  const modeInstruction = requestedMode === "fast" ? FAST_MODE_INSTRUCTIONS : requestedMode === "search" ? SEARCH_MODE_INSTRUCTIONS : "";
+  const isKenyaImportSearch = requestedMode === "search" && isKenyaVehicleImportQuestion(lastUserMsg);
+  const modeInstruction = requestedMode === "fast" ? FAST_MODE_INSTRUCTIONS : requestedMode === "search" ? (isKenyaImportSearch ? KENYA_IMPORT_SEARCH_INSTRUCTIONS : SEARCH_MODE_INSTRUCTIONS) : "";
   const currentDate = new Date().toLocaleDateString("en-CA", { timeZone: "Africa/Nairobi" });
-  const systemInstruction = `${baseInstruction}${langInstruction} Current date in Kenya: ${currentDate}. ${modeInstruction}`;
+  const systemInstruction = isKenyaImportSearch
+    ? `You are a careful Kenyan vehicle-import research assistant. Current date in Kenya: ${currentDate}. ${langInstruction} ${KENYA_IMPORT_SEARCH_INSTRUCTIONS}`
+    : `${baseInstruction}${langInstruction} Current date in Kenya: ${currentDate}. ${modeInstruction}`;
 
   let effectiveMode = requestedMode;
   if (effectiveMode === "auto") {
@@ -1041,8 +1054,9 @@ app.post("/api/chat", async (req, res) => {
     let message = err?.message || "Failed to generate response from Groq.";
     if (/invalid_api_key|authentication|unauthorized/i.test(message)) {
       message = "Groq API key was rejected. Check that GROQ_API_KEY in Render is correct and active.";
-    } else if (/rate_limit|rate limit|tokens per day|requests per day/i.test(message)) {
-      message = `Groq rate limit reached: ${message}`;
+    } else if (/rate_limit|rate limit|tokens per day|requests per day|too many requests/i.test(message) || status === 429) {
+      console.warn("Groq rate limit response:", { mode: effectiveMode, status });
+      message = "The AI advisor has reached Groq's free usage limit for now. This request was not processed. Please wait for the allowance to reset before trying Search again; no paid upgrade is required to continue using the free tier.";
     }
     res.status(status >= 400 && status < 600 ? status : 500).json({ error: message });
   }
