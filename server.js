@@ -181,27 +181,32 @@ function removeUnverifiedKenyaMarkdownLinks(text, verifiedSources) {
 }
 
 function sanitizeKenyaRhdClaims(text) {
-  const safeStatement = "KRA's procedure states that the vehicle must be right-hand drive; that page does not set out an exemption process or discuss exceptions. The wider position on any exceptions is not established by that page.";
+  const safeAgeStatement = "KRA's live vehicle-import procedure uses the wording 'less than 8 years old from the year of first registration'; that page does not explain the calculation method or resolve the exact-eight-year boundary.";
+  const safeRhdStatement = "KRA's procedure states that the vehicle must be right-hand drive; that page does not set out an exemption process or discuss exceptions. The wider position on any exceptions is not established by that page.";
   const patterns = [
-    /no other official KRA\s*[/&]\s*KEBS notice was found/i,
-    /no other official (?:KRA|KEBS)(?:\s*[/&]\s*(?:KRA|KEBS))? notice was found/i,
-    /no other official notice was found(?:\s+that)?/i,
-    /no other official notice (?:was )?found/i,
-    /no other official (?:notice|instrument) (?:was )?located/i,
-    /(?:there are|there're) no (?:possible )?(?:current )?(?:RHD|right[- ]hand drive)[ -]?(?:exceptions|exemptions)/i,
-    /no (?:current )?(?:RHD|right[- ]hand drive)[ -]?(?:exceptions|exemptions) (?:exist|apply)/i,
-    /(?:RHD|right[- ]hand drive).{0,70}no exceptions or exemptions/i,
-    /no (?:official )?(?:RHD |right[- ]hand drive )?exemptions?\s+(?:exists?|applies?)/i,
-    /no official exemption (?:exists?|applies?)/i,
-    /no other (?:official )?(?:RHD )?(?:exception|exemption)/i,
-    /no separate (?:KEBS|NTSA|official) notice.{0,120}(?:provides?|lists?|contains?).{0,80}exemptions?/i,
-    /no other current (?:KRA,? )?(?:KEBS|NTSA|official).{0,100}(?:notice|instrument).{0,100}(?:provides?|lists?|contains?).{0,80}exemption/i,
+    // Age-rule search-absence claims: replace the entire sentence, not just the phrase.
+    /\bno\s+(?:other\s+)?(?:official\s+)?(?:(?:KRA|KEBS)(?:\s*[/&]\s*(?:KRA|KEBS))?\s+)?(?:age[- ]rule\s+)?(?:notice|instrument|guidance|rule)\b[^.!?]{0,160}\b(?:found|located|identified|published|exists?)\b/i,
+    /\b(?:no|not any)\s+(?:other\s+)?(?:KRA|KEBS)(?:\s*[/&]\s*(?:KRA|KEBS))?\s+(?:age[- ]rule\s+)?(?:notice|instrument|guidance)\b[^.!?]{0,160}\b(?:found|located|identified|published)\b/i,
+    /\bno other official notice was found(?:\s+that)?\b/i,
+    /\bno other official notice (?:was )?found\b/i,
+    /\bno other official (?:notice|instrument) (?:was )?located\b/i,
+    // RHD/exemption search-absence and absolute claims.
+    /\bno\s+(?:other\s+)?(?:official\s+)?(?:(?:KRA|KEBS|NTSA)(?:\s*[/&]\s*(?:KRA|KEBS|NTSA))?\s+)?(?:RHD\s+|right[- ]hand drive\s+)?(?:exceptions?|exemptions?|waivers?)\b[^.!?]{0,160}\b(?:found|located|identified|exist|apply|available|published)\b/i,
+    /\b(?:there are|there're) no (?:possible )?(?:current )?(?:RHD|right[- ]hand drive)[ -]?(?:exceptions|exemptions)\b/i,
+    /\bno (?:current )?(?:RHD|right[- ]hand drive)[ -]?(?:exceptions|exemptions) (?:exist|apply)\b/i,
+    /\b(?:RHD|right[- ]hand drive)\b[^.!?]{0,90}\bno exceptions or exemptions\b/i,
+    /\b(?:only|sole) (?:official )?(?:RHD )?(?:exception|exemption)\b/i,
+    /\bno other (?:official )?(?:RHD )?(?:exception|exemption)\b/i,
+    /\bno separate (?:KEBS|NTSA|official) notice\b[^.!?]{0,160}\b(?:provides?|lists?|contains?)\b[^.!?]{0,80}\bexemptions?\b/i,
+    /\b(?:limited )?search\b[^.!?]{0,140}\bno (?:other )?(?:KRA|KEBS|NTSA)?\s*(?:RHD\s+)?(?:notice|exception|exemption)\b[^.!?]{0,80}\b(?:found|located|identified)\b/i
   ];
   let changed = false;
   const output = String(text || "").split(/(?<=[.!?])\s+|\n+/).map((sentence) => {
-    if (patterns.some((pattern) => pattern.test(sentence))) {
+    const ageClaim = patterns.slice(0, 5).some((pattern) => pattern.test(sentence));
+    const rhdClaim = patterns.slice(5).some((pattern) => pattern.test(sentence));
+    if (ageClaim || rhdClaim) {
       changed = true;
-      return safeStatement;
+      return ageClaim ? safeAgeStatement : safeRhdStatement;
     }
     return sentence;
   }).join("\n");
