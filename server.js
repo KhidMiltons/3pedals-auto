@@ -183,25 +183,25 @@ function removeUnverifiedKenyaMarkdownLinks(text, verifiedSources) {
 function sanitizeKenyaRhdClaims(text) {
   const safeStatement = "KRA's procedure states that the vehicle must be right-hand drive; that page does not set out an exemption process or discuss exceptions. The wider position on any exceptions is not established by that page.";
   const patterns = [
-    /no other official KRA\\s*[/&]\\s*KEBS notice was found/i,
-    /no other official (?:KRA|KEBS)(?:\\s*[/&]\\s*(?:KRA|KEBS))? notice was found/i,
+    /no other official KRA\s*[/&]\s*KEBS notice was found/i,
+    /no other official (?:KRA|KEBS)(?:\s*[/&]\s*(?:KRA|KEBS))? notice was found/i,
     /(?:there are|there're) no (?:possible )?(?:current )?(?:RHD|right[- ]hand drive)[ -]?(?:exceptions|exemptions)/i,
     /no (?:current )?(?:RHD|right[- ]hand drive)[ -]?(?:exceptions|exemptions) (?:exist|apply)/i,
     /(?:RHD|right[- ]hand drive).{0,70}no exceptions or exemptions/i,
-    /no (?:official )?(?:RHD |right[- ]hand drive )?exemptions?\\s+(?:exists?|applies?)/i,
+    /no (?:official )?(?:RHD |right[- ]hand drive )?exemptions?\s+(?:exists?|applies?)/i,
     /no official exemption (?:exists?|applies?)/i,
     /no other (?:official )?(?:RHD )?(?:exception|exemption)/i,
     /no separate (?:KEBS|NTSA|official) notice.{0,120}(?:provides?|lists?|contains?).{0,80}exemptions?/i,
     /no other current (?:KRA,? )?(?:KEBS|NTSA|official).{0,100}(?:notice|instrument).{0,100}(?:provides?|lists?|contains?).{0,80}exemption/i,
   ];
   let changed = false;
-  const output = String(text || "").split(/(?<=[.!?])\\s+|\\n+/).map((sentence) => {
+  const output = String(text || "").split(/(?<=[.!?])\s+|\n+/).map((sentence) => {
     if (patterns.some((pattern) => pattern.test(sentence))) {
       changed = true;
       return safeStatement;
     }
     return sentence;
-  }).join("\\n");
+  }).join("\n");
   return { text: output, changed };
 }
 
