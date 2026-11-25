@@ -919,7 +919,10 @@ app.post("/api/chat", async (req, res) => {
     // Avoid parallel browser actions; the prompt also limits the search to one
     // initial query and at most one follow-up. Groq controls the internal browsing loop.
     requestBody.parallel_tool_calls = false;
-    requestBody.tool_choice = "required";
+    // Let the model decide when to invoke browser_search. Forcing a tool call
+    // can make GPT-OSS emit an invalid tool payload and trigger Groq's
+    // "failed_generation" parsing error before a response is produced.
+    requestBody.tool_choice = "auto";
   }
 
   try {
