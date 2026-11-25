@@ -7,8 +7,22 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const port = Number(process.env.PORT) || 3000;
+const port = Number.parseInt(process.env.PORT || "3000", 10);
 const host = "0.0.0.0";
+
+if (!Number.isInteger(port) || port < 1 || port > 65535) {
+  throw new Error(`Invalid PORT environment value: ${process.env.PORT}`);
+}
+
+// Bind immediately so Render can detect the service port during startup.
+// Express routes and middleware can safely be registered after listen().
+const server = app.listen(port, host, () => {
+  console.log(`3 Pedals Auto KE listening on http://${host}:${port}`);
+});
+server.on("error", (error) => {
+  console.error("HTTP server failed to bind:", error);
+  process.exitCode = 1;
+});
 
 const BLOCKED_PREFIXES = ["/.git", "/.github", "/github", "/outputs", "/scripts", "/supabase"];
 const BLOCKED_FILES = new Set(["/package.json", "/package-lock.json", "/server.js", "/PROJECTS_SETUP.sql", "/.env", "/.env.local"]);
@@ -1296,6 +1310,3 @@ app.use(
   })
 );
 
-app.listen(port, host, () => {
-  console.log(`3 Pedals Auto KE listening on http://${host}:${port}`);
-});
