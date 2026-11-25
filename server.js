@@ -94,7 +94,7 @@ const FAST_MODE_INSTRUCTIONS = [
 const SEARCH_MODE_INSTRUCTIONS = [
   "Use live browser search, but conserve tokens: make one focused search first; use at most one follow-up search only if a material gap remains. Open no more than 3 relevant pages. Stop when the best available primary sources answer the question. Do not browse broadly or repeat equivalent searches.",
   "Prefer current primary sources (for Kenya: KRA, KEBS, NTSA and legislation). Match jurisdiction, vehicle class, fuel, engine band and effective date. Separate binding law, official guidance, archived material and drafts.",
-  "Never invent sources, titles, dates, quotations, clauses, exemptions, rates, tax bases, URLs or legal interpretations. Cite the exact source checked. Source silence is not proof. If evidence is missing or conflicting, state that clearly.",
+  "Never invent sources, titles, dates, quotations, clauses, exemptions, rates, tax bases, URLs or legal interpretations. Cite the exact source checked. Source silence is not proof. If evidence is missing or conflicting, state that clearly. Do not say 'no other official notice was found', 'no exceptions were found', or equivalent exhaustive-search wording; describe only what the specific cited instrument says or does not say. Do not label an older FAQ as draft, archived, withdrawn or superseded unless an official source explicitly establishes that status; call it an older FAQ and describe the conflict neutrally.",
   "Kenya used-car age: KRA's procedure says 'less than 8 years old from the year of first registration'. Never calculate a cutoff by subtracting 8 from the import year, state that the first-registration year must be later than a calendar year obtained by subtracting 8, use any equivalent calendar-year boundary formula, use a current-year-minus-7 formula, or give derived eligibility examples (such as 2018/2019 registrations in 2026) unless a current binding instrument expressly prescribes that method. Distinguish the wording 'less than 8 years' from 'older than 8 years': they differ at exactly 8 years and must not be described as equivalent. Do not define 'older than eight' as 'eight or older', 'at least eight', or 'eight years or more'; exactly eight is not linguistically the same as older than eight, and its legal treatment must remain unresolved unless a binding source resolves it. Quote each source's exact wording and identify the boundary as unresolved if the current binding instruments do not resolve it; do not decide it by inference. Do not claim KEBS confirms KRA's boundary merely because both refer to eight years. The 2023 KRA first-registration notice concerns the EAC depreciation schedule; disclose conflicting manufacture-year wording where relevant. Do not reinterpret 'from the year of first registration' as a calendar-year age calculation or state that age is measured from the calendar year in which registered; do not describe 'older than eight years' as the opposite or as exceeding eight years unless a binding source defines it. Do not convert the phrase 'from the year of first registration' into an anniversary/day-count rule: do not state a specific day/month cutoff, '7 years and 99 days', or that eligibility ends on the exact eighth anniversary unless a current binding instrument expressly says so. If the source does not explain whether day/month matters, say it is unspecified. For the age conclusion, report only the exact KRA wording and the fact that the source does not state a calculation method; do not explain what 'older than eight years' means, compare it with 'less than eight years', classify the exactly-eight-year case, or derive any eligibility boundary. Avoid calendar-year arithmetic in prose as well as equations.",
   "RHD: report only what a current binding source establishes for this vehicle class. Do not infer ordinary-car exemptions from special-purpose notices, duty relief or drafts; do not claim no exceptions exist unless an authoritative source expressly establishes that exhaustive rule. Do not infer that no separate KEBS/NTSA exemption exists merely because the KRA procedure lists none or because a limited search found none; describe only the scope of the source actually checked and say the wider position is unverified. Use this limited formulation: 'KRA's procedure states that the vehicle must be right-hand drive; that page does not set out an exemption process or discuss exceptions.' Do not summarise search absence as 'no other notice', 'no exemptions', 'none exists', 'no other KRA or KEBS notice was found', 'no notice was found in the limited search', or equivalent language. A limited search result cannot establish the absence of exceptions.",
   "Inspection: distinguish pre-export roadworthiness inspection/CoR, PVoC and destination inspection. KRA describes inspection by a KEBS-appointed agent in the export country. For the KEBS July 2025 validation notice, preserve the stated sequence: a used vehicle not accompanied by a CoR must have its logbook, deregistration certificate or export certificate submitted to QISJ for validation; the notice says only vehicles with validated import documents will be subjected to destination inspection, effective 14 July 2025. Do not compress this into a claim that every vehicle arriving without a CoR automatically undergoes destination inspection. Do not say a CoR guarantees exemption from destination inspection. If the notice is not among the sources actually retrieved, say the exact trigger cannot be confirmed from the sources checked.",
@@ -136,6 +136,36 @@ function isKenyaVehicleImportQuestion(text) {
     /\b(vehicle|car|motor vehicle|passenger car|used car)\b/i.test(value);
 }
 
+function isOfficialKenyaSourceUrl(rawUrl) {
+  try {
+    const url = new URL(rawUrl);
+    if (!["http:", "https:"].includes(url.protocol)) return false;
+    const host = url.hostname.toLowerCase().replace(/^www\./, "");
+    const officialDomains = [
+      "kra.go.ke", "kebs.org", "ntsa.go.ke", "mygov.go.ke",
+      "parliament.go.ke", "kenyalaw.org", "new.kenyalaw.org",
+      "treasury.go.ke", "kenya.go.ke",
+    ];
+    return officialDomains.some((domain) => host === domain || host.endsWith("." + domain));
+  } catch {
+    return false;
+  }
+}
+
+function removeUnverifiedKenyaMarkdownLinks(text, verifiedSources) {
+  const verifiedUris = new Set((verifiedSources || []).map((source) => {
+    try { return new URL(source.uri).href; } catch { return ""; }
+  }).filter(Boolean));
+  return String(text || "").replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, (match, label, rawUrl) => {
+    try {
+      const normalized = new URL(rawUrl).href;
+      return isOfficialKenyaSourceUrl(normalized) && verifiedUris.has(normalized) ? match : label;
+    } catch {
+      return label;
+    }
+  });
+}
+
 function findKenyaImportAnswerIssues(text) {
   const value = String(text || "").replace(/\r/g, "");
   const issues = new Set();
@@ -163,7 +193,7 @@ function findKenyaImportAnswerIssues(text) {
   detect("overstated_destination_inspection_trigger", /\b(?:destination inspection|inspection at destination)\b.{0,120}\b(?:only|solely|exclusively)\b.{0,120}\b(?:not covered|outside|non[- ]?PVoC|no appointed inspection agent|countries? without|absence|lack|without a valid? CoR|no CoR)\b|\b(?:only|solely|exclusively)\b.{0,120}\b(?:absence|lack|without a valid? CoR|no CoR)\b.{0,100}\b(?:destination inspection|inspection at destination)\b|\b(?:destination )?inspection\b.{0,100}\brequired only when\b.{0,100}\b(?:absent|missing|not present|no CoR)\b|\b(?:valid|existing) CoR\b.{0,100}\b(?:exempt|exemption|not subject)\b.{0,100}\b(?:regardless|irrespective) of\b.{0,80}\b(?:age|RHD|drive[- ]side|left[- ]hand drive)\b|\b(?:age|LHD|left[- ]hand drive|right[- ]hand drive)\b.{0,80}\bnever\b.{0,50}\b(?:trigger|require)\b.{0,40}\bdestination inspection\b|\b(?:if|when)\b.{0,120}\barriv\w*\b.{0,100}\bwithout\b.{0,50}\b(?:valid )?(?:CoC|Certificate of Conformity)\b.{0,120}\bdestination inspection\b|\b(?:CoC|Certificate of Conformity)\b.{0,100}\b(?:eliminat\w*|avoid\w*|prevent\w*)\b.{0,80}\bdestination inspection\b|\bdestination inspection\b.{0,100}\b15\s*%\b.{0,50}\bCIF\b|\bsecurity bond\b.{0,80}\b(?:equal|equivalent)\b.{0,60}\b(?:fee|15\s*%)\b/i);
   detect("inferred_individual_tax_bases", /(?:\|\s*(?:VAT|value[- ]added tax|excise duty|IDF|import declaration fee|RDL|railway development levy)\s*\|[^\n]{0,180}customs value)|\b(?:all|every) (?:the )?(?:vehicle import )?taxes\b.{0,70}\b(?:are|is)\b.{0,30}\b(?:calculated|charged|based)\b.{0,40}\b(?:only )?customs value\b|\b(?:excise duty|VAT|value[- ]added tax|IDF|import declaration fee|RDL|railway development levy)\b.{0,65}\b(?:is|are|will be|shall be)\b.{0,20}\b(?:calculated|charged|levied|assessed|based)\b.{0,20}\bon customs value\b|\b(?:VAT|excise|IDF|RDL)\b.{0,100}\b(?:all|each)\b.{0,40}\b(?:based on|calculated on)\b.{0,40}\bcustoms value\b|\b(?:VAT|value[- ]added tax|excise duty|IDF|import declaration fee|RDL|railway development levy)\b.{0,180}\b\d+(?:\.\d+)?\s*%\s*(?:of|on)\s*(?:the )?(?:customs value|CIF)\b|\b(?:VAT|value[- ]added tax|excise duty|IDF|import declaration fee|RDL|railway development levy)\b.{0,100}\b(?:charged|calculated|levied|assessed|based)\s+on\s*\([^)]{0,180}\bcustoms value\b/i);
   detect("unsupported_exhaustive_age_claim", /\bno (?:other )?(?:official )?(?:KRA|KEBS|KRA or KEBS) notice\b.{0,100}\b(?:found|located|identified)\b|\bno other official notice was found\b|\bno other (?:current )?(?:KRA|KEBS) notice\b.{0,100}\b(?:found|located)\b/i);
-  detect("unsupported_exhaustive_rhd_claim", /\b(?:there are|there\x27re) no (?:possible )?(?:current )?(?:RHD|right[- ]hand drive)[ -]?(?:exceptions|exemptions)\b|\bno (?:current )?(?:RHD|right[- ]hand drive)[ -]?(?:exceptions|exemptions) (?:exist|apply)\b|\b(?:RHD|right[- ]hand drive)\b.{0,70}\bno exceptions or exemptions\b|\b(?:only|sole) (?:official )?(?:RHD )?(?:exception|exemption)\b|\bno other (?:official )?(?:RHD )?(?:exception|exemption)\b|\b(?:only exception|no other exception)\b.{0,100}\b(?:RHD|right[- ]hand drive)\b|\bno (?:official )?(?:RHD |right[- ]hand drive )?exemptions?\s+(?:exists?|applies?)\b|\bno official exemption (?:exists?|applies?)\b|\bno separate (?:KEBS|NTSA|official) notice\b.{0,120}\b(?:provides?|lists?|contains?)\b.{0,80}\bexemptions?\b|\bno (?:KEBS|NTSA) (?:notice|instrument|publication)\b.{0,100}\b(?:exemption|waiver)\b|\bno other current (?:KRA,? )?(?:KEBS|NTSA|official)\b.{0,100}\b(?:notice|instrument)\b.{0,100}\b(?:provides?|lists?|contains?)\b.{0,80}\b(?:statutory )?exemption\b|\bno other (?:current )?(?:KRA|KEBS|KRA or KEBS) notice\b.{0,100}\b(?:found|modifies?|changes?|alters?)\b|\bno (?:KRA|KEBS) notice was found\b.{0,100}\b(?:limited )?search\b|\b(?:limited )?search\b.{0,100}\bno (?:other )?(?:KRA|KEBS) notice\b.{0,100}\bfound\b/i);
+  detect("unsupported_exhaustive_rhd_claim", /\bno other official KRA\s*[/&]\s*KEBS notice was found\b|\bno other official (?:KRA|KEBS)(?:\s*[/&]\s*(?:KRA|KEBS))? notice was found\b|\b(?:there are|there\x27re) no (?:possible )?(?:current )?(?:RHD|right[- ]hand drive)[ -]?(?:exceptions|exemptions)\b|\bno (?:current )?(?:RHD|right[- ]hand drive)[ -]?(?:exceptions|exemptions) (?:exist|apply)\b|\b(?:RHD|right[- ]hand drive)\b.{0,70}\bno exceptions or exemptions\b|\b(?:only|sole) (?:official )?(?:RHD )?(?:exception|exemption)\b|\bno other (?:official )?(?:RHD )?(?:exception|exemption)\b|\b(?:only exception|no other exception)\b.{0,100}\b(?:RHD|right[- ]hand drive)\b|\bno (?:official )?(?:RHD |right[- ]hand drive )?exemptions?\s+(?:exists?|applies?)\b|\bno official exemption (?:exists?|applies?)\b|\bno separate (?:KEBS|NTSA|official) notice\b.{0,120}\b(?:provides?|lists?|contains?)\b.{0,80}\bexemptions?\b|\bno (?:KEBS|NTSA) (?:notice|instrument|publication)\b.{0,100}\b(?:exemption|waiver)\b|\bno other current (?:KRA,? )?(?:KEBS|NTSA|official)\b.{0,100}\b(?:notice|instrument)\b.{0,100}\b(?:provides?|lists?|contains?)\b.{0,80}\b(?:statutory )?exemption\b|\bno other (?:current )?(?:KRA|KEBS|KRA or KEBS) notice\b.{0,100}\b(?:found|modifies?|changes?|alters?)\b|\bno (?:KRA|KEBS) notice was found\b.{0,100}\b(?:limited )?search\b|\b(?:limited )?search\b.{0,100}\bno (?:other )?(?:KRA|KEBS) notice\b.{0,100}\bfound\b/i);
 
   return [...issues];
 }
@@ -1034,6 +1064,20 @@ app.post("/api/chat", async (req, res) => {
       }
     }
 
+    // Kenya import answers expose only sources on official Kenyan government/legal domains.
+    // The same filtered list is returned to the client and used to validate answer links.
+    const isKenyaImportSearch = effectiveMode === "search" && isKenyaVehicleImportQuestion(lastUserMsg);
+    if (isKenyaImportSearch) {
+      const receivedSourceCount = groundingSources.length;
+      for (let i = groundingSources.length - 1; i >= 0; i--) {
+        if (!isOfficialKenyaSourceUrl(groundingSources[i].uri)) groundingSources.splice(i, 1);
+      }
+      console.info("Kenya import official-source filter:", {
+        receivedSourceCount,
+        retainedOfficialSourceCount: groundingSources.length,
+      });
+    }
+
     // Safe diagnostics: field names and counts only; never log source contents or prompts.
     if (effectiveMode === "search") {
       console.info("Groq browser-search source diagnostics:", {
@@ -1053,6 +1097,9 @@ app.post("/api/chat", async (req, res) => {
     }
 
     let finalReply = reply || "I could not generate a response for that request. Please try rephrasing.";
+    if (isKenyaImportSearch) {
+      finalReply = removeUnverifiedKenyaMarkdownLinks(finalReply, groundingSources);
+    }
 
     // Deterministic fail-closed audit for Kenya vehicle-import research.
     // Never spend a second Groq completion attempting to repair an unsafe answer.
