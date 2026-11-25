@@ -456,7 +456,7 @@ html[data-theme="light"] body footer.foot {
 
 @media (max-width: 760px) {
   html[data-theme="light"] body :is(
-    .card, .panel, .dealer, .stat, .state, .empty, .error, .tile, #home .tile, .tiles .tile,
+    .card, .panel, .dealer, .stat, .state, .empty, .error, .tile, #home .hero, #home .tile, .tiles .tile,
     .vehicle-card, .story-card, .journal-card, .journal-entry, .journal-intro,
     .project-card, .project-intro, .project-public-empty, .contact-card, .promotion-package,
     .dashboard-card, .filter-panel, .search-panel, .featured-panel, .about-glass-card,
@@ -465,12 +465,19 @@ html[data-theme="light"] body footer.foot {
     .vehicle, .booking, .account-box, .chauffeur-assurance, .assurance-grid article,
     .steps-grid article, .route-preview, .trip-summary, .admin-stat, .calendar-day,
     .mechanic-card, .request-hero, .contact, #home #garageContactCard.contact,
-    .auto-quote-rail, #home #autoQuoteRail, .showroom-vehicle-note, .check,
-    header, header.head, #nav, #garageSectionNav, #chauffeurNav
+    .auto-quote-rail, #home #autoQuoteRail, .showroom-vehicle-note, .check
   ):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
-    background: #fbf8f1 !important;
-    background-color: #fbf8f1 !important;
-    background-image: none !important;
+    -webkit-backdrop-filter: blur(14px) saturate(135%) !important;
+    backdrop-filter: blur(14px) saturate(135%) !important;
+    background-color: rgba(253, 250, 243, 0.78) !important;
+    background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.76), rgba(247, 241, 228, 0.60)) !important;
+    border-color: rgba(138, 114, 62, 0.28) !important;
+    box-shadow: 0 10px 26px rgba(48, 38, 18, 0.09), inset 0 1px 0 rgba(255, 255, 255, 0.88) !important;
+    color: #171512 !important;
+  }
+  html[data-theme="light"] body :is(header, header.head, #nav, #garageSectionNav, #chauffeurNav) {
+    background: rgba(253, 250, 243, 0.99) !important;
+    background-color: rgba(253, 250, 243, 0.99) !important;
     color: #171512 !important;
   }
   html[data-theme="light"] body :is(
@@ -478,8 +485,8 @@ html[data-theme="light"] body footer.foot {
     .auto-quote-next, .journal-share, .article-share, .tabs button:not(.active),
     input, select, textarea
   ):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
-    background: #ffffff !important;
-    background-color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.86) !important;
+    background-color: rgba(255, 255, 255, 0.86) !important;
     color: #171512 !important;
     border-color: rgba(138, 114, 62, 0.36) !important;
   }
@@ -769,26 +776,29 @@ html[data-ux="1"] body > .wrap > header.top {
     align-items: stretch !important;
     position: absolute !important;
     top: calc(100% + 8px) !important;
-    right: 10px !important;
+    left: auto !important;
+    right: -1px !important;
     z-index: 1200 !important;
-    width: min(178px, calc(100vw - 24px)) !important;
-    max-height: min(60dvh, 300px) !important;
+    width: 260px !important;
+    max-width: 85vw !important;
+    max-height: min(74dvh, 420px) !important;
+    margin: 0 !important;
     overflow-y: auto !important;
-    padding: 5px !important;
-    gap: 1px !important;
-    border-radius: 12px !important;
-    border: 1px solid rgba(255, 255, 255, 0.22) !important;
-    background: rgba(18, 20, 24, 0.98) !important;
-    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.56) !important;
-    backdrop-filter: blur(20px) saturate(140%) !important;
-    -webkit-backdrop-filter: blur(20px) saturate(140%) !important;
+    padding: 8px 10px 10px !important;
+    gap: 2px !important;
+    border-radius: 16px !important;
+    border: 1px solid rgba(229, 185, 111, 0.30) !important;
+    background: rgba(14, 14, 17, 0.99) !important;
+    box-shadow: 0 24px 50px -10px rgba(0, 0, 0, 0.85) !important;
+    backdrop-filter: blur(22px) saturate(140%) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(140%) !important;
   }
   html[data-ux="1"][data-theme="light"] body > header nav.ux-subnav-links.is-open,
   html[data-ux="1"][data-theme="light"] body > .wrap > header.top nav.ux-subnav-links.is-open {
-    background: #fbf8f1 !important;
-    background-color: #fbf8f1 !important;
+    background: rgba(253, 250, 243, 0.99) !important;
+    background-color: rgba(253, 250, 243, 0.99) !important;
     border-color: rgba(138, 114, 62, 0.36) !important;
-    box-shadow: 0 18px 42px rgba(48, 38, 18, 0.22) !important;
+    box-shadow: 0 24px 50px -10px rgba(48, 38, 18, 0.32) !important;
   }
   html[data-ux="1"][data-theme="light"] body > header nav.ux-subnav-links.is-open .ux-subnav-link,
   html[data-ux="1"][data-theme="light"] body > .wrap > header.top nav.ux-subnav-links.is-open .ux-subnav-link {
@@ -799,9 +809,9 @@ html[data-ux="1"] body > .wrap > header.top {
     justify-content: flex-start !important;
     width: 100% !important;
     min-height: 30px !important;
-    padding: 4px 9px !important;
-    font-size: 12px !important;
-    border-radius: 7px !important;
+    padding: 6px 12px !important;
+    font-size: 13.5px !important;
+    border-radius: 9px !important;
   }
   html[data-ux="1"] body > header nav.ux-subnav-links.is-open .ux-drawer-controls,
   html[data-ux="1"] body > .wrap > header.top nav.ux-subnav-links.is-open .ux-drawer-controls {
@@ -829,37 +839,42 @@ html[data-ux="1"] body > .wrap > header.top {
   }
 }
 
-/* Prevent mobile #nav button { width:100% } from stretching theme & language buttons */
+/* Keep drawer utility controls balanced cleanly across the footer row */
 html[data-ux="1"] body > header :is(#nav, #garageSectionNav, #chauffeurNav, nav.ux-subnav-links) .ux-drawer-controls .ux-controls {
   width: 100% !important;
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
+  flex-wrap: nowrap !important;
   gap: 6px !important;
+  margin-left: 0 !important;
 }
 
 html[data-ux="1"] body > header :is(#nav, #garageSectionNav, #chauffeurNav, nav.ux-subnav-links) .ux-drawer-controls .ux-theme-btn {
   width: auto !important;
   flex: 0 0 auto !important;
-  min-width: 30px !important;
-  min-height: 28px !important;
-  height: 28px !important;
-  padding: 4px 8px !important;
+  min-width: 0 !important;
+  min-height: 30px !important;
+  height: 30px !important;
+  padding: 0 8px !important;
+  gap: 4px !important;
   border-radius: 8px !important;
-  font-size: 10.5px !important;
+  font-size: 11.5px !important;
   justify-content: center !important;
 }
 
 html[data-ux="1"] body > header :is(#nav, #garageSectionNav, #chauffeurNav, nav.ux-subnav-links) .ux-drawer-controls .ux-theme-btn svg {
-  width: 13px !important;
-  height: 13px !important;
-  flex: 0 0 13px !important;
+  width: 12px !important;
+  height: 12px !important;
+  flex: 0 0 12px !important;
 }
 
 html[data-ux="1"] body > header :is(#nav, #garageSectionNav, #chauffeurNav, nav.ux-subnav-links) .ux-drawer-controls .ux-lang-switch {
   display: inline-flex !important;
   width: auto !important;
   flex: 0 0 auto !important;
+  height: 30px !important;
+  min-height: 30px !important;
   padding: 2px !important;
   gap: 2px !important;
   border-radius: 8px !important;
@@ -868,12 +883,12 @@ html[data-ux="1"] body > header :is(#nav, #garageSectionNav, #chauffeurNav, nav.
 html[data-ux="1"] body > header :is(#nav, #garageSectionNav, #chauffeurNav, nav.ux-subnav-links) .ux-drawer-controls .ux-lang-switch button {
   width: auto !important;
   flex: 0 0 auto !important;
-  min-width: 28px !important;
+  min-width: 26px !important;
   min-height: 24px !important;
   height: 24px !important;
-  padding: 2px 7px !important;
+  padding: 0 7px !important;
   border-radius: 6px !important;
-  font-size: 10px !important;
+  font-size: 11px !important;
   justify-content: center !important;
   line-height: 1 !important;
 }
@@ -883,17 +898,17 @@ html[data-ux="1"] body > header :is(#nav, #garageSectionNav, #chauffeurNav, nav.
     gap: 4px;
   }
   .ux-theme-btn {
-    min-width: 32px !important;
-    min-height: 32px !important;
-    height: 32px !important;
-    padding: 4px 7px !important;
+    min-width: 30px !important;
+    min-height: 30px !important;
+    height: 30px !important;
+    padding: 0 8px !important;
     border-radius: 8px !important;
     font-size: 11px !important;
   }
   .ux-theme-btn svg {
-    width: 14px !important;
-    height: 14px !important;
-    flex: 0 0 14px !important;
+    width: 13px !important;
+    height: 13px !important;
+    flex: 0 0 13px !important;
   }
   .ux-lang-switch {
     padding: 2px !important;
@@ -901,23 +916,25 @@ html[data-ux="1"] body > header :is(#nav, #garageSectionNav, #chauffeurNav, nav.
   }
   .ux-lang-switch button {
     min-width: 26px !important;
-    min-height: 26px !important;
-    height: 26px !important;
-    padding: 2px 6px !important;
+    min-height: 24px !important;
+    height: 24px !important;
+    padding: 0 7px !important;
     border-radius: 6px !important;
-    font-size: 10px !important;
+    font-size: 10.5px !important;
   }
   html[data-ux="1"] body > header #nav.is-open,
   html[data-ux="1"] body > header #nav.mobile-menu-open,
   html[data-ux="1"] body > header #garageSectionNav.is-open,
   html[data-ux="1"] body > header #chauffeurNav.is-open {
     justify-content: flex-start !important;
-    width: min(232px, calc(100vw - 28px)) !important;
-    max-width: calc(100vw - 28px) !important;
-    max-height: min(78dvh, 480px) !important;
-    padding: 8px !important;
-    gap: 3px !important;
-    right: 10px !important;
+    left: auto !important;
+    right: -1px !important;
+    width: 260px !important;
+    max-width: 85vw !important;
+    max-height: min(74dvh, 420px) !important;
+    margin: 0 !important;
+    padding: 8px 10px 10px !important;
+    gap: 2px !important;
   }
   html[data-ux="1"] body > header > .wrap > button#navToggle.nav-toggle {
     width: 36px !important;
@@ -2222,8 +2239,21 @@ html[data-theme="light"] .eff-line[data-eff="G"] strong {
 .card-actions-top {
   grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: 1.24fr 0.76fr;
+  grid-template-columns: 1fr;
   gap: 8px;
+}
+
+.card-actions-footer {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1.35fr 0.65fr;
+  gap: 8px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+html[data-theme="light"] .card-actions-footer {
+  border-top-color: rgba(138, 114, 62, 0.16);
 }
 
 .card-actions-bar .inventory-quickview-button,
@@ -2278,7 +2308,6 @@ html[data-theme="light"] .eff-line[data-eff="G"] strong {
 }
 
 .card-actions-bar .inventory-alert-button {
-  grid-column: 1 / -1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -6657,6 +6686,310 @@ html[data-theme="light"] .ux-compare-source-link {
   background: rgba(223, 190, 111, 0.14);
   border-color: rgba(138, 114, 62, 0.32);
 }
+
+/* ===== Top-Right Glass Heart Wishlist Button, Sold Overlay & Card Footer Share ===== */
+.card .photo,
+.card .swatch {
+  position: relative;
+}
+
+.photo .card-wishlist-btn,
+.swatch .card-wishlist-btn {
+  position: absolute !important;
+  top: 8px !important;
+  right: 8px !important;
+  left: auto !important;
+  z-index: 6 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  min-height: 34px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(255, 255, 255, 0.28) !important;
+  background: rgba(14, 16, 20, 0.56) !important;
+  background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.14), rgba(14, 16, 20, 0.56)) !important;
+  color: rgba(255, 255, 255, 0.94) !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(140%) !important;
+  backdrop-filter: blur(12px) saturate(140%) !important;
+  cursor: pointer;
+  transition: transform 0.18s ease, background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease !important;
+}
+
+.card-wishlist-btn svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+  pointer-events: none;
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), fill 0.18s ease;
+}
+
+.card-wishlist-btn svg path {
+  fill: transparent;
+  stroke: currentColor;
+  stroke-width: 2;
+  transition: fill 0.18s ease, stroke 0.18s ease;
+}
+
+.photo .card-wishlist-btn[aria-pressed="true"],
+.swatch .card-wishlist-btn[aria-pressed="true"],
+.card-wishlist-btn.is-saved {
+  border-color: rgba(229, 185, 111, 0.78) !important;
+  background: rgba(20, 16, 18, 0.78) !important;
+  color: #f4687d !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.36), 0 0 0 1px rgba(229, 185, 111, 0.28) !important;
+}
+
+.card-wishlist-btn[aria-pressed="true"] svg path,
+.card-wishlist-btn.is-saved svg path {
+  fill: currentColor;
+  stroke: currentColor;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .photo .card-wishlist-btn:not(:disabled):hover,
+  .swatch .card-wishlist-btn:not(:disabled):hover {
+    transform: scale(1.08) !important;
+    border-color: rgba(229, 185, 111, 0.85) !important;
+    background: rgba(20, 22, 27, 0.78) !important;
+  }
+}
+
+html[data-theme="light"] .photo .card-wishlist-btn,
+html[data-theme="light"] .swatch .card-wishlist-btn {
+  background: rgba(255, 252, 246, 0.84) !important;
+  background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(246, 240, 227, 0.78)) !important;
+  border-color: rgba(138, 114, 62, 0.38) !important;
+  color: #2f281d !important;
+  box-shadow: 0 6px 14px rgba(48, 38, 18, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+}
+
+html[data-theme="light"] .photo .card-wishlist-btn[aria-pressed="true"],
+html[data-theme="light"] .swatch .card-wishlist-btn[aria-pressed="true"],
+html[data-theme="light"] .card-wishlist-btn.is-saved {
+  border-color: rgba(200, 51, 73, 0.54) !important;
+  background: rgba(255, 252, 246, 0.96) !important;
+  color: #cf344a !important;
+}
+
+/* Keep FEATURED badge clear of the top-right heart wishlist button */
+.photo:has(.card-wishlist-btn) .promoted-tag,
+.swatch:has(.card-wishlist-btn) .promoted-tag {
+  right: 48px !important;
+}
+
+#featuredGrid.featured-grid .photo .card-wishlist-btn {
+  width: 28px !important;
+  height: 28px !important;
+  min-width: 28px !important;
+  min-height: 28px !important;
+  top: 6px !important;
+  right: 6px !important;
+}
+
+#featuredGrid.featured-grid .photo .card-wishlist-btn svg {
+  width: 13.5px;
+  height: 13.5px;
+}
+
+#featuredGrid.featured-grid .photo:has(.card-wishlist-btn) .promoted-tag {
+  right: 39px !important;
+}
+
+@media (max-width: 560px) {
+  .photo .card-wishlist-btn,
+  .swatch .card-wishlist-btn {
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    min-height: 30px !important;
+    top: 6px !important;
+    right: 6px !important;
+  }
+  .card-wishlist-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+  .photo:has(.card-wishlist-btn) .promoted-tag,
+  .swatch:has(.card-wishlist-btn) .promoted-tag {
+    right: 40px !important;
+  }
+}
+
+/* Sold Vehicle Card Overlay & Disabled Save State */
+.card.is-sold .photo > img,
+.card.is-sold .swatch > img {
+  filter: grayscale(0.55) brightness(0.58) contrast(0.95) !important;
+}
+
+.sold-badge-overlay {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: fit-content;
+  height: fit-content;
+  z-index: 7;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(248, 113, 113, 0.78);
+  background: rgba(17, 12, 14, 0.88);
+  color: #fecaca;
+  font: 800 12px/1 Manrope, system-ui, sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.52);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+}
+
+html[data-theme="light"] .sold-badge-overlay {
+  background: rgba(127, 29, 29, 0.92);
+  border-color: rgba(254, 202, 202, 0.7);
+  color: #ffffff;
+}
+
+#featuredGrid.featured-grid .sold-badge-overlay {
+  padding: 5px 11px;
+  font-size: 10px;
+}
+
+@media (max-width: 560px) {
+  .sold-badge-overlay {
+    padding: 5px 12px;
+    font-size: 10.5px;
+  }
+}
+
+.card.is-sold .card-wishlist-btn:disabled,
+.card-wishlist-btn[aria-disabled="true"] {
+  opacity: 0.42 !important;
+  pointer-events: none !important;
+  cursor: not-allowed !important;
+}
+
+.card.is-sold [data-save-vehicle]:disabled,
+[data-save-vehicle][aria-disabled="true"] {
+  opacity: 0.50 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  filter: grayscale(0.45);
+}
+
+.sold-status-pill {
+  background: rgba(185, 28, 28, 0.20) !important;
+  border-color: rgba(248, 113, 113, 0.55) !important;
+  color: #fecaca !important;
+}
+
+html[data-theme="light"] .sold-status-pill {
+  background: rgba(185, 28, 28, 0.12) !important;
+  border-color: rgba(185, 28, 28, 0.45) !important;
+  color: #991b1b !important;
+}
+
+/* Home (#buy) & Yard Profile Footer Action Row with Save + Share Icon Button */
+.account-card-footer,
+.yard-card-footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px 12px;
+  margin-top: auto;
+}
+
+.account-card-footer .account-card-save {
+  width: 100% !important;
+  margin: 0 !important;
+  min-height: 36px;
+}
+
+.yard-card-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+  color: inherit;
+  text-decoration: none;
+}
+
+.yard-card-open-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.08);
+  color: #f4f0e8;
+  font: 600 12px/1 Manrope, system-ui, sans-serif;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.card-footer-share-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 5px;
+  min-height: 36px !important;
+  padding: 7px 12px !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(255, 255, 255, 0.24) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #f4f0e8 !important;
+  font: 600 12px/1 Manrope, system-ui, sans-serif !important;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease !important;
+}
+
+.card-footer-share-btn svg {
+  width: 13px;
+  height: 13px;
+  flex: 0 0 13px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card-footer-share-btn:hover,
+  .yard-card-open-link:hover {
+    border-color: rgba(223, 190, 111, 0.78) !important;
+    background: rgba(215, 189, 131, 0.18) !important;
+    color: #fff6df !important;
+  }
+}
+
+html[data-theme="light"] .card-footer-share-btn,
+html[data-theme="light"] .yard-card-open-link {
+  background: rgba(255, 255, 255, 0.88) !important;
+  border-color: rgba(138, 114, 62, 0.34) !important;
+  color: #171512 !important;
+}
+
+@media (max-width: 560px) {
+  .account-card-footer,
+  .yard-card-footer {
+    gap: 6px;
+    padding: 0 8px 9px;
+  }
+  .account-card-footer .account-card-save,
+  .yard-card-open-link,
+  .card-footer-share-btn {
+    min-height: 34px !important;
+    padding: 6px 8px !important;
+    font-size: 11px !important;
+  }
+}
+
 
 
 

@@ -84,15 +84,36 @@
   async function toggleSavedVehicle(id, button) {
     const client = sb();
     const me = getMe();
+    id = String(id);
+    if (button?.disabled || button?.getAttribute?.("aria-disabled") === "true" || button?.closest?.(".card.is-sold")) {
+      window.ThreePedalsAccountUI?.toast("Sold vehicles cannot be saved.", "err");
+      return;
+    }
     if (!me) {
       host().openAuth?.("login", "Sign in to save vehicles to your account.");
       return;
     }
-    id = String(id);
     const removing = savedVehicleIds.has(id);
+    const isHeartBtn = Boolean(button?.classList?.contains("card-wishlist-btn"));
     if (button) {
       button.disabled = true;
-      button.textContent = removing ? "Removing…" : "Saving…";
+      if (!isHeartBtn) button.textContent = removing ? "Removing…" : "Saving…";
+    }
+    if (!removing && client) {
+      const { data: statusRow } = await client.from("listings").select("status").eq("id", id).maybeSingle();
+      if (statusRow && String(statusRow.status || "").trim().toLowerCase() === "sold") {
+        document.querySelectorAll("[data-save-vehicle]").forEach((el) => {
+          if (el.dataset.saveVehicle === id) {
+            el.disabled = true;
+            el.setAttribute("aria-disabled", "true");
+            el.setAttribute("aria-pressed", "false");
+            if (!el.classList.contains("card-wishlist-btn")) el.textContent = "Sold";
+            el.closest(".card")?.classList.add("is-sold");
+          }
+        });
+        window.ThreePedalsAccountUI?.toast("This vehicle has been marked as Sold.", "err");
+        return;
+      }
     }
     const result = removing
       ? await client.from("saved_vehicles").delete().eq("listing_id", id)
@@ -100,7 +121,7 @@
     if (result.error) {
       if (button) {
         button.disabled = false;
-        button.textContent = removing ? "Remove saved" : "Save vehicle";
+        if (!isHeartBtn) button.textContent = removing ? "Remove saved" : "Save vehicle";
       }
       window.ThreePedalsAccountUI?.toast(
         result.error.message || "Could not update saved vehicles.",
@@ -116,11 +137,20 @@
       savedVehiclesLoadedFor = null;
       await loadSavedVehicles();
     }
+    const isSaved = savedVehicleIds.has(id);
     document.querySelectorAll("[data-save-vehicle]").forEach((el) => {
       if (el.dataset.saveVehicle === id) {
-        el.textContent = savedVehicleIds.has(id) ? "Saved ✓" : "Save vehicle";
-        el.setAttribute("aria-pressed", String(savedVehicleIds.has(id)));
-        el.disabled = false;
+        const isHeart = el.classList.contains("card-wishlist-btn");
+        if (isHeart) {
+          el.classList.toggle("is-saved", isSaved);
+          el.setAttribute("aria-label", isSaved ? "Remove from wishlist" : "Add to wishlist");
+          el.title = isSaved ? "Remove from wishlist" : "Save to wishlist";
+        } else {
+          el.textContent = isSaved ? "Saved ✓" : "Save vehicle";
+        }
+        el.setAttribute("aria-pressed", String(isSaved));
+        el.disabled = Boolean(el.closest(".card.is-sold"));
+        el.closest(".card")?.classList.toggle("is-saved", isSaved);
       }
     });
     const savedMetric = $("accBody")?.querySelector('[data-overview-page="buying"] b, [data-overview-page="buying"] strong');

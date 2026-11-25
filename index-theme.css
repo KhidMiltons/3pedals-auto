@@ -241,82 +241,21 @@ html:not([data-theme="light"]) :is(.listing,.stat,.promotion-package,.account-fa
     visibility:visible!important;opacity:1!important;z-index:1002!important;
   }
   body>header #nav{
-    left:auto!important;right:10px!important;top:calc(100% + 8px)!important;
-    width:min(300px,calc(100vw - 32px))!important;max-width:calc(100vw - 32px)!important;
+    left:auto!important;right:-1px!important;width:260px!important;max-width:85vw!important;top:calc(100% + 8px)!important;
     align-items:stretch!important;
   }
-  body>header #nav>.account-pill{
-    order:-1!important;display:flex!important;align-items:center!important;
-    justify-content:space-between!important;gap:12px!important;width:100%!important;
-    min-height:48px!important;margin:0 0 5px!important;padding:5px 8px 5px 13px!important;
-    border:1px solid rgba(227,179,65,.28)!important;border-radius:12px!important;
-    background:rgba(255,255,255,.045)!important;box-shadow:none!important;
-    -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
-  }
-  body>header #nav>.account-pill span{display:inline!important;color:#f3f0e8!important;font-size:14px!important;font-weight:650!important}
-  body>header #nav>.account-pill button{
-    display:grid!important;place-items:center!important;flex:0 0 40px!important;
-    width:40px!important;height:40px!important;min-width:40px!important;margin:0!important;padding:0!important;border-radius:10px!important;
-  }
-  html body>header button#navToggle.nav-toggle[aria-expanded="true"],
-  html body.nav-open>header button#navToggle.nav-toggle,
-  html body:has(header #nav.mobile-menu-open)>header button#navToggle.nav-toggle,
-  html body:has(header #nav.is-open)>header button#navToggle.nav-toggle{
-    background:rgba(22,23,25,.24)!important;background-color:rgba(22,23,25,.24)!important;background-image:none!important;
-    border:1px solid rgba(255,255,255,.30)!important;
-    -webkit-backdrop-filter:blur(32px) saturate(165%)!important;backdrop-filter:blur(32px) saturate(165%)!important;
-    box-shadow:0 8px 24px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.12)!important;
-  }
-  html body>header button#navToggle.nav-toggle[aria-expanded="true"] svg,
-  html body.nav-open>header button#navToggle.nav-toggle svg{filter:none!important}
-}
-@media(max-width:760px){
-  body>header #nav{
-    display:none!important;position:absolute!important;top:calc(100% + 8px)!important;left:auto!important;right:10px!important;
-    z-index:1001!important;padding:14px!important;margin:0!important;gap:8px!important;
-    flex-direction:column!important;align-items:stretch!important;flex-wrap:nowrap!important;
-    background:rgba(16,18,21,.94)!important;border:1px solid rgba(255,255,255,.22)!important;
-    border-radius:18px!important;box-shadow:0 18px 42px rgba(0,0,0,.38)!important;
-    backdrop-filter:blur(24px) saturate(140%)!important;-webkit-backdrop-filter:blur(24px) saturate(140%)!important;
-  }
-  body>header #nav.mobile-menu-open,body>header #nav.is-open{display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}
-  body>header #nav>button,body>header #nav>a{
-    display:flex!important;visibility:visible!important;opacity:1!important;flex:0 0 auto!important;
-    width:100%!important;min-height:42px!important;box-sizing:border-box!important;text-align:left!important;
-    justify-content:flex-start!important;align-items:center!important;padding:10px 14px!important;
-    border-radius:11px!important;font-size:14px!important;color:#f3f0e8!important;
-    background:transparent!important;text-decoration:none!important;
-  }
-  body>header #nav>.nav-contact,body>header #nav>button.nav-contact{
-    display:flex!important;align-items:center!important;justify-content:flex-start!important;
-    box-sizing:border-box!important;width:100%!important;min-height:42px!important;margin:0!important;padding:10px 14px!important;
-    font:inherit!important;font-size:14px!important;line-height:1.25!important;text-align:left!important;
-    vertical-align:middle!important;white-space:normal!important;transform:none!important;
-  }
-}
-@media(max-width:600px){
-  body>header #nav,body>header #nav.is-open,body>header #nav.mobile-menu-open{
-    top:calc(100% + 6px)!important;right:10px!important;left:auto!important;
-    width:min(178px,calc(100vw - 24px))!important;max-width:calc(100vw - 24px)!important;
-    max-height:min(60dvh,300px)!important;padding:5px!important;gap:1px!important;border-radius:12px!important;
-    background:rgba(18,20,23,.96)!important;
-    -webkit-backdrop-filter:blur(22px) saturate(140%)!important;backdrop-filter:blur(22px) saturate(140%)!important;
-    border-color:rgba(255,255,255,.20)!important;
-  }
-  body>header #nav>button,body>header #nav>a.navlink{min-height:30px!important;padding:4px 9px!important;font-size:12px!important;line-height:1.2!important;border-radius:7px!important}
 }
 @media(max-width:420px){
   body>header>.wrap{grid-template-columns:minmax(0,1fr) 38px!important;column-gap:6px!important}
   body>header>.wrap>button#navToggle.nav-toggle{width:38px!important;height:38px!important;min-width:38px!important}
-  body>header #nav>.account-pill button{width:38px!important;height:38px!important;flex-basis:38px!important}
-  body>header>.wrap>.logo{font-size:clamp(16px,4.6vw,19px)!important}
+  body>header>.wrap>.logo{font-size:clamp(15px,4.4vw,18px)!important}
 }
 
 
 
 /* ===== Home Lighter Glass, Quote Rail & Interactions ===== */
 #home .hero{display:flex!important;flex-direction:column!important;align-items:flex-start!important}
-html:not([data-theme="light"]) #home .hero{background-color:rgba(20,22,25,.30)!important;-webkit-backdrop-filter:blur(8px) saturate(118%)!important;backdrop-filter:blur(8px) saturate(118%)!important}
+html:not([data-theme="light"]) #home .hero,
 html:not([data-theme="light"]) #home .tile,
 html:not([data-theme="light"]) #home .tiles .tile,
 html:not([data-theme="light"]) .tiles .tile,
@@ -324,12 +263,12 @@ html:not([data-theme="light"]) #home .showroom-vehicle-note,
 html:not([data-theme="light"]) #home .auto-quote-rail,
 html:not([data-theme="light"]) #home .journal-intro,
 html:not([data-theme="light"]) #home .project-intro{
-  background-color:rgba(20,22,25,.28)!important;
-  background-image:linear-gradient(135deg,rgba(255,255,255,.085),rgba(255,255,255,.015) 45%,rgba(215,189,131,.045))!important;
-  -webkit-backdrop-filter:blur(24px) saturate(140%)!important;
-  backdrop-filter:blur(24px) saturate(140%)!important;
+  background-color:rgba(20,22,26,.50)!important;
+  background-image:linear-gradient(135deg,rgba(255,255,255,.10),rgba(255,255,255,.02) 48%,rgba(215,189,131,.05))!important;
+  -webkit-backdrop-filter:blur(20px) saturate(140%)!important;
+  backdrop-filter:blur(20px) saturate(140%)!important;
   border:1px solid rgba(255,255,255,.20)!important;
-  box-shadow:0 16px 40px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.16)!important;
+  box-shadow:0 16px 40px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.16)!important;
 }
 html:not([data-theme="light"]) #home .journal-intro .btn.alt,
 html:not([data-theme="light"]) #home .project-intro .btn.alt{
@@ -342,18 +281,18 @@ html:not([data-theme="light"]) #home .project-intro .btn.alt{
   backdrop-filter:blur(14px) saturate(130%)!important;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 6px 18px rgba(0,0,0,.18)!important;
 }
-@media(min-width:761px){
-  html[data-theme="light"] #home .tile,
-  html[data-theme="light"] #home .tiles .tile,
-  html[data-theme="light"] #home .journal-intro,
-  html[data-theme="light"] #home .project-intro{
-    background-color:rgba(255,252,246,.72)!important;
-    background-image:linear-gradient(135deg,rgba(255,255,255,.68),rgba(247,241,228,.54))!important;
-    -webkit-backdrop-filter:blur(22px) saturate(135%)!important;
-    backdrop-filter:blur(22px) saturate(135%)!important;
-    border-color:rgba(138,114,62,.28)!important;
-    box-shadow:0 14px 36px rgba(48,38,18,.09),inset 0 1px 0 rgba(255,255,255,.88)!important;
-  }
+html[data-theme="light"] #home .hero,
+html[data-theme="light"] #home .tile,
+html[data-theme="light"] #home .tiles .tile,
+html[data-theme="light"] #home .auto-quote-rail,
+html[data-theme="light"] #home .journal-intro,
+html[data-theme="light"] #home .project-intro{
+  background-color:rgba(255,252,246,.74)!important;
+  background-image:linear-gradient(135deg,rgba(255,255,255,.72),rgba(247,241,228,.56))!important;
+  -webkit-backdrop-filter:blur(20px) saturate(135%)!important;
+  backdrop-filter:blur(20px) saturate(135%)!important;
+  border-color:rgba(138,114,62,.28)!important;
+  box-shadow:0 14px 36px rgba(48,38,18,.09),inset 0 1px 0 rgba(255,255,255,.88)!important;
 }
 #home .home-with-quote{display:block!important}
 #home .home-with-quote>div{min-width:0!important}
@@ -363,7 +302,7 @@ html:not([data-theme="light"]) #home .project-intro .btn.alt{
   border-radius:18px!important;
 }
 html:not([data-theme="light"]) #home #autoQuoteRail{
-  border:1px solid rgba(255,255,255,.34)!important;color:#fff!important;
+  border:1px solid rgba(255,255,255,.28)!important;color:#fff!important;
 }
 #home .hero #autoQuoteRail{align-self:flex-start!important}
 html:not([data-theme="light"]) #home .auto-quote-text,
@@ -392,14 +331,14 @@ html:not([data-theme="light"]) #home .auto-quote-author{color:#fff!important}
   #home .project-intro:focus-within{
     transform:translateY(-2px) scale(1.01)!important;
   }
-  html:not([data-theme="light"]) :is(.card,.tile,#home .tile,.tiles .tile,.project-card,.contact-card,.journal-card,#home .journal-intro,#home .project-intro):not(#accDlg *):hover{
-    background-color:rgba(36,39,45,.38)!important;
+  html:not([data-theme="light"]) :is(#home .hero,.card,.tile,#home .tile,.tiles .tile,.project-card,.contact-card,.journal-card,#home .journal-intro,#home .project-intro):not(#accDlg *):hover{
+    background-color:rgba(36,39,45,.46)!important;
     border-color:rgba(215,189,131,.52)!important;
     box-shadow:0 22px 48px rgba(0,0,0,.30),0 0 0 1px rgba(215,189,131,.14),inset 0 1px 0 rgba(255,255,255,.24)!important;
-    -webkit-backdrop-filter:blur(28px) saturate(145%)!important;
-    backdrop-filter:blur(28px) saturate(145%)!important;
+    -webkit-backdrop-filter:blur(24px) saturate(145%)!important;
+    backdrop-filter:blur(24px) saturate(145%)!important;
   }
-  html[data-theme="light"] :is(#home .tile,#home .tiles .tile,#home .journal-intro,#home .project-intro):hover{
+  html[data-theme="light"] :is(#home .hero,#home .tile,#home .tiles .tile,#home .journal-intro,#home .project-intro):hover{
     background-color:rgba(255,253,249,.86)!important;
     border-color:rgba(158,116,21,.48)!important;
     box-shadow:0 20px 44px rgba(48,38,18,.14),inset 0 1px 0 rgba(255,255,255,.95)!important;
@@ -410,8 +349,8 @@ button:focus-visible,a:focus-visible,[role=button]:focus-visible{outline:2px sol
 @media(max-width:640px){
   body>header{margin-bottom:12px!important}
   main.wrap{width:100%!important;max-width:100%!important;padding-left:12px!important;padding-right:12px!important}
-  #home .hero{min-height:0!important;padding:3.5rem 17px 24px!important;gap:12px!important;border-radius:22px!important}
-  #home .hero h1{font-size:clamp(2rem,8.5vw,2.8rem)!important;line-height:1.06!important;margin:8px 0 10px!important}
+  #home .hero{min-height:0!important;padding:24px 17px 22px!important;gap:12px!important;border-radius:20px!important}
+  #home .hero h1{font-size:clamp(1.95rem,8.4vw,2.75rem)!important;line-height:1.08!important;margin:6px 0 10px!important}
   #home .hero p{font-size:13px!important;line-height:1.5!important}
   #home .showroom-actions{gap:8px!important;flex-wrap:wrap!important}
   #home .showroom-actions .btn{padding:10px 13px!important;font-size:12px!important}
@@ -576,18 +515,17 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){f
   #buy .hero{display:block!important;padding:0 0 6px!important;margin:0!important;min-height:0!important;gap:0!important}
   #buy .hero h1{margin:0!important;padding:0!important;line-height:1.12!important;min-height:0!important}
   #buy .hero p{margin:4px 0 0!important;padding:0!important}
-  #buy #grid .card .body h3{min-height:0!important;height:auto!important;margin:0 0 1px!important;padding:0!important;font-size:13px!important;line-height:1.15!important;display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:2!important;line-clamp:2!important;overflow:hidden!important;overflow-wrap:anywhere!important}
-  #buy #grid .card .body .price{margin:0!important;padding:0!important;font-size:14px!important;line-height:1.12!important;overflow-wrap:anywhere!important}
-  #buy #grid .card .body .tag,#buy #grid .card .body .card-extra,#buy #grid .card .body .yard-line,#buy #grid .card .body .card-reveal{display:none!important}
+  #buy #grid .card .body h3{min-height:0!important;height:auto!important;margin:0 0 2px!important;padding:0!important;font-size:13px!important;line-height:1.18!important;display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:2!important;line-clamp:2!important;overflow:hidden!important;overflow-wrap:anywhere!important}
+  #buy #grid .card .body .price{margin:0 0 2px!important;padding:0!important;font-size:14px!important;line-height:1.15!important;overflow-wrap:anywhere!important}
   #buy .grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
-  #buy .grid>.card{display:flex!important;flex-direction:column!important;min-width:0!important;height:auto!important;min-height:0!important;overflow:hidden!important}
+  #buy .grid>.card{display:flex!important;flex-direction:column!important;min-width:0!important;height:auto!important;min-height:0!important;overflow:hidden!important;padding:0!important}
   #buy .grid>.card .card-main{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:0!important;width:100%!important;height:auto!important;min-height:0!important}
   #buy .grid>.card .swatch{display:block!important;position:relative!important;width:100%!important;max-width:100%!important;height:clamp(125px,38vw,165px)!important;min-height:0!important;flex:0 0 auto!important;margin:0!important;padding:0!important;box-sizing:border-box!important;background-size:cover!important;background-position:center!important;overflow:hidden!important}
   #buy .grid>.card .swatch-photo{position:absolute!important;inset:0!important;display:block!important;width:100%!important;height:100%!important;min-height:0!important;object-fit:cover!important;object-position:center!important}
-  #buy .grid>.card .body{display:block!important;width:100%!important;min-width:0!important;height:auto!important;min-height:0!important;flex:0 0 auto!important;box-sizing:border-box!important;margin:0!important;padding:6px 7px!important;gap:4px!important;overflow:visible!important}
-  #buy .grid>.card .body h3{display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:2!important;min-height:0!important;height:auto!important;margin:0 0 1px!important;padding:0!important;font-size:13px!important;line-height:1.15!important;overflow:hidden!important}
-  #buy .grid>.card .body .price{display:block!important;margin:0!important;padding:0!important;font-size:14px!important;line-height:1.12!important}
-  #buy .grid>.card .body>.tag{display:inline-flex!important;margin:3px 3px 0 0!important}
+  #buy .grid>.card .body{display:block!important;width:100%!important;min-width:0!important;height:auto!important;min-height:0!important;flex:1 0 auto!important;box-sizing:border-box!important;margin:0!important;padding:8px 8px 6px!important;gap:4px!important;overflow:visible!important}
+  #buy .grid>.card .body h3{display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:2!important;min-height:0!important;height:auto!important;margin:0 0 2px!important;padding:0!important;font-size:13px!important;line-height:1.18!important;overflow:hidden!important}
+  #buy .grid>.card .body .price{display:block!important;margin:0 0 2px!important;padding:0!important;font-size:14px!important;line-height:1.15!important}
+  #buy .grid>.card .body>.tag{display:inline-flex!important;margin:3px 3px 0 0!important;font-size:9px!important;padding:2px 5px!important}
   #buy .grid>.card .body .card-extra,#buy .grid>.card .body .yard-line,#buy .grid>.card .body .card-reveal{display:block!important;margin-top:4px!important}
   #buy .grid>.card>.yard-badge{font-size:8px!important;padding:2px 4px!important}
   .featured-grid .card .body,.featured-grid>.card .body{padding:6px 7px!important;margin:0!important;gap:0!important}
@@ -631,45 +569,40 @@ body:has(#home[hidden]) #publicWhatsappFab{display:none!important}
 @media(max-width:600px){#publicWhatsappHero{width:52px!important;height:52px!important;min-width:52px!important}#publicWhatsappFab{width:54px!important;height:54px!important;min-width:54px!important}#publicWhatsappFab svg{width:38px!important;height:38px!important}}
 @media(prefers-reduced-motion:reduce){.glass-icon-btn{transition:none!important}}
 
-/* ===== Mobile Performance (<= 760px): Crisp Semi-Opaque Cards, Tiles & Buttons without Heavy Blur ===== */
+/* ===== Mobile Glass Consistency (<= 760px): Unified Frosted-Glass Cards, Hero, Tiles & Panels ===== */
 @media(max-width:760px){
-  html:not([data-theme="light"]) :is(.card,.dealer,.listing,.vehicle-card,.story-card,.journal-card,.journal-entry,
+  html:not([data-theme="light"]) :is(#home .hero,.card,.dealer,.listing,.vehicle-card,.story-card,.journal-card,.journal-entry,
   .project-card,.project-public-empty,.contact-card,.promotion-package,
   .stat,.panel,.garage-card,.service-card,.booking-card,
   .featured-panel,.dashboard-card,.contact-form,.filter-panel,.search-panel,
   .showroom-vehicle-note,#autoQuoteRail,.about-glass-card,.about-value-card,.contact-intro-card,
+  #home .tile,#home .tiles .tile,.tiles .tile,#home .journal-intro,#home .project-intro,
   #location .tile,#location .card,#location .panel,#location .location-card,#location .location-panel,
   #location .contact-card,#location .map-card,#location .location-content,#location .location-info,
-  #location .location-details,#location .location-cta,.journal-share-dialog):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){
-    -webkit-backdrop-filter:none!important;
-    backdrop-filter:none!important;
-    background:rgba(18,20,23,.90)!important;
-    background-color:rgba(18,20,23,.90)!important;
-  }
-  html:not([data-theme="light"]) :is(#home .tile,#home .tiles .tile,.tiles .tile,#home .journal-intro,#home .project-intro){
-    -webkit-backdrop-filter:blur(12px) saturate(125%)!important;
-    backdrop-filter:blur(12px) saturate(125%)!important;
-    background-color:rgba(18,20,24,.64)!important;
-    background-image:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.02))!important;
+  #location .location-details,#location .location-cta):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){
+    -webkit-backdrop-filter:blur(14px) saturate(135%)!important;
+    backdrop-filter:blur(14px) saturate(135%)!important;
+    background-color:rgba(20,22,26,.54)!important;
+    background-image:linear-gradient(135deg,rgba(255,255,255,.095),rgba(255,255,255,.02))!important;
     border-color:rgba(255,255,255,.20)!important;
+    box-shadow:0 12px 30px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.14)!important;
+  }
+  html:not([data-theme="light"]) .journal-share-dialog{
+    background:rgba(22,23,24,.96)!important;
   }
   html:not([data-theme="light"]) :is(button.ghost,.btn.ghost,.button.ghost,.btn.alt,.button.alt,.journal-entry .journal-read,
   .journal-entry .journal-share,.journal-share-actions button,.journal-share-actions a,
   .auto-quote-next,.yard-badge,.project-media-count,.account-card-save):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){
-    -webkit-backdrop-filter:none!important;
-    backdrop-filter:none!important;
-    background:rgba(26,28,32,.92)!important;
-    background-color:rgba(26,28,32,.92)!important;
-  }
-  html:not([data-theme="light"]) #home .hero{
-    -webkit-backdrop-filter:none!important;
-    backdrop-filter:none!important;
-    background-color:rgba(14,16,19,.74)!important;
+    -webkit-backdrop-filter:blur(10px) saturate(125%)!important;
+    backdrop-filter:blur(10px) saturate(125%)!important;
+    background-color:rgba(255,255,255,.085)!important;
+    background-image:none!important;
+    border-color:rgba(255,255,255,.22)!important;
   }
   html:not([data-theme="light"]) :is(input,select,textarea):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){
-    -webkit-backdrop-filter:none!important;
-    backdrop-filter:none!important;
-    background:rgba(20,22,25,.90)!important;
+    -webkit-backdrop-filter:blur(10px)!important;
+    backdrop-filter:blur(10px)!important;
+    background:rgba(18,20,24,.58)!important;
   }
 }
 
@@ -751,7 +684,7 @@ body:has(#home[hidden]) #publicWhatsappFab{display:none!important}
 }
 @media(max-width:600px){
   #home{
-    padding-bottom:24px;
+    padding-bottom:84px;
   }
   #home .tiles,
   .tiles{

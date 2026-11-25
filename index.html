@@ -239,11 +239,11 @@ form .btn{margin-top:10px}#sellForm>.btn,#bBtn{min-width:160px}
   nav:not(.account-sidebar) button,nav:not(.account-sidebar) a.navlink{color:#f3f0e8;text-shadow:0 1px 2px rgba(0,0,0,.45)}
   nav:not(.account-sidebar).is-open{opacity:1;visibility:visible;transform:translateY(0) scale(1)}
   nav:not(.account-sidebar) button,nav:not(.account-sidebar) a.navlink{width:100%;justify-content:flex-start;padding:12px 14px;min-height:44px}
-  nav:not(.account-sidebar) button::after,nav:not(.account-sidebar) a.navlink::after{left:auto;right:12px;bottom:50%;width:3px;height:20px;transform:translateY(50%) scaleY(0);transform-origin:center}
-  nav:not(.account-sidebar) button:hover::after,nav:not(.account-sidebar) a.navlink:hover::after{transform:translateY(50%) scaleY(1)}
+  nav:not(.account-sidebar) button:not(#accountOpen)::after,nav:not(.account-sidebar) a.navlink::after{left:auto;right:12px;bottom:50%;width:3px;height:20px;transform:translateY(50%) scaleY(0);transform-origin:center}
+  nav:not(.account-sidebar) button:not(#accountOpen):hover::after,nav:not(.account-sidebar) a.navlink:hover::after{transform:translateY(50%) scaleY(1)}
   nav:not(.account-sidebar) button[aria-selected="true"]::after{display:none}
 }
-@media(max-width:430px){.tiles{grid-template-columns:1fr}.hero>div[style*="display:flex"]{flex-direction:column}.hero>div[style*="display:flex"] .btn{width:100%}.account-pill span{display:none}.wrap{padding-left:16px;padding-right:16px}nav:not(.account-sidebar){right:16px;width:calc(100vw - 32px)}}
+@media(max-width:430px){.tiles{grid-template-columns:1fr}.hero>div[style*="display:flex"]{flex-direction:column}.hero>div[style*="display:flex"] .btn{width:100%}.account-pill span{display:none}.wrap{padding-left:16px;padding-right:16px}}
 
 .demo{background:#fff4cf;color:#4a3a00;text-align:center;padding:9px 16px;font-size:14px;font-weight:600}
 .acts{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
@@ -575,7 +575,7 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 </style>
 <style id="buy-card-photo-fit">#buy .card .swatch.has{background-size:cover!important;background-position:center!important;background-repeat:no-repeat!important;background-color:#17191c!important}</style>
 <style id="buy-card-no-image-zoom">#buy .card:hover .swatch,#buy .card:hover .swatch-photo{transform:none!important;filter:none!important}#buy .card:hover .swatch.has:before{transform:none!important}</style>
-<style id="buy-inventory-theme">#buy .card{background:linear-gradient(180deg,#17191c,#111214);border-color:rgba(255,255,255,.10)}#buy .card .swatch.has{height:230px;text-shadow:0 2px 8px rgba(0,0,0,.8)}@media(max-width:560px){#buy .card .swatch.has{height:190px!important}}/* Mobile inventory performance: defer off-screen card layout and reduce initial rendering work. */
+<style id="buy-inventory-theme">#buy .card .swatch.has{height:230px;text-shadow:0 2px 8px rgba(0,0,0,.8)}/* Mobile inventory performance: defer off-screen card layout and reduce initial rendering work. */
 @media(max-width:700px){#grid .card{content-visibility:auto;contain-intrinsic-size:auto 280px}#grid .swatch-photo{object-fit:cover}}
 </style>
 <style id="touch-no-zoom">
@@ -589,27 +589,10 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 </style>
 <style id="mobile-inventory-cards">
 @media(max-width:560px){
-  #buy{padding-bottom:100px}
-  #buy .grid{grid-template-columns:1fr;gap:12px}
-  #buy .card{display:flex;flex-direction:column;border-radius:14px}
-  #buy .card-main{flex:0 0 auto;height:auto;min-height:0;flex-direction:row;align-items:flex-start}
-  #buy .card .swatch{width:36%;flex:0 0 36%;height:190px!important;min-height:190px;align-self:flex-start;padding:8px;font-size:18px;background-size:contain!important;background-color:#17191c}
-  #buy .card .swatch.has:before{filter:blur(10px) brightness(.42)}
-  #buy .card .body{flex:1;min-width:0;padding:13px 12px}
-  #buy .card h3{white-space:normal;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden;font-size:17px;line-height:1.2}
-  #buy .card .price{font-size:18px;line-height:1.25;margin:6px 0 2px}
-  #buy .card .tag{font-size:10px;padding:2px 6px;margin:5px 3px 0 0}
-  #buy .card-extra{padding:8px 0 0!important;margin:8px 0 0!important;border-top:1px solid var(--line)}
-  #buy .card-extra .yard-line{margin:5px 0 0;padding:0;border:0;font-size:11px;white-space:normal}
-  #buy .card-reveal{max-height:none;opacity:1;margin-top:5px}
-  #buy .yard-logo{width:24px;height:24px;flex-basis:24px}
   .fab{right:12px;bottom:12px;padding:9px 12px;font-size:12px}
   .auth-left{left:12px;bottom:12px}
   .auth-left button{min-height:36px;padding:7px 9px;font-size:11px}
 }
-</style>
-<style id="mobile-menu-compact">
-@media(max-width:980px){header .wrap{position:relative}nav:not(.account-sidebar),nav:not(.account-sidebar).is-open{width:min(178px,calc(100vw - 24px))!important;max-width:calc(100vw - 24px)!important;right:10px!important;left:auto!important;max-height:min(60dvh,300px);overflow-x:hidden!important;overflow-y:auto!important;gap:1px!important;padding:5px!important}nav:not(.account-sidebar) button,nav:not(.account-sidebar) a.navlink{min-height:30px!important;padding:4px 9px!important;flex:0 0 auto!important;font-size:12px!important}}
 </style>
 <style id="vehicle-photo-controls">
 .gal{position:relative;touch-action:pan-y;overscroll-behavior-x:contain}.gal .main{touch-action:pan-y;user-select:none;-webkit-user-drag:none}.gal .vehicle-step{position:absolute;top:calc(50% - 24px);z-index:3;width:44px;height:54px;padding:0;border:1px solid rgba(255,255,255,.24);border-radius:10px;background:rgba(12,13,14,.72);color:#fff;font-size:32px;line-height:1;display:grid;place-items:center;cursor:pointer;backdrop-filter:blur(10px)}.gal .vehicle-prev{left:10px}.gal .vehicle-next{right:10px}.gal .vehicle-count{position:absolute;right:10px;top:10px;z-index:3;padding:5px 8px;border-radius:6px;background:rgba(12,13,14,.72);color:#fff;font-size:12px;font-weight:700}dialog:not(#accDlg):not(#accActionDlg):not(#sellerEditListingDialog){overscroll-behavior:contain;touch-action:pan-y}body{overscroll-behavior-x:none}
@@ -633,20 +616,9 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 <style id="mobile-header-and-gallery-fix">
 .journal-gallery img{object-fit:contain!important;background:#08090b}
 @media(max-width:600px){
-  header .wrap{grid-template-columns:minmax(0,1fr) 42px 42px!important;grid-template-areas:"brand account nav-toggle"!important;align-items:center!important;gap:8px!important;padding-top:max(8px,env(safe-area-inset-top))!important;padding-bottom:8px!important}
-  .logo{font-size:clamp(18px,5.5vw,23px)!important;line-height:1.12;max-width:100%!important;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .account-pill{grid-area:account!important;justify-self:end!important;margin:0!important;padding:2px!important}
-  .account-pill button,.nav-toggle{width:40px!important;height:40px!important;min-width:40px!important;align-self:center!important;justify-self:end!important}
-  .nav-toggle{grid-area:nav-toggle!important;display:inline-flex!important;margin:0!important}
-  nav:not(.account-sidebar){top:calc(100% + 6px)!important;right:10px!important;left:auto!important;width:min(178px,calc(100vw - 24px))!important;max-width:calc(100vw - 24px)!important;margin:0!important;padding:5px!important;gap:1px!important}
-  nav:not(.account-sidebar) button,nav:not(.account-sidebar) a.navlink{min-height:30px!important;padding:4px 9px!important;font-size:12px!important}
-  .hero{padding:26px 0 16px!important}
-  .hero h1{font-size:clamp(34px,9.5vw,42px)!important;line-height:1.06!important;max-width:16ch!important;letter-spacing:-.025em}
-  .hero p{font-size:15px!important;line-height:1.6!important;margin-top:12px!important}
   .journal-gallery{border-radius:10px!important}
   .journal-gallery img{width:100%!important;height:auto!important;aspect-ratio:16/9!important;max-height:min(52vh,420px)!important;object-fit:contain!important}
 }
-@media(max-width:380px){header .wrap{grid-template-columns:minmax(0,1fr) 38px 38px!important;gap:6px!important}.account-pill button,.nav-toggle{width:38px!important;height:38px!important;min-width:38px!important}.logo{font-size:18px!important}.hero h1{font-size:34px!important}}
 </style>
 
 <style id="mobile-compact-layout-performance">
@@ -658,9 +630,6 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
   .auto-quote-text{font-size:clamp(16px,4.5vw,18px)!important;line-height:1.28!important;margin:4px 0 8px!important}
   .auto-quote-author{font-size:12px!important}.auto-quote-source{font-size:10px!important}
   .auto-quote-footer{padding:7px 12px 9px!important}.auto-quote-next{min-height:36px;padding:6px 10px!important}
-  #home .hero{padding:22px 0 14px!important}
-  #home .hero h1{font-size:clamp(34px,9vw,42px)!important;line-height:1.06!important;max-width:18ch!important}
-  #home .hero p{font-size:14px!important;line-height:1.55!important}
   #journalGrid .journal-entry-media,#journalGrid .journal-entry-media img,#journalGrid .journal-entry-empty{height:clamp(145px,42vw,200px)!important;max-height:200px!important}
   #journalGrid .journal-entry .project-body{padding:14px!important}
   #journalGrid .journal-entry .project-body h2{font-size:clamp(20px,6vw,25px)!important;line-height:1.08!important;margin:5px 0 7px!important;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
@@ -668,24 +637,8 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
   #journalGrid .journal-entry .project-kicker{font-size:10px!important;margin-bottom:4px}
   #journalGrid .journal-entry .journal-meta{font-size:9px!important;line-height:1.4;gap:4px!important}
   #journalGrid .journal-entry .journal-read{min-height:38px!important;margin-top:10px!important;padding:8px 12px!important;font-size:12px!important}
-  .project-card,.journal-entry,.tile,.contact-card{box-shadow:0 5px 16px rgba(0,0,0,.18)!important}
 }
-@media(max-width:520px){.auto-quote-live{font-size:8px}.auto-quote-updated{font-size:9px}#home .hero{padding-top:18px!important}#home .hero h1{font-size:clamp(32px,8.5vw,38px)!important;max-width:17ch!important}.home-with-quote{margin-top:4px!important}}
-@media(hover:none) and (max-width:760px){header,.auto-quote-rail{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}.journal-entry-media img{transition:none!important}.project-card,.journal-entry,.tile,.contact-card{transition:none!important}}
-</style>
-
-<style id="mobile-nav-glass-compact-override">
-@media(max-width:600px){
-  #nav,#nav.is-open{top:calc(100% + 6px)!important;right:10px!important;left:auto!important;width:min(178px,calc(100vw - 24px))!important;max-width:min(178px,calc(100vw - 24px))!important;max-height:min(60dvh,300px)!important;padding:5px!important;gap:1px!important;overflow-x:hidden!important;overflow-y:auto!important;background:rgba(22,23,25,.56)!important;border:1px solid rgba(201,183,132,.38)!important;border-radius:12px!important;box-shadow:0 18px 44px rgba(0,0,0,.58),inset 0 1px 0 rgba(255,255,255,.09)!important;backdrop-filter:blur(24px) saturate(145%)!important;-webkit-backdrop-filter:blur(24px) saturate(145%)!important}
-  #nav button,#nav a.navlink{width:100%!important;min-height:30px!important;flex:0 0 auto!important;padding:4px 9px!important;font-size:12px!important;border:1px solid transparent!important;border-radius:7px!important;background:transparent!important;color:rgba(243,240,232,.84)!important;transition:background .2s ease,border-color .2s ease,color .2s ease,transform .2s ease,box-shadow .2s ease!important}
-  #nav button:hover,#nav button:focus-visible,#nav a.navlink:hover,#nav a.navlink:focus-visible{transform:translateX(2px);border-color:rgba(201,183,132,.42)!important;background:linear-gradient(110deg,rgba(198,178,127,.2),rgba(169,146,95,.11))!important;color:#f1d995!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.055),0 5px 14px rgba(0,0,0,.16)!important;outline:none}
-  #nav button[aria-selected="true"]{border-color:rgba(201,183,132,.55)!important;background:linear-gradient(110deg,#c6b27f,#a9925f)!important;color:#171717!important;box-shadow:0 5px 16px rgba(183,160,106,.2),inset 0 1px 0 rgba(255,255,255,.28)!important}
-}
-@media(prefers-reduced-motion:reduce){#nav button,#nav a.navlink{transition:none!important}}
-</style><style id="mobile-menu-stronger-translucency">
-@media(max-width:700px){
- #nav,#nav.is-open{background:rgba(22,23,25,.2)!important;backdrop-filter:blur(34px) saturate(175%)!important;-webkit-backdrop-filter:blur(34px) saturate(175%)!important}
-}
+@media(max-width:520px){.auto-quote-live{font-size:8px}.auto-quote-updated{font-size:9px}.home-with-quote{margin-top:4px!important}}
 </style><style id="mobile-auth-dialog-compact">
 @media(max-width:600px){
  #authDlg{box-sizing:border-box;width:min(440px,calc(100vw - 24px))!important;max-width:calc(100vw - 24px)!important;max-height:calc(100dvh - 16px)!important;margin:auto!important;overflow:hidden!important;border-radius:16px!important}
@@ -718,10 +671,10 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 <!-- Optional Meta Pixel is loaded by consent.js only after explicit acceptance. -->
 
 <link rel="stylesheet" href="/dashboard-glass.css?v=20261122-card-matched">
-<link rel="stylesheet" href="/index-theme.css?v=20261124-fix10">
+<link rel="stylesheet" href="/index-theme.css?v=20261124-fix18">
 <link rel="stylesheet" href="/account-panel.css?v=20261123-fix8">
-<link rel="stylesheet" href="/site-ux.css?v=20261123-fix19">
-<link rel="stylesheet" href="/header-modern.css?v=20261124-fix13">
+<link rel="stylesheet" href="/site-ux.css?v=20261124-fix19">
+<link rel="stylesheet" href="/header-modern.css?v=20261124-fix19">
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
@@ -736,7 +689,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="logo" style="cursor:pointer" onclick="window.location.assign('/')" role="button" tabindex="0" aria-label="Reload homepage" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.location.assign('/')}">3 Pedals Auto KE</div>
   <button class="nav-toggle" id="navToggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="nav"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
   <nav id="nav" aria-label="Main navigation">
-    <div class="account-pill" aria-label="Account"><span id="accountText">Not signed in</span><button id="accountOpen" aria-label="Open account" title="Account"></button></div>
+    <div class="account-pill" aria-label="Account"><span id="accountText">Not signed in</span><button id="accountOpen" data-ux-account-label="Account" aria-label="Open account" title="Account"></button></div>
     <button type="button" class="navlink" role="tab" data-tab="home" aria-selected="true" aria-label="Home">Home</button>
     <button type="button" class="navlink" role="tab" data-tab="about" aria-selected="false">About Us</button>
     <a class="navlink" href="/inventory.html">Inventory</a>
@@ -1236,7 +1189,7 @@ window.ThreePedalsAccountHost={
 </script>
 <script src="/account-listings-crud.js?v=20261122-perf"></script>
 <script src="/account-promotions.js?v=20261122-perf"></script>
-<script src="/account-workspace.js?v=20261122-perf"></script>
+<script src="/account-workspace.js?v=20261124-fix16"></script>
 <script>
 async function getProjectsAdmin(){
   const {data,error}=await sb.from("projects").select("*").order("created_at",{ascending:false});
@@ -1309,30 +1262,55 @@ function sellerTypeForListing(r){
   if(["private","private seller","individual"].includes(type))return "private";
   return [r?.yard_name,r?.yard_location,r?.yard_contact].some(v=>String(v||"").trim())?"yard":"private";
 }
-const rowToCar=(r,i)=>({id:r.id,make:String(r.make||"").trim(),model:String(r.model||"").trim(),year:r.year,price:r.price,km:r.km||0,fuel:r.fuel||"",desc:r.description||"",photos:r.photos||[],color:colors[i%colors.length],isPromoted:false,
-  seller:{type:sellerTypeForListing(r),name:r.yard_name||r.seller_name,contact:r.contact||r.yard_contact,location:r.yard_location||r.location,phone:r.seller_phone||r.phone,email:r.seller_email||r.email,web:r.web||r.yard_web,whatsapp:r.whatsapp,logo:r.yard_logo_url||r.seller_logo_url||""}});
-const HOME_LISTINGS_CACHE_KEY="3pedals:home-approved:v4";
-function readHomeListingsCache(){try{const legacy=HOME_LISTINGS_CACHE_KEY.replace(":v4",":v3");const raw=localStorage.getItem(HOME_LISTINGS_CACHE_KEY)||sessionStorage.getItem(HOME_LISTINGS_CACHE_KEY)||localStorage.getItem(legacy)||sessionStorage.getItem(legacy);const saved=JSON.parse(raw||"null");return saved&&Array.isArray(saved.rows)&&Date.now()-saved.at<10*60*1000?saved.rows:null}catch(_){return null}}
+const rowToCar=(r,i)=>{const st=String(r.status||"approved").trim();return {id:r.id,make:String(r.make||"").trim(),model:String(r.model||"").trim(),year:r.year,price:r.price,km:r.km||0,fuel:r.fuel||"",status:st,isSold:st.toLowerCase()==="sold",desc:r.description||"",photos:r.photos||[],color:colors[i%colors.length],isPromoted:false,
+  seller:{type:sellerTypeForListing(r),name:r.yard_name||r.seller_name,contact:r.contact||r.yard_contact,location:r.yard_location||r.location,phone:r.seller_phone||r.phone,email:r.seller_email||r.email,web:r.web||r.yard_web,whatsapp:r.whatsapp,logo:r.yard_logo_url||r.seller_logo_url||""}}};
+const HOME_LISTINGS_CACHE_KEY="3pedals:home-approved:v5";
+function readHomeListingsCache(){try{const legacy=HOME_LISTINGS_CACHE_KEY.replace(":v5",":v4");const raw=localStorage.getItem(HOME_LISTINGS_CACHE_KEY)||sessionStorage.getItem(HOME_LISTINGS_CACHE_KEY)||localStorage.getItem(legacy)||sessionStorage.getItem(legacy);const saved=JSON.parse(raw||"null");return saved&&Array.isArray(saved.rows)&&Date.now()-saved.at<10*60*1000?saved.rows:null}catch(_){return null}}
 function writeHomeListingsCache(rows){const value=JSON.stringify({at:Date.now(),rows});try{localStorage.setItem(HOME_LISTINGS_CACHE_KEY,value)}catch(_){}try{sessionStorage.setItem(HOME_LISTINGS_CACHE_KEY,value)}catch(_){/* Cache is optional; live inventory still works. */}}
 function applyHomeListings(rows){
-  cars=(rows||[]).map((row,i)=>({...rowToCar(row,i),isPromoted:false}));
+  const promoMap=new Map(cars.map(c=>[String(c.id),Boolean(c.isPromoted)]));
+  cars=(rows||[]).map((row,i)=>({...rowToCar(row,i),isPromoted:Boolean(promoMap.get(String(row.id)))}));
   makes();render();
+}
+let homeListingsChannel=null,homeLastRefreshAt=0;
+function subscribeHomeListingUpdates(){
+  if(!sb?.channel||homeListingsChannel)return;
+  homeListingsChannel=sb.channel("home-listings-live").on("postgres_changes",{event:"*",schema:"public",table:"listings"},payload=>{
+    const row=payload?.new||payload?.old;
+    if(!row?.id)return;
+    if(payload.eventType==="UPDATE"){
+      const nextStatus=String(row.status||"").trim().toLowerCase();
+      if(nextStatus==="sold"||nextStatus==="approved"){
+        const idx=cars.findIndex(c=>String(c.id)===String(row.id));
+        if(idx>=0){
+          cars[idx]={...rowToCar(row,idx),isPromoted:cars[idx].isPromoted};
+          render();
+          return;
+        }
+      }
+    }
+    loadListings();
+  }).subscribe();
+  document.addEventListener("visibilitychange",()=>{
+    if(document.visibilityState==="visible"&&Date.now()-homeLastRefreshAt>15000)loadListings();
+  });
 }
 async function loadListings(){
   if(!sb)return;
+  homeLastRefreshAt=Date.now();
   const cachedRows=readHomeListingsCache();
-  if(cachedRows)applyHomeListings(cachedRows);
-  let inventoryResult=await sb.from("listings").select("id,make,model,year,price,km,fuel,description,photos,whatsapp,seller_name,seller_phone,seller_email,yard_name,yard_location,status,created_at,seller_type,contact,yard_web,yard_logo_url").eq("status","approved").order("created_at",{ascending:false});
+  if(cachedRows&&!cars.length)applyHomeListings(cachedRows);
+  let inventoryResult=await sb.from("listings").select("id,make,model,year,price,km,fuel,description,photos,whatsapp,seller_name,seller_phone,seller_email,yard_name,yard_location,status,created_at,seller_type,contact,yard_web,yard_logo_url").in("status",["approved","sold","Sold"]).order("created_at",{ascending:false});
   if(inventoryResult.error){
     console.warn("Optimized inventory query failed; retrying with the full listing row.",inventoryResult.error);
-    inventoryResult=await sb.from("listings").select("*").eq("status","approved").order("created_at",{ascending:false});
+    inventoryResult=await sb.from("listings").select("*").in("status",["approved","sold","Sold"]).order("created_at",{ascending:false});
   }
   if(inventoryResult.error){
     if(!cachedRows)$("grid").innerHTML='<p class="meta">We could not load the cars right now. Please refresh in a moment.</p>';
     else console.warn("Inventory refresh failed; showing recently loaded cars.",inventoryResult.error);
     return;
   }
-  const rows=inventoryResult.data||[];writeHomeListingsCache(rows);applyHomeListings(rows);
+  const rows=inventoryResult.data||[];writeHomeListingsCache(rows);applyHomeListings(rows);subscribeHomeListingUpdates();
   sb.from("active_listing_promotions").select("listing_id").then(({data,error})=>{
     if(error){console.warn("Could not load promotion badges; inventory remains available.",error);return}
     const promoted=new Set((data||[]).map(x=>String(x.listing_id)));
@@ -1370,23 +1348,51 @@ function updateBuyFilters(){const mk=$("make").value,mf=$("model").value,cv=$("v
 function makes(){const m=[...new Set(cars.map(c=>canonicalMake(c.make)).filter(Boolean))].sort(),cur=$("make").value;$("make").innerHTML='<option value="">All makes</option>'+m.map(x=>`<option value="${esc(x)}">${esc(x==="Mercedes-Benz"?"Mercedes":x)}</option>`).join("");if(m.includes(cur))$("make").value=cur;else $("make").value="";updateBuyFilters()}
 const hasPh=c=>c.photos&&c.photos[0]?" has":"";
 const bgOf=c=>c.color||"#17191c";
+const HOME_HEART_SVG='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.6c-.3 0-.6-.1-.8-.3C6.1 16 3 12.9 3 8.9 3 6.1 5.1 4 7.9 4c1.6 0 3.1.8 4.1 2 1-1.2 2.5-2 4.1-2 2.8 0 4.9 2.1 4.9 4.9 0 4-3.1 7.1-8.2 11.4-.2.2-.5.3-.8.3z"/></svg>';
+const HOME_SHARE_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>';
 const cardMarkup=(c,i)=>{
   const isYard=c.seller&&c.seller.type==="yard",yardName=c.seller?.name||"Car yard",loc=c.seller?.location||"";
   const vehicleUrl=`vehicle.html?id=${encodeURIComponent(c.id)}`;
-  const saved=typeof isSavedVehicle==="function"?isSavedVehicle(c.id):false;
+  const sold=Boolean(c.isSold);
+  const saved=!sold&&typeof isSavedVehicle==="function"?isSavedVehicle(c.id):false;
   const yardUrl=`yard.html?name=${encodeURIComponent(yardName)}`;
-  return `<article class="card">
+  return `<article class="card${saved?" is-saved":""}${sold?" is-sold":""}">
     <div class="card-main" role="link" tabindex="0" data-href="${vehicleUrl}">
-      <div class="swatch${hasPh(c)}" style="background:${bgOf(c)}">${c.photos&&c.photos[0]?`<img class="swatch-photo" src="${esc(c.photos[0])}" alt="${esc(c.year+" "+c.make+" "+c.model)}" loading="${i===0?"eager":"lazy"}" decoding="async" fetchpriority="${i===0?"high":"low"}" sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 320px">`:""}<span class="swatch-year">${esc(c.year)}</span>${c.isPromoted?'<span class="promoted-tag">FEATURED</span>':""}</div>
+      <div class="swatch${hasPh(c)}" style="background:${bgOf(c)}">${c.photos&&c.photos[0]?`<img class="swatch-photo" src="${esc(c.photos[0])}" alt="${esc(c.year+" "+c.make+" "+c.model)}" loading="${i===0?"eager":"lazy"}" decoding="async" fetchpriority="${i===0?"high":"low"}" sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 320px">`:""}<span class="swatch-year">${esc(c.year)}</span>${c.isPromoted?'<span class="promoted-tag">FEATURED</span>':""}<button type="button" class="card-wishlist-btn${saved?" is-saved":""}" data-save-vehicle="${esc(c.id)}" aria-pressed="${String(saved)}" aria-label="${sold?"Vehicle sold":saved?"Remove from wishlist":"Add to wishlist"}" title="${sold?"Sold":saved?"Remove from wishlist":"Save to wishlist"}"${sold?' disabled aria-disabled="true"':""}>${HOME_HEART_SVG}</button>${sold?'<span class="sold-badge-overlay" aria-label="Sold">Sold</span>':""}</div>
       <div class="body"><h3><a href="${vehicleUrl}" style="color:inherit;text-decoration:none">${esc(c.year)} ${esc(c.make)} ${esc(c.model)}</a></h3>
       <div class="price">KES ${fmt(c.price)}</div>
       <span class="tag">${fmt(c.km)} km</span><span class="tag">${esc(c.fuel||"N/A")}</span><span class="tag">${isYard?"Car yard / dealer":"Private seller"}</span>
       ${isYard?`<div class="card-extra"><div class="yard-line">${c.seller.logo?`<img class="yard-logo" src="${esc(c.seller.logo)}" alt="${esc(yardName)} logo" loading="lazy">`:`<span aria-hidden="true">🏢</span>`}<a class="yard-link" href="${yardUrl}">${esc(yardName)}</a></div>${loc?`<div class="yard-line">📍 ${esc(loc)}</div>`:""}<div class="card-reveal"><a class="yard-link" href="${yardUrl}">View dealer profile</a></div></div>`:""}
       </div>
     </div>
-    <div class="account-card-save-wrap"><button type="button" class="account-card-save" data-save-vehicle="${esc(c.id)}" aria-pressed="${String(saved)}">${saved?"Saved ✓":"Save vehicle"}</button></div>
+    <div class="account-card-footer">
+      <button type="button" class="account-card-save" data-save-vehicle="${esc(c.id)}" aria-pressed="${String(saved)}"${sold?' disabled aria-disabled="true"':""}>${sold?"Sold":saved?"Saved ✓":"Save vehicle"}</button>
+      <button type="button" class="card-footer-share-btn" data-share-vehicle="${esc(c.id)}" aria-label="Share ${esc(c.year)} ${esc(c.make)} ${esc(c.model)}" title="Share vehicle">${HOME_SHARE_SVG}<span>Share</span></button>
+    </div>
   </article>`;
 };
+function copyHomeShareLink(url,title){
+  if(navigator.clipboard&&window.isSecureContext){
+    navigator.clipboard.writeText(url).then(()=>window.ThreePedalsAccountUI?.toast?.(`Share link copied for ${title}.`,"ok")).catch(()=>window.prompt("Copy vehicle link:",url));
+    return;
+  }
+  window.prompt("Copy vehicle link:",url);
+}
+function handleHomeShareVehicle(carId){
+  const c=cars.find(x=>String(x.id)===String(carId));
+  if(!c)return;
+  const shareUrl=`${location.origin}/vehicle.html?id=${encodeURIComponent(c.id)}`;
+  const title=`${c.year} ${c.make} ${c.model}`.trim();
+  const text=`${title} — KES ${fmt(c.price)} (${fmt(c.km)} km) on 3 Pedals Auto KE`;
+  if(typeof navigator.share==="function"){
+    navigator.share({title,text,url:shareUrl}).catch(err=>{
+      if(err&&err.name==="AbortError")return;
+      copyHomeShareLink(shareUrl,title);
+    });
+    return;
+  }
+  copyHomeShareLink(shareUrl,title);
+}
 function render(){
   const q=$("q").value.trim().toLowerCase(),mk=$("make").value,mf=$("model").value,vr=$("variant").value,mx=+$("max").value,s=$("sort").value;
   let r=cars.filter(c=>(!q||(c.make+" "+c.model).toLowerCase().includes(q))&&(!mk||canonicalMake(c.make)===mk)&&(!mf||familyFor(c.make,c.model)===mf)&&(!vr||variantFor(c.make,c.model)===vr)&&(!mx||c.price<=mx));
@@ -1394,7 +1400,7 @@ function render(){
   $("count").textContent=r.length+(r.length===1?" car":" cars")+" found";
   $("grid").innerHTML=r.length?r.map(cardMarkup).join(""):'<p class="meta">No cars match these filters. Clear the search or raise the price limit.</p>';
 }
-["grid","featuredGrid"].forEach(id=>{const el=$(id);if(!el)return;el.addEventListener("click",e=>{const save=e.target.closest("[data-save-vehicle]");if(save){e.preventDefault();e.stopPropagation();toggleSavedVehicle(save.dataset.saveVehicle,save);return}if(e.target.closest("a"))return;const card=e.target.closest(".card-main");if(card)location.href=card.dataset.href});el.addEventListener("keydown",e=>{if(e.target.closest("a,button"))return;const card=e.target.closest(".card-main");if(card&&(e.key==="Enter"||e.key===" ")){e.preventDefault();location.href=card.dataset.href}})});
+["grid","featuredGrid"].forEach(id=>{const el=$(id);if(!el)return;el.addEventListener("click",e=>{const share=e.target.closest("[data-share-vehicle]");if(share){e.preventDefault();e.stopPropagation();handleHomeShareVehicle(share.dataset.shareVehicle);return}const save=e.target.closest("[data-save-vehicle]");if(save){e.preventDefault();e.stopPropagation();if(save.disabled||save.getAttribute("aria-disabled")==="true"||save.closest(".card.is-sold"))return;toggleSavedVehicle(save.dataset.saveVehicle,save);return}if(e.target.closest("a"))return;const card=e.target.closest(".card-main");if(card)location.href=card.dataset.href});el.addEventListener("keydown",e=>{if(e.target.closest("a,button"))return;const card=e.target.closest(".card-main");if(card&&(e.key==="Enter"||e.key===" ")){e.preventDefault();location.href=card.dataset.href}})});
 ["q","max","sort"].forEach(i=>$(i).addEventListener("input",render));
 $("make").addEventListener("change",()=>{updateBuyFilters();render()});
 $("model").addEventListener("change",()=>{updateBuyFilters();render()});
@@ -1429,7 +1435,7 @@ Vehicle link: ${inventoryUrl}`;
   const gal=ph.length?`<div class="gal"><img class="main" id="mainImg" src="${ph[0]}" alt="${esc(c.make+" "+c.model)} photo 1" fetchpriority="high" decoding="async">${ph.length>1?`<div class="thumbs">${ph.map((p,i)=>`<button data-i="${i}" aria-label="Photo ${i+1}" aria-current="${i===0}"><img src="${p}" alt="" loading="lazy" decoding="async"></button>`).join("")}</div>`:""}</div>`
     :`<div class="swatch" style="background:${c.color}">${c.year}</div>`;
   d.innerHTML=`${gal}<div class="in">
-  <h2>${esc(c.make)} ${esc(c.model)} <span class="meta">${c.year}</span></h2><div class="price">KES ${fmt(c.price)}</div>
+  <h2>${esc(c.make)} ${esc(c.model)} <span class="meta">${c.year}</span>${c.isSold?' <span class="st sold-status-pill">Sold</span>':""}</h2><div class="price">KES ${fmt(c.price)}</div>
   <div class="specs">${rows.map(r=>`<div class="spec-row"><span>${r[0]}:</span><b>${r[1]}</b></div>`).join("")}</div>
   <p>${esc(c.desc||"")}</p>
   <p class="meta">Stay safe: view the car in person, check the logbook, and never pay before you have inspected it.</p>
@@ -1935,6 +1941,6 @@ loadSiteSettings();
   }
 })();
 </script>
-<script defer src="/site-ux.js?v=20261124-fix14"></script>
+<script defer src="/site-ux.js?v=20261124-fix19"></script>
 </body>
 </html>

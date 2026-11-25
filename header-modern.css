@@ -890,7 +890,7 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     overflow-y: visible !important;
     scroll-snap-type: none !important;
     overscroll-behavior-y: auto !important;
-    padding-top: calc(70px + env(safe-area-inset-top, 0px)) !important;
+    padding-top: calc(80px + env(safe-area-inset-top, 0px)) !important;
   }
 
   html[data-ux="1"][data-theme][lang] body:not(:has(#app)) > main.wrap,
@@ -906,9 +906,9 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
   }
 
   html[data-ux="1"][data-theme][lang] body:not(:has(#app)) #home .hero {
-    margin-top: 4px !important;
+    margin-top: 6px !important;
     margin-bottom: 18px !important;
-    padding: 28px 18px 24px !important;
+    padding: 24px 18px 22px !important;
   }
 
   html[data-ux="1"][data-theme][lang] body > header,
@@ -928,8 +928,8 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     padding: 0 !important;
     border-radius: 16px !important;
     border: 1px solid rgba(255, 255, 255, 0.24) !important;
-    background: rgba(24, 27, 32, 0.28) !important;
-    background-color: rgba(24, 27, 32, 0.28) !important;
+    background: rgba(24, 27, 32, 0.34) !important;
+    background-color: rgba(24, 27, 32, 0.34) !important;
     background-image: linear-gradient(
       135deg,
       rgba(255, 255, 255, 0.16),
@@ -1045,77 +1045,78 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     background: rgba(255, 255, 255, 0.12) !important;
   }
 
-  /* Modern Classic Frosted Floating Menu Panel (zero bleed-through, compact spacing, aligned under header) */
-  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links),
+  /* Compact Modern Classic Floating Menu Popover (right-aligned beneath toggle, zero bleed-through) */
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav#chauffeurNav, nav.ux-subnav-links),
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links {
     display: none !important;
     box-sizing: border-box !important;
     position: absolute !important;
     top: calc(100% + 8px) !important;
-    right: 0 !important;
     left: auto !important;
+    right: -1px !important;
     bottom: auto !important;
     z-index: 1250 !important;
     flex-direction: column !important;
     align-items: stretch !important;
     justify-content: flex-start !important;
     flex-wrap: nowrap !important;
-    width: min(384px, 100%) !important;
-    max-width: calc(100vw - 24px) !important;
-    max-height: min(78dvh, 480px) !important;
+    width: 260px !important;
+    max-width: 85vw !important;
+    max-height: min(74dvh, 420px) !important;
+    margin: 0 !important;
     overflow-x: hidden !important;
     overflow-y: auto !important;
-    padding: 10px 12px !important;
-    gap: 4px !important;
-    border-radius: 14px !important;
-    border: 1px solid rgba(229, 185, 111, 0.28) !important;
-    background: rgba(14, 14, 17, 0.96) !important;
-    background-color: rgba(14, 14, 17, 0.96) !important;
+    padding: 8px 10px 10px !important;
+    gap: 2px !important;
+    border-radius: 16px !important;
+    border: 1px solid rgba(229, 185, 111, 0.30) !important;
+    background: #0e0e11 !important;
+    background-color: rgba(14, 14, 17, 0.99) !important;
     background-image: linear-gradient(
       165deg,
-      rgba(255, 255, 255, 0.045),
-      rgba(14, 14, 17, 0.98) 54%,
-      rgba(229, 185, 111, 0.035)
+      rgba(26, 26, 31, 0.985),
+      rgba(14, 14, 17, 0.995) 54%,
+      rgba(24, 21, 16, 0.99)
     ) !important;
     box-shadow:
-      0 25px 50px -12px rgba(0, 0, 0, 0.78),
-      0 0 0 1px rgba(255, 255, 255, 0.07),
+      0 24px 50px -10px rgba(0, 0, 0, 0.85),
+      0 0 0 1px rgba(255, 255, 255, 0.08),
       inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
-    -webkit-backdrop-filter: blur(24px) saturate(145%) !important;
-    backdrop-filter: blur(24px) saturate(145%) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(140%) !important;
+    backdrop-filter: blur(22px) saturate(140%) !important;
     opacity: 1 !important;
     visibility: visible !important;
     transform-origin: top right !important;
     transform: none !important;
   }
 
-  html[data-ux="1"][data-theme="light"][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links),
+  html[data-ux="1"][data-theme="light"][lang] body > header :is(nav#nav, nav#garageSectionNav, nav#chauffeurNav, nav.ux-subnav-links),
   html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top nav.ux-subnav-links {
-    background: rgba(253, 250, 243, 0.98) !important;
-    background-color: rgba(253, 250, 243, 0.98) !important;
-    background-image: linear-gradient(165deg, rgba(255, 255, 255, 0.92), rgba(246, 240, 227, 0.97)) !important;
-    border-color: rgba(138, 114, 62, 0.34) !important;
+    background: #fdfaf3 !important;
+    background-color: rgba(253, 250, 243, 0.99) !important;
+    background-image: linear-gradient(165deg, rgba(255, 255, 255, 0.99), rgba(246, 240, 227, 0.99)) !important;
+    border-color: rgba(138, 114, 62, 0.36) !important;
     box-shadow:
-      0 25px 50px -12px rgba(48, 38, 18, 0.28),
-      inset 0 1px 0 rgba(255, 255, 255, 0.96) !important;
+      0 24px 50px -10px rgba(48, 38, 18, 0.32),
+      inset 0 1px 0 rgba(255, 255, 255, 0.98) !important;
   }
 
-  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav.is-open, nav#nav.mobile-menu-open, nav#garageSectionNav.is-open, nav.ux-subnav-links.is-open),
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav.is-open, nav#nav.mobile-menu-open, nav#garageSectionNav.is-open, nav#chauffeurNav.is-open, nav.ux-subnav-links.is-open),
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links.is-open {
     display: flex !important;
     animation: uxDrawerIn 0.18s cubic-bezier(0.16, 1, 0.3, 1) both !important;
   }
 
-  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) > :is(button, a.navlink, a.ux-subnav-link),
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav#chauffeurNav, nav.ux-subnav-links) > :is(button, a.navlink, a.ux-subnav-link),
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links > a.ux-subnav-link {
     width: 100% !important;
     height: auto !important;
-    min-height: 36px !important;
+    min-height: 30px !important;
     justify-content: flex-start !important;
     margin: 0 !important;
-    padding: 8px 12px !important;
+    padding: 6px 12px !important;
     border: 1px solid transparent !important;
-    border-radius: 8px !important;
+    border-radius: 9px !important;
     background: transparent !important;
     background-color: transparent !important;
     background-image: none !important;
@@ -1124,20 +1125,20 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     backdrop-filter: none !important;
     text-shadow: none !important;
     color: #f4f0e8 !important;
-    font-size: 14px !important;
-    line-height: 1.25 !important;
+    font-size: 13.5px !important;
+    line-height: 1.2 !important;
     font-weight: 500 !important;
     letter-spacing: 0.015em !important;
     transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease !important;
   }
 
-  html[data-ux="1"][data-theme="light"][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) > :is(button, a.navlink, a.ux-subnav-link),
+  html[data-ux="1"][data-theme="light"][lang] body > header :is(nav#nav, nav#garageSectionNav, nav#chauffeurNav, nav.ux-subnav-links) > :is(button, a.navlink, a.ux-subnav-link),
   html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top nav.ux-subnav-links > a.ux-subnav-link {
     color: #171512 !important;
   }
 
-  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) > :is(button, a.navlink, a.ux-subnav-link):hover,
-  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) > :is(button, a.navlink, a.ux-subnav-link):focus-visible,
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav#chauffeurNav, nav.ux-subnav-links) > :is(button, a.navlink, a.ux-subnav-link):hover,
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav#chauffeurNav, nav.ux-subnav-links) > :is(button, a.navlink, a.ux-subnav-link):focus-visible,
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links > a.ux-subnav-link:hover,
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links > a.ux-subnav-link:focus-visible {
     background: rgba(255, 255, 255, 0.06) !important;
@@ -1146,8 +1147,8 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     transform: none !important;
   }
 
-  html[data-ux="1"][data-theme="light"][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) > :is(button, a.navlink, a.ux-subnav-link):hover,
-  html[data-ux="1"][data-theme="light"][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) > :is(button, a.navlink, a.ux-subnav-link):focus-visible,
+  html[data-ux="1"][data-theme="light"][lang] body > header :is(nav#nav, nav#garageSectionNav, nav#chauffeurNav, nav.ux-subnav-links) > :is(button, a.navlink, a.ux-subnav-link):hover,
+  html[data-ux="1"][data-theme="light"][lang] body > header :is(nav#nav, nav#garageSectionNav, nav#chauffeurNav, nav.ux-subnav-links) > :is(button, a.navlink, a.ux-subnav-link):focus-visible,
   html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top nav.ux-subnav-links > a.ux-subnav-link:hover,
   html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top nav.ux-subnav-links > a.ux-subnav-link:focus-visible {
     background: rgba(158, 116, 21, 0.09) !important;
@@ -1155,16 +1156,16 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     color: #171512 !important;
   }
 
-  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) > :is(button[aria-selected="true"], a[aria-current="page"]),
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav#chauffeurNav, nav.ux-subnav-links) > :is(button[aria-selected="true"], a[aria-current="page"]),
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links > a[aria-current="page"] {
-    background: rgba(229, 185, 111, 0.15) !important;
-    background-color: rgba(229, 185, 111, 0.15) !important;
-    border-color: rgba(229, 185, 111, 0.30) !important;
+    background: rgba(229, 185, 111, 0.16) !important;
+    background-color: rgba(229, 185, 111, 0.16) !important;
+    border-color: rgba(229, 185, 111, 0.34) !important;
     color: #E5B96F !important;
     font-weight: 600 !important;
   }
 
-  html[data-ux="1"][data-theme="light"][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) > :is(button[aria-selected="true"], a[aria-current="page"]),
+  html[data-ux="1"][data-theme="light"][lang] body > header :is(nav#nav, nav#garageSectionNav, nav#chauffeurNav, nav.ux-subnav-links) > :is(button[aria-selected="true"], a[aria-current="page"]),
   html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top nav.ux-subnav-links > a[aria-current="page"] {
     background: rgba(158, 116, 21, 0.14) !important;
     background-color: rgba(158, 116, 21, 0.14) !important;
@@ -1172,42 +1173,23 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     color: #7c5609 !important;
   }
 
-  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) > :is(button, a.navlink, a.ux-subnav-link)::after,
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav#chauffeurNav, nav.ux-subnav-links) > :is(button, a.navlink, a.ux-subnav-link)::after,
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links > a.ux-subnav-link::after {
     display: none !important;
   }
 
-  /* Unified Sleek Utility Footer Row inside Mobile Menu: [Account] + [Light/Dark] + [EN | SW] */
-  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) .ux-drawer-controls,
-  html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links .ux-drawer-controls {
-    order: 2 !important;
+  /* Account button placed directly below Contact Us inside Mobile Popover */
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav) > .account-pill {
+    order: 1 !important;
     display: flex !important;
     align-items: center !important;
-    justify-content: space-between !important;
-    flex-wrap: wrap !important;
-    gap: 8px !important;
+    justify-content: flex-start !important;
     width: 100% !important;
-    box-sizing: border-box !important;
-    margin-top: 6px !important;
-    padding: 10px 2px 2px !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.10) !important;
-  }
-
-  html[data-ux="1"][data-theme="light"][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) .ux-drawer-controls,
-  html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top nav.ux-subnav-links .ux-drawer-controls {
-    border-top-color: rgba(138, 114, 62, 0.22) !important;
-  }
-
-  html[data-ux="1"][data-theme][lang] body > header .ux-drawer-controls > .account-pill {
-    order: 0 !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    width: auto !important;
     min-width: 0 !important;
     min-height: 0 !important;
     max-width: none !important;
     flex: 0 0 auto !important;
-    margin: 0 !important;
+    margin: 2px 0 0 !important;
     padding: 0 !important;
     border: 0 !important;
     border-radius: 0 !important;
@@ -1218,86 +1200,173 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     backdrop-filter: none !important;
   }
 
-  html[data-ux="1"][data-theme][lang] body > header .ux-drawer-controls > .account-pill > span {
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav) > .account-pill > span {
     display: none !important;
   }
 
-  html[data-ux="1"][data-theme][lang] body > header .ux-drawer-controls > .account-pill > #accountOpen {
-    display: inline-flex !important;
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav) > .account-pill > #accountOpen {
+    display: flex !important;
     align-items: center !important;
-    justify-content: center !important;
-    flex: 0 0 auto !important;
-    width: auto !important;
+    justify-content: flex-start !important;
+    flex: 1 1 auto !important;
+    width: 100% !important;
     min-width: 0 !important;
     max-width: none !important;
-    height: 32px !important;
+    height: auto !important;
     min-height: 32px !important;
     margin: 0 !important;
-    padding: 0 10px !important;
-    gap: 6px !important;
-    border-radius: 8px !important;
-    font-size: 11.5px !important;
-    font-weight: 600 !important;
-    line-height: 1 !important;
+    padding: 6px 12px !important;
+    gap: 8px !important;
+    border-radius: 9px !important;
+    border: 1px solid rgba(229, 185, 111, 0.24) !important;
+    background: rgba(229, 185, 111, 0.08) !important;
+    background-color: rgba(229, 185, 111, 0.08) !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    color: #f3d792 !important;
+    font-size: 13.5px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.015em !important;
+    line-height: 1.2 !important;
     white-space: nowrap !important;
   }
 
-  html[data-ux="1"][data-theme][lang] body > header .ux-drawer-controls > .account-pill > #accountOpen::before {
-    flex: 0 0 14px !important;
-    width: 14px !important;
-    height: 14px !important;
+  html[data-ux="1"][data-theme="light"][lang] body > header :is(nav#nav, nav#garageSectionNav) > .account-pill > #accountOpen {
+    border-color: rgba(138, 114, 62, 0.28) !important;
+    background: rgba(158, 116, 21, 0.08) !important;
+    background-color: rgba(158, 116, 21, 0.08) !important;
+    color: #7c5609 !important;
   }
 
-  html[data-ux="1"][data-theme][lang] body > header .ux-drawer-controls > .account-pill > #accountOpen::after {
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav) > .account-pill > #accountOpen:hover,
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav) > .account-pill > #accountOpen:focus-visible {
+    background: rgba(229, 185, 111, 0.16) !important;
+    background-color: rgba(229, 185, 111, 0.16) !important;
+    border-color: rgba(229, 185, 111, 0.42) !important;
+    color: #E5B96F !important;
+    transform: none !important;
+  }
+
+  html[data-ux="1"][data-theme="light"][lang] body > header :is(nav#nav, nav#garageSectionNav) > .account-pill > #accountOpen:hover,
+  html[data-ux="1"][data-theme="light"][lang] body > header :is(nav#nav, nav#garageSectionNav) > .account-pill > #accountOpen:focus-visible {
+    background: rgba(158, 116, 21, 0.14) !important;
+    background-color: rgba(158, 116, 21, 0.14) !important;
+    border-color: rgba(158, 116, 21, 0.40) !important;
+    color: #5b3e05 !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav) > .account-pill > #accountOpen::before {
+    flex: 0 0 15px !important;
+    width: 15px !important;
+    height: 15px !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav) > .account-pill > #accountOpen::after {
     content: attr(data-ux-account-label) !important;
-    display: inline !important;
+    display: inline-block !important;
+    position: static !important;
+    inset: auto !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: none !important;
+    box-shadow: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    color: currentColor !important;
+    -webkit-text-fill-color: currentColor !important;
+    font: inherit !important;
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
   }
 
-  html[data-ux="1"][data-theme][lang] body > header .ux-drawer-controls .ux-controls {
-    order: 1 !important;
-    display: inline-flex !important;
+  /* Unified Compact Single-Row Utility Footer below Divider: [Light/Dark] + [EN | SW] */
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav#chauffeurNav, nav.ux-subnav-links) .ux-drawer-controls,
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links .ux-drawer-controls {
+    order: 2 !important;
+    display: flex !important;
     align-items: center !important;
-    justify-content: flex-end !important;
-    width: auto !important;
+    justify-content: space-between !important;
+    flex-wrap: nowrap !important;
+    gap: 6px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    margin-top: 8px !important;
+    padding: 10px 0 2px !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.10) !important;
+  }
+
+  html[data-ux="1"][data-theme="light"][lang] body > header :is(nav#nav, nav#garageSectionNav, nav#chauffeurNav, nav.ux-subnav-links) .ux-drawer-controls,
+  html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top nav.ux-subnav-links .ux-drawer-controls {
+    border-top-color: rgba(138, 114, 62, 0.22) !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav#chauffeurNav, nav.ux-subnav-links) .ux-drawer-controls .ux-controls,
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links .ux-drawer-controls .ux-controls {
+    order: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    flex-wrap: nowrap !important;
+    width: 100% !important;
     min-width: 0 !important;
-    flex: 0 1 auto !important;
-    margin-left: auto !important;
+    flex: 1 1 auto !important;
+    margin-left: 0 !important;
     gap: 6px !important;
   }
 
-  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) .ux-drawer-controls .ux-theme-btn {
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav#chauffeurNav, nav.ux-subnav-links) .ux-drawer-controls .ux-theme-btn,
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links .ux-drawer-controls .ux-theme-btn {
     width: auto !important;
     flex: 0 0 auto !important;
     min-width: 0 !important;
-    padding: 0 9px !important;
-    height: 32px !important;
-    min-height: 32px !important;
+    padding: 0 10px !important;
+    gap: 5px !important;
+    height: 30px !important;
+    min-height: 30px !important;
     font-size: 11.5px !important;
     border-radius: 8px !important;
     justify-content: center !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header .ux-drawer-controls .ux-theme-btn svg {
+    width: 12px !important;
+    height: 12px !important;
+    flex: 0 0 12px !important;
   }
 
   html[data-ux="1"][data-theme][lang] body > header .ux-drawer-controls .ux-theme-btn .ux-theme-text {
     display: inline !important;
   }
 
-  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) .ux-drawer-controls .ux-lang-switch {
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav#chauffeurNav, nav.ux-subnav-links) .ux-drawer-controls .ux-lang-switch,
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links .ux-drawer-controls .ux-lang-switch {
     display: inline-flex !important;
     width: auto !important;
     flex: 0 0 auto !important;
-    height: 32px !important;
-    min-height: 32px !important;
+    height: 30px !important;
+    min-height: 30px !important;
     padding: 2px !important;
+    gap: 2px !important;
     border-radius: 8px !important;
   }
 
-  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav.ux-subnav-links) .ux-drawer-controls .ux-lang-switch button {
+  html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav#chauffeurNav, nav.ux-subnav-links) .ux-drawer-controls .ux-lang-switch button,
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top nav.ux-subnav-links .ux-drawer-controls .ux-lang-switch button {
     width: auto !important;
     flex: 0 0 auto !important;
-    min-width: 28px !important;
-    height: 26px !important;
-    min-height: 26px !important;
-    padding: 0 8px !important;
+    min-width: 26px !important;
+    height: 24px !important;
+    min-height: 24px !important;
+    padding: 0 7px !important;
     font-size: 11px !important;
     justify-content: center !important;
     border-radius: 6px !important;
@@ -1316,7 +1385,7 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
 @keyframes uxDrawerIn {
   from {
     opacity: 0;
-    transform: translateY(-8px) scale(0.985);
+    transform: translateY(-8px) scale(0.975);
   }
   to {
     opacity: 1;

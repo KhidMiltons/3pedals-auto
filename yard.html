@@ -666,8 +666,8 @@ html body h1,html body h2,html body h3,html body .logo,html body .brand{font-fam
 html body > header .logo,html body > header .brand{font-family:"Playfair Display",Georgia,serif!important;font-size:27px!important;font-weight:700!important;letter-spacing:.03em!important;text-transform:uppercase!important}
 html body > header nav a,html body > header nav button,html body > header .headnav a,html body > header .headnav button,html body > header .back{font-family:Manrope,system-ui,sans-serif!important;font-size:14px!important;font-weight:400!important;letter-spacing:0!important}
 </style>
-<link rel="stylesheet" href="/site-ux.css?v=20261123-fix12">
-<link rel="stylesheet" href="/header-modern.css?v=20261123-fix12">
+<link rel="stylesheet" href="/site-ux.css?v=20261124-fix19">
+<link rel="stylesheet" href="/header-modern.css?v=20261124-fix19">
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
@@ -697,56 +697,291 @@ function yardType(r){
 }
 function yardNameFor(r){return String(r?.yard_name||r?.seller_name||'').trim()}
 function normalizeYardName(name){return String(name||'').trim().replace(/\s+(?:ke|kenya)$/i,'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'')}
+const YARD_CACHE_KEY='3pedals:yard-approved:v4';
+const YARD_GUEST_SAVED_KEY='3pedals:guest-saved-vehicles:v1';
+const YARD_HEART_SVG='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.6c-.3 0-.6-.1-.8-.3C6.1 16 3 12.9 3 8.9 3 6.1 5.1 4 7.9 4c1.6 0 3.1.8 4.1 2 1-1.2 2.5-2 4.1-2 2.8 0 4.9 2.1 4.9 4.9 0 4-3.1 7.1-8.2 11.4-.2.2-.5.3-.8.3z"/></svg>';
+const YARD_SHARE_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>';
+let yardAllRows=[];
+let yardActiveRows=[];
+let yardSavedIds=new Set();
+let yardSessionUserId=null;
+function readGuestSavedYardIds(){
+  try{
+    const raw=JSON.parse(localStorage.getItem(YARD_GUEST_SAVED_KEY)||'[]');
+    return Array.isArray(raw)?raw.map(x=>String(x)):[];
+  }catch(_){return []}
+}
+function writeGuestSavedYardIds(ids){
+  try{localStorage.setItem(YARD_GUEST_SAVED_KEY,JSON.stringify([...ids]))}catch(_){}
+}
+function showYardNotice(message){
+  let toast=document.getElementById('yardActionToast');
+  if(!toast){
+    toast=document.createElement('div');
+    toast.id='yardActionToast';
+    toast.setAttribute('role','status');
+    toast.setAttribute('aria-live','polite');
+    toast.style.cssText='position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(14px);z-index:2600;padding:10px 16px;border-radius:999px;border:1px solid rgba(229,185,111,.48);background:rgba(15,17,22,.94);color:#f5f0e6;font:600 13px/1.35 Manrope,system-ui,sans-serif;box-shadow:0 16px 36px rgba(0,0,0,.44);opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease;max-width:min(92vw,420px);text-align:center;';
+    document.body.appendChild(toast);
+  }
+  toast.textContent=message;
+  toast.style.opacity='1';
+  toast.style.transform='translateX(-50%) translateY(0)';
+  clearTimeout(toast._hideTimer);
+  toast._hideTimer=setTimeout(()=>{
+    toast.style.opacity='0';
+    toast.style.transform='translateX(-50%) translateY(14px)';
+  },2600);
+}
+async function loadYardSavedVehicles(){
+  yardSavedIds=new Set(readGuestSavedYardIds());
+  if(!sb)return;
+  try{
+    const {data}=await sb.auth.getSession();
+    const user=data?.session?.user||null;
+    yardSessionUserId=user?.id||null;
+    if(!yardSessionUserId)return;
+    const {data:rows,error}=await sb.from('saved_vehicles').select('listing_id').eq('user_id',yardSessionUserId);
+    if(!error&&Array.isArray(rows)){
+      rows.forEach(item=>{if(item?.listing_id)yardSavedIds.add(String(item.listing_id))});
+    }
+  }catch(_){}
+}
+function syncYardSavedUI(vehicleId){
+  const grid=document.getElementById('grid');
+  if(!grid)return;
+  const targets=vehicleId?[...grid.querySelectorAll(`[data-yard-save="${CSS.escape(String(vehicleId))}"]`)]:[...grid.querySelectorAll('[data-yard-save]')];
+  targets.forEach(btn=>{
+    const id=String(btn.dataset.yardSave||'');
+    const card=btn.closest('[data-yard-car]');
+    const isSold=card?.dataset?.sold==='1'||card?.classList?.contains('is-sold');
+    const saved=!isSold&&yardSavedIds.has(id);
+    btn.classList.toggle('is-saved',saved);
+    btn.setAttribute('aria-pressed',String(saved));
+    btn.setAttribute('aria-label',isSold?'Vehicle sold':(saved?'Remove from wishlist':'Save to wishlist'));
+    btn.setAttribute('title',isSold?'Sold':(saved?'Remove from wishlist':'Save to wishlist'));
+    btn.disabled=Boolean(isSold);
+    if(isSold)btn.setAttribute('aria-disabled','true');else btn.removeAttribute('aria-disabled');
+    if(card)card.classList.toggle('is-saved',saved);
+  });
+}
+async function toggleYardSavedVehicle(vehicleId){
+  const id=String(vehicleId||'');
+  if(!id)return;
+  const row=yardActiveRows.find(item=>String(item.id)===id);
+  const isSold=String(row?.status||'').trim().toLowerCase()==='sold';
+  if(isSold){
+    showYardNotice('This vehicle has been marked as sold.');
+    return;
+  }
+  const currentlySaved=yardSavedIds.has(id);
+  if(sb&&yardSessionUserId){
+    if(!currentlySaved){
+      try{
+        const {data:latest}=await sb.from('listings').select('status').eq('id',id).maybeSingle();
+        if(String(latest?.status||'').trim().toLowerCase()==='sold'){
+          if(row)row.status=latest.status;
+          renderYardCards();
+          showYardNotice('This vehicle was just marked as sold.');
+          return;
+        }
+      }catch(_){}
+    }
+    const result=currentlySaved
+      ?await sb.from('saved_vehicles').delete().eq('user_id',yardSessionUserId).eq('listing_id',id)
+      :await sb.from('saved_vehicles').insert({user_id:yardSessionUserId,listing_id:id});
+    if(result?.error){
+      showYardNotice(result.error.message||'Could not update your saved vehicles.');
+      return;
+    }
+  }
+  if(currentlySaved)yardSavedIds.delete(id);else yardSavedIds.add(id);
+  writeGuestSavedYardIds(yardSavedIds);
+  syncYardSavedUI(id);
+  showYardNotice(currentlySaved?'Removed from your saved vehicles.':'Added to your saved vehicles.');
+}
+function handleYardVehicleShare(vehicleId){
+  const r=yardActiveRows.find(item=>String(item.id)===String(vehicleId));
+  if(!r)return;
+  const title=`${r.year||''} ${r.make||''} ${r.model||''}`.replace(/\s+/g,' ').trim()||'Vehicle';
+  const shareUrl=`${location.origin}/vehicle.html?id=${encodeURIComponent(r.id)}`;
+  const text=`${title} — KES ${fmt(r.price)} (${fmt(r.km)} km) on 3 Pedals Auto KE`;
+  if(typeof navigator.share==='function'){
+    navigator.share({title,text,url:shareUrl}).catch(err=>{
+      if(err&&err.name==='AbortError')return;
+      if(navigator.clipboard&&window.isSecureContext){
+        navigator.clipboard.writeText(shareUrl).then(()=>showYardNotice(`Share link copied for ${title}.`)).catch(()=>showYardNotice('Copy URL: '+shareUrl));
+      }else{
+        showYardNotice('Share URL: '+shareUrl);
+      }
+    });
+    return;
+  }
+  if(navigator.clipboard&&window.isSecureContext){
+    navigator.clipboard.writeText(shareUrl).then(()=>showYardNotice(`Share link copied for ${title}.`)).catch(()=>showYardNotice('Copy URL: '+shareUrl));
+  }else{
+    showYardNotice('Share URL: '+shareUrl);
+  }
+}
+function filterYardRowsForProfile(rows){
+  const key=normalizeYardName(wanted),slugKey=String(wantedSlug||'').toLowerCase(),dealerKey=normalizeYardName(wantedDealer);
+  return (rows||[]).filter(r=>yardType(r)==='yard'&&(wantedDealer?(normalizeYardName(yardNameFor(r))===dealerKey||String(r.seller_slug||'').toLowerCase()===slugKey):wantedSlug?(String(r.seller_slug||'').toLowerCase()===slugKey||(!r.seller_slug&&normalizeYardName(yardNameFor(r))===normalizeYardName(wantedSlug))):normalizeYardName(yardNameFor(r))===key));
+}
+function applyYardFilters(){
+  const grid=document.getElementById('grid');
+  if(!grid)return;
+  const q=document.getElementById('yardVehicleSearch').value.trim().toLowerCase(),fuel=document.getElementById('yardFuelFilter').value,sort=document.getElementById('yardSort').value;
+  const stateParams=new URLSearchParams(location.search);
+  [['vehicle_search',q],['fuel',fuel],['sort',sort]].forEach(([key,value])=>value&&value!==(key==='sort'?'new':'')?stateParams.set(key,value):stateParams.delete(key));
+  history.replaceState(history.state,'',location.pathname+'?'+stateParams.toString()+location.hash);
+  const cards=[...grid.querySelectorAll('[data-yard-car]')];
+  cards.sort((a,b)=>sort==='low'?Number(a.dataset.price)-Number(b.dataset.price):sort==='high'?Number(b.dataset.price)-Number(b.dataset.price):sort==='km'?Number(a.dataset.km)-Number(b.dataset.km):String(b.dataset.created).localeCompare(String(a.dataset.created)));
+  cards.forEach(card=>{card.hidden=!((!q||(card.dataset.search||'').includes(q))&&(!fuel||card.dataset.fuel===fuel));grid.appendChild(card)});
+  const shown=cards.filter(card=>!card.hidden).length;
+  document.getElementById('countText').textContent=`${shown} of ${yardActiveRows.length} ${yardActiveRows.length===1?'vehicle':'vehicles'}`;
+  let empty=document.getElementById('yardNoMatches');
+  if(!empty){empty=document.createElement('div');empty.id='yardNoMatches';empty.className='panel empty';empty.textContent='No vehicles match these filters. Try another search or clear the filters.';grid.appendChild(empty)}
+  empty.hidden=shown>0;
+}
+function renderYardCards(){
+  const grid=document.getElementById('grid');
+  if(!grid)return;
+  const rows=yardActiveRows;
+  const availableCount=rows.filter(r=>String(r.status||'').trim().toLowerCase()!=='sold').length;
+  document.getElementById('vehicleCount').textContent=availableCount;
+  const prices=rows.map(r=>Number(r.price||0)).filter(Boolean);
+  if(prices.length){const lo=Math.min(...prices),hi=Math.max(...prices);document.getElementById('priceRange').textContent=lo===hi?'KES '+fmt(lo):'KES '+fmt(lo)+'–'+fmt(hi)}
+  const returnTo=encodeURIComponent(location.pathname+location.search+location.hash);
+  grid.innerHTML=rows.map((r,i)=>{
+    const photo=Array.isArray(r.photos)&&r.photos[0]?r.photos[0]:'';
+    const sold=String(r.status||'').trim().toLowerCase()==='sold';
+    const saved=!sold&&yardSavedIds.has(String(r.id));
+    const title=`${r.year||''} ${r.make||''} ${r.model||''}`.replace(/\s+/g,' ').trim();
+    const vehicleHref=`/vehicle.html?id=${encodeURIComponent(r.id)}&return_to=${returnTo}`;
+    return `<article class="card${saved?' is-saved':''}${sold?' is-sold':''}" data-yard-car data-id="${esc(r.id)}" data-sold="${sold?'1':'0'}" data-search="${esc([r.year,r.make,r.model,r.fuel].filter(Boolean).join(' ').toLowerCase())}" data-fuel="${esc(String(r.fuel||'').toLowerCase())}" data-price="${Number(r.price)||0}" data-km="${Number(r.km)||0}" data-created="${esc(r.created_at||'')}" style="--card-index:${i}">
+      <div class="photo">
+        <a class="yard-photo-link" href="${vehicleHref}">${photo?`<img src="${esc(photo)}" alt="${esc(title)}" loading="${i<2?'eager':'lazy'}" decoding="async" fetchpriority="${i===0?'high':'auto'}">`:`<div style="height:100%;display:grid;place-items:center;color:var(--mute)">${esc(r.year||'')}</div>`}</a>
+        <button type="button" class="card-wishlist-btn${saved?' is-saved':''}" data-yard-save="${esc(r.id)}" aria-pressed="${String(saved)}" aria-label="${sold?'Vehicle sold':(saved?'Remove from wishlist':'Save to wishlist')}" title="${sold?'Sold':(saved?'Remove from wishlist':'Save to wishlist')}"${sold?' disabled aria-disabled="true"':''}>${YARD_HEART_SVG}</button>
+        ${sold?'<span class="sold-badge-overlay" aria-label="Sold">Sold</span>':''}
+      </div>
+      <a class="yard-card-main" href="${vehicleHref}">
+        <div class="cardbody">
+          <h3>${esc(title)}</h3>
+          <div class="price">KES ${fmt(r.price)}</div>
+          <div class="tags"><span class="tag">${fmt(r.km)} km</span><span class="tag">${esc(r.fuel||'N/A')}</span><span class="tag">${sold?'Sold':'Car yard / dealer'}</span></div>
+        </div>
+      </a>
+      <div class="yard-card-footer">
+        <a class="yard-card-open-link" href="${vehicleHref}">View vehicle</a>
+        <button type="button" class="card-footer-share-btn" data-yard-share="${esc(r.id)}" aria-label="Share ${esc(title)}" title="Share vehicle">${YARD_SHARE_SVG}<span>Share</span></button>
+      </div>
+    </article>`;
+  }).join('');
+  applyYardFilters();
+}
+let yardLiveChannel=null,yardLastRefreshAt=0;
+function subscribeYardUpdates(refreshFn){
+  if(!sb?.channel||yardLiveChannel)return;
+  yardLiveChannel=sb.channel('yard-listings-live').on('postgres_changes',{event:'*',schema:'public',table:'listings'},payload=>{
+    const row=payload?.new||payload?.old;
+    if(!row?.id)return;
+    if(payload.eventType==='UPDATE'){
+      const st=String(row.status||'').trim().toLowerCase();
+      const idx=yardActiveRows.findIndex(item=>String(item.id)===String(row.id));
+      if(idx>=0){
+        if(st==='sold'||st==='approved'){
+          yardActiveRows[idx]={...yardActiveRows[idx],status:row.status};
+          renderYardCards();
+          return;
+        }
+      }
+    }
+    refreshFn().catch(()=>{});
+  }).subscribe();
+}
 async function init(){
- if(!wanted&&!wantedSlug&&!wantedDealer){document.getElementById('yardName').textContent='Car yard';document.getElementById('countText').textContent='No yard selected';document.getElementById('grid').innerHTML='<div class="panel empty">Choose a yard from the vehicle listings to see its inventory.</div>';return}
- if(!sb||/^PASTE_/.test(CFG.key)){document.getElementById('yardName').textContent=wanted||wantedSlug;document.getElementById('grid').innerHTML='<div class="panel empty">The live database connection is not configured.</div>';return}
- // Reuse recently loaded approved inventory immediately, then refresh it in the background.
- const YARD_CACHE_KEY='3pedals:yard-approved:v3';
- let cachedRows=null;
- try{const saved=JSON.parse(localStorage.getItem(YARD_CACHE_KEY)||sessionStorage.getItem(YARD_CACHE_KEY)||'null');if(saved&&Array.isArray(saved.rows)&&Date.now()-saved.at<3*60*1000)cachedRows=saved.rows}catch(_){}
- let data=cachedRows,error=null;
- const refreshApprovedRows=()=>sb.from('listings').select('id,make,model,year,price,km,fuel,photos,created_at,seller_type,yard_name,seller_name,yard_location,seller_phone,seller_email,yard_web,contact,seller_slug,whatsapp').eq('status','approved').order('created_at',{ascending:false}).then(result=>{
-  if(result.error){console.warn('Yard inventory background refresh failed:',result.error);return result}
-  // This page displays one thumbnail per vehicle; discard the unused gallery URLs
-  // before caching so storage, parsing and mobile memory costs stay small.
-  const compactRows=(result.data||[]).map(row=>({...row,photos:Array.isArray(row.photos)&&row.photos.length?[row.photos[0]]:[]}));
-  try{const value=JSON.stringify({at:Date.now(),rows:compactRows});localStorage.setItem(YARD_CACHE_KEY,value);sessionStorage.setItem(YARD_CACHE_KEY,value)}catch(_){}
-  if(!cachedRows)data=compactRows;
-  return {...result,data:compactRows};
- });
- if(cachedRows){refreshApprovedRows()}
- else{
-  const result=await refreshApprovedRows();data=result?.data||data;error=result?.error||null;
- }
- if(error){document.getElementById('yardName').textContent=wanted||wantedSlug;document.getElementById('countText').textContent='Inventory unavailable';document.getElementById('grid').innerHTML='<div class="panel empty">We could not load this yard right now. Please try again.</div>';return}
- const key=normalizeYardName(wanted),slugKey=String(wantedSlug||'').toLowerCase(),dealerKey=normalizeYardName(wantedDealer);
- const rows=(data||[]).filter(r=>yardType(r)==='yard'&&(wantedDealer?(normalizeYardName(yardNameFor(r))===dealerKey||String(r.seller_slug||'').toLowerCase()===slugKey):wantedSlug?(String(r.seller_slug||'').toLowerCase()===slugKey||(!r.seller_slug&&normalizeYardName(yardNameFor(r))===normalizeYardName(wantedSlug))):normalizeYardName(yardNameFor(r))===key));
- if(!rows.length){document.getElementById('yardName').textContent=wanted||wantedSlug;document.getElementById('title').textContent=wanted||wantedSlug;document.getElementById('countText').textContent='0 available vehicles';document.getElementById('vehicleCount').textContent='0';document.getElementById('priceRange').textContent='—';document.getElementById('grid').innerHTML='<div class="panel empty">No currently available vehicles were found for this yard.</div>';return}
- const first=rows[0],name=yardNameFor(first)||wanted||wantedSlug,loc=first.yard_location||first.location||'',phone=first.seller_phone||first.phone||'',email=first.seller_email||first.email||'',web=first.web||first.yard_web||'',contact=first.contact||first.yard_contact||'';
- const canonicalUrl=new URL('/yard.html',location.origin);canonicalUrl.searchParams.set('name',name);
- const seoTitle=`${name} | Car Yard in Kenya | 3 Pedals Auto KE`;
- const seoDescription=`Browse approved cars from ${name} on 3 Pedals Auto KE. View available vehicles, compare prices and contact the yard${loc?' in '+loc:''}.`.slice(0,160);
- document.title=seoTitle;
- const setMeta=(selector,attribute,key,value)=>{let el=document.head.querySelector(`meta[${attribute}="${key}"]`);if(!el){el=document.createElement('meta');el.setAttribute(attribute,key);document.head.appendChild(el)}el.setAttribute('content',value)};
- setMeta('name','name','description',seoDescription);
- setMeta('name','name','robots','index,follow');
- setMeta('property','property','og:title',seoTitle);
- setMeta('property','property','og:description',seoDescription);
- setMeta('property','property','og:url',canonicalUrl.toString());
- setMeta('property','property','og:type','website');
- setMeta('name','name','twitter:title',seoTitle);
- setMeta('name','name','twitter:description',seoDescription);
- let canonical=document.head.querySelector('link[rel="canonical"]');if(!canonical){canonical=document.createElement('link');canonical.rel='canonical';document.head.appendChild(canonical)}canonical.href=canonicalUrl.toString();
- let structured=document.getElementById('yard-structured-data');if(!structured){structured=document.createElement('script');structured.id='yard-structured-data';structured.type='application/ld+json';document.head.appendChild(structured)}
- const businessSchema={'@context':'https://schema.org','@type':'AutoDealer',name,url:canonicalUrl.toString(),description:seoDescription,...(phone?{telephone:phone}:{}),...(email?{email}:{}),...(loc?{address:{'@type':'PostalAddress',streetAddress:loc,addressCountry:'KE'}}:{})};
- structured.textContent=JSON.stringify(businessSchema);
- document.getElementById('title').textContent=name;document.getElementById('yardName').textContent=name;
- // Keep dealer branding as a compact text/icon mark; do not inject a photo inside the profile card.
- document.getElementById('contacts').innerHTML=[contact?`<div class="detail">Contact: <strong>${esc(contact)}</strong></div>`:'',loc?`<div class="detail">📍 <strong>${esc(loc)}</strong></div>`:'',phone?`<div class="detail">📞 <a href="tel:${esc(phone.replace(/\D/g,''))}">${esc(phone)}</a></div>`:'',email?`<div class="detail">✉️ <a href="mailto:${esc(email)}">${esc(email)}</a></div>`:'',web?`<div class="detail">🌐 <a href="${esc(/^https?:\/\//i.test(web)?web:'https://'+web)}" target="_blank" rel="noopener">${esc(web)}</a></div>`:''].join('');
- const wa=(first.whatsapp||phone||'').replace(/\D/g,'');document.getElementById('actions').innerHTML=[phone?`<a class="btn primary" href="tel:${esc(phone.replace(/\D/g,''))}">📞 Call yard</a>`:'',wa?`<a class="btn gold" href="https://wa.me/${esc(wa)}?text=${encodeURIComponent('Hello '+name+', I found your vehicles on 3 Pedals Auto KE and would like to enquire.') }" target="_blank" rel="noopener">💬 WhatsApp yard</a>`:'',loc?`<a class="btn" href="${esc(mapUrl(loc))}" target="_blank" rel="noopener">📍 Get directions</a>`:'',web?`<a class="btn" href="${esc(/^https?:\/\//i.test(web)?web:'https://'+web)}" target="_blank" rel="noopener">🌐 Visit website</a>`:'',`<button class="btn" type="button" id="shareYardProfile">↗ Share this yard</button>`].join('');
- document.getElementById('shareYardProfile').addEventListener('click',async()=>{const shareData={title:name+' | 3 Pedals Auto KE',text:'Explore available vehicles from '+name+' on 3 Pedals Auto KE.',url:window.location.href};try{if(navigator.share){await navigator.share(shareData)}else if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(shareData.url);alert('Dealer profile link copied.')}else{window.prompt('Copy this dealer profile link:',shareData.url)}}catch(error){if(error&&error.name!=='AbortError')window.prompt('Copy this dealer profile link:',shareData.url)}});
- document.getElementById('vehicleCount').textContent=rows.length;const prices=rows.map(r=>Number(r.price||0)).filter(Boolean);if(prices.length){const lo=Math.min(...prices),hi=Math.max(...prices);document.getElementById('priceRange').textContent=lo===hi?'KES '+fmt(lo):'KES '+fmt(lo)+'–'+fmt(hi)}document.getElementById('countText').textContent=`${rows.length} available ${rows.length===1?'vehicle':'vehicles'}`;
- const grid=document.getElementById('grid');grid.innerHTML=rows.map((r,i)=>{const photo=Array.isArray(r.photos)&&r.photos[0]?r.photos[0]:'';return `<a class="card" data-yard-car data-search="${esc([r.year,r.make,r.model,r.fuel].filter(Boolean).join(' ').toLowerCase())}" data-fuel="${esc(String(r.fuel||'').toLowerCase())}" data-price="${Number(r.price)||0}" data-km="${Number(r.km)||0}" data-created="${esc(r.created_at||'')}" style="--card-index:${i}" href="/vehicle.html?id=${encodeURIComponent(r.id)}&return_to=${encodeURIComponent(location.pathname+location.search+location.hash)}"><div class="photo">${photo?`<img src="${esc(photo)}" alt="${esc((r.year||'')+' '+(r.make||'')+' '+(r.model||''))}" loading="${i<2?"eager":"lazy"}" decoding="async" fetchpriority="${i===0?"high":"auto"}">`:`<div style="height:100%;display:grid;place-items:center;color:var(--mute)">${esc(r.year||'')}</div>`}</div><div class="cardbody"><h3>${esc(r.year||'')} ${esc(r.make||'')} ${esc(r.model||'')}</h3><div class="price">KES ${fmt(r.price)}</div><div class="tags"><span class="tag">${fmt(r.km)} km</span><span class="tag">${esc(r.fuel||'N/A')}</span><span class="tag">Car yard / dealer</span></div></div></a>`}).join('');const fuelValues=[...new Set(rows.map(r=>String(r.fuel||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b));document.getElementById('yardFuelFilter').innerHTML='<option value="">All fuel types</option>'+fuelValues.map(f=>`<option value="${esc(f.toLowerCase())}">${esc(f)}</option>`).join('');const applyYardFilters=()=>{const q=document.getElementById('yardVehicleSearch').value.trim().toLowerCase(),fuel=document.getElementById('yardFuelFilter').value,sort=document.getElementById('yardSort').value;const stateParams=new URLSearchParams(location.search);[['vehicle_search',q],['fuel',fuel],['sort',sort]].forEach(([key,value])=>value&&value!==(key==='sort'?'new':'')?stateParams.set(key,value):stateParams.delete(key));history.replaceState(history.state,'',location.pathname+'?'+stateParams.toString()+location.hash);const cards=[...grid.querySelectorAll('[data-yard-car]')];cards.sort((a,b)=>sort==='low'?Number(a.dataset.price)-Number(b.dataset.price):sort==='high'?Number(b.dataset.price)-Number(a.dataset.price):sort==='km'?Number(a.dataset.km)-Number(b.dataset.km):String(b.dataset.created).localeCompare(String(a.dataset.created)));cards.forEach(card=>{card.hidden=!( (!q||(card.dataset.search||'').includes(q))&&(!fuel||card.dataset.fuel===fuel));grid.appendChild(card)});const shown=cards.filter(card=>!card.hidden).length;document.getElementById('countText').textContent=`${shown} of ${rows.length} available ${rows.length===1?'vehicle':'vehicles'}`;let empty=document.getElementById('yardNoMatches');if(!empty){empty=document.createElement('div');empty.id='yardNoMatches';empty.className='panel empty';empty.textContent='No vehicles match these filters. Try another search or clear the filters.';grid.appendChild(empty)}empty.hidden=shown>0};['yardVehicleSearch','yardFuelFilter','yardSort'].forEach(id=>document.getElementById(id).addEventListener(id==='yardVehicleSearch'?'input':'change',applyYardFilters));document.getElementById('yardClearFilters').addEventListener('click',()=>{document.getElementById('yardVehicleSearch').value='';document.getElementById('yardFuelFilter').value='';document.getElementById('yardSort').value='new';applyYardFilters()});document.getElementById('yardVehicleSearch').value=qs.get('vehicle_search')||'';document.getElementById('yardFuelFilter').value=qs.get('fuel')||'';document.getElementById('yardSort').value=qs.get('sort')||'new';applyYardFilters();
+  if(!wanted&&!wantedSlug&&!wantedDealer){document.getElementById('yardName').textContent='Car yard';document.getElementById('countText').textContent='No yard selected';document.getElementById('grid').innerHTML='<div class="panel empty">Choose a yard from the vehicle listings to see its inventory.</div>';return}
+  if(!sb||/^PASTE_/.test(CFG.key)){document.getElementById('yardName').textContent=wanted||wantedSlug;document.getElementById('grid').innerHTML='<div class="panel empty">The live database connection is not configured.</div>';return}
+  await loadYardSavedVehicles();
+  let cachedRows=null;
+  try{const saved=JSON.parse(localStorage.getItem(YARD_CACHE_KEY)||sessionStorage.getItem(YARD_CACHE_KEY)||'null');if(saved&&Array.isArray(saved.rows)&&Date.now()-saved.at<3*60*1000)cachedRows=saved.rows}catch(_){}
+  let data=cachedRows,error=null;
+  const refreshApprovedRows=()=>sb.from('listings').select('id,status,make,model,year,price,km,fuel,photos,created_at,seller_type,yard_name,seller_name,yard_location,seller_phone,seller_email,yard_web,contact,seller_slug,whatsapp').in('status',['approved','sold','Sold']).order('created_at',{ascending:false}).then(result=>{
+    if(result.error){console.warn('Yard inventory background refresh failed:',result.error);return result}
+    const compactRows=(result.data||[]).map(row=>({...row,photos:Array.isArray(row.photos)&&row.photos.length?[row.photos[0]]:[]}));
+    try{const value=JSON.stringify({at:Date.now(),rows:compactRows});localStorage.setItem(YARD_CACHE_KEY,value);sessionStorage.setItem(YARD_CACHE_KEY,value)}catch(_){}
+    yardAllRows=compactRows;
+    yardLastRefreshAt=Date.now();
+    const filtered=filterYardRowsForProfile(compactRows);
+    if(filtered.length){
+      yardActiveRows=filtered;
+      if(cachedRows)renderYardCards();
+    }
+    if(!cachedRows)data=compactRows;
+    return {...result,data:compactRows};
+  });
+  if(cachedRows){refreshApprovedRows()}
+  else{
+    const result=await refreshApprovedRows();data=result?.data||data;error=result?.error||null;
+  }
+  if(error){document.getElementById('yardName').textContent=wanted||wantedSlug;document.getElementById('countText').textContent='Inventory unavailable';document.getElementById('grid').innerHTML='<div class="panel empty">We could not load this yard right now. Please try again.</div>';return}
+  yardAllRows=data||[];
+  const rows=filterYardRowsForProfile(yardAllRows);
+  yardActiveRows=rows;
+  if(!rows.length){document.getElementById('yardName').textContent=wanted||wantedSlug;document.getElementById('title').textContent=wanted||wantedSlug;document.getElementById('countText').textContent='0 available vehicles';document.getElementById('vehicleCount').textContent='0';document.getElementById('priceRange').textContent='—';document.getElementById('grid').innerHTML='<div class="panel empty">No currently available vehicles were found for this yard.</div>';return}
+  const first=rows[0],name=yardNameFor(first)||wanted||wantedSlug,loc=first.yard_location||first.location||'',phone=first.seller_phone||first.phone||'',email=first.seller_email||first.email||'',web=first.web||first.yard_web||'',contact=first.contact||first.yard_contact||'';
+  const canonicalUrl=new URL('/yard.html',location.origin);canonicalUrl.searchParams.set('name',name);
+  const seoTitle=`${name} | Car Yard in Kenya | 3 Pedals Auto KE`;
+  const seoDescription=`Browse approved cars from ${name} on 3 Pedals Auto KE. View available vehicles, compare prices and contact the yard${loc?' in '+loc:''}.`.slice(0,160);
+  document.title=seoTitle;
+  const setMeta=(selector,attribute,key,value)=>{let el=document.head.querySelector(`meta[${attribute}="${key}"]`);if(!el){el=document.createElement('meta');el.setAttribute(attribute,key);document.head.appendChild(el)}el.setAttribute('content',value)};
+  setMeta('name','name','description',seoDescription);
+  setMeta('name','name','robots','index,follow');
+  setMeta('property','property','og:title',seoTitle);
+  setMeta('property','property','og:description',seoDescription);
+  setMeta('property','property','og:url',canonicalUrl.toString());
+  setMeta('property','property','og:type','website');
+  setMeta('name','name','twitter:title',seoTitle);
+  setMeta('name','name','twitter:description',seoDescription);
+  let canonical=document.head.querySelector('link[rel="canonical"]');if(!canonical){canonical=document.createElement('link');canonical.rel='canonical';document.head.appendChild(canonical)}canonical.href=canonicalUrl.toString();
+  let structured=document.getElementById('yard-structured-data');if(!structured){structured=document.createElement('script');structured.id='yard-structured-data';structured.type='application/ld+json';document.head.appendChild(structured)}
+  const businessSchema={'@context':'https://schema.org','@type':'AutoDealer',name,url:canonicalUrl.toString(),description:seoDescription,...(phone?{telephone:phone}:{}),...(email?{email}:{}),...(loc?{address:{'@type':'PostalAddress',streetAddress:loc,addressCountry:'KE'}}:{})};
+  structured.textContent=JSON.stringify(businessSchema);
+  document.getElementById('title').textContent=name;document.getElementById('yardName').textContent=name;
+  document.getElementById('contacts').innerHTML=[contact?`<div class="detail">Contact: <strong>${esc(contact)}</strong></div>`:'',loc?`<div class="detail">📍 <strong>${esc(loc)}</strong></div>`:'',phone?`<div class="detail">📞 <a href="tel:${esc(phone.replace(/\D/g,''))}">${esc(phone)}</a></div>`:'',email?`<div class="detail">✉️ <a href="mailto:${esc(email)}">${esc(email)}</a></div>`:'',web?`<div class="detail">🌐 <a href="${esc(/^https?:\/\//i.test(web)?web:'https://'+web)}" target="_blank" rel="noopener">${esc(web)}</a></div>`:''].join('');
+  const wa=(first.whatsapp||phone||'').replace(/\D/g,'');document.getElementById('actions').innerHTML=[phone?`<a class="btn primary" href="tel:${esc(phone.replace(/\D/g,''))}">📞 Call yard</a>`:'',wa?`<a class="btn gold" href="https://wa.me/${esc(wa)}?text=${encodeURIComponent('Hello '+name+', I found your vehicles on 3 Pedals Auto KE and would like to enquire.') }" target="_blank" rel="noopener">💬 WhatsApp yard</a>`:'',loc?`<a class="btn" href="${esc(mapUrl(loc))}" target="_blank" rel="noopener">📍 Get directions</a>`:'',web?`<a class="btn" href="${esc(/^https?:\/\//i.test(web)?web:'https://'+web)}" target="_blank" rel="noopener">🌐 Visit website</a>`:'',`<button class="btn" type="button" id="shareYardProfile">↗ Share this yard</button>`].join('');
+  document.getElementById('shareYardProfile').addEventListener('click',()=>{const shareData={title:name+' | 3 Pedals Auto KE',text:'Explore available vehicles from '+name+' on 3 Pedals Auto KE.',url:window.location.href};if(typeof navigator.share==='function'){navigator.share(shareData).catch(err=>{if(err&&err.name==='AbortError')return;if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(shareData.url).then(()=>showYardNotice('Dealer profile link copied.')).catch(()=>showYardNotice('Share URL: '+shareData.url))}else showYardNotice('Share URL: '+shareData.url)})}else if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(shareData.url).then(()=>showYardNotice('Dealer profile link copied.')).catch(()=>showYardNotice('Share URL: '+shareData.url))}else{showYardNotice('Share URL: '+shareData.url)}});
+  const fuelValues=[...new Set(rows.map(r=>String(r.fuel||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+  document.getElementById('yardFuelFilter').innerHTML='<option value="">All fuel types</option>'+fuelValues.map(f=>`<option value="${esc(f.toLowerCase())}">${esc(f)}</option>`).join('');
+  document.getElementById('yardVehicleSearch').value=qs.get('vehicle_search')||'';
+  document.getElementById('yardFuelFilter').value=qs.get('fuel')||'';
+  document.getElementById('yardSort').value=qs.get('sort')||'new';
+  renderYardCards();
+  const grid=document.getElementById('grid');
+  grid.addEventListener('click',e=>{
+    const saveBtn=e.target.closest('[data-yard-save]');
+    if(saveBtn){
+      e.preventDefault();
+      e.stopPropagation();
+      if(saveBtn.disabled||saveBtn.getAttribute('aria-disabled')==='true'||saveBtn.closest('.card.is-sold'))return;
+      toggleYardSavedVehicle(saveBtn.dataset.yardSave);
+      return;
+    }
+    const shareBtn=e.target.closest('[data-yard-share]');
+    if(shareBtn){
+      e.preventDefault();
+      e.stopPropagation();
+      handleYardVehicleShare(shareBtn.dataset.yardShare);
+    }
+  });
+  ['yardVehicleSearch','yardFuelFilter','yardSort'].forEach(id=>document.getElementById(id).addEventListener(id==='yardVehicleSearch'?'input':'change',applyYardFilters));
+  document.getElementById('yardClearFilters').addEventListener('click',()=>{document.getElementById('yardVehicleSearch').value='';document.getElementById('yardFuelFilter').value='';document.getElementById('yardSort').value='new';applyYardFilters()});
+  subscribeYardUpdates(refreshApprovedRows);
+  document.addEventListener('visibilitychange',()=>{
+    if(document.visibilityState==='visible'&&Date.now()-yardLastRefreshAt>15000){
+      refreshApprovedRows().catch(()=>{});
+    }
+  });
 }
 init().catch(error=>{console.error('Could not initialize the yard profile:',error);document.getElementById('countText').textContent='Inventory unavailable';document.getElementById('grid').innerHTML='<div class="panel empty">We could not load this yard right now. Please refresh and try again.</div>'});
 </script>
@@ -897,26 +1132,35 @@ html body :is(.price,.amount,.vehicle-price,[data-price]){font-family:"Manrope",
 html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){font-family:"Playfair Display",Georgia,serif!important;font-weight:600!important;letter-spacing:-.02em!important}
 </style>
 <style id="yard-mobile-performance-override">
+.card[data-yard-car]{
+  display:flex!important;
+  flex-direction:column!important;
+}
+.yard-photo-link{
+  display:block;
+  width:100%;
+  height:100%;
+}
 @media(max-width:760px){
   html:not([data-theme="light"]) body :is(.card,.panel,.dealer,.stat,.state,.empty,.error,#profile .panel,#profile .details,.detail){
-    -webkit-backdrop-filter:none!important;
-    backdrop-filter:none!important;
-    background:rgba(18,20,23,.90)!important;
-    background-color:rgba(18,20,23,.90)!important;
+    -webkit-backdrop-filter:blur(14px) saturate(135%)!important;
+    backdrop-filter:blur(14px) saturate(135%)!important;
+    background:rgba(20,22,26,.54)!important;
+    background-color:rgba(20,22,26,.54)!important;
   }
   html:not([data-theme="light"]) body :is(.back,.btn:not(.primary):not(.gold)){
-    -webkit-backdrop-filter:none!important;
-    backdrop-filter:none!important;
-    background:rgba(26,28,32,.92)!important;
-    background-color:rgba(26,28,32,.92)!important;
+    -webkit-backdrop-filter:blur(12px) saturate(130%)!important;
+    backdrop-filter:blur(12px) saturate(130%)!important;
+    background:rgba(24,26,31,.58)!important;
+    background-color:rgba(24,26,31,.58)!important;
   }
   html:not([data-theme="light"]) body :is(input,select,textarea){
-    -webkit-backdrop-filter:none!important;
-    backdrop-filter:none!important;
-    background:rgba(20,22,25,.92)!important;
+    -webkit-backdrop-filter:blur(10px) saturate(120%)!important;
+    backdrop-filter:blur(10px) saturate(120%)!important;
+    background:rgba(20,22,26,.58)!important;
   }
 }
 </style>
-<script defer src="/site-ux.js?v=20261123-fix8"></script>
+<script defer src="/site-ux.js?v=20261124-fix19"></script>
 </body>
 </html>

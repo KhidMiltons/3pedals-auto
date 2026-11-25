@@ -326,8 +326,8 @@ html body>main.wrap{padding-top:48px!important}
 
 
 
-<link rel="stylesheet" href="/site-ux.css?v=20261123-fix15">
-<link rel="stylesheet" href="/header-modern.css?v=20261123-fix12">
+<link rel="stylesheet" href="/site-ux.css?v=20261124-fix19">
+<link rel="stylesheet" href="/header-modern.css?v=20261124-fix19">
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
@@ -343,7 +343,7 @@ html body>main.wrap{padding-top:48px!important}
 <footer class="ux-site-footer no-print"><div class="wrap">© <span data-ux-year>2026</span> 3 Pedals Auto KE.</div></footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
-<script defer src="/site-ux.js?v=20261123-fix8"></script>
+<script defer src="/site-ux.js?v=20261124-fix19"></script>
 <script>
 const CFG=window.SB_CONFIG||{};
 const sb=(CFG.url&&!/^PASTE/.test(CFG.url)&&window.supabase)?window.supabase.createClient(CFG.url,CFG.key):null;
@@ -486,7 +486,8 @@ Vehicle link: ${pageUrl}`;
   const specTransmission=transMatch?transMatch[0]:'Automatic / Verify on viewing';
   const specDuty=dutyMatch?dutyMatch[0]:(r.stock_mode==='import'?'Import / Duty clearance':'Duty Paid / Kenya Registered');
 
-  $('app').outerHTML=`<div class="vehicle"><div class="no-print">${gallery}</div><article class="info"><span class="eyebrow">3 Pedals Auto KE · Approved listing</span><h1>${esc(r.make)} ${esc(r.model)} <span class="year">${esc(r.year||'')}</span></h1><div class="price">KES ${fmt(r.price)}</div><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><span class="status">Available to enquire</span>${garageChecked?'<span class="ux-checked-pill" style="margin-top:0" title="Verified 3 Pedals Garage Pre-Purchase Inspection">✓ Checked · Verified 3 Pedals Garage Pre-Purchase Inspection</span>':''}</div><div class="ref">Vehicle reference: <strong>${ref}</strong></div><div class="specs"><div class="spec"><span>Fuel:</span><strong>${esc(r.fuel||'Not specified')}</strong></div><div class="spec"><span>Mileage:</span><strong>${fmt(r.km)} km</strong></div><div class="spec"><span>Engine:</span><strong>${esc(specEngine)}</strong></div><div class="spec"><span>Transmission:</span><strong>${esc(specTransmission)}</strong></div><div class="spec"><span>Duty status:</span><strong>${esc(specDuty)}</strong></div><div class="spec"><span>Location:</span><strong>${esc(sellerLocation||'Not specified')}</strong></div><div class="spec"><span>Listing:</span><strong>${isYard?'Car yard':'Private seller'}</strong></div></div><details class="vehicle-features-disclosure"><summary><span>View more · Features &amp; condition</span><span class="feature-chevron" aria-hidden="true">⌄</span></summary><div class="vehicle-features-content"><p class="desc">${esc(descText||'No description provided.')}</p><ul class="vehicle-feature-list"><li>Logbook &amp; Ownership Due Diligence Ready</li><li>Chassis &amp; Mileage Verification Supported</li><li>Pre-Purchase Inspection Eligible at 3 Pedals Garage</li><li>Viewing &amp; Test Drive by Appointment</li></ul><p class="vehicle-tradein-note">Trade-in options available. Financing can be arranged.</p></div></details><div class="seller"><h3>${isYard?"Car Yard":"Seller"}</h3><p><strong>${esc(sellerName)}</strong></p>${sellerBits}</div><div class="actions no-print">${wa?`<a class="btn gold" href="https://wa.me/${esc(wa)}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">💬 WhatsApp Enquiry</a>`:''}${phone?`<a class="btn dark" href="tel:${esc(waNumber(phone))}">📞 Call Seller</a>`:''}<button class="btn ghost" type="button" id="vehiclePrintA4Btn">🖨 Print Spec Sheet (A4)</button><button class="btn ghost" type="button" id="vehiclePreviewA4Btn">📄 Preview A4</button><button class="btn ghost" type="button" id="saveVehicleBtn" aria-pressed="false" disabled>Checking saved status…</button><button class="btn ghost" type="button" id="shareBtn">↗ Share vehicle</button><button class="btn ghost" type="button" id="copyLinkBtn">⧉ Copy vehicle link</button><button class="btn ghost" type="button" id="copyBtn">Copy details</button><a class="btn ghost" href="/inventory">← More cars</a></div><span id="shareFeedback" class="meta no-print" role="status" aria-live="polite"></span><div class="note no-print">For your safety, inspect the vehicle in person, verify ownership documents and complete payment only after you are satisfied with the car and paperwork.</div></article></div>`;
+  const isSold=String(r.status||'').trim().toLowerCase()==='sold';
+  $('app').outerHTML=`<div class="vehicle"><div class="no-print">${gallery}</div><article class="info"><span class="eyebrow">3 Pedals Auto KE · ${isSold?'Sold listing':'Approved listing'}</span><h1>${esc(r.make)} ${esc(r.model)} <span class="year">${esc(r.year||'')}</span></h1><div class="price">KES ${fmt(r.price)}</div><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><span class="status${isSold?' sold-status-pill':''}">${isSold?'Sold':'Available to enquire'}</span>${garageChecked?'<span class="ux-checked-pill" style="margin-top:0" title="Verified 3 Pedals Garage Pre-Purchase Inspection">✓ Checked · Verified 3 Pedals Garage Pre-Purchase Inspection</span>':''}</div><div class="ref">Vehicle reference: <strong>${ref}</strong></div><div class="specs"><div class="spec"><span>Fuel:</span><strong>${esc(r.fuel||'Not specified')}</strong></div><div class="spec"><span>Mileage:</span><strong>${fmt(r.km)} km</strong></div><div class="spec"><span>Engine:</span><strong>${esc(specEngine)}</strong></div><div class="spec"><span>Transmission:</span><strong>${esc(specTransmission)}</strong></div><div class="spec"><span>Duty status:</span><strong>${esc(specDuty)}</strong></div><div class="spec"><span>Location:</span><strong>${esc(sellerLocation||'Not specified')}</strong></div><div class="spec"><span>Listing:</span><strong>${isYard?'Car yard':'Private seller'}</strong></div></div><details class="vehicle-features-disclosure"><summary><span>View more · Features &amp; condition</span><span class="feature-chevron" aria-hidden="true">⌄</span></summary><div class="vehicle-features-content"><p class="desc">${esc(descText||'No description provided.')}</p><ul class="vehicle-feature-list"><li>Logbook &amp; Ownership Due Diligence Ready</li><li>Chassis &amp; Mileage Verification Supported</li><li>Pre-Purchase Inspection Eligible at 3 Pedals Garage</li><li>Viewing &amp; Test Drive by Appointment</li></ul><p class="vehicle-tradein-note">Trade-in options available. Financing can be arranged.</p></div></details><div class="seller"><h3>${isYard?"Car Yard":"Seller"}</h3><p><strong>${esc(sellerName)}</strong></p>${sellerBits}</div><div class="actions no-print">${wa?`<a class="btn gold" href="https://wa.me/${esc(wa)}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">💬 WhatsApp Enquiry</a>`:''}${phone?`<a class="btn dark" href="tel:${esc(waNumber(phone))}">📞 Call Seller</a>`:''}<button class="btn ghost" type="button" id="vehiclePrintA4Btn">🖨 Print Spec Sheet (A4)</button><button class="btn ghost" type="button" id="vehiclePreviewA4Btn">📄 Preview A4</button><button class="btn ghost" type="button" id="saveVehicleBtn" aria-pressed="false" disabled${isSold?' aria-disabled="true"':''}>${isSold?'Vehicle Sold':'Checking saved status…'}</button><button class="btn ghost" type="button" id="shareBtn">↗ Share vehicle</button><button class="btn ghost" type="button" id="copyLinkBtn">⧉ Copy vehicle link</button><button class="btn ghost" type="button" id="copyBtn">Copy details</button><a class="btn ghost" href="/inventory">← More cars</a></div><span id="shareFeedback" class="meta no-print" role="status" aria-live="polite"></span><div class="note no-print">For your safety, inspect the vehicle in person, verify ownership documents and complete payment only after you are satisfied with the car and paperwork.</div></article></div>`;
 
   // Populate Printable A4 Vehicle Spec Sheet + QR
   const mainEl=document.querySelector('main.wrap');
@@ -522,7 +523,7 @@ Vehicle link: ${pageUrl}`;
             <div class="a4-ref-meta">
               <div><strong>Ref:</strong> ${esc(ref)}</div>
               <div><strong>Generated:</strong> ${esc(printedDate)}</div>
-              <div><strong>Status:</strong> Available</div>
+              <div><strong>Status:</strong> ${isSold?'Sold':'Available'}</div>
             </div>
           </header>
 
@@ -607,14 +608,22 @@ Vehicle link: ${pageUrl}`;
   }
 
   const saveVehicleButton=$("saveVehicleBtn");
-  if(saveVehicleButton&&sb){
-    sb.auth.getSession().then(async({data})=>{
-      const user=data?.session?.user;if(!user){saveVehicleButton.disabled=true;saveVehicleButton.textContent="Sign in to save";saveVehicleButton.title="Sign in using the Account button in the site header to save vehicles.";return}
-      const {data:existing,error}=await sb.from("saved_vehicles").select("listing_id").eq("user_id",user.id).eq("listing_id",r.id).maybeSingle();
-      if(error){saveVehicleButton.textContent="Save vehicle";saveVehicleButton.disabled=false;return}
-      let saved=!!existing;saveVehicleButton.textContent=saved?"Saved ✓ · Remove":"Save vehicle";saveVehicleButton.setAttribute("aria-pressed",String(saved));saveVehicleButton.disabled=false;
-      saveVehicleButton.onclick=async()=>{saveVehicleButton.disabled=true;const result=saved?await sb.from("saved_vehicles").delete().eq("user_id",user.id).eq("listing_id",r.id):await sb.from("saved_vehicles").insert({user_id:user.id,listing_id:r.id});if(result.error){saveVehicleButton.disabled=false;$('shareFeedback').textContent=result.error.message||"Could not update saved vehicles.";return}const next=!saved;saveVehicleButton.textContent=next?"Saved ✓ · Remove":"Save vehicle";saved=next;saveVehicleButton.setAttribute("aria-pressed",String(next));saveVehicleButton.disabled=false;$('shareFeedback').textContent=next?"Vehicle saved to your account.":"Removed from saved vehicles."};
-    }).catch(()=>{saveVehicleButton.disabled=false;saveVehicleButton.textContent="Save vehicle"});
+  if(saveVehicleButton){
+    if(isSold){
+      saveVehicleButton.disabled=true;
+      saveVehicleButton.setAttribute("aria-disabled","true");
+      saveVehicleButton.setAttribute("aria-pressed","false");
+      saveVehicleButton.textContent="Vehicle Sold";
+      saveVehicleButton.title="This listing has been marked as sold.";
+    }else if(sb){
+      sb.auth.getSession().then(async({data})=>{
+        const user=data?.session?.user;if(!user){saveVehicleButton.disabled=true;saveVehicleButton.textContent="Sign in to save";saveVehicleButton.title="Sign in using the Account button in the site header to save vehicles.";return}
+        const {data:existing,error}=await sb.from("saved_vehicles").select("listing_id").eq("user_id",user.id).eq("listing_id",r.id).maybeSingle();
+        if(error){saveVehicleButton.textContent="Save vehicle";saveVehicleButton.disabled=false;return}
+        let saved=!!existing;saveVehicleButton.textContent=saved?"Saved ✓ · Remove":"Save vehicle";saveVehicleButton.setAttribute("aria-pressed",String(saved));saveVehicleButton.disabled=false;
+        saveVehicleButton.onclick=async()=>{saveVehicleButton.disabled=true;const result=saved?await sb.from("saved_vehicles").delete().eq("user_id",user.id).eq("listing_id",r.id):await sb.from("saved_vehicles").insert({user_id:user.id,listing_id:r.id});if(result.error){saveVehicleButton.disabled=false;$('shareFeedback').textContent=result.error.message||"Could not update saved vehicles.";return}const next=!saved;saveVehicleButton.textContent=next?"Saved ✓ · Remove":"Save vehicle";saved=next;saveVehicleButton.setAttribute("aria-pressed",String(next));saveVehicleButton.disabled=false;$('shareFeedback').textContent=next?"Vehicle saved to your account.":"Removed from saved vehicles."};
+      }).catch(()=>{saveVehicleButton.disabled=false;saveVehicleButton.textContent="Save vehicle"});
+    }
   }
   const sellerContactActions=document.querySelector(".actions");if(sellerContactActions){sellerContactActions.querySelectorAll('a[href^="https://wa.me/"],a[href^="tel:"]').forEach(link=>{link.addEventListener("click",()=>{if(typeof window.fbq==="function")window.fbq("track","Lead",{content_type:"product",content_ids:[String(r.id||"")],content_name:title,value:Number(r.price||0),currency:"KES",contact_method:link.href.startsWith("https://wa.me/")?"WhatsApp":"Phone"});});});}
   let photoIndex=0;const showPhoto=index=>{photoIndex=(index+photos.length)%photos.length;const image=$('mainPhoto'),counter=document.querySelector('.photo-count');image.src=photos[photoIndex];image.alt=`${title} — photo ${photoIndex+1} of ${photos.length}`;if(counter)counter.textContent=`${photoIndex+1} / ${photos.length}`;document.querySelectorAll('.thumb').forEach((button,i)=>button.setAttribute('aria-current',String(i===photoIndex)))};
@@ -651,7 +660,7 @@ async function load(){
   if(!sb){app.innerHTML='<h2>Vehicle details unavailable</h2><p class="desc">The live vehicle database is not connected. Please try again later.</p><a class="btn gold" href="/inventory">Browse cars</a>';return}
   const cacheKey='3pedals:vehicle:v2:'+String(id);
   let cached=null,renderedFromCache=false;
-  try{const saved=JSON.parse(localStorage.getItem(cacheKey)||sessionStorage.getItem(cacheKey)||'null');if(saved&&saved.row&&Date.now()-saved.at<30*60*1000&&saved.row.status==='approved'){cached=saved.row;render(cached);renderedFromCache=true}}catch(_){}
+  try{const saved=JSON.parse(localStorage.getItem(cacheKey)||sessionStorage.getItem(cacheKey)||'null');if(saved&&saved.row&&Date.now()-saved.at<30*60*1000&&['approved','sold'].includes(String(saved.row.status||'').trim().toLowerCase())){cached=saved.row;render(cached);renderedFromCache=true}}catch(_){}
   try{
     const request=sb.from('listings').select('id,make,model,year,price,km,fuel,description,photos,whatsapp,seller_name,seller_phone,seller_email,yard_name,yard_location,status,created_at,seller_type,contact,yard_web,yard_logo_url').eq('id',id).maybeSingle();
     const timeout=new Promise((_,reject)=>setTimeout(()=>reject(new Error('Vehicle request timed out')),15000));
@@ -1041,26 +1050,26 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){f
     transform:none!important;
   }
   html:not([data-theme="light"]) body :is(.card,.panel,.dealer,.stat,.state,.info,.gallery,.seller,.specs,.spec,.note,.related-card,.vehicle-card,.vehicle-details,.details,.info-card,.spec-card){
-    -webkit-backdrop-filter:none!important;
-    backdrop-filter:none!important;
-    background:rgba(18,20,23,.92)!important;
-    background-color:rgba(18,20,23,.92)!important;
+    -webkit-backdrop-filter:blur(14px) saturate(135%)!important;
+    backdrop-filter:blur(14px) saturate(135%)!important;
+    background:rgba(20,22,26,.56)!important;
+    background-color:rgba(20,22,26,.56)!important;
   }
   html:not([data-theme="light"]) .btn.ghost,
   html:not([data-theme="light"]) .btn.dark,
   html:not([data-theme="light"]) .back,
   html:not([data-theme="light"]) .photo-step{
-    -webkit-backdrop-filter:none!important;
-    backdrop-filter:none!important;
-    background:rgba(26,28,32,.92)!important;
-    background-color:rgba(26,28,32,.92)!important;
+    -webkit-backdrop-filter:blur(12px) saturate(130%)!important;
+    backdrop-filter:blur(12px) saturate(130%)!important;
+    background:rgba(24,26,31,.58)!important;
+    background-color:rgba(24,26,31,.58)!important;
   }
   html:not([data-theme="light"]) input,
   html:not([data-theme="light"]) select,
   html:not([data-theme="light"]) textarea{
-    -webkit-backdrop-filter:none!important;
-    backdrop-filter:none!important;
-    background:rgba(20,22,25,.92)!important;
+    -webkit-backdrop-filter:blur(10px) saturate(120%)!important;
+    backdrop-filter:blur(10px) saturate(120%)!important;
+    background:rgba(20,22,26,.58)!important;
   }
 }
 </style>
