@@ -206,7 +206,7 @@ function sanitizeKenyaRhdClaims(text) {
     const rhdClaim = patterns.slice(5).some((pattern) => pattern.test(sentence));
     if (ageClaim || rhdClaim) {
       changed = true;
-      return ageClaim ? safeAgeStatement : safeRhdStatement;
+      return /\b(?:RHD|right[- ]hand drive|exemptions?|exceptions?|waivers?)\b/i.test(sentence) ? safeRhdStatement : safeAgeStatement;
     }
     return sentence;
   }).join("\n");
