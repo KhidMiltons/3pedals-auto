@@ -6,250 +6,320 @@
 <meta name="description" content="Request premium chauffeur-driven travel with 3 Pedals Auto KE. Explore available vehicles, choose your hire arrangement and receive a confirmed quotation before payment.">
 <script>(function(){try{var t=localStorage.getItem("3pedals:theme")||"dark";document.documentElement.setAttribute("data-theme",t==="light"?"light":"dark");document.documentElement.dataset.ux="1";}catch(e){}})();</script>
 <script src="/consent.js?v=20261107-1"></script>
-<link rel="preconnect" href="https://images.unsplash.com" crossorigin>
-<link rel="preload" as="image" href="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=60" media="(max-width: 760px)" fetchpriority="high">
-<link rel="preload" as="image" href="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72" media="(min-width: 761px)" fetchpriority="high">
+<link rel="preload" as="image" href="/public/assets/hero-backdrop-mobile.webp" media="(max-width: 760px)" fetchpriority="high">
+<link rel="preload" as="image" href="/public/assets/hero-backdrop.webp" media="(min-width: 761px)" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-<noscript><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet"></noscript>
-<link rel="stylesheet" href="/site-theme.css?v=20261123-fix8">
-<style>
-:root{color-scheme:dark;--gold:#c9b783;--ink:#f4f0e8;--muted:rgba(244,240,232,.68);--glass:rgba(18,20,23,.42)}
-*{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--ink);font-family:Manrope,system-ui,sans-serif;background:#101316}
-a{color:inherit}.shell{width:min(1160px,calc(100% - 36px));margin:auto}.topbar{display:flex;align-items:center;justify-content:space-between;padding:22px 0;gap:18px}.brand{font-weight:800;letter-spacing:.04em}.brand span{display:block;color:var(--gold);font-size:10px;letter-spacing:.2em;margin-top:3px}.topbar a{font-size:13px;text-decoration:none;color:var(--muted)}.hero{padding:48px 0 30px;max-width:760px}.eyebrow{font-size:10px;letter-spacing:.22em;color:var(--gold);font-weight:800}.hero h1{font:600 clamp(38px,6vw,66px)/1.05 'Playfair Display',Georgia,serif;margin:14px 0}.hero p{color:var(--muted);max-width:620px;line-height:1.8}.glass{background:rgba(18,20,23,.46);border:1px solid rgba(255,255,255,.09);border-radius:22px;box-shadow:0 18px 50px rgba(0,0,0,.24);backdrop-filter:blur(24px) saturate(130%);-webkit-backdrop-filter:blur(24px) saturate(130%)}.fleet{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:18px 0 28px}.vehicle{padding:18px;overflow:hidden}.vehicle-art{height:170px;border-radius:15px;background:linear-gradient(135deg,rgba(201,183,131,.16),rgba(255,255,255,.025)),radial-gradient(ellipse at 50% 110%,rgba(0,0,0,.1),transparent 60%);display:grid;place-items:center;color:rgba(255,255,255,.5);font-size:12px;letter-spacing:.12em}.vehicle h2{font:600 25px 'Playfair Display',Georgia,serif;margin:16px 0 6px}.vehicle p{color:var(--muted);font-size:13px;line-height:1.7;margin:0}.tag{display:inline-block;margin-top:12px;color:var(--gold);font-size:10px;letter-spacing:.14em;text-transform:uppercase}.booking{padding:24px;margin:24px 0 50px}.booking h2{font:600 30px 'Playfair Display',Georgia,serif;margin:0 0 6px}.sub{color:var(--muted);font-size:13px;line-height:1.7;margin:0 0 20px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.field{min-width:0}.field.wide{grid-column:1/-1}label{display:block;font-size:11px;color:rgba(244,240,232,.72);margin:0 0 7px}input,select,textarea{width:100%;min-height:46px;padding:12px 13px;color:var(--ink);font:13px Manrope,sans-serif;background:rgba(5,8,10,.46);border:1px solid rgba(255,255,255,.14);border-radius:11px;outline:none}textarea{min-height:86px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:rgba(201,183,131,.7)}select option{background:#171a1d}.hint{color:var(--muted);font-size:11px;line-height:1.6;margin-top:7px}.price-note{padding:14px;border-radius:12px;background:rgba(201,183,131,.08);border:1px solid rgba(201,183,131,.16);font-size:12px;line-height:1.7;color:rgba(244,240,232,.82)}.btn{border:0;border-radius:11px;padding:13px 18px;background:linear-gradient(120deg,#d8c99f,#aa9463);color:#171717;font:800 12px Manrope,sans-serif;cursor:pointer}.btn:disabled{opacity:.5;cursor:not-allowed}.ghost{border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.045);color:var(--ink);border-radius:10px;padding:10px 14px;cursor:pointer}.actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:16px}.notice{display:none;padding:12px 14px;border-radius:10px;margin:14px 0;font-size:12px;line-height:1.6;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12)}.notice.show{display:block}.notice.error{border-color:rgba(220,100,100,.35);color:#ffd0d0}.notice.success{border-color:rgba(120,190,140,.35);color:#d8f5df}.auth{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}.account-box{margin-top:22px;padding:18px}.account-box h3{margin:0 0 10px;font-size:16px}.booking-row{padding:13px 0;border-top:1px solid rgba(255,255,255,.09);font-size:12px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}.booking-row .btn{margin-top:8px;padding:8px 12px;font-size:11px}.status{color:var(--gold);font-weight:700}.foot{padding:0 0 34px;color:var(--muted);font-size:11px;text-align:center}
-@media(max-width:700px){.shell{width:calc(100% - 24px)}.hero{padding:32px 0 18px}.fleet{grid-template-columns:1fr}.vehicle-art{height:145px}.booking{padding:17px}.grid,.auth{grid-template-columns:1fr}.field.wide{grid-column:auto}.topbar{padding:16px 0}.hero h1{font-size:42px}}
-
-/* 3 Pedals Garage visual system — Chauffeur Hire */
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700&display=swap" rel="stylesheet"></noscript>
+<style id="chauffeur-page-styles">
 :root{
   color-scheme:dark;
+  --gold:#d7bd83;
+  --ink:#f4f0e8;
+  --muted:rgba(244,240,232,.70);
+  --glass:rgba(18,20,23,.48);
   --chauffeur-ink:#f5f1e6;
-  --chauffeur-muted:#a8a08a;
-  --chauffeur-gold:#b7a06a;
-  --chauffeur-edge:rgba(255,255,255,.11);
-  --chauffeur-glass:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.025));
+  --chauffeur-muted:#b7b0a0;
+  --chauffeur-gold:#d7bd83;
+  --chauffeur-edge:rgba(255,255,255,.14);
+  --chauffeur-glass:linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.025));
   --chauffeur-ease:cubic-bezier(.22,1,.36,1);
 }
-html{background:#0d0d0d;scroll-behavior:smooth}
-body{
-  position:relative!important;
-  isolation:isolate!important;
-  color:var(--chauffeur-ink)!important;
-  background:#101316!important;
-  font-family:Manrope,Arial,sans-serif!important;
-  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
-}
-body:before{
-  content:""!important;display:block!important;position:fixed!important;inset:-10px!important;z-index:-1!important;pointer-events:none!important;
-  background:linear-gradient(120deg,rgba(7,10,13,.78),rgba(7,10,13,.62)),url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72') center center/cover no-repeat!important;
-}
-.shell{width:min(1180px,calc(100% - 48px));}
-/* Header follows the intended home-screen masthead */
-.topbar{
-  position:relative;z-index:50;
-  width:100%;margin:0;padding:0 max(18px,calc((100% - 1080px)/2));
-  min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:16px;
-  border:0;border-bottom:1px solid rgba(183,160,106,.30);border-radius:0;
-  background:rgba(13,13,13,.86)!important;color:#fff;
-  box-shadow:0 10px 32px rgba(0,0,0,.18);
-  -webkit-backdrop-filter:blur(22px) saturate(145%);
-  backdrop-filter:blur(22px) saturate(145%);
-}
-.brand{
-  display:inline-flex;align-items:center;
-  font:700 27px/1.1 'Playfair Display',Georgia,serif!important;
-  color:#e3b341!important;letter-spacing:.03em;text-transform:uppercase;
-  white-space:nowrap;transition:opacity .25s ease;
-}
-.brand:hover{opacity:.86}
-.brand span{display:none}
-.topbar>a:last-child{
-  display:inline-flex;align-items:center;justify-content:center;min-height:42px;
-  padding:9px 15px;border:1px solid rgba(255,255,255,.11);border-radius:12px;
-  background:rgba(255,255,255,.055);color:#d7d9de!important;
-  font-size:13px;font-weight:600;white-space:nowrap;
-  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
-  transition:background .32s ease,border-color .32s ease,color .32s ease,transform .32s ease,box-shadow .32s ease;
-}
-@media(hover:hover) and (pointer:fine){
-  .topbar>a:last-child:hover{
-    background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.18);
-    color:#fff!important;transform:translateY(-1px);box-shadow:0 8px 18px rgba(0,0,0,.16)
-  }
-}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;color:var(--chauffeur-ink);font-family:"Manrope",system-ui,sans-serif;background:#08090b;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:inherit}
+.shell{width:min(1180px,calc(100% - 48px));margin:auto}
+
+/* Compact horizontal Chauffeur introduction card */
 .hero{
-  max-width:760px;margin:24px 0 22px;padding:23px 26px 21px;
-  border:1px solid rgba(255,255,255,.10);border-radius:18px;
-  background:linear-gradient(145deg,rgba(18,20,23,.48),rgba(18,20,23,.34))!important;
-  box-shadow:0 14px 38px rgba(0,0,0,.19),inset 0 1px rgba(255,255,255,.035);
+  position:relative;isolation:isolate;overflow:hidden;
+  width:100%;max-width:none;min-height:0;
+  margin:12px 0 22px;padding:22px 26px;
+  border:1px solid rgba(255,255,255,.16);border-radius:20px;
+  background:linear-gradient(125deg,rgba(255,255,255,.075),rgba(255,255,255,.025));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 14px 36px rgba(0,0,0,.18);
+  -webkit-backdrop-filter:blur(18px) saturate(130%);backdrop-filter:blur(18px) saturate(130%);
+}
+.hero .eyebrow{display:block;margin:0 0 6px;color:var(--chauffeur-gold);font-size:10px;font-weight:800;line-height:1.2;letter-spacing:.2em}
+.hero h1{
+  display:block;margin:0 0 8px;
+  font-family:"Sora","Manrope",system-ui,sans-serif;font-weight:700;
+  font-size:clamp(28px,3.6vw,44px);line-height:1.1;letter-spacing:-.035em;
+  color:var(--chauffeur-ink);
+}
+.hero h1 br{display:none}
+.hero h1:after{content:"";display:block;width:74px;height:3px;margin-top:10px;border-radius:99px;background:linear-gradient(90deg,#e8d7ae,#a88b54);transition:width .45s var(--chauffeur-ease)}
+.hero:hover h1:after{width:104px}
+.hero p{display:block;max-width:850px;margin:0;color:var(--chauffeur-muted);font-size:14px;line-height:1.7}
+
+.section-heading{display:flex;align-items:end;justify-content:space-between;gap:30px;margin:34px 0 15px}
+.section-title{margin:8px 0 0;color:var(--chauffeur-ink);font:700 clamp(26px,3.2vw,38px)/1.12 "Sora","Manrope",system-ui,sans-serif;letter-spacing:-.03em}
+.section-intro{max-width:480px;margin:0;color:var(--chauffeur-muted);font-size:13.5px;line-height:1.72}
+.chauffeur-fleet-section,.chauffeur-services,.chauffeur-assurance,.chauffeur-steps,.chauffeur-faq{margin:34px 0 42px}
+
+/* Surface cards */
+.glass,.vehicle,.booking,.account-box,.service-card,.assurance-grid article,.steps-grid article,.chauffeur-assurance{
+  background:var(--chauffeur-glass);
+  border:1px solid var(--chauffeur-edge);
+  border-radius:18px;
+  box-shadow:0 14px 38px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.06);
   -webkit-backdrop-filter:blur(18px) saturate(130%);
   backdrop-filter:blur(18px) saturate(130%);
 }
-.hero img,.hero picture,.hero video{display:none!important}
-.eyebrow{color:#d6c28e!important;font-size:10px;letter-spacing:.22em}
-.hero h1,.booking h2,.vehicle h2{font-family:'Playfair Display',Georgia,serif!important;letter-spacing:-.025em;color:var(--chauffeur-ink)}
-.hero h1{font-size:clamp(36px,5vw,56px);line-height:1.06;margin:9px 0 10px}
-.hero h1:after{content:"";display:block;width:74px;height:3px;margin-top:19px;border-radius:99px;background:linear-gradient(90deg,#d8c18a,#9a865a);box-shadow:0 0 18px rgba(183,160,106,.24);transition:width .55s var(--chauffeur-ease)}
-.hero:hover h1:after{width:104px}
-.hero p{max-width:640px;color:var(--chauffeur-muted)!important;font-size:13px;line-height:1.7;margin:0}
-.fleet{gap:16px;margin:10px 0 28px}
-.glass,.vehicle,.booking,.account-box{
-  background:var(--chauffeur-glass)!important;
-  border:1px solid var(--chauffeur-edge)!important;
-  border-radius:18px!important;
-  box-shadow:0 14px 38px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.035)!important;
-  -webkit-backdrop-filter:blur(18px) saturate(130%)!important;
-  backdrop-filter:blur(18px) saturate(130%)!important;
-  transition:transform .42s var(--chauffeur-ease),border-color .3s,box-shadow .42s var(--chauffeur-ease);
+.fleet{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:18px 0 8px}
+.vehicle{padding:12px;overflow:hidden;transition:transform var(--ux-card-hover-duration,210ms) var(--ux-card-ease,var(--chauffeur-ease)),border-color var(--ux-card-glow-duration,240ms) var(--ux-card-ease,var(--chauffeur-ease)),box-shadow var(--ux-card-glow-duration,240ms) var(--ux-card-ease,var(--chauffeur-ease))}
+.vehicle-photo{height:220px;border-radius:13px;background-size:cover;background-position:center;position:relative;overflow:hidden}
+.vehicle-photo:after{content:"";position:absolute;inset:35% 0 0;background:linear-gradient(transparent,rgba(8,10,12,.58))}
+.vehicle-photo-sedan{background-image:url("https://upload.wikimedia.org/wikipedia/commons/e/ed/2014_Mazda2_%28DJ%29_Genki_hatchback_%282015-08-07%29_01.jpg")}
+.vehicle-photo-suv{background-image:url("https://upload.wikimedia.org/wikipedia/commons/1/1d/2018_Toyota_Land_Cruiser_Prado_%28GDJ150R%29_GXL_wagon_%282018-08-06%29_01.jpg")}
+.vehicle-copy{padding:8px 8px 5px}
+.tag{display:inline-block;margin-top:10px;color:var(--chauffeur-gold);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.vehicle h2{margin:8px 0 6px;font:700 24px/1.2 "Sora","Manrope",system-ui,sans-serif;color:var(--chauffeur-ink)}
+.vehicle p{min-height:44px;color:var(--chauffeur-muted);font-size:13px;line-height:1.7;margin:0}
+.vehicle-facts{display:flex;gap:8px 18px;flex-wrap:wrap;padding:0;margin:14px 0 16px;list-style:none;color:var(--chauffeur-muted);font-size:11.5px}
+.vehicle-facts li:before{content:"✓";color:var(--chauffeur-gold);margin-right:6px}
+.vehicle-select{display:flex;width:100%;justify-content:space-between;align-items:center;padding:12px 2px 5px;border:0;border-top:1px solid rgba(255,255,255,.12);background:none;color:var(--chauffeur-gold);font:700 12px "Manrope",sans-serif;cursor:pointer;text-align:left}
+.vehicle-select span{font-size:18px;transition:transform .25s}
+.vehicle-select:hover span{transform:translateX(5px)}
+.fleet-footnote{color:var(--chauffeur-muted);font-size:11px;line-height:1.6;margin:8px 2px}
+
+.service-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:18px}
+.service-card{display:flex;flex-direction:column;align-items:flex-start;padding:19px}
+.service-card,.assurance-grid article,.steps-grid article{
+  transition:transform var(--ux-card-hover-duration,210ms) var(--ux-card-ease,var(--chauffeur-ease)),border-color var(--ux-card-glow-duration,240ms) var(--ux-card-ease,var(--chauffeur-ease)),box-shadow var(--ux-card-glow-duration,240ms) var(--ux-card-ease,var(--chauffeur-ease));
 }
-.vehicle{padding:18px}
-.vehicle:hover,.booking:hover,.account-box:hover{border-color:rgba(183,160,106,.34)!important;box-shadow:0 22px 52px rgba(0,0,0,.27),inset 0 1px rgba(255,255,255,.06)!important}
-@media(hover:hover) and (pointer:fine){.vehicle:hover{transform:translateY(-3px)}}
-.vehicle-art{
-  height:174px;border-radius:14px;
-  background:radial-gradient(ellipse at 50% 110%,rgba(183,160,106,.15),transparent 60%),linear-gradient(135deg,rgba(183,160,106,.12),rgba(255,255,255,.025))!important;
-  color:rgba(245,241,230,.62);letter-spacing:.16em
+.service-card p{flex:1}
+.service-icon{width:36px;height:36px;display:grid;place-items:center;border-radius:11px;background:rgba(215,189,131,.12);color:var(--chauffeur-gold);font-size:19px;margin-bottom:14px}
+.service-card h3,.assurance-grid h3,.steps-grid h3{margin:0 0 7px;color:var(--chauffeur-ink);font:600 17px/1.28 "Sora","Manrope",system-ui,sans-serif}
+.service-card p,.assurance-grid p,.steps-grid p{margin:0;color:var(--chauffeur-muted);font-size:12.5px;line-height:1.7}
+.service-select{display:block;width:100%;margin-top:13px;padding:10px 0 0;border:0;border-top:1px solid rgba(255,255,255,.10);background:none;color:var(--chauffeur-gold);font:700 11.5px "Manrope",sans-serif;text-align:left;cursor:pointer}
+.service-select:hover{opacity:.85}
+
+.chauffeur-assurance{display:grid;grid-template-columns:.8fr 1.2fr;gap:34px;align-items:start;padding:25px;border-radius:20px}
+.assurance-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.assurance-grid article{padding:15px}
+.assurance-grid article>span,.steps-grid article>span{display:block;margin-bottom:10px;color:var(--chauffeur-gold);font-size:10px;font-weight:800;letter-spacing:.16em}
+.chauffeur-steps{padding:0 0 4px}
+.steps-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:18px}
+.steps-grid article{padding:17px}
+.steps-grid h3{font-size:16px}
+
+@media(hover:hover) and (pointer:fine){
+  .vehicle:hover,.service-card:hover,.assurance-grid article:hover,.steps-grid article:hover{
+    transform:translate3d(0,var(--ux-card-lift-y,-4px),0);
+    border-color:var(--ux-card-border-hover,rgba(215,189,131,.56));
+    box-shadow:var(--ux-card-shadow-hover),var(--ux-card-glow-hover),var(--ux-card-inset-hover);
+  }
 }
-.vehicle h2{font-size:26px;margin:17px 0 7px}
-.vehicle p,.sub,.hint{color:var(--chauffeur-muted)!important;line-height:1.75}
-.vehicle p{font-size:13px}
-.tag{color:#d6c28e!important;font-size:10px;letter-spacing:.14em}
-.booking{padding:26px;margin:24px 0 46px}
-.booking h2{font-size:32px;margin:0 0 7px}
-.sub{font-size:13px;margin-bottom:22px}
-.grid{gap:15px}
-label{color:rgba(245,241,230,.76)!important;font-size:11px;font-weight:600;letter-spacing:.025em;margin:0 0 7px}
+
+.booking{padding:26px;margin:24px 0 46px;scroll-margin-top:95px}
+.booking h2{font:700 28px/1.15 "Sora","Manrope",system-ui,sans-serif;margin:0 0 7px;color:var(--chauffeur-ink)}
+.sub,.hint{color:var(--chauffeur-muted);line-height:1.7}
+.sub{font-size:13px;margin:0 0 22px}
+.hint{font-size:11.5px;margin-top:7px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.field{min-width:0}.field.wide{grid-column:1/-1}
+label{display:block;color:rgba(245,241,230,.78);font-size:11.5px;font-weight:600;letter-spacing:.02em;margin:0 0 7px}
 input,select,textarea{
-  min-height:46px;padding:12px 14px;
-  color:var(--chauffeur-ink)!important;
-  background:rgba(255,255,255,.045)!important;
-  border:1px solid var(--chauffeur-edge)!important;
-  border-radius:11px!important;
-  font:13px Manrope,sans-serif;
+  width:100%;min-height:46px;padding:12px 14px;
+  color:var(--chauffeur-ink);
+  background:rgba(12,15,18,.52);
+  border:1px solid var(--chauffeur-edge);
+  border-radius:11px;font:13px "Manrope",sans-serif;
   transition:border-color .25s,box-shadow .3s,background .3s;
 }
-input::placeholder,textarea::placeholder{color:rgba(245,241,230,.38)}
-input:hover,select:hover,textarea:hover{border-color:rgba(183,160,106,.38)!important}
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--chauffeur-gold)!important;box-shadow:0 0 0 4px rgba(183,160,106,.14)!important}
+textarea{min-height:86px;resize:vertical}
+input::placeholder,textarea::placeholder{color:rgba(245,241,230,.44)}
+input:hover,select:hover,textarea:hover{border-color:rgba(215,189,131,.40)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--chauffeur-gold);box-shadow:0 0 0 4px rgba(215,189,131,.14)}
 select option{background:#171819;color:#f5f1e6}
-input[type=checkbox]{accent-color:#b7a06a}
+input[type=checkbox]{accent-color:#d7bd83}
+
 .price-note{
-  color:rgba(245,241,230,.82)!important;
-  background:rgba(183,160,106,.075)!important;
-  border:1px solid rgba(183,160,106,.18)!important;
-  border-radius:13px;padding:15px;font-size:12px;line-height:1.75;
+  color:rgba(245,241,230,.84);
+  background:rgba(215,189,131,.08);
+  border:1px solid rgba(215,189,131,.20);
+  border-radius:13px;padding:15px;font-size:12.5px;line-height:1.72;
 }
 .btn{
   min-height:44px;padding:12px 18px;border:1px solid transparent;border-radius:11px;
-  background:linear-gradient(135deg,#e3c57b,#b7a06a)!important;color:#111!important;
+  background:linear-gradient(135deg,#e3c57b,#b7a06a);color:#14120e;
   box-shadow:0 8px 22px rgba(0,0,0,.17);
-  font:700 12px Manrope,sans-serif;letter-spacing:.01em;
-  transition:transform .35s var(--chauffeur-ease),box-shadow .35s,filter .3s;
+  font:700 12.5px "Manrope",sans-serif;letter-spacing:.01em;cursor:pointer;
+  transition:transform .28s var(--chauffeur-ease),box-shadow .28s,filter .25s;
 }
-@media(hover:hover) and (pointer:fine){.btn:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(0,0,0,.25);filter:brightness(1.05)}}
-.btn:active{transform:translateY(0) scale(.97)}
+@media(hover:hover) and (pointer:fine){.btn:hover{transform:translateY(-2px);box-shadow:0 14px 28px rgba(0,0,0,.24);filter:brightness(1.04)}}
 .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
 .ghost{
-  min-height:42px;padding:10px 15px;border:1px solid var(--chauffeur-edge)!important;
-  border-radius:11px;background:rgba(255,255,255,.045)!important;color:var(--chauffeur-ink)!important;
-  transition:background .3s,border-color .3s,transform .3s;
+  min-height:42px;padding:10px 15px;border:1px solid var(--chauffeur-edge);
+  border-radius:11px;background:rgba(255,255,255,.05);color:var(--chauffeur-ink);
+  font:600 12.5px "Manrope",sans-serif;cursor:pointer;
+  transition:background .25s,border-color .25s,transform .25s;
 }
-@media(hover:hover) and (pointer:fine){.ghost:hover{background:rgba(183,160,106,.09)!important;border-color:rgba(183,160,106,.38)!important;transform:translateY(-2px)}}
-.actions{gap:11px;margin-top:18px}
-.notice{
-  color:var(--chauffeur-ink);background:rgba(255,255,255,.045)!important;
-  border:1px solid var(--chauffeur-edge)!important;border-radius:12px;
-}
-.notice.error{border-color:rgba(220,100,100,.4)!important;color:#ffd0d0}
-.notice.success{border-color:rgba(120,190,140,.35)!important;color:#d8f5df}
+@media(hover:hover) and (pointer:fine){.ghost:hover{background:rgba(215,189,131,.12);border-color:rgba(215,189,131,.44);transform:translateY(-1px)}}
+.actions{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-top:18px}
+.auth{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}
+.notice{display:none;padding:12px 14px;border-radius:12px;margin:14px 0;font-size:12.5px;line-height:1.6;color:var(--chauffeur-ink);background:rgba(255,255,255,.05);border:1px solid var(--chauffeur-edge)}
+.notice.show{display:block}.notice.error{border-color:rgba(220,100,100,.4);color:#ffd0d0}.notice.success{border-color:rgba(120,190,140,.38);color:#d8f5df}
+
+.trip-summary{padding:17px;border:1px solid rgba(215,189,131,.24);border-radius:15px;background:rgba(215,189,131,.06)}
+.trip-summary-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.trip-summary-head strong{font:700 18px "Sora","Manrope",system-ui,sans-serif;color:var(--chauffeur-ink)}
+.trip-summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.trip-summary-grid>div{min-width:0}
+.trip-summary-grid small{display:block;color:var(--chauffeur-muted);font-size:10.5px;margin-bottom:4px}
+.trip-summary-grid span{display:block;color:var(--chauffeur-ink);font-size:12.5px;line-height:1.5;overflow-wrap:anywhere}
+.trip-summary-note{margin:14px 0 0;color:var(--chauffeur-muted);font-size:10.5px;line-height:1.6}
+
+.faq-list{margin-top:17px;border-top:1px solid rgba(255,255,255,.12)}
+.faq-list details{border-bottom:1px solid rgba(255,255,255,.12);padding:16px 2px}
+.faq-list summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:15px;color:var(--chauffeur-ink);font-size:13.5px;font-weight:700}
+.faq-list summary::-webkit-details-marker{display:none}
+.faq-list summary:after{content:"+";color:var(--chauffeur-gold);font-size:18px;line-height:1}
+.faq-list details[open] summary:after{content:"−"}
+.faq-list details p{max-width:780px;margin:12px 0 0;color:var(--chauffeur-muted);font-size:12.5px;line-height:1.75}
+
+.route-preview{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px;border:1px solid rgba(215,189,131,.22);border-radius:13px;background:rgba(215,189,131,.05)}
+.route-preview p{margin:5px 0 0;color:var(--chauffeur-muted);font-size:11.5px;line-height:1.6}
+.route-preview a{color:var(--chauffeur-gold);font-size:11.5px;font-weight:700;white-space:nowrap}
+
 .account-box{padding:19px;margin-top:22px}
-.account-box h3{font:600 20px 'Playfair Display',Georgia,serif;color:var(--chauffeur-ink)}
-.booking-row{border-color:rgba(255,255,255,.09);color:var(--chauffeur-ink);line-height:1.75;padding:15px 0}
-.status{color:#d6c28e!important}
-.foot{padding:0 0 34px;color:var(--chauffeur-muted)!important;font-size:11px}
-a{color:inherit}
-:focus-visible{outline:2px solid rgba(183,160,106,.85);outline-offset:3px}
-@media(max-width:700px){
-  .shell{width:calc(100% - 24px)}
-  .topbar{min-height:66px;padding:0 12px;border-radius:0}
-  .topbar>a:last-child{font-size:11px;padding:8px 10px}
-  .brand{font-size:22px!important}
-  .hero{margin:16px 0 16px;padding:19px 18px}
-  .hero h1{font-size:clamp(39px,11vw,52px)}
-  .fleet{grid-template-columns:1fr;gap:13px}
-  .vehicle{padding:15px}
-  .vehicle-art{height:148px}
-  .booking{padding:18px;margin-top:18px}
-  .booking h2{font-size:27px}
-  .grid,.auth{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-  .field.wide{grid-column:1/-1}
-  .actions{align-items:stretch}
-  .actions .btn,.actions .ghost{flex:1}
+.account-box h3{font:700 19px "Sora","Manrope",system-ui,sans-serif;color:var(--chauffeur-ink);margin:0 0 10px}
+.booking-row{padding:14px 0;border-top:1px solid rgba(255,255,255,.10);color:var(--chauffeur-ink);font-size:12.5px;line-height:1.75;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.booking-row .btn{margin-top:8px;padding:8px 12px;font-size:11px}
+.status{color:var(--chauffeur-gold);font-weight:700}
+.admin-booking p{overflow-wrap:anywhere}
+.admin-head,.admin-toolbar,.admin-driver-form{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.admin-head h3,.admin-subsection h3{margin:5px 0 12px;font:700 20px "Sora","Manrope",system-ui,sans-serif}
+.admin-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:15px 0}
+.admin-stat{padding:13px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10)}
+.admin-stat strong{display:block;color:var(--chauffeur-gold);font-size:23px;font-variant-numeric:tabular-nums}
+.admin-stat span{font-size:10.5px;color:var(--chauffeur-muted)}
+.admin-toolbar{margin:14px 0}.admin-toolbar input{flex:1;min-width:180px}.admin-toolbar select{max-width:220px}
+.admin-booking{padding:15px 0;border-top:1px solid rgba(255,255,255,.10)}
+.admin-booking-top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.admin-booking p{margin:5px 0;color:var(--chauffeur-muted);font-size:11.5px;line-height:1.7}
+.admin-booking-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}
+.admin-booking-controls input,.admin-booking-controls select{min-width:0;min-height:40px;font-size:11.5px}
+.admin-booking-controls .actions{grid-column:1/-1;margin:0}
+.admin-subsection{margin-top:22px;padding-top:16px;border-top:1px solid rgba(255,255,255,.10)}
+.admin-driver-form input{flex:1;min-width:140px}
+.admin-row{padding:10px 0;border-top:1px solid rgba(255,255,255,.09);font-size:11.5px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.customer-action{margin-top:9px;display:flex;gap:8px;flex-wrap:wrap}
+.review-form{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.review-form select,.review-form input{max-width:170px}
+.calendar-day{padding:11px;margin:7px 0;border-left:2px solid var(--chauffeur-gold);background:rgba(255,255,255,.04);border-radius:0 10px 10px 0}
+
+/* Dual-Theme Daylight (Parchment) Parity */
+html[data-theme="light"] {
+  color-scheme:light;
+  --chauffeur-ink:#171512;
+  --chauffeur-muted:#575145;
+  --chauffeur-gold:#8c6510;
+  --chauffeur-edge:rgba(138,114,62,.28);
+  --chauffeur-glass:linear-gradient(145deg,rgba(255,252,246,.88),rgba(247,241,228,.78));
 }
-@media(max-width:480px){
-  .grid,.auth{grid-template-columns:1fr}
+html[data-theme="light"] body{background:#f4efe4;color:#171512}
+html[data-theme="light"] .hero{
+  background:linear-gradient(135deg,rgba(253,250,243,.92),rgba(246,240,227,.88));
+  border-color:rgba(138,114,62,.30);
+  box-shadow:0 14px 36px rgba(48,38,18,.10),inset 0 1px 0 rgba(255,255,255,.94);
+}
+html[data-theme="light"] .glass,
+html[data-theme="light"] .vehicle,
+html[data-theme="light"] .booking,
+html[data-theme="light"] .account-box,
+html[data-theme="light"] .service-card,
+html[data-theme="light"] .assurance-grid article,
+html[data-theme="light"] .steps-grid article,
+html[data-theme="light"] .chauffeur-assurance{
+  background:rgba(255,252,246,.82);
+  border-color:rgba(138,114,62,.26);
+  box-shadow:0 12px 30px rgba(48,38,18,.09),inset 0 1px 0 rgba(255,255,255,.90);
+}
+html[data-theme="light"] .service-icon{background:rgba(158,116,21,.12);color:#7c580a}
+html[data-theme="light"] .vehicle-select,
+html[data-theme="light"] .service-select{border-top-color:rgba(138,114,62,.22);color:#7c580a}
+html[data-theme="light"] .trip-summary,
+html[data-theme="light"] .route-preview,
+html[data-theme="light"] .price-note{
+  background:rgba(158,116,21,.08);
+  border-color:rgba(138,114,62,.26);
+  color:#2b261d;
+}
+html[data-theme="light"] label{color:#3c362c}
+html[data-theme="light"] input,
+html[data-theme="light"] select,
+html[data-theme="light"] textarea{
+  background:rgba(255,255,255,.90);
+  border-color:rgba(138,114,62,.30);
+  color:#171512;
+}
+html[data-theme="light"] input::placeholder,
+html[data-theme="light"] textarea::placeholder{color:#6b6355}
+html[data-theme="light"] select option{background:#ffffff;color:#171512}
+html[data-theme="light"] .ghost{background:rgba(255,255,255,.86);border-color:rgba(138,114,62,.32);color:#171512}
+html[data-theme="light"] .faq-list,
+html[data-theme="light"] .faq-list details,
+html[data-theme="light"] .booking-row,
+html[data-theme="light"] .admin-booking,
+html[data-theme="light"] .admin-subsection,
+html[data-theme="light"] .admin-row{border-color:rgba(138,114,62,.22)}
+html[data-theme="light"] .admin-stat,
+html[data-theme="light"] .calendar-day{background:rgba(255,255,255,.78);border-color:rgba(138,114,62,.25)}
+html[data-theme="light"] .notice{background:rgba(255,255,255,.86);border-color:rgba(138,114,62,.28);color:#171512}
+html[data-theme="light"] .notice.error{background:rgba(220,38,38,.08);border-color:rgba(185,28,28,.36);color:#991b1b}
+html[data-theme="light"] .notice.success{background:rgba(21,128,61,.08);border-color:rgba(21,128,61,.35);color:#166534}
+
+@media(max-width:800px){
+  .shell{width:calc(100% - 24px)}
+  .section-heading{display:block}
+  .section-intro{margin-top:10px}
+  .service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .chauffeur-assurance{grid-template-columns:1fr;gap:18px}
+  .steps-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .trip-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:650px){
+  .admin-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .admin-booking-controls{grid-template-columns:1fr 1fr}
+  .admin-booking-controls .actions{grid-column:1/-1}
+  .admin-toolbar select{max-width:none;width:100%}
+}
+@media(max-width:560px){
+  .hero{margin:8px 0 16px;padding:17px 16px;border-radius:16px}
+  .hero h1{font-size:clamp(25px,7vw,32px)}
+  .hero h1 br{display:initial}
+  .hero p{font-size:13px;line-height:1.6}
+  .chauffeur-fleet-section,.chauffeur-services,.chauffeur-assurance,.chauffeur-steps,.chauffeur-faq{margin:27px 0 32px}
+  .fleet,.grid,.auth{grid-template-columns:1fr;gap:13px}
   .field.wide{grid-column:auto}
-  .topbar{align-items:center}
-  .topbar>a:last-child{max-width:124px;text-align:right;line-height:1.4}
-  .hero{padding:18px 15px;margin:13px 0}
-  .booking{padding:16px}
-  .actions{flex-direction:column}
+  .vehicle{padding:14px}
+  .vehicle-photo{height:190px}
+  .service-grid{grid-template-columns:1fr}
+  .service-card{padding:16px}
+  .chauffeur-assurance{padding:17px}
+  .assurance-grid,.steps-grid{grid-template-columns:1fr}
+  .booking{padding:17px;margin-top:18px}
+  .booking h2{font-size:24px}
+  .trip-summary{padding:13px}
+  .trip-summary-grid{grid-template-columns:1fr 1fr}
+  .section-title{font-size:26px}
+  .section-heading{margin-top:26px}
+  .actions{flex-direction:column;align-items:stretch}
   .actions .btn,.actions .ghost{width:100%}
 }
 @media(hover:none),(pointer:coarse){
-  .vehicle:hover,.booking:hover,.account-box:hover{transform:none}
+  .vehicle:hover,.service-card:hover,.assurance-grid article:hover,.steps-grid article:hover{transform:none}
 }
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{transition:none!important;animation:none!important}
 }
-
-
-
-/* Compact horizontal Chauffeur introduction card */
-.hero{
-  width:100%!important;
-  max-width:100%!important;
-  margin:10px 0 13px!important;
-  padding:12px 24px!important;
-  display:grid!important;
-  grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);
-  grid-template-rows:auto auto;
-  column-gap:34px;
-  align-items:center;
-}
-.hero .eyebrow{grid-column:1;grid-row:1;align-self:end}
-.hero h1{
-  grid-column:1;grid-row:2;
-  font-size:clamp(27px,3.2vw,38px)!important;
-  line-height:1.02!important;
-  margin:3px 0 0!important;
-}
-.hero h1 br{display:none}
-.hero h1:after{margin-top:7px!important}
-.hero p{
-  grid-column:2;grid-row:1/3;
-  align-self:center;
-  max-width:100%!important;
-  font-size:12px!important;
-  line-height:1.45!important;
-  margin:0!important;
-}
-@media(max-width:700px){
-  .hero{
-    display:block!important;
-    margin:10px 0 12px!important;
-    padding:11px 15px!important;
-  }
-  .hero h1{
-    font-size:clamp(28px,7.8vw,36px)!important;
-    margin:4px 0 7px!important;
-  }
-  .hero h1 br{display:initial}
-  .hero p{font-size:11.5px!important;line-height:1.4!important}
-}
 </style>
-<link rel="stylesheet" href="/site-ux.css?v=20261124-fix23">
-<link rel="stylesheet" href="/header-modern.css?v=20261124-fix22">
+<link rel="stylesheet" href="/site-theme.css?v=20261125-up1">
+<link rel="stylesheet" href="/site-ux.css?v=20261125-up1">
+<link rel="stylesheet" href="/header-modern.css?v=20261125-up1">
 </head>
 <body>
 <header class="head"><div class="wrap headin">
@@ -539,149 +609,5 @@ $('requestForm').onsubmit=async e=>{e.preventDefault();hide('bookingNotice');con
  if(account&&!account.dataset.bound){account.dataset.bound='1';account.addEventListener('click',()=>document.getElementById('booking')?.scrollIntoView({behavior:'smooth',block:'start'}))}
 })();
 </script>
-<style id="chauffeur-intro-compact-final">
-/* Match the Inventory introduction card: compact, image-free dark glass with clean stacked typography. */
-html body .hero{
-  position:relative!important;display:block!important;isolation:isolate!important;
-  width:100%!important;max-width:none!important;min-height:0!important;
-  margin:12px 0 22px!important;padding:22px 26px!important;
-  overflow:hidden!important;border:1px solid rgba(255,255,255,.14)!important;
-  border-radius:20px!important;
-  background:linear-gradient(120deg,rgba(255,255,255,.075),rgba(255,255,255,.025))!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 12px 30px rgba(0,0,0,.12)!important;
-  -webkit-backdrop-filter:blur(16px) saturate(125%)!important;
-  backdrop-filter:blur(16px) saturate(125%)!important;
-}
-html body .hero::before,html body .hero::after{content:none!important;display:none!important;background-image:none!important}
-html body .hero .eyebrow{display:block!important;margin:0 0 5px!important;font-size:10px!important;line-height:1.2!important;letter-spacing:.2em!important}
-html body .hero h1{
-  display:block!important;margin:0 0 8px!important;
-  font-family:"Playfair Display",Georgia,serif!important;
-  font-size:clamp(27px,3.4vw,42px)!important;line-height:1.12!important;letter-spacing:-.025em!important;
-}
-html body .hero h1 br{display:none!important}
-html body .hero h1:after{margin-top:7px!important}
-html body .hero p{
-  display:block!important;max-width:850px!important;margin:0!important;
-  color:var(--muted)!important;font-family:Manrope,system-ui,sans-serif!important;
-  font-size:14px!important;line-height:1.7!important;
-}
-@media(max-width:560px){
-  html body .hero{margin:8px 0 16px!important;padding:17px 16px!important;border-radius:16px!important}
-  html body .hero h1{font-size:clamp(25px,7vw,32px)!important}
-  html body .hero p{font-size:13px!important;line-height:1.6!important}
-}
-</style>
-<style id="chauffeur-complete-experience">
-.section-heading{display:flex;align-items:end;justify-content:space-between;gap:30px;margin:34px 0 15px}
-.section-title{margin:8px 0 0!important;color:var(--chauffeur-ink)!important;font:600 clamp(27px,3.3vw,39px)/1.12 "Playfair Display",Georgia,serif!important;letter-spacing:-.025em}
-.section-intro{max-width:480px;margin:0!important;color:var(--chauffeur-muted)!important;font-size:13px;line-height:1.75}
-.chauffeur-fleet-section,.chauffeur-services,.chauffeur-assurance,.chauffeur-steps,.chauffeur-faq{margin:34px 0 42px}
-.fleet{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:18px 0 8px}
-.vehicle{padding:12px!important;overflow:hidden}
-.vehicle-photo{height:220px;border-radius:13px;background-size:cover;background-position:center;position:relative;overflow:hidden}
-.vehicle-photo:after{content:"";position:absolute;inset:35% 0 0;background:linear-gradient(transparent,rgba(8,10,12,.58))}
-.vehicle-photo-sedan{background-image:url("https://upload.wikimedia.org/wikipedia/commons/e/ed/2014_Mazda2_%28DJ%29_Genki_hatchback_%282015-08-07%29_01.jpg")}
-.vehicle-photo-suv{background-image:url("https://upload.wikimedia.org/wikipedia/commons/1/1d/2018_Toyota_Land_Cruiser_Prado_%28GDJ150R%29_GXL_wagon_%282018-08-06%29_01.jpg")}
-.vehicle-copy{padding:8px 8px 5px}
-.vehicle h2{margin:8px 0 6px!important;font-size:26px!important}
-.vehicle p{min-height:44px}
-.vehicle-facts{display:flex;gap:8px 18px;flex-wrap:wrap;padding:0;margin:14px 0 16px;list-style:none;color:var(--chauffeur-muted);font-size:11px}
-.vehicle-facts li:before{content:"✓";color:var(--chauffeur-gold);margin-right:6px}
-.vehicle-select{display:flex;width:100%;justify-content:space-between;align-items:center;padding:12px 2px 5px;border:0;border-top:1px solid rgba(255,255,255,.10);background:none;color:#e1cf9f;font:700 12px Manrope,sans-serif;cursor:pointer;text-align:left}
-.vehicle-select span{font-size:18px;transition:transform .25s}
-.vehicle-select:hover span{transform:translateX(5px)}
-.fleet-footnote{color:var(--chauffeur-muted);font-size:10px;line-height:1.6;margin:8px 2px}
-.service-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:18px}
-.service-card,.assurance-grid article,.steps-grid article{padding:19px;border:1px solid rgba(255,255,255,.10);border-radius:16px;background:rgba(18,20,23,.34);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
-@media(max-width:760px){
-  html:not([data-theme="light"]) body{
-    background:linear-gradient(120deg,rgba(7,10,13,.80),rgba(7,10,13,.66)),url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=60') center/cover scroll,#101316!important;
-    background-attachment:scroll!important;
-  }
-  html:not([data-theme="light"]) :is(.hero,.glass,.vehicle,.booking,.account-box,.service-card,.assurance-grid article,.steps-grid article,.chauffeur-assurance){
-    -webkit-backdrop-filter:blur(14px) saturate(135%)!important;
-    backdrop-filter:blur(14px) saturate(135%)!important;
-    background:rgba(20,22,26,.54)!important;
-  }
-}
-.service-icon{width:36px;height:36px;display:grid;place-items:center;border-radius:11px;background:rgba(183,160,106,.10);color:#e0ca91;font-size:19px;margin-bottom:14px}
-.service-card h3,.assurance-grid h3,.steps-grid h3{margin:0 0 7px;color:var(--chauffeur-ink);font:600 18px "Playfair Display",Georgia,serif}
-.service-card p,.assurance-grid p,.steps-grid p{margin:0;color:var(--chauffeur-muted);font-size:12px;line-height:1.7}
-.chauffeur-assurance{display:grid;grid-template-columns:.8fr 1.2fr;gap:34px;align-items:start;padding:25px;border:1px solid rgba(255,255,255,.10);border-radius:20px;background:rgba(18,20,23,.28);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
-.assurance-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.assurance-grid article{padding:15px;background:rgba(255,255,255,.025)}
-.assurance-grid article>span,.steps-grid article>span{display:block;margin-bottom:10px;color:#d6c28e;font-size:10px;font-weight:800;letter-spacing:.16em}
-.chauffeur-steps{padding:0 0 4px}
-.steps-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:18px}
-.steps-grid article{padding:17px;background:rgba(18,20,23,.28)}
-.steps-grid h3{font-size:16px}
-.trip-summary{padding:17px;border:1px solid rgba(183,160,106,.22);border-radius:15px;background:rgba(183,160,106,.055)}
-.trip-summary-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
-.trip-summary-head strong{font:600 19px "Playfair Display",Georgia,serif}
-.trip-summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
-.trip-summary-grid>div{min-width:0}
-.trip-summary-grid small{display:block;color:var(--chauffeur-muted);font-size:10px;margin-bottom:4px}
-.trip-summary-grid span{display:block;color:var(--chauffeur-ink);font-size:12px;line-height:1.5;overflow-wrap:anywhere}
-.trip-summary-note{margin:14px 0 0;color:var(--chauffeur-muted);font-size:10px;line-height:1.6}
-.faq-list{margin-top:17px;border-top:1px solid rgba(255,255,255,.10)}
-.faq-list details{border-bottom:1px solid rgba(255,255,255,.10);padding:16px 2px}
-.faq-list summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:15px;color:var(--chauffeur-ink);font-size:13px;font-weight:700}
-.faq-list summary::-webkit-details-marker{display:none}
-.faq-list summary:after{content:"+";color:#d6c28e;font-size:18px;line-height:1}
-.faq-list details[open] summary:after{content:"−"}
-.faq-list details p{max-width:780px;margin:12px 0 0;color:var(--chauffeur-muted);font-size:12px;line-height:1.75}
-.booking{scroll-margin-top:95px}
-@media(max-width:800px){.section-heading{display:block}.section-intro{margin-top:10px!important}.service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.chauffeur-assurance{grid-template-columns:1fr;gap:18px}.steps-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.trip-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:560px){.chauffeur-fleet-section,.chauffeur-services,.chauffeur-assurance,.chauffeur-steps,.chauffeur-faq{margin:27px 0 32px}.fleet{grid-template-columns:1fr}.vehicle-photo{height:190px}.service-grid{grid-template-columns:1fr}.service-card{padding:16px}.chauffeur-assurance{padding:17px}.assurance-grid{grid-template-columns:1fr}.steps-grid{grid-template-columns:1fr}.trip-summary{padding:13px}.trip-summary-grid{grid-template-columns:1fr 1fr}.section-title{font-size:29px!important}.section-heading{margin-top:26px}}
-@media(hover:hover) and (pointer:fine){.service-card,.assurance-grid article,.steps-grid article{transition:transform .3s,border-color .3s,background .3s}.service-card:hover,.assurance-grid article:hover,.steps-grid article:hover{transform:translateY(-3px);border-color:rgba(183,160,106,.32);background:rgba(255,255,255,.045)}}
-.service-select{display:block;margin-top:13px;padding:10px 0 0;border:0;border-top:1px solid rgba(255,255,255,.09);background:none;color:#ddc994;font:700 11px Manrope,sans-serif;text-align:left;cursor:pointer}
-.service-select:hover{color:#fff}
-.service-card{display:flex;flex-direction:column;align-items:flex-start}
-.service-card p{flex:1}
-</style>
-<style id="chauffeur-customer-admin-upgrade">
-.route-preview{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px;border:1px solid rgba(183,160,106,.2);border-radius:13px;background:rgba(183,160,106,.045)}.route-preview p{margin:5px 0 0;color:var(--chauffeur-muted);font-size:11px;line-height:1.6}.route-preview a{color:#dfcc98;font-size:11px;font-weight:700;white-space:nowrap}.admin-booking p{overflow-wrap:anywhere}
-.admin-head,.admin-toolbar,.admin-driver-form{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
-.admin-head h3,.admin-subsection h3{margin:5px 0 12px;font:600 21px "Playfair Display",Georgia,serif}
-.admin-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:15px 0}
-.admin-stat{padding:13px;border-radius:12px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08)}
-.admin-stat strong{display:block;color:#e3cf9c;font-size:23px}.admin-stat span{font-size:10px;color:var(--chauffeur-muted)}
-.admin-toolbar{margin:14px 0}.admin-toolbar input{flex:1;min-width:180px}.admin-toolbar select{max-width:220px}
-.admin-booking{padding:15px 0;border-top:1px solid rgba(255,255,255,.10)}
-.admin-booking-top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.admin-booking p{margin:5px 0;color:var(--chauffeur-muted);font-size:11px;line-height:1.7}
-.admin-booking-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}
-.admin-booking-controls input,.admin-booking-controls select{min-width:0;min-height:40px;font-size:11px}
-.admin-booking-controls .actions{grid-column:1/-1;margin:0}
-.admin-subsection{margin-top:22px;padding-top:16px;border-top:1px solid rgba(255,255,255,.10)}
-.admin-driver-form input{flex:1;min-width:140px}
-.admin-row{padding:10px 0;border-top:1px solid rgba(255,255,255,.08);font-size:11px;display:flex;justify-content:space-between;align-items:center;gap:10px}
-.customer-action{margin-top:9px;display:flex;gap:8px;flex-wrap:wrap}
-.review-form{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.review-form select,.review-form input{max-width:170px}
-.calendar-day{padding:11px;margin:7px 0;border-left:2px solid #b7a06a;background:rgba(255,255,255,.035);border-radius:0 10px 10px 0}
-@media(max-width:650px){.admin-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.admin-booking-controls{grid-template-columns:1fr 1fr}.admin-booking-controls .actions{grid-column:1/-1}.admin-toolbar select{max-width:none;width:100%}}
-</style>
-<style id="chauffeur-mobile-performance-override">
-@media(max-width:760px){
-  html:not([data-theme="light"]) body :is(.hero,.glass,.vehicle,.booking,.account-box,
-  .service-card,.assurance-grid article,.steps-grid article,.chauffeur-assurance,
-  .route-preview,.trip-summary,.admin-stat,.calendar-day,.notice,
-  input,select,textarea,.ghost){
-    -webkit-backdrop-filter:blur(14px) saturate(135%)!important;
-    backdrop-filter:blur(14px) saturate(135%)!important;
-  }
-  html:not([data-theme="light"]) body :is(.hero,.glass,.vehicle,.booking,.account-box,
-  .service-card,.assurance-grid article,.steps-grid article,.chauffeur-assurance,
-  .admin-stat,.calendar-day){
-    background:rgba(20,22,26,.54)!important;
-    background-color:rgba(20,22,26,.54)!important;
-  }
-  html:not([data-theme="light"]) body :is(input,select,textarea,.ghost){
-    background:rgba(24,26,31,.58)!important;
-    background-color:rgba(24,26,31,.58)!important;
-  }
-}
-</style>
-<script defer src="/site-ux.js?v=20261124-fix19"></script>
+<script defer src="/site-ux.js?v=20261125-up1"></script>
 </body></html>

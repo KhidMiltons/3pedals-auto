@@ -111,7 +111,7 @@ html{min-height:100%;background:transparent!important}
 body{min-height:100vh;display:flex;flex-direction:column;position:relative!important;isolation:isolate!important;background:transparent!important;background-color:transparent!important;color:#f7f4ed}
 body:before{
   content:""!important;display:block!important;position:fixed!important;inset:-10px!important;z-index:-1!important;pointer-events:none!important;
-  background:linear-gradient(110deg,rgba(8,9,11,.42),rgba(8,9,11,.18) 48%,rgba(8,9,11,.42)),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72") center center/cover no-repeat!important;
+  background:linear-gradient(110deg,rgba(8,9,11,.42),rgba(8,9,11,.18) 48%,rgba(8,9,11,.42)),url("/public/assets/hero-backdrop.webp") center center/cover no-repeat!important;
   filter:blur(4px)!important;transform:scale(1.025)!important;
 }
 body:after{content:none!important;display:none!important}
@@ -119,7 +119,7 @@ body:after{content:none!important;display:none!important}
   body:before{
     top:-12px!important;left:-12px!important;right:auto!important;bottom:auto!important;
     width:calc(100vw + 24px)!important;height:calc(100vh + 24px)!important;height:calc(100lvh + 24px)!important;
-    background-image:linear-gradient(110deg,rgba(8,9,11,.42),rgba(8,9,11,.18) 48%,rgba(8,9,11,.42)),url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=60")!important;
+    background-image:linear-gradient(110deg,rgba(8,9,11,.42),rgba(8,9,11,.18) 48%,rgba(8,9,11,.42)),url("/public/assets/hero-backdrop-mobile.webp")!important;
     filter:none!important;
     transform:translate3d(0,0,0)!important;
   }
@@ -470,7 +470,8 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){f
   .featured-grid .card .body{padding:7px!important}
   .featured-grid .card h3{font-size:12px!important;line-height:1.2!important;margin:0 0 4px!important}
   .featured-grid .card .price{font-size:12px!important;margin:0 0 4px!important}
-  .featured-grid .card .tag{font-size:8px!important;padding:2px 4px!important}
+  .featured-grid .card .tags{margin:2px 0 4px!important}
+  .featured-grid .card .tag{font-size:10px!important;padding:0!important}
   .featured-grid .card .card-extra{margin-top:5px!important}
   .featured-grid .card .yard-line{font-size:9px!important;gap:4px!important}
 }
@@ -525,7 +526,9 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){f
   #buy .grid>.card .body{display:block!important;width:100%!important;min-width:0!important;height:auto!important;min-height:0!important;flex:1 0 auto!important;box-sizing:border-box!important;margin:0!important;padding:8px 8px 6px!important;gap:4px!important;overflow:visible!important}
   #buy .grid>.card .body h3{display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:2!important;min-height:0!important;height:auto!important;margin:0 0 2px!important;padding:0!important;font-size:13px!important;line-height:1.18!important;overflow:hidden!important}
   #buy .grid>.card .body .price{display:block!important;margin:0 0 2px!important;padding:0!important;font-size:14px!important;line-height:1.15!important}
-  #buy .grid>.card .body>.tag{display:inline-flex!important;margin:3px 3px 0 0!important;font-size:9px!important;padding:2px 5px!important}
+  #buy .grid>.card .body .tags,
+  #buy .grid>.card .body>.tags{display:flex!important;flex-wrap:wrap!important;align-items:center!important;margin:4px 0 2px!important}
+  #buy .grid>.card .body>.tag{display:inline-flex!important;margin:3px 6px 0 0!important;font-size:10.5px!important;padding:0!important}
   #buy .grid>.card .body .card-extra,#buy .grid>.card .body .yard-line,#buy .grid>.card .body .card-reveal{display:block!important;margin-top:4px!important}
   #buy .grid>.card>.yard-badge{font-size:8px!important;padding:2px 4px!important}
   .featured-grid .card .body,.featured-grid>.card .body{padding:6px 7px!important;margin:0!important;gap:0!important}
@@ -534,7 +537,7 @@ html body :is(.journal-title,.article-title,.editorial-title,.article-head h2){f
   .featured-grid>.card .swatch-photo{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important}
   .featured-grid>.card .body h3{min-height:0!important;margin:0 0 1px!important;font-size:12px!important;line-height:1.15!important}
   .featured-grid>.card .body .price{margin:0!important;font-size:13px!important;line-height:1.12!important}
-  .featured-grid>.card .body>.tag{display:inline-flex!important;margin:3px 3px 0 0!important}
+  .featured-grid>.card .body>.tag{display:inline-flex!important;margin:3px 6px 0 0!important}
   .featured-grid>.card .body .card-extra,.featured-grid>.card .body .yard-line,.featured-grid>.card .body .card-reveal{display:block!important;margin-top:4px!important}
 }
 

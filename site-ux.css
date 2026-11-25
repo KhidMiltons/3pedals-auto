@@ -64,7 +64,7 @@ html[data-theme="light"] body:before,
 html[data-theme="light"] body #dealers-blurred-wallpaper {
   background:
     linear-gradient(125deg, rgba(246, 241, 230, 0.88), rgba(243, 237, 224, 0.78) 50%, rgba(246, 241, 230, 0.90)),
-    url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=72") center center / cover no-repeat !important;
+    url("/public/assets/hero-backdrop.webp") center center / cover no-repeat !important;
   filter: blur(6px) saturate(0.7) brightness(1.06) !important;
 }
 
@@ -73,7 +73,7 @@ html[data-theme="light"] body #dealers-blurred-wallpaper {
   html[data-theme="light"] body #dealers-blurred-wallpaper {
     background:
       linear-gradient(125deg, rgba(246, 241, 230, 0.90), rgba(243, 237, 224, 0.82) 50%, rgba(246, 241, 230, 0.92)),
-      url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=60") center center / cover no-repeat !important;
+      url("/public/assets/hero-backdrop-mobile.webp") center center / cover no-repeat !important;
     filter: none !important;
     transform: none !important;
   }
@@ -435,7 +435,7 @@ html[data-theme="light"] body .steps-grid article > span {
   color: #171512 !important;
 }
 
-html[data-theme="light"] body .tag,
+html[data-theme="light"] body .tag:not(.card .tag):not(#grid .tag):not(#featuredGrid .tag),
 html[data-theme="light"] body #contact .contact-specialties span {
   background: rgba(158, 116, 21, 0.12) !important;
   color: #4f442c !important;
@@ -3556,7 +3556,7 @@ html[data-theme="light"] .ux-map-section {
 
 .ux-map-head h2 {
   margin: 4px 0 4px;
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: "Sora", "Manrope", system-ui, sans-serif;
   font-size: clamp(22px, 2.8vw, 30px);
   line-height: 1.15;
 }
@@ -5247,7 +5247,7 @@ html[data-theme="light"] .ux-filter-menu-head {
 
 .ux-filter-menu-title {
   margin: 0;
-  font-family: "Playfair Display", Georgia, serif;
+  font-family: "Sora", "Manrope", system-ui, sans-serif;
   font-size: 19px;
   font-weight: 700;
   line-height: 1.15;
@@ -6988,6 +6988,88 @@ html[data-theme="light"] .yard-card-open-link {
     min-height: 34px !important;
     padding: 6px 8px !important;
     font-size: 11px !important;
+  }
+}
+
+/* Unified Borderless Typographic Vehicle Card Spec Line (Home, Inventory, Yard) */
+#grid .card .tags,
+#featuredGrid .card .tags,
+.card[data-yard-car] .tags {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 2px 0 !important;
+  margin: 4px 0 0 !important;
+  padding: 0 !important;
+}
+
+#grid .card .tag:not(.sold-status-pill),
+#featuredGrid .card .tag:not(.sold-status-pill),
+.card[data-yard-car] .tag:not(.sold-status-pill) {
+  display: inline-flex !important;
+  align-items: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: rgba(235, 228, 214, 0.78) !important;
+  font: 500 12px/1.35 "Manrope", system-ui, sans-serif !important;
+  font-variant-numeric: tabular-nums !important;
+  letter-spacing: 0.01em !important;
+}
+
+#grid .card .tag:not(.sold-status-pill):not(:last-child)::after,
+#featuredGrid .card .tag:not(.sold-status-pill):not(:last-child)::after,
+.card[data-yard-car] .tag:not(.sold-status-pill):not(:last-child)::after {
+  content: "·";
+  margin: 0 7px;
+  color: rgba(215, 189, 131, 0.65);
+  font-weight: 700;
+}
+
+html[data-theme="light"] #grid .card .tag:not(.sold-status-pill),
+html[data-theme="light"] #featuredGrid .card .tag:not(.sold-status-pill),
+html[data-theme="light"] .card[data-yard-car] .tag:not(.sold-status-pill) {
+  color: #5a5244 !important;
+  background: transparent !important;
+  border: 0 !important;
+}
+
+html[data-theme="light"] #grid .card .tag:not(.sold-status-pill):not(:last-child)::after,
+html[data-theme="light"] #featuredGrid .card .tag:not(.sold-status-pill):not(:last-child)::after,
+html[data-theme="light"] .card[data-yard-car] .tag:not(.sold-status-pill):not(:last-child)::after {
+  color: rgba(138, 114, 62, 0.72);
+}
+
+#grid .card .tag.sold-status-pill,
+#featuredGrid .card .tag.sold-status-pill,
+.card[data-yard-car] .tag.sold-status-pill {
+  padding: 2px 8px !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(248, 113, 113, 0.55) !important;
+  font: 700 10.5px/1.2 "Manrope", system-ui, sans-serif !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+}
+
+@media (max-width: 560px) {
+  #grid .card .tags,
+  #featuredGrid .card .tags,
+  .card[data-yard-car] .tags {
+    margin: 3px 0 0 !important;
+  }
+  #grid .card .tag:not(.sold-status-pill),
+  #featuredGrid .card .tag:not(.sold-status-pill),
+  .card[data-yard-car] .tag:not(.sold-status-pill) {
+    font-size: 11px !important;
+    line-height: 1.3 !important;
+  }
+  #grid .card .tag:not(.sold-status-pill):not(:last-child)::after,
+  #featuredGrid .card .tag:not(.sold-status-pill):not(:last-child)::after,
+  .card[data-yard-car] .tag:not(.sold-status-pill):not(:last-child)::after {
+    margin: 0 5px;
   }
 }
 
