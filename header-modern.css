@@ -1060,30 +1060,30 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     align-items: stretch !important;
     justify-content: flex-start !important;
     flex-wrap: nowrap !important;
-    width: 215px !important;
+    width: fit-content !important;
+    min-width: 185px !important;
     max-width: 85vw !important;
     max-height: min(74dvh, 420px) !important;
     margin: 0 !important;
     overflow-x: hidden !important;
     overflow-y: auto !important;
-    padding: 8px 10px 10px !important;
+    padding: 8px 9px 9px !important;
     gap: 2px !important;
     border-radius: 16px !important;
-    border: 1px solid rgba(229, 185, 111, 0.30) !important;
-    background: #0e0e11 !important;
-    background-color: rgba(14, 14, 17, 0.99) !important;
+    border: 1px solid rgba(255, 255, 255, 0.16) !important;
+    background: rgba(18, 18, 21, 0.68) !important;
+    background-color: rgba(18, 18, 21, 0.68) !important;
     background-image: linear-gradient(
       165deg,
-      rgba(26, 26, 31, 0.985),
-      rgba(14, 14, 17, 0.995) 54%,
-      rgba(24, 21, 16, 0.99)
+      rgba(255, 255, 255, 0.11),
+      rgba(18, 18, 21, 0.56) 46%,
+      rgba(229, 185, 111, 0.06)
     ) !important;
     box-shadow:
-      0 24px 50px -10px rgba(0, 0, 0, 0.85),
-      0 0 0 1px rgba(255, 255, 255, 0.08),
-      inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
-    -webkit-backdrop-filter: blur(22px) saturate(140%) !important;
-    backdrop-filter: blur(22px) saturate(140%) !important;
+      0 22px 48px -10px rgba(0, 0, 0, 0.62),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.14) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(165%) !important;
+    backdrop-filter: blur(22px) saturate(165%) !important;
     opacity: 1 !important;
     visibility: visible !important;
     transform-origin: top right !important;
@@ -1092,13 +1092,13 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
 
   html[data-ux="1"][data-theme="light"][lang] body > header :is(nav#nav, nav#garageSectionNav, nav#chauffeurNav, nav.ux-subnav-links),
   html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top nav.ux-subnav-links {
-    background: #fdfaf3 !important;
-    background-color: rgba(253, 250, 243, 0.99) !important;
-    background-image: linear-gradient(165deg, rgba(255, 255, 255, 0.99), rgba(246, 240, 227, 0.99)) !important;
-    border-color: rgba(138, 114, 62, 0.36) !important;
+    background: rgba(252, 248, 240, 0.72) !important;
+    background-color: rgba(252, 248, 240, 0.72) !important;
+    background-image: linear-gradient(165deg, rgba(255, 255, 255, 0.78), rgba(246, 240, 227, 0.64)) !important;
+    border-color: rgba(138, 114, 62, 0.30) !important;
     box-shadow:
-      0 24px 50px -10px rgba(48, 38, 18, 0.32),
-      inset 0 1px 0 rgba(255, 255, 255, 0.98) !important;
+      0 22px 48px -10px rgba(48, 38, 18, 0.24),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.85) !important;
   }
 
   html[data-ux="1"][data-theme][lang] body > header :is(nav#nav.is-open, nav#nav.mobile-menu-open, nav#garageSectionNav.is-open, nav#chauffeurNav.is-open, nav.ux-subnav-links.is-open),
