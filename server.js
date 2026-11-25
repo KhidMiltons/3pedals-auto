@@ -104,7 +104,7 @@ const SEARCH_MODE_INSTRUCTIONS = [
 
 const KENYA_IMPORT_SEARCH_INSTRUCTIONS = [
   "Answer only the four questions in the user's Kenya 2026 ordinary used 1,500cc petrol passenger-car import request: (1) binding age wording and first-registration calculation; (2) RHD and exceptions; (3) import duty, excise, VAT, IDF and RDL rates, with bases only where expressly supported; (4) pre-export inspection and exact destination-inspection triggers.",
-  "Use current official KRA/KEBS sources first. Search narrowly and open only the most relevant official pages. Keep the complete answer under 700 words, with four numbered sections. For each section give the official document title, displayed publication/revision date (or say 'undated live page'), and a clickable source URL. Separate draft/conflicting guidance.",
+  "Use current official KRA/KEBS sources first. Search narrowly and open only the most relevant official pages. Keep the complete answer under 450 words, with four numbered sections. For each section give the official document title, displayed publication/revision date (or say 'undated live page'), and a clickable source URL. Separate draft/conflicting guidance. Use compact wording so all four sections are completed; do not spend words repeating the question.",
   "Age: quote KRA's exact phrase 'less than 8 years old from the year of first registration'. Do not calculate, derive, or illustrate a cutoff; do not define 'older than eight'; do not resolve the exactly-eight-year boundary or invent a calendar-year or anniversary method. State that the source does not specify the calculation method and that the boundary is unresolved if no binding instrument resolves it.",
   "RHD: say only that KRA's procedure states the vehicle must be right-hand drive and that this page does not set out an exemption process or discuss exceptions. Do not claim no exceptions exist or that no other notice was found.",
   "Taxes: verify rates against current KRA/legal sources. KRA procedure lists import duty 25%, VAT 16%, IDF 3.5%, RDL 2%, and 20% excise for petrol spark-ignition vehicles over 1,000cc up to 1,500cc. Do not attach a tax base unless the source assigns it to that specific tax. Flag older KRA FAQ rates IDF 2% and RDL 1.5% as conflicting; do not silently resolve. Do not claim a publication date for an undated page.",
@@ -907,10 +907,12 @@ app.post("/api/chat", async (req, res) => {
     messages,
     temperature: requestedMode === "fast" ? 0.1 : 0.4,
     // GPT-OSS 120B supports only low/medium/high; low is already its minimum.
-    // Keep Search's total completion budget tight to reduce daily token use.
+    // Keep ordinary Search lean; allow the four-part Kenya import audit enough room to finish.
     reasoning_effort: "low",
     reasoning_format: "hidden",
-    max_completion_tokens: effectiveMode === "search" ? 650 : 1400,
+    max_completion_tokens: effectiveMode === "search"
+      ? (isKenyaVehicleImportQuestion(lastUserMsg) ? 1000 : 650)
+      : 1400,
   };
 
   // Groq's browser_search tool replaces Gemini/Google Search grounding for Search mode.
