@@ -180,6 +180,31 @@ function removeUnverifiedKenyaMarkdownLinks(text, verifiedSources) {
   });
 }
 
+function sanitizeKenyaRhdClaims(text) {
+  const safeStatement = "KRA's procedure states that the vehicle must be right-hand drive; that page does not set out an exemption process or discuss exceptions. The wider position on any exceptions is not established by that page.";
+  const patterns = [
+    /no other official KRA\\s*[/&]\\s*KEBS notice was found/i,
+    /no other official (?:KRA|KEBS)(?:\\s*[/&]\\s*(?:KRA|KEBS))? notice was found/i,
+    /(?:there are|there're) no (?:possible )?(?:current )?(?:RHD|right[- ]hand drive)[ -]?(?:exceptions|exemptions)/i,
+    /no (?:current )?(?:RHD|right[- ]hand drive)[ -]?(?:exceptions|exemptions) (?:exist|apply)/i,
+    /(?:RHD|right[- ]hand drive).{0,70}no exceptions or exemptions/i,
+    /no (?:official )?(?:RHD |right[- ]hand drive )?exemptions?\\s+(?:exists?|applies?)/i,
+    /no official exemption (?:exists?|applies?)/i,
+    /no other (?:official )?(?:RHD )?(?:exception|exemption)/i,
+    /no separate (?:KEBS|NTSA|official) notice.{0,120}(?:provides?|lists?|contains?).{0,80}exemptions?/i,
+    /no other current (?:KRA,? )?(?:KEBS|NTSA|official).{0,100}(?:notice|instrument).{0,100}(?:provides?|lists?|contains?).{0,80}exemption/i,
+  ];
+  let changed = false;
+  const output = String(text || "").split(/(?<=[.!?])\\s+|\\n+/).map((sentence) => {
+    if (patterns.some((pattern) => pattern.test(sentence))) {
+      changed = true;
+      return safeStatement;
+    }
+    return sentence;
+  }).join("\\n");
+  return { text: output, changed };
+}
+
 function findKenyaImportAnswerIssues(text) {
   const value = String(text || "").replace(/\r/g, "");
   const issues = new Set();
@@ -815,6 +840,15 @@ app.post("/api/chat", async (req, res) => {
     effectiveMode = roleKey === "yard_locator" || shouldRouteToMaps(lastUserMsg) ? "maps" : "chat";
   }
 
+  if (requestedMode === "auto" && isKenyaVehicleImportQuestion(lastUserMsg)) {
+    return res.json({
+      reply: "This is a current Kenyan vehicle-import rules question. Auto mode does not verify current KRA/KEBS instruments, tax rates or source links, so I won't generate legal or tax figures here. Please use Search mode for this question and check each cited instrument directly. In particular, do not rely on an Auto-mode answer for vehicle-age calculations, RHD exceptions, tax bases or destination-inspection rules.",
+      model: "3 Pedals Auto source-safety check",
+      groundingMode: "auto",
+      groundingSources: [],
+    });
+  }
+
   let osmPlaces = [];
   if (effectiveMode === "maps") {
     try {
@@ -902,8 +936,11 @@ app.post("/api/chat", async (req, res) => {
       });
       const reply = String(geminiResponse?.text || "").trim();
       const groundingSources = extractGeminiSearchSources(geminiResponse);
-      const finalReply =
+      let finalReply =
         reply || "I could not generate a response for that request. Please try rephrasing.";
+      if (effectiveMode === "search" && isKenyaVehicleImportQuestion(lastUserMsg)) {
+        finalReply = sanitizeKenyaRhdClaims(finalReply).text;
+      }
       const hasMarkdownSourceLinks = /\[[^\]]+\]\(https?:\/\/[^)]+\)/i.test(finalReply);
       const displayedSources = effectiveMode === "search" && isKenyaVehicleImportQuestion(lastUserMsg)
         ? groundingSources.filter((source) => {
@@ -1111,6 +1148,9 @@ app.post("/api/chat", async (req, res) => {
     }
 
     let finalReply = reply || "I could not generate a response for that request. Please try rephrasing.";
+    if (isKenyaImportSearch) {
+      finalReply = sanitizeKenyaRhdClaims(finalReply).text;
+    }
     if (isKenyaImportSearch) {
       finalReply = removeUnverifiedKenyaMarkdownLinks(finalReply, groundingSources);
     }
