@@ -207,10 +207,13 @@ function sanitizeKenyaRhdClaims(text) {
     const rhdClaim = patterns.slice(5).some((pattern) => pattern.test(sentence));
     if (ageClaim || rhdClaim) {
       changed = true;
-      return /\b(?:RHD|right[- ]hand drive|exemptions?|exceptions?|waivers?)\b/i.test(sentence) ? safeRhdStatement : safeAgeStatement;
+      if (ageClaim) return safeAgeStatement;
+      return /\b(?:must be|states? that the vehicle must|vehicle must be)\b[^.!?]{0,60}\b(?:right[- ]hand drive|RHD)\b/i.test(sentence)
+        ? safeRhdStatement
+        : "";
     }
     return sentence;
-  }).filter((sentence, index, all) => index === 0 || sentence.trim() !== all[index - 1].trim()).join("\n");
+  }).filter((sentence) => sentence.trim()).filter((sentence, index, all) => index === 0 || sentence.trim() !== all[index - 1].trim()).join("\n");
   return { text: output, changed };
 }
 
