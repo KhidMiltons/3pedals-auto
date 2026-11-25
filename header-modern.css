@@ -928,6 +928,28 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     padding: 0 !important;
     border-radius: 16px !important;
     border: 1px solid rgba(255, 255, 255, 0.24) !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    box-shadow:
+      0 10px 28px rgba(0, 0, 0, 0.16),
+      inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    isolation: auto !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header::before,
+  html[data-ux="1"][data-theme][lang] body > header.head::before,
+  html[data-ux="1"][data-theme][lang] body > header.top::before,
+  html[data-ux="1"][data-theme][lang] body > header.site-header::before,
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top::before {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    border-radius: inherit !important;
+    z-index: -1 !important;
+    pointer-events: none !important;
     background: rgba(24, 27, 32, 0.34) !important;
     background-color: rgba(24, 27, 32, 0.34) !important;
     background-image: linear-gradient(
@@ -936,9 +958,6 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
       rgba(255, 255, 255, 0.04) 44%,
       rgba(215, 189, 131, 0.09)
     ) !important;
-    box-shadow:
-      0 10px 28px rgba(0, 0, 0, 0.16),
-      inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
     -webkit-backdrop-filter: blur(20px) saturate(145%) !important;
     backdrop-filter: blur(20px) saturate(145%) !important;
   }
@@ -958,13 +977,23 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
   html[data-ux="1"][data-theme="light"][lang] body > header.top,
   html[data-ux="1"][data-theme="light"][lang] body > header.site-header,
   html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top {
-    background: linear-gradient(135deg, rgba(255, 253, 248, 0.84), rgba(248, 242, 230, 0.78)) !important;
-    background-color: rgba(255, 253, 248, 0.82) !important;
-    background-image: linear-gradient(135deg, rgba(255, 253, 248, 0.84), rgba(248, 242, 230, 0.78)) !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
     border: 1px solid rgba(138, 114, 62, 0.28) !important;
     box-shadow:
       0 10px 26px rgba(48, 38, 18, 0.10),
       inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+  }
+
+  html[data-ux="1"][data-theme="light"][lang] body > header::before,
+  html[data-ux="1"][data-theme="light"][lang] body > header.head::before,
+  html[data-ux="1"][data-theme="light"][lang] body > header.top::before,
+  html[data-ux="1"][data-theme="light"][lang] body > header.site-header::before,
+  html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top::before {
+    background: linear-gradient(135deg, rgba(255, 253, 248, 0.84), rgba(248, 242, 230, 0.78)) !important;
+    background-color: rgba(255, 253, 248, 0.82) !important;
+    background-image: linear-gradient(135deg, rgba(255, 253, 248, 0.84), rgba(248, 242, 230, 0.78)) !important;
   }
 
   html[data-ux="1"][data-theme][lang] body > header > .wrap,
@@ -1071,19 +1100,20 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     gap: 2px !important;
     border-radius: 16px !important;
     border: 1px solid rgba(255, 255, 255, 0.16) !important;
-    background: rgba(18, 18, 21, 0.68) !important;
-    background-color: rgba(18, 18, 21, 0.68) !important;
+    background: rgba(12, 12, 14, 0.85) !important;
+    background-color: rgba(12, 12, 14, 0.85) !important;
     background-image: linear-gradient(
       165deg,
-      rgba(255, 255, 255, 0.11),
-      rgba(18, 18, 21, 0.56) 46%,
-      rgba(229, 185, 111, 0.06)
+      rgba(255, 255, 255, 0.08),
+      rgba(12, 12, 14, 0.82) 48%,
+      rgba(229, 185, 111, 0.05)
     ) !important;
     box-shadow:
-      0 22px 48px -10px rgba(0, 0, 0, 0.62),
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.14) !important;
-    -webkit-backdrop-filter: blur(22px) saturate(165%) !important;
-    backdrop-filter: blur(22px) saturate(165%) !important;
+      0 24px 54px -10px rgba(0, 0, 0, 0.74),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.12) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
+    backdrop-filter: blur(28px) saturate(180%) !important;
+    isolation: auto !important;
     opacity: 1 !important;
     visibility: visible !important;
     transform-origin: top right !important;
@@ -1092,13 +1122,13 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
 
   html[data-ux="1"][data-theme="light"][lang] body > header :is(nav#nav, nav#garageSectionNav, nav#chauffeurNav, nav.ux-subnav-links),
   html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top nav.ux-subnav-links {
-    background: rgba(252, 248, 240, 0.72) !important;
-    background-color: rgba(252, 248, 240, 0.72) !important;
-    background-image: linear-gradient(165deg, rgba(255, 255, 255, 0.78), rgba(246, 240, 227, 0.64)) !important;
-    border-color: rgba(138, 114, 62, 0.30) !important;
+    background: rgba(252, 248, 240, 0.88) !important;
+    background-color: rgba(252, 248, 240, 0.88) !important;
+    background-image: linear-gradient(165deg, rgba(255, 255, 255, 0.88), rgba(246, 240, 227, 0.84)) !important;
+    border-color: rgba(138, 114, 62, 0.34) !important;
     box-shadow:
-      0 22px 48px -10px rgba(48, 38, 18, 0.24),
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.85) !important;
+      0 24px 54px -10px rgba(48, 38, 18, 0.28),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.90) !important;
   }
 
   html[data-ux="1"][data-theme][lang] body > header :is(nav#nav.is-open, nav#nav.mobile-menu-open, nav#garageSectionNav.is-open, nav#chauffeurNav.is-open, nav.ux-subnav-links.is-open),
@@ -1334,7 +1364,19 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     min-height: 30px !important;
     font-size: 11.5px !important;
     border-radius: 8px !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    background: rgba(0, 0, 0, 0.44) !important;
+    background-color: rgba(0, 0, 0, 0.44) !important;
+    color: #f4f0e8 !important;
     justify-content: center !important;
+  }
+
+  html[data-ux="1"][data-theme="light"][lang] body > header :is(nav#nav, nav#garageSectionNav, nav#chauffeurNav, nav.ux-subnav-links) .ux-drawer-controls .ux-theme-btn,
+  html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top nav.ux-subnav-links .ux-drawer-controls .ux-theme-btn {
+    border-color: rgba(138, 114, 62, 0.24) !important;
+    background: rgba(255, 255, 255, 0.72) !important;
+    background-color: rgba(255, 255, 255, 0.72) !important;
+    color: #171512 !important;
   }
 
   html[data-ux="1"][data-theme][lang] body > header .ux-drawer-controls .ux-theme-btn svg {
@@ -1357,6 +1399,16 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     padding: 2px !important;
     gap: 2px !important;
     border-radius: 8px !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    background: rgba(0, 0, 0, 0.44) !important;
+    background-color: rgba(0, 0, 0, 0.44) !important;
+  }
+
+  html[data-ux="1"][data-theme="light"][lang] body > header :is(nav#nav, nav#garageSectionNav, nav#chauffeurNav, nav.ux-subnav-links) .ux-drawer-controls .ux-lang-switch,
+  html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top nav.ux-subnav-links .ux-drawer-controls .ux-lang-switch {
+    border-color: rgba(138, 114, 62, 0.24) !important;
+    background: rgba(255, 255, 255, 0.72) !important;
+    background-color: rgba(255, 255, 255, 0.72) !important;
   }
 
   html[data-ux="1"][data-theme][lang] body > header :is(nav#nav, nav#garageSectionNav, nav#chauffeurNav, nav.ux-subnav-links) .ux-drawer-controls .ux-lang-switch button,
