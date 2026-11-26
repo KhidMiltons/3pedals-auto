@@ -1123,6 +1123,24 @@ app.post("/api/chat", async (req, res) => {
     // can make GPT-OSS emit an invalid tool payload and trigger Groq's
     // "failed_generation" parsing error before a response is produced.
     requestBody.tool_choice = "auto";
+    // Restrict Kenya import-law research to primary Kenyan government/legal domains.
+    // This reduces irrelevant page retrieval while preserving the KRA/KEBS evidence
+    // needed by the deterministic answer safeguards below.
+    if (isKenyaImportSearch) {
+      requestBody.search_settings = {
+        include_domains: [
+          "kra.go.ke",
+          "kebs.org",
+          "mygov.go.ke",
+          "ntsa.go.ke",
+          "kenyalaw.org",
+          "new.kenyalaw.org",
+          "parliament.go.ke",
+          "treasury.go.ke",
+          "kenya.go.ke",
+        ],
+      };
+    }
   }
 
   try {
@@ -1318,10 +1336,12 @@ app.post("/api/chat", async (req, res) => {
     ) {
       const evidenceSources = groundingSources
         .filter((source) => source.snippet && source.snippet.trim().length >= 40)
-        .slice(0, 5);
+        .slice(0, 4);
+      // Recovery is a rare fallback, so keep its evidence payload deliberately small.
+      // The original browser-search call already did the research; do not resend long excerpts.
       const evidenceText = evidenceSources
         .map((source, index) =>
-          `[Source ${index + 1}] ${source.title}\nURL: ${source.uri}\nExcerpt: ${source.snippet}`
+          `[Source ${index + 1}] ${source.title}\nURL: ${source.uri}\nExcerpt: ${source.snippet.slice(0, 800)}`
         )
         .join("\n\n");
       const evidenceLength = evidenceText.length;
@@ -1356,7 +1376,7 @@ app.post("/api/chat", async (req, res) => {
             temperature: 0.1,
             reasoning_effort: "low",
             reasoning_format: "hidden",
-            max_completion_tokens: 1000,
+            max_completion_tokens: 800,
           };
           const recovery = await sendGroqRequest(recoveryBody);
           if (recovery.response.ok) {
