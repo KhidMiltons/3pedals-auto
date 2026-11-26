@@ -263,7 +263,8 @@ function sanitizeKenyaTaxAndFaqClaims(text) {
   value = value.replace(/\b(?:this )?older FAQ (?:is|was) (?:not )?the current binding instrument\b/gi,
     "this earlier KRA FAQ lists different IDF and RDL rates; its date and the status and legal effect of the difference are not established by these sources");
   value = value.replace(/\bnot the current binding instrument\b/gi,
-  value = value.replace(/[^.!?\\n]*(?:earlier|older) KRA FAQ[^.!?\\n]*(?:not|is not|isn\x27t)[^.!?\\n]*(?:binding|current)[^.!?\\n]*[.!?]?/gi,
+    "its date and legal effect are not established by the sources checked");
+  value = value.replace(/[^.!?\n]*(?:earlier|older) KRA FAQ[^.!?\n]*(?:not|is not|isn\x27t)[^.!?\n]*(?:binding|current)[^.!?\n]*[.!?]?/gi,
     "An earlier KRA FAQ lists different IDF and RDL rates (2% and 1.5%); its publication date and the status and legal effect of the difference are not established by the sources checked.");
   // The KEBS notice describes document validation where no CoR accompanies
   // the vehicle, and says vehicles with validated import documents undergo
