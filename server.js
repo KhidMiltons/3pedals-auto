@@ -220,13 +220,32 @@ function sanitizeKenyaRhdClaims(text) {
 
 function sanitizeKenyaTaxAndFaqClaims(text) {
   let value = String(text || "");
-  value = value.replace(/customs value\s*\(\s*implied\s*\)/gi, "individual tax base not specified in this source");
-  value = value.replace(/\b(customs value)\s*[-–—]?\s*(implied|inferred)\b/gi, "individual tax base not specified in this source");
+
+  // The KRA procedure page lists rates and says taxes are based on customs
+  // value generally, but does not assign an individual base to each listed tax.
+  // Normalize the basis column for the five requested taxes rather than
+  // allowing a model to infer a tax-specific base from that general wording.
+  const taxRow = /^(\s*\|\s*)(Import Duty|Excise Duty|Value[- ]Added Tax|VAT|Import Declaration Fee|IDF|Railway Development Levy|RDL)(\b[^|]*\|[^|]*\|)([^|]*)(\|.*)$/i;
+  value = value.split("\n").map((line) => {
+    if (!taxRow.test(line)) return line;
+    return line.replace(taxRow, (_match, start, tax, middle, _basis, end) =>
+      `${start}${tax}${middle} Individual tax base not specified in this source ${end}`);
+  }).join("\n");
+
+  value = value.replace(/customs value\s*\(\s*(?:implied|inferred)\b[^)]*\)/gi,
+    "individual tax base not specified in this source");
+  value = value.replace(/\b(customs value)\s*[-–—]?\s*(implied|inferred)\b/gi,
+    "individual tax base not specified in this source");
   value = value.replace(/\b(?:archived|archived,?\s+undated)\b/gi, "older");
+
+  // Both the live KRA procedure page and the FAQ are undated; do not infer
+  // their relative publication dates or legal status.
+  value = value.replace(/\b(?:older|earlier) than (?:the )?(?:current )?(?:KRA )?(?:procedure|procedure page|procedures for motor vehicle page)\b/gi,
+    "undated; its date relative to the KRA procedure page is not established");
   value = value.replace(/\b(?:this )?older FAQ (?:is|was) (?:not )?the current binding instrument\b/gi,
-    "this older KRA FAQ lists different IDF and RDL rates; the status and legal effect of the difference are not established by these sources");
+    "this earlier KRA FAQ lists different IDF and RDL rates; its date and the status and legal effect of the difference are not established by these sources");
   value = value.replace(/\bnot the current binding instrument\b/gi,
-    "its status and legal effect are not established by the sources checked");
+    "its date and legal effect are not established by the sources checked");
   return value;
 }
 
