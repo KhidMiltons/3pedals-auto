@@ -7073,6 +7073,478 @@ html[data-theme="light"] .card[data-yard-car] .tag:not(.sold-status-pill):not(:l
   }
 }
 
+/* ===== 2026-11-26 Feature Upgrades: Hero Inspection CTA, About FAQ, Quick Filter Bar, Keyword Search, Preloader & Garage Expert FAQ ===== */
+html:not([data-theme="light"]) #home .showroom-actions .showroom-inspection {
+  background: linear-gradient(135deg, #e7c97e 0%, #c89d3c 100%) !important;
+  color: #15120d !important;
+  border: 1px solid rgba(255, 240, 198, 0.72) !important;
+  font-weight: 800 !important;
+  box-shadow: 0 10px 26px rgba(199, 159, 62, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.45) !important;
+}
+
+html[data-theme="light"] #home .showroom-actions .showroom-inspection {
+  background: #171512 !important;
+  color: #f6eed9 !important;
+  border: 1px solid #171512 !important;
+  font-weight: 800 !important;
+  box-shadow: 0 10px 24px rgba(23, 21, 18, 0.20) !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html:not([data-theme="light"]) #home .showroom-actions .showroom-inspection:hover {
+    background: linear-gradient(135deg, #f3d893 0%, #d4aa48 100%) !important;
+    border-color: #fff3cf !important;
+    color: #110e09 !important;
+  }
+  html[data-theme="light"] #home .showroom-actions .showroom-inspection:hover {
+    background: #2b261e !important;
+    border-color: #8c6510 !important;
+    color: #ffffff !important;
+  }
+}
+
+/* Contact inspection context banner when routed from Hero */
+.contact-inspection-banner {
+  margin: 0 0 16px;
+  padding: 13px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(215, 189, 131, 0.42);
+  background: rgba(215, 189, 131, 0.12);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 14px;
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+html[data-theme="light"] .contact-inspection-banner {
+  border-color: rgba(138, 114, 62, 0.36);
+  background: rgba(215, 189, 131, 0.16);
+  color: #171512;
+}
+
+.contact-inspection-banner a.btn {
+  min-height: 40px;
+  padding: 8px 14px;
+  font-size: 13px;
+}
+
+/* About FAQ & Garage FAQ shared accessible accordion */
+.about-faq,
+.garage-faq-section {
+  margin: 26px 0 10px;
+  padding: clamp(20px, 3vw, 30px);
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(20, 22, 26, 0.56);
+  -webkit-backdrop-filter: blur(20px) saturate(135%);
+  backdrop-filter: blur(20px) saturate(135%);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+html[data-theme="light"] .about-faq,
+html[data-theme="light"] .garage-faq-section {
+  background: rgba(253, 250, 243, 0.94) !important;
+  border-color: rgba(138, 114, 62, 0.26) !important;
+  color: #171512 !important;
+  box-shadow: 0 12px 32px rgba(48, 38, 18, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+}
+
+.faq-section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px 18px;
+  margin-bottom: 18px;
+}
+
+.faq-section-head h2 {
+  margin: 4px 0 6px;
+  font-size: clamp(22px, 2.8vw, 30px);
+}
+
+.faq-section-head p {
+  margin: 0;
+  max-width: 58ch;
+  color: rgba(244, 240, 232, 0.76);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+html[data-theme="light"] .faq-section-head p {
+  color: #4f483d !important;
+}
+
+.faq-accordion-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+@media (max-width: 760px) {
+  .faq-accordion-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+.faq-item {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.04);
+  overflow: hidden;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.faq-item[open] {
+  border-color: rgba(215, 189, 131, 0.48);
+  background: rgba(215, 189, 131, 0.07);
+}
+
+html[data-theme="light"] .faq-item {
+  border-color: rgba(138, 114, 62, 0.24);
+  background: rgba(255, 255, 255, 0.85);
+}
+
+html[data-theme="light"] .faq-item[open] {
+  border-color: rgba(138, 114, 62, 0.52);
+  background: #ffffff;
+}
+
+.faq-item summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 48px;
+  padding: 13px 16px;
+  font: 700 14.5px/1.38 "Sora", "Manrope", system-ui, sans-serif;
+  cursor: pointer;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary::after {
+  content: "+";
+  content: "+" / "";
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 1px solid rgba(215, 189, 131, 0.36);
+  color: #dfbe6f;
+  font: 700 15px/1 Manrope, sans-serif;
+}
+
+html[data-theme="light"] .faq-item summary::after {
+  color: #8c6510;
+  border-color: rgba(138, 114, 62, 0.40);
+}
+
+.faq-item[open] summary::after {
+  content: "−";
+  content: "−" / "";
+}
+
+.faq-item-body {
+  padding: 0 16px 15px;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: rgba(244, 240, 232, 0.82);
+}
+
+html[data-theme="light"] .faq-item-body {
+  color: #423b31;
+}
+
+.faq-item-tag {
+  display: inline-block;
+  margin-bottom: 6px;
+  font: 700 10.5px/1.1 Manrope, sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #d7bd83;
+}
+
+html[data-theme="light"] .faq-item-tag {
+  color: #8c6510;
+}
+
+/* Home Recently Viewed Section */
+#homeRecentViewedSection.ux-recent-section {
+  margin: 26px 0 8px;
+}
+
+/* Inventory Quick-Filter Chip Bar placed cleanly inside search field container */
+html[data-ux="1"] .inventory-filter-sidebar .ux-filter-field-search .ux-quick-filters,
+.ux-filter-field-search .ux-quick-filters {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  width: 100% !important;
+  overflow-x: visible !important;
+  margin: 8px 0 4px !important;
+  gap: 6px !important;
+}
+
+html[data-ux="1"] .inventory-filter-sidebar .ux-filter-field-search .ux-quick-chip,
+.ux-filter-field-search .ux-quick-chip {
+  display: inline-flex !important;
+  width: auto !important;
+  max-width: 100% !important;
+  flex: 0 0 auto !important;
+  min-height: 36px !important;
+  padding: 6px 11px !important;
+  font-size: 12px !important;
+}
+
+@media (max-width: 1023px) {
+  .ux-keyword-field {
+    grid-column: 1 / -1 !important;
+  }
+}
+
+@media (max-width: 620px) {
+  html[data-ux="1"] .inventory-filter-sidebar .ux-filter-field-search .ux-quick-filters,
+  .ux-filter-field-search .ux-quick-filters {
+    flex-wrap: wrap !important;
+    overflow-x: visible !important;
+    gap: 6px !important;
+  }
+  html[data-ux="1"] .inventory-filter-sidebar .ux-filter-field-search .ux-quick-chip,
+  .ux-filter-field-search .ux-quick-chip {
+    width: auto !important;
+    flex: 0 0 auto !important;
+    min-height: 38px !important;
+    padding: 7px 11px !important;
+    font-size: 12px !important;
+  }
+}
+
+/* Inventory Keyword Search + Live Result Count */
+.ux-keyword-field {
+  gap: 6px;
+}
+
+.ux-keyword-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ux-keyword-count {
+  font-size: 11.5px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #dfbe6f;
+  white-space: nowrap;
+}
+
+html[data-theme="light"] .ux-keyword-count {
+  color: #8c6510;
+}
+
+.ux-keyword-hint {
+  margin: 0;
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: rgba(244, 240, 232, 0.66);
+}
+
+html[data-theme="light"] .ux-keyword-hint {
+  color: #5a5244;
+}
+
+/* Intersection-Observer Image Preloader States */
+.inventory-photo[data-preload-state="pending"] {
+  opacity: 0.35;
+}
+
+.inventory-photo[data-preload-state="loading"] {
+  opacity: 0.65;
+  transition: opacity 0.22s ease;
+}
+
+.inventory-photo[data-preload-state="ready"] {
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+
+/* Garage Ask an Expert Modal + Action CTA */
+.btn.garage-expert-btn {
+  border: 1px solid rgba(215, 189, 131, 0.55) !important;
+  background: rgba(215, 189, 131, 0.14) !important;
+  color: #f5ebd2 !important;
+}
+
+html[data-theme="light"] .btn.garage-expert-btn {
+  background: #ffffff !important;
+  color: #171512 !important;
+  border-color: rgba(138, 114, 62, 0.48) !important;
+}
+
+dialog#askExpertDlg {
+  width: min(560px, calc(100vw - 24px));
+  max-width: 560px;
+  border: 1px solid rgba(215, 189, 131, 0.35);
+  border-radius: 20px;
+  padding: 0;
+  background: rgba(18, 20, 24, 0.96);
+  color: #f4f0e8;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+dialog#askExpertDlg::backdrop {
+  background: rgba(5, 7, 9, 0.68);
+  backdrop-filter: blur(5px);
+}
+
+html[data-theme="light"] dialog#askExpertDlg {
+  background: #fcfaf4;
+  color: #171512;
+  border-color: rgba(138, 114, 62, 0.34);
+}
+
+.ask-expert-shell {
+  padding: 24px;
+}
+
+.ask-expert-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.ask-expert-head h2 {
+  margin: 4px 0 4px;
+  font-size: clamp(21px, 3vw, 26px);
+}
+
+.ask-expert-head p {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: rgba(244, 240, 232, 0.74);
+}
+
+html[data-theme="light"] .ask-expert-head p {
+  color: #4f483d;
+}
+
+.ask-expert-close {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  color: inherit;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+html[data-theme="light"] .ask-expert-close {
+  border-color: rgba(138, 114, 62, 0.32);
+  background: #ffffff;
+}
+
+.ask-expert-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 12px;
+}
+
+.ask-expert-grid .full {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 560px) {
+  .ask-expert-grid {
+    grid-template-columns: 1fr;
+  }
+  .ask-expert-grid .full {
+    grid-column: auto;
+  }
+  .ask-expert-shell {
+    padding: 18px;
+  }
+}
+
+.ask-expert-form label {
+  display: block;
+  margin: 0 0 5px;
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.ask-expert-form input,
+.ask-expert-form select,
+.ask-expert-form textarea {
+  width: 100%;
+  min-height: 42px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  background: rgba(12, 15, 19, 0.65);
+  color: #f4f0e8;
+  font: 500 14px/1.4 Manrope, sans-serif;
+}
+
+html[data-theme="light"] .ask-expert-form input,
+html[data-theme="light"] .ask-expert-form select,
+html[data-theme="light"] .ask-expert-form textarea {
+  background: #ffffff;
+  color: #171512;
+  border-color: rgba(138, 114, 62, 0.34);
+}
+
+.ask-expert-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.ask-expert-status {
+  margin: 10px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+.ask-expert-status.is-error {
+  color: #ff8a7a;
+}
+
+.ask-expert-status.is-success {
+  color: #7ee098;
+}
+
+html[data-theme="light"] .ask-expert-status.is-error {
+  color: #b42318;
+}
+
+html[data-theme="light"] .ask-expert-status.is-success {
+  color: #1f6c36;
+}
+
+
 
 
 

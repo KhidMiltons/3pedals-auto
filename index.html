@@ -591,16 +591,16 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 }
 @media(max-width:380px){#authDlg>.in{padding-left:13px!important;padding-right:13px!important}#authDlg .in>h2{font-size:25px!important}}
 </style>
-<link rel="stylesheet" href="/site-theme.css?v=20261125-up1">
+<link rel="stylesheet" href="/site-theme.css?v=20261126-up2">
 <style id="account-restore-no-flash">html.account-restoring body{visibility:hidden!important;background:#0c0e12!important}html[data-theme="light"].account-restoring body{background:#f4efe4!important}html.account-restoring #accDlg[open]{visibility:visible!important}html.account-restoring #accDlg[open] #accBody{min-height:100px}#accDlg .account-refresh-status{display:none!important}</style>
 <script>try{if(sessionStorage.getItem("3pedals:account-open")==="1")document.documentElement.classList.add("account-restoring")}catch(_){}</script>
 <!-- Optional Meta Pixel is loaded by consent.js only after explicit acceptance. -->
 
 <link rel="stylesheet" href="/dashboard-glass.css?v=20261122-card-matched">
-<link rel="stylesheet" href="/index-theme.css?v=20261125-up1">
+<link rel="stylesheet" href="/index-theme.css?v=20261126-up2">
 <link rel="stylesheet" href="/account-panel.css?v=20261123-fix8">
-<link rel="stylesheet" href="/site-ux.css?v=20261125-up1">
-<link rel="stylesheet" href="/header-modern.css?v=20261125-up1">
+<link rel="stylesheet" href="/site-ux.css?v=20261126-up2">
+<link rel="stylesheet" href="/header-modern.css?v=20261126-up2">
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
@@ -649,6 +649,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="showroom-actions">
         <button class="btn showroom-primary" type="button" data-go="sell">Sell your car</button>
         <a class="btn showroom-secondary" href="/inventory.html">Inventory</a>
+        <button class="btn showroom-inspection" id="heroBookInspectionBtn" type="button">Book an inspection</button>
       </div>
     </div>
   </div>
@@ -664,6 +665,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="project-intro"><div><span class="eyebrow">3 PEDALS AUTO KE</span><h2>Built around cars, people and real work.</h2><p class="meta">Explore our latest vehicle work, inspections, restorations, servicing stories and automotive updates.</p></div><button class="btn alt" data-go="projects">Explore our projects </button></div>
     </div>
   </div>
+  <section id="homeRecentViewedSection" hidden aria-label="Recently viewed vehicles"></section>
 </section>
 
 <section id="buy" hidden>
@@ -762,9 +764,63 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <article class="about-value-card"><span class="about-value-number">03 / SERVICE</span><h3>Support that continues</h3><p>Explore vehicle sales alongside servicing, repairs and inspection support through 3 Pedals Garage.</p></article>
   </div>
   <div class="about-signoff"><span>3 PEDALS AUTO KE</span><p>Automotive excellence reimagined, for those who appreciate the drive.</p></div>
+  <section class="about-faq" id="aboutFaq" aria-labelledby="aboutFaqHeading">
+    <div class="faq-section-head">
+      <div>
+        <span class="eyebrow">FREQUENTLY ASKED QUESTIONS</span>
+        <h2 id="aboutFaqHeading">Common questions on inspections, selling &amp; booking.</h2>
+        <p>Clear answers on how we inspect cars before purchase, how private owners and dealers list vehicles, and how to book an inspection or workshop slot.</p>
+      </div>
+      <button type="button" class="btn alt" data-book-inspection>Book an inspection</button>
+    </div>
+    <div class="faq-accordion-list">
+      <details class="faq-item" open>
+        <summary>What is included in a 3 Pedals pre-purchase vehicle inspection?</summary>
+        <div class="faq-item-body">
+          <span class="faq-item-tag">Inspections</span>
+          <div>Every pre-purchase inspection covers a full OBD-II computer scan, engine and transmission health check, suspension and underbody assessment, braking and tyre measurement, body-paint/accident signs, and a road test — followed by a clear written report before you pay the seller.</div>
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>Can I have an inspection carried out at a car yard or seller’s location?</summary>
+        <div class="faq-item-body">
+          <span class="faq-item-tag">Inspections</span>
+          <div>Yes. You can bring the vehicle to 3 Pedals Garage or request a mobile inspection at Nairobi car yards and private sellers’ locations via our Roadside &amp; Mobile Mechanic team.</div>
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>How do I list and sell my car on 3 Pedals Auto KE?</summary>
+        <div class="faq-item-body">
+          <span class="faq-item-tag">Selling</span>
+          <div>Sign in, open <strong>Sell your car</strong>, add your make, model, mileage, price in KES, up to 15 photos, and your WhatsApp number. Listings are reviewed quickly and go live so buyers can contact you directly without hidden middlemen.</div>
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>Can dealerships and car yards register multiple vehicles?</summary>
+        <div class="faq-item-body">
+          <span class="faq-item-tag">Selling</span>
+          <div>Yes. Create an <strong>Organization / dealership</strong> account during sign-up to get a dedicated public yard profile page, display your yard logo and location, and manage your entire stock from one dashboard.</div>
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>How do I book an inspection or garage service appointment?</summary>
+        <div class="faq-item-body">
+          <span class="faq-item-tag">Booking</span>
+          <div>Tap <strong>Book an inspection</strong> to reach our enquiry form right away, or visit <a href="/garage.html#book" style="color:var(--gold);text-decoration:underline">3 Pedals Garage booking</a> to pick an open Monday–Saturday time slot (8:00 am – 6:00 pm) and receive a booking reference ticket.</div>
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>How quickly do you confirm bookings and inspection reports?</summary>
+        <div class="faq-item-body">
+          <span class="faq-item-tag">Booking</span>
+          <div>Appointment slots are confirmed personally by phone or WhatsApp the same working day, and standard pre-purchase inspection reports are delivered within 2 hours of inspecting the vehicle.</div>
+        </div>
+      </details>
+    </div>
+  </section>
 </section>
 
-<section id="contact" hidden><div class="contact-intro-card"><div class="contact-intro-copy"><span class="eyebrow">3 PEDALS AUTO KE · CONTACT</span><h1>Let’s move your automotive plans forward.</h1><p>Whether you are buying or selling a vehicle, looking for a trusted inspection, or need professional workshop support, our team is ready to help. Tell us what you need and we will guide you to the right next step.</p><div class="contact-specialties"><span>Vehicle sales &amp; sourcing</span><span>Pre-purchase inspections</span><span>Servicing &amp; repairs</span></div><p class="contact-intro-note">For the quickest response, contact us on WhatsApp. For detailed enquiries and appointments, you can also reach us by email.</p></div></div><form id="publicContactForm" class="contact-form" style="margin:22px auto;max-width:900px;padding:22px" novalidate><span class="eyebrow">SEND AN ENQUIRY</span><h2>How can we help?</h2><p class="contact-intro-note">Send a message directly to our team. We’ll review it and get back to you using the contact details you provide.</p><div class="contact-grid"><label>Name<input name="name" autocomplete="name" maxlength="120" required></label><label>Email<input name="email" type="email" autocomplete="email" maxlength="254" required></label><label>Phone (optional)<input name="phone" type="tel" autocomplete="tel" maxlength="40"></label><label>Subject<input name="subject" maxlength="160" required></label><label style="grid-column:1/-1">Message<textarea name="message" rows="5" minlength="10" maxlength="5000" required></textarea></label></div><div class="contact-form-actions" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:16px"><button class="btn primary" id="sendPublicEnquiry" type="submit">Send enquiry</button><span id="publicContactStatus" role="status" aria-live="polite"></span></div></form><div class="contact-grid"><a class="contact-card" id="publicWhatsapp" href="https://wa.me/254791961807" target="_blank" rel="noopener"><span>💬 WHATSAPP</span><strong>Message us</strong><small>Fastest way to reach us</small></a><a class="contact-card" id="publicEmailLink" href="mailto:3pedalsautoke@gmail.com"><span>✉️ EMAIL</span><strong id="publicEmail">3pedalsautoke@gmail.com</strong><small>Appointments and enquiries</small></a><div class="contact-card"><span>📍 ADDRESS</span><strong id="publicAddress">P.O. Box 462-00516</strong><small>3 Pedals Auto KE</small></div><a class="contact-card social-card" id="publicInstagram" href="https://instagram.com/3pedalsauto" target="_blank" rel="noopener"><span>📸 INSTAGRAM</span><strong>Instagram</strong><small>Open Instagram</small></a><a class="contact-card social-card" id="publicFacebook" href="https://facebook.com/3pedalsauto" target="_blank" rel="noopener"><span>📘 FACEBOOK</span><strong>Facebook</strong><small>Open Facebook</small></a><a class="contact-card social-card" id="publicTwitter" href="https://twitter.com/3pedalsauto" target="_blank" rel="noopener"><span>🐦 X / TWITTER</span><strong>X / Twitter</strong><small>Open X / Twitter</small></a><a class="contact-card social-card" id="publicTiktok" href="https://tiktok.com/@3pedalsauto" target="_blank" rel="noopener"><span>🎵 TIKTOK</span><strong>@3pedalsauto</strong><small>Open TikTok</small></a></div></section>
+<section id="contact" hidden><div class="contact-intro-card"><div class="contact-intro-copy"><span class="eyebrow">3 PEDALS AUTO KE · CONTACT</span><h1>Let’s move your automotive plans forward.</h1><p>Whether you are buying or selling a vehicle, looking for a trusted inspection, or need professional workshop support, our team is ready to help. Tell us what you need and we will guide you to the right next step.</p><div class="contact-specialties"><span>Vehicle sales &amp; sourcing</span><span>Pre-purchase inspections</span><span>Servicing &amp; repairs</span></div><p class="contact-intro-note">For the quickest response, contact us on WhatsApp. For detailed enquiries and appointments, you can also reach us by email.</p></div></div><form id="publicContactForm" class="contact-form" style="margin:22px auto;max-width:900px;padding:22px" novalidate><div class="contact-inspection-banner" id="contactInspectionBanner" hidden><div><strong>Pre-Purchase Inspection Booking</strong><br><span>Share the car details and preferred date below, or pick an exact slot directly in 3 Pedals Garage.</span></div><a class="btn ghost" href="/garage.html#book">Open Garage Booking</a></div><span class="eyebrow">SEND AN ENQUIRY</span><h2>How can we help?</h2><p class="contact-intro-note">Send a message directly to our team. We’ll review it and get back to you using the contact details you provide.</p><div class="contact-grid"><label>Name<input name="name" autocomplete="name" maxlength="120" required></label><label>Email<input name="email" type="email" autocomplete="email" maxlength="254" required></label><label>Phone (optional)<input name="phone" type="tel" autocomplete="tel" maxlength="40"></label><label>Subject<input name="subject" maxlength="160" required></label><label style="grid-column:1/-1">Message<textarea name="message" rows="5" minlength="10" maxlength="5000" required></textarea></label></div><div class="contact-form-actions" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:16px"><button class="btn primary" id="sendPublicEnquiry" type="submit">Send enquiry</button><span id="publicContactStatus" role="status" aria-live="polite"></span></div></form><div class="contact-grid"><a class="contact-card" id="publicWhatsapp" href="https://wa.me/254791961807" target="_blank" rel="noopener"><span>💬 WHATSAPP</span><strong>Message us</strong><small>Fastest way to reach us</small></a><a class="contact-card" id="publicEmailLink" href="mailto:3pedalsautoke@gmail.com"><span>✉️ EMAIL</span><strong id="publicEmail">3pedalsautoke@gmail.com</strong><small>Appointments and enquiries</small></a><div class="contact-card"><span>📍 ADDRESS</span><strong id="publicAddress">P.O. Box 462-00516</strong><small>3 Pedals Auto KE</small></div><a class="contact-card social-card" id="publicInstagram" href="https://instagram.com/3pedalsauto" target="_blank" rel="noopener"><span>📸 INSTAGRAM</span><strong>Instagram</strong><small>Open Instagram</small></a><a class="contact-card social-card" id="publicFacebook" href="https://facebook.com/3pedalsauto" target="_blank" rel="noopener"><span>📘 FACEBOOK</span><strong>Facebook</strong><small>Open Facebook</small></a><a class="contact-card social-card" id="publicTwitter" href="https://twitter.com/3pedalsauto" target="_blank" rel="noopener"><span>🐦 X / TWITTER</span><strong>X / Twitter</strong><small>Open X / Twitter</small></a><a class="contact-card social-card" id="publicTiktok" href="https://tiktok.com/@3pedalsauto" target="_blank" rel="noopener"><span>🎵 TIKTOK</span><strong>@3pedalsauto</strong><small>Open TikTok</small></a></div></section>
 
 </main>
 
@@ -1865,8 +1921,51 @@ loadSiteSettings();
       if (dy >= 110 && Math.abs(dx) < Math.abs(dy) * 0.65) window.location.reload();
     }, { passive: true });
   }
+  // Smooth scroll animation for Hero & About 'Book an inspection' actions -> Contact inspection booking
+  const smoothScrollToInspectionBooking = () => {
+    const form = byId('publicContactForm');
+    const banner = byId('contactInspectionBanner');
+    const subjectInput = form?.querySelector('input[name="subject"]');
+    const nameInput = form?.querySelector('input[name="name"]');
+    const messageInput = form?.querySelector('textarea[name="message"]');
+    if (typeof show === 'function') {
+      show('contact', { scroll: false });
+    } else {
+      document.querySelectorAll('main.wrap > section').forEach(section => {
+        section.hidden = section.id !== 'contact';
+      });
+      document.querySelectorAll('#nav button[data-tab]').forEach(item => {
+        item.setAttribute('aria-selected', String(item.dataset.tab === 'contact'));
+      });
+      try { history.pushState({ siteSection: 'contact' }, '', location.pathname + location.search + '#contact'); } catch (_) {}
+    }
+    if (banner) banner.hidden = false;
+    if (subjectInput && !subjectInput.value.trim()) {
+      subjectInput.value = 'Pre-Purchase Vehicle Inspection Booking';
+    }
+    if (messageInput && !messageInput.value.trim()) {
+      messageInput.placeholder = 'Vehicle make, model, year, yard/seller location, and preferred inspection date…';
+    }
+    requestAnimationFrame(() => {
+      const target = form || byId('contact');
+      if (!target) return;
+      const headerHeight = document.querySelector('header')?.getBoundingClientRect().height || 0;
+      const top = Math.max(0, window.scrollY + target.getBoundingClientRect().top - headerHeight - 18);
+      window.scrollTo({ top, behavior: reduced ? 'auto' : 'smooth' });
+      window.setTimeout(() => {
+        try { nameInput?.focus({ preventScroll: true }); } catch (_) {}
+      }, reduced ? 20 : 420);
+    });
+  };
+  document.addEventListener('click', event => {
+    const trigger = event.target.closest?.('#heroBookInspectionBtn, [data-book-inspection]');
+    if (!trigger) return;
+    event.preventDefault();
+    smoothScrollToInspectionBooking();
+  });
 })();
 </script>
-<script defer src="/site-ux.js?v=20261125-up1"></script>
+<script defer src="/lib/auto-logic.js?v=20261126-up2"></script>
+<script defer src="/site-ux.js?v=20261126-up2"></script>
 </body>
 </html>

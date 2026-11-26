@@ -62,7 +62,7 @@ html:not([data-theme="light"]) {
 
 html:not([data-theme="light"]) body {
   color: var(--p3-ivory);
-  background-color: #08090b;
+  background-color: transparent;
 }
 
 html:not([data-theme="light"]) body::before {

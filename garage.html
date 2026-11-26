@@ -57,7 +57,7 @@
 </script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700&display=swap" rel="stylesheet"></noscript>
-<link rel="stylesheet" href="/site-theme.css?v=20261125-up1">
+<link rel="stylesheet" href="/site-theme.css?v=20261126-up2">
 <style id="garage-base-layout">
 :root{
   --bg:#0d0e11;--surface:rgba(24,26,30,.78);--surface-2:rgba(30,33,38,.72);--ink:#f4f0e8;--mute:#b3ab9b;--line:rgba(225,203,155,.22);
@@ -158,8 +158,8 @@ footer .wrap{text-align:center}
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
 }
 </style>
-<link rel="stylesheet" href="/site-ux.css?v=20261125-up1">
-<link rel="stylesheet" href="/header-modern.css?v=20261125-up1">
+<link rel="stylesheet" href="/site-ux.css?v=20261126-up2">
+<link rel="stylesheet" href="/header-modern.css?v=20261126-up2">
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
@@ -187,6 +187,7 @@ footer .wrap{text-align:center}
   <p>Book a slot online, message us on WhatsApp, or call. We confirm every booking personally.</p>
   <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
     <button class="btn" type="button" data-go="book">Book a service</button>
+    <button class="btn garage-expert-btn" id="openAskExpertBtn" data-ask-expert type="button">Ask an Expert</button>
     <a class="btn ghost" id="garageWhatsAppCta" href="https://wa.me/254791961807?text=Hello%203%20Pedals%20Garage%2C%20I%27d%20like%20to%20book%20a%20service." target="_blank" rel="noopener">Chat on WhatsApp</a>
   </div></div>
   <div class="tiles">
@@ -196,6 +197,60 @@ footer .wrap{text-align:center}
     <button class="tile" id="inspTile"><h3>Pre-purchase inspection</h3><span class="meta">Get a car checked before you buy</span></button>
     <a class="tile" id="cTile" href="/"><h3>Inventory</h3><span class="meta">Browse 3 Pedals Auto KE listings</span></a>
   </div>
+  <section class="garage-faq-section" id="garageFaqSection" aria-labelledby="garageFaqTitle">
+    <div class="faq-section-head">
+      <div>
+        <span class="eyebrow">GARAGE KNOWLEDGE &amp; SUPPORT</span>
+        <h2 id="garageFaqTitle">Need advice on a repair or inspection?</h2>
+        <p>Ask our workshop specialists a specific technical question about your car, or browse common servicing and repair FAQs below.</p>
+      </div>
+      <button type="button" class="btn garage-expert-btn" data-ask-expert>Ask an Expert</button>
+    </div>
+    <div class="faq-accordion-list">
+      <details class="faq-item" open>
+        <summary>How long does a full pre-purchase inspection take?</summary>
+        <div class="faq-item-body">
+          <span class="faq-item-tag">Inspections</span>
+          <div>Most pre-purchase inspections take about 90 to 120 minutes, covering computer diagnostics, underbody &amp; suspension checks, fluids, braking, and a road test, with a clear written report shared right away.</div>
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>What should I do if my check engine, ABS, or hybrid warning light comes on?</summary>
+        <div class="faq-item-body">
+          <span class="faq-item-tag">Diagnostics</span>
+          <div>Book a computer diagnostic scan before replacing parts by guesswork. If the light is flashing or the vehicle shakes or loses power, avoid highway driving and request a mobile mechanic check.</div>
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>How often should I service my car on Kenyan roads?</summary>
+        <div class="faq-item-body">
+          <span class="faq-item-tag">Servicing</span>
+          <div>For normal urban and highway driving, engine oil and filter changes are recommended every 5,000–7,500 km (or every 6 months), with full multi-point servicing and brake/suspension checks every 10,000–15,000 km.</div>
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>Can 3 Pedals Garage diagnose noisy suspension, steering knocks, or uneven tyre wear?</summary>
+        <div class="faq-item-body">
+          <span class="faq-item-tag">Repairs &amp; Alignment</span>
+          <div>Yes. We inspect lower arm bushes, ball joints, shocks, tie-rod ends, and wheel bearings, then pair mechanical repairs with computerised wheel alignment and balancing.</div>
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>Do you offer mobile mechanics if my vehicle won’t start or breaks down?</summary>
+        <div class="faq-item-body">
+          <span class="faq-item-tag">Mobile Mechanic</span>
+          <div>Yes. Use the <strong>Mobile mechanic</strong> tab above to share your exact location pin and issue for battery, starter, breakdown diagnosis, or on-site pre-purchase checks.</div>
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>Can I bring my own spare parts or ask you to source genuine OEM parts?</summary>
+        <div class="faq-item-body">
+          <span class="faq-item-tag">Parts &amp; Warranty</span>
+          <div>We can source verified OEM and trusted aftermarket parts for you with transparent pricing ahead of work, or fit quality customer-supplied parts once checked for compatibility.</div>
+        </div>
+      </details>
+    </div>
+  </section>
   <div id="garageContactCard" class="contact"><h2>Visit or contact the garage</h2>
     <div class="svc garage-contact-row">
       <span class="garage-contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20.5 11.8a8.4 8.4 0 0 1-12.4 7.4L3 20l.9-4.9a8.4 8.4 0 1 1 16.6-3.3Z"/><path d="M8.7 8.1c.2-.5.5-.5.8-.5h.5c.2 0 .4.1.5.4l.7 1.7c.1.2.1.4-.1.6l-.5.6c-.2.2-.2.4-.1.6.6 1 1.4 1.8 2.4 2.3.2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.6.8c.3.1.4.3.4.5 0 .4-.2 1.1-.7 1.5-.5.5-1.2.7-1.8.6-1.1-.2-2.4-.9-3.7-2-1.2-1.1-2.1-2.5-2.3-3.5-.2-.9.1-1.8.4-2.6Z"/></svg></span>
@@ -249,9 +304,63 @@ footer .wrap{text-align:center}
 
 <footer class="ux-site-footer no-print"><div class="wrap">© <span data-ux-year>2026</span> 3 Pedals Garage.</div></footer>
 <a class="fab" id="garageFab" href="https://wa.me/254791961807?text=Hello%203%20Pedals%20Garage" target="_blank" rel="noopener" aria-label="Chat on WhatsApp" title="Chat on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.8a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.4-4.9A8.4 8.4 0 1 1 20.5 11.8Z"/><path d="M8.4 7.7c.2-.5.4-.5.7-.5h.5c.2 0 .4.1.5.4l.8 1.8c.1.2.1.4-.1.6l-.6.7c-.2.2-.2.4 0 .7.5.8 1.2 1.5 2.1 2 .2.1.4.1.6-.1l.8-.9c.2-.2.4-.2.6-.1l1.7.8c.3.1.4.3.4.5 0 .4-.2 1.1-.7 1.5-.5.5-1.2.7-2 .5-1-.2-2.3-.8-3.5-1.9-1.4-1.2-2.3-2.7-2.5-3.8-.2-.9.1-1.5.7-2.2Z"/></svg></a>
+<dialog id="askExpertDlg" aria-labelledby="askExpertTitle" aria-modal="true">
+  <div class="ask-expert-shell">
+    <div class="ask-expert-head">
+      <div>
+        <span class="eyebrow">3 PEDALS GARAGE SPECIALISTS</span>
+        <h2 id="askExpertTitle">Ask an Expert</h2>
+        <p>Describe your vehicle repair, warning light, or diagnostic question and our lead technician will reply by email or WhatsApp.</p>
+      </div>
+      <button type="button" class="ask-expert-close" id="closeAskExpertBtn" aria-label="Close Ask an Expert form">×</button>
+    </div>
+    <form class="ask-expert-form" id="askExpertForm" novalidate>
+      <div class="ask-expert-grid">
+        <div>
+          <label for="expertName">Your name</label>
+          <input id="expertName" name="name" autocomplete="name" maxlength="120" required placeholder="e.g. Brian Kamau">
+        </div>
+        <div>
+          <label for="expertEmail">Email address</label>
+          <input id="expertEmail" name="email" type="email" autocomplete="email" maxlength="254" required placeholder="you@example.com">
+        </div>
+        <div>
+          <label for="expertPhone">Phone / WhatsApp (optional)</label>
+          <input id="expertPhone" name="phone" type="tel" autocomplete="tel" maxlength="40" placeholder="0712 345 678">
+        </div>
+        <div>
+          <label for="expertTopic">Repair topic</label>
+          <select id="expertTopic" name="topic">
+            <option value="Engine & Diagnostics">Engine &amp; Diagnostics</option>
+            <option value="Brakes & Suspension">Brakes &amp; Suspension</option>
+            <option value="Transmission & Drivetrain">Transmission &amp; Drivetrain</option>
+            <option value="Hybrid Battery & Electrical">Hybrid Battery &amp; Electrical</option>
+            <option value="Pre-Purchase Inspection">Pre-Purchase Inspection</option>
+            <option value="General Servicing">General Servicing</option>
+          </select>
+        </div>
+        <div class="full">
+          <label for="expertVehicle">Vehicle make, model &amp; year</label>
+          <input id="expertVehicle" name="vehicle" maxlength="120" placeholder="e.g. 2016 Subaru Forester XT (112,000 km)">
+        </div>
+        <div class="full">
+          <label for="expertQuestion">Your repair question</label>
+          <textarea id="expertQuestion" name="question" rows="4" minlength="10" maxlength="2000" required placeholder="Describe any symptoms, noises, warning lights, or repair history…"></textarea>
+        </div>
+      </div>
+      <input id="expertHoneypot" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
+      <div class="ask-expert-actions">
+        <button type="submit" class="btn" id="askExpertSubmitBtn">Send question</button>
+        <a class="btn ghost" id="askExpertWhatsappLink" href="https://wa.me/254791961807" target="_blank" rel="noopener">WhatsApp a technician</a>
+      </div>
+      <p class="ask-expert-status" id="askExpertStatus" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</dialog>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
+<script src="/lib/auto-logic.js?v=20261126-up2"></script>
 <script>
 // Where the separate cars-for-sale site lives. Change this if it is on another address.
 const CARS_URL="__TPA_CARS_URL__".indexOf("__")===0?"/":"__TPA_CARS_URL__";
@@ -527,6 +636,90 @@ $("rDate").min=localDateString();
 if(sb)sb.auth.onAuthStateChange(()=>setTimeout(loadSession,0));
 loadSession();
 loadGarageSettings();loadGarageServices();loadPublicMechanics();
+
+// Ask an Expert modal wiring
+(()=>{
+  const dlg=$("askExpertDlg"),form=$("askExpertForm"),status=$("askExpertStatus"),submitBtn=$("askExpertSubmitBtn"),waLink=$("askExpertWhatsappLink"),closeBtn=$("closeAskExpertBtn");
+  if(!dlg||!form)return;
+  const syncExpertWaLink=()=>{
+    if(!waLink)return;
+    const digits=String(garageSettings.garage_whatsapp||"254791961807").replace(/\D/g,"");
+    const topic=$("expertTopic")?.value||"Repair question";
+    const car=$("expertVehicle")?.value.trim()||"";
+    const question=$("expertQuestion")?.value.trim()||"";
+    const msg=`Hello 3 Pedals Garage, I have a question for a mechanic.\nTopic: ${topic}${car?`\nVehicle: ${car}`:""}${question?`\nQuestion: ${question}`:""}`;
+    waLink.href=`https://wa.me/${digits}?text=${encodeURIComponent(msg)}`;
+  };
+  const openAskExpertModal=()=>{
+    if(profile){
+      if(!$("expertName").value&&profile.name)$("expertName").value=profile.name;
+      if(!$("expertPhone").value&&profile.phone)$("expertPhone").value=profile.phone;
+    }
+    if(me?.email&&!$("expertEmail").value)$("expertEmail").value=me.email;
+    if(status){status.textContent="";status.className="ask-expert-status"}
+    syncExpertWaLink();
+    if(!dlg.open){
+      try{dlg.showModal()}catch(_){dlg.setAttribute("open","")}
+    }
+    setTimeout(()=>$("expertName")?.focus(),40);
+  };
+  const closeAskExpertModal=()=>{if(dlg.open)dlg.close();else dlg.removeAttribute("open")};
+  document.addEventListener("click",e=>{
+    const trigger=e.target.closest?.("[data-ask-expert], #openAskExpertBtn");
+    if(!trigger)return;
+    e.preventDefault();
+    openAskExpertModal();
+  });
+  closeBtn?.addEventListener("click",closeAskExpertModal);
+  dlg.addEventListener("click",e=>{if(e.target===dlg)closeAskExpertModal()});
+  ["expertTopic","expertVehicle","expertQuestion"].forEach(id=>$(id)?.addEventListener("input",syncExpertWaLink));
+  form.addEventListener("submit",async e=>{
+    e.preventDefault();
+    if($("expertHoneypot")?.value)return;
+    if(status){status.textContent="";status.className="ask-expert-status"}
+    const name=($("expertName")?.value||"").trim();
+    const email=($("expertEmail")?.value||"").trim();
+    const phone=($("expertPhone")?.value||"").trim()||null;
+    const topic=$("expertTopic")?.value||"Repair question";
+    const vehicle=($("expertVehicle")?.value||"").trim();
+    const question=($("expertQuestion")?.value||"").trim();
+    const emailOk=window.ThreePedalsLogic?.isValidEmail?window.ThreePedalsLogic.isValidEmail(email):/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+    if(name.length<2||!emailOk||question.length<10){
+      if(status){
+        status.textContent="Please enter your name, a valid email address, and at least 10 characters describing your repair question.";
+        status.className="ask-expert-status is-error";
+      }
+      return;
+    }
+    syncExpertWaLink();
+    if(!sb){
+      if(status){
+        status.textContent="Online submission is offline right now — please tap 'WhatsApp a technician' beside this button to send your question immediately.";
+        status.className="ask-expert-status is-error";
+      }
+      return;
+    }
+    submitBtn.disabled=true;submitBtn.textContent="Sending question…";
+    const subject=`Garage Expert Question — ${topic}${vehicle?` (${vehicle})`:""}`.slice(0,160);
+    const message=`Topic: ${topic}\n${vehicle?`Vehicle: ${vehicle}\n`:""}\nQuestion:\n${question}`.slice(0,4900);
+    const {error}=await sb.from("contact_enquiries").insert({name,email,phone,subject,message});
+    submitBtn.disabled=false;submitBtn.textContent="Send question";
+    if(error){
+      console.error("Ask an Expert submission failed:",error);
+      if(status){
+        status.textContent="Could not submit online just now. Use 'WhatsApp a technician' to send your repair question directly.";
+        status.className="ask-expert-status is-error";
+      }
+      return;
+    }
+    form.reset();
+    syncExpertWaLink();
+    if(status){
+      status.textContent="Question received! Our garage specialist will respond via email or WhatsApp shortly.";
+      status.className="ask-expert-status is-success";
+    }
+  });
+})();
 </script>
 
 <script>
@@ -1213,6 +1406,6 @@ html[data-theme="light"] #roadside textarea {
   }
 }
 </style>
-<script defer src="/site-ux.js?v=20261125-up1"></script>
+<script defer src="/site-ux.js?v=20261126-up2"></script>
 </body>
 </html>

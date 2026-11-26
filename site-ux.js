@@ -44,9 +44,9 @@
       printSpecSheet: "Print Spec Sheet (A4)",
       previewA4: "Preview A4",
       hideA4: "Hide Preview",
-      nlKicker: "Monthly Intelligence",
-      nlTitle: "Auto Market Briefing",
-      nlDesc: "Monthly yard arrivals, Kenya import duty shifts, and verified price drops from 3 Pedals Auto KE.",
+      nlKicker: "Weekly Automotive Insights",
+      nlTitle: "Weekly Auto Insights",
+      nlDesc: "Weekly yard arrivals, Kenya import duty shifts, inspection tips, and verified price drops from 3 Pedals Auto KE.",
       nlEmailPlaceholder: "Enter your email address",
       nlSubscribe: "Subscribe",
       nlTopicsLabel: "Focus topics",
@@ -54,10 +54,11 @@
       nlTopicDuty: "Import Duty Updates",
       nlTopicDrops: "Price Drops",
       nlInvalidEmail: "Enter a valid email address to subscribe.",
-      nlSuccess: "Subscribed to the monthly Auto Market Briefing.",
+      nlSyncing: "Subscribing…",
+      nlSuccess: "Subscribed to Weekly Automotive Insights.",
       nlEditPrefs: "Update preferences",
       nlUnsubscribe: "Unsubscribe",
-      nlSubscribedBadge: "Active monthly briefing"
+      nlSubscribedBadge: "Active weekly insights subscription"
     },
     sw: {
       home: "Mwanzo",
@@ -81,7 +82,7 @@
       searchDealersPlaceholder: "Tafuta yadi za magari au wauzaji…",
       searchYardPlaceholder: "Tafuta magari ya yadi hii",
       recentlyViewedTitle: "Uliyotazama Hivi Karibuni",
-      recentlyViewedSub: "Magari uliyoyafungua hivi karibuni kwenye kifaa hiki.",
+      recentlyViewedSub: "Magari 5 ya mwisho uliyoyafungua kwenye kifaa hiki.",
       clearHistory: "Futa historia",
       recentReadsTitle: "Makala Ulizosoma Hivi Karibuni",
       recentReadsSub: "Makala ulizofungua hivi karibuni.",
@@ -90,9 +91,9 @@
       printSpecSheet: "Chapisha Karatasi (A4)",
       previewA4: "Hakiki A4",
       hideA4: "Ficha Hakikisho",
-      nlKicker: "Taarifa ya Kila Mwezi",
-      nlTitle: "Ripoti ya Soko la Magari",
-      nlDesc: "Magari mapya yardini, mabadiliko ya ushuru wa kuagiza Kenya, na punguzo la bei kutoka 3 Pedals Auto KE.",
+      nlKicker: "Maarifa ya Kila Wiki",
+      nlTitle: "Maarifa ya Magari ya Kila Wiki",
+      nlDesc: "Magari mapya yardini kila wiki, mabadiliko ya ushuru wa kuagiza Kenya, vidokezo vya ukaguzi, na punguzo la bei kutoka 3 Pedals Auto KE.",
       nlEmailPlaceholder: "Weka barua pepe yako",
       nlSubscribe: "Jisajili",
       nlTopicsLabel: "Mada unazopendelea",
@@ -100,10 +101,11 @@
       nlTopicDuty: "Taarifa za Ushuru",
       nlTopicDrops: "Punguzo la Bei",
       nlInvalidEmail: "Tafadhali weka anwani sahihi ya barua pepe.",
-      nlSuccess: "Umejisajili kupokea Ripoti ya Soko la Magari kila mwezi.",
+      nlSyncing: "Inasajili…",
+      nlSuccess: "Umejisajili kupokea Maarifa ya Magari ya Kila Wiki.",
       nlEditPrefs: "Hariri mapendeleo",
       nlUnsubscribe: "Jiondoe",
-      nlSubscribedBadge: "Usajili wa kila mwezi upo hai"
+      nlSubscribedBadge: "Usajili wa kila wiki upo hai"
     }
   };
 
@@ -227,6 +229,11 @@
     if (sellCta && sellCta.dataset.origEn) {
       sellCta.textContent = code === "sw" ? "Uza Gari" : sellCta.dataset.origEn;
     }
+    const inspectCta = document.getElementById("heroBookInspectionBtn");
+    if (inspectCta) {
+      if (!inspectCta.dataset.origEn) inspectCta.dataset.origEn = inspectCta.textContent.trim();
+      inspectCta.textContent = code === "sw" ? "Weka miadi ya ukaguzi" : inspectCta.dataset.origEn;
+    }
 
     syncThemeButtons(getTheme());
     const topLabel = document.querySelector("#uxBackToTop span");
@@ -235,6 +242,8 @@
     if (topBtn) topBtn.setAttribute("aria-label", t("backToTop"));
 
     refreshFooterNewsletterCopy();
+    const homeRecentHost = document.getElementById("homeRecentViewedSection");
+    if (homeRecentHost) renderRecentlyViewed(homeRecentHost);
     syncBackButtonsForViewport();
     window.dispatchEvent(new CustomEvent("3pedals:lang-changed", { detail: { lang: code } }));
   }
@@ -667,7 +676,7 @@
 
     footer.innerHTML = `
       <div class="ux-footer-inner">
-        <section class="ux-footer-newsletter" aria-label="Auto Market Briefing Newsletter"></section>
+        <section class="ux-footer-newsletter" aria-label="Weekly Automotive Insights Newsletter"></section>
         <div class="ux-footer-legal">
           <div>© <span data-ux-year>${year}</span> ${brandHtml}</div>
           <div class="legal-footer-links">
@@ -684,13 +693,43 @@
     const box = footer.querySelector(".ux-footer-newsletter");
     renderNewsletterBox(box);
 
-    footer.addEventListener("submit", (e) => {
+    async function callNewsletterEdge(payload) {
+      const cfg = window.SB_CONFIG || {};
+      const sbUrl = String(cfg.url || "").replace(/\/+$/, "");
+      const sbKey = String(cfg.key || "");
+      if (!sbUrl || !sbKey || /^PASTE/i.test(sbUrl)) {
+        return { ok: false, skipped: true, status: 0 };
+      }
+      const ctrl = typeof AbortController === "function" ? new AbortController() : null;
+      const timer = ctrl ? setTimeout(() => ctrl.abort(), 9000) : 0;
+      try {
+        const res = await fetch(`${sbUrl}/functions/v1/newsletter-subscribe`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            apikey: sbKey,
+            Authorization: `Bearer ${sbKey}`
+          },
+          body: JSON.stringify(payload),
+          signal: ctrl?.signal
+        });
+        const data = await res.json().catch(() => ({}));
+        return { ok: res.ok, status: res.status, data };
+      } catch (err) {
+        return { ok: false, status: 0, error: err?.message || "Network error" };
+      } finally {
+        if (timer) clearTimeout(timer);
+      }
+    }
+
+    footer.addEventListener("submit", async (e) => {
       const form = e.target.closest(".ux-nl-form");
       if (!form) return;
       e.preventDefault();
       const emailInput = form.querySelector('input[name="nlEmail"]');
+      const submitBtn = form.querySelector('button[type="submit"]');
       const statusEl = form.querySelector(".ux-nl-status");
-      const email = (emailInput?.value || "").trim();
+      const email = (emailInput?.value || "").trim().toLowerCase();
       const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
       if (!emailValid) {
         statusEl.className = "ux-nl-status is-error";
@@ -699,10 +738,41 @@
         return;
       }
       const topics = [...form.querySelectorAll('input[name="nlTopic"]:checked')].map((el) => el.value);
+      const cleanTopics = topics.length ? topics : ["arrivals"];
+      const payload = {
+        email,
+        topics: cleanTopics,
+        cadence: "weekly",
+        lang: getLang(),
+        action: "subscribe",
+        source: "footer"
+      };
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = t("nlSyncing");
+      }
+      statusEl.className = "ux-nl-status";
+      statusEl.textContent = "";
+
+      const edgeRes = await callNewsletterEdge(payload);
+      if (!edgeRes.ok && (edgeRes.status === 400 || edgeRes.status === 422)) {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = t("nlSubscribe");
+        }
+        statusEl.className = "ux-nl-status is-error";
+        statusEl.textContent = edgeRes.data?.error || t("nlInvalidEmail");
+        emailInput?.focus();
+        return;
+      }
+
       const record = {
         email,
-        topics: topics.length ? topics : ["arrivals"],
+        topics: cleanTopics,
+        cadence: "weekly",
         lang: getLang(),
+        edgeSynced: Boolean(edgeRes.ok),
         subscribedAt: new Date().toISOString()
       };
       try {
@@ -712,13 +782,24 @@
       renderNewsletterBox(box);
     });
 
-    footer.addEventListener("click", (e) => {
+    footer.addEventListener("click", async (e) => {
       if (e.target.closest("[data-nl-edit]")) {
         box.dataset.editing = "1";
         renderNewsletterBox(box);
         return;
       }
-      if (e.target.closest("[data-nl-unsub]")) {
+      const unsubBtn = e.target.closest("[data-nl-unsub]");
+      if (unsubBtn) {
+        const saved = getNewsletterState();
+        unsubBtn.disabled = true;
+        if (saved?.email) {
+          await callNewsletterEdge({
+            email: saved.email,
+            action: "unsubscribe",
+            lang: getLang(),
+            source: "footer"
+          });
+        }
         try { localStorage.removeItem(NEWSLETTER_KEY); } catch (_) {}
         delete box.dataset.editing;
         renderNewsletterBox(box);
@@ -731,10 +812,12 @@
     return String(value ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   }
 
+  const MAX_RECENT_VEHICLES = 5;
+
   function getRecentVehicles() {
     try {
       const list = JSON.parse(localStorage.getItem(RECENT_VEHICLES_KEY) || "[]");
-      return Array.isArray(list) ? list.filter((x) => x && x.id) : [];
+      return Array.isArray(list) ? list.filter((x) => x && x.id).slice(0, MAX_RECENT_VEHICLES) : [];
     } catch (_) {
       return [];
     }
@@ -751,7 +834,7 @@
       photo: String(item.photo || ""),
       viewedAt: Date.now()
     };
-    const next = [entry, ...getRecentVehicles().filter((x) => String(x.id) !== entry.id)].slice(0, 8);
+    const next = [entry, ...getRecentVehicles().filter((x) => String(x.id) !== entry.id)].slice(0, MAX_RECENT_VEHICLES);
     try { localStorage.setItem(RECENT_VEHICLES_KEY, JSON.stringify(next)); } catch (_) {}
     return next;
   }
@@ -763,7 +846,9 @@
   function renderRecentlyViewed(hostEl, options = {}) {
     if (!hostEl) return;
     const excludeId = options.excludeId ? String(options.excludeId) : "";
-    const items = getRecentVehicles().filter((x) => !excludeId || String(x.id) !== excludeId);
+    const items = getRecentVehicles()
+      .filter((x) => !excludeId || String(x.id) !== excludeId)
+      .slice(0, MAX_RECENT_VEHICLES);
     if (!items.length) {
       hostEl.hidden = true;
       hostEl.innerHTML = "";
@@ -1618,6 +1703,8 @@
     initFooterNewsletter();
     syncFooterCopyrightYears();
     applyLanguage(getLang());
+    const homeRecentHost = document.getElementById("homeRecentViewedSection");
+    if (homeRecentHost) renderRecentlyViewed(homeRecentHost);
     const initDeferredUi = () => {
       initBackToTop();
       initGeminiAdvisorChat();
