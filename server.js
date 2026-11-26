@@ -236,7 +236,7 @@ function sanitizeKenyaTaxAndFaqClaims(text) {
 
   // Normalize table bases for all requested taxes. A general customs-value
   // statement on the KRA page is not enough to assign a base to each tax.
-  const taxRow = /^(\s*\|\s*)(Import Duty|Excise Duty|Value[‑–—- ]Added Tax|VAT|Import Declaration Fee|IDF|Railway Development Levy|RDL)(\b[^|]*\|[^|]*\|)([^|]*)(\|.*)$/i;
+  const taxRow = /^(\s*\|\s*)(Import Duty|Excise Duty|Value[‑–—\- ]Added Tax|VAT|Import Declaration Fee|IDF|Railway Development Levy|RDL)(\b[^|]*\|[^|]*\|)([^|]*)(\|.*)$/i;
   value = value.split("\n").map((line) => {
     if (!taxRow.test(line)) return line;
     return line.replace(taxRow, (_match, start, tax, middle, _basis, end) =>
