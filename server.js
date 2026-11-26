@@ -319,6 +319,23 @@ function sanitizeKenyaTaxAndFaqClaims(text) {
   value = value.replace(/Destination inspection by KEBS occurs only when[^.!?\n]*[.!?]?/gi, "");
   value = value.replace(/Thus,?\s*the destination inspection[^.!?\n]*[.!?]?/gi, "");
 
+  // Keep the pre-export inspection statement aligned with the KRA procedure;
+  // do not broaden it into an unsupported universal CoR rule.
+  value = value.replace(/All used motor vehicles must obtain a road[- ]worthiness certificate from a KEBS[- ]appointed inspection agent in the export country\.?/gi,
+    "KRA's Procedures for Motor Vehicle states that the vehicle will be subject to roadworthiness inspection by a KEBS-appointed inspection agent in the country of export.");
+
+  // Collapse repeated destination-inspection caveats, including the variant
+  // that starts with "The notice describes this validation process".
+  const destinationCaveat = "The notice describes this validation process; it does not establish whether other destination-inspection triggers apply.";
+  value = value.replace(/The notice describes this validation process; it does not establish whether other destination[- ]inspection triggers apply\./gi, destinationCaveat);
+  let keptDestinationCaveat = false;
+  value = value.replace(/The notice describes this validation process; it does not establish whether other destination-inspection triggers apply\./gi, () => {
+    if (keptDestinationCaveat) return "";
+    keptDestinationCaveat = true;
+    return destinationCaveat;
+  });
+  value = value.replace(/apply\.\s*The notice describes this validation process; it does not establish whether other destination-inspection triggers apply\./gi, "apply.");
+
   // Sentence matching above can stop at the decimal point in "1.5%",
   // leaving a stray "5%." behind. Remove that artifact and keep one FAQ note.
   const faqNote = "An earlier KRA FAQ lists different IDF and RDL rates (2% and 1.5%); its publication date and the status and legal effect of the difference are not established by the sources checked.";
