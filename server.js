@@ -121,8 +121,8 @@ const KENYA_IMPORT_SEARCH_INSTRUCTIONS = [
   "Use current official KRA/KEBS sources first. Search narrowly and open at most 3 relevant official pages. Keep the complete answer under 450 words, with four numbered sections. For each section give the official document title, displayed publication/revision date (or say 'undated live page'), and a clickable source URL. Separate draft/conflicting guidance. Use compact wording so all four sections are completed; do not spend words repeating the question.",
   "Age: quote KRA's exact phrase 'less than 8 years old from the year of first registration'. Do not calculate, derive, or illustrate a cutoff; do not define 'older than eight'; do not resolve the exactly-eight-year boundary or invent a calendar-year or anniversary method. State only that the cited KRA page does not specify the calculation method and that the boundary is unresolved in the guidance cited. Do not claim that no other binding KRA instrument provides a method unless you have verified that instrument set comprehensively.",
   "RHD: say only that KRA's procedure states the vehicle must be right-hand drive and that this page does not set out an exemption process or discuss exceptions. Do not claim no exceptions exist or that no other notice was found. Do not add a sentence claiming that no other official notice was found, even with a qualifier such as 'that provides details'; source silence must remain limited to the cited KRA page.",
-  "Taxes: verify rates against current KRA/legal sources. KRA procedure lists import duty 25%, VAT 16%, IDF 3.5%, RDL 2%, and 20% excise for petrol spark-ignition vehicles over 1,000cc up to 1,500cc. Do not attach a tax base unless the source assigns it to that specific tax. Treat IDF 2% and RDL 1.5% as an official KRA FAQ conflict only if the actual FAQ page on a KRA-controlled domain is among the retrieved sources. A third-party blog, aggregator, or 'KRA-derived FAQ' summary is secondary evidence: identify it as such, do not call it an official/older KRA FAQ, and do not use it to establish the applicable rates. Do not silently resolve conflicts or claim a publication date for an undated page.",
-  "Inspection: KRA describes pre-export inspection by a KEBS-appointed agent in the export country. If the July 2025 KEBS validation notice is retrieved, describe its sequence: vehicles not accompanied by a CoR must submit the logbook, deregistration certificate or export certificate to QISJ for validation; the notice states that vehicles with validated import documents will be subjected to destination inspection effective 14 July 2025. Do not imply that the absence of a CoR alone triggers destination inspection, that the CoR guarantees exemption, or that the notice establishes the exhaustive set of possible triggers. Do not say 'only vehicles...' or 'no other trigger was identified'. If this notice is not retrieved, state that the exact destination-inspection trigger is not confirmed by the sources checked.",
+  "Taxes: verify each rate and base against the exact retrieved source text. KRA procedure lists import duty 25%, VAT 16%, IDF 3.5%, RDL 2%, and 20% excise for petrol spark-ignition vehicles over 1,000cc up to 1,500cc. For each tax, report a base only if the cited source expressly states it for that tax; do not automatically mark every base unspecified. In particular, if the cited KRA procedure lines expressly state VAT on customs value plus duties and IDF/RDL on customs value, report those bases and do not then claim those same bases are unstated. Treat IDF 2% and RDL 1.5% as an official KRA FAQ conflict only if the actual FAQ page on a KRA-controlled domain is among retrieved sources. A third-party blog, aggregator, or 'KRA-derived FAQ' summary is secondary evidence. Do not claim the searched pages are the only official figures or that no other KRA source exists; state only what the retrieved source says. Do not silently resolve conflicts or claim a publication date for an undated page.",
+  "Inspection: attribute pre-export roadworthiness inspection to the KRA Procedures for Motor Vehicle page, using its wording that the vehicle will be subject to inspection by a KEBS-appointed agent in the country of export. Attribute the CoR document-validation sequence only to the KEBS July 2025 notice: vehicles not accompanied by a CoR must submit the logbook, deregistration certificate or export certificate to QISJ for validation; the notice states that vehicles with validated import documents will be subjected to destination inspection effective 14 July 2025. Say 'vehicles not accompanied by a CoR', never 'importers not accompanied'. Do not imply that absence of a CoR alone automatically triggers destination inspection, that a CoR guarantees exemption, or that the notice establishes all possible triggers. Do not say 'only vehicles...', 'no other trigger was identified', or 'no other official source was found'. If this notice is not retrieved, state that the exact destination-inspection trigger is not confirmed by the sources checked.",
   "Do not invent legal interpretations, dates, source titles, exceptions, bases or destination-inspection triggers. If evidence is incomplete, say so. Prioritise finishing all four sections over detail."
 ].join(" ");
 
@@ -245,6 +245,40 @@ function sanitizeKenyaTaxAndFaqClaims(text) {
     return line.replace(taxRow, (_match, start, tax, middle, _basis, end) =>
       `${start}${tax}${middle} Individual tax base not specified in this source ${end}`);
   }).join("\n");
+
+  // In prose, preserve only tax bases explicitly stated by the cited KRA page.
+  // Remove contradictory statements that IDF/RDL have no stated base when the
+  // answer has already cited the page's express customs-value wording.
+  value = value.replace(/No KRA source[^.!?\\n]{0,180}assigns? a separate tax base to (?:IDF|RDL)[^.!?\\n]*[.!?]?/gi,
+    "The cited KRA procedure states the bases shown for each tax above.");
+  value = value.replace(/(?:IDF|Import Declaration Fee)[^.!?\\n]{0,100}(?:no|not) (?:separate )?(?:tax )?base[^.!?\\n]*[.!?]?/gi,
+    "The cited KRA procedure states the IDF base where specified.");
+  value = value.replace(/(?:RDL|Railway Development Levy)[^.!?\\n]{0,100}(?:no|not) (?:separate )?(?:tax )?base[^.!?\\n]*[.!?]?/gi,
+    "The cited KRA procedure states the RDL base where specified.");
+
+  // Remove claims that the limited retrieved set is the exhaustive universe
+  // of KRA guidance or official destination-inspection triggers.
+  value = value.replace(/[^.!?\\n]*No KRA source[^.!?\\n]*(?:retrieved|found)[^.!?\\n]*[.!?]?/gi,
+    "The cited KRA procedure lists the rates and bases expressly stated on that page.");
+  value = value.replace(/[^.!?\\n]*only official figures found[^.!?\\n]*[.!?]?/gi,
+    "The rates above are those listed in the cited KRA procedure.");
+  value = value.replace(/[^.!?\\n]*No other official source was found[^.!?\\n]*[.!?]?/gi,
+    "The cited KEBS notice describes the validation process; it does not establish whether other destination-inspection triggers apply.");
+  value = value.replace(/[^.!?\\n]*No other official (?:KRA|KEBS|government) source[^.!?\\n]*(?:found|identified|located)[^.!?\\n]*[.!?]?/gi,
+    "The cited sources describe the requirements set out above; they do not establish whether other requirements apply.");
+
+  // Correct the subject: the vehicle, not the importer, is unaccompanied by CoR.
+  value = value.replace(/Importers? (?:not|who are not) accompanied by (?:a )?(?:Certificate of Roadworthiness|CoR)[^.!?\\n]*[.!?]?/gi,
+    "Vehicles not accompanied by a Certificate of Roadworthiness (CoR) must have the specified import documents submitted to QISJ for validation.");
+
+  // Remove repeated deterministic age wording when it immediately follows
+  // an equivalent explanation in the same section.
+  const safeAge = "KRA's live vehicle-import procedure uses the wording 'less than 8 years old from the year of first registration'; that page does not explain the calculation method or resolve the exact-eight-year boundary.";
+  value = value.replace(/(The KRA page does not explain[^.!?\\n]*\.)\\s*KRA's live vehicle-import procedure uses the wording 'less than 8 years old from the year of first registration'; that page does not explain the calculation method or resolve the exact-eight-year boundary\\./gi, safeAge);
+
+  // Keep pre-export inspection attribution on the KRA procedure page.
+  value = value.replace(/Vehicles must undergo a road[- ]worthiness inspection by a KEBS[- ]appointed agent in the export country[^.!?\\n]*[.!?]?/gi,
+    "KRA's Procedures for Motor Vehicle states that the vehicle will be subject to roadworthiness inspection by a KEBS-appointed inspection agent in the country of export.");
 
   // Remove unsupported VAT-base assumptions in prose as well as tables.
   value = value.replace(/(?:VAT|value[-‑– ]added tax)[^.!?\n]{0,160}\b(?:normally|typically|generally)\b[^.!?\n]{0,100}\b(?:customs value|CIF)\b[^.!?\n]{0,80}(?:\+|plus|and)[^.!?\n]{0,80}\b(?:duties|taxes)\b[^.!?\n]*/gi,
