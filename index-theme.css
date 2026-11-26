@@ -36,7 +36,7 @@
 }
 
 /* ===== Contact Page ===== */
-#contact .contact-intro-card{position:relative;overflow:hidden;margin:30px 0 24px;padding:clamp(26px,5vw,54px);border:1px solid rgba(255,255,255,.18);border-radius:22px;background:rgba(20,22,25,.28)!important;box-shadow:0 16px 42px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.07);backdrop-filter:blur(24px) saturate(145%);-webkit-backdrop-filter:blur(24px) saturate(145%)}
+#contact .contact-intro-card{position:relative;overflow:hidden;margin:30px 0 24px;padding:clamp(26px,5vw,54px);border:1px solid rgba(255,255,255,.17);border-radius:20px;background:rgba(18,23,30,.36)!important;box-shadow:0 18px 46px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.07);backdrop-filter:blur(24px) saturate(125%);-webkit-backdrop-filter:blur(24px) saturate(125%)}
 #contact .contact-intro-card:before,#contact .contact-intro-card:after{content:none!important;display:none!important}
 #contact .contact-intro-copy{position:relative;z-index:1;max-width:850px}
 #contact .contact-intro-copy h1{max-width:14em;margin:10px 0 14px;font-size:clamp(34px,5.5vw,58px);line-height:1.08;letter-spacing:-.035em}
@@ -54,12 +54,12 @@
   max-width:none!important;
   margin:0 0 24px!important;
   padding:clamp(22px,4vw,42px)!important;
-  border-radius:22px!important;
-  border:1px solid rgba(255,255,255,.16)!important;
-  background:rgba(20,22,25,.28)!important;
-  box-shadow:0 16px 42px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.06)!important;
-  -webkit-backdrop-filter:blur(24px) saturate(145%)!important;
-  backdrop-filter:blur(24px) saturate(145%)!important;
+  border-radius:20px!important;
+  border:1px solid rgba(255,255,255,.17)!important;
+  background:rgba(18,23,30,.36)!important;
+  box-shadow:0 18px 46px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.07)!important;
+  -webkit-backdrop-filter:blur(24px) saturate(125%)!important;
+  backdrop-filter:blur(24px) saturate(125%)!important;
 }
 #contact #publicContactForm .contact-grid{width:100%!important;max-width:none!important}
 @media(max-width:600px){#contact #publicContactForm{padding:20px!important}}
@@ -131,17 +131,17 @@ a{color:#e4ce9d}
 input::placeholder,textarea::placeholder{color:rgba(255,255,255,.68)!important}
 
 @media(min-width:1280px){main.wrap{width:100%!important;max-width:1280px!important;padding-left:24px!important;padding-right:24px!important}}
-.hero{position:relative;isolation:isolate;overflow:hidden;border:1px solid rgba(255,255,255,.17);border-radius:30px;padding:clamp(56px,6vw,88px) clamp(22px,5vw,70px) clamp(46px,6vw,78px)!important;margin:16px auto 34px!important;width:100%;max-width:100%;min-height:clamp(380px,50vw,620px);display:flex;flex-direction:column;justify-content:center;box-shadow:0 28px 80px rgba(0,0,0,.42),inset 0 1px rgba(255,255,255,.2)!important}
-.hero:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(135deg,rgba(255,255,255,.10),transparent 34%,rgba(215,189,131,.08));pointer-events:none}
+.hero{position:relative;isolation:isolate;overflow:hidden;border:1px solid rgba(255,255,255,.17);border-radius:20px;padding:clamp(56px,6vw,88px) clamp(22px,5vw,70px) clamp(46px,6vw,78px)!important;margin:16px auto 34px!important;width:100%;max-width:100%;min-height:clamp(380px,50vw,620px);display:flex;flex-direction:column;justify-content:center;box-shadow:0 18px 46px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.07)!important}
+.hero:before{content:none!important;display:none!important}
 .hero h1{max-width:11ch!important;color:#fff!important;text-shadow:0 5px 28px rgba(0,0,0,.45)}
 .hero h1:after{background:linear-gradient(90deg,#e8d7ae,#a88b54)!important;border-radius:99px}
 .hero p{max-width:38em;color:rgba(255,255,255,.84)!important}
 @media(max-width:760px){
-  .hero{width:100%;margin:8px auto 20px!important;min-height:380px;border-radius:22px!important;padding:28px 20px 26px!important}
+  .hero{width:100%;margin:8px auto 20px!important;min-height:380px;border-radius:20px!important;padding:28px 20px 26px!important}
   .hero h1{font-size:clamp(34px,10vw,52px)!important}
 }
 
-/* Unified glass surfaces (storefront only; exclude Account Workspace modals and modern header) */
+/* Unified glass surfaces matching About cards (storefront only; exclude Account Workspace modals and modern header) */
 html:not([data-theme="light"]) #dlg,
 html:not([data-theme="light"]) .authbox,
 html:not([data-theme="light"]) .modal:not(#accDlg),
@@ -155,6 +155,7 @@ html:not([data-theme="light"]) .panel,
 html:not([data-theme="light"]) .contact-card,
 html:not([data-theme="light"]) .journal-intro,
 html:not([data-theme="light"]) .journal-card,
+html:not([data-theme="light"]) .journal-entry,
 html:not([data-theme="light"]) .project-intro,
 html:not([data-theme="light"]) .project-card,
 html:not([data-theme="light"]) .project-public-empty,
@@ -171,15 +172,16 @@ html:not([data-theme="light"]) .garage-card,
 html:not([data-theme="light"]) #autoQuoteRail,
 html:not([data-theme="light"]) .journal-photo-viewer,
 html:not([data-theme="light"]) :is(.listing,.stat,.promotion-package,.account-fast-loading,.account-load-error):not(#accDlg *) {
-  background-color:rgba(24,24,25,.24)!important;
-  border:1px solid rgba(255,255,255,.22)!important;
-  box-shadow:0 14px 38px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.16)!important;
+  background-color:rgba(18,23,30,.36)!important;
+  background-image:none!important;
+  border:1px solid rgba(255,255,255,.17)!important;
+  box-shadow:0 18px 46px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.07)!important;
   -webkit-backdrop-filter:blur(24px) saturate(125%)!important;
   backdrop-filter:blur(24px) saturate(125%)!important;
-  border-radius:18px!important;
+  border-radius:20px!important;
 }
-.hero,#home .tile,.tiles .tile,.card,.panel,.contact-card,.journal-intro,.journal-card,.project-intro,.project-card,.vehicle-card,.dealer,#autoQuoteRail{
-  border-radius:18px;
+.hero,#home .tile,.tiles .tile,.card,.panel,.contact-card,.journal-intro,.journal-card,.journal-entry,.project-intro,.project-card,.vehicle-card,.dealer,#autoQuoteRail{
+  border-radius:20px;
 }
 @media(max-width:800px){
   body{padding-top:0!important}
@@ -253,7 +255,7 @@ html:not([data-theme="light"]) :is(.listing,.stat,.promotion-package,.account-fa
 
 
 
-/* ===== Home Lighter Glass, Quote Rail & Interactions ===== */
+/* ===== Home About-Matched Glass, Quote Rail & Interactions ===== */
 #home .hero{display:flex!important;flex-direction:column!important;align-items:flex-start!important}
 html:not([data-theme="light"]) #home .hero,
 html:not([data-theme="light"]) #home .tile,
@@ -263,16 +265,17 @@ html:not([data-theme="light"]) #home .showroom-vehicle-note,
 html:not([data-theme="light"]) #home .auto-quote-rail,
 html:not([data-theme="light"]) #home .journal-intro,
 html:not([data-theme="light"]) #home .project-intro{
-  background-color:rgba(20,22,26,.50)!important;
-  background-image:linear-gradient(135deg,rgba(255,255,255,.10),rgba(255,255,255,.02) 48%,rgba(215,189,131,.05))!important;
-  -webkit-backdrop-filter:blur(20px) saturate(140%)!important;
-  backdrop-filter:blur(20px) saturate(140%)!important;
-  border:1px solid rgba(255,255,255,.20)!important;
-  box-shadow:0 16px 40px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.16)!important;
+  background-color:rgba(18,23,30,.36)!important;
+  background-image:none!important;
+  -webkit-backdrop-filter:blur(24px) saturate(125%)!important;
+  backdrop-filter:blur(24px) saturate(125%)!important;
+  border:1px solid rgba(255,255,255,.17)!important;
+  border-radius:20px!important;
+  box-shadow:0 18px 46px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.07)!important;
 }
 html:not([data-theme="light"]) #home .journal-intro .btn.alt,
 html:not([data-theme="light"]) #home .project-intro .btn.alt{
-  background:rgba(255,255,255,.08)!important;
+  background:rgba(255,255,255,.06)!important;
   background-color:rgba(255,255,255,.08)!important;
   background-image:none!important;
   border:1px solid rgba(255,255,255,.24)!important;
@@ -299,10 +302,16 @@ html[data-theme="light"] #home .project-intro{
 #home #autoQuoteRail{
   display:block!important;position:relative!important;float:none!important;left:auto!important;top:auto!important;bottom:auto!important;transform:none!important;
   width:min(100%,390px)!important;max-width:100%!important;margin:24px 0 0!important;box-sizing:border-box!important;z-index:2!important;
-  border-radius:18px!important;
+  border-radius:20px!important;
 }
 html:not([data-theme="light"]) #home #autoQuoteRail{
-  border:1px solid rgba(255,255,255,.28)!important;color:#fff!important;
+  border:1px solid rgba(255,255,255,.17)!important;color:#fff!important;
+  background-color:rgba(18,23,30,.36)!important;background-image:none!important;
+  box-shadow:0 18px 46px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.07)!important;
+}
+html:not([data-theme="light"]) #home #autoQuoteRail .auto-quote-top,
+html:not([data-theme="light"]) #home #autoQuoteRail .auto-quote-footer{
+  border-color:rgba(255,255,255,.12)!important;
 }
 #home .hero #autoQuoteRail{align-self:flex-start!important}
 html:not([data-theme="light"]) #home .auto-quote-text,
@@ -317,28 +326,28 @@ html:not([data-theme="light"]) #home .auto-quote-author{color:#fff!important}
   transition:transform .26s cubic-bezier(.22,1,.36,1),background-color .24s ease,border-color .24s ease,box-shadow .26s ease,opacity .22s ease!important;
 }
 @media (hover: hover) and (pointer: fine) and (min-width: 821px){
-  :is(button,a,[role=button],summary,.account-pill,.account-icon,.tile,.card,.panel,.project-card,.contact-card,.mechanic-card,.nav-contact):not(header *):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):hover{
-    border-color:rgba(211,181,143,.72)!important;
-    box-shadow:0 10px 26px rgba(0,0,0,.2),0 0 0 1px rgba(211,181,143,.12)!important;
+  :is(button,a,[role=button],summary,.account-pill,.account-icon,.tile,.card,.project-card,.contact-card,.mechanic-card,.nav-contact):not(header *):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):hover{
+    border-color:rgba(215,189,131,.42)!important;
+    box-shadow:0 16px 38px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.10)!important;
   }
   :is(button,a,[role=button],.tile,.card,.project-card,.contact-card,.mechanic-card,.journal-card):not(header *):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):hover,
   :is(.tile,.card,.project-card,.contact-card,.mechanic-card,.journal-card):not(header *):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):focus-visible{
-    transform:translateY(-3px) scale(1.018)!important;
+    transform:translateY(-2px)!important;
   }
   #home .journal-intro:hover,
   #home .project-intro:hover,
   #home .journal-intro:focus-within,
   #home .project-intro:focus-within{
-    transform:translateY(-2px) scale(1.01)!important;
+    transform:translateY(-2px)!important;
   }
-  html:not([data-theme="light"]) :is(#home .hero,.card,.tile,#home .tile,.tiles .tile,.project-card,.contact-card,.journal-card,#home .journal-intro,#home .project-intro):not(#accDlg *):hover{
-    background-color:rgba(36,39,45,.46)!important;
-    border-color:rgba(215,189,131,.52)!important;
-    box-shadow:0 22px 48px rgba(0,0,0,.30),0 0 0 1px rgba(215,189,131,.14),inset 0 1px 0 rgba(255,255,255,.24)!important;
-    -webkit-backdrop-filter:blur(24px) saturate(145%)!important;
-    backdrop-filter:blur(24px) saturate(145%)!important;
+  html:not([data-theme="light"]) :is(.card,.tile,#home .tile,.tiles .tile,.project-card,.contact-card,.journal-card,.journal-entry,#home .journal-intro,#home .project-intro):not(#accDlg *):hover{
+    background-color:rgba(22,28,36,.46)!important;
+    border-color:rgba(215,189,131,.40)!important;
+    box-shadow:0 22px 48px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.10)!important;
+    -webkit-backdrop-filter:blur(24px) saturate(125%)!important;
+    backdrop-filter:blur(24px) saturate(125%)!important;
   }
-  html[data-theme="light"] :is(#home .hero,#home .tile,#home .tiles .tile,#home .journal-intro,#home .project-intro):hover{
+  html[data-theme="light"] :is(#home .tile,#home .tiles .tile,#home .journal-intro,#home .project-intro):hover{
     background-color:rgba(255,253,249,.86)!important;
     border-color:rgba(158,116,21,.48)!important;
     box-shadow:0 20px 44px rgba(48,38,18,.14),inset 0 1px 0 rgba(255,255,255,.95)!important;
@@ -412,9 +421,11 @@ html:not([data-theme="light"]) #location .location-content,
 html:not([data-theme="light"]) #location .location-info,
 html:not([data-theme="light"]) #location .location-details,
 html:not([data-theme="light"]) #location .location-cta{
-  background:linear-gradient(145deg,rgba(24,24,25,.30),rgba(17,17,18,.38))!important;
-  border:1px solid rgba(255,255,255,.22)!important;
-  box-shadow:0 14px 38px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.14)!important;
+  background:rgba(18,23,30,.36)!important;
+  background-image:none!important;
+  border:1px solid rgba(255,255,255,.17)!important;
+  border-radius:20px!important;
+  box-shadow:0 18px 46px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.07)!important;
   -webkit-backdrop-filter:blur(24px) saturate(125%)!important;backdrop-filter:blur(24px) saturate(125%)!important;
 }
 html:not([data-theme="light"]) #location input,
@@ -572,7 +583,7 @@ body:has(#home[hidden]) #publicWhatsappFab{display:none!important}
 @media(max-width:600px){#publicWhatsappHero{width:52px!important;height:52px!important;min-width:52px!important}#publicWhatsappFab{width:54px!important;height:54px!important;min-width:54px!important}#publicWhatsappFab svg{width:38px!important;height:38px!important}}
 @media(prefers-reduced-motion:reduce){.glass-icon-btn{transition:none!important}}
 
-/* ===== Mobile Glass Consistency (<= 760px): Unified Frosted-Glass Cards, Hero, Tiles & Panels ===== */
+/* ===== Mobile Glass Consistency (<= 760px): Unified About-Style Dark Obsidian Glass ===== */
 @media(max-width:760px){
   html:not([data-theme="light"]) :is(#home .hero,.card,.dealer,.listing,.vehicle-card,.story-card,.journal-card,.journal-entry,
   .project-card,.project-public-empty,.contact-card,.promotion-package,
@@ -583,12 +594,12 @@ body:has(#home[hidden]) #publicWhatsappFab{display:none!important}
   #location .tile,#location .card,#location .panel,#location .location-card,#location .location-panel,
   #location .contact-card,#location .map-card,#location .location-content,#location .location-info,
   #location .location-details,#location .location-cta):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){
-    -webkit-backdrop-filter:blur(14px) saturate(135%)!important;
-    backdrop-filter:blur(14px) saturate(135%)!important;
-    background-color:rgba(20,22,26,.54)!important;
-    background-image:linear-gradient(135deg,rgba(255,255,255,.095),rgba(255,255,255,.02))!important;
-    border-color:rgba(255,255,255,.20)!important;
-    box-shadow:0 12px 30px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.14)!important;
+    -webkit-backdrop-filter:blur(18px) saturate(125%)!important;
+    backdrop-filter:blur(18px) saturate(125%)!important;
+    background-color:rgba(18,23,30,.42)!important;
+    background-image:none!important;
+    border-color:rgba(255,255,255,.17)!important;
+    box-shadow:0 18px 46px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.07)!important;
   }
   html:not([data-theme="light"]) .journal-share-dialog{
     background:rgba(22,23,24,.96)!important;

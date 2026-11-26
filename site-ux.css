@@ -1235,11 +1235,14 @@ html[data-theme="light"] .ux-back-to-top:hover {
 /* ===== 5. Recently Viewed Vehicles Section & Journal Recent Reads ===== */
 .ux-recent-section {
   margin: 28px 0 34px;
-  padding: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 18px;
-  background: rgba(22, 24, 28, 0.46);
-  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  padding: clamp(20px, 2.8vw, 28px);
+  border: 1px solid rgba(255, 255, 255, 0.17);
+  border-radius: 20px;
+  background: rgba(18, 23, 30, 0.36);
+  background-image: none;
+  -webkit-backdrop-filter: blur(24px) saturate(125%);
+  backdrop-filter: blur(24px) saturate(125%);
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.07);
 }
 
 html[data-theme="light"] .ux-recent-section {
@@ -1267,9 +1270,9 @@ html[data-theme="light"] .ux-recent-section {
 .ux-clear-history {
   min-height: 36px;
   padding: 6px 12px;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  background: rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.17);
+  background: rgba(255, 255, 255, 0.05);
   color: inherit;
   font: 600 12px/1 Manrope, system-ui, sans-serif;
   cursor: pointer;
@@ -1294,19 +1297,22 @@ html[data-theme="light"] .ux-clear-history {
 .ux-recent-card {
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.17);
+  border-radius: 16px;
   overflow: hidden;
-  background: rgba(16, 18, 22, 0.55);
+  background: rgba(18, 23, 30, 0.36);
+  background-image: none;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.07);
   text-decoration: none;
   color: inherit;
-  transition: transform 0.22s ease, border-color 0.22s ease;
+  transition: transform 0.22s ease, border-color 0.22s ease, background-color 0.22s ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .ux-recent-card:hover {
     transform: translateY(-2px);
-    border-color: rgba(215, 189, 131, 0.55);
+    background-color: rgba(22, 28, 36, 0.46);
+    border-color: rgba(215, 189, 131, 0.42);
   }
 }
 
@@ -1383,10 +1389,13 @@ html[data-theme="light"] .ux-read-meta {
 
 .ux-journal-recent-strip {
   margin: 0 auto 22px;
-  padding: 16px 18px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 16px;
-  background: rgba(20, 22, 26, 0.5);
+  padding: 18px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.17);
+  border-radius: 20px;
+  background: rgba(18, 23, 30, 0.36);
+  -webkit-backdrop-filter: blur(24px) saturate(125%);
+  backdrop-filter: blur(24px) saturate(125%);
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.07);
 }
 
 html[data-theme="light"] .ux-journal-recent-strip {
@@ -1501,11 +1510,14 @@ html[data-theme="light"] .ux-site-footer {
 }
 
 .ux-footer-newsletter {
-  padding: 20px 22px;
-  border: 0 !important;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.045) !important;
-  box-shadow: none !important;
+  padding: 22px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.17) !important;
+  border-radius: 20px;
+  background: rgba(18, 23, 30, 0.36) !important;
+  background-image: none !important;
+  -webkit-backdrop-filter: blur(24px) saturate(125%);
+  backdrop-filter: blur(24px) saturate(125%);
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
   gap: 16px 24px;
@@ -1513,9 +1525,9 @@ html[data-theme="light"] .ux-site-footer {
 }
 
 html[data-theme="light"] .ux-footer-newsletter {
-  background: rgba(255, 255, 255, 0.58) !important;
-  border: 0 !important;
-  box-shadow: none !important;
+  background: rgba(255, 255, 255, 0.72) !important;
+  border: 1px solid rgba(138, 114, 62, 0.25) !important;
+  box-shadow: 0 12px 32px rgba(48, 38, 18, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
 }
 
 .ux-nl-header {
@@ -3532,11 +3544,14 @@ html[data-theme="light"] .ux-price-alert-status.is-error {
 
 .ux-map-section {
   margin: 28px 0 32px;
-  padding: 20px;
-  border: 1px solid rgba(201, 183, 132, 0.28);
-  border-radius: 18px;
-  background: rgba(20, 22, 26, 0.62);
-  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  padding: clamp(20px, 2.8vw, 28px);
+  border: 1px solid rgba(255, 255, 255, 0.17);
+  border-radius: 20px;
+  background: rgba(18, 23, 30, 0.36);
+  background-image: none;
+  -webkit-backdrop-filter: blur(24px) saturate(125%);
+  backdrop-filter: blur(24px) saturate(125%);
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.07);
 }
 
 html[data-theme="light"] .ux-map-section {
@@ -3747,16 +3762,17 @@ html[data-theme="light"] .ux-map-canvas .leaflet-popup-content a {
 }
 
 .ux-map-place-card {
-  padding: 10px 12px;
-  border-radius: 12px;
+  padding: 11px 13px;
+  border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(18, 23, 30, 0.36);
   text-align: left;
   color: inherit;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   gap: 3px;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .ux-map-place-card strong {
@@ -5218,13 +5234,14 @@ html[data-theme="light"] .ux-share-ch-primary {
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-width: thin;
-  padding: 16px;
-  border-radius: 16px;
-  border: 1px solid rgba(201, 183, 132, 0.26);
-  background: linear-gradient(155deg, rgba(28, 30, 34, 0.88), rgba(16, 17, 20, 0.92));
-  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(18px) saturate(135%);
-  -webkit-backdrop-filter: blur(18px) saturate(135%);
+  padding: 18px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.17);
+  background: rgba(18, 23, 30, 0.36);
+  background-image: none;
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(24px) saturate(125%);
+  -webkit-backdrop-filter: blur(24px) saturate(125%);
 }
 
 html[data-theme="light"] .inventory-filter-sidebar {
@@ -7137,13 +7154,14 @@ html[data-theme="light"] .contact-inspection-banner {
 .about-faq,
 .garage-faq-section {
   margin: 26px 0 10px;
-  padding: clamp(20px, 3vw, 30px);
-  border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(20, 22, 26, 0.56);
-  -webkit-backdrop-filter: blur(20px) saturate(135%);
-  backdrop-filter: blur(20px) saturate(135%);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  padding: clamp(20px, 3vw, 32px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.17);
+  background: rgba(18, 23, 30, 0.36);
+  background-image: none;
+  -webkit-backdrop-filter: blur(24px) saturate(125%);
+  backdrop-filter: blur(24px) saturate(125%);
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.07);
 }
 
 html[data-theme="light"] .about-faq,
@@ -7193,16 +7211,16 @@ html[data-theme="light"] .faq-section-head p {
 }
 
 .faq-item {
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 13px;
-  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+  background: rgba(18, 23, 30, 0.30);
   overflow: hidden;
   transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .faq-item[open] {
-  border-color: rgba(215, 189, 131, 0.48);
-  background: rgba(215, 189, 131, 0.07);
+  border-color: rgba(215, 189, 131, 0.42);
+  background: rgba(18, 23, 30, 0.46);
 }
 
 html[data-theme="light"] .faq-item {
@@ -8210,5 +8228,136 @@ html[data-theme="light"] .ux-inspect-secondary {
     display: none !important;
   }
 }
+
+/* ===== 18. Unified Dark Obsidian Glass Card Parity (Matches .about-glass-card / .about-value-card) ===== */
+html:not([data-theme="light"]) body :is(
+  main.wrap > .inventory-intro-compact,
+  .inventory-filter-sidebar,
+  .ux-recent-section,
+  .ux-map-section,
+  .about-faq,
+  .garage-faq-section,
+  .ux-footer-newsletter,
+  .ux-journal-recent-strip,
+  #home .hero,
+  #home #autoQuoteRail,
+  #home .tile,
+  .tiles .tile,
+  #home .journal-intro,
+  #home .project-intro,
+  .card,
+  #grid .card,
+  .featured-grid .card,
+  .dealer,
+  .panel,
+  .contact-card,
+  .contact-intro-card,
+  #contact #publicContactForm,
+  .project-card,
+  .journal-card,
+  .journal-entry,
+  .vehicle-card,
+  .story-card,
+  .mechanic-card,
+  .service-card,
+  .booking-card,
+  .garage-card,
+  .related-card,
+  .request-hero,
+  .chauffeur-assurance,
+  .assurance-grid article,
+  .steps-grid article,
+  .route-preview,
+  .trip-summary
+):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
+  background-color: rgba(18, 23, 30, 0.36) !important;
+  background-image: none !important;
+  border: 1px solid rgba(255, 255, 255, 0.17) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(125%) !important;
+  backdrop-filter: blur(24px) saturate(125%) !important;
+}
+
+html:not([data-theme="light"]) body :is(.ux-recent-card, .ux-map-place-card):not(#accDlg *) {
+  background-color: rgba(18, 23, 30, 0.36) !important;
+  background-image: none !important;
+  border: 1px solid rgba(255, 255, 255, 0.17) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
+}
+
+@media (hover: hover) and (pointer: fine) and (min-width: 821px) {
+  html:not([data-theme="light"]) body :is(
+    .card, #grid .card, .featured-grid .card,
+    #home .tile, .tiles .tile,
+    #home .journal-intro, #home .project-intro,
+    .dealer, .contact-card, .project-card, .journal-card, .journal-entry,
+    .vehicle-card, .story-card, .mechanic-card, .service-card, .booking-card,
+    .garage-card, .related-card, .ux-recent-card, .ux-map-place-card
+  ):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):hover {
+    background-color: rgba(22, 28, 36, 0.46) !important;
+    border-color: rgba(215, 189, 131, 0.40) !important;
+    box-shadow: 0 22px 48px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.10) !important;
+  }
+}
+
+@media (max-width: 760px) {
+  html:not([data-theme="light"]) body :is(
+    main.wrap > .inventory-intro-compact,
+    .inventory-filter-sidebar,
+    .ux-recent-section,
+    .ux-map-section,
+    .about-faq,
+    .garage-faq-section,
+    .ux-footer-newsletter,
+    #home .hero,
+    #home #autoQuoteRail,
+    #home .tile,
+    .tiles .tile,
+    #home .journal-intro,
+    #home .project-intro,
+    .card,
+    #grid .card,
+    .featured-grid .card,
+    .dealer,
+    .panel,
+    .contact-card,
+    .contact-intro-card,
+    #contact #publicContactForm,
+    .project-card,
+    .journal-card,
+    .journal-entry,
+    .vehicle-card,
+    .story-card,
+    .mechanic-card,
+    .service-card,
+    .booking-card,
+    .garage-card,
+    .related-card,
+    .ux-recent-card,
+    .about-glass-card,
+    .about-value-card
+  ):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
+    background-color: rgba(18, 23, 30, 0.42) !important;
+    background-image: none !important;
+    border-color: rgba(255, 255, 255, 0.17) !important;
+    box-shadow: 0 18px 46px rgba(0, 0, 0, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(125%) !important;
+    backdrop-filter: blur(18px) saturate(125%) !important;
+  }
+
+  html:not([data-theme="light"]) body :is(
+    #grid .card,
+    .featured-grid .card,
+    .ux-recent-card,
+    .contact-card,
+    #home .tile,
+    .tiles .tile
+  ):not(#accDlg *) {
+    border-radius: 16px !important;
+  }
+}
+
 
 
