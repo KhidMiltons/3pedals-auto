@@ -276,9 +276,16 @@ function sanitizeKenyaTaxAndFaqClaims(text) {
     "its date and legal effect are not established by the sources checked");
   value = value.replace(/[^.!?\n]*(?:earlier|older) KRA FAQ[^.!?\n]*(?:not|is not|isn\x27t)[^.!?\n]*(?:binding|current)[^.!?\n]*[.!?]?/gi,
     "An earlier KRA FAQ lists different IDF and RDL rates (2% and 1.5%); its publication date and the status and legal effect of the difference are not established by the sources checked.");
+  // Normalize any FAQ chronology/archive claim to one neutral conflict note.
+  // The available KRA pages do not establish the FAQ's publication date or status.
+  value = value.replace(/[^.!?\n]*\bFAQ\b[^.!?\n]*(?:earlier|older|archive|archived|found in the KRA)[^.!?\n]*[.!?]?/gi,
+    "The KRA FAQ lists different IDF and RDL rates (2% and 1.5%); its publication date and the status and legal effect of the difference are not established by the sources checked.");
+  value = value.replace(/No draft[- ]marked guidance was identified[^.!?\n]*[.!?]?/gi,
+    "No draft document is relied on in this answer.");
+
   // Keep the destination-inspection summary within the notice's stated
   // sequence. Do not turn its validation language into an exhaustive rule.
-  value = value.replace(/(?:\*{1,2})?Only(?:\*{1,2})?\s+(?:used\s+)?motor\s+vehicles?[^.!?\n]*(?:validated|validation)[^.!?\n]*(?:destination inspection|inspection at destination)[^.!?\n]*[.!?]?/gi,
+  value = value.replace(/(?:\*{1,2})?Only(?:\*{1,2})?\s+(?:(?:used\s+)?motor\s+)?vehicles?[^.!?\n]*(?:validated|validation)[^.!?\n]*(?:destination inspection|inspection at destination)[^.!?\n]*[.!?]?/gi,
     "The notice describes document validation for vehicles not accompanied by a CoR and states that vehicles with validated import documents will be subjected to destination inspection; it does not establish whether other triggers apply.");
   value = value.replace(/No (?:additional|other) (?:destination[- ]inspection )?trigger(?:s)? (?:was|were|is|are) identified[^.!?\n]*[.!?]?/gi,
     "The notice describes this validation process; it does not establish whether other destination-inspection triggers apply.");
