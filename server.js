@@ -218,6 +218,19 @@ function sanitizeKenyaRhdClaims(text) {
 }
 
 
+function enforceKenyaRhdSection(text) {
+  const value = String(text || "");
+  const safeRhdStatement = "KRA's procedure states that the vehicle must be right-hand drive; that page does not set out an exemption process or discuss exceptions.";
+  // The model sometimes duplicates the age paragraph under section 2. Replace
+  // that section deterministically so the RHD question is actually answered.
+  const sectionPattern = /(?:^|\n)\s*\*\*2\.[\s\S]*?(?=\n\s*\*\*3\.|$)/i;
+  if (!sectionPattern.test(value)) return value;
+  return value.replace(sectionPattern, (section) => {
+    const prefix = section.startsWith("\n") ? "\n" : "";
+    return `${prefix}**2. Right-hand-drive (RHD) requirement**\n${safeRhdStatement}\n`;
+  });
+}
+
 function sanitizeKenyaTaxAndFaqClaims(text) {
   let value = String(text || "");
 
@@ -984,6 +997,7 @@ app.post("/api/chat", async (req, res) => {
         reply || "I could not generate a response for that request. Please try rephrasing.";
       if (effectiveMode === "search" && isKenyaVehicleImportQuestion(lastUserMsg)) {
         finalReply = sanitizeKenyaRhdClaims(finalReply).text;
+        finalReply = enforceKenyaRhdSection(finalReply);
         finalReply = sanitizeKenyaTaxAndFaqClaims(finalReply);
       }
       const hasMarkdownSourceLinks = /\[[^\]]+\]\(https?:\/\/[^)]+\)/i.test(finalReply);
@@ -1195,6 +1209,7 @@ app.post("/api/chat", async (req, res) => {
     let finalReply = reply || "I could not generate a response for that request. Please try rephrasing.";
     if (isKenyaImportSearch) {
       finalReply = sanitizeKenyaRhdClaims(finalReply).text;
+      finalReply = enforceKenyaRhdSection(finalReply);
       finalReply = sanitizeKenyaTaxAndFaqClaims(finalReply);
     }
     if (isKenyaImportSearch) {
