@@ -249,35 +249,35 @@ function sanitizeKenyaTaxAndFaqClaims(text) {
   // In prose, preserve only tax bases explicitly stated by the cited KRA page.
   // Remove contradictory statements that IDF/RDL have no stated base when the
   // answer has already cited the page's express customs-value wording.
-  value = value.replace(/No KRA source[^.!?\\n]{0,180}assigns? a separate tax base to (?:IDF|RDL)[^.!?\\n]*[.!?]?/gi,
+  value = value.replace(/No KRA source[^.!?\n]{0,180}assigns? a separate tax base to (?:IDF|RDL)[^.!?\n]*[.!?]?/gi,
     "The cited KRA procedure states the bases shown for each tax above.");
-  value = value.replace(/(?:IDF|Import Declaration Fee)[^.!?\\n]{0,100}(?:no|not) (?:separate )?(?:tax )?base[^.!?\\n]*[.!?]?/gi,
+  value = value.replace(/(?:IDF|Import Declaration Fee)[^.!?\n]{0,100}(?:no|not) (?:separate )?(?:tax )?base[^.!?\n]*[.!?]?/gi,
     "The cited KRA procedure states the IDF base where specified.");
-  value = value.replace(/(?:RDL|Railway Development Levy)[^.!?\\n]{0,100}(?:no|not) (?:separate )?(?:tax )?base[^.!?\\n]*[.!?]?/gi,
+  value = value.replace(/(?:RDL|Railway Development Levy)[^.!?\n]{0,100}(?:no|not) (?:separate )?(?:tax )?base[^.!?\n]*[.!?]?/gi,
     "The cited KRA procedure states the RDL base where specified.");
 
   // Remove claims that the limited retrieved set is the exhaustive universe
   // of KRA guidance or official destination-inspection triggers.
-  value = value.replace(/[^.!?\\n]*No KRA source[^.!?\\n]*(?:retrieved|found)[^.!?\\n]*[.!?]?/gi,
+  value = value.replace(/[^.!?\n]*No KRA source[^.!?\n]*(?:retrieved|found)[^.!?\n]*[.!?]?/gi,
     "The cited KRA procedure lists the rates and bases expressly stated on that page.");
-  value = value.replace(/[^.!?\\n]*only official figures found[^.!?\\n]*[.!?]?/gi,
+  value = value.replace(/[^.!?\n]*only official figures found[^.!?\n]*[.!?]?/gi,
     "The rates above are those listed in the cited KRA procedure.");
-  value = value.replace(/[^.!?\\n]*No other official source was found[^.!?\\n]*[.!?]?/gi,
+  value = value.replace(/[^.!?\n]*No other official source was found[^.!?\n]*[.!?]?/gi,
     "The cited KEBS notice describes the validation process; it does not establish whether other destination-inspection triggers apply.");
-  value = value.replace(/[^.!?\\n]*No other official (?:KRA|KEBS|government) source[^.!?\\n]*(?:found|identified|located)[^.!?\\n]*[.!?]?/gi,
+  value = value.replace(/[^.!?\n]*No other official (?:KRA|KEBS|government) source[^.!?\n]*(?:found|identified|located)[^.!?\n]*[.!?]?/gi,
     "The cited sources describe the requirements set out above; they do not establish whether other requirements apply.");
 
   // Correct the subject: the vehicle, not the importer, is unaccompanied by CoR.
-  value = value.replace(/Importers? (?:not|who are not) accompanied by (?:a )?(?:Certificate of Roadworthiness|CoR)[^.!?\\n]*[.!?]?/gi,
+  value = value.replace(/Importers? (?:not|who are not) accompanied by (?:a )?(?:Certificate of Roadworthiness|CoR)[^.!?\n]*[.!?]?/gi,
     "Vehicles not accompanied by a Certificate of Roadworthiness (CoR) must have the specified import documents submitted to QISJ for validation.");
 
   // Remove repeated deterministic age wording when it immediately follows
   // an equivalent explanation in the same section.
   const safeAge = "KRA's live vehicle-import procedure uses the wording 'less than 8 years old from the year of first registration'; that page does not explain the calculation method or resolve the exact-eight-year boundary.";
-  value = value.replace(/(The KRA page does not explain[^.!?\\n]*\.)\\s*KRA's live vehicle-import procedure uses the wording 'less than 8 years old from the year of first registration'; that page does not explain the calculation method or resolve the exact-eight-year boundary\\./gi, safeAge);
+  value = value.replace(/(The KRA page does not explain[^.!?\n]*\.)\s*KRA's live vehicle-import procedure uses the wording 'less than 8 years old from the year of first registration'; that page does not explain the calculation method or resolve the exact-eight-year boundary\\./gi, safeAge);
 
   // Keep pre-export inspection attribution on the KRA procedure page.
-  value = value.replace(/Vehicles must undergo a road[- ]worthiness inspection by a KEBS[- ]appointed agent in the export country[^.!?\\n]*[.!?]?/gi,
+  value = value.replace(/Vehicles must undergo a road[- ]worthiness inspection by a KEBS[- ]appointed agent in the export country[^.!?\n]*[.!?]?/gi,
     "KRA's Procedures for Motor Vehicle states that the vehicle will be subject to roadworthiness inspection by a KEBS-appointed inspection agent in the country of export.");
 
   // Remove unsupported VAT-base assumptions in prose as well as tables.
