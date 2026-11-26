@@ -599,7 +599,7 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 <link rel="stylesheet" href="/dashboard-glass.css?v=20261122-card-matched">
 <link rel="stylesheet" href="/index-theme.css?v=20261126-up2">
 <link rel="stylesheet" href="/account-panel.css?v=20261123-fix8">
-<link rel="stylesheet" href="/site-ux.css?v=20261126-up2">
+<link rel="stylesheet" href="/site-ux.css?v=20261126-up5">
 <link rel="stylesheet" href="/header-modern.css?v=20261126-up2">
 </head>
 <body>
@@ -829,6 +829,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <a class="fab glass-icon-btn" id="publicWhatsappFab" href="https://wa.me/254791961807?text=Hello%203%20Pedals%20Auto%20KE" target="_blank" rel="noopener" aria-label="Chat on WhatsApp" title="Chat on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.8a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.4-4.9A8.4 8.4 0 1 1 20.5 11.8Z"/><path d="M8.4 7.7c.2-.5.4-.5.7-.5h.5c.2 0 .4.1.5.4l.8 1.8c.1.2.1.4-.1.6l-.6.7c-.2.2-.2.4 0 .7.5.8 1.2 1.5 2.1 2 .2.1.4.1.6-.1l.8-.9c.2-.2.4-.2.6-.1l1.7.8c.3.1.4.3.4.5 0 .4-.2 1.1-.7 1.5-.5.5-1.2.7-2 .5-1-.2-2.3-.8-3.5-1.9-1.4-1.2-2.3-2.7-2.5-3.8-.2-.9.1-1.5.7-2.2Z"/></svg></a>
 
 <dialog id="dlg" aria-label="Car details"></dialog>
+<dialog id="inspectionBookingModal" aria-labelledby="inspectionBookingTitle" aria-modal="true"></dialog>
 <dialog id="journalPhotoViewer" class="journal-photo-viewer" aria-label="Journal photo viewer"><button type="button" class="journal-photo-close" id="journalPhotoClose" aria-label="Close photo viewer">×</button><span class="journal-photo-count" id="journalViewerCount"></span><button type="button" class="journal-photo-step journal-photo-prev" id="journalViewerPrev" aria-label="Previous photo">‹</button><figure><img id="journalViewerImage" alt=""><figcaption id="journalViewerCaption"></figcaption></figure><button type="button" class="journal-photo-step journal-photo-next" id="journalViewerNext" aria-label="Next photo">›</button></dialog>
 <dialog id="authDlg" class="authbox"><div class="in"><button class="auth-close" id="authCloseTop" type="button" aria-label="Close sign in or sign up">×</button><div class="auth-brand"><span class="auth-brand-mark" aria-hidden="true"><img src="favicon.svg" alt=""></span><span>3 Pedals Auto KE</span></div><h2 id="authTitle">Create your account</h2><p class="meta auth-intro" id="authIntro">One account for buying and selling with 3 Pedals Auto KE.</p><div class="auth-fields"><div id="authDobField"><label for="authDob">Date of birth</label><input id="authDob" type="date" autocomplete="bday" required><small class="meta">You must be at least 13 years old to create an account.</small></div><details class="auth-optional" id="authProfileDetails"><summary>Profile details <span class="meta">(optional)</span></summary><div class="auth-optional-inner"><div id="authNameField"><label for="authName">Your name</label><input id="authName" autocomplete="name"></div><div id="authPhoneField"><label for="authPhone">Phone number</label><input id="authPhone" type="tel" autocomplete="tel"></div><fieldset class="seg" id="authTypeWrap"><legend>Account type</legend><label><input type="radio" name="accountType" value="private" checked> Private Seller</label><label><input type="radio" name="accountType" value="yard"> Organization / dealership</label></fieldset><p id="authTypeHint" class="meta">Private seller accounts are for individuals selling their own vehicles.</p></div></details><div id="authSellerUrlWrap" hidden><label for="authSellerSlug">Your 3 Pedals Auto URL</label><input id="authSellerSlug" autocomplete="off" autocapitalize="none" spellcheck="false"><small class="meta">Lowercase letters, numbers, and hyphens only. Suggested from your name; you can edit it.</small><p class="meta" id="authSellerUrlPreview" aria-live="polite"></p></div><div id="authEmailField"><label for="authEmail">Email</label><input id="authEmail" type="email" autocomplete="email"></div><div id="authPasswordField"><label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="new-password"></div><div id="authConfirmField"><label for="authConfirmPassword">Confirm password</label><input id="authConfirmPassword" type="password" autocomplete="new-password"><small class="meta">At least 8 characters.</small></div><button class="auth-forgot" id="authForgot" type="button" hidden>Forgot password?</button></div><p id="authErr" class="meta" style="color:var(--err)" role="status" aria-live="polite"></p><div class="auth-actions"><button class="btn" id="authSubmit">Create account</button></div><div class="auth-divider" id="authDivider" aria-hidden="true">or</div><button class="btn google-btn" id="authGoogle" type="button"><span class="google-mark" aria-hidden="true">G</span> Continue with Google</button><p class="auth-legal meta" id="authLegal">By creating an account, you confirm you meet the minimum age requirement and agree to our <a href="/terms.html" target="_blank" rel="noopener">Terms of Service</a> and acknowledge our <a href="/privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</p><p class="switch" id="authSwitchRow"><span id="authSwitchText">Already have an account?</span> <button id="authSwitch" type="button">Log in</button></p><button class="auth-back" id="authCloseBack" type="button">‹ Back to marketplace</button></div></dialog>
 <div id="accountPanelMount"></div>
@@ -1332,12 +1333,14 @@ const hasPh=c=>c.photos&&c.photos[0]?" has":"";
 const bgOf=c=>c.color||"#17191c";
 const HOME_HEART_SVG='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.6c-.3 0-.6-.1-.8-.3C6.1 16 3 12.9 3 8.9 3 6.1 5.1 4 7.9 4c1.6 0 3.1.8 4.1 2 1-1.2 2.5-2 4.1-2 2.8 0 4.9 2.1 4.9 4.9 0 4-3.1 7.1-8.2 11.4-.2.2-.5.3-.8.3z"/></svg>';
 const HOME_SHARE_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>';
-const cardMarkup=(c,i)=>{
+const HOME_INSPECT_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></svg>';
+const cardMarkup=(c,i,inMainGrid=false)=>{
   const isYard=c.seller&&c.seller.type==="yard",yardName=c.seller?.name||"Car yard",loc=c.seller?.location||"";
   const vehicleUrl=`vehicle.html?id=${encodeURIComponent(c.id)}`;
   const sold=Boolean(c.isSold);
   const saved=!sold&&typeof isSavedVehicle==="function"?isSavedVehicle(c.id):false;
   const yardUrl=`yard.html?name=${encodeURIComponent(yardName)}`;
+  const inspectFooterBtn=inMainGrid?`<button type="button" class="card-footer-inspect-btn" data-book-inspection-vehicle="${esc(c.id)}" aria-label="${sold?"Vehicle sold":`Book Inspection for ${esc(c.year)} ${esc(c.make)} ${esc(c.model)}`}" title="${sold?"Sold":"Book inspection for this vehicle"}"${sold?' disabled aria-disabled="true"':""}>${HOME_INSPECT_SVG}<span>${sold?"Sold":"Book Inspection"}</span></button>`:"";
   return `<article class="card${saved?" is-saved":""}${sold?" is-sold":""}">
     <div class="card-main" role="link" tabindex="0" data-href="${vehicleUrl}">
       <div class="swatch${hasPh(c)}" style="background:${bgOf(c)}">${c.photos&&c.photos[0]?`<img class="swatch-photo" src="${esc(c.photos[0])}" alt="${esc(c.year+" "+c.make+" "+c.model)}" loading="${i===0?"eager":"lazy"}" decoding="async" fetchpriority="${i===0?"high":"low"}" sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 320px">`:""}<span class="swatch-year">${esc(c.year)}</span>${c.isPromoted?'<span class="promoted-tag">FEATURED</span>':""}<button type="button" class="card-wishlist-btn${saved?" is-saved":""}" data-save-vehicle="${esc(c.id)}" aria-pressed="${String(saved)}" aria-label="${sold?"Vehicle sold":saved?"Remove from wishlist":"Add to wishlist"}" title="${sold?"Sold":saved?"Remove from wishlist":"Save to wishlist"}"${sold?' disabled aria-disabled="true"':""}>${HOME_HEART_SVG}</button>${sold?'<span class="sold-badge-overlay" aria-label="Sold">Sold</span>':""}</div>
@@ -1350,6 +1353,7 @@ const cardMarkup=(c,i)=>{
     <div class="account-card-footer">
       <button type="button" class="account-card-save" data-save-vehicle="${esc(c.id)}" aria-pressed="${String(saved)}"${sold?' disabled aria-disabled="true"':""}>${sold?"Sold":saved?"Saved ✓":"Save vehicle"}</button>
       <button type="button" class="card-footer-share-btn" data-share-vehicle="${esc(c.id)}" aria-label="Share ${esc(c.year)} ${esc(c.make)} ${esc(c.model)}" title="Share vehicle">${HOME_SHARE_SVG}<span>Share</span></button>
+      ${inspectFooterBtn}
     </div>
   </article>`;
 };
@@ -1375,14 +1379,172 @@ function handleHomeShareVehicle(carId){
   }
   copyHomeShareLink(shareUrl,title);
 }
+function homeTodayIso(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`}
+function homeNextInspectDate(){const d=new Date();d.setDate(d.getDate()+1);if(d.getDay()===0)d.setDate(d.getDate()+1);return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`}
+function openHomeInspectionBookingModal(carId){
+  const c=cars.find(x=>String(x.id)===String(carId));
+  const dlg=$("inspectionBookingModal");
+  if(!c||!dlg)return;
+  if(c.isSold){window.ThreePedalsAccountUI?.toast?.("This vehicle is already marked as sold.","error");return}
+  const s=c.seller||{};
+  const title=`${c.year} ${c.make} ${c.model}`.trim();
+  const photo=(c.photos&&c.photos[0])||"";
+  const vehicleRef=`3PA-${String(c.id||"").replace(/-/g,"").slice(0,8).toUpperCase()}`;
+  const sellerLabel=s.type==="yard"?(s.name||"Car yard"):(s.name||"Private seller");
+  const locText=s.location?` · ${s.location}`:"";
+  const minDate=homeTodayIso();
+  const defaultDate=homeNextInspectDate();
+  const defaultName=String((profile&&profile.name)||me?.user_metadata?.name||me?.user_metadata?.full_name||"").trim();
+  const defaultPhone=String((profile&&profile.phone)||me?.user_metadata?.phone||"").trim();
+  const defaultEmail=String(me?.email||"").trim();
+  const businessWa=String(siteSettings.whatsapp_number||HOUSE.whatsapp||"254791961807").replace(/\D/g,"");
+  const garageHref=`${GARAGE_URL}${GARAGE_URL.includes("?")?"&":"?"}service=${encodeURIComponent("Pre-purchase inspection")}&car=${encodeURIComponent(title)}#book`;
+  const timeSlots=["08:00 AM","09:00 AM","10:00 AM","11:00 AM","12:00 PM","01:00 PM","02:00 PM","03:00 PM","04:00 PM"];
+  dlg.innerHTML=`
+    <div class="ux-inspect-modal-shell">
+      <div class="ux-inspect-modal-head">
+        <div>
+          <span class="eyebrow">3 PEDALS GARAGE INSPECTION · ${esc(vehicleRef)}</span>
+          <h2 id="inspectionBookingTitle">Book Vehicle Inspection</h2>
+        </div>
+        <button type="button" class="ux-inspect-modal-close" id="closeInspectModalBtn" aria-label="Close inspection booking">×</button>
+      </div>
+      <div class="ux-inspect-car">
+        ${photo?`<img src="${esc(photo)}" alt="${esc(title)}">`:`<div class="ux-inspect-car-fallback" aria-hidden="true">3P</div>`}
+        <div class="ux-inspect-car-meta">
+          <strong>${esc(title)}</strong>
+          <div class="ux-inspect-car-price">KES ${fmt(c.price)}</div>
+          <span class="ux-inspect-car-sub">${esc(fmt(c.km))} km · ${esc(c.fuel||"Petrol")} · ${esc(sellerLabel+locText)}</span>
+        </div>
+      </div>
+      <form class="ux-inspect-form" id="inspectionBookingForm" novalidate>
+        <div class="ux-inspect-field">
+          <label for="inspectServiceType">Inspection Type</label>
+          <select id="inspectServiceType" name="serviceType">
+            <option value="Pre-purchase inspection">Pre-purchase inspection (3 Pedals Garage)</option>
+            <option value="Mobile yard pre-purchase inspection">Mobile inspection at seller / car yard</option>
+          </select>
+        </div>
+        <div class="ux-inspect-row">
+          <div class="ux-inspect-field">
+            <label for="inspectDate">Preferred Date</label>
+            <input type="date" id="inspectDate" name="date" min="${esc(minDate)}" value="${esc(defaultDate)}" required>
+          </div>
+          <div class="ux-inspect-field">
+            <label for="inspectTimeSlot">Time Slot</label>
+            <select id="inspectTimeSlot" name="timeSlot" required>
+              ${timeSlots.map((slot,idx)=>`<option value="${esc(slot)}"${idx===1?" selected":""}>${esc(slot)}</option>`).join("")}
+            </select>
+          </div>
+        </div>
+        <div class="ux-inspect-row">
+          <div class="ux-inspect-field">
+            <label for="inspectCustomerName">Your Name</label>
+            <input type="text" id="inspectCustomerName" name="name" autocomplete="name" maxlength="120" placeholder="Jane Mwangi" value="${esc(defaultName)}" required>
+          </div>
+          <div class="ux-inspect-field">
+            <label for="inspectCustomerPhone">Phone / WhatsApp</label>
+            <input type="tel" id="inspectCustomerPhone" name="phone" autocomplete="tel" maxlength="40" placeholder="0712 345 678" value="${esc(defaultPhone)}" required>
+          </div>
+        </div>
+        <div class="ux-inspect-field">
+          <label for="inspectCustomerEmail">Email (optional)</label>
+          <input type="email" id="inspectCustomerEmail" name="email" autocomplete="email" maxlength="254" placeholder="you@example.com" value="${esc(defaultEmail)}">
+        </div>
+        <div class="ux-inspect-field">
+          <label for="inspectNotes">Notes / Yard Location (optional)</label>
+          <textarea id="inspectNotes" name="notes" maxlength="800" placeholder="${esc(s.location?`Vehicle located at ${s.location}`:"Any checks you want prioritised or yard directions…")}">${esc(s.location?`Vehicle location: ${s.location}`:"")}</textarea>
+        </div>
+        <p class="ux-inspect-hint">Garage &amp; mobile inspections run Monday–Saturday, 8:00 AM – 6:00 PM (OBD-II scan, engine, chassis &amp; road test).</p>
+        <p class="ux-inspect-status" id="inspectBookingStatus" role="status" aria-live="polite" hidden></p>
+        <div class="ux-inspect-confirm-links" id="inspectConfirmLinks" hidden></div>
+        <div class="ux-inspect-actions">
+          <button type="submit" class="ux-inspect-submit" id="inspectSubmitBtn">Confirm Inspection Booking</button>
+          <a class="ux-inspect-secondary" href="${esc(garageHref)}">Open Garage Page</a>
+        </div>
+      </form>
+    </div>
+  `;
+  $("closeInspectModalBtn")?.addEventListener("click",()=>dlg.close());
+  const dateInput=$("inspectDate"),statusEl=$("inspectBookingStatus"),linksEl=$("inspectConfirmLinks");
+  const setStatus=(msg,isErr=false)=>{if(!statusEl)return;statusEl.textContent=msg;statusEl.classList.toggle("is-error",isErr);statusEl.hidden=!msg};
+  dateInput?.addEventListener("change",()=>{
+    if(!dateInput.value)return;
+    const picked=new Date(dateInput.value+"T00:00:00");
+    if(picked.getDay()===0)setStatus("3 Pedals Garage is closed on Sundays. Please pick Monday–Saturday.",true);
+    else if(statusEl?.classList.contains("is-error"))setStatus("",false);
+  });
+  $("inspectionBookingForm")?.addEventListener("submit",async e=>{
+    e.preventDefault();
+    const serviceType=$("inspectServiceType")?.value||"Pre-purchase inspection";
+    const date=$("inspectDate")?.value||"";
+    const timeSlot=$("inspectTimeSlot")?.value||"09:00 AM";
+    const name=($("inspectCustomerName")?.value||"").trim();
+    const phoneRaw=($("inspectCustomerPhone")?.value||"").trim();
+    const email=($("inspectCustomerEmail")?.value||"").trim();
+    const notes=($("inspectNotes")?.value||"").trim();
+    if(!date){setStatus("Please select an inspection date.",true);$("inspectDate")?.focus();return}
+    const picked=new Date(date+"T00:00:00");
+    if(!Number.isFinite(picked.getTime())||date<minDate){setStatus("Please choose today or a future date.",true);$("inspectDate")?.focus();return}
+    if(picked.getDay()===0){setStatus("3 Pedals Garage is closed on Sundays. Please pick Monday–Saturday.",true);$("inspectDate")?.focus();return}
+    if(name.length<2){setStatus("Please enter your full name.",true);$("inspectCustomerName")?.focus();return}
+    if(phoneRaw.replace(/\D/g,"").length<9){setStatus("Please enter a valid phone or WhatsApp number.",true);$("inspectCustomerPhone")?.focus();return}
+    if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){setStatus("Please enter a valid email address or leave it blank.",true);$("inspectCustomerEmail")?.focus();return}
+    const submitBtn=$("inspectSubmitBtn");
+    if(submitBtn){submitBtn.disabled=true;submitBtn.textContent="Booking inspection…"}
+    setStatus("",false);
+    if(linksEl)linksEl.hidden=true;
+    const ref="3PG-"+Math.random().toString(36).slice(2,8).toUpperCase();
+    const carDesc=`${title} (${vehicleRef})`;
+    let savedRemotely=false,slotTaken=false;
+    if(sb){
+      if(me?.id){
+        const {error}=await sb.from("bookings").insert({ref,user_id:me.id,request_type:"garage",service:serviceType,car:carDesc,date,time_slot:timeSlot,service_status:"scheduled",name,phone:phoneRaw});
+        if(!error)savedRemotely=true;
+        else if(error.code==="23505")slotTaken=true;
+        else console.warn("Direct inspection booking insert fallback:",error);
+      }
+      if(!savedRemotely&&!slotTaken){
+        const {error:enqErr}=await sb.from("contact_enquiries").insert({name,email:email||"inspection@3pedalsauto.co.ke",phone:phoneRaw,subject:`Inspection Booking (${ref}): ${title}`,message:[`Inspection request for ${carDesc}`,`Service: ${serviceType}`,`Preferred date: ${date} at ${timeSlot}`,`Vehicle price: KES ${fmt(c.price)}`,`Seller: ${sellerLabel}${locText}`,notes?`Notes: ${notes}`:""].filter(Boolean).join("\n")});
+        if(!enqErr)savedRemotely=true;
+        else console.warn("Inspection enquiry insert failed:",enqErr);
+      }
+    }
+    if(slotTaken){
+      if(submitBtn){submitBtn.disabled=false;submitBtn.textContent="Confirm Inspection Booking"}
+      setStatus("That time slot is already taken. Please select another slot or date.",true);
+      $("inspectTimeSlot")?.focus();
+      return;
+    }
+    try{
+      const existingLocal=JSON.parse(localStorage.getItem("3pedals:inspection-bookings:v1")||"[]");
+      const nextLocal=Array.isArray(existingLocal)?existingLocal:[];
+      nextLocal.unshift({ref,vehicleId:c.id,vehicle:title,service:serviceType,date,timeSlot,name,phone:phoneRaw,createdAt:new Date().toISOString()});
+      localStorage.setItem("3pedals:inspection-bookings:v1",JSON.stringify(nextLocal.slice(0,20)));
+    }catch(_){}
+    const waText=encodeURIComponent(`Hello 3 Pedals Garage, I have booked a ${serviceType} (${ref}) for the ${title} (${vehicleRef}) on ${date} at ${timeSlot}.\nName: ${name}\nPhone: ${phoneRaw}${notes?`\nNotes: ${notes}`:""}`);
+    const waUrl=`https://wa.me/${businessWa}?text=${waText}`;
+    setStatus(savedRemotely?`Inspection booked (${ref}) for ${title} on ${date} at ${timeSlot}. Our garage team will confirm shortly.`:`Inspection request ${ref} prepared for ${title} (${date} at ${timeSlot}). Send directly on WhatsApp below to lock in your slot.`,false);
+    if(linksEl){
+      linksEl.innerHTML=`<a class="ux-inspect-submit" style="text-align:center;text-decoration:none;display:inline-flex;align-items:center;justify-content:center" href="${esc(waUrl)}" target="_blank" rel="noopener">Send via WhatsApp</a><button type="button" class="ux-inspect-secondary" id="inspectDoneBtn">Done</button>`;
+      linksEl.hidden=false;
+      $("inspectDoneBtn")?.addEventListener("click",()=>dlg.close());
+    }
+    if(submitBtn){submitBtn.disabled=false;submitBtn.textContent="Update Booking"}
+    window.ThreePedalsAccountUI?.toast?.(`Inspection booked (${ref}) for ${title}.`,"ok");
+  });
+  if(!dlg.open)dlg.showModal();
+  setTimeout(()=>($("inspectCustomerName")?.value?$("inspectCustomerPhone"):$("inspectCustomerName"))?.focus(),40);
+}
+$("inspectionBookingModal")?.addEventListener("click",e=>{if(e.target===$("inspectionBookingModal"))$("inspectionBookingModal").close()});
 function render(){
   const q=$("q").value.trim().toLowerCase(),mk=$("make").value,mf=$("model").value,vr=$("variant").value,mx=+$("max").value,s=$("sort").value;
   let r=cars.filter(c=>(!q||(c.make+" "+c.model).toLowerCase().includes(q))&&(!mk||canonicalMake(c.make)===mk)&&(!mf||familyFor(c.make,c.model)===mf)&&(!vr||variantFor(c.make,c.model)===vr)&&(!mx||c.price<=mx));
   r.sort((a,b)=>(Number(b.isPromoted)-Number(a.isPromoted))||(s==="low"?a.price-b.price:s==="high"?b.price-a.price:s==="km"?a.km-b.km:b.year-a.year));
   $("count").textContent=r.length+(r.length===1?" car":" cars")+" found";
-  $("grid").innerHTML=r.length?r.map(cardMarkup).join(""):'<p class="meta">No cars match these filters. Clear the search or raise the price limit.</p>';
+  $("grid").innerHTML=r.length?r.map((c,idx)=>cardMarkup(c,idx,true)).join(""):'<p class="meta">No cars match these filters. Clear the search or raise the price limit.</p>';
 }
-["grid","featuredGrid"].forEach(id=>{const el=$(id);if(!el)return;el.addEventListener("click",e=>{const share=e.target.closest("[data-share-vehicle]");if(share){e.preventDefault();e.stopPropagation();handleHomeShareVehicle(share.dataset.shareVehicle);return}const save=e.target.closest("[data-save-vehicle]");if(save){e.preventDefault();e.stopPropagation();if(save.disabled||save.getAttribute("aria-disabled")==="true"||save.closest(".card.is-sold"))return;toggleSavedVehicle(save.dataset.saveVehicle,save);return}if(e.target.closest("a"))return;const card=e.target.closest(".card-main");if(card)location.href=card.dataset.href});el.addEventListener("keydown",e=>{if(e.target.closest("a,button"))return;const card=e.target.closest(".card-main");if(card&&(e.key==="Enter"||e.key===" ")){e.preventDefault();location.href=card.dataset.href}})});
+["grid","featuredGrid"].forEach(id=>{const el=$(id);if(!el)return;el.addEventListener("click",e=>{const inspect=e.target.closest("[data-book-inspection-vehicle]");if(inspect){e.preventDefault();e.stopPropagation();if(inspect.disabled||inspect.getAttribute("aria-disabled")==="true"||inspect.closest(".card.is-sold"))return;openHomeInspectionBookingModal(inspect.dataset.bookInspectionVehicle);return}const share=e.target.closest("[data-share-vehicle]");if(share){e.preventDefault();e.stopPropagation();handleHomeShareVehicle(share.dataset.shareVehicle);return}const save=e.target.closest("[data-save-vehicle]");if(save){e.preventDefault();e.stopPropagation();if(save.disabled||save.getAttribute("aria-disabled")==="true"||save.closest(".card.is-sold"))return;toggleSavedVehicle(save.dataset.saveVehicle,save);return}if(e.target.closest("a"))return;const card=e.target.closest(".card-main");if(card)location.href=card.dataset.href});el.addEventListener("keydown",e=>{if(e.target.closest("a,button"))return;const card=e.target.closest(".card-main");if(card&&(e.key==="Enter"||e.key===" ")){e.preventDefault();location.href=card.dataset.href}})});
 ["q","max","sort"].forEach(i=>$(i).addEventListener("input",render));
 $("make").addEventListener("change",()=>{updateBuyFilters();render()});
 $("model").addEventListener("change",()=>{updateBuyFilters();render()});
