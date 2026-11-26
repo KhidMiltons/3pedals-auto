@@ -1185,38 +1185,81 @@ app.post("/api/chat", async (req, res) => {
 
     const groundingSources = [];
     const seenUris = new Set();
+    const getGroundingSnippet = (candidate) => {
+      const fields = [
+        candidate?.snippet,
+        candidate?.description,
+        candidate?.text,
+        candidate?.content,
+        candidate?.extract,
+        candidate?.excerpt,
+        candidate?.summary,
+        candidate?.content_text,
+        candidate?.page_content,
+        candidate?.raw_content,
+      ];
+      const direct = fields.find((value) => typeof value === "string" && value.trim().length >= 40);
+      if (direct) return direct.trim().slice(0, 1200);
+      if (Array.isArray(candidate?.highlights)) {
+        const highlights = candidate.highlights.filter((value) => typeof value === "string" && value.trim());
+        if (highlights.length) return highlights.join("\n").slice(0, 1200);
+      }
+      if (Array.isArray(candidate?.contents)) {
+        const contents = candidate.contents
+          .map((item) => typeof item === "string" ? item : String(item?.text || item?.content || ""))
+          .filter((value) => value.trim());
+        if (contents.length) return contents.join("\n").slice(0, 1200);
+      }
+      return "";
+    };
     const addGroundingSource = (candidate) => {
       if (!candidate || typeof candidate !== "object") return;
-      const rawUri = candidate.url || candidate.uri || candidate.link;
+      const rawUri = candidate.url || candidate.uri || candidate.link || candidate.href;
       if (typeof rawUri !== "string") return;
       let parsed;
       try { parsed = new URL(rawUri); } catch { return; }
-      if (!["http:", "https:"].includes(parsed.protocol) || seenUris.has(parsed.href)) return;
+      if (!["http:", "https:"].includes(parsed.protocol)) return;
+      const snippet = getGroundingSnippet(candidate);
+      const existingIndex = groundingSources.findIndex((source) => source.uri === parsed.href);
+      if (existingIndex >= 0) {
+        if (!groundingSources[existingIndex].snippet && snippet) groundingSources[existingIndex].snippet = snippet;
+        return;
+      }
       seenUris.add(parsed.href);
       groundingSources.push({
         type: "web",
         title: String(candidate.title || candidate.name || parsed.hostname).slice(0, 240),
         uri: parsed.href,
-        snippet: String(candidate.snippet || candidate.description || candidate.text || "").slice(0, 350),
+        snippet,
       });
     };
 
     // Groq browser_search sources are returned under message.executed_tools,
-    // not necessarily message.annotations. Support both documented result shapes.
+    // not necessarily message.annotations. Preserve excerpts from the common
+    // search-result field variants so the no-content recovery can synthesize
+    // from actual retrieved text rather than source URLs alone.
     for (const annotation of answer?.annotations || []) {
       addGroundingSource(annotation?.url_citation || annotation?.urlCitation || annotation);
     }
     for (const executedTool of answer?.executed_tools || []) {
-      for (const result of executedTool?.search_results?.results || []) addGroundingSource(result);
+      const searchResults = executedTool?.search_results;
+      const resultItems = Array.isArray(searchResults) ? searchResults
+        : Array.isArray(searchResults?.results) ? searchResults.results
+        : Array.isArray(searchResults?.items) ? searchResults.items
+        : [];
+      for (const result of resultItems) addGroundingSource(result);
       for (const result of executedTool?.browser_results || []) addGroundingSource(result);
-      // Some API versions expose the search payload as JSON text in output.
-      if (typeof executedTool?.output === "string") {
-        try {
-          const parsedOutput = JSON.parse(executedTool.output);
-          const results = Array.isArray(parsedOutput) ? parsedOutput
-            : parsedOutput?.results || parsedOutput?.search_results?.results || parsedOutput?.browser_results || [];
-          for (const result of results) addGroundingSource(result);
-        } catch { /* Non-JSON tool output is not a structured source list. */ }
+
+      // Some API versions expose the search payload as JSON text or an object in output.
+      let parsedOutput = executedTool?.output;
+      if (typeof parsedOutput === "string") {
+        try { parsedOutput = JSON.parse(parsedOutput); } catch { parsedOutput = null; }
+      }
+      if (parsedOutput && typeof parsedOutput === "object") {
+        const outputItems = Array.isArray(parsedOutput) ? parsedOutput
+          : parsedOutput?.results || parsedOutput?.items ||
+            parsedOutput?.search_results?.results || parsedOutput?.browser_results || [];
+        for (const result of outputItems) addGroundingSource(result);
       }
     }
 
@@ -1274,6 +1317,8 @@ app.post("/api/chat", async (req, res) => {
         sourceCount: groundingSources.length,
         excerptSourceCount: evidenceSources.length,
         evidenceCharacters: evidenceLength,
+        recoveryEligible: evidenceSources.length >= 3 && evidenceLength >= 500,
+        sourceSnippetLengths: groundingSources.slice(0, 5).map((source) => source.snippet.length),
       });
 
       if (evidenceSources.length >= 3 && evidenceLength >= 500) {
