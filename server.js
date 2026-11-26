@@ -251,6 +251,11 @@ function sanitizeKenyaTaxAndFaqClaims(text) {
   value = value.replace(/\b(customs value)\s*[-–—]?\s*(implied|inferred)\b/gi,
     "individual tax base not specified in this source");
 
+  // Narrow unsupported exhaustive claims about the age calculation to the
+  // exact KRA page that was cited.
+  value = value.replace(/(?:The page|This page|The cited KRA page) does not explain[^.!?\n]*,\s*nor does any other binding KRA instrument[^.!?\n]*[.!?]?/gi,
+    "The cited KRA page does not explain the calculation method.");
+
   // Both KRA pages are undated in the sources checked. Do not invent a date,
   // chronological order, or supersession status for the FAQ.
   value = value.replace(/[^.!?\n]*(?:(?:earlier|older) (?:KRA )?FAQ)[^.!?\n]*(?:not|is not|isn\x27t)[^.!?\n]*(?:binding|current)[^.!?\n]*[.!?]?/gi,
@@ -268,7 +273,7 @@ function sanitizeKenyaTaxAndFaqClaims(text) {
     "An earlier KRA FAQ lists different IDF and RDL rates (2% and 1.5%); its publication date and the status and legal effect of the difference are not established by the sources checked.");
   // Keep the destination-inspection summary within the notice's stated
   // sequence. Do not turn its validation language into an exhaustive rule.
-  value = value.replace(/Only vehicles? without (?:a )?CoR[^.!?\n]*(?:validated|validation)[^.!?\n]*(?:destination inspection|inspection at destination)[^.!?\n]*[.!?]?/gi,
+  value = value.replace(/Only vehicles?[^.!?\n]*(?:without|not accompanied by)[^.!?\n]*(?:CoR|Certificate of Roadworthiness)[^.!?\n]*(?:validated|validation)[^.!?\n]*(?:destination inspection|inspection at destination)[^.!?\n]*[.!?]?/gi,
     "The notice describes document validation for vehicles not accompanied by a CoR and states that vehicles with validated import documents will be subjected to destination inspection; it does not establish whether other triggers apply.");
   value = value.replace(/No (?:additional|other) (?:destination[- ]inspection )?trigger(?:s)? (?:was|were|is|are) identified[^.!?\n]*[.!?]?/gi,
     "The notice describes this validation process; it does not establish whether other destination-inspection triggers apply.");
