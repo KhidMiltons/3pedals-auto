@@ -234,32 +234,47 @@ function enforceKenyaRhdSection(text) {
 function sanitizeKenyaTaxAndFaqClaims(text) {
   let value = String(text || "");
 
-  // The KRA procedure page lists rates and says taxes are based on customs
-  // value generally, but does not assign an individual base to each listed tax.
-  // Normalize the basis column for the five requested taxes rather than
-  // allowing a model to infer a tax-specific base from that general wording.
-  const taxRow = /^(\s*\|\s*)(Import Duty|Excise Duty|Value[- ]Added Tax|VAT|Import Declaration Fee|IDF|Railway Development Levy|RDL)(\b[^|]*\|[^|]*\|)([^|]*)(\|.*)$/i;
+  // Normalize table bases for all requested taxes. A general customs-value
+  // statement on the KRA page is not enough to assign a base to each tax.
+  const taxRow = /^(\s*\|\s*)(Import Duty|Excise Duty|Value[‑–—- ]Added Tax|VAT|Import Declaration Fee|IDF|Railway Development Levy|RDL)(\b[^|]*\|[^|]*\|)([^|]*)(\|.*)$/i;
   value = value.split("\n").map((line) => {
     if (!taxRow.test(line)) return line;
     return line.replace(taxRow, (_match, start, tax, middle, _basis, end) =>
       `${start}${tax}${middle} Individual tax base not specified in this source ${end}`);
   }).join("\n");
 
-  value = value.replace(/customs value\s*\(\s*(?:implied|inferred)\b[^)]*\)/gi,
+  // Remove unsupported VAT-base assumptions in prose as well as tables.
+  value = value.replace(/(?:VAT|value[-‑– ]added tax)[^.!?\n]{0,160}\b(?:normally|typically|generally)\b[^.!?\n]{0,100}\b(?:customs value|CIF)\b[^.!?\n]{0,80}(?:\+|plus|and)[^.!?\n]{0,80}\b(?:duties|taxes)\b[^.!?\n]*/gi,
+    "The cited KRA procedure does not specify an individual VAT tax base");
+  value = value.replace(/\b(?:customs value)\s*\(\s*(?:implied|inferred)\b[^)]*\)/gi,
     "individual tax base not specified in this source");
   value = value.replace(/\b(customs value)\s*[-–—]?\s*(implied|inferred)\b/gi,
     "individual tax base not specified in this source");
-  value = value.replace(/\b(?:archived|archived,?\s+undated)\b/gi, "older");
 
-  // Both the live KRA procedure page and the FAQ are undated; do not infer
-  // their relative publication dates or legal status.
+  // Both KRA pages are undated in the sources checked. Do not invent a date,
+  // chronological order, or supersession status for the FAQ.
+  value = value.replace(/[^.!?\n]*(?:earlier|older) KRA FAQ[^.!?\n]*(?:dated? prior to|before)\s*2024[^.!?\n]*[.!?]?/gi,
+    "An earlier KRA FAQ lists different IDF and RDL rates (2% and 1.5%); its publication date and the status and legal effect of the difference are not established by the sources checked.");
+  value = value.replace(/[^.!?\n]*(?:FAQ)[^.!?\n]*(?:superseded|replaced by|no longer applies)[^.!?\n]*[.!?]?/gi,
+    "The earlier KRA FAQ lists different IDF and RDL rates; its publication date and the status and legal effect of the difference are not established by the sources checked.");
+  value = value.replace(/\b(?:archived|archived,?\s+undated)\b/gi, "older");
   value = value.replace(/\b(?:older|earlier) than (?:the )?(?:current )?(?:KRA )?(?:procedure|procedure page|procedures for motor vehicle page)\b/gi,
     "undated; its date relative to the KRA procedure page is not established");
   value = value.replace(/\b(?:this )?older FAQ (?:is|was) (?:not )?the current binding instrument\b/gi,
     "this earlier KRA FAQ lists different IDF and RDL rates; its date and the status and legal effect of the difference are not established by these sources");
   value = value.replace(/\bnot the current binding instrument\b/gi,
     "its date and legal effect are not established by the sources checked");
-  return value;
+
+  // The KEBS notice describes document validation where no CoR accompanies
+  // the vehicle, and says vehicles with validated import documents undergo
+  // destination inspection. Do not infer an exclusive trigger or add others.
+  value = value.replace(/Destination inspection by KEBS occurs only when[^.!?\n]*[.!?]?/gi, "");
+  value = value.replace(/Thus,?\s*the destination inspection[^.!?\n]*[.!?]?/gi, "");
+  value = value.replace(/No other trigger is identified[^.!?\n]*[.!?]?/gi, "");
+  value = value.replace(/The only (?:trigger|circumstance) for destination inspection[^.!?\n]*[.!?]?/gi, "");
+  value = value.replace(/(?:destination inspection|inspection at destination)[^.!?\n]{0,180}\bonly\s+(?:when|if)\b[^.!?\n]*[.!?]?/gi, "");
+
+  return value.replace(/\n{3,}/g, "\n\n");
 }
 
 function findKenyaImportAnswerIssues(text) {
