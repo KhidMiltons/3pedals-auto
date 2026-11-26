@@ -263,8 +263,8 @@ function sanitizeKenyaTaxAndFaqClaims(text) {
   value = value.replace(/\b(?:this )?older FAQ (?:is|was) (?:not )?the current binding instrument\b/gi,
     "this earlier KRA FAQ lists different IDF and RDL rates; its date and the status and legal effect of the difference are not established by these sources");
   value = value.replace(/\bnot the current binding instrument\b/gi,
-    "its date and legal effect are not established by the sources checked");
-
+  value = value.replace(/[^.!?\\n]*(?:earlier|older) KRA FAQ[^.!?\\n]*(?:not|is not|isn\x27t)[^.!?\\n]*(?:binding|current)[^.!?\\n]*[.!?]?/gi,
+    "An earlier KRA FAQ lists different IDF and RDL rates (2% and 1.5%); its publication date and the status and legal effect of the difference are not established by the sources checked.");
   // The KEBS notice describes document validation where no CoR accompanies
   // the vehicle, and says vehicles with validated import documents undergo
   // destination inspection. Do not infer an exclusive trigger or add others.
@@ -272,6 +272,7 @@ function sanitizeKenyaTaxAndFaqClaims(text) {
   value = value.replace(/Thus,?\s*the destination inspection[^.!?\n]*[.!?]?/gi, "");
   value = value.replace(/No other trigger is identified[^.!?\n]*[.!?]?/gi, "");
   value = value.replace(/The only (?:trigger|circumstance) for destination inspection[^.!?\n]*[.!?]?/gi, "");
+  value = value.replace(/If the KEBS notice cannot be accessed[^.!?\\n]*[.!?]?/gi, "");
   value = value.replace(/(?:destination inspection|inspection at destination)[^.!?\n]{0,180}\bonly\s+(?:when|if)\b[^.!?\n]*[.!?]?/gi, "");
 
   return value.replace(/\n{3,}/g, "\n\n");
