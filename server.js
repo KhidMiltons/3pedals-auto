@@ -273,10 +273,23 @@ function sanitizeKenyaTaxAndFaqClaims(text) {
   value = value.replace(/Thus,?\s*the destination inspection[^.!?\n]*[.!?]?/gi, "");
   value = value.replace(/No other trigger is identified[^.!?\n]*[.!?]?/gi, "");
   value = value.replace(/The only (?:trigger|circumstance) for destination inspection[^.!?\n]*[.!?]?/gi, "");
-  value = value.replace(/If the KEBS notice cannot be accessed[^.!?\n]*[.!?]?/gi, "");
+  // Remove conditional caveats about the notice being unavailable; the
+  // answer has already cited and summarized that notice.
+  value = value.replace(/If the KEBS notice[^.!?\n]*[.!?]?/gi, "");
   value = value.replace(/(?:destination inspection|inspection at destination)[^.!?\n]{0,180}\bonly\s+(?:when|if)\b[^.!?\n]*[.!?]?/gi, "");
 
-  return value.replace(/\n{3,}/g, "\n\n");
+  // Sentence matching above can stop at the decimal point in "1.5%",
+  // leaving a stray "5%." behind. Remove that artifact and keep one FAQ note.
+  const faqNote = "An earlier KRA FAQ lists different IDF and RDL rates (2% and 1.5%); its publication date and the status and legal effect of the difference are not established by the sources checked.";
+  value = value.replace(/(its publication date and the status and legal effect of the difference are not established by the sources checked\.)\s*5\s*%\./gi, "$1");
+  let keptFaqNote = false;
+  value = value.replace(/An earlier KRA FAQ lists different IDF and RDL rates \(2% and 1\.5%\); its publication date and the status and legal effect of the difference are not established by the sources checked\./gi, () => {
+    if (keptFaqNote) return "";
+    keptFaqNote = true;
+    return faqNote;
+  });
+
+  return value.replace(/\n{3,}/g, "\n\n").replace(/[ \t]+\n/g, "\n");
 }
 
 function findKenyaImportAnswerIssues(text) {
