@@ -253,7 +253,7 @@ function sanitizeKenyaTaxAndFaqClaims(text) {
 
   // Both KRA pages are undated in the sources checked. Do not invent a date,
   // chronological order, or supersession status for the FAQ.
-  value = value.replace(/[^.!?\n]*(?:earlier|older) KRA FAQ[^.!?\n]*(?:dated? prior to|before)\s*2024[^.!?\n]*[.!?]?/gi,
+  value = value.replace(/[^.!?\n]*(?:(?:earlier|older) (?:KRA )?FAQ)[^.!?\n]*(?:not|is not|isn\x27t)[^.!?\n]*(?:binding|current)[^.!?\n]*[.!?]?/gi,
     "An earlier KRA FAQ lists different IDF and RDL rates (2% and 1.5%); its publication date and the status and legal effect of the difference are not established by the sources checked.");
   value = value.replace(/[^.!?\n]*(?:FAQ)[^.!?\n]*(?:superseded|replaced by|no longer applies)[^.!?\n]*[.!?]?/gi,
     "The earlier KRA FAQ lists different IDF and RDL rates; its publication date and the status and legal effect of the difference are not established by the sources checked.");
@@ -273,7 +273,7 @@ function sanitizeKenyaTaxAndFaqClaims(text) {
   value = value.replace(/Thus,?\s*the destination inspection[^.!?\n]*[.!?]?/gi, "");
   value = value.replace(/No other trigger is identified[^.!?\n]*[.!?]?/gi, "");
   value = value.replace(/The only (?:trigger|circumstance) for destination inspection[^.!?\n]*[.!?]?/gi, "");
-  value = value.replace(/If the KEBS notice cannot be accessed[^.!?\\n]*[.!?]?/gi, "");
+  value = value.replace(/If the KEBS notice cannot be accessed[^.!?\n]*[.!?]?/gi, "");
   value = value.replace(/(?:destination inspection|inspection at destination)[^.!?\n]{0,180}\bonly\s+(?:when|if)\b[^.!?\n]*[.!?]?/gi, "");
 
   return value.replace(/\n{3,}/g, "\n\n");
