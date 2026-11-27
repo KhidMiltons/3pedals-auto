@@ -1079,6 +1079,7 @@
     const c = opts.car;
     const dlg = opts.dialog || document.getElementById("inspectionBookingModal");
     if (!c || !dlg) return;
+    dlg.classList.add("ux-inspect-modal");
     const sw = (opts.lang || getLang()) === "sw";
     if (c.isSold) {
       if (typeof opts.onNotice === "function") {
@@ -1738,6 +1739,9 @@
     renderScheduler();
     syncScopeChips();
     if (!dlg.open) dlg.showModal();
+    dlg.scrollTop = 0;
+    const closeInspectBtn = document.getElementById("closeInspectModalBtn");
+    if (closeInspectBtn) closeInspectBtn.focus({ preventScroll: true });
 
     // Fetch live garage bookings asynchronously to prevent double-booking across users
     if (opts.sb) {
@@ -1769,13 +1773,6 @@
       slotsLoading = false;
       renderScheduler();
     }
-
-    setTimeout(() => {
-      const target = document.getElementById("inspectCustomerName")?.value
-        ? document.getElementById("inspectCustomerPhone")
-        : document.getElementById("inspectCustomerName");
-      target?.focus();
-    }, 40);
   }
 
   // ===== Journal Estimated Reading Time & Recent Reads =====

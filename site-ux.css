@@ -195,10 +195,13 @@ html[data-theme="light"] #home .hero,
 html[data-theme="light"] body .garage-hero,
 html[data-theme="light"] body .journal-hero {
   position: relative;
+  background: transparent !important;
   background-color: transparent !important;
-  background-image: linear-gradient(180deg, rgba(255, 253, 249, 0.90) 0%, rgba(252, 247, 238, 0.72) 55%, rgba(246, 240, 227, 0.44) 100%) !important;
+  background-image: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
   border: 0 !important;
-  box-shadow: 0 18px 46px rgba(48, 38, 18, 0.10) !important;
+  box-shadow: none !important;
   color: #171512 !important;
 }
 html[data-theme="light"] body .hero h1,
@@ -259,11 +262,14 @@ html[data-theme="light"] #home .showroom-actions .showroom-secondary {
 
 /* Motoring wisdom card (#autoQuoteRail) legible in light mode */
 html[data-theme="light"] #home #autoQuoteRail {
+  background: transparent !important;
   background-color: transparent !important;
-  background-image: linear-gradient(180deg, rgba(255, 253, 249, 0.92) 0%, rgba(252, 247, 238, 0.72) 60%, rgba(246, 240, 227, 0.44) 100%) !important;
+  background-image: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
   border: 0 !important;
   color: #171512 !important;
-  box-shadow: 0 14px 36px rgba(48, 38, 18, 0.10) !important;
+  box-shadow: none !important;
 }
 html[data-theme="light"] #home #autoQuoteRail .auto-quote-top,
 html[data-theme="light"] #home #autoQuoteRail .auto-quote-footer {
@@ -310,11 +316,14 @@ html[data-theme="light"] body :is(
   #contact .contact-intro-card, #contact #publicContactForm,
   #about .about-glass-card, #about .about-value-card, .account-load-error
 ):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
+  background: transparent !important;
   background-color: transparent !important;
-  background-image: linear-gradient(180deg, rgba(255, 253, 249, 0.90) 0%, rgba(252, 247, 238, 0.72) 55%, rgba(246, 240, 227, 0.44) 100%) !important;
+  background-image: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
   border: 0 !important;
   color: #171512 !important;
-  box-shadow: 0 12px 32px rgba(48, 38, 18, 0.08) !important;
+  box-shadow: none !important;
 }
 
 html[data-theme="light"] #accDlg .account-page {
@@ -1861,16 +1870,17 @@ html[data-theme="light"] .ux-footer-legal .legal-footer-links button {
   padding: 20px;
   border: 0;
   border-radius: 20px;
-  background-color: transparent;
-  background-image: linear-gradient(180deg, rgba(18, 22, 28, 0.62) 0%, rgba(16, 18, 24, 0.42) 55%, rgba(12, 14, 18, 0.18) 100%);
-  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.18), inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
-  -webkit-backdrop-filter: blur(22px) saturate(130%);
-  backdrop-filter: blur(22px) saturate(130%);
+  background: transparent;
+  background-image: none;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
 
 html[data-theme="light"] .a4-preview-panel {
-  background-image: linear-gradient(180deg, rgba(255, 253, 249, 0.94) 0%, rgba(248, 242, 230, 0.78) 100%);
-  box-shadow: 0 14px 36px rgba(48, 38, 18, 0.10), inset 0 1px 0 0 rgba(255, 255, 255, 0.96);
+  background: transparent;
+  background-image: none;
+  box-shadow: none;
 }
 
 .a4-preview-toolbar {
@@ -7206,20 +7216,20 @@ html[data-theme="light"] .contact-inspection-banner {
   padding: clamp(20px, 3vw, 32px);
   border-radius: 20px;
   border: 0;
-  background-color: transparent;
-  background-image: linear-gradient(180deg, rgba(18, 22, 28, 0.56) 0%, rgba(16, 18, 24, 0.34) 48%, rgba(12, 14, 18, 0.10) 100%);
-  -webkit-backdrop-filter: blur(24px) saturate(125%);
-  backdrop-filter: blur(24px) saturate(125%);
-  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.16), inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
+  background: transparent;
+  background-image: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: none;
 }
 
 html[data-theme="light"] .about-faq,
 html[data-theme="light"] .garage-faq-section {
-  background-color: transparent !important;
-  background-image: linear-gradient(180deg, rgba(255, 253, 249, 0.90) 0%, rgba(252, 247, 238, 0.72) 55%, rgba(246, 240, 227, 0.44) 100%) !important;
+  background: transparent !important;
+  background-image: none !important;
   border: 0 !important;
   color: #171512 !important;
-  box-shadow: 0 12px 32px rgba(48, 38, 18, 0.08), inset 0 1px 0 0 rgba(255, 255, 255, 0.96) !important;
+  box-shadow: none !important;
 }
 
 .faq-section-head {
@@ -7928,24 +7938,33 @@ dialog#inspectionBookingModal {
   position: fixed;
   inset: 0;
   margin: auto;
-  width: min(500px, calc(100vw - 24px));
-  max-width: min(500px, calc(100vw - 24px));
+  width: min(760px, calc(100vw - 24px));
+  max-width: min(760px, calc(100vw - 24px));
   height: auto;
-  max-height: calc(100dvh - 32px);
+  max-height: min(92dvh, 860px);
   padding: 0;
-  border: 1px solid rgba(215, 189, 131, 0.42);
-  border-radius: 18px;
-  background: rgba(17, 19, 23, 0.99);
+  border: 0 !important;
+  border-radius: 22px;
+  background-color: rgba(13, 15, 20, 0.72) !important;
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.055) 0%,
+    rgba(16, 18, 24, 0.50) 42%,
+    rgba(11, 13, 18, 0.80) 100%
+  ) !important;
   color: #f4f0e8;
-  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.78), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  box-shadow:
+    0 28px 80px rgba(0, 0, 0, 0.62),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.16) !important;
+  backdrop-filter: blur(26px) saturate(135%);
+  -webkit-backdrop-filter: blur(26px) saturate(135%);
   overflow: auto;
 }
 
 dialog#inspectionBookingModal::backdrop {
-  background: rgba(0, 0, 0, 0.78);
-  backdrop-filter: blur(6px);
+  background: rgba(5, 7, 10, 0.64);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 dialog#inspectionBookingModal[open] {
@@ -7965,25 +7984,28 @@ dialog#inspectionBookingModal[open]::backdrop {
     max-width: min(500px, calc(100vw - 24px)) !important;
     height: auto !important;
     max-height: calc(100dvh - 32px) !important;
-    border-radius: 18px !important;
-    border: 1px solid rgba(215, 189, 131, 0.42) !important;
+    border-radius: 20px !important;
+    border: 0 !important;
     padding: 0 !important;
     overflow-y: auto !important;
   }
 }
 
 html[data-theme="light"] dialog#inspectionBookingModal {
-  background: #fbf8f1 !important;
+  background-color: rgba(253, 250, 243, 0.88) !important;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(247, 241, 228, 0.80)) !important;
   color: #171512 !important;
-  border-color: rgba(138, 114, 62, 0.42) !important;
-  box-shadow: 0 24px 64px rgba(48, 38, 18, 0.24) !important;
+  border: 0 !important;
+  box-shadow:
+    0 24px 68px rgba(48, 38, 18, 0.22),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.98) !important;
 }
 
 .ux-inspect-modal-shell {
-  padding: 16px 20px 18px;
+  padding: 18px 22px 20px;
   display: flex;
   flex-direction: column;
-  gap: 11px;
+  gap: 12px;
 }
 
 .ux-inspect-modal-head {
@@ -8019,33 +8041,45 @@ html[data-theme="light"] .ux-inspect-modal-head .eyebrow {
   height: 36px;
   display: grid;
   place-items: center;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  background: rgba(255, 255, 255, 0.06);
+  border-radius: 11px;
+  border: 0 !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.12) !important;
   color: inherit;
   font-size: 21px;
   line-height: 1;
   cursor: pointer;
+  transition: background-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.ux-inspect-modal-close:hover,
+.ux-inspect-modal-close:focus-visible {
+  outline: none !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  box-shadow: inset 0 1px 0 0 rgba(229, 185, 111, 0.40), 0 0 0 1px rgba(229, 185, 111, 0.30) !important;
 }
 
 html[data-theme="light"] .ux-inspect-modal-close {
-  border-color: rgba(138, 114, 62, 0.34);
-  background: #ffffff;
+  border: 0 !important;
+  background: rgba(255, 255, 255, 0.78) !important;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.96), 0 2px 8px rgba(48, 38, 18, 0.08) !important;
 }
 
 .ux-inspect-car {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 12px;
-  border-radius: 12px;
-  border: 1px solid rgba(215, 189, 131, 0.28);
-  background: rgba(255, 255, 255, 0.045);
+  padding: 11px 13px;
+  border-radius: 16px;
+  border: 0 !important;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.015) 100%) !important;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.12), 0 8px 22px rgba(0, 0, 0, 0.16) !important;
 }
 
 html[data-theme="light"] .ux-inspect-car {
-  background: rgba(223, 190, 111, 0.12);
-  border-color: rgba(138, 114, 62, 0.28);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.78) 0%, rgba(250, 244, 232, 0.48) 100%) !important;
+  border: 0 !important;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.96), 0 6px 18px rgba(48, 38, 18, 0.06) !important;
 }
 
 .ux-inspect-car img,
@@ -8053,7 +8087,7 @@ html[data-theme="light"] .ux-inspect-car {
   width: 68px;
   height: 50px;
   flex: 0 0 68px;
-  border-radius: 8px;
+  border-radius: 10px;
   object-fit: cover;
   background: #1a1c20;
 }
@@ -8064,7 +8098,8 @@ html[data-theme="light"] .ux-inspect-car {
   font-weight: 800;
   font-size: 13px;
   color: #dfbe6f;
-  border: 1px solid rgba(215, 189, 131, 0.3);
+  border: 0;
+  box-shadow: inset 0 1px 0 rgba(229, 185, 111, 0.24);
 }
 
 .ux-inspect-car-meta {
@@ -8141,47 +8176,104 @@ html[data-theme="light"] .ux-inspect-field label {
   color: #5b5446;
 }
 
-.ux-inspect-field input,
-.ux-inspect-field select,
-.ux-inspect-field textarea {
+dialog#inspectionBookingModal .ux-inspect-field input,
+dialog#inspectionBookingModal .ux-inspect-field select,
+dialog#inspectionBookingModal .ux-inspect-field textarea,
+dialog#inspectionBookingModal #inspectScopeInput {
   width: 100%;
   box-sizing: border-box;
   min-height: 42px;
-  padding: 9px 12px;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  background: rgba(255, 255, 255, 0.06);
-  color: #f4f0e8;
+  padding: 10px 13px;
+  border-radius: 12px !important;
+  border: 0 !important;
+  outline: none !important;
+  background-color: rgba(255, 255, 255, 0.055) !important;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.045) 0%, rgba(255, 255, 255, 0.015) 100%) !important;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.11), inset 0 -1px 0 0 rgba(0, 0, 0, 0.18) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  backdrop-filter: blur(12px) !important;
+  color: #f4f0e8 !important;
   font: 500 13.5px/1.35 "Manrope", system-ui, sans-serif;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease !important;
 }
 
-.ux-inspect-field select option {
+dialog#inspectionBookingModal .ux-inspect-field select option {
   background: #17191d;
   color: #f4f0e8;
 }
 
-.ux-inspect-field textarea {
-  min-height: 74px;
+dialog#inspectionBookingModal .ux-inspect-field textarea,
+dialog#inspectionBookingModal #inspectScopeInput {
+  min-height: 76px;
   resize: vertical;
 }
 
-.ux-inspect-field input:focus,
-.ux-inspect-field select:focus,
-.ux-inspect-field textarea:focus {
-  outline: none;
-  border-color: #dfbe6f;
-  box-shadow: 0 0 0 3px rgba(223, 190, 111, 0.18);
+dialog#inspectionBookingModal .ux-inspect-field input:hover,
+dialog#inspectionBookingModal .ux-inspect-field select:hover,
+dialog#inspectionBookingModal .ux-inspect-field textarea:hover,
+dialog#inspectionBookingModal #inspectScopeInput:hover {
+  border: 0 !important;
+  outline: none !important;
+  background-color: rgba(255, 255, 255, 0.085) !important;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.18), 0 4px 14px rgba(0, 0, 0, 0.14) !important;
 }
 
-html[data-theme="light"] .ux-inspect-field input,
-html[data-theme="light"] .ux-inspect-field select,
-html[data-theme="light"] .ux-inspect-field textarea {
-  background: #ffffff !important;
+dialog#inspectionBookingModal .ux-inspect-field input:focus,
+dialog#inspectionBookingModal .ux-inspect-field input:focus-visible,
+dialog#inspectionBookingModal .ux-inspect-field select:focus,
+dialog#inspectionBookingModal .ux-inspect-field select:focus-visible,
+dialog#inspectionBookingModal .ux-inspect-field textarea:focus,
+dialog#inspectionBookingModal .ux-inspect-field textarea:focus-visible,
+dialog#inspectionBookingModal #inspectScopeInput:focus,
+dialog#inspectionBookingModal #inspectScopeInput:focus-visible {
+  outline: none !important;
+  border: 0 !important;
+  transform: none !important;
+  background-color: rgba(255, 255, 255, 0.105) !important;
+  background-image: linear-gradient(180deg, rgba(229, 185, 111, 0.085) 0%, rgba(255, 255, 255, 0.02) 100%) !important;
+  box-shadow:
+    inset 0 1px 0 0 rgba(229, 185, 111, 0.56),
+    0 8px 24px rgba(0, 0, 0, 0.22) !important;
+}
+
+html[data-theme="light"] dialog#inspectionBookingModal .ux-inspect-field input,
+html[data-theme="light"] dialog#inspectionBookingModal .ux-inspect-field select,
+html[data-theme="light"] dialog#inspectionBookingModal .ux-inspect-field textarea,
+html[data-theme="light"] dialog#inspectionBookingModal #inspectScopeInput {
+  background-color: rgba(255, 255, 255, 0.72) !important;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.90) 0%, rgba(250, 245, 234, 0.62) 100%) !important;
   color: #171512 !important;
-  border-color: rgba(138, 114, 62, 0.36) !important;
+  border: 0 !important;
+  outline: none !important;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.96), 0 2px 10px rgba(48, 38, 18, 0.06) !important;
 }
 
-html[data-theme="light"] .ux-inspect-field select option {
+html[data-theme="light"] dialog#inspectionBookingModal .ux-inspect-field input:hover,
+html[data-theme="light"] dialog#inspectionBookingModal .ux-inspect-field select:hover,
+html[data-theme="light"] dialog#inspectionBookingModal .ux-inspect-field textarea:hover,
+html[data-theme="light"] dialog#inspectionBookingModal #inspectScopeInput:hover {
+  background-color: rgba(255, 255, 255, 0.88) !important;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.98), 0 4px 12px rgba(48, 38, 18, 0.09) !important;
+}
+
+html[data-theme="light"] dialog#inspectionBookingModal .ux-inspect-field input:focus,
+html[data-theme="light"] dialog#inspectionBookingModal .ux-inspect-field input:focus-visible,
+html[data-theme="light"] dialog#inspectionBookingModal .ux-inspect-field select:focus,
+html[data-theme="light"] dialog#inspectionBookingModal .ux-inspect-field select:focus-visible,
+html[data-theme="light"] dialog#inspectionBookingModal .ux-inspect-field textarea:focus,
+html[data-theme="light"] dialog#inspectionBookingModal .ux-inspect-field textarea:focus-visible,
+html[data-theme="light"] dialog#inspectionBookingModal #inspectScopeInput:focus,
+html[data-theme="light"] dialog#inspectionBookingModal #inspectScopeInput:focus-visible {
+  outline: none !important;
+  border: 0 !important;
+  background-color: rgba(255, 255, 255, 0.96) !important;
+  background-image: linear-gradient(180deg, rgba(255, 252, 244, 0.98) 0%, rgba(246, 236, 212, 0.65) 100%) !important;
+  box-shadow:
+    inset 0 1px 0 0 rgba(158, 116, 21, 0.48),
+    0 8px 20px rgba(48, 38, 18, 0.11) !important;
+}
+
+html[data-theme="light"] dialog#inspectionBookingModal .ux-inspect-field select option {
   background: #ffffff;
   color: #171512;
 }
@@ -8250,9 +8342,10 @@ html[data-theme="light"] .ux-inspect-status.is-error {
   flex: 0 1 auto;
   min-height: 42px;
   padding: 10px 14px;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  background: rgba(255, 255, 255, 0.05);
+  border-radius: 11px;
+  border: 0 !important;
+  background: rgba(255, 255, 255, 0.055) !important;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.12) !important;
   color: inherit;
   font: 600 12.5px/1 "Manrope", system-ui, sans-serif;
   text-decoration: none;
@@ -8260,11 +8353,20 @@ html[data-theme="light"] .ux-inspect-status.is-error {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: background-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.ux-inspect-secondary:hover,
+.ux-inspect-secondary:focus-visible {
+  outline: none !important;
+  background: rgba(255, 255, 255, 0.11) !important;
+  box-shadow: inset 0 1px 0 0 rgba(229, 185, 111, 0.38), 0 0 0 1px rgba(229, 185, 111, 0.28) !important;
 }
 
 html[data-theme="light"] .ux-inspect-secondary {
-  border-color: rgba(138, 114, 62, 0.36);
-  background: #ffffff;
+  border: 0 !important;
+  background: rgba(255, 255, 255, 0.78) !important;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.96), 0 2px 8px rgba(48, 38, 18, 0.08) !important;
   color: #171512;
 }
 
@@ -8280,7 +8382,7 @@ html[data-theme="light"] .ux-inspect-secondary {
   }
 }
 
-/* ===== 18. Modern Classic Curved Fading Rim-Light Glass Parity ===== */
+/* ===== 18. Transparent Cards with Subtle Sleek Corner-Only Borders ===== */
 html:not([data-theme="light"]) body :is(
   main.wrap > .inventory-intro-compact,
   .ux-recent-section,
@@ -8342,25 +8444,19 @@ html:not([data-theme="light"]) body :is(
   .info-card,
   .spec-card,
   .vehicle-details,
-  .ux-cal-pane,
-  .ux-slots-pane,
-  .ux-inspect-callback-card
+  .inventory-filter-sidebar
 ):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):not(.a4-sheet *):not(.a4-sheet) {
+  background: transparent !important;
   background-color: transparent !important;
-  background-image: linear-gradient(
-    180deg,
-    rgba(18, 22, 28, 0.56) 0%,
-    rgba(16, 18, 24, 0.34) 48%,
-    rgba(12, 14, 18, 0.10) 100%
-  ) !important;
+  background-image: none !important;
   border: 0 !important;
   border-radius: 20px !important;
-  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.16) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(125%) !important;
-  backdrop-filter: blur(24px) saturate(125%) !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
 }
 
-/* Position relative on flow cards so ::after curved border mask binds cleanly */
+/* Position relative on flow cards so ::after corner border mask spans full card bounds */
 html body :is(
   main.wrap > .inventory-intro-compact,
   .ux-recent-section,
@@ -8371,6 +8467,7 @@ html body :is(
   .ux-journal-recent-strip,
   #home .hero,
   #home #autoQuoteRail,
+  #home .showroom-vehicle-note,
   #home .tile,
   .tiles .tile,
   #home .journal-intro,
@@ -8423,14 +8520,12 @@ html body :is(
   .info-card,
   .spec-card,
   .vehicle-details,
-  .ux-cal-pane,
-  .ux-slots-pane,
-  .ux-inspect-callback-card
+  .inventory-filter-sidebar
 ):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):not(.a4-sheet *):not(.a4-sheet) {
   position: relative !important;
 }
 
-/* Curved top-to-bottom fading 1px rim-light border (::after mask) matching header silhouette */
+/* Subtle 4-corner-only rim-light border (no full horizontal or vertical edge lines) */
 html:not([data-theme="light"]) body :is(
   main.wrap > .inventory-intro-compact,
   .ux-recent-section,
@@ -8494,28 +8589,38 @@ html:not([data-theme="light"]) body :is(
   .info-card,
   .spec-card,
   .vehicle-details,
-  .ux-cal-pane,
-  .ux-slots-pane,
-  .ux-inspect-callback-card
+  .inventory-filter-sidebar
 ):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):not(.a4-sheet *):not(.a4-sheet)::after {
   content: "" !important;
+  display: block !important;
   position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
   inset: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  margin: 0 !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  transform: none !important;
   border-radius: inherit !important;
   padding: 1px !important;
   pointer-events: none !important;
   z-index: 4 !important;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.28) 0%,
-    rgba(255, 255, 255, 0.13) 42%,
-    rgba(255, 255, 255, 0.04) 78%,
-    rgba(255, 255, 255, 0.01) 100%
-  ) !important;
+  background:
+    radial-gradient(52px 52px at 0% 0%, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.11) 42%, transparent 78%),
+    radial-gradient(52px 52px at 100% 0%, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.11) 42%, transparent 78%),
+    radial-gradient(52px 52px at 0% 100%, rgba(255, 255, 255, 0.17) 0%, rgba(255, 255, 255, 0.07) 42%, transparent 78%),
+    radial-gradient(52px 52px at 100% 100%, rgba(255, 255, 255, 0.17) 0%, rgba(255, 255, 255, 0.07) 42%, transparent 78%) !important;
+  background-repeat: no-repeat !important;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0) !important;
   -webkit-mask-composite: xor !important;
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0) !important;
   mask-composite: exclude !important;
+  opacity: 0 !important;
+  transition: opacity 0.24s cubic-bezier(0.22, 1, 0.36, 1) !important;
 }
 
 html[data-theme="light"] body :is(
@@ -8581,63 +8686,55 @@ html[data-theme="light"] body :is(
   .info-card,
   .spec-card,
   .vehicle-details,
-  .ux-cal-pane,
-  .ux-slots-pane,
-  .ux-inspect-callback-card
+  .inventory-filter-sidebar
 ):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):not(.a4-sheet *):not(.a4-sheet)::after {
   content: "" !important;
+  display: block !important;
   position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
   inset: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  margin: 0 !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  transform: none !important;
   border-radius: inherit !important;
   padding: 1px !important;
   pointer-events: none !important;
   z-index: 4 !important;
-  background: linear-gradient(
-    180deg,
-    rgba(138, 114, 62, 0.34) 0%,
-    rgba(138, 114, 62, 0.16) 46%,
-    rgba(138, 114, 62, 0.05) 84%,
-    rgba(138, 114, 62, 0.015) 100%
-  ) !important;
+  background:
+    radial-gradient(52px 52px at 0% 0%, rgba(138, 114, 62, 0.34) 0%, rgba(138, 114, 62, 0.14) 42%, transparent 78%),
+    radial-gradient(52px 52px at 100% 0%, rgba(138, 114, 62, 0.34) 0%, rgba(138, 114, 62, 0.14) 42%, transparent 78%),
+    radial-gradient(52px 52px at 0% 100%, rgba(138, 114, 62, 0.24) 0%, rgba(138, 114, 62, 0.09) 42%, transparent 78%),
+    radial-gradient(52px 52px at 100% 100%, rgba(138, 114, 62, 0.24) 0%, rgba(138, 114, 62, 0.09) 42%, transparent 78%) !important;
+  background-repeat: no-repeat !important;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0) !important;
   -webkit-mask-composite: xor !important;
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0) !important;
   mask-composite: exclude !important;
-}
-
-/* Scrollable containers (sticky filter sidebar & modal dialogs) get directional fading border */
-html:not([data-theme="light"]) body .inventory-filter-sidebar {
-  background-color: transparent !important;
-  background-image: linear-gradient(
-    180deg,
-    rgba(18, 22, 28, 0.56) 0%,
-    rgba(16, 18, 24, 0.34) 48%,
-    rgba(12, 14, 18, 0.10) 100%
-  ) !important;
-  border: 1px solid rgba(255, 255, 255, 0.13) !important;
-  border-top-color: rgba(255, 255, 255, 0.26) !important;
-  border-bottom-color: rgba(255, 255, 255, 0.03) !important;
-  border-radius: 20px !important;
-  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.16) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(125%) !important;
-  backdrop-filter: blur(24px) saturate(125%) !important;
-}
-
-html:not([data-theme="light"]) body :is(.ux-cal-pane, .ux-slots-pane, .ux-inspect-callback-card) {
-  border-radius: 14px !important;
+  opacity: 0 !important;
+  transition: opacity 0.24s cubic-bezier(0.22, 1, 0.36, 1) !important;
 }
 
 html:not([data-theme="light"]) body :is(.ux-recent-card, .ux-map-place-card):not(#accDlg *) {
+  background: transparent !important;
   background-color: transparent !important;
-  background-image: linear-gradient(
-    180deg,
-    rgba(18, 22, 28, 0.56) 0%,
-    rgba(16, 18, 24, 0.34) 48%,
-    rgba(12, 14, 18, 0.10) 100%
-  ) !important;
+  background-image: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
   border: 0 !important;
   border-radius: 16px !important;
-  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.16) !important;
+  box-shadow: none !important;
+}
+
+/* Soften inner horizontal dividers on Motoring Wisdom card so it matches borderless aesthetic */
+#home #autoQuoteRail .auto-quote-top,
+#home #autoQuoteRail .auto-quote-footer {
+  border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
 /* Sentence-case card & hero kickers */
@@ -8670,7 +8767,7 @@ html:not([data-theme="light"]) body :is(
   border: 1px solid rgba(255, 255, 255, 0.18) !important;
 }
 
-@media (hover: hover) and (pointer: fine) and (min-width: 821px) {
+@media (hover: hover) and (pointer: fine) {
   html:not([data-theme="light"]) body :is(
     .btn:not(.primary):not(.gold-button),
     .showroom-primary,
@@ -8679,46 +8776,292 @@ html:not([data-theme="light"]) body :is(
     .ux-quick-chip,
     .ux-card-inspect-btn,
     .ux-card-view-btn
-  ):not(header *):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):hover {
+  ):not(header *):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):not(dialog#inspectionBookingModal *):hover {
     border-color: rgba(255, 255, 255, 0.34) !important;
   }
 
   html:not([data-theme="light"]) body :is(
-    .card, #grid .card, .featured-grid .card,
-    #home .tile, .tiles .tile,
-    #home .journal-intro, #home .project-intro,
-    .dealer, .contact-card, .project-card, .journal-card, .journal-entry,
-    .vehicle-card, .story-card, .mechanic-card, .service-card, .booking-card,
-    .garage-card, .related-card, .ux-recent-card, .ux-map-place-card,
-    .about-glass-card, .about-value-card
-  ):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):hover {
+    main.wrap > .inventory-intro-compact,
+    .ux-recent-section,
+    .ux-map-section,
+    .about-faq,
+    .garage-faq-section,
+    .ux-footer-newsletter,
+    .ux-journal-recent-strip,
+    #home .hero,
+    #home #autoQuoteRail,
+    #home .showroom-vehicle-note,
+    #home .tile,
+    .tiles .tile,
+    #home .journal-intro,
+    #home .project-intro,
+    .card,
+    #grid .card,
+    .featured-grid .card,
+    .ux-recent-card,
+    .ux-map-place-card,
+    .dealer,
+    .panel,
+    .stat,
+    .state,
+    .empty,
+    .error,
+    .seller-card,
+    .info,
+    .gallery,
+    .seller,
+    .spec,
+    .note,
+    .listing,
+    .contact-card,
+    .contact-intro-card,
+    #contact #publicContactForm,
+    #home #garageContactCard.contact,
+    .project-card,
+    .project-public-empty,
+    .journal-card,
+    .journal-entry,
+    .vehicle-card,
+    .story-card,
+    .mechanic-card,
+    .service-card,
+    .booking-card,
+    .garage-card,
+    .related-card,
+    .request-hero,
+    .chauffeur-assurance,
+    .assurance-grid article,
+    .steps-grid article,
+    .route-preview,
+    .trip-summary,
+    .about-glass-card,
+    .about-value-card,
+    .article-toc,
+    .inline-article-photo,
+    .journal-internal-links a,
+    .details,
+    .info-card,
+    .spec-card,
+    .vehicle-details,
+    .inventory-filter-sidebar
+  ):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):not(.a4-sheet *):not(.a4-sheet):is(:hover, :focus-visible) {
+    background: transparent !important;
     background-color: transparent !important;
-    background-image: linear-gradient(
-      180deg,
-      rgba(22, 27, 35, 0.66) 0%,
-      rgba(18, 21, 28, 0.42) 52%,
-      rgba(14, 16, 21, 0.14) 100%
-    ) !important;
+    background-image: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
     border: 0 !important;
-    box-shadow: 0 22px 48px rgba(0, 0, 0, 0.24) !important;
+    box-shadow: none !important;
   }
 
   html:not([data-theme="light"]) body :is(
-    .card, #grid .card, .featured-grid .card,
-    #home .tile, .tiles .tile,
-    #home .journal-intro, #home .project-intro,
-    .dealer, .contact-card, .project-card, .journal-card, .journal-entry,
-    .vehicle-card, .story-card, .mechanic-card, .service-card, .booking-card,
-    .garage-card, .related-card, .ux-recent-card, .ux-map-place-card,
-    .about-glass-card, .about-value-card
-  ):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):hover::after {
-    background: linear-gradient(
-      180deg,
-      rgba(229, 185, 111, 0.44) 0%,
-      rgba(255, 255, 255, 0.16) 44%,
-      rgba(255, 255, 255, 0.045) 82%,
-      rgba(255, 255, 255, 0.015) 100%
-    ) !important;
+    main.wrap > .inventory-intro-compact,
+    .ux-recent-section,
+    .ux-map-section,
+    .about-faq,
+    .garage-faq-section,
+    .ux-footer-newsletter,
+    .ux-journal-recent-strip,
+    #home .hero,
+    #home #autoQuoteRail,
+    #home .showroom-vehicle-note,
+    #home .tile,
+    .tiles .tile,
+    #home .journal-intro,
+    #home .project-intro,
+    .card,
+    #grid .card,
+    .featured-grid .card,
+    .ux-recent-card,
+    .ux-map-place-card,
+    .dealer,
+    .panel,
+    .stat,
+    .state,
+    .empty,
+    .error,
+    .seller-card,
+    .info,
+    .gallery,
+    .seller,
+    .spec,
+    .note,
+    .listing,
+    .contact-card,
+    .contact-intro-card,
+    #contact #publicContactForm,
+    #home #garageContactCard.contact,
+    .project-card,
+    .project-public-empty,
+    .journal-card,
+    .journal-entry,
+    .vehicle-card,
+    .story-card,
+    .mechanic-card,
+    .service-card,
+    .booking-card,
+    .garage-card,
+    .related-card,
+    .request-hero,
+    .chauffeur-assurance,
+    .assurance-grid article,
+    .steps-grid article,
+    .route-preview,
+    .trip-summary,
+    .about-glass-card,
+    .about-value-card,
+    .article-toc,
+    .inline-article-photo,
+    .journal-internal-links a,
+    .details,
+    .info-card,
+    .spec-card,
+    .vehicle-details,
+    .inventory-filter-sidebar
+  ):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):not(.a4-sheet *):not(.a4-sheet):is(:hover, :focus-visible)::after {
+    opacity: 1 !important;
+    background:
+      radial-gradient(58px 58px at 0% 0%, rgba(229, 185, 111, 0.44) 0%, rgba(229, 185, 111, 0.16) 44%, transparent 80%),
+      radial-gradient(58px 58px at 100% 0%, rgba(229, 185, 111, 0.44) 0%, rgba(229, 185, 111, 0.16) 44%, transparent 80%),
+      radial-gradient(58px 58px at 0% 100%, rgba(229, 185, 111, 0.28) 0%, rgba(229, 185, 111, 0.10) 44%, transparent 80%),
+      radial-gradient(58px 58px at 100% 100%, rgba(229, 185, 111, 0.28) 0%, rgba(229, 185, 111, 0.10) 44%, transparent 80%) !important;
+  }
+
+  html[data-theme="light"] body :is(
+    main.wrap > .inventory-intro-compact,
+    .ux-recent-section,
+    .ux-map-section,
+    .about-faq,
+    .garage-faq-section,
+    .ux-footer-newsletter,
+    .ux-journal-recent-strip,
+    #home .hero,
+    #home #autoQuoteRail,
+    #home .showroom-vehicle-note,
+    #home .tile,
+    .tiles .tile,
+    #home .journal-intro,
+    #home .project-intro,
+    .card,
+    #grid .card,
+    .featured-grid .card,
+    .ux-recent-card,
+    .ux-map-place-card,
+    .dealer,
+    .panel,
+    .stat,
+    .state,
+    .empty,
+    .error,
+    .seller-card,
+    .info,
+    .gallery,
+    .seller,
+    .spec,
+    .note,
+    .listing,
+    .contact-card,
+    .contact-intro-card,
+    #contact #publicContactForm,
+    #home #garageContactCard.contact,
+    .project-card,
+    .project-public-empty,
+    .journal-card,
+    .journal-entry,
+    .vehicle-card,
+    .story-card,
+    .mechanic-card,
+    .service-card,
+    .booking-card,
+    .garage-card,
+    .related-card,
+    .request-hero,
+    .chauffeur-assurance,
+    .assurance-grid article,
+    .steps-grid article,
+    .route-preview,
+    .trip-summary,
+    .about-glass-card,
+    .about-value-card,
+    .article-toc,
+    .inline-article-photo,
+    .journal-internal-links a,
+    .details,
+    .info-card,
+    .spec-card,
+    .vehicle-details,
+    .inventory-filter-sidebar
+  ):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):not(.a4-sheet *):not(.a4-sheet):is(:hover, :focus-visible) {
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  html[data-theme="light"] body :is(
+    main.wrap > .inventory-intro-compact,
+    .ux-recent-section,
+    .ux-map-section,
+    .about-faq,
+    .garage-faq-section,
+    .ux-footer-newsletter,
+    .ux-journal-recent-strip,
+    #home .hero,
+    #home #autoQuoteRail,
+    #home .showroom-vehicle-note,
+    #home .tile,
+    .tiles .tile,
+    #home .journal-intro,
+    #home .project-intro,
+    .card,
+    #grid .card,
+    .featured-grid .card,
+    .ux-recent-card,
+    .ux-map-place-card,
+    .dealer,
+    .panel,
+    .stat,
+    .state,
+    .empty,
+    .error,
+    .seller-card,
+    .info,
+    .gallery,
+    .seller,
+    .spec,
+    .note,
+    .listing,
+    .contact-card,
+    .contact-intro-card,
+    #contact #publicContactForm,
+    #home #garageContactCard.contact,
+    .project-card,
+    .project-public-empty,
+    .journal-card,
+    .journal-entry,
+    .vehicle-card,
+    .story-card,
+    .mechanic-card,
+    .service-card,
+    .booking-card,
+    .garage-card,
+    .related-card,
+    .request-hero,
+    .chauffeur-assurance,
+    .assurance-grid article,
+    .steps-grid article,
+    .route-preview,
+    .trip-summary,
+    .about-glass-card,
+    .about-value-card,
+    .article-toc,
+    .inline-article-photo,
+    .journal-internal-links a,
+    .details,
+    .info-card,
+    .spec-card,
+    .vehicle-details,
+    .inventory-filter-sidebar
+  ):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):not(.a4-sheet *):not(.a4-sheet):is(:hover, :focus-visible)::after {
+    opacity: 1 !important;
   }
 }
 
@@ -8758,17 +9101,13 @@ html:not([data-theme="light"]) body :is(
     .about-glass-card,
     .about-value-card
   ):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
+    background: transparent !important;
     background-color: transparent !important;
-    background-image: linear-gradient(
-      180deg,
-      rgba(18, 22, 28, 0.58) 0%,
-      rgba(16, 18, 24, 0.36) 48%,
-      rgba(12, 14, 18, 0.12) 100%
-    ) !important;
+    background-image: none !important;
     border: 0 !important;
-    box-shadow: 0 18px 46px rgba(0, 0, 0, 0.16) !important;
-    -webkit-backdrop-filter: blur(18px) saturate(125%) !important;
-    backdrop-filter: blur(18px) saturate(125%) !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
   }
 
   html:not([data-theme="light"]) body :is(
@@ -9083,23 +9422,30 @@ html[data-theme="light"] .ux-read-progress-track {
 }
 
 /* ===== 21. #inspectionBookingModal Calendar, Slots, Scope & Mechanic Callback ===== */
+html[data-ux="1"] dialog#inspectionBookingModal,
 html[data-ux="1"] dialog#inspectionBookingModal.ux-inspect-modal {
   width: min(760px, calc(100vw - 24px)) !important;
   max-width: 760px !important;
   max-height: min(92dvh, 860px) !important;
   overflow-y: auto !important;
   border: 0 !important;
-  border-radius: 20px !important;
-  background-color: rgba(14, 16, 21, 0.94) !important;
-  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(14, 16, 21, 0.94) 55%) !important;
-  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.65), inset 0 1px 0 0 rgba(255, 255, 255, 0.16) !important;
-  -webkit-backdrop-filter: blur(26px) saturate(140%) !important;
-  backdrop-filter: blur(26px) saturate(140%) !important;
+  border-radius: 22px !important;
+  background-color: rgba(13, 15, 20, 0.72) !important;
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.055) 0%,
+    rgba(16, 18, 24, 0.50) 42%,
+    rgba(11, 13, 18, 0.80) 100%
+  ) !important;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.62), inset 0 1px 0 0 rgba(255, 255, 255, 0.16) !important;
+  -webkit-backdrop-filter: blur(26px) saturate(135%) !important;
+  backdrop-filter: blur(26px) saturate(135%) !important;
 }
 
+html[data-ux="1"][data-theme="light"] dialog#inspectionBookingModal,
 html[data-ux="1"][data-theme="light"] dialog#inspectionBookingModal.ux-inspect-modal {
-  background-color: rgba(253, 250, 243, 0.98) !important;
-  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(247, 241, 228, 0.94)) !important;
+  background-color: rgba(253, 250, 243, 0.88) !important;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(247, 241, 228, 0.80)) !important;
   box-shadow: 0 24px 68px rgba(48, 38, 18, 0.22), inset 0 1px 0 0 rgba(255, 255, 255, 0.98) !important;
 }
 
@@ -9118,16 +9464,18 @@ html[data-ux="1"][data-theme="light"] dialog#inspectionBookingModal.ux-inspect-m
 
 .ux-cal-pane,
 .ux-slots-pane {
-  padding: 12px;
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.035);
+  padding: 13px;
+  border-radius: 16px;
+  border: 0 !important;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.015) 100%) !important;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.12), 0 8px 22px rgba(0, 0, 0, 0.14) !important;
 }
 
 html[data-theme="light"] .ux-cal-pane,
 html[data-theme="light"] .ux-slots-pane {
-  border-color: rgba(138, 114, 62, 0.24);
-  background: rgba(255, 255, 255, 0.78);
+  border: 0 !important;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.78) 0%, rgba(250, 244, 232, 0.48) 100%) !important;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.96), 0 6px 18px rgba(48, 38, 18, 0.06) !important;
 }
 
 .ux-cal-header {
@@ -9138,32 +9486,47 @@ html[data-theme="light"] .ux-slots-pane {
   margin-bottom: 10px;
 }
 
+.ux-cal-month,
 .ux-cal-month-title {
   font: 700 13.5px/1.2 "Sora", "Manrope", system-ui, sans-serif;
   color: #f4f0e8;
 }
 
+html[data-theme="light"] .ux-cal-month,
 html[data-theme="light"] .ux-cal-month-title {
   color: #171512;
 }
 
+.ux-cal-nav,
 .ux-cal-nav-btn {
   width: 30px;
   height: 30px;
   min-height: 30px !important;
   padding: 0;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(255, 255, 255, 0.06);
+  border-radius: 9px;
+  border: 0 !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.12) !important;
   color: inherit;
   font-size: 16px;
   line-height: 1;
   cursor: pointer;
 }
 
+.ux-cal-nav:hover:not(:disabled),
+.ux-cal-nav:focus-visible,
+.ux-cal-nav-btn:hover:not(:disabled),
+.ux-cal-nav-btn:focus-visible {
+  outline: none !important;
+  background: rgba(229, 185, 111, 0.16) !important;
+  box-shadow: inset 0 1px 0 0 rgba(229, 185, 111, 0.40), 0 0 0 1px rgba(229, 185, 111, 0.28) !important;
+}
+
+html[data-theme="light"] .ux-cal-nav,
 html[data-theme="light"] .ux-cal-nav-btn {
-  border-color: rgba(138, 114, 62, 0.30);
-  background: #ffffff;
+  border: 0 !important;
+  background: rgba(255, 255, 255, 0.85) !important;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.96), 0 2px 6px rgba(48, 38, 18, 0.08) !important;
   color: #171512;
 }
 
@@ -9194,8 +9557,9 @@ html[data-theme="light"] .ux-cal-weekdays span {
   min-height: 34px !important;
   padding: 4px 2px;
   border-radius: 9px;
-  border: 1px solid transparent;
-  background: rgba(255, 255, 255, 0.04);
+  border: 0 !important;
+  background: rgba(255, 255, 255, 0.045) !important;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.08) !important;
   color: #f4f0e8;
   font: 600 12px/1 "Manrope", system-ui, sans-serif;
   display: inline-flex;
@@ -9207,23 +9571,28 @@ html[data-theme="light"] .ux-cal-weekdays span {
 }
 
 html[data-theme="light"] .ux-cal-day {
-  background: rgba(138, 114, 62, 0.06);
+  background: rgba(255, 255, 255, 0.72) !important;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.94), 0 1px 4px rgba(48, 38, 18, 0.05) !important;
   color: #171512;
 }
 
-.ux-cal-day:hover:not(:disabled) {
-  border-color: rgba(229, 185, 111, 0.45);
-  background: rgba(229, 185, 111, 0.14);
+.ux-cal-day:hover:not(:disabled),
+.ux-cal-day:focus-visible {
+  outline: none !important;
+  border: 0 !important;
+  background: rgba(229, 185, 111, 0.16) !important;
+  box-shadow: inset 0 1px 0 0 rgba(229, 185, 111, 0.42), 0 0 0 1px rgba(229, 185, 111, 0.28) !important;
 }
 
 .ux-cal-day.is-today:not(.is-selected) {
-  border-color: rgba(229, 185, 111, 0.45);
+  box-shadow: inset 0 1px 0 0 rgba(229, 185, 111, 0.48), 0 0 0 1px rgba(229, 185, 111, 0.34) !important;
 }
 
 .ux-cal-day.is-selected {
   background: linear-gradient(180deg, #e5c372, #c89f3f) !important;
   color: #171512 !important;
-  border-color: transparent !important;
+  border: 0 !important;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.45), 0 6px 14px rgba(229, 185, 111, 0.22) !important;
   font-weight: 800;
 }
 
@@ -9271,11 +9640,15 @@ html[data-theme="light"] .ux-cal-legend {
   display: inline-block;
 }
 
-.ux-legend-selected { background: #E5B96F; }
-.ux-legend-partial { border: 1.5px solid #E5B96F; }
-.ux-legend-closed { background: rgba(255, 255, 255, 0.28); }
+.ux-legend-selected,
+.ux-cal-legend .dot-open { background: #E5B96F; }
+.ux-legend-partial,
+.ux-cal-legend .dot-busy { border: 1.5px solid #E5B96F; }
+.ux-legend-closed,
+.ux-cal-legend .dot-closed { background: rgba(255, 255, 255, 0.28); }
 
-html[data-theme="light"] .ux-legend-closed { background: rgba(0, 0, 0, 0.22); }
+html[data-theme="light"] .ux-legend-closed,
+html[data-theme="light"] .ux-cal-legend .dot-closed { background: rgba(0, 0, 0, 0.22); }
 
 .ux-slots-head {
   display: flex;
@@ -9286,11 +9659,13 @@ html[data-theme="light"] .ux-legend-closed { background: rgba(0, 0, 0, 0.22); }
   font-size: 12px;
 }
 
+.ux-slots-date-badge,
 .ux-slots-date-label {
   font-weight: 700;
   color: #E5B96F;
 }
 
+html[data-theme="light"] .ux-slots-date-badge,
 html[data-theme="light"] .ux-slots-date-label {
   color: #8c6510;
 }
@@ -9303,10 +9678,11 @@ html[data-theme="light"] .ux-slots-date-label {
 
 .ux-slot-btn {
   min-height: 44px !important;
-  padding: 7px 9px;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(255, 255, 255, 0.05);
+  padding: 7px 10px;
+  border-radius: 11px;
+  border: 0 !important;
+  background: rgba(255, 255, 255, 0.055) !important;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.10) !important;
   color: #f4f0e8;
   display: flex;
   flex-direction: column;
@@ -9316,11 +9692,20 @@ html[data-theme="light"] .ux-slots-date-label {
   cursor: pointer;
   text-align: left;
   font: 600 12px/1.2 "Manrope", system-ui, sans-serif;
+  transition: background-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.ux-slot-btn:hover:not(:disabled),
+.ux-slot-btn:focus-visible {
+  outline: none !important;
+  background: rgba(229, 185, 111, 0.14) !important;
+  box-shadow: inset 0 1px 0 0 rgba(229, 185, 111, 0.36), 0 0 0 1px rgba(229, 185, 111, 0.26) !important;
 }
 
 html[data-theme="light"] .ux-slot-btn {
-  border-color: rgba(138, 114, 62, 0.28);
-  background: #ffffff;
+  border: 0 !important;
+  background: rgba(255, 255, 255, 0.80) !important;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.96), 0 2px 8px rgba(48, 38, 18, 0.06) !important;
   color: #171512;
 }
 
@@ -9336,7 +9721,8 @@ html[data-theme="light"] .ux-slot-btn span {
 
 .ux-slot-btn.is-selected {
   background: linear-gradient(180deg, #e5c372, #c89f3f) !important;
-  border-color: transparent !important;
+  border: 0 !important;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.45), 0 6px 16px rgba(229, 185, 111, 0.22) !important;
   color: #171512 !important;
 }
 
@@ -9345,9 +9731,8 @@ html[data-theme="light"] .ux-slot-btn span {
 }
 
 .ux-slot-btn.is-booked {
-  opacity: 0.45;
+  opacity: 0.42;
   cursor: not-allowed;
-  border-style: dashed;
 }
 
 .ux-slot-btn.is-booked strong {
@@ -9371,44 +9756,58 @@ html[data-theme="light"] .ux-slot-btn.is-booked span {
 
 .ux-scope-chip {
   min-height: 32px !important;
-  padding: 5px 11px;
+  padding: 5px 12px;
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(255, 255, 255, 0.05);
+  border: 0 !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.11) !important;
   color: rgba(244, 240, 232, 0.88);
   font: 600 12px/1 "Manrope", system-ui, sans-serif;
   cursor: pointer;
+  transition: background-color 0.18s ease, box-shadow 0.18s ease, color 0.18s ease;
+}
+
+.ux-scope-chip:hover,
+.ux-scope-chip:focus-visible {
+  outline: none !important;
+  background: rgba(255, 255, 255, 0.11) !important;
+  box-shadow: inset 0 1px 0 0 rgba(229, 185, 111, 0.36), 0 0 0 1px rgba(229, 185, 111, 0.26) !important;
 }
 
 html[data-theme="light"] .ux-scope-chip {
-  border-color: rgba(138, 114, 62, 0.30);
-  background: #ffffff;
+  border: 0 !important;
+  background: rgba(255, 255, 255, 0.78) !important;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.96), 0 2px 6px rgba(48, 38, 18, 0.06) !important;
   color: #171512;
 }
 
 .ux-scope-chip.is-active {
-  border-color: rgba(229, 185, 111, 0.72) !important;
-  background: rgba(229, 185, 111, 0.18) !important;
+  border: 0 !important;
+  background: rgba(229, 185, 111, 0.20) !important;
+  box-shadow: inset 0 1px 0 0 rgba(229, 185, 111, 0.45), 0 0 0 1px rgba(229, 185, 111, 0.42) !important;
   color: #E5B96F !important;
 }
 
 html[data-theme="light"] .ux-scope-chip.is-active {
-  border-color: #9e7415 !important;
-  background: rgba(158, 116, 21, 0.14) !important;
+  border: 0 !important;
+  background: rgba(158, 116, 21, 0.16) !important;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.8), 0 0 0 1px rgba(158, 116, 21, 0.42) !important;
   color: #7c5609 !important;
 }
 
 .ux-inspect-callback-card {
   margin-top: 2px;
-  padding: 12px 13px;
-  border-radius: 14px;
-  border: 1px solid rgba(229, 185, 111, 0.24);
-  background: rgba(229, 185, 111, 0.06);
+  padding: 13px 14px;
+  border-radius: 16px;
+  border: 0 !important;
+  background: linear-gradient(180deg, rgba(229, 185, 111, 0.085) 0%, rgba(255, 255, 255, 0.02) 100%) !important;
+  box-shadow: inset 0 1px 0 0 rgba(229, 185, 111, 0.24), 0 8px 22px rgba(0, 0, 0, 0.14) !important;
 }
 
 html[data-theme="light"] .ux-inspect-callback-card {
-  border-color: rgba(138, 114, 62, 0.32);
-  background: rgba(158, 116, 21, 0.07);
+  border: 0 !important;
+  background: linear-gradient(180deg, rgba(255, 252, 245, 0.86) 0%, rgba(246, 236, 212, 0.56) 100%) !important;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.96), 0 6px 18px rgba(48, 38, 18, 0.06) !important;
 }
 
 .ux-inspect-callback-head {
@@ -9460,32 +9859,38 @@ html[data-theme="light"] .ux-callback-badge {
   min-height: 36px !important;
   padding: 7px 14px;
   border-radius: 10px;
-  border: 1px solid rgba(229, 185, 111, 0.52);
-  background: rgba(229, 185, 111, 0.14);
+  border: 0 !important;
+  background: rgba(229, 185, 111, 0.15) !important;
+  box-shadow: inset 0 1px 0 0 rgba(229, 185, 111, 0.34) !important;
   color: #E5B96F;
   font: 700 12.5px/1 "Manrope", system-ui, sans-serif;
   cursor: pointer;
   white-space: nowrap;
-  transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+  transition: background-color 0.18s ease, box-shadow 0.18s ease, color 0.18s ease;
 }
 
 .ux-inspect-callback-toggle:hover,
+.ux-inspect-callback-toggle:focus-visible,
 .ux-inspect-callback-toggle[aria-expanded="true"] {
-  background: rgba(229, 185, 111, 0.24);
-  border-color: rgba(229, 185, 111, 0.78);
+  outline: none !important;
+  border: 0 !important;
+  background: rgba(229, 185, 111, 0.25) !important;
+  box-shadow: inset 0 1px 0 0 rgba(229, 185, 111, 0.52), 0 0 0 1px rgba(229, 185, 111, 0.28) !important;
   color: #fff3d6;
 }
 
 html[data-theme="light"] .ux-inspect-callback-toggle {
-  border-color: rgba(158, 116, 21, 0.55);
-  background: rgba(158, 116, 21, 0.12);
+  border: 0 !important;
+  background: rgba(158, 116, 21, 0.13) !important;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.85), 0 2px 6px rgba(48, 38, 18, 0.06) !important;
   color: #7c5609;
 }
 
 html[data-theme="light"] .ux-inspect-callback-toggle:hover,
+html[data-theme="light"] .ux-inspect-callback-toggle:focus-visible,
 html[data-theme="light"] .ux-inspect-callback-toggle[aria-expanded="true"] {
-  background: #9e7415;
-  border-color: #9e7415;
+  background: #9e7415 !important;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.35), 0 4px 12px rgba(158, 116, 21, 0.22) !important;
   color: #ffffff;
 }
 
@@ -9494,7 +9899,7 @@ html[data-theme="light"] .ux-inspect-callback-toggle[aria-expanded="true"] {
   gap: 8px;
   margin-top: 10px;
   padding-top: 10px;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .ux-inspect-callback-body[hidden] {
@@ -9502,24 +9907,34 @@ html[data-theme="light"] .ux-inspect-callback-toggle[aria-expanded="true"] {
 }
 
 html[data-theme="light"] .ux-inspect-callback-body {
-  border-top-color: rgba(138, 114, 62, 0.20);
+  border-top-color: rgba(138, 114, 62, 0.14);
 }
 
 .ux-inspect-callback-submit {
   min-height: 38px !important;
   padding: 8px 14px;
   border-radius: 10px;
-  border: 1px solid rgba(229, 185, 111, 0.55);
-  background: rgba(229, 185, 111, 0.16);
+  border: 0 !important;
+  background: rgba(229, 185, 111, 0.18) !important;
+  box-shadow: inset 0 1px 0 0 rgba(229, 185, 111, 0.36) !important;
   color: #E5B96F;
   font: 700 12.5px/1 "Manrope", system-ui, sans-serif;
   cursor: pointer;
   justify-self: start;
 }
 
+.ux-inspect-callback-submit:hover,
+.ux-inspect-callback-submit:focus-visible {
+  outline: none !important;
+  border: 0 !important;
+  background: rgba(229, 185, 111, 0.28) !important;
+  box-shadow: inset 0 1px 0 0 rgba(229, 185, 111, 0.54), 0 0 0 1px rgba(229, 185, 111, 0.28) !important;
+}
+
 html[data-theme="light"] .ux-inspect-callback-submit {
-  border-color: #9e7415;
-  background: #9e7415;
+  border: 0 !important;
+  background: #9e7415 !important;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.35), 0 4px 12px rgba(158, 116, 21, 0.22) !important;
   color: #ffffff;
 }
 

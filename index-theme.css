@@ -8,7 +8,7 @@
 #about .about-intro h1 span{display:inline-block}
 #about .about-intro>p{max-width:660px;margin:0 auto;color:var(--muted);font-size:clamp(15px,1.5vw,18px);line-height:1.75}
 #about .about-story-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:18px;align-items:stretch}
-#about .about-glass-card,#about .about-value-card{min-width:0;border:0;border-radius:20px;background-color:transparent;background-image:linear-gradient(180deg,rgba(18,22,28,.56) 0%,rgba(16,18,24,.34) 48%,rgba(12,14,18,.10) 100%);-webkit-backdrop-filter:blur(24px) saturate(125%);backdrop-filter:blur(24px) saturate(125%);box-shadow:0 18px 46px rgba(0,0,0,.16),inset 0 1px 0 0 rgba(255,255,255,.15)}
+#about .about-glass-card,#about .about-value-card{min-width:0;border:0;border-radius:20px;background:transparent;background-image:none;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none}
 #about .about-glass-card{padding:clamp(22px,3vw,38px)}
 #about .about-overline,#about .about-value-number{font-size:13px;letter-spacing:.01em;font-weight:500;text-transform:none;color:rgba(255,255,255,.9)}
 #about .about-glass-card h2{font-size:clamp(23px,2.5vw,32px);line-height:1.2;margin:12px 0 16px;letter-spacing:-.02em}
@@ -36,8 +36,8 @@
 }
 
 /* ===== Contact Page ===== */
-#contact .contact-intro-card{position:relative;overflow:hidden;margin:30px 0 24px;padding:clamp(26px,5vw,54px);border:0!important;border-radius:20px;background-color:transparent!important;background-image:linear-gradient(180deg,rgba(18,22,28,.56) 0%,rgba(16,18,24,.34) 48%,rgba(12,14,18,.10) 100%)!important;box-shadow:0 18px 46px rgba(0,0,0,.16),inset 0 1px 0 0 rgba(255,255,255,.15)!important;backdrop-filter:blur(24px) saturate(125%);-webkit-backdrop-filter:blur(24px) saturate(125%)}
-#contact .contact-intro-card:before,#contact .contact-intro-card:after{content:none!important;display:none!important}
+#contact .contact-intro-card{position:relative;overflow:hidden;margin:30px 0 24px;padding:clamp(26px,5vw,54px);border:0!important;border-radius:20px;background:transparent!important;background-image:none!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+#contact .contact-intro-card:before{content:none!important;display:none!important}
 #contact .contact-intro-copy{position:relative;z-index:1;max-width:850px}
 #contact .contact-intro-copy h1{max-width:14em;margin:10px 0 14px;font-size:clamp(34px,5.5vw,58px);line-height:1.08;letter-spacing:-.035em}
 #contact .contact-intro-copy>p{max-width:720px;color:rgba(255,255,255,.78);line-height:1.75}
@@ -56,11 +56,11 @@
   padding:clamp(22px,4vw,42px)!important;
   border-radius:20px!important;
   border:0!important;
-  background-color:transparent!important;
-  background-image:linear-gradient(180deg,rgba(18,22,28,.56) 0%,rgba(16,18,24,.34) 48%,rgba(12,14,18,.10) 100%)!important;
-  box-shadow:0 18px 46px rgba(0,0,0,.16),inset 0 1px 0 0 rgba(255,255,255,.15)!important;
-  -webkit-backdrop-filter:blur(24px) saturate(125%)!important;
-  backdrop-filter:blur(24px) saturate(125%)!important;
+  background:transparent!important;
+  background-image:none!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
 }
 #contact #publicContactForm .contact-grid{width:100%!important;max-width:none!important}
 @media(max-width:600px){#contact #publicContactForm{padding:20px!important}}
@@ -132,7 +132,7 @@ a{color:#e4ce9d}
 input::placeholder,textarea::placeholder{color:rgba(255,255,255,.68)!important}
 
 @media(min-width:1280px){main.wrap{width:100%!important;max-width:1280px!important;padding-left:24px!important;padding-right:24px!important}}
-.hero{position:relative;isolation:isolate;overflow:hidden;border:0;border-radius:20px;padding:clamp(56px,6vw,88px) clamp(22px,5vw,70px) clamp(46px,6vw,78px)!important;margin:16px auto 34px!important;width:100%;max-width:100%;min-height:clamp(380px,50vw,620px);display:flex;flex-direction:column;justify-content:center;box-shadow:0 18px 46px rgba(0,0,0,.16),inset 0 1px 0 0 rgba(255,255,255,.15)!important}
+.hero{position:relative;isolation:isolate;overflow:hidden;border:0;border-radius:20px;padding:clamp(56px,6vw,88px) clamp(22px,5vw,70px) clamp(46px,6vw,78px)!important;margin:16px auto 34px!important;width:100%;max-width:100%;min-height:clamp(380px,50vw,620px);display:flex;flex-direction:column;justify-content:center;background:transparent!important;background-image:none!important;box-shadow:none!important}
 .hero:before{content:none!important;display:none!important}
 .hero h1{max-width:11ch!important;color:#fff!important;text-shadow:0 5px 28px rgba(0,0,0,.45)}
 .hero h1:after{background:linear-gradient(90deg,#e8d7ae,#a88b54)!important;border-radius:99px}
@@ -142,11 +142,20 @@ input::placeholder,textarea::placeholder{color:rgba(255,255,255,.68)!important}
   .hero h1{font-size:clamp(34px,10vw,52px)!important}
 }
 
-/* Unified Modern Classic borderless edge-lit fading glass surfaces */
+/* Modal & Drawer surfaces retain deep translucent blur; section cards stay transparent with corner borders */
 html:not([data-theme="light"]) #dlg,
 html:not([data-theme="light"]) .authbox,
 html:not([data-theme="light"]) .modal:not(#accDlg),
 html:not([data-theme="light"]) .drawer,
+html:not([data-theme="light"]) .journal-photo-viewer {
+  background-color:rgba(14,16,21,.88)!important;
+  background-image:linear-gradient(180deg,rgba(24,27,34,.90) 0%,rgba(14,16,21,.94) 100%)!important;
+  border:1px solid rgba(255,255,255,.14)!important;
+  box-shadow:0 24px 64px rgba(0,0,0,.48)!important;
+  -webkit-backdrop-filter:blur(24px) saturate(130%)!important;
+  backdrop-filter:blur(24px) saturate(130%)!important;
+  border-radius:20px!important;
+}
 html:not([data-theme="light"]) .hero,
 html:not([data-theme="light"]) #home .tile,
 html:not([data-theme="light"]) .tiles .tile,
@@ -171,14 +180,14 @@ html:not([data-theme="light"]) .service-card,
 html:not([data-theme="light"]) .booking-card,
 html:not([data-theme="light"]) .garage-card,
 html:not([data-theme="light"]) #autoQuoteRail,
-html:not([data-theme="light"]) .journal-photo-viewer,
 html:not([data-theme="light"]) :is(.listing,.stat,.promotion-package,.account-fast-loading,.account-load-error):not(#accDlg *) {
+  background:transparent!important;
   background-color:transparent!important;
-  background-image:linear-gradient(180deg,rgba(18,22,28,.56) 0%,rgba(16,18,24,.34) 48%,rgba(12,14,18,.10) 100%)!important;
+  background-image:none!important;
   border:0!important;
-  box-shadow:0 18px 46px rgba(0,0,0,.16),inset 0 1px 0 0 rgba(255,255,255,.15)!important;
-  -webkit-backdrop-filter:blur(24px) saturate(125%)!important;
-  backdrop-filter:blur(24px) saturate(125%)!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
   border-radius:20px!important;
 }
 .hero,#home .tile,.tiles .tile,.card,.panel,.contact-card,.journal-intro,.journal-card,.journal-entry,.project-intro,.project-card,.vehicle-card,.dealer,#autoQuoteRail{
@@ -256,7 +265,7 @@ html:not([data-theme="light"]) :is(.listing,.stat,.promotion-package,.account-fa
 
 
 
-/* ===== Home Modern Classic Edge-Lit Glass, Quote Rail & Interactions ===== */
+/* ===== Home Transparent Corner-Lit Cards, Quote Rail & Interactions ===== */
 #home .hero{display:flex!important;flex-direction:column!important;align-items:flex-start!important}
 html:not([data-theme="light"]) #home .hero,
 html:not([data-theme="light"]) #home .tile,
@@ -266,13 +275,14 @@ html:not([data-theme="light"]) #home .showroom-vehicle-note,
 html:not([data-theme="light"]) #home .auto-quote-rail,
 html:not([data-theme="light"]) #home .journal-intro,
 html:not([data-theme="light"]) #home .project-intro{
+  background:transparent!important;
   background-color:transparent!important;
-  background-image:linear-gradient(180deg,rgba(18,22,28,.56) 0%,rgba(16,18,24,.34) 48%,rgba(12,14,18,.10) 100%)!important;
-  -webkit-backdrop-filter:blur(24px) saturate(125%)!important;
-  backdrop-filter:blur(24px) saturate(125%)!important;
+  background-image:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
   border:0!important;
   border-radius:20px!important;
-  box-shadow:0 18px 46px rgba(0,0,0,.16),inset 0 1px 0 0 rgba(255,255,255,.15)!important;
+  box-shadow:none!important;
 }
 html:not([data-theme="light"]) #home .journal-intro .btn.alt,
 html:not([data-theme="light"]) #home .project-intro .btn.alt{
@@ -291,12 +301,13 @@ html[data-theme="light"] #home .tiles .tile,
 html[data-theme="light"] #home .auto-quote-rail,
 html[data-theme="light"] #home .journal-intro,
 html[data-theme="light"] #home .project-intro{
+  background:transparent!important;
   background-color:transparent!important;
-  background-image:linear-gradient(180deg,rgba(255,253,249,.88) 0%,rgba(252,247,238,.66) 55%,rgba(247,241,228,.38) 100%)!important;
-  -webkit-backdrop-filter:blur(20px) saturate(135%)!important;
-  backdrop-filter:blur(20px) saturate(135%)!important;
+  background-image:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
   border:0!important;
-  box-shadow:0 14px 36px rgba(48,38,18,.09),inset 0 1px 0 0 rgba(255,255,255,.94)!important;
+  box-shadow:none!important;
 }
 #home .home-with-quote{display:block!important}
 #home .home-with-quote>div{min-width:0!important}
@@ -307,13 +318,14 @@ html[data-theme="light"] #home .project-intro{
 }
 html:not([data-theme="light"]) #home #autoQuoteRail{
   border:0!important;color:#fff!important;
+  background:transparent!important;
   background-color:transparent!important;
-  background-image:linear-gradient(180deg,rgba(18,22,28,.58) 0%,rgba(16,18,24,.36) 50%,rgba(12,14,18,.12) 100%)!important;
-  box-shadow:0 18px 46px rgba(0,0,0,.16),inset 0 1px 0 0 rgba(255,255,255,.15)!important;
+  background-image:none!important;
+  box-shadow:none!important;
 }
 html:not([data-theme="light"]) #home #autoQuoteRail .auto-quote-top,
 html:not([data-theme="light"]) #home #autoQuoteRail .auto-quote-footer{
-  border-color:rgba(255,255,255,.10)!important;
+  border-color:rgba(255,255,255,.08)!important;
 }
 #home .hero #autoQuoteRail{align-self:flex-start!important}
 html:not([data-theme="light"]) #home .auto-quote-text,
@@ -343,18 +355,20 @@ html:not([data-theme="light"]) #home .auto-quote-label{color:rgba(255,255,255,.9
     transform:translateY(-2px)!important;
   }
   html:not([data-theme="light"]) :is(.card,.tile,#home .tile,.tiles .tile,.project-card,.contact-card,.journal-card,.journal-entry,#home .journal-intro,#home .project-intro):not(#accDlg *):hover{
+    background:transparent!important;
     background-color:transparent!important;
-    background-image:linear-gradient(180deg,rgba(22,27,35,.66) 0%,rgba(18,21,28,.42) 52%,rgba(14,16,21,.14) 100%)!important;
+    background-image:none!important;
     border:0!important;
-    box-shadow:0 22px 48px rgba(0,0,0,.24),inset 0 1px 0 0 rgba(229,185,111,.38)!important;
-    -webkit-backdrop-filter:blur(24px) saturate(125%)!important;
-    backdrop-filter:blur(24px) saturate(125%)!important;
+    box-shadow:none!important;
+    -webkit-backdrop-filter:none!important;
+    backdrop-filter:none!important;
   }
   html[data-theme="light"] :is(#home .tile,#home .tiles .tile,#home .journal-intro,#home .project-intro):hover{
+    background:transparent!important;
     background-color:transparent!important;
-    background-image:linear-gradient(180deg,rgba(255,254,250,.94) 0%,rgba(252,248,240,.78) 55%,rgba(248,242,230,.52) 100%)!important;
+    background-image:none!important;
     border:0!important;
-    box-shadow:0 20px 44px rgba(48,38,18,.14),inset 0 1px 0 0 rgba(183,145,56,.45)!important;
+    box-shadow:none!important;
   }
 }
 button:focus-visible,a:focus-visible,[role=button]:focus-visible{outline:2px solid #d3b58f!important;outline-offset:3px!important}
@@ -425,12 +439,13 @@ html:not([data-theme="light"]) #location .location-content,
 html:not([data-theme="light"]) #location .location-info,
 html:not([data-theme="light"]) #location .location-details,
 html:not([data-theme="light"]) #location .location-cta{
+  background:transparent!important;
   background-color:transparent!important;
-  background-image:linear-gradient(180deg,rgba(18,22,28,.56) 0%,rgba(16,18,24,.34) 48%,rgba(12,14,18,.10) 100%)!important;
+  background-image:none!important;
   border:0!important;
   border-radius:20px!important;
-  box-shadow:0 18px 46px rgba(0,0,0,.16),inset 0 1px 0 0 rgba(255,255,255,.15)!important;
-  -webkit-backdrop-filter:blur(24px) saturate(125%)!important;backdrop-filter:blur(24px) saturate(125%)!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
 }
 html:not([data-theme="light"]) #location input,
 html:not([data-theme="light"]) #location select,
@@ -587,7 +602,7 @@ body:has(#home[hidden]) #publicWhatsappFab{display:none!important}
 @media(max-width:600px){#publicWhatsappHero{width:52px!important;height:52px!important;min-width:52px!important}#publicWhatsappFab{width:54px!important;height:54px!important;min-width:54px!important}#publicWhatsappFab svg{width:38px!important;height:38px!important}}
 @media(prefers-reduced-motion:reduce){.glass-icon-btn{transition:none!important}}
 
-/* ===== Mobile Glass Consistency (<= 760px): Modern Classic Borderless Edge-Lit Glass ===== */
+/* ===== Mobile Card Consistency (<= 760px): Transparent Corner-Lit Cards ===== */
 @media(max-width:760px){
   html:not([data-theme="light"]) :is(#home .hero,.card,.dealer,.listing,.vehicle-card,.story-card,.journal-card,.journal-entry,
   .project-card,.project-public-empty,.contact-card,.promotion-package,
@@ -598,12 +613,13 @@ body:has(#home[hidden]) #publicWhatsappFab{display:none!important}
   #location .tile,#location .card,#location .panel,#location .location-card,#location .location-panel,
   #location .contact-card,#location .map-card,#location .location-content,#location .location-info,
   #location .location-details,#location .location-cta):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *){
-    -webkit-backdrop-filter:blur(18px) saturate(125%)!important;
-    backdrop-filter:blur(18px) saturate(125%)!important;
+    -webkit-backdrop-filter:none!important;
+    backdrop-filter:none!important;
+    background:transparent!important;
     background-color:transparent!important;
-    background-image:linear-gradient(180deg,rgba(18,22,28,.58) 0%,rgba(16,18,24,.36) 48%,rgba(12,14,18,.12) 100%)!important;
+    background-image:none!important;
     border:0!important;
-    box-shadow:0 18px 46px rgba(0,0,0,.16),inset 0 1px 0 0 rgba(255,255,255,.15)!important;
+    box-shadow:none!important;
   }
   html:not([data-theme="light"]) .journal-share-dialog{
     background:rgba(22,23,24,.96)!important;

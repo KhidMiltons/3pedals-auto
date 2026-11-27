@@ -1,8 +1,8 @@
 /* ==========================================================================
    3 Pedals Auto KE — Modern Classic Edge-Lit Floating Navbar
-   Borderless frosted glass (rgba(13,13,16,0.70) + blur(24px)),
-   16px radius, whisper-thin top-edge catchlight + downward fade,
-   #E5B96F active underline, and matching <1024px mobile drawer.
+   Borderless frosted glass with 28px rounded caps, curved side-bracket
+   fading 1px rim-light outline, framed gold serif brand wordmark,
+   circular account action, bordered Contact Us button, and #E5B96F active bar.
    ========================================================================== */
 
 /* Keep horizontal overflow clipped without breaking position:sticky */
@@ -25,21 +25,21 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top {
   z-index: 1000 !important;
   width: min(1132px, calc(100% - 48px)) !important;
   max-width: 1132px !important;
-  min-height: 60px !important;
+  min-height: 64px !important;
   margin: 14px auto 12px !important;
   padding: 0 !important;
-  border-radius: 18px !important;
+  border-radius: 28px !important;
   border: 0 !important;
-  background-color: rgba(13, 13, 16, 0.62) !important;
+  background-color: rgba(18, 19, 22, 0.56) !important;
   background-image: linear-gradient(
     to bottom,
-    rgba(255, 255, 255, 0.045),
-    rgba(18, 20, 24, 0.12) 55%,
-    transparent
+    rgba(255, 255, 255, 0.035),
+    rgba(14, 15, 18, 0.08) 58%,
+    rgba(12, 13, 16, 0.03)
   ) !important;
-  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.28) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(135%) !important;
-  backdrop-filter: blur(24px) saturate(135%) !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.24) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(130%) !important;
+  backdrop-filter: blur(22px) saturate(130%) !important;
   color: #f4f0e8 !important;
   isolation: isolate !important;
   overflow: visible !important;
@@ -59,11 +59,15 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top::after {
   pointer-events: none !important;
   z-index: 3 !important;
   background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.28) 0%,
-    rgba(255, 255, 255, 0.13) 42%,
-    rgba(255, 255, 255, 0.04) 78%,
-    rgba(255, 255, 255, 0.01) 100%
+    90deg,
+    rgba(255, 255, 255, 0.24) 0px,
+    rgba(255, 255, 255, 0.16) 14px,
+    rgba(255, 255, 255, 0.06) 34px,
+    rgba(255, 255, 255, 0) 64px,
+    rgba(255, 255, 255, 0) calc(100% - 64px),
+    rgba(255, 255, 255, 0.06) calc(100% - 34px),
+    rgba(255, 255, 255, 0.16) calc(100% - 14px),
+    rgba(255, 255, 255, 0.24) 100%
   ) !important;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0) !important;
   -webkit-mask-composite: xor !important;
@@ -125,17 +129,21 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top::after {
   html[data-ux="1"][data-theme][lang] body > header:hover,
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top:hover {
     border: 0 !important;
-    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.34) !important;
+    box-shadow: 0 16px 38px rgba(0, 0, 0, 0.30) !important;
   }
 
   html[data-ux="1"][data-theme][lang] body > header:hover::after,
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top:hover::after {
     background: linear-gradient(
-      180deg,
-      rgba(229, 185, 111, 0.44) 0%,
-      rgba(255, 255, 255, 0.16) 44%,
-      rgba(255, 255, 255, 0.045) 82%,
-      rgba(255, 255, 255, 0.015) 100%
+      90deg,
+      rgba(229, 185, 111, 0.36) 0px,
+      rgba(255, 255, 255, 0.18) 14px,
+      rgba(255, 255, 255, 0.07) 36px,
+      rgba(255, 255, 255, 0) 68px,
+      rgba(255, 255, 255, 0) calc(100% - 68px),
+      rgba(255, 255, 255, 0.07) calc(100% - 36px),
+      rgba(255, 255, 255, 0.18) calc(100% - 14px),
+      rgba(229, 185, 111, 0.36) 100%
     ) !important;
   }
 }
@@ -149,7 +157,7 @@ html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top {
   background-color: rgba(253, 250, 243, 0.84) !important;
   background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.94), rgba(246, 240, 227, 0.72)) !important;
   border: 0 !important;
-  box-shadow: 0 14px 36px rgba(48, 38, 18, 0.10) !important;
+  box-shadow: 0 12px 32px rgba(48, 38, 18, 0.10) !important;
   color: #171512 !important;
 }
 
@@ -159,11 +167,15 @@ html[data-ux="1"][data-theme="light"][lang] body > header.top::after,
 html[data-ux="1"][data-theme="light"][lang] body > header.site-header::after,
 html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top::after {
   background: linear-gradient(
-    180deg,
-    rgba(138, 114, 62, 0.34) 0%,
-    rgba(138, 114, 62, 0.16) 46%,
-    rgba(138, 114, 62, 0.05) 84%,
-    rgba(138, 114, 62, 0.015) 100%
+    90deg,
+    rgba(138, 114, 62, 0.34) 0px,
+    rgba(138, 114, 62, 0.18) 16px,
+    rgba(138, 114, 62, 0.06) 36px,
+    rgba(138, 114, 62, 0) 64px,
+    rgba(138, 114, 62, 0) calc(100% - 64px),
+    rgba(138, 114, 62, 0.06) calc(100% - 36px),
+    rgba(138, 114, 62, 0.18) calc(100% - 16px),
+    rgba(138, 114, 62, 0.34) 100%
   ) !important;
 }
 
@@ -177,9 +189,9 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top {
   position: relative !important;
   width: 100% !important;
   max-width: 100% !important;
-  min-height: 60px !important;
+  min-height: 64px !important;
   margin: 0 !important;
-  padding: 8px 18px !important;
+  padding: 9px 22px !important;
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: nowrap !important;
@@ -189,7 +201,7 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top {
   background: transparent !important;
   border: 0 !important;
   box-shadow: none !important;
-  border-radius: 16px !important;
+  border-radius: 28px !important;
 }
 
 /* Re-apply card skin on vehicle_documents.html where header.top has no inner .wrap */
@@ -198,25 +210,25 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top {
   max-width: 100% !important;
   margin: 14px auto 16px !important;
   border: 0 !important;
-  border-radius: 18px !important;
-  background-color: rgba(13, 13, 16, 0.62) !important;
+  border-radius: 28px !important;
+  background-color: rgba(18, 19, 22, 0.56) !important;
   background-image: linear-gradient(
     to bottom,
-    rgba(255, 255, 255, 0.045),
-    rgba(18, 20, 24, 0.12) 55%,
-    transparent
+    rgba(255, 255, 255, 0.035),
+    rgba(14, 15, 18, 0.08) 58%,
+    rgba(12, 13, 16, 0.03)
   ) !important;
-  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.28) !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.24) !important;
 }
 
 html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top {
   background: rgba(253, 250, 243, 0.84) !important;
   background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.94), rgba(246, 240, 227, 0.72)) !important;
   border: 0 !important;
-  box-shadow: 0 14px 36px rgba(48, 38, 18, 0.10) !important;
+  box-shadow: 0 12px 32px rgba(48, 38, 18, 0.10) !important;
 }
 
-/* 2. Left — Brand Identity with Dashboard/Account "3." Monogram Badge */
+/* 2. Left — Editorial Gold Serif Brand Badge inside Rounded Smoked-Glass Frame */
 html[data-ux="1"][data-theme][lang] body > header :is(.logo, .brand),
 html[data-ux="1"][data-theme][lang] body > .wrap > header.top :is(.logo, .brand) {
   grid-area: auto !important;
@@ -229,68 +241,74 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top :is(.logo, .brand)
   max-width: none !important;
   min-width: 0 !important;
   margin: 0 !important;
-  padding: 2px 0 !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  background-color: transparent !important;
+  padding: 6px 15px !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  border-radius: 14px !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+  background-color: rgba(255, 255, 255, 0.03) !important;
   background-image: none !important;
-  box-shadow: none !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
   -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
   -webkit-background-clip: border-box !important;
   background-clip: border-box !important;
-  -webkit-text-fill-color: #ffffff !important;
-  color: #ffffff !important;
-  font-family: "Sora", "Manrope", system-ui, sans-serif !important;
-  font-size: 15px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.045em !important;
-  line-height: 1.15 !important;
+  -webkit-text-fill-color: #dfc384 !important;
+  color: #dfc384 !important;
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif !important;
+  font-size: clamp(16px, 1.35vw, 19.5px) !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.04em !important;
+  line-height: 1.08 !important;
   text-transform: uppercase !important;
   text-decoration: none !important;
-  text-shadow: none !important;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.28) !important;
   white-space: nowrap !important;
   transform: none !important;
   cursor: pointer !important;
+  transition: border-color 0.2s ease, background-color 0.2s ease, opacity 0.2s ease !important;
 }
 
 html[data-ux="1"][data-theme][lang] body > header :is(.logo, .brand)::before,
 html[data-ux="1"][data-theme][lang] body > .wrap > header.top :is(.logo, .brand)::before {
-  content: "" !important;
-  display: inline-block !important;
-  flex: 0 0 28px !important;
-  width: 28px !important;
-  height: 28px !important;
-  margin-right: 10px !important;
-  border-radius: 7px !important;
-  background: #111213 url("/favicon.svg") center/cover no-repeat !important;
-  border: 1px solid rgba(211, 181, 143, 0.42) !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.30) !important;
-}
-
-html[data-ux="1"][data-theme][lang] body > header :is(.logo, .brand)::after,
-html[data-ux="1"][data-theme][lang] body > .wrap > header.top :is(.logo, .brand)::after {
   content: none !important;
   display: none !important;
 }
 
-html[data-ux="1"][data-theme="light"][lang] body > header :is(.logo, .brand),
-html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top :is(.logo, .brand) {
-  color: #171512 !important;
-  -webkit-text-fill-color: #171512 !important;
+html[data-ux="1"][data-theme][lang] body > header :is(.logo, .brand)::after,
+html[data-ux="1"][data-theme][lang] body > .wrap > header.top :is(.logo, .brand)::after {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  left: 10px !important;
+  right: 32% !important;
+  bottom: -4px !important;
+  height: 1.5px !important;
+  border-radius: 99px !important;
+  background: linear-gradient(90deg, rgba(223, 195, 132, 0.72), rgba(223, 195, 132, 0.16) 72%, transparent) !important;
+  pointer-events: none !important;
 }
 
-html[data-ux="1"][data-theme="light"][lang] body > header :is(.logo, .brand)::before,
-html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top :is(.logo, .brand)::before {
-  background: #111213 url("/favicon.svg") center/cover no-repeat !important;
-  border-color: rgba(138, 114, 62, 0.42) !important;
-  box-shadow: 0 2px 8px rgba(48, 38, 18, 0.16) !important;
+html[data-ux="1"][data-theme="light"][lang] body > header :is(.logo, .brand),
+html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top :is(.logo, .brand) {
+  color: #8b6312 !important;
+  -webkit-text-fill-color: #8b6312 !important;
+  border-color: rgba(138, 114, 62, 0.34) !important;
+  background: rgba(255, 255, 255, 0.65) !important;
+  background-color: rgba(255, 255, 255, 0.65) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+  text-shadow: none !important;
+}
+
+html[data-ux="1"][data-theme="light"][lang] body > header :is(.logo, .brand)::after,
+html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top :is(.logo, .brand)::after {
+  background: linear-gradient(90deg, rgba(158, 116, 21, 0.65), rgba(158, 116, 21, 0.14) 72%, transparent) !important;
 }
 
 @media (hover: hover) and (pointer: fine) {
   html[data-ux="1"][data-theme][lang] body > header :is(.logo, .brand):hover {
-    opacity: 0.90 !important;
+    border-color: rgba(223, 195, 132, 0.44) !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    opacity: 0.96 !important;
     transform: none !important;
   }
 }
@@ -374,7 +392,7 @@ html[data-ux="1"][data-theme][lang] body > header :is(
 @media (min-width: 1280px) {
   html[data-ux="1"][data-theme][lang] body > header > .wrap,
   html[data-ux="1"][data-theme][lang] body > header > .headin {
-    padding: 8px 22px !important;
+    padding: 9px 26px !important;
     gap: 16px !important;
   }
   html[data-ux="1"][data-theme][lang] body > header nav#nav,
@@ -388,7 +406,7 @@ html[data-ux="1"][data-theme][lang] body > header :is(
     nav.ux-subnav-links > a.ux-subnav-link
   ) {
     padding: 0 11px !important;
-    font-size: 14px !important;
+    font-size: 13.5px !important;
   }
 }
 
@@ -468,6 +486,63 @@ html[data-ux="1"][data-theme][lang] body > header :is(
   pointer-events: none !important;
 }
 
+/* Desktop Bordered Glass Pill for Contact Us CTA */
+@media (min-width: 1024px) {
+  html[data-ux="1"][data-theme][lang] body > header #nav > button[data-tab="contact"],
+  html[data-ux="1"][data-theme][lang] body > header #nav > button.nav-contact {
+    padding: 0 16px !important;
+    margin-left: 4px !important;
+    height: 36px !important;
+    min-height: 36px !important;
+    border-radius: 12px !important;
+    border: 1px solid rgba(255, 255, 255, 0.28) !important;
+    background: rgba(255, 255, 255, 0.055) !important;
+    background-color: rgba(255, 255, 255, 0.055) !important;
+    color: rgba(244, 240, 232, 0.92) !important;
+    -webkit-text-fill-color: currentColor !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10) !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header #nav > button[data-tab="contact"]:hover,
+  html[data-ux="1"][data-theme][lang] body > header #nav > button.nav-contact:hover {
+    border: 1px solid rgba(229, 185, 111, 0.56) !important;
+    background: rgba(255, 255, 255, 0.10) !important;
+    background-color: rgba(255, 255, 255, 0.10) !important;
+    color: #ffffff !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header #nav > button[data-tab="contact"][aria-selected="true"],
+  html[data-ux="1"][data-theme][lang] body > header #nav > button.nav-contact[aria-selected="true"] {
+    border: 1px solid rgba(229, 185, 111, 0.68) !important;
+    background: rgba(229, 185, 111, 0.14) !important;
+    background-color: rgba(229, 185, 111, 0.14) !important;
+    color: #E5B96F !important;
+    -webkit-text-fill-color: #E5B96F !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header #nav > button[data-tab="contact"][aria-selected="true"]::after,
+  html[data-ux="1"][data-theme][lang] body > header #nav > button.nav-contact[aria-selected="true"]::after {
+    display: none !important;
+  }
+
+  html[data-ux="1"][data-theme="light"][lang] body > header #nav > button[data-tab="contact"],
+  html[data-ux="1"][data-theme="light"][lang] body > header #nav > button.nav-contact {
+    border: 1px solid rgba(138, 114, 62, 0.36) !important;
+    background: rgba(255, 255, 255, 0.80) !important;
+    background-color: rgba(255, 255, 255, 0.80) !important;
+    color: #171512 !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.94) !important;
+  }
+
+  html[data-ux="1"][data-theme="light"][lang] body > header #nav > button[data-tab="contact"][aria-selected="true"],
+  html[data-ux="1"][data-theme="light"][lang] body > header #nav > button.nav-contact[aria-selected="true"] {
+    border-color: rgba(158, 116, 21, 0.60) !important;
+    background: rgba(229, 185, 111, 0.22) !important;
+    color: #7c5609 !important;
+    -webkit-text-fill-color: #7c5609 !important;
+  }
+}
+
 html[data-ux="1"][data-theme="light"][lang] body > header :is(
   #nav > button[aria-selected="true"],
   #nav > a[aria-current="page"],
@@ -522,40 +597,40 @@ html[data-ux="1"][data-theme][lang] body > header .ux-controls {
   flex: 0 0 auto !important;
 }
 
-/* Theme Button (h-9 rounded-[12px] translucent glass) */
+/* Theme Button (h-[34px] subtle smoked-glass capsule) */
 html[data-ux="1"][data-theme][lang] body > header .ux-theme-btn {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
   gap: 6px !important;
-  min-width: 36px !important;
-  height: 36px !important;
-  min-height: 36px !important;
-  padding: 0 12px !important;
+  min-width: 34px !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  padding: 0 11px !important;
   margin: 0 !important;
-  border-radius: 12px !important;
-  border: 1px solid rgba(255, 255, 255, 0.20) !important;
-  background: rgba(255, 255, 255, 0.08) !important;
-  color: #f4f0e8 !important;
-  font: 600 12.5px/1 "Manrope", system-ui, sans-serif !important;
+  border-radius: 11px !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  background: rgba(255, 255, 255, 0.045) !important;
+  color: rgba(244, 240, 232, 0.88) !important;
+  font: 600 12px/1 "Manrope", system-ui, sans-serif !important;
   white-space: nowrap !important;
   cursor: pointer !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
   -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
   transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease !important;
 }
 
 html[data-ux="1"][data-theme][lang] body > header .ux-theme-btn svg {
-  width: 15px !important;
-  height: 15px !important;
-  flex: 0 0 15px !important;
+  width: 14px !important;
+  height: 14px !important;
+  flex: 0 0 14px !important;
 }
 
 @media (hover: hover) and (pointer: fine) {
   html[data-ux="1"][data-theme][lang] body > header .ux-theme-btn:hover {
-    background: rgba(255, 255, 255, 0.14) !important;
-    border-color: rgba(211, 181, 143, 0.65) !important;
+    background: rgba(255, 255, 255, 0.10) !important;
+    border-color: rgba(211, 181, 143, 0.50) !important;
     color: #ffffff !important;
   }
 }
@@ -567,18 +642,18 @@ html[data-ux="1"][data-theme="light"][lang] body > header .ux-theme-btn {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
 }
 
-/* Language Switcher (h-9 rounded-[12px] segmented glass) */
+/* Language Switcher (h-[34px] smoked-glass segmented pill) */
 html[data-ux="1"][data-theme][lang] body > header .ux-lang-switch {
   display: inline-flex !important;
   align-items: center !important;
-  height: 36px !important;
-  min-height: 36px !important;
+  height: 34px !important;
+  min-height: 34px !important;
   padding: 3px !important;
   gap: 2px !important;
-  border-radius: 12px !important;
-  border: 1px solid rgba(255, 255, 255, 0.20) !important;
-  background: rgba(255, 255, 255, 0.08) !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+  border-radius: 11px !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  background: rgba(255, 255, 255, 0.045) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
   -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
 }
@@ -588,28 +663,29 @@ html[data-ux="1"][data-theme][lang] body > header .ux-lang-switch button {
   align-items: center !important;
   justify-content: center !important;
   width: auto !important;
-  min-width: 31px !important;
-  height: 28px !important;
-  min-height: 28px !important;
-  padding: 0 8px !important;
+  min-width: 29px !important;
+  height: 26px !important;
+  min-height: 26px !important;
+  padding: 0 7px !important;
   margin: 0 !important;
   border: 0 !important;
-  border-radius: 9px !important;
+  border-radius: 8px !important;
   background: transparent !important;
   background-color: transparent !important;
   box-shadow: none !important;
   -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
-  color: rgba(244, 240, 232, 0.78) !important;
-  font: 700 11px/1 "Manrope", system-ui, sans-serif !important;
+  color: rgba(244, 240, 232, 0.74) !important;
+  font: 700 10.5px/1 "Manrope", system-ui, sans-serif !important;
   letter-spacing: 0.04em !important;
   cursor: pointer !important;
   transition: background-color 0.18s ease, color 0.18s ease !important;
 }
 
 html[data-ux="1"][data-theme][lang] body > header .ux-lang-switch button[aria-pressed="true"] {
-  background: linear-gradient(180deg, #e8c775, #cfa140) !important;
-  color: #121214 !important;
+  background: rgba(229, 185, 111, 0.22) !important;
+  color: #E5B96F !important;
+  border: 1px solid rgba(229, 185, 111, 0.36) !important;
 }
 
 html[data-ux="1"][data-theme="light"][lang] body > header .ux-lang-switch {
@@ -625,9 +701,10 @@ html[data-ux="1"][data-theme="light"][lang] body > header .ux-lang-switch button
 html[data-ux="1"][data-theme="light"][lang] body > header .ux-lang-switch button[aria-pressed="true"] {
   background: #9e7415 !important;
   color: #ffffff !important;
+  border-color: transparent !important;
 }
 
-/* Primary Account CTA Pill (h-9, matched champagne glass button) */
+/* Primary Account Button — Refined Circular Frosted Glass Icon */
 html[data-ux="1"][data-theme][lang] body > header .account-pill {
   grid-area: auto !important;
   position: static !important;
@@ -657,20 +734,20 @@ html[data-ux="1"][data-theme][lang] body > header .account-pill > button {
   align-items: center !important;
   justify-content: center !important;
   gap: 0 !important;
-  width: 36px !important;
-  max-width: 36px !important;
-  min-width: 36px !important;
-  height: 36px !important;
-  min-height: 36px !important;
+  width: 34px !important;
+  max-width: 34px !important;
+  min-width: 34px !important;
+  height: 34px !important;
+  min-height: 34px !important;
   padding: 0 !important;
   margin: 0 !important;
-  border-radius: 12px !important;
-  border: 1px solid rgba(229, 185, 111, 0.48) !important;
-  background: rgba(229, 185, 111, 0.16) !important;
-  background-color: rgba(229, 185, 111, 0.16) !important;
-  color: #f3d792 !important;
+  border-radius: 9999px !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  background: rgba(255, 255, 255, 0.045) !important;
+  background-color: rgba(255, 255, 255, 0.045) !important;
+  color: rgba(244, 240, 232, 0.84) !important;
   font: 600 12.5px/1 "Manrope", system-ui, sans-serif !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10) !important;
   -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
   transform: none !important;
@@ -685,12 +762,12 @@ html[data-ux="1"][data-theme][lang] body > header #accountOpen > svg {
 html[data-ux="1"][data-theme][lang] body > header #accountOpen::before {
   content: "" !important;
   display: block !important;
-  flex: 0 0 17px !important;
-  width: 17px !important;
-  height: 17px !important;
+  flex: 0 0 16px !important;
+  width: 16px !important;
+  height: 16px !important;
   background-color: currentColor !important;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='8' r='4' fill='none' stroke='black' stroke-width='2'/%3E%3Cpath d='M4 21c.8-4.1 3.4-6 8-6s7.2 1.9 8 6' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat !important;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='8' r='4' fill='none' stroke='black' stroke-width='2'/%3E%3Cpath d='M4 21c.8-4.1 3.4-6 8-6s7.2 1.9 8 6' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='8' r='4' fill='none' stroke='black' stroke-width='1.8'/%3E%3Cpath d='M4.5 20.5c.8-3.8 3.2-5.5 7.5-5.5s6.7 1.7 7.5 5.5' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='8' r='4' fill='none' stroke='black' stroke-width='1.8'/%3E%3Cpath d='M4.5 20.5c.8-3.8 3.2-5.5 7.5-5.5s6.7 1.7 7.5 5.5' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat !important;
 }
 
 html[data-ux="1"][data-theme][lang] body > header #accountOpen::after {
@@ -700,21 +777,21 @@ html[data-ux="1"][data-theme][lang] body > header #accountOpen::after {
 
 html[data-ux="1"][data-theme="light"][lang] body > header #accountOpen,
 html[data-ux="1"][data-theme="light"][lang] body > header .account-pill > button {
-  background: rgba(229, 185, 111, 0.22) !important;
-  background-color: rgba(229, 185, 111, 0.22) !important;
-  border-color: rgba(158, 116, 21, 0.45) !important;
+  background: rgba(255, 255, 255, 0.85) !important;
+  background-color: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(138, 114, 62, 0.34) !important;
   color: #7c5609 !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
 }
 
 @media (hover: hover) and (pointer: fine) {
   html[data-ux="1"][data-theme][lang] body > header #accountOpen:hover {
-    background: #E5B96F !important;
-    background-color: #E5B96F !important;
-    border-color: #E5B96F !important;
-    color: #121214 !important;
+    background: rgba(229, 185, 111, 0.16) !important;
+    background-color: rgba(229, 185, 111, 0.16) !important;
+    border-color: rgba(229, 185, 111, 0.62) !important;
+    color: #E5B96F !important;
     transform: none !important;
-    box-shadow: 0 8px 22px rgba(229, 185, 111, 0.26) !important;
+    box-shadow: 0 6px 18px rgba(229, 185, 111, 0.18) !important;
   }
 
   html[data-ux="1"][data-theme="light"][lang] body > header #accountOpen:hover {
@@ -870,18 +947,14 @@ html[data-ux="1"][data-theme][lang] body > header :is(#navToggle, #garageNavTogg
 @media (min-width: 1024px) and (max-width: 1200px) {
   html[data-ux="1"][data-theme][lang] body > header > .wrap,
   html[data-ux="1"][data-theme][lang] body > header > .headin {
-    padding: 8px 14px !important;
+    padding: 8px 16px !important;
     gap: 8px !important;
   }
   html[data-ux="1"][data-theme][lang] body > header :is(.logo, .brand) {
+    padding: 5px 11px !important;
+    border-radius: 12px !important;
     font-size: 13.5px !important;
     letter-spacing: 0.035em !important;
-  }
-  html[data-ux="1"][data-theme][lang] body > header :is(.logo, .brand)::before {
-    width: 24px !important;
-    height: 24px !important;
-    flex-basis: 24px !important;
-    margin-right: 7px !important;
   }
   html[data-ux="1"][data-theme][lang] body > header :is(
     #nav > button, #nav > a.navlink,
@@ -889,18 +962,24 @@ html[data-ux="1"][data-theme][lang] body > header :is(#navToggle, #garageNavTogg
     nav.ux-subnav-links > a.ux-subnav-link
   ) {
     padding: 0 6px !important;
-    font-size: 12.25px !important;
+    font-size: 12px !important;
+  }
+  html[data-ux="1"][data-theme][lang] body > header #nav > button[data-tab="contact"],
+  html[data-ux="1"][data-theme][lang] body > header #nav > button.nav-contact {
+    padding: 0 11px !important;
+    height: 32px !important;
+    min-height: 32px !important;
   }
   html[data-ux="1"][data-theme][lang] body > header .ux-theme-btn .ux-theme-text {
     display: none !important;
   }
   html[data-ux="1"][data-theme][lang] body > header .ux-theme-btn {
-    width: 36px !important;
+    width: 34px !important;
     padding: 0 !important;
   }
   html[data-ux="1"][data-theme][lang] body > header #accountOpen {
-    width: 36px !important;
-    min-width: 36px !important;
+    width: 34px !important;
+    min-width: 34px !important;
     padding: 0 !important;
   }
 }
@@ -965,10 +1044,10 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     z-index: 1200 !important;
     width: calc(100% - 28px) !important;
     max-width: none !important;
-    min-height: 52px !important;
+    min-height: 54px !important;
     margin: 0 auto !important;
     padding: 0 !important;
-    border-radius: 16px !important;
+    border-radius: 22px !important;
     border: 0 !important;
     background: transparent !important;
     background-color: transparent !important;
@@ -977,6 +1056,42 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
     isolation: auto !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header::after,
+  html[data-ux="1"][data-theme][lang] body > header.head::after,
+  html[data-ux="1"][data-theme][lang] body > header.top::after,
+  html[data-ux="1"][data-theme][lang] body > header.site-header::after,
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top::after {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.24) 0px,
+      rgba(255, 255, 255, 0.15) 11px,
+      rgba(255, 255, 255, 0.05) 26px,
+      rgba(255, 255, 255, 0) 46px,
+      rgba(255, 255, 255, 0) calc(100% - 46px),
+      rgba(255, 255, 255, 0.05) calc(100% - 26px),
+      rgba(255, 255, 255, 0.15) calc(100% - 11px),
+      rgba(255, 255, 255, 0.24) 100%
+    ) !important;
+  }
+
+  html[data-ux="1"][data-theme="light"][lang] body > header::after,
+  html[data-ux="1"][data-theme="light"][lang] body > header.head::after,
+  html[data-ux="1"][data-theme="light"][lang] body > header.top::after,
+  html[data-ux="1"][data-theme="light"][lang] body > header.site-header::after,
+  html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top::after {
+    background: linear-gradient(
+      90deg,
+      rgba(138, 114, 62, 0.34) 0px,
+      rgba(138, 114, 62, 0.17) 12px,
+      rgba(138, 114, 62, 0.05) 28px,
+      rgba(138, 114, 62, 0) 46px,
+      rgba(138, 114, 62, 0) calc(100% - 46px),
+      rgba(138, 114, 62, 0.05) calc(100% - 28px),
+      rgba(138, 114, 62, 0.17) calc(100% - 12px),
+      rgba(138, 114, 62, 0.34) 100%
+    ) !important;
   }
 
   html[data-ux="1"][data-theme][lang] body > header::before,
@@ -990,15 +1105,15 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     border-radius: inherit !important;
     z-index: -1 !important;
     pointer-events: none !important;
-    background: rgba(13, 13, 16, 0.66) !important;
-    background-color: rgba(13, 13, 16, 0.66) !important;
+    background: rgba(18, 19, 22, 0.62) !important;
+    background-color: rgba(18, 19, 22, 0.62) !important;
     background-image: linear-gradient(
       to bottom,
-      rgba(255, 255, 255, 0.045),
+      rgba(255, 255, 255, 0.035),
       transparent
     ) !important;
-    -webkit-backdrop-filter: blur(24px) saturate(135%) !important;
-    backdrop-filter: blur(24px) saturate(135%) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(130%) !important;
+    backdrop-filter: blur(22px) saturate(130%) !important;
   }
 
   @media (max-width: 640px) {
@@ -1036,18 +1151,21 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
   html[data-ux="1"][data-theme][lang] body > header > .wrap,
   html[data-ux="1"][data-theme][lang] body > header > .headin,
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top {
-    min-height: 52px !important;
-    padding: 6px 12px !important;
+    min-height: 54px !important;
+    padding: 7px 14px !important;
     gap: 8px !important;
-    border-radius: 16px !important;
+    border-radius: 22px !important;
   }
 
   html[data-ux="1"][data-theme][lang] body > header :is(.logo, .brand),
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top :is(.logo, .brand) {
-    flex: 1 1 auto !important;
+    flex: 0 1 auto !important;
+    margin-right: auto !important;
     min-width: 0 !important;
-    max-width: none !important;
-    font-size: clamp(13px, 3.6vw, 15px) !important;
+    max-width: calc(100% - 92px) !important;
+    padding: 5px 11px !important;
+    border-radius: 11px !important;
+    font-size: clamp(11.5px, 3.2vw, 14px) !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
   }
@@ -1060,11 +1178,8 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
 
   html[data-ux="1"][data-theme][lang] body > header :is(.logo, .brand)::before,
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top :is(.logo, .brand)::before {
-    width: 24px !important;
-    height: 24px !important;
-    flex-basis: 24px !important;
-    margin-right: 7px !important;
-    border-radius: 6px !important;
+    content: none !important;
+    display: none !important;
   }
 
   /* Hide desktop utility toggles behind hamburger drawer on < 1024px */
