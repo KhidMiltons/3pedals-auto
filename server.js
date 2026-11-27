@@ -333,6 +333,8 @@ function sanitizeKenyaTaxAndFaqClaims(text) {
   // sequence. Do not turn its validation language into an exhaustive rule.
   value = value.replace(/(?:\*{1,2})?Only(?:\*{1,2})?\s+(?:(?:used\s+)?motor\s+)?vehicles?[^.!?\n]*(?:validated|validation)[^.!?\n]*(?:destination inspection|inspection at destination)[^.!?\n]*[.!?]?/gi,
     "The notice describes document validation for vehicles not accompanied by a CoR and states that vehicles with validated import documents will be subjected to destination inspection; it does not establish whether other triggers apply.");
+  value = value.replace(/[^.!?\n]*destination inspection[^.!?\n]*\bapplies? only (?:when|if)\b[^.!?\n]*\b(?:without|not accompanied by)\s+(?:a )?CoR\b[^.!?\n]*[.!?]?/gi,
+    "The KEBS notice describes document validation for vehicles not accompanied by a CoR and states that vehicles with validated import documents will be subjected to destination inspection; it does not establish whether other triggers apply.");
   value = value.replace(/[^.!?\n]*destination inspection[^.!?\n]*\bapplies? only to vehicles?\b[^.!?\n]*\b(?:without|not accompanied by)\s+(?:a )?CoR\b[^.!?\n]*[.!?]?/gi,
     "The KEBS notice describes document validation for vehicles not accompanied by a CoR and states that vehicles with validated import documents will be subjected to destination inspection; it does not establish whether other triggers apply.");
   value = value.replace(/No (?:additional|other) (?:destination[- ]inspection )?trigger(?:s)? (?:was|were|is|are) identified[^.!?\n]*[.!?]?/gi,
@@ -341,7 +343,8 @@ function sanitizeKenyaTaxAndFaqClaims(text) {
     "The notice describes this validation process; it does not establish whether other destination-inspection triggers apply.");
   value = value.replace(/The notice does not state (?:any )?other triggers?[^.!?\n]*[.!?]?/gi, "The notice describes this validation process; it does not establish whether other destination-inspection triggers apply.");
 
-   value = value.replace(/[^.!?\n]*\bNo conflicting KRA FAQ\b[^.!?\n]*\bfound\b[^.!?\n]*[.!?]?/gi, "");
+   value = value.replace(/[^.!?\n]*\bNo conflicting KRA FAQ\b[^.!?\n]*\b(?:found|retrieved)\b[^.!?\n]*[.!?]?/gi,
+    "The cited KRA procedure lists IDF at 3.5% and RDL at 2%; the sources returned in this search do not establish the status of other KRA guidance.");
    value = value.replace(/[^.!?\n]*\bThe notice does not list any other triggers?[^.!?\n]*[.!?]?/gi,
      "The notice describes this validation process; it does not establish whether other destination-inspection triggers apply.");
    value = value.replace(/[^.!?\n]*\bconfirmed trigger for destination inspection is\b[^.!?\n]*[.!?]?/gi,
