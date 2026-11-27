@@ -341,7 +341,7 @@ function sanitizeKenyaTaxAndFaqClaims(text) {
     "The notice describes this validation process; it does not establish whether other destination-inspection triggers apply.");
   value = value.replace(/The notice does not state (?:any )?other triggers?[^.!?\n]*[.!?]?/gi, "The notice describes this validation process; it does not establish whether other destination-inspection triggers apply.");
 
-   value = value.replace(/[^.!?\\n]*\\bNo conflicting KRA FAQ\\b[^.!?\\n]*\\bfound\\b[^.!?\\n]*[.!?]?/gi, "");
+   value = value.replace(/[^.!?\n]*\bNo conflicting KRA FAQ\b[^.!?\n]*\bfound\b[^.!?\n]*[.!?]?/gi, "");
    value = value.replace(/[^.!?\n]*\bThe notice does not list any other triggers?[^.!?\n]*[.!?]?/gi,
      "The notice describes this validation process; it does not establish whether other destination-inspection triggers apply.");
    value = value.replace(/[^.!?\n]*\bconfirmed trigger for destination inspection is\b[^.!?\n]*[.!?]?/gi,
