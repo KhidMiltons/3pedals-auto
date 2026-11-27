@@ -237,15 +237,11 @@ function enforceKenyaRhdSection(text) {
 function sanitizeKenyaTaxAndFaqClaims(text) {
   let value = String(text || "");
 
-  // Normalize table bases for all requested taxes. A general customs-value
-  // statement on the KRA page is not enough to assign a base to each tax.
-  const taxRow = /^(\s*\|\s*)(Import Duty|Excise Duty|Value[‑–—\- ]Added Tax|VAT|Import Declaration Fee|IDF|Railway Development Levy|RDL)(\b[^|]*\|[^|]*\|)([^|]*)(\|.*)$/i;
-  value = value.split("\n").map((line) => {
-    if (!taxRow.test(line)) return line;
-    return line.replace(taxRow, (_match, start, tax, middle, _basis, end) =>
-      `${start}${tax}${middle} Individual tax base not specified in this source ${end}`);
-  }).join("\n");
-
+  // Preserve tax bases generated from the retrieved source text. Do not
+  // overwrite every table row with "unspecified": VAT, IDF and RDL may have
+  // express bases on the KRA procedure page. The answer audit separately
+  // flags unsupported customs-value assignments.
+  
   // In prose, preserve only tax bases explicitly stated by the cited KRA page.
   // Remove contradictory statements that IDF/RDL have no stated base when the
   // answer has already cited the page's express customs-value wording.
@@ -328,6 +324,8 @@ function sanitizeKenyaTaxAndFaqClaims(text) {
   // sequence. Do not turn its validation language into an exhaustive rule.
   value = value.replace(/(?:\*{1,2})?Only(?:\*{1,2})?\s+(?:(?:used\s+)?motor\s+)?vehicles?[^.!?\n]*(?:validated|validation)[^.!?\n]*(?:destination inspection|inspection at destination)[^.!?\n]*[.!?]?/gi,
     "The notice describes document validation for vehicles not accompanied by a CoR and states that vehicles with validated import documents will be subjected to destination inspection; it does not establish whether other triggers apply.");
+  value = value.replace(/[^.!?\n]*destination inspection[^.!?\n]*\bapplies? only to vehicles?\b[^.!?\n]*\b(?:without|not accompanied by)\s+(?:a )?CoR\b[^.!?\n]*[.!?]?/gi,
+    "The KEBS notice describes document validation for vehicles not accompanied by a CoR and states that vehicles with validated import documents will be subjected to destination inspection; it does not establish whether other triggers apply.");
   value = value.replace(/No (?:additional|other) (?:destination[- ]inspection )?trigger(?:s)? (?:was|were|is|are) identified[^.!?\n]*[.!?]?/gi,
     "The notice describes this validation process; it does not establish whether other destination-inspection triggers apply.");
   value = value.replace(/No other trigger is identified[^.!?\n]*[.!?]?/gi,
