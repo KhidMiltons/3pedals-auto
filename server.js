@@ -266,15 +266,20 @@ function sanitizeKenyaTaxAndFaqClaims(text) {
     "KRA's Procedures for Motor Vehicle states that the vehicle will be subject to roadworthiness inspection by a KEBS-appointed inspection agent in the country of export.");
 
   // VAT, IDF and RDL are separate from the KRA customs-value table.
-  // Preserve each row's rate, but normalize any claimed base to unspecified.
+  // Replace the complete base cell, rather than splicing text into its contents.
   value = value.split("\n").map((line) => {
-    if (!/^\s*\|\s*(?:VAT|value[-‑– ]added tax|IDF|import declaration fee|RDL|railway development levy)\b/i.test(line)) return line;
     const cells = line.split("|");
-    if (cells.length >= 4) {
-      return [cells[0], cells[1], cells[2], " individual tax base not specified in the current KRA procedure ", ...cells.slice(4)].join("|");
-    }
-    return line.replace(/(?:customs value|CIF)[^.!?\n]*/gi, "individual tax base not specified in the current KRA procedure");
+    if (cells.length < 4) return line;
+    const taxName = String(cells[1] || "").trim();
+    if (!/^(?:VAT|value[-‑–‑ ]added tax(?:\s*\(VAT\))?|IDF|import declaration fee|RDL|railway development levy)$/i.test(taxName)) return line;
+    cells[3] = " individual tax base not specified in the current KRA procedure ";
+    return cells.join("|");
   }).join("\n");
+
+  // Repair partial duplicate wording if the model emitted a truncated phrase
+  // immediately before the deterministic replacement.
+  value = value.replace(/individual tax base not speindividual tax base not specified in the current KRA procedure/gi,
+    "individual tax base not specified in the current KRA procedure");
 
   // Dated 2021 blog formulas are not proof of current 2026 tax bases.
   value = value.replace(/(?:VAT|value[-‑– ]added tax|IDF|import declaration fee|RDL|railway development levy)[^.!?\n]{0,180}(?:customs value|CIF)[^.!?\n]*/gi,
