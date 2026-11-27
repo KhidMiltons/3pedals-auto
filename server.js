@@ -343,10 +343,10 @@ function sanitizeKenyaTaxAndFaqClaims(text) {
     "The notice describes this validation process; it does not establish whether other destination-inspection triggers apply.");
   value = value.replace(/The notice does not state (?:any )?other triggers?[^.!?\n]*[.!?]?/gi, "The notice describes this validation process; it does not establish whether other destination-inspection triggers apply.");
 
-   value = value.replace(/[^.!?\n]*\bNo conflicting KRA FAQ\b[^.!?\n]*\b(?:found|retrieved)\b[^.!?\n]*[.!?]?/gi,
-  value = value.replace(/[^.!?\n]*\bNo other KRA[- ]controlled FAQ page\b[^.!?\n]*\b(?:retrieved|found|located|identified)\b[^.!?\n]*[.!?]?/gi,
-    "The retrieved results do not include a KRA FAQ stating different IDF or RDL rates; this does not establish that no such guidance exists.");
-    "The cited KRA procedure lists IDF at 3.5% and RDL at 2%; the sources returned in this search do not establish the status of other KRA guidance.");
+    value = value.replace(/[^.!?\n]*\bNo conflicting KRA FAQ\b[^.!?\n]*\b(?:found|retrieved)\b[^.!?\n]*[.!?]?/gi,
+      "The cited KRA procedure lists IDF at 3.5% and RDL at 2%; the sources returned in this search do not establish the status of other KRA guidance.");
+    value = value.replace(/[^.!?\n]*\bNo other KRA[- ]controlled FAQ page\b[^.!?\n]*\b(?:retrieved|found|located|identified)\b[^.!?\n]*[.!?]?/gi,
+      "The retrieved results do not include a KRA FAQ stating different IDF or RDL rates; this does not establish that no such guidance exists.");
    value = value.replace(/[^.!?\n]*\bThe notice does not list any other triggers?[^.!?\n]*[.!?]?/gi,
      "The notice describes this validation process; it does not establish whether other destination-inspection triggers apply.");
    value = value.replace(/[^.!?\n]*\bconfirmed trigger for destination inspection is\b[^.!?\n]*[.!?]?/gi,
