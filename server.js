@@ -241,16 +241,6 @@ function sanitizeKenyaTaxAndFaqClaims(text) {
   // into current VAT, IDF or RDL bases. Import duty and excise are handled
   // separately under the KRA procedure table heading.
   
-  // In prose, preserve only tax bases explicitly stated by the cited KRA page.
-  // Remove contradictory statements that IDF/RDL have no stated base when the
-  // answer has already cited the page's express customs-value wording.
-  value = value.replace(/No KRA source[^.!?\n]{0,180}assigns? a separate tax base to (?:IDF|RDL)[^.!?\n]*[.!?]?/gi,
-    "The cited KRA procedure states the bases shown for each tax above.");
-  value = value.replace(/(?:IDF|Import Declaration Fee)[^.!?\n]{0,100}(?:no|not) (?:separate )?(?:tax )?base[^.!?\n]*[.!?]?/gi,
-    "The cited KRA procedure states the IDF base where specified.");
-  value = value.replace(/(?:RDL|Railway Development Levy)[^.!?\n]{0,100}(?:no|not) (?:separate )?(?:tax )?base[^.!?\n]*[.!?]?/gi,
-    "The cited KRA procedure states the RDL base where specified.");
-
   // Remove claims that the limited retrieved set is the exhaustive universe
   // of KRA guidance or official destination-inspection triggers.
   value = value.replace(/[^.!?\n]*No KRA source[^.!?\n]*(?:retrieved|found)[^.!?\n]*[.!?]?/gi,
