@@ -105,10 +105,11 @@ html[data-theme="light"] body > header.head,
 html[data-theme="light"] body > header.top,
 html[data-theme="light"] body > .wrap > header.top,
 html[data-theme="light"] body > header.site-header {
-  background: rgba(252, 249, 242, 0.88) !important;
-  background-color: rgba(252, 249, 242, 0.88) !important;
-  border: 1px solid rgba(138, 114, 62, 0.30) !important;
-  box-shadow: 0 10px 30px rgba(48, 38, 18, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+  background: rgba(253, 250, 243, 0.84) !important;
+  background-color: rgba(253, 250, 243, 0.84) !important;
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.94), rgba(246, 240, 227, 0.72)) !important;
+  border: 0 !important;
+  box-shadow: 0 10px 30px rgba(48, 38, 18, 0.08), inset 0 1px 0 0 rgba(255, 255, 255, 0.96) !important;
   color: #171512 !important;
 }
 
@@ -193,10 +194,11 @@ html[data-theme="light"] body .hero,
 html[data-theme="light"] #home .hero,
 html[data-theme="light"] body .garage-hero,
 html[data-theme="light"] body .journal-hero {
-  background: linear-gradient(135deg, rgba(253, 250, 243, 0.92), rgba(246, 240, 227, 0.88)) !important;
-  background-image: linear-gradient(135deg, rgba(253, 250, 243, 0.92), rgba(246, 240, 227, 0.88)) !important;
-  border-color: rgba(138, 114, 62, 0.30) !important;
-  box-shadow: 0 18px 46px rgba(48, 38, 18, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+  position: relative;
+  background-color: transparent !important;
+  background-image: linear-gradient(180deg, rgba(255, 253, 249, 0.90) 0%, rgba(252, 247, 238, 0.72) 55%, rgba(246, 240, 227, 0.44) 100%) !important;
+  border: 0 !important;
+  box-shadow: 0 18px 46px rgba(48, 38, 18, 0.10) !important;
   color: #171512 !important;
 }
 html[data-theme="light"] body .hero h1,
@@ -206,9 +208,18 @@ html[data-theme="light"] body .journal-hero h1 {
   color: #171512 !important;
   text-shadow: none !important;
 }
-html[data-theme="light"] #home .hero h1 span,
+html[data-theme="light"] #home .hero h1 span {
+  color: #8c6510 !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  letter-spacing: inherit !important;
+}
 html[data-theme="light"] #home .showroom-kicker {
   color: #8c6510 !important;
+  text-transform: none !important;
+  letter-spacing: 0.01em !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
 }
 html[data-theme="light"] body .hero p,
 html[data-theme="light"] #home .hero p,
@@ -221,7 +232,7 @@ html:not([data-theme="light"]) #home .showroom-actions .showroom-primary,
 html:not([data-theme="light"]) #home .showroom-actions .showroom-secondary {
   background: rgba(255, 255, 255, 0.10) !important;
   color: #f5f1e6 !important;
-  border: 1px solid rgba(215, 189, 131, 0.55) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10), 0 8px 20px rgba(0, 0, 0, 0.18) !important;
 }
 @media (hover: hover) and (pointer: fine) {
@@ -229,7 +240,7 @@ html:not([data-theme="light"]) #home .showroom-actions .showroom-secondary {
   html:not([data-theme="light"]) #home .showroom-actions .showroom-secondary:hover {
     background: rgba(227, 179, 65, 0.18) !important;
     color: #fffaf0 !important;
-    border-color: rgba(227, 179, 65, 0.85) !important;
+    border-color: rgba(255, 255, 255, 0.34) !important;
   }
 }
 html[data-theme="light"] #home .showroom-actions .showroom-primary,
@@ -248,8 +259,9 @@ html[data-theme="light"] #home .showroom-actions .showroom-secondary {
 
 /* Motoring wisdom card (#autoQuoteRail) legible in light mode */
 html[data-theme="light"] #home #autoQuoteRail {
-  background: rgba(253, 250, 243, 0.94) !important;
-  border-color: rgba(138, 114, 62, 0.34) !important;
+  background-color: transparent !important;
+  background-image: linear-gradient(180deg, rgba(255, 253, 249, 0.92) 0%, rgba(252, 247, 238, 0.72) 60%, rgba(246, 240, 227, 0.44) 100%) !important;
+  border: 0 !important;
   color: #171512 !important;
   box-shadow: 0 14px 36px rgba(48, 38, 18, 0.10) !important;
 }
@@ -289,7 +301,7 @@ html[data-theme="light"] body :is(
   .package, .notice, .booking-card, .service-card, .yard-card,
   .tile, #home .tile, .tiles .tile, .showroom-vehicle-note, .journal-intro, .journal-card, .journal-entry,
   .project-intro, .project-card, .project-public-empty, #autoQuoteRail, #home #autoQuoteRail, .auto-quote-rail,
-  .journal-photo-viewer, .vehicle, .booking, .glass, .account-box, .check,
+  .vehicle, .booking, .glass, .account-box, .check,
   .chauffeur-assurance, .assurance-grid article, .steps-grid article,
   .route-preview, .trip-summary, .admin-stat, .calendar-day,
   .mechanic-card, .request-hero, .contact, #home #garageContactCard.contact,
@@ -298,12 +310,11 @@ html[data-theme="light"] body :is(
   #contact .contact-intro-card, #contact #publicContactForm,
   #about .about-glass-card, #about .about-value-card, .account-load-error
 ):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
-  background: rgba(253, 250, 243, 0.94) !important;
-  background-color: rgba(253, 250, 243, 0.94) !important;
-  background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.90), rgba(246, 240, 228, 0.92)) !important;
-  border-color: rgba(138, 114, 62, 0.25) !important;
+  background-color: transparent !important;
+  background-image: linear-gradient(180deg, rgba(255, 253, 249, 0.90) 0%, rgba(252, 247, 238, 0.72) 55%, rgba(246, 240, 227, 0.44) 100%) !important;
+  border: 0 !important;
   color: #171512 !important;
-  box-shadow: 0 12px 32px rgba(48, 38, 18, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+  box-shadow: 0 12px 32px rgba(48, 38, 18, 0.08) !important;
 }
 
 html[data-theme="light"] #accDlg .account-page {
@@ -1848,14 +1859,18 @@ html[data-theme="light"] .ux-footer-legal .legal-footer-links button {
 .a4-preview-panel {
   margin: 24px 0;
   padding: 20px;
-  border: 1px solid rgba(215, 189, 131, 0.28);
-  border-radius: 18px;
-  background: rgba(18, 20, 24, 0.68);
+  border: 0;
+  border-radius: 20px;
+  background-color: transparent;
+  background-image: linear-gradient(180deg, rgba(18, 22, 28, 0.62) 0%, rgba(16, 18, 24, 0.42) 55%, rgba(12, 14, 18, 0.18) 100%);
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.18), inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
+  -webkit-backdrop-filter: blur(22px) saturate(130%);
+  backdrop-filter: blur(22px) saturate(130%);
 }
 
 html[data-theme="light"] .a4-preview-panel {
-  background: rgba(253, 250, 243, 0.96);
-  border-color: rgba(138, 114, 62, 0.34);
+  background-image: linear-gradient(180deg, rgba(255, 253, 249, 0.94) 0%, rgba(248, 242, 230, 0.78) 100%);
+  box-shadow: 0 14px 36px rgba(48, 38, 18, 0.10), inset 0 1px 0 0 rgba(255, 255, 255, 0.96);
 }
 
 .a4-preview-toolbar {
@@ -1865,6 +1880,16 @@ html[data-theme="light"] .a4-preview-panel {
   gap: 12px;
   flex-wrap: wrap;
   margin-bottom: 16px;
+}
+
+.a4-preview-toolbar strong,
+.a4-preview-toolbar .meta {
+  color: #f4f0e8;
+}
+
+html[data-theme="light"] .a4-preview-toolbar strong,
+html[data-theme="light"] .a4-preview-toolbar .meta {
+  color: #171512;
 }
 
 .a4-preview-scroll {
@@ -1893,13 +1918,36 @@ html[data-theme="light"] .a4-preview-panel {
   color: #141311;
 }
 
+.a4-sheet header.a4-letterhead,
 .a4-letterhead {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid #b88c24;
+  position: static !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 0 10px 0 !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 14px !important;
+  border: 0 !important;
+  border-bottom: 2px solid #b88c24 !important;
+  border-radius: 0 !important;
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  color: #141311 !important;
+}
+
+.a4-sheet header.a4-letterhead * {
+  color: #141311 !important;
 }
 
 .a4-brand-row {
@@ -1931,6 +1979,7 @@ html[data-theme="light"] .a4-preview-panel {
   font-size: 11px;
   line-height: 1.45;
   font-variant-numeric: tabular-nums;
+  color: #141311 !important;
 }
 
 .a4-hero-block {
@@ -7156,20 +7205,21 @@ html[data-theme="light"] .contact-inspection-banner {
   margin: 26px 0 10px;
   padding: clamp(20px, 3vw, 32px);
   border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.17);
-  background: rgba(18, 23, 30, 0.36);
-  background-image: none;
+  border: 0;
+  background-color: transparent;
+  background-image: linear-gradient(180deg, rgba(18, 22, 28, 0.56) 0%, rgba(16, 18, 24, 0.34) 48%, rgba(12, 14, 18, 0.10) 100%);
   -webkit-backdrop-filter: blur(24px) saturate(125%);
   backdrop-filter: blur(24px) saturate(125%);
-  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.16), inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
 }
 
 html[data-theme="light"] .about-faq,
 html[data-theme="light"] .garage-faq-section {
-  background: rgba(253, 250, 243, 0.94) !important;
-  border-color: rgba(138, 114, 62, 0.26) !important;
+  background-color: transparent !important;
+  background-image: linear-gradient(180deg, rgba(255, 253, 249, 0.90) 0%, rgba(252, 247, 238, 0.72) 55%, rgba(246, 240, 227, 0.44) 100%) !important;
+  border: 0 !important;
   color: #171512 !important;
-  box-shadow: 0 12px 32px rgba(48, 38, 18, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+  box-shadow: 0 12px 32px rgba(48, 38, 18, 0.08), inset 0 1px 0 0 rgba(255, 255, 255, 0.96) !important;
 }
 
 .faq-section-head {
@@ -7201,6 +7251,7 @@ html[data-theme="light"] .faq-section-head p {
 .faq-accordion-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
   gap: 12px;
 }
 
@@ -7287,9 +7338,9 @@ html[data-theme="light"] .faq-item-body {
 .faq-item-tag {
   display: inline-block;
   margin-bottom: 6px;
-  font: 700 10.5px/1.1 Manrope, sans-serif;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font: 600 12.5px/1.2 Manrope, sans-serif;
+  letter-spacing: 0.01em;
+  text-transform: none;
   color: #d7bd83;
 }
 
@@ -7929,10 +7980,10 @@ html[data-theme="light"] dialog#inspectionBookingModal {
 }
 
 .ux-inspect-modal-shell {
-  padding: 20px 22px 22px;
+  padding: 16px 20px 18px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 11px;
 }
 
 .ux-inspect-modal-head {
@@ -8229,10 +8280,89 @@ html[data-theme="light"] .ux-inspect-secondary {
   }
 }
 
-/* ===== 18. Unified Dark Obsidian Glass Card Parity (Matches .about-glass-card / .about-value-card) ===== */
+/* ===== 18. Modern Classic Curved Fading Rim-Light Glass Parity ===== */
 html:not([data-theme="light"]) body :is(
   main.wrap > .inventory-intro-compact,
-  .inventory-filter-sidebar,
+  .ux-recent-section,
+  .ux-map-section,
+  .about-faq,
+  .garage-faq-section,
+  .ux-footer-newsletter,
+  .ux-journal-recent-strip,
+  #home .hero,
+  #home #autoQuoteRail,
+  #home .showroom-vehicle-note,
+  #home .tile,
+  .tiles .tile,
+  #home .journal-intro,
+  #home .project-intro,
+  .card,
+  #grid .card,
+  .featured-grid .card,
+  .dealer,
+  .panel,
+  .stat,
+  .state,
+  .empty,
+  .error,
+  .seller-card,
+  .info,
+  .gallery,
+  .seller,
+  .spec,
+  .note,
+  .listing,
+  .contact-card,
+  .contact-intro-card,
+  #contact #publicContactForm,
+  #home #garageContactCard.contact,
+  .project-card,
+  .project-public-empty,
+  .journal-card,
+  .journal-entry,
+  .vehicle-card,
+  .story-card,
+  .mechanic-card,
+  .service-card,
+  .booking-card,
+  .garage-card,
+  .related-card,
+  .request-hero,
+  .chauffeur-assurance,
+  .assurance-grid article,
+  .steps-grid article,
+  .route-preview,
+  .trip-summary,
+  .about-glass-card,
+  .about-value-card,
+  .article-toc,
+  .inline-article-photo,
+  .journal-internal-links a,
+  .details,
+  .info-card,
+  .spec-card,
+  .vehicle-details,
+  .ux-cal-pane,
+  .ux-slots-pane,
+  .ux-inspect-callback-card
+):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):not(.a4-sheet *):not(.a4-sheet) {
+  background-color: transparent !important;
+  background-image: linear-gradient(
+    180deg,
+    rgba(18, 22, 28, 0.56) 0%,
+    rgba(16, 18, 24, 0.34) 48%,
+    rgba(12, 14, 18, 0.10) 100%
+  ) !important;
+  border: 0 !important;
+  border-radius: 20px !important;
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.16) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(125%) !important;
+  backdrop-filter: blur(24px) saturate(125%) !important;
+}
+
+/* Position relative on flow cards so ::after curved border mask binds cleanly */
+html body :is(
+  main.wrap > .inventory-intro-compact,
   .ux-recent-section,
   .ux-map-section,
   .about-faq,
@@ -8248,12 +8378,27 @@ html:not([data-theme="light"]) body :is(
   .card,
   #grid .card,
   .featured-grid .card,
+  .ux-recent-card,
+  .ux-map-place-card,
   .dealer,
   .panel,
+  .stat,
+  .state,
+  .empty,
+  .error,
+  .seller-card,
+  .info,
+  .gallery,
+  .seller,
+  .spec,
+  .note,
+  .listing,
   .contact-card,
   .contact-intro-card,
   #contact #publicContactForm,
+  #home #garageContactCard.contact,
   .project-card,
+  .project-public-empty,
   .journal-card,
   .journal-entry,
   .vehicle-card,
@@ -8268,44 +8413,318 @@ html:not([data-theme="light"]) body :is(
   .assurance-grid article,
   .steps-grid article,
   .route-preview,
-  .trip-summary
-):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
-  background-color: rgba(18, 23, 30, 0.36) !important;
-  background-image: none !important;
-  border: 1px solid rgba(255, 255, 255, 0.17) !important;
+  .trip-summary,
+  .about-glass-card,
+  .about-value-card,
+  .article-toc,
+  .inline-article-photo,
+  .journal-internal-links a,
+  .details,
+  .info-card,
+  .spec-card,
+  .vehicle-details,
+  .ux-cal-pane,
+  .ux-slots-pane,
+  .ux-inspect-callback-card
+):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):not(.a4-sheet *):not(.a4-sheet) {
+  position: relative !important;
+}
+
+/* Curved top-to-bottom fading 1px rim-light border (::after mask) matching header silhouette */
+html:not([data-theme="light"]) body :is(
+  main.wrap > .inventory-intro-compact,
+  .ux-recent-section,
+  .ux-map-section,
+  .about-faq,
+  .garage-faq-section,
+  .ux-footer-newsletter,
+  .ux-journal-recent-strip,
+  #home .hero,
+  #home #autoQuoteRail,
+  #home .showroom-vehicle-note,
+  #home .tile,
+  .tiles .tile,
+  #home .journal-intro,
+  #home .project-intro,
+  .card,
+  #grid .card,
+  .featured-grid .card,
+  .ux-recent-card,
+  .ux-map-place-card,
+  .dealer,
+  .panel,
+  .stat,
+  .state,
+  .empty,
+  .error,
+  .seller-card,
+  .info,
+  .gallery,
+  .seller,
+  .spec,
+  .note,
+  .listing,
+  .contact-card,
+  .contact-intro-card,
+  #contact #publicContactForm,
+  #home #garageContactCard.contact,
+  .project-card,
+  .project-public-empty,
+  .journal-card,
+  .journal-entry,
+  .vehicle-card,
+  .story-card,
+  .mechanic-card,
+  .service-card,
+  .booking-card,
+  .garage-card,
+  .related-card,
+  .request-hero,
+  .chauffeur-assurance,
+  .assurance-grid article,
+  .steps-grid article,
+  .route-preview,
+  .trip-summary,
+  .about-glass-card,
+  .about-value-card,
+  .article-toc,
+  .inline-article-photo,
+  .journal-internal-links a,
+  .details,
+  .info-card,
+  .spec-card,
+  .vehicle-details,
+  .ux-cal-pane,
+  .ux-slots-pane,
+  .ux-inspect-callback-card
+):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):not(.a4-sheet *):not(.a4-sheet)::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  border-radius: inherit !important;
+  padding: 1px !important;
+  pointer-events: none !important;
+  z-index: 4 !important;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.28) 0%,
+    rgba(255, 255, 255, 0.13) 42%,
+    rgba(255, 255, 255, 0.04) 78%,
+    rgba(255, 255, 255, 0.01) 100%
+  ) !important;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0) !important;
+  -webkit-mask-composite: xor !important;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0) !important;
+  mask-composite: exclude !important;
+}
+
+html[data-theme="light"] body :is(
+  main.wrap > .inventory-intro-compact,
+  .ux-recent-section,
+  .ux-map-section,
+  .about-faq,
+  .garage-faq-section,
+  .ux-footer-newsletter,
+  .ux-journal-recent-strip,
+  #home .hero,
+  #home #autoQuoteRail,
+  #home .showroom-vehicle-note,
+  #home .tile,
+  .tiles .tile,
+  #home .journal-intro,
+  #home .project-intro,
+  .card,
+  #grid .card,
+  .featured-grid .card,
+  .ux-recent-card,
+  .ux-map-place-card,
+  .dealer,
+  .panel,
+  .stat,
+  .state,
+  .empty,
+  .error,
+  .seller-card,
+  .info,
+  .gallery,
+  .seller,
+  .spec,
+  .note,
+  .listing,
+  .contact-card,
+  .contact-intro-card,
+  #contact #publicContactForm,
+  #home #garageContactCard.contact,
+  .project-card,
+  .project-public-empty,
+  .journal-card,
+  .journal-entry,
+  .vehicle-card,
+  .story-card,
+  .mechanic-card,
+  .service-card,
+  .booking-card,
+  .garage-card,
+  .related-card,
+  .request-hero,
+  .chauffeur-assurance,
+  .assurance-grid article,
+  .steps-grid article,
+  .route-preview,
+  .trip-summary,
+  .about-glass-card,
+  .about-value-card,
+  .article-toc,
+  .inline-article-photo,
+  .journal-internal-links a,
+  .details,
+  .info-card,
+  .spec-card,
+  .vehicle-details,
+  .ux-cal-pane,
+  .ux-slots-pane,
+  .ux-inspect-callback-card
+):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):not(.a4-sheet *):not(.a4-sheet)::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  border-radius: inherit !important;
+  padding: 1px !important;
+  pointer-events: none !important;
+  z-index: 4 !important;
+  background: linear-gradient(
+    180deg,
+    rgba(138, 114, 62, 0.34) 0%,
+    rgba(138, 114, 62, 0.16) 46%,
+    rgba(138, 114, 62, 0.05) 84%,
+    rgba(138, 114, 62, 0.015) 100%
+  ) !important;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0) !important;
+  -webkit-mask-composite: xor !important;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0) !important;
+  mask-composite: exclude !important;
+}
+
+/* Scrollable containers (sticky filter sidebar & modal dialogs) get directional fading border */
+html:not([data-theme="light"]) body .inventory-filter-sidebar {
+  background-color: transparent !important;
+  background-image: linear-gradient(
+    180deg,
+    rgba(18, 22, 28, 0.56) 0%,
+    rgba(16, 18, 24, 0.34) 48%,
+    rgba(12, 14, 18, 0.10) 100%
+  ) !important;
+  border: 1px solid rgba(255, 255, 255, 0.13) !important;
+  border-top-color: rgba(255, 255, 255, 0.26) !important;
+  border-bottom-color: rgba(255, 255, 255, 0.03) !important;
   border-radius: 20px !important;
-  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.16) !important;
   -webkit-backdrop-filter: blur(24px) saturate(125%) !important;
   backdrop-filter: blur(24px) saturate(125%) !important;
 }
 
+html:not([data-theme="light"]) body :is(.ux-cal-pane, .ux-slots-pane, .ux-inspect-callback-card) {
+  border-radius: 14px !important;
+}
+
 html:not([data-theme="light"]) body :is(.ux-recent-card, .ux-map-place-card):not(#accDlg *) {
-  background-color: rgba(18, 23, 30, 0.36) !important;
-  background-image: none !important;
-  border: 1px solid rgba(255, 255, 255, 0.17) !important;
+  background-color: transparent !important;
+  background-image: linear-gradient(
+    180deg,
+    rgba(18, 22, 28, 0.56) 0%,
+    rgba(16, 18, 24, 0.34) 48%,
+    rgba(12, 14, 18, 0.10) 100%
+  ) !important;
+  border: 0 !important;
   border-radius: 16px !important;
-  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.16) !important;
+}
+
+/* Sentence-case card & hero kickers */
+html:not([data-theme="light"]) body :is(
+  #home .showroom-kicker,
+  #home .auto-quote-label,
+  .eyebrow,
+  .project-kicker,
+  .contact-card span,
+  #about .about-overline,
+  #about .about-value-number
+):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
+  text-transform: none !important;
+  letter-spacing: 0.01em !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: rgba(255, 255, 255, 0.90) !important;
+}
+
+/* Interactive buttons keep deliberate hairline border */
+html:not([data-theme="light"]) body :is(
+  .btn:not(.primary):not(.gold-button),
+  .showroom-primary,
+  .showroom-secondary,
+  .auto-quote-next,
+  .ux-quick-chip,
+  .ux-card-inspect-btn,
+  .ux-card-view-btn
+):not(header *):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
 }
 
 @media (hover: hover) and (pointer: fine) and (min-width: 821px) {
+  html:not([data-theme="light"]) body :is(
+    .btn:not(.primary):not(.gold-button),
+    .showroom-primary,
+    .showroom-secondary,
+    .auto-quote-next,
+    .ux-quick-chip,
+    .ux-card-inspect-btn,
+    .ux-card-view-btn
+  ):not(header *):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):hover {
+    border-color: rgba(255, 255, 255, 0.34) !important;
+  }
+
   html:not([data-theme="light"]) body :is(
     .card, #grid .card, .featured-grid .card,
     #home .tile, .tiles .tile,
     #home .journal-intro, #home .project-intro,
     .dealer, .contact-card, .project-card, .journal-card, .journal-entry,
     .vehicle-card, .story-card, .mechanic-card, .service-card, .booking-card,
-    .garage-card, .related-card, .ux-recent-card, .ux-map-place-card
+    .garage-card, .related-card, .ux-recent-card, .ux-map-place-card,
+    .about-glass-card, .about-value-card
   ):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):hover {
-    background-color: rgba(22, 28, 36, 0.46) !important;
-    border-color: rgba(215, 189, 131, 0.40) !important;
-    box-shadow: 0 22px 48px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.10) !important;
+    background-color: transparent !important;
+    background-image: linear-gradient(
+      180deg,
+      rgba(22, 27, 35, 0.66) 0%,
+      rgba(18, 21, 28, 0.42) 52%,
+      rgba(14, 16, 21, 0.14) 100%
+    ) !important;
+    border: 0 !important;
+    box-shadow: 0 22px 48px rgba(0, 0, 0, 0.24) !important;
+  }
+
+  html:not([data-theme="light"]) body :is(
+    .card, #grid .card, .featured-grid .card,
+    #home .tile, .tiles .tile,
+    #home .journal-intro, #home .project-intro,
+    .dealer, .contact-card, .project-card, .journal-card, .journal-entry,
+    .vehicle-card, .story-card, .mechanic-card, .service-card, .booking-card,
+    .garage-card, .related-card, .ux-recent-card, .ux-map-place-card,
+    .about-glass-card, .about-value-card
+  ):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):hover::after {
+    background: linear-gradient(
+      180deg,
+      rgba(229, 185, 111, 0.44) 0%,
+      rgba(255, 255, 255, 0.16) 44%,
+      rgba(255, 255, 255, 0.045) 82%,
+      rgba(255, 255, 255, 0.015) 100%
+    ) !important;
   }
 }
 
 @media (max-width: 760px) {
   html:not([data-theme="light"]) body :is(
     main.wrap > .inventory-intro-compact,
-    .inventory-filter-sidebar,
     .ux-recent-section,
     .ux-map-section,
     .about-faq,
@@ -8339,10 +8758,15 @@ html:not([data-theme="light"]) body :is(.ux-recent-card, .ux-map-place-card):not
     .about-glass-card,
     .about-value-card
   ):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
-    background-color: rgba(18, 23, 30, 0.42) !important;
-    background-image: none !important;
-    border-color: rgba(255, 255, 255, 0.17) !important;
-    box-shadow: 0 18px 46px rgba(0, 0, 0, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
+    background-color: transparent !important;
+    background-image: linear-gradient(
+      180deg,
+      rgba(18, 22, 28, 0.58) 0%,
+      rgba(16, 18, 24, 0.36) 48%,
+      rgba(12, 14, 18, 0.12) 100%
+    ) !important;
+    border: 0 !important;
+    box-shadow: 0 18px 46px rgba(0, 0, 0, 0.16) !important;
     -webkit-backdrop-filter: blur(18px) saturate(125%) !important;
     backdrop-filter: blur(18px) saturate(125%) !important;
   }
@@ -8358,6 +8782,747 @@ html:not([data-theme="light"]) body :is(.ux-recent-card, .ux-map-place-card):not
     border-radius: 16px !important;
   }
 }
+
+/* ===== 19. Modernized Auth / Login Dialog (#authDlg) ===== */
+html[data-ux="1"] dialog#authDlg.authbox:not(.wide) {
+  width: min(440px, calc(100vw - 24px)) !important;
+  max-width: 440px !important;
+  max-height: min(92dvh, 760px) !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 22px !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  color: #f4f0e8 !important;
+  background-color: rgba(14, 16, 21, 0.90) !important;
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(16, 19, 25, 0.88) 42%,
+    rgba(11, 13, 18, 0.95) 100%
+  ) !important;
+  box-shadow:
+    0 28px 90px rgba(0, 0, 0, 0.62),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.16) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(145%) !important;
+  backdrop-filter: blur(28px) saturate(145%) !important;
+}
+
+html[data-ux="1"][data-theme="light"] dialog#authDlg.authbox:not(.wide) {
+  color: #171512 !important;
+  background-color: rgba(253, 250, 243, 0.96) !important;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(246, 240, 227, 0.92)) !important;
+  box-shadow:
+    0 26px 76px rgba(48, 38, 18, 0.22),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.98) !important;
+}
+
+html[data-ux="1"] dialog#authDlg::backdrop {
+  background: rgba(6, 8, 12, 0.68);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+html[data-ux="1"] dialog#authDlg .in {
+  padding: clamp(18px, 2.5vw, 24px) !important;
+}
+
+html[data-ux="1"] dialog#authDlg .auth-brand {
+  margin: 0 0 12px !important;
+  padding: 0 38px !important;
+  font-size: 13px !important;
+  letter-spacing: 0.04em !important;
+}
+
+html[data-ux="1"] dialog#authDlg .auth-mode-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px;
+  padding: 4px;
+  margin: 0 0 14px;
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+html[data-ux="1"] dialog#authDlg .auth-mode-tabs[hidden] {
+  display: none !important;
+}
+
+html[data-ux="1"][data-theme="light"] dialog#authDlg .auth-mode-tabs {
+  background: rgba(138, 114, 62, 0.10);
+  border-color: rgba(138, 114, 62, 0.22);
+}
+
+html[data-ux="1"] dialog#authDlg .auth-mode-tabs [role="tab"] {
+  min-height: 38px;
+  padding: 8px 12px;
+  border: 0 !important;
+  border-radius: 9px;
+  background: transparent !important;
+  color: rgba(244, 240, 232, 0.72) !important;
+  font: 600 13px/1 "Manrope", system-ui, sans-serif !important;
+  cursor: pointer;
+  transition: background-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease !important;
+}
+
+html[data-ux="1"][data-theme="light"] dialog#authDlg .auth-mode-tabs [role="tab"] {
+  color: #5b5446 !important;
+}
+
+html[data-ux="1"] dialog#authDlg .auth-mode-tabs [role="tab"][aria-selected="true"] {
+  background: linear-gradient(180deg, #e5c372, #c89f3f) !important;
+  color: #171512 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.24) !important;
+}
+
+html[data-ux="1"] dialog#authDlg .in > h2 {
+  font-size: clamp(22px, 3vw, 26px) !important;
+  margin: 0 0 6px !important;
+  letter-spacing: -0.025em !important;
+}
+
+html[data-ux="1"] dialog#authDlg .auth-intro {
+  margin: 0 0 14px !important;
+  font-size: 13.5px !important;
+  color: rgba(244, 240, 232, 0.72) !important;
+}
+
+html[data-ux="1"][data-theme="light"] dialog#authDlg .auth-intro {
+  color: #5b5446 !important;
+}
+
+html[data-ux="1"] dialog#authDlg .auth-fields label {
+  display: block;
+  margin: 10px 0 5px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: rgba(244, 240, 232, 0.88);
+}
+
+html[data-ux="1"][data-theme="light"] dialog#authDlg .auth-fields label {
+  color: #2b261d !important;
+}
+
+html[data-ux="1"] dialog#authDlg .auth-fields input:not([type="radio"]) {
+  min-height: 44px;
+  padding: 10px 13px;
+  border-radius: 12px !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  background: rgba(10, 12, 16, 0.62) !important;
+  color: #f4f0e8 !important;
+  font-size: 14px;
+}
+
+html[data-ux="1"][data-theme="light"] dialog#authDlg .auth-fields input:not([type="radio"]) {
+  background: #ffffff !important;
+  color: #171512 !important;
+  border-color: rgba(138, 114, 62, 0.34) !important;
+}
+
+html[data-ux="1"] dialog#authDlg .auth-pw-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+html[data-ux="1"] dialog#authDlg .auth-pw-wrap input {
+  width: 100%;
+  padding-right: 46px !important;
+}
+
+html[data-ux="1"] dialog#authDlg .auth-pw-toggle {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%) !important;
+  width: 34px;
+  height: 34px;
+  min-height: 34px !important;
+  display: inline-grid;
+  place-items: center;
+  padding: 0;
+  border: 0 !important;
+  border-radius: 9px;
+  background: transparent !important;
+  color: rgba(244, 240, 232, 0.66) !important;
+  cursor: pointer;
+  z-index: 2;
+}
+
+html[data-ux="1"] dialog#authDlg .auth-pw-toggle svg {
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+}
+
+html[data-ux="1"] dialog#authDlg .auth-pw-toggle:hover,
+html[data-ux="1"] dialog#authDlg .auth-pw-toggle.is-visible {
+  color: #E5B96F !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+html[data-ux="1"][data-theme="light"] dialog#authDlg .auth-pw-toggle {
+  color: #5b5446 !important;
+}
+
+html[data-ux="1"][data-theme="light"] dialog#authDlg .auth-pw-toggle:hover,
+html[data-ux="1"][data-theme="light"] dialog#authDlg .auth-pw-toggle.is-visible {
+  color: #8c6510 !important;
+  background: rgba(138, 114, 62, 0.12) !important;
+}
+
+html[data-ux="1"] dialog#authDlg #authSubmit {
+  min-height: 44px;
+  border: 0 !important;
+  border-radius: 12px !important;
+  background: linear-gradient(180deg, #e5c372, #c89f3f) !important;
+  color: #171512 !important;
+  font-weight: 700 !important;
+}
+
+html[data-ux="1"] dialog#authDlg .google-btn {
+  width: 100%;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 12px !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: #f4f0e8 !important;
+}
+
+html[data-ux="1"][data-theme="light"] dialog#authDlg .google-btn {
+  background: #ffffff !important;
+  color: #171512 !important;
+  border-color: rgba(138, 114, 62, 0.34) !important;
+}
+
+html[data-ux="1"] dialog#authDlg #authCloseTop {
+  position: absolute !important;
+  top: 14px !important;
+  right: 14px !important;
+  float: none !important;
+  width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  background: rgba(255, 255, 255, 0.07) !important;
+  color: inherit !important;
+  font-size: 20px !important;
+}
+
+html[data-ux="1"][data-theme="light"] dialog#authDlg #authCloseTop {
+  border-color: rgba(138, 114, 62, 0.32) !important;
+  background: #ffffff !important;
+}
+
+html[data-ux="1"] dialog#authDlg #authSwitch {
+  min-height: 36px !important;
+  padding: 6px 12px !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(229, 185, 111, 0.45) !important;
+  color: #E5B96F !important;
+  background: rgba(229, 185, 111, 0.10) !important;
+}
+
+html[data-ux="1"][data-theme="light"] dialog#authDlg #authSwitch {
+  color: #8c6510 !important;
+  border-color: rgba(138, 114, 62, 0.42) !important;
+  background: rgba(158, 116, 21, 0.10) !important;
+}
+
+/* ===== 20. Journal Animated Reading Progress Indicator ===== */
+.ux-read-progress-track {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+html[data-theme="light"] .ux-read-progress-track {
+  background: rgba(138, 114, 62, 0.16);
+}
+
+.ux-read-progress-bar {
+  width: 100%;
+  height: 100%;
+  transform-origin: left center;
+  transform: scaleX(var(--ux-read-progress, 0));
+  background: linear-gradient(90deg, #b88c24 0%, #E5B96F 75%, #fff2cc 100%);
+  box-shadow: 0 0 12px rgba(229, 185, 111, 0.55);
+  transition: transform 0.14s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.ux-read-progress-page {
+  position: sticky;
+  top: 78px;
+  margin-bottom: 14px;
+  border-radius: 999px;
+}
+
+@media (max-width: 1023px) {
+  .ux-read-progress-page {
+    top: 66px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ux-read-progress-bar {
+    transition: none !important;
+  }
+}
+
+/* ===== 21. #inspectionBookingModal Calendar, Slots, Scope & Mechanic Callback ===== */
+html[data-ux="1"] dialog#inspectionBookingModal.ux-inspect-modal {
+  width: min(760px, calc(100vw - 24px)) !important;
+  max-width: 760px !important;
+  max-height: min(92dvh, 860px) !important;
+  overflow-y: auto !important;
+  border: 0 !important;
+  border-radius: 20px !important;
+  background-color: rgba(14, 16, 21, 0.94) !important;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(14, 16, 21, 0.94) 55%) !important;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.65), inset 0 1px 0 0 rgba(255, 255, 255, 0.16) !important;
+  -webkit-backdrop-filter: blur(26px) saturate(140%) !important;
+  backdrop-filter: blur(26px) saturate(140%) !important;
+}
+
+html[data-ux="1"][data-theme="light"] dialog#inspectionBookingModal.ux-inspect-modal {
+  background-color: rgba(253, 250, 243, 0.98) !important;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(247, 241, 228, 0.94)) !important;
+  box-shadow: 0 24px 68px rgba(48, 38, 18, 0.22), inset 0 1px 0 0 rgba(255, 255, 255, 0.98) !important;
+}
+
+.ux-inspect-scheduler {
+  display: grid;
+  grid-template-columns: 1.08fr 0.92fr;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+@media (max-width: 680px) {
+  .ux-inspect-scheduler {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.ux-cal-pane,
+.ux-slots-pane {
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+html[data-theme="light"] .ux-cal-pane,
+html[data-theme="light"] .ux-slots-pane {
+  border-color: rgba(138, 114, 62, 0.24);
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.ux-cal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.ux-cal-month-title {
+  font: 700 13.5px/1.2 "Sora", "Manrope", system-ui, sans-serif;
+  color: #f4f0e8;
+}
+
+html[data-theme="light"] .ux-cal-month-title {
+  color: #171512;
+}
+
+.ux-cal-nav-btn {
+  width: 30px;
+  height: 30px;
+  min-height: 30px !important;
+  padding: 0;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.06);
+  color: inherit;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+html[data-theme="light"] .ux-cal-nav-btn {
+  border-color: rgba(138, 114, 62, 0.30);
+  background: #ffffff;
+  color: #171512;
+}
+
+.ux-cal-weekdays,
+.ux-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.ux-cal-weekdays {
+  margin-bottom: 5px;
+}
+
+.ux-cal-weekdays span {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(244, 240, 232, 0.56);
+}
+
+html[data-theme="light"] .ux-cal-weekdays span {
+  color: #6b6355;
+}
+
+.ux-cal-day {
+  position: relative;
+  min-height: 34px !important;
+  padding: 4px 2px;
+  border-radius: 9px;
+  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.04);
+  color: #f4f0e8;
+  font: 600 12px/1 "Manrope", system-ui, sans-serif;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  cursor: pointer;
+}
+
+html[data-theme="light"] .ux-cal-day {
+  background: rgba(138, 114, 62, 0.06);
+  color: #171512;
+}
+
+.ux-cal-day:hover:not(:disabled) {
+  border-color: rgba(229, 185, 111, 0.45);
+  background: rgba(229, 185, 111, 0.14);
+}
+
+.ux-cal-day.is-today:not(.is-selected) {
+  border-color: rgba(229, 185, 111, 0.45);
+}
+
+.ux-cal-day.is-selected {
+  background: linear-gradient(180deg, #e5c372, #c89f3f) !important;
+  color: #171512 !important;
+  border-color: transparent !important;
+  font-weight: 800;
+}
+
+.ux-cal-day.is-past,
+.ux-cal-day.is-sunday,
+.ux-cal-day:disabled {
+  opacity: 0.30;
+  cursor: not-allowed;
+}
+
+.ux-cal-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #E5B96F;
+}
+
+.ux-cal-day.is-selected .ux-cal-dot {
+  background: #171512;
+}
+
+.ux-cal-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 9px;
+  font-size: 11px;
+  color: rgba(244, 240, 232, 0.68);
+}
+
+html[data-theme="light"] .ux-cal-legend {
+  color: #5b5446;
+}
+
+.ux-cal-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.ux-cal-legend i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.ux-legend-selected { background: #E5B96F; }
+.ux-legend-partial { border: 1.5px solid #E5B96F; }
+.ux-legend-closed { background: rgba(255, 255, 255, 0.28); }
+
+html[data-theme="light"] .ux-legend-closed { background: rgba(0, 0, 0, 0.22); }
+
+.ux-slots-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 9px;
+  font-size: 12px;
+}
+
+.ux-slots-date-label {
+  font-weight: 700;
+  color: #E5B96F;
+}
+
+html[data-theme="light"] .ux-slots-date-label {
+  color: #8c6510;
+}
+
+.ux-slots-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.ux-slot-btn {
+  min-height: 44px !important;
+  padding: 7px 9px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.05);
+  color: #f4f0e8;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
+  cursor: pointer;
+  text-align: left;
+  font: 600 12px/1.2 "Manrope", system-ui, sans-serif;
+}
+
+html[data-theme="light"] .ux-slot-btn {
+  border-color: rgba(138, 114, 62, 0.28);
+  background: #ffffff;
+  color: #171512;
+}
+
+.ux-slot-btn span {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #7ee3a9;
+}
+
+html[data-theme="light"] .ux-slot-btn span {
+  color: #157347;
+}
+
+.ux-slot-btn.is-selected {
+  background: linear-gradient(180deg, #e5c372, #c89f3f) !important;
+  border-color: transparent !important;
+  color: #171512 !important;
+}
+
+.ux-slot-btn.is-selected span {
+  color: #171512 !important;
+}
+
+.ux-slot-btn.is-booked {
+  opacity: 0.45;
+  cursor: not-allowed;
+  border-style: dashed;
+}
+
+.ux-slot-btn.is-booked strong {
+  text-decoration: line-through;
+}
+
+.ux-slot-btn.is-booked span {
+  color: #f1a09a;
+}
+
+html[data-theme="light"] .ux-slot-btn.is-booked span {
+  color: #991b1b;
+}
+
+.ux-scope-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 7px;
+}
+
+.ux-scope-chip {
+  min-height: 32px !important;
+  padding: 5px 11px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(244, 240, 232, 0.88);
+  font: 600 12px/1 "Manrope", system-ui, sans-serif;
+  cursor: pointer;
+}
+
+html[data-theme="light"] .ux-scope-chip {
+  border-color: rgba(138, 114, 62, 0.30);
+  background: #ffffff;
+  color: #171512;
+}
+
+.ux-scope-chip.is-active {
+  border-color: rgba(229, 185, 111, 0.72) !important;
+  background: rgba(229, 185, 111, 0.18) !important;
+  color: #E5B96F !important;
+}
+
+html[data-theme="light"] .ux-scope-chip.is-active {
+  border-color: #9e7415 !important;
+  background: rgba(158, 116, 21, 0.14) !important;
+  color: #7c5609 !important;
+}
+
+.ux-inspect-callback-card {
+  margin-top: 2px;
+  padding: 12px 13px;
+  border-radius: 14px;
+  border: 1px solid rgba(229, 185, 111, 0.24);
+  background: rgba(229, 185, 111, 0.06);
+}
+
+html[data-theme="light"] .ux-inspect-callback-card {
+  border-color: rgba(138, 114, 62, 0.32);
+  background: rgba(158, 116, 21, 0.07);
+}
+
+.ux-inspect-callback-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ux-inspect-callback-head > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ux-inspect-callback-head strong {
+  font-size: 13px;
+  color: #f4f0e8;
+}
+
+.ux-inspect-callback-head small {
+  font-size: 11.5px;
+  color: rgba(244, 240, 232, 0.70);
+}
+
+html[data-theme="light"] .ux-inspect-callback-head strong {
+  color: #171512;
+}
+
+html[data-theme="light"] .ux-inspect-callback-head small {
+  color: #5b5446;
+}
+
+.ux-callback-badge {
+  display: inline-block;
+  width: fit-content;
+  margin-bottom: 2px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #E5B96F;
+}
+
+html[data-theme="light"] .ux-callback-badge {
+  color: #8c6510;
+}
+
+.ux-inspect-callback-toggle {
+  min-height: 36px !important;
+  padding: 7px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(229, 185, 111, 0.52);
+  background: rgba(229, 185, 111, 0.14);
+  color: #E5B96F;
+  font: 700 12.5px/1 "Manrope", system-ui, sans-serif;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+
+.ux-inspect-callback-toggle:hover,
+.ux-inspect-callback-toggle[aria-expanded="true"] {
+  background: rgba(229, 185, 111, 0.24);
+  border-color: rgba(229, 185, 111, 0.78);
+  color: #fff3d6;
+}
+
+html[data-theme="light"] .ux-inspect-callback-toggle {
+  border-color: rgba(158, 116, 21, 0.55);
+  background: rgba(158, 116, 21, 0.12);
+  color: #7c5609;
+}
+
+html[data-theme="light"] .ux-inspect-callback-toggle:hover,
+html[data-theme="light"] .ux-inspect-callback-toggle[aria-expanded="true"] {
+  background: #9e7415;
+  border-color: #9e7415;
+  color: #ffffff;
+}
+
+.ux-inspect-callback-body {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.ux-inspect-callback-body[hidden] {
+  display: none !important;
+}
+
+html[data-theme="light"] .ux-inspect-callback-body {
+  border-top-color: rgba(138, 114, 62, 0.20);
+}
+
+.ux-inspect-callback-submit {
+  min-height: 38px !important;
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(229, 185, 111, 0.55);
+  background: rgba(229, 185, 111, 0.16);
+  color: #E5B96F;
+  font: 700 12.5px/1 "Manrope", system-ui, sans-serif;
+  cursor: pointer;
+  justify-self: start;
+}
+
+html[data-theme="light"] .ux-inspect-callback-submit {
+  border-color: #9e7415;
+  background: #9e7415;
+  color: #ffffff;
+}
+
 
 
 

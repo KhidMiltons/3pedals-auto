@@ -1,8 +1,8 @@
 /* ==========================================================================
-   3 Pedals Auto KE — Card-Matched Floating Frosted-Glass Navbar
-   Matches .hero / .tile / #autoQuoteRail glass surface, 18px/15px radius,
-   rgba(255,255,255,0.22) catchlight border, favicon.svg "3." monogram,
-   h-9 utility controls, and clean <1024px frosted mobile drawer.
+   3 Pedals Auto KE — Modern Classic Edge-Lit Floating Navbar
+   Borderless frosted glass (rgba(13,13,16,0.70) + blur(24px)),
+   16px radius, whisper-thin top-edge catchlight + downward fade,
+   #E5B96F active underline, and matching <1024px mobile drawer.
    ========================================================================== */
 
 /* Keep horizontal overflow clipped without breaking position:sticky */
@@ -11,7 +11,7 @@ html[data-ux="1"][data-theme][lang] body {
   overflow-x: clip !important;
 }
 
-/* 1. Floating Sticky Frosted-Glass Card Container (Matched to .hero & .tile) */
+/* 1. Floating Sticky Modern Classic Edge-Lit Navbar Container */
 html[data-ux="1"][data-theme][lang] body > header,
 html[data-ux="1"][data-theme][lang] body > header.head,
 html[data-ux="1"][data-theme][lang] body > header.top,
@@ -29,23 +29,46 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top {
   margin: 14px auto 12px !important;
   padding: 0 !important;
   border-radius: 18px !important;
-  border: 1px solid rgba(255, 255, 255, 0.22) !important;
-  background-color: rgba(20, 22, 25, 0.36) !important;
+  border: 0 !important;
+  background-color: rgba(13, 13, 16, 0.62) !important;
   background-image: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.09),
-    transparent 38%,
-    rgba(215, 189, 131, 0.06)
+    to bottom,
+    rgba(255, 255, 255, 0.045),
+    rgba(18, 20, 24, 0.12) 55%,
+    transparent
   ) !important;
-  box-shadow:
-    0 14px 38px rgba(0, 0, 0, 0.24),
-    inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
-  -webkit-backdrop-filter: blur(22px) saturate(128%) !important;
-  backdrop-filter: blur(22px) saturate(128%) !important;
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.28) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(135%) !important;
+  backdrop-filter: blur(24px) saturate(135%) !important;
   color: #f4f0e8 !important;
   isolation: isolate !important;
   overflow: visible !important;
-  transition: border-color 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease !important;
+  transition: box-shadow 0.22s ease, background-color 0.22s ease !important;
+}
+
+html[data-ux="1"][data-theme][lang] body > header::after,
+html[data-ux="1"][data-theme][lang] body > header.head::after,
+html[data-ux="1"][data-theme][lang] body > header.top::after,
+html[data-ux="1"][data-theme][lang] body > header.site-header::after,
+html[data-ux="1"][data-theme][lang] body > .wrap > header.top::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  border-radius: inherit !important;
+  padding: 1px !important;
+  pointer-events: none !important;
+  z-index: 3 !important;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.28) 0%,
+    rgba(255, 255, 255, 0.13) 42%,
+    rgba(255, 255, 255, 0.04) 78%,
+    rgba(255, 255, 255, 0.01) 100%
+  ) !important;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0) !important;
+  -webkit-mask-composite: xor !important;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0) !important;
+  mask-composite: exclude !important;
 }
 
 /* Desktop horizontal width parity: Header, Hero, Card grids, and Footer align edge-to-edge */
@@ -101,10 +124,19 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top {
 @media (hover: hover) and (pointer: fine) {
   html[data-ux="1"][data-theme][lang] body > header:hover,
   html[data-ux="1"][data-theme][lang] body > .wrap > header.top:hover {
-    border-color: rgba(211, 181, 143, 0.44) !important;
-    box-shadow:
-      0 18px 42px rgba(0, 0, 0, 0.30),
-      inset 0 1px 0 rgba(255, 255, 255, 0.20) !important;
+    border: 0 !important;
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.34) !important;
+  }
+
+  html[data-ux="1"][data-theme][lang] body > header:hover::after,
+  html[data-ux="1"][data-theme][lang] body > .wrap > header.top:hover::after {
+    background: linear-gradient(
+      180deg,
+      rgba(229, 185, 111, 0.44) 0%,
+      rgba(255, 255, 255, 0.16) 44%,
+      rgba(255, 255, 255, 0.045) 82%,
+      rgba(255, 255, 255, 0.015) 100%
+    ) !important;
   }
 }
 
@@ -113,14 +145,26 @@ html[data-ux="1"][data-theme="light"][lang] body > header.head,
 html[data-ux="1"][data-theme="light"][lang] body > header.top,
 html[data-ux="1"][data-theme="light"][lang] body > header.site-header,
 html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top {
-  background: linear-gradient(135deg, rgba(253, 250, 243, 0.92), rgba(246, 240, 227, 0.88)) !important;
-  background-color: rgba(253, 250, 243, 0.92) !important;
-  background-image: linear-gradient(135deg, rgba(253, 250, 243, 0.92), rgba(246, 240, 227, 0.88)) !important;
-  border: 1px solid rgba(138, 114, 62, 0.30) !important;
-  box-shadow:
-    0 14px 36px rgba(48, 38, 18, 0.10),
-    inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+  background: rgba(253, 250, 243, 0.84) !important;
+  background-color: rgba(253, 250, 243, 0.84) !important;
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.94), rgba(246, 240, 227, 0.72)) !important;
+  border: 0 !important;
+  box-shadow: 0 14px 36px rgba(48, 38, 18, 0.10) !important;
   color: #171512 !important;
+}
+
+html[data-ux="1"][data-theme="light"][lang] body > header::after,
+html[data-ux="1"][data-theme="light"][lang] body > header.head::after,
+html[data-ux="1"][data-theme="light"][lang] body > header.top::after,
+html[data-ux="1"][data-theme="light"][lang] body > header.site-header::after,
+html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top::after {
+  background: linear-gradient(
+    180deg,
+    rgba(138, 114, 62, 0.34) 0%,
+    rgba(138, 114, 62, 0.16) 46%,
+    rgba(138, 114, 62, 0.05) 84%,
+    rgba(138, 114, 62, 0.015) 100%
+  ) !important;
 }
 
 /* Inner Row Layout (Single Horizontal Flex Row) */
@@ -145,7 +189,7 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top {
   background: transparent !important;
   border: 0 !important;
   box-shadow: none !important;
-  border-radius: 18px !important;
+  border-radius: 16px !important;
 }
 
 /* Re-apply card skin on vehicle_documents.html where header.top has no inner .wrap */
@@ -153,25 +197,23 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top {
   width: 100% !important;
   max-width: 100% !important;
   margin: 14px auto 16px !important;
-  border: 1px solid rgba(255, 255, 255, 0.22) !important;
-  background-color: rgba(20, 22, 25, 0.36) !important;
+  border: 0 !important;
+  border-radius: 18px !important;
+  background-color: rgba(13, 13, 16, 0.62) !important;
   background-image: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.09),
-    transparent 38%,
-    rgba(215, 189, 131, 0.06)
+    to bottom,
+    rgba(255, 255, 255, 0.045),
+    rgba(18, 20, 24, 0.12) 55%,
+    transparent
   ) !important;
-  box-shadow:
-    0 14px 38px rgba(0, 0, 0, 0.24),
-    inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.28) !important;
 }
 
 html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top {
-  background: linear-gradient(135deg, rgba(253, 250, 243, 0.92), rgba(246, 240, 227, 0.88)) !important;
-  border: 1px solid rgba(138, 114, 62, 0.30) !important;
-  box-shadow:
-    0 14px 36px rgba(48, 38, 18, 0.10),
-    inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+  background: rgba(253, 250, 243, 0.84) !important;
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.94), rgba(246, 240, 227, 0.72)) !important;
+  border: 0 !important;
+  box-shadow: 0 14px 36px rgba(48, 38, 18, 0.10) !important;
 }
 
 /* 2. Left — Brand Identity with Dashboard/Account "3." Monogram Badge */
@@ -927,13 +969,11 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     margin: 0 auto !important;
     padding: 0 !important;
     border-radius: 16px !important;
-    border: 1px solid rgba(255, 255, 255, 0.24) !important;
+    border: 0 !important;
     background: transparent !important;
     background-color: transparent !important;
     background-image: none !important;
-    box-shadow:
-      0 10px 28px rgba(0, 0, 0, 0.16),
-      inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22) !important;
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
     isolation: auto !important;
@@ -950,16 +990,15 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     border-radius: inherit !important;
     z-index: -1 !important;
     pointer-events: none !important;
-    background: rgba(24, 27, 32, 0.34) !important;
-    background-color: rgba(24, 27, 32, 0.34) !important;
+    background: rgba(13, 13, 16, 0.66) !important;
+    background-color: rgba(13, 13, 16, 0.66) !important;
     background-image: linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.16),
-      rgba(255, 255, 255, 0.04) 44%,
-      rgba(215, 189, 131, 0.09)
+      to bottom,
+      rgba(255, 255, 255, 0.045),
+      transparent
     ) !important;
-    -webkit-backdrop-filter: blur(20px) saturate(145%) !important;
-    backdrop-filter: blur(20px) saturate(145%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(135%) !important;
+    backdrop-filter: blur(24px) saturate(135%) !important;
   }
 
   @media (max-width: 640px) {
@@ -980,10 +1019,8 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     background: transparent !important;
     background-color: transparent !important;
     background-image: none !important;
-    border: 1px solid rgba(138, 114, 62, 0.28) !important;
-    box-shadow:
-      0 10px 26px rgba(48, 38, 18, 0.10),
-      inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+    border: 0 !important;
+    box-shadow: 0 10px 26px rgba(48, 38, 18, 0.10) !important;
   }
 
   html[data-ux="1"][data-theme="light"][lang] body > header::before,
@@ -991,9 +1028,9 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
   html[data-ux="1"][data-theme="light"][lang] body > header.top::before,
   html[data-ux="1"][data-theme="light"][lang] body > header.site-header::before,
   html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top::before {
-    background: linear-gradient(135deg, rgba(255, 253, 248, 0.84), rgba(248, 242, 230, 0.78)) !important;
-    background-color: rgba(255, 253, 248, 0.82) !important;
-    background-image: linear-gradient(135deg, rgba(255, 253, 248, 0.84), rgba(248, 242, 230, 0.78)) !important;
+    background: rgba(253, 250, 243, 0.84) !important;
+    background-color: rgba(253, 250, 243, 0.84) !important;
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.94), rgba(246, 240, 227, 0.72)) !important;
   }
 
   html[data-ux="1"][data-theme][lang] body > header > .wrap,
@@ -1099,18 +1136,18 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
     padding: 8px 9px 9px !important;
     gap: 2px !important;
     border-radius: 16px !important;
-    border: 1px solid rgba(255, 255, 255, 0.16) !important;
-    background: rgba(12, 12, 14, 0.85) !important;
-    background-color: rgba(12, 12, 14, 0.85) !important;
+    border: 0 !important;
+    background: rgba(13, 13, 16, 0.88) !important;
+    background-color: rgba(13, 13, 16, 0.88) !important;
     background-image: linear-gradient(
-      165deg,
-      rgba(255, 255, 255, 0.08),
-      rgba(12, 12, 14, 0.82) 48%,
-      rgba(229, 185, 111, 0.05)
+      to bottom,
+      rgba(255, 255, 255, 0.05),
+      transparent 48%,
+      rgba(13, 13, 16, 0.12)
     ) !important;
     box-shadow:
       0 24px 54px -10px rgba(0, 0, 0, 0.74),
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.12) !important;
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.14) !important;
     -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
     backdrop-filter: blur(28px) saturate(180%) !important;
     isolation: auto !important;
@@ -1122,13 +1159,13 @@ html[data-ux="1"][data-theme][lang] body > .wrap > header.top .ux-drawer-control
 
   html[data-ux="1"][data-theme="light"][lang] body > header :is(nav#nav, nav#garageSectionNav, nav#chauffeurNav, nav.ux-subnav-links),
   html[data-ux="1"][data-theme="light"][lang] body > .wrap > header.top nav.ux-subnav-links {
-    background: rgba(252, 248, 240, 0.88) !important;
-    background-color: rgba(252, 248, 240, 0.88) !important;
-    background-image: linear-gradient(165deg, rgba(255, 255, 255, 0.88), rgba(246, 240, 227, 0.84)) !important;
-    border-color: rgba(138, 114, 62, 0.34) !important;
+    background: rgba(252, 248, 240, 0.92) !important;
+    background-color: rgba(252, 248, 240, 0.92) !important;
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.96), rgba(246, 240, 227, 0.82)) !important;
+    border: 0 !important;
     box-shadow:
-      0 24px 54px -10px rgba(48, 38, 18, 0.28),
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.90) !important;
+      0 24px 54px -10px rgba(48, 38, 18, 0.24),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.96) !important;
   }
 
   html[data-ux="1"][data-theme][lang] body > header :is(nav#nav.is-open, nav#nav.mobile-menu-open, nav#garageSectionNav.is-open, nav#chauffeurNav.is-open, nav.ux-subnav-links.is-open),

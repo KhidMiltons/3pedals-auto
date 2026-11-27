@@ -30,7 +30,7 @@
 :root{--bg:#f7f5ef;--surface:#fff;--ink:#0d0d0d;--mute:#5e5848;--line:#e3dcc8;--blue:#946c00;--gold:#d4a017;--gold-ink:#0d0d0d;--alt:#0d0d0d;--alt-ink:#e3b341;--err:#b42318}
 @media(prefers-color-scheme:dark){:root{--bg:#0d0d0d;--surface:#1a1a1a;--ink:#f5f1e6;--mute:#a8a08a;--line:#333026;--blue:#e3b341;--gold:#e3b341;--gold-ink:#0d0d0d;--alt:#f5f1e6;--alt-ink:#0d0d0d;--err:#ff8a7a}}
 *{box-sizing:border-box}body{overscroll-behavior-x:none;margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Manrope,system-ui,sans-serif}h1,h2,h3{font-family:"Playfair Display",Georgia,serif;line-height:1.08;margin:0}.wrap{max-width:1120px;margin:auto;padding:0 18px}
-header{background:#0d0d0d;color:#fff;border-bottom:3px solid #d4a017}.head{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:18px}.logo{font:700 27px "Playfair Display",Georgia,serif;color:#e3b341;letter-spacing:.03em;text-transform:uppercase}.back{color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.18);padding:9px 14px;border-radius:8px}.back:hover{border-color:#d4a017;color:#e3b341}
+body > header{background:#0d0d0d;color:#fff;border-bottom:3px solid #d4a017}.head{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:18px}.logo{font:700 27px "Playfair Display",Georgia,serif;color:#e3b341;letter-spacing:.03em;text-transform:uppercase}.back{color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.18);padding:9px 14px;border-radius:8px}.back:hover{border-color:#d4a017;color:#e3b341}
 main{padding:28px 0 60px}.crumb{color:var(--mute);font-size:14px;margin-bottom:16px}.crumb a{color:inherit;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}.state{padding:22px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
 .vehicle{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(320px,.8fr);gap:24px;align-items:start}.gallery{position:relative;background:#111;border-radius:16px;overflow:hidden;border:1px solid var(--line);touch-action:pan-y;overscroll-behavior-x:contain}.main-photo{touch-action:pan-y;user-select:none;-webkit-user-drag:none}.photo-step{position:absolute;top:calc(50% - 24px);z-index:3;width:48px;height:56px;padding:0;border:1px solid rgba(255,255,255,.22);border-radius:10px;background:rgba(12,13,14,.72);color:#f5f1e6;font-size:34px;line-height:1;display:grid;place-items:center;cursor:pointer;backdrop-filter:blur(10px)}.photo-step:hover{background:rgba(183,160,106,.7)}.photo-prev{left:12px}.photo-next{right:12px}.photo-count{position:absolute;right:12px;top:12px;z-index:3;padding:5px 8px;border-radius:6px;background:rgba(12,13,14,.72);color:#fff;font-size:12px;font-weight:700}.main-photo{width:100%;aspect-ratio:16/10;object-fit:contain;display:block;background:#17191c}.thumbs{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;padding:9px}.thumb{border:2px solid transparent;background:#222;border-radius:7px;padding:0;overflow:hidden;cursor:pointer;aspect-ratio:4/3}.thumb[aria-current="true"]{border-color:#d4a017}.thumb img{width:100%;height:100%;object-fit:cover;display:block}
 .info{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:0 8px 30px rgba(0,0,0,.06)}.eyebrow{font-size:12px;font-weight:800;letter-spacing:.14em;color:var(--blue);text-transform:uppercase}.info h1{font-size:clamp(36px,5vw,56px);margin-top:7px}.year{color:var(--mute);font-family:Manrope,sans-serif;font-size:.55em}.price{font:700 30px "Playfair Display",Georgia,serif;color:var(--blue);margin:12px 0 18px}.specs{display:flex!important;flex-direction:column!important;flex-wrap:nowrap!important;align-items:flex-start!important;justify-content:flex-start!important;gap:5px!important;margin:14px 0 18px!important;padding:10px 12px!important;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.025);width:100%!important;max-width:100%;box-sizing:border-box}.spec{display:flex!important;align-items:baseline!important;justify-content:flex-start!important;gap:5px!important;min-width:0;padding:0;border:0;border-radius:0;background:transparent;white-space:normal!important}.spec span{display:inline;color:var(--mute);font-size:12px;text-transform:none;letter-spacing:0;font-weight:600;white-space:nowrap}.spec strong{display:inline;margin:0;font-size:13px;overflow-wrap:anywhere}.specs .spec{min-width:0}.desc{color:var(--mute);white-space:pre-wrap}.yard-label{display:inline-flex;padding:6px 9px;border-radius:999px;background:var(--ink);color:var(--gold);font-size:10px;font-weight:800;letter-spacing:.08em;margin-bottom:9px}.seller{margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}.seller h3{font-size:24px;margin-bottom:8px}.seller p{margin:4px 0}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}.actions .btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;text-align:center}.btn{display:inline-block;text-decoration:none;border:0;border-radius:8px;padding:12px 17px;font-weight:700;cursor:pointer}@media(max-width:520px){.actions{display:grid;grid-template-columns:1fr;gap:10px}.actions .btn{width:100%;min-height:48px;padding:13px 14px}.seller .btn{width:100%;box-sizing:border-box;text-align:center;justify-content:center}}.btn.gold{background:var(--gold);color:var(--gold-ink)}.btn.dark{background:var(--alt);color:var(--alt-ink)}.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--ink)}.status{display:inline-flex;align-items:center;gap:7px;margin-top:2px;padding:6px 10px;border-radius:999px;background:#edf7ee;color:#28633a;border:1px solid #c9e5cd;font-size:12px;font-weight:800}.status:before{content:"";width:7px;height:7px;border-radius:50%;background:#3b8a4a}.status.sold{background:#fbeaea;color:#8a2020;border-color:#efc7c7}.status.sold:before{background:#b42318}.ref{margin-top:8px;color:var(--mute);font-size:12px}.note{margin-top:18px;padding:13px 15px;border-radius:10px;border:1px solid var(--line);color:var(--mute);font-size:13px}
@@ -60,8 +60,8 @@ main{padding:28px 0 60px}.crumb{color:var(--mute);font-size:14px;margin-bottom:1
 </style>
 <style id="vehicle-features-dropdown-soft-borders">html body .vehicle-features-disclosure{margin:14px 0 18px;border:1px solid rgba(255,255,255,.12);border-radius:12px;background:rgba(255,255,255,.035);overflow:hidden}html body .vehicle-features-disclosure summary{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 15px;cursor:pointer;list-style:none;color:var(--ink);font:600 13px/1.4 Manrope,system-ui,sans-serif}html body .vehicle-features-disclosure summary::-webkit-details-marker{display:none}html body .vehicle-features-disclosure .feature-chevron{color:var(--mute);font-size:20px;line-height:1;transition:transform .2s ease}html body .vehicle-features-disclosure[open] .feature-chevron{transform:rotate(180deg)}html body .vehicle-features-content{padding:0 15px 15px}html body .vehicle-features-content .desc{margin:0 0 10px}html body .vehicle-feature-list{margin:0;padding-left:19px;display:grid;grid-template-columns:1fr;gap:5px;color:var(--mute);font:400 13px/1.55 Manrope,system-ui,sans-serif}html body .vehicle-tradein-note{margin:14px 0 0;color:var(--mute);font-size:12px;line-height:1.5}</style>
 <!-- Meta Pixel loads only after explicit optional-cookie consent. -->
-<link rel="stylesheet" href="/site-theme.css?v=20261126-up3">
-<link rel="stylesheet" href="/site-ux.css?v=20261126-up6">
+<link rel="stylesheet" href="/site-theme.css?v=20261127-up1">
+<link rel="stylesheet" href="/site-ux.css?v=20261127-up1">
 <style id="vehicle-dual-theme-shell">
 :root {
   color-scheme: dark;
@@ -89,14 +89,14 @@ html body .related-price {
   color: var(--gold);
 }
 html body :is(.gallery, .info, .state, .related-card) {
-  background: rgba(20, 22, 26, 0.58) !important;
-  border-color: rgba(255, 255, 255, 0.16) !important;
-  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.09) !important;
-  -webkit-backdrop-filter: blur(18px) saturate(135%) !important;
-  backdrop-filter: blur(18px) saturate(135%) !important;
+  background-color: transparent !important;
+  background-image: linear-gradient(180deg, rgba(18, 22, 28, 0.56) 0%, rgba(16, 18, 24, 0.34) 48%, rgba(12, 14, 18, 0.10) 100%) !important;
+  border: 0 !important;
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.16) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(125%) !important;
+  backdrop-filter: blur(24px) saturate(125%) !important;
   transition:
     transform var(--ux-card-hover-duration, 210ms) var(--ux-card-ease, cubic-bezier(0.22, 1, 0.36, 1)),
-    border-color var(--ux-card-glow-duration, 240ms) var(--ux-card-ease, cubic-bezier(0.22, 1, 0.36, 1)),
     box-shadow var(--ux-card-glow-duration, 240ms) var(--ux-card-ease, cubic-bezier(0.22, 1, 0.36, 1)) !important;
 }
 html body .main-photo { background: rgba(13, 15, 18, 0.9); }
@@ -134,8 +134,8 @@ html body .info a:not(.btn) { color: var(--gold); }
   html body :is(.gallery, .info, .related-card):hover,
   html body .related-card:focus-visible {
     transform: translate3d(0, var(--ux-card-lift-y, -4px), 0) !important;
-    border-color: var(--ux-card-border-hover, rgba(215, 189, 131, 0.68)) !important;
-    box-shadow: var(--ux-card-shadow-hover), var(--ux-card-glow-hover), var(--ux-card-inset-hover) !important;
+    border: 0 !important;
+    box-shadow: 0 22px 48px rgba(0, 0, 0, 0.24) !important;
     outline: none;
   }
   html body .btn:hover { transform: translateY(-2px); filter: brightness(1.06); }
@@ -170,10 +170,11 @@ html[data-theme="light"] .related-heading p,
 html[data-theme="light"] .vehicle-feature-list,
 html[data-theme="light"] .vehicle-tradein-note { color: #575145 !important; }
 html[data-theme="light"] :is(.gallery, .thumbs, .info, .state, .related-card) {
-  background: rgba(255, 252, 246, 0.88) !important;
+  background-color: transparent !important;
+  background-image: linear-gradient(180deg, rgba(255, 253, 249, 0.90) 0%, rgba(252, 247, 238, 0.72) 55%, rgba(246, 240, 227, 0.44) 100%) !important;
   color: #171512 !important;
-  border-color: rgba(138, 114, 62, 0.28) !important;
-  box-shadow: 0 12px 32px rgba(48, 38, 18, 0.09), inset 0 1px 0 rgba(255, 255, 255, 0.92) !important;
+  border: 0 !important;
+  box-shadow: 0 12px 32px rgba(48, 38, 18, 0.09) !important;
 }
 html[data-theme="light"] .main-photo { background: #ebe5d8 !important; }
 html[data-theme="light"] .thumb { background: #e3dcd0 !important; }
@@ -223,7 +224,7 @@ html[data-theme="light"] .btn.gold {
   color: #1c160c !important;
 }
 </style>
-<link rel="stylesheet" href="/header-modern.css?v=20261126-up2">
+<link rel="stylesheet" href="/header-modern.css?v=20261127-up1">
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
@@ -239,7 +240,8 @@ html[data-theme="light"] .btn.gold {
 <footer class="ux-site-footer no-print"><div class="wrap">© <span data-ux-year>2026</span> 3 Pedals Auto KE.</div></footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
-<script defer src="/site-ux.js?v=20261126-up2"></script>
+<script src="/lib/auto-logic.js?v=20261127-up1"></script>
+<script defer src="/site-ux.js?v=20261127-up1"></script>
 <script>
 const CFG=window.SB_CONFIG||{};
 const sb=(CFG.url&&!/^PASTE/.test(CFG.url)&&window.supabase)?window.supabase.createClient(CFG.url,CFG.key):null;
@@ -383,7 +385,9 @@ Vehicle link: ${pageUrl}`;
   const specDuty=dutyMatch?dutyMatch[0]:(r.stock_mode==='import'?'Import / Duty clearance':'Duty Paid / Kenya Registered');
 
   const isSold=String(r.status||'').trim().toLowerCase()==='sold';
-  $('app').outerHTML=`<div class="vehicle"><div class="no-print">${gallery}</div><article class="info"><span class="eyebrow">3 Pedals Auto KE · ${isSold?'Sold listing':'Approved listing'}</span><h1>${esc(r.make)} ${esc(r.model)} <span class="year">${esc(r.year||'')}</span></h1><div class="price">KES ${fmt(r.price)}</div><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><span class="status${isSold?' sold-status-pill':''}">${isSold?'Sold':'Available to enquire'}</span>${garageChecked?'<span class="ux-checked-pill" style="margin-top:0" title="Verified 3 Pedals Garage Pre-Purchase Inspection">✓ Checked · Verified 3 Pedals Garage Pre-Purchase Inspection</span>':''}</div><div class="ref">Vehicle reference: <strong>${ref}</strong></div><div class="specs"><div class="spec"><span>Fuel:</span><strong>${esc(r.fuel||'Not specified')}</strong></div><div class="spec"><span>Mileage:</span><strong>${fmt(r.km)} km</strong></div><div class="spec"><span>Engine:</span><strong>${esc(specEngine)}</strong></div><div class="spec"><span>Transmission:</span><strong>${esc(specTransmission)}</strong></div><div class="spec"><span>Duty status:</span><strong>${esc(specDuty)}</strong></div><div class="spec"><span>Location:</span><strong>${esc(sellerLocation||'Not specified')}</strong></div><div class="spec"><span>Listing:</span><strong>${isYard?'Car yard':'Private seller'}</strong></div></div><details class="vehicle-features-disclosure"><summary><span>View more · Features &amp; condition</span><span class="feature-chevron" aria-hidden="true">⌄</span></summary><div class="vehicle-features-content"><p class="desc">${esc(descText||'No description provided.')}</p><ul class="vehicle-feature-list"><li>Logbook &amp; Ownership Due Diligence Ready</li><li>Chassis &amp; Mileage Verification Supported</li><li>Pre-Purchase Inspection Eligible at 3 Pedals Garage</li><li>Viewing &amp; Test Drive by Appointment</li></ul><p class="vehicle-tradein-note">Trade-in options available. Financing can be arranged.</p></div></details><div class="seller"><h3>${isYard?"Car Yard":"Seller"}</h3><p><strong>${esc(sellerName)}</strong></p>${sellerBits}</div><div class="actions no-print">${wa?`<a class="btn gold" href="https://wa.me/${esc(wa)}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">💬 WhatsApp Enquiry</a>`:''}${phone?`<a class="btn dark" href="tel:${esc(waNumber(phone))}">📞 Call Seller</a>`:''}<button class="btn ghost" type="button" id="vehiclePrintA4Btn">🖨 Print Spec Sheet (A4)</button><button class="btn ghost" type="button" id="vehiclePreviewA4Btn">📄 Preview A4</button><button class="btn ghost" type="button" id="saveVehicleBtn" aria-pressed="false" disabled${isSold?' aria-disabled="true"':''}>${isSold?'Vehicle Sold':'Checking saved status…'}</button><button class="btn ghost" type="button" id="shareBtn">↗ Share vehicle</button><button class="btn ghost" type="button" id="copyLinkBtn">⧉ Copy vehicle link</button><button class="btn ghost" type="button" id="copyBtn">Copy details</button><a class="btn ghost" href="/inventory">← More cars</a></div><span id="shareFeedback" class="meta no-print" role="status" aria-live="polite"></span><div class="note no-print">For your safety, inspect the vehicle in person, verify ownership documents and complete payment only after you are satisfied with the car and paperwork.</div></article></div>`;
+  const mountTarget=$('app')||document.querySelector('main.wrap > .vehicle');
+  if(!mountTarget)return;
+  mountTarget.outerHTML=`<div class="vehicle"><div class="no-print">${gallery}</div><article class="info"><span class="eyebrow">3 Pedals Auto KE · ${isSold?'Sold listing':'Approved listing'}</span><h1>${esc(r.make)} ${esc(r.model)} <span class="year">${esc(r.year||'')}</span></h1><div class="price">KES ${fmt(r.price)}</div><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><span class="status${isSold?' sold-status-pill':''}">${isSold?'Sold':'Available to enquire'}</span>${garageChecked?'<span class="ux-checked-pill" style="margin-top:0" title="Verified 3 Pedals Garage Pre-Purchase Inspection">✓ Checked · Verified 3 Pedals Garage Pre-Purchase Inspection</span>':''}</div><div class="ref">Vehicle reference: <strong>${ref}</strong></div><div class="specs"><div class="spec"><span>Fuel:</span><strong>${esc(r.fuel||'Not specified')}</strong></div><div class="spec"><span>Mileage:</span><strong>${fmt(r.km)} km</strong></div><div class="spec"><span>Engine:</span><strong>${esc(specEngine)}</strong></div><div class="spec"><span>Transmission:</span><strong>${esc(specTransmission)}</strong></div><div class="spec"><span>Duty status:</span><strong>${esc(specDuty)}</strong></div><div class="spec"><span>Location:</span><strong>${esc(sellerLocation||'Not specified')}</strong></div><div class="spec"><span>Listing:</span><strong>${isYard?'Car yard':'Private seller'}</strong></div></div><details class="vehicle-features-disclosure"><summary><span>View more · Features &amp; condition</span><span class="feature-chevron" aria-hidden="true">⌄</span></summary><div class="vehicle-features-content"><p class="desc">${esc(descText||'No description provided.')}</p><ul class="vehicle-feature-list"><li>Logbook &amp; Ownership Due Diligence Ready</li><li>Chassis &amp; Mileage Verification Supported</li><li>Pre-Purchase Inspection Eligible at 3 Pedals Garage</li><li>Viewing &amp; Test Drive by Appointment</li></ul><p class="vehicle-tradein-note">Trade-in options available. Financing can be arranged.</p></div></details><div class="seller"><h3>${isYard?"Car Yard":"Seller"}</h3><p><strong>${esc(sellerName)}</strong></p>${sellerBits}</div><div class="actions no-print">${wa?`<a class="btn gold" href="https://wa.me/${esc(wa)}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">💬 WhatsApp Enquiry</a>`:''}${phone?`<a class="btn dark" href="tel:${esc(waNumber(phone))}">📞 Call Seller</a>`:''}<button class="btn ghost" type="button" id="vehiclePrintA4Btn">🖨 Print Spec Sheet (A4)</button><button class="btn ghost" type="button" id="vehiclePreviewA4Btn">📄 Preview A4</button><button class="btn ghost" type="button" id="saveVehicleBtn" aria-pressed="false" disabled${isSold?' aria-disabled="true"':''}>${isSold?'Vehicle Sold':'Checking saved status…'}</button><button class="btn ghost" type="button" id="shareBtn">↗ Share vehicle</button><button class="btn ghost" type="button" id="copyLinkBtn">⧉ Copy vehicle link</button><button class="btn ghost" type="button" id="copyBtn">Copy details</button><a class="btn ghost" href="/inventory">← More cars</a></div><span id="shareFeedback" class="meta no-print" role="status" aria-live="polite"></span><div class="note no-print">For your safety, inspect the vehicle in person, verify ownership documents and complete payment only after you are satisfied with the car and paperwork.</div></article></div>`;
 
   // Populate Printable A4 Vehicle Spec Sheet + QR
   const mainEl=document.querySelector('main.wrap');
@@ -489,7 +493,15 @@ Vehicle link: ${pageUrl}`;
   });
 
   // Track & render Recently Viewed Vehicles
-  window.ThreePedalsUX?.recordRecentVehicle({id:r.id,title,price:r.price,km:r.km,fuel:r.fuel,photo:photos[0]||''});
+  const trackRecent=()=>{
+    window.ThreePedalsUX?.recordRecentVehicle({
+      id:r.id,title,make:r.make,model:r.model,year:r.year,price:r.price,km:r.km,fuel:r.fuel,desc:r.description,photo:photos[0]||'',photos,
+      seller:{type:isYard?'yard':'private',name:sellerName,yard:r.yard_name||'',location:sellerLocation,phone:phone||'',whatsapp:whatsapp||'',email:r.seller_email||'',web:r.web||r.yard_web||'',logo:r.yard_logo_url||''},
+      status:r.status||'approved'
+    });
+  };
+  if(window.ThreePedalsUX)trackRecent();
+  else window.addEventListener('DOMContentLoaded',trackRecent,{once:true});
   let recentHost=$('recentlyViewedSection');
   if(!recentHost&&mainEl){
     recentHost=document.createElement('section');
@@ -550,20 +562,61 @@ async function loadRelated(current){
     $('relatedGrid').innerHTML=candidates.map(item=>{const name=vehicleTitle(item),photo=photosById.get(item.id)||'';return `<a class="related-card" href="/vehicle.html?id=${encodeURIComponent(item.id)}">${photo?`<img class="related-photo" src="${esc(photo)}" alt="${esc(name)}" loading="lazy" decoding="async">`:''}<div class="related-copy"><h3>${esc(name)}</h3><div class="related-price">KES ${fmt(item.price)}</div><div class="related-meta">${fmt(item.km)} km · ${esc(item.fuel||'Fuel not specified')}</div></div></a>`}).join('');
   }catch(error){host.remove();console.warn('Related vehicles could not be loaded:',error)}
 }
+function hydrateCachedVehicle(targetId){
+  const readJson=raw=>{try{return JSON.parse(raw||'null')}catch(_){return null}};
+  const key='3pedals:vehicle:v2:'+String(targetId);
+  const direct=readJson(localStorage.getItem(key)||sessionStorage.getItem(key));
+  const recent=readJson(localStorage.getItem('3pedals:recently-viewed'));
+  const inv=readJson(localStorage.getItem('3pedals:inventory-approved:v5')||sessionStorage.getItem('3pedals:inventory-approved:v5'));
+  const home=readJson(localStorage.getItem('3pedals:home-approved:v5')||sessionStorage.getItem('3pedals:home-approved:v5'));
+  if(window.ThreePedalsLogic?.resolveVehicleFromCaches){
+    return window.ThreePedalsLogic.resolveVehicleFromCaches(targetId,[
+      direct?.row||direct,
+      recent,
+      inv?.rows||inv,
+      home?.rows||home
+    ]);
+  }
+  const cand=direct?.row||(Array.isArray(recent)&&recent.find(x=>String(x?.id)===String(targetId)))||(Array.isArray(inv?.rows)&&inv.rows.find(x=>String(x?.id)===String(targetId)))||(Array.isArray(home?.rows)&&home.rows.find(x=>String(x?.id)===String(targetId)));
+  return cand&&cand.id?cand:null;
+}
+function shouldRefreshRenderedVehicle(prevRow,nextRow){
+  if(!prevRow||!nextRow)return true;
+  const prevPhotos=Array.isArray(prevRow.photos)?prevRow.photos.length:0;
+  const nextPhotos=Array.isArray(nextRow.photos)?nextRow.photos.length:0;
+  return String(prevRow.status||'').toLowerCase()!==String(nextRow.status||'').toLowerCase()
+    ||Number(prevRow.price||0)!==Number(nextRow.price||0)
+    ||nextPhotos>prevPhotos
+    ||String(nextRow.description||'').length>String(prevRow.description||'').length
+    ||(!prevRow.seller_phone&&Boolean(nextRow.seller_phone));
+}
 async function load(){
   const app=$('app');
   if(!id){app.innerHTML='<h2>Vehicle not specified</h2><p>Please return to the Buy section and select a vehicle.</p><a class="btn gold" href="/inventory">Browse cars</a>';return}
-  if(!sb){app.innerHTML='<h2>Vehicle details unavailable</h2><p class="desc">The live vehicle database is not connected. Please try again later.</p><a class="btn gold" href="/inventory">Browse cars</a>';return}
   const cacheKey='3pedals:vehicle:v2:'+String(id);
-  let cached=null,renderedFromCache=false;
-  try{const saved=JSON.parse(localStorage.getItem(cacheKey)||sessionStorage.getItem(cacheKey)||'null');if(saved&&saved.row&&Date.now()-saved.at<30*60*1000&&['approved','sold'].includes(String(saved.row.status||'').trim().toLowerCase())){cached=saved.row;render(cached);renderedFromCache=true}}catch(_){}
+  const cached=hydrateCachedVehicle(id);
+  let renderedFromCache=false;
+  if(cached&&['approved','sold',''].includes(String(cached.status||'approved').trim().toLowerCase())){
+    render(cached);
+    renderedFromCache=true;
+  }
+  if(!sb){
+    if(!renderedFromCache)app.innerHTML='<h2>Vehicle details unavailable</h2><p class="desc">The live vehicle database is not connected. Please try again later.</p><a class="btn gold" href="/inventory">Browse cars</a>';
+    return;
+  }
   try{
     const request=sb.from('listings').select('id,make,model,year,price,km,fuel,description,photos,whatsapp,seller_name,seller_phone,seller_email,yard_name,yard_location,status,created_at,seller_type,contact,yard_web,yard_logo_url').eq('id',id).maybeSingle();
     const timeout=new Promise((_,reject)=>setTimeout(()=>reject(new Error('Vehicle request timed out')),15000));
     const {data:r,error}=await Promise.race([request,timeout]);
     if(error){console.error('Vehicle lookup failed:',error);if(!renderedFromCache)app.innerHTML='<h2>Could not load this vehicle</h2><p class="desc">The vehicle details could not be retrieved. Please refresh the page or return to Buy Car and try again.</p><a class="btn gold" href="/inventory">Browse available cars</a>';else loadRelated(cached).catch(()=>{});return}
-    if(!r){try{localStorage.removeItem(cacheKey);sessionStorage.removeItem(cacheKey)}catch(_){}app.innerHTML='<h2>Vehicle unavailable</h2><p class="desc">This vehicle may have been sold, removed, or is no longer available on the website.</p><a class="btn gold" href="/inventory">Browse cars</a>';return}
-    render(r);try{const value=JSON.stringify({at:Date.now(),row:r});localStorage.setItem(cacheKey,value);sessionStorage.setItem(cacheKey,value)}catch(_){}
+    if(!r){try{localStorage.removeItem(cacheKey);sessionStorage.removeItem(cacheKey)}catch(_){}const target=$('app')||document.querySelector('main.wrap > .vehicle');if(target)target.innerHTML='<h2>Vehicle unavailable</h2><p class="desc">This vehicle may have been sold, removed, or is no longer available on the website.</p><a class="btn gold" href="/inventory">Browse cars</a>';return}
+    try{const value=JSON.stringify({at:Date.now(),row:r});localStorage.setItem(cacheKey,value);sessionStorage.setItem(cacheKey,value)}catch(_){}
+    if(!renderedFromCache||shouldRefreshRenderedVehicle(cached,r)){
+      const existingViewer=$('vehiclePhotoViewer');if(existingViewer)existingViewer.remove();
+      render(r);
+    }else{
+      window.__listing=r;
+    }
     loadRelated(r).catch(error=>console.warn('Related vehicles could not be loaded:',error));
   }catch(error){
     console.error('Vehicle page load failed:',error);

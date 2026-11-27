@@ -14,7 +14,12 @@ const {
   isUnderPriceCeiling,
   recordRecentVehicleList,
   isValidEmail,
-  buildNewsletterPayload
+  buildNewsletterPayload,
+  computeAvailableTimeSlots,
+  buildCalendarMonthMatrix,
+  toggleInspectionScopeItem,
+  hasInspectionScopeItem,
+  resolveVehicleFromCaches
 } = logic;
 
 test("keyword search matches description features like sunroof and leather", () => {
@@ -112,4 +117,66 @@ test("weekly newsletter email validation and payload sanitization", () => {
     action: "subscribe",
     source: "footer"
   });
+});
+
+test("inspection calendar blocks Sundays, past dates, past hours, and already booked slots", () => {
+  const fakeNow = new Date(2026, 4, 15, 10, 30, 0); // Fri May 15, 2026 10:30 AM
+  const todaySlots = computeAvailableTimeSlots({
+    dateIso: "2026-05-15",
+    bookedSlots: ["12:00 PM"],
+    nowDate: fakeNow
+  });
+  assert.equal(todaySlots.find((s) => s.slot === "09:00 AM")?.available, false);
+  assert.equal(todaySlots.find((s) => s.slot === "10:00 AM")?.available, false);
+  assert.equal(todaySlots.find((s) => s.slot === "11:00 AM")?.available, true);
+  assert.equal(todaySlots.find((s) => s.slot === "12:00 PM")?.available, false);
+  assert.equal(todaySlots.find((s) => s.slot === "12:00 PM")?.booked, true);
+
+  // Sunday May 17, 2026 must be closed
+  const sundaySlots = computeAvailableTimeSlots({ dateIso: "2026-05-17", nowDate: fakeNow });
+  assert.equal(sundaySlots.every((s) => !s.available && s.reason === "sunday_closed"), true);
+
+  const matrix = buildCalendarMonthMatrix({
+    year: 2026,
+    monthIndex: 4,
+    minDateIso: "2026-05-15",
+    bookedByDate: { "2026-05-16": ["09:00 AM", "10:00 AM"] },
+    nowDate: fakeNow
+  });
+  const sat16 = matrix.find((c) => c.iso === "2026-05-16");
+  const sun17 = matrix.find((c) => c.iso === "2026-05-17");
+  assert.equal(sat16?.bookedCount, 2);
+  assert.equal(sat16?.availableCount, 7);
+  assert.equal(sat16?.isDisabled, false);
+  assert.equal(sun17?.isSunday, true);
+  assert.equal(sun17?.isDisabled, true);
+});
+
+test("inspection scope chip toggles cleanly preserve custom text without duplicates", () => {
+  let scope = toggleInspectionScopeItem("", "Engine only");
+  assert.equal(scope, "Engine only");
+  scope = toggleInspectionScopeItem(`${scope}, Compression test`, "Paintwork check");
+  assert.equal(scope, "Engine only, Compression test, Paintwork check");
+  assert.equal(hasInspectionScopeItem(scope, "paintwork check"), true);
+  scope = toggleInspectionScopeItem(scope, "Engine only");
+  assert.equal(scope, "Compression test, Paintwork check");
+});
+
+test("resolveVehicleFromCaches hydrates cold-start vehicle rows from recently viewed fallback", () => {
+  const recent = [
+    {
+      id: "abc-123",
+      title: "2020 Toyota Harrier",
+      price: 5650000,
+      km: 7000,
+      fuel: "Petrol",
+      photo: "https://example.com/harrier.webp"
+    }
+  ];
+  const hydrated = resolveVehicleFromCaches("abc-123", [null, recent, []]);
+  assert.ok(hydrated);
+  assert.equal(hydrated.make, "Toyota");
+  assert.equal(hydrated.model, "Harrier");
+  assert.equal(hydrated.year, 2020);
+  assert.deepEqual(hydrated.photos, ["https://example.com/harrier.webp"]);
 });

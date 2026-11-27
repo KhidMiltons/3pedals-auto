@@ -813,6 +813,54 @@
   }
 
   const MAX_RECENT_VEHICLES = 5;
+  const LOCAL_BOOKINGS_KEY = "3pedals:inspection-bookings:v1";
+  const LOCAL_CALLBACKS_KEY = "3pedals:mechanic-callbacks:v1";
+
+  function buildVehicleCacheSnapshot(item) {
+    if (window.ThreePedalsLogic?.buildVehicleCacheRow) {
+      return window.ThreePedalsLogic.buildVehicleCacheRow(item);
+    }
+    if (!item || !item.id) return null;
+    const seller = item.seller && typeof item.seller === "object" ? item.seller : {};
+    let make = String(item.make || "").trim();
+    let model = String(item.model || "").trim();
+    let year = item.year || "";
+    if ((!make || !model) && item.title) {
+      const parts = String(item.title).trim().split(/\s+/);
+      if (!year && /^\d{4}$/.test(parts[0] || "")) year = Number(parts.shift());
+      if (!make && parts.length) make = parts.shift() || "";
+      if (!model && parts.length) model = parts.join(" ");
+    }
+    const photos = Array.isArray(item.photos) && item.photos.length
+      ? item.photos.filter((p) => typeof p === "string" && p.trim()).slice(0, 6)
+      : item.photo
+        ? [String(item.photo)]
+        : [];
+    const sellerType = item.seller_type || seller.type || (item.yard_name || seller.yard ? "yard" : "private");
+    return {
+      id: String(item.id),
+      make: make || "Vehicle",
+      model,
+      year,
+      price: Number(item.price || 0),
+      km: Number(item.km || 0),
+      fuel: String(item.fuel || ""),
+      desc: String(item.desc ?? item.description ?? ""),
+      description: String(item.description ?? item.desc ?? ""),
+      photos,
+      whatsapp: item.whatsapp || seller.whatsapp || "",
+      seller_name: item.seller_name || seller.name || "",
+      seller_phone: item.seller_phone || item.phone || seller.phone || "",
+      seller_email: item.seller_email || item.email || seller.email || "",
+      yard_name: item.yard_name || seller.yard || (sellerType === "yard" ? seller.name || "" : ""),
+      yard_location: item.yard_location || item.location || seller.location || "",
+      yard_web: item.yard_web || item.web || seller.web || "",
+      yard_logo_url: item.yard_logo_url || item.seller_logo_url || seller.logo || "",
+      contact: item.contact || seller.contact || "",
+      seller_type: sellerType,
+      status: String(item.status || "approved")
+    };
+  }
 
   function getRecentVehicles() {
     try {
@@ -824,23 +872,69 @@
   }
 
   function recordRecentVehicle(item) {
-    if (!item || !item.id) return;
-    const entry = {
-      id: String(item.id),
-      title: String(item.title || `${item.year || ""} ${item.make || ""} ${item.model || ""}`.trim() || "Vehicle"),
-      price: Number(item.price || 0),
-      km: Number(item.km || 0),
-      fuel: String(item.fuel || ""),
-      photo: String(item.photo || ""),
-      viewedAt: Date.now()
-    };
-    const next = [entry, ...getRecentVehicles().filter((x) => String(x.id) !== entry.id)].slice(0, MAX_RECENT_VEHICLES);
+    if (!item || !item.id) return [];
+    let next;
+    if (window.ThreePedalsLogic?.recordRecentVehicleList) {
+      next = window.ThreePedalsLogic.recordRecentVehicleList(getRecentVehicles(), item, MAX_RECENT_VEHICLES);
+    } else {
+      const photos = Array.isArray(item.photos)
+        ? item.photos.filter((p) => typeof p === "string" && p.trim()).slice(0, 4)
+        : item.photo
+          ? [String(item.photo)]
+          : [];
+      const entry = {
+        id: String(item.id),
+        title: String(item.title || `${item.year || ""} ${item.make || ""} ${item.model || ""}`.trim() || "Vehicle"),
+        make: item.make ? String(item.make) : "",
+        model: item.model ? String(item.model) : "",
+        year: item.year || "",
+        price: Number(item.price || 0),
+        km: Number(item.km || 0),
+        fuel: String(item.fuel || ""),
+        desc: String(item.desc ?? item.description ?? "").slice(0, 500),
+        photo: String(item.photo || photos[0] || ""),
+        photos,
+        seller: item.seller && typeof item.seller === "object" ? item.seller : undefined,
+        status: String(item.status || "approved"),
+        viewedAt: Date.now()
+      };
+      next = [entry, ...getRecentVehicles().filter((x) => String(x.id) !== entry.id)].slice(0, MAX_RECENT_VEHICLES);
+    }
     try { localStorage.setItem(RECENT_VEHICLES_KEY, JSON.stringify(next)); } catch (_) {}
+    // Also prime vehicle.html cold-start cache so opening a recently viewed vehicle is instantaneous
+    try {
+      const snapshot = buildVehicleCacheSnapshot(item);
+      if (snapshot) {
+        const cacheKey = "3pedals:vehicle:v2:" + snapshot.id;
+        const payload = JSON.stringify({ at: Date.now(), row: snapshot });
+        localStorage.setItem(cacheKey, payload);
+        sessionStorage.setItem(cacheKey, payload);
+      }
+    } catch (_) {}
     return next;
   }
 
   function clearRecentVehicles() {
     try { localStorage.removeItem(RECENT_VEHICLES_KEY); } catch (_) {}
+  }
+
+  function warmVehicleAssets(car) {
+    if (!car || !car.id) return;
+    try {
+      const cacheKey = "3pedals:vehicle:v2:" + String(car.id);
+      if (!localStorage.getItem(cacheKey)) {
+        const snapshot = buildVehicleCacheSnapshot(car);
+        if (snapshot) {
+          const payload = JSON.stringify({ at: Date.now(), row: snapshot });
+          localStorage.setItem(cacheKey, payload);
+        }
+      }
+    } catch (_) {}
+    if (car.photo && typeof Image === "function") {
+      const pre = new Image();
+      pre.decoding = "async";
+      pre.src = car.photo;
+    }
   }
 
   function renderRecentlyViewed(hostEl, options = {}) {
@@ -867,11 +961,11 @@
       <div class="ux-recent-grid">
         ${items
           .map(
-            (car) => `
+            (car, idx) => `
           <a class="ux-recent-card" href="/vehicle.html?id=${encodeURIComponent(car.id)}" data-recent-vehicle-id="${escapeHtml(car.id)}">
             ${
               car.photo
-                ? `<img class="ux-recent-thumb" src="${escapeHtml(car.photo)}" alt="${escapeHtml(car.title)}" loading="lazy" decoding="async">`
+                ? `<img class="ux-recent-thumb" src="${escapeHtml(car.photo)}" alt="${escapeHtml(car.title)}" loading="${idx < 3 ? "eager" : "lazy"}" decoding="async" fetchpriority="${idx === 0 ? "high" : "auto"}">`
                 : `<div class="ux-recent-thumb-empty">3 Pedals Auto KE</div>`
             }
             <div class="ux-recent-body">
@@ -884,18 +978,804 @@
           .join("")}
       </div>
     `;
+    // Proactively prime caches & first 2 thumbnails so clicking feels instantaneous on startup
+    items.slice(0, 3).forEach(warmVehicleAssets);
+
     hostEl.querySelector("[data-ux-clear-recent-vehicles]")?.addEventListener("click", () => {
       clearRecentVehicles();
       renderRecentlyViewed(hostEl, options);
     });
-    if (typeof options.onSelect === "function") {
-      hostEl.querySelectorAll(".ux-recent-card").forEach((link) => {
-        link.addEventListener("click", (e) => {
-          const id = link.dataset.recentVehicleId;
-          if (id && options.onSelect(id, e)) e.preventDefault();
+    hostEl.querySelectorAll(".ux-recent-card").forEach((link) => {
+      const id = link.dataset.recentVehicleId;
+      const carObj = items.find((x) => String(x.id) === String(id));
+      const primeOnIntent = () => {
+        if (carObj) warmVehicleAssets(carObj);
+      };
+      link.addEventListener("pointerenter", primeOnIntent, { passive: true, once: true });
+      link.addEventListener("touchstart", primeOnIntent, { passive: true, once: true });
+      link.addEventListener("click", (e) => {
+        if (carObj) {
+          warmVehicleAssets(carObj);
+          recordRecentVehicle(carObj);
+        }
+        if (typeof options.onSelect === "function" && id && options.onSelect(id, e)) {
+          e.preventDefault();
+        }
+      });
+    });
+  }
+
+  // ===== Journal Reading Progress Bar =====
+  function mountReadingProgress(scrollEl, barEl) {
+    if (!barEl) return () => {};
+    let rafId = 0;
+    const isWindow = !scrollEl || scrollEl === window || scrollEl === document.documentElement;
+    const update = () => {
+      rafId = 0;
+      let scrollTop = 0;
+      let maxScroll = 0;
+      if (isWindow) {
+        const doc = document.documentElement;
+        scrollTop = window.scrollY || doc.scrollTop || 0;
+        maxScroll = Math.max(0, doc.scrollHeight - window.innerHeight);
+      } else {
+        scrollTop = scrollEl.scrollTop || 0;
+        maxScroll = Math.max(0, scrollEl.scrollHeight - scrollEl.clientHeight);
+      }
+      const ratio = maxScroll > 12 ? Math.min(1, Math.max(0, scrollTop / maxScroll)) : 1;
+      const pct = Math.round(ratio * 1000) / 10;
+      barEl.style.transform = `scaleX(${ratio})`;
+      barEl.style.opacity = ratio > 0.01 ? "1" : "0.45";
+      barEl.setAttribute("aria-valuenow", String(Math.round(pct)));
+    };
+    const schedule = () => {
+      if (!rafId) rafId = requestAnimationFrame(update);
+    };
+    const target = isWindow ? window : scrollEl;
+    target.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule, { passive: true });
+    requestAnimationFrame(update);
+    return () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      target.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+    };
+  }
+
+  // ===== Unified Graphical Inspection Booking Modal (Calendar + Scope + Mechanic Callback) =====
+  function readLocalBookingsMap() {
+    const map = {};
+    try {
+      const list = JSON.parse(localStorage.getItem(LOCAL_BOOKINGS_KEY) || "[]");
+      if (Array.isArray(list)) {
+        list.forEach((b) => {
+          if (b && b.date && b.timeSlot) {
+            if (!map[b.date]) map[b.date] = [];
+            if (!map[b.date].includes(b.timeSlot)) map[b.date].push(b.timeSlot);
+          }
+        });
+      }
+    } catch (_) {}
+    return map;
+  }
+
+  function mergeBookedMaps(a, b) {
+    const out = {};
+    [a, b].forEach((src) => {
+      if (!src) return;
+      Object.entries(src).forEach(([iso, slots]) => {
+        if (!out[iso]) out[iso] = new Set();
+        (Array.isArray(slots) ? slots : Array.from(slots || [])).forEach((s) => {
+          if (s) out[iso].add(String(s).trim());
         });
       });
+    });
+    const plain = {};
+    Object.entries(out).forEach(([k, v]) => { plain[k] = Array.from(v); });
+    return plain;
+  }
+
+  function openInspectionBookingModal(opts = {}) {
+    const c = opts.car;
+    const dlg = opts.dialog || document.getElementById("inspectionBookingModal");
+    if (!c || !dlg) return;
+    const sw = (opts.lang || getLang()) === "sw";
+    if (c.isSold) {
+      if (typeof opts.onNotice === "function") {
+        opts.onNotice(sw ? "Gari hili tayari limeuzwa." : "This vehicle is already marked as sold.", { kind: "error" });
+      }
+      return;
     }
+
+    const logic = window.ThreePedalsLogic;
+    const ALL_SLOTS = logic?.INSPECTION_TIME_SLOTS || [
+      "08:00 AM", "09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM"
+    ];
+    const SCOPE_PRESETS = logic?.INSPECTION_SCOPE_PRESETS || [
+      "Engine only", "Full chassis", "Paintwork check", "OBD-II & Electronics", "Suspension & Brakes", "Road test"
+    ];
+
+    const now = new Date();
+    const toIso = (y, m, d) => `${y}-${String(m + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+    const minDate = toIso(now.getFullYear(), now.getMonth(), now.getDate());
+    const nextWorkday = (() => {
+      const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+      if (d.getDay() === 0) d.setDate(d.getDate() + 1);
+      return toIso(d.getFullYear(), d.getMonth(), d.getDate());
+    })();
+
+    const s = c.seller || {};
+    const title = `${c.year || ""} ${c.make || ""} ${c.model || ""}`.trim() || "Vehicle";
+    const photo = (c.photos && c.photos[0]) || c.photo || "";
+    const vehicleRef = `3PA-${String(c.id || "").replace(/-/g, "").slice(0, 8).toUpperCase()}`;
+    const sellerLabel = s.type === "yard"
+      ? (s.yard || s.name || (sw ? "Yadi ya magari" : "Car yard"))
+      : (s.name || (sw ? "Muuzaji binafsi" : "Private seller"));
+    const locText = s.location ? ` · ${s.location}` : "";
+    const defaultName = String(opts.defaultName || opts.profile?.name || opts.user?.user_metadata?.name || opts.user?.user_metadata?.full_name || "").trim();
+    const defaultPhone = String(opts.defaultPhone || opts.profile?.phone || opts.user?.user_metadata?.phone || "").trim();
+    const defaultEmail = String(opts.defaultEmail || opts.user?.email || "").trim();
+    const businessWa = String(opts.businessWa || opts.siteSettings?.whatsapp_number || "254791961807").replace(/\D/g, "");
+    const garageHref = opts.garageHref || `/garage.html?service=${encodeURIComponent("Pre-purchase inspection")}&car=${encodeURIComponent(title)}#book`;
+    const fmtNum = (n) => Number(n || 0).toLocaleString("en-US");
+
+    let selectedDate = nextWorkday;
+    let selectedSlot = "09:00 AM";
+    const selParts = logic?.parseIsoDateParts?.(selectedDate);
+    let viewYear = selParts ? selParts.year : now.getFullYear();
+    let viewMonth = selParts ? selParts.monthIndex : now.getMonth();
+    let bookedMap = readLocalBookingsMap();
+    let slotsLoading = Boolean(opts.sb);
+
+    dlg.innerHTML = `
+      <div class="ux-inspect-modal-shell">
+        <div class="ux-inspect-modal-head">
+          <div>
+            <span class="eyebrow">${sw ? "UKAGUZI WA 3 PEDALS GARAGE" : "3 PEDALS GARAGE INSPECTION"} · ${escapeHtml(vehicleRef)}</span>
+            <h2 id="inspectionBookingTitle">${sw ? "Weka Miadi ya Ukaguzi" : "Book Vehicle Inspection"}</h2>
+          </div>
+          <button type="button" class="ux-inspect-modal-close" id="closeInspectModalBtn" aria-label="${sw ? "Funga dirisha la ukaguzi" : "Close inspection booking"}">×</button>
+        </div>
+
+        <div class="ux-inspect-car">
+          ${photo ? `<img src="${escapeHtml(photo)}" alt="${escapeHtml(title)}">` : `<div class="ux-inspect-car-fallback" aria-hidden="true">3P</div>`}
+          <div class="ux-inspect-car-meta">
+            <strong>${escapeHtml(title)}</strong>
+            <div class="ux-inspect-car-price">KES ${fmtNum(c.price)}</div>
+            <span class="ux-inspect-car-sub">${escapeHtml(fmtNum(c.km))} km · ${escapeHtml(c.fuel || "Petrol")} · ${escapeHtml(sellerLabel + locText)}</span>
+          </div>
+        </div>
+
+        <div class="ux-inspect-callback-card" id="inspectCallbackCard">
+          <div class="ux-inspect-callback-head">
+            <div>
+              <span class="ux-callback-badge">${sw ? "USHAURI WA KITAALAM KABLA YA MIADI" : "Pre-Booking Technical Advice"}</span>
+              <strong>${sw ? "Una swali la kiufundi kuhusu gari hili?" : "Have a technical question before booking?"}</strong>
+              <small>${sw ? `Uliza mekanika wa 3 Pedals moja kwa moja kuhusu ${escapeHtml(title)}.` : `Ask a 3 Pedals mechanic directly about ${escapeHtml(title)} before you finalize.`}</small>
+            </div>
+            <button
+              type="button"
+              class="ux-inspect-callback-toggle"
+              id="inspectAskMechanicBtn"
+              aria-expanded="false"
+              aria-controls="inspectAskMechanicPanel"
+            >${sw ? "Uliza Mekanika" : "Ask a Mechanic"}</button>
+          </div>
+          <div class="ux-inspect-callback-body" id="inspectAskMechanicPanel" hidden>
+            <div class="ux-inspect-field">
+              <label for="inspectCallbackQuestion">${sw ? `Swali la Kiufundi Kuhusu ${escapeHtml(title)}` : `Technical Question About ${escapeHtml(title)}`}</label>
+              <textarea id="inspectCallbackQuestion" rows="3" maxlength="600" placeholder="${sw ? "Andika swali lako la kiufundi (mf. injini, gearbox ya CVT, betri ya hybrid, au rekodi za service)…" : "Ask about engine reliability, CVT/transmission health, hybrid battery condition, suspension, or common faults…"}"></textarea>
+            </div>
+            <div class="ux-inspect-row">
+              <div class="ux-inspect-field">
+                <label for="inspectCallbackPhone">${sw ? "Namba ya Simu / WhatsApp ya Majibu" : "Phone / WhatsApp for Mechanic Reply"}</label>
+                <input type="tel" id="inspectCallbackPhone" maxlength="40" placeholder="0712 345 678" value="${escapeHtml(defaultPhone)}">
+              </div>
+              <div class="ux-inspect-field">
+                <label for="inspectCallbackWindow">${sw ? "Njia / Muda wa Majibu" : "Preferred Advice Channel"}</label>
+                <select id="inspectCallbackWindow">
+                  <option value="Phone call (ASAP)">${sw ? "Simu haraka iwezekanavyo" : "Phone call (ASAP)"}</option>
+                  <option value="WhatsApp technical reply">${sw ? "Ujumbe wa kiufundi WhatsApp" : "WhatsApp technical reply"}</option>
+                  <option value="Morning callback (8 AM – 12 PM)">${sw ? "Simu asubuhi (8 AM – 12 PM)" : "Morning callback (8 AM – 12 PM)"}</option>
+                  <option value="Afternoon callback (12 PM – 5 PM)">${sw ? "Simu mchana (12 PM – 5 PM)" : "Afternoon callback (12 PM – 5 PM)"}</option>
+                </select>
+              </div>
+            </div>
+            <p class="ux-inspect-status" id="inspectCallbackStatus" role="status" aria-live="polite" hidden></p>
+            <div class="ux-inspect-actions">
+              <button type="button" class="ux-inspect-callback-submit" id="inspectCallbackSubmitBtn">${sw ? "Tuma Swali kwa Mekanika" : "Send Question to Mechanic"}</button>
+            </div>
+          </div>
+        </div>
+
+        <form class="ux-inspect-form" id="inspectionBookingForm" novalidate>
+          <div class="ux-inspect-field">
+            <label for="inspectServiceType">${sw ? "Aina ya Ukaguzi" : "Inspection Type"}</label>
+            <select id="inspectServiceType" name="serviceType">
+              <option value="Pre-purchase inspection">${sw ? "Ukaguzi wa Kabla ya Kununua (3 Pedals Garage)" : "Pre-purchase inspection (3 Pedals Garage)"}</option>
+              <option value="Mobile yard pre-purchase inspection">${sw ? "Ukaguzi wa Moja kwa Moja kwenye Yadi" : "Mobile inspection at seller / car yard"}</option>
+            </select>
+          </div>
+
+          <div class="ux-inspect-scheduler" id="inspectScheduler">
+            <div class="ux-cal-pane">
+              <div class="ux-cal-header">
+                <button type="button" class="ux-cal-nav" id="inspectCalPrev" aria-label="${sw ? "Mwezi uliopita" : "Previous month"}">‹</button>
+                <strong class="ux-cal-month" id="inspectCalMonthLabel"></strong>
+                <button type="button" class="ux-cal-nav" id="inspectCalNext" aria-label="${sw ? "Mwezi ujao" : "Next month"}">›</button>
+              </div>
+              <div class="ux-cal-weekdays" aria-hidden="true">
+                <span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span>
+              </div>
+              <div class="ux-cal-grid" id="inspectCalGrid" role="grid" aria-label="${sw ? "Chagua tarehe ya ukaguzi" : "Select inspection date"}"></div>
+              <div class="ux-cal-legend">
+                <span><i class="dot dot-open"></i>${sw ? "Inapatikana" : "Open"}</span>
+                <span><i class="dot dot-busy"></i>${sw ? "Baadhi zimejaa" : "Partial"}</span>
+                <span><i class="dot dot-closed"></i>${sw ? "Jumapili imefungwa" : "Sun Closed"}</span>
+              </div>
+            </div>
+
+            <div class="ux-slots-pane">
+              <div class="ux-slots-head">
+                <span class="ux-slots-title">${sw ? "Muda Unaopatikana" : "Available Time Slots"}</span>
+                <span class="ux-slots-date-badge" id="inspectSelectedDateBadge"></span>
+              </div>
+              <div class="ux-slots-grid" id="inspectSlotsGrid" role="radiogroup" aria-label="${sw ? "Chagua muda" : "Select time slot"}"></div>
+              <p class="ux-slots-sync-note" id="inspectSlotsSyncNote"></p>
+            </div>
+            <input type="hidden" id="inspectDate" name="date" value="${escapeHtml(selectedDate)}">
+            <input type="hidden" id="inspectTimeSlot" name="timeSlot" value="${escapeHtml(selectedSlot)}">
+          </div>
+
+          <div class="ux-inspect-field ux-inspect-scope-field">
+            <label for="inspectScopeInput">${sw ? "Wigo wa Ukaguzi (Inspection Scope)" : "Inspection Scope"}</label>
+            <div class="ux-scope-chips" id="inspectScopeChips" role="group" aria-label="${sw ? "Chagua sehemu za kukagua" : "Prioritize inspection components"}">
+              ${SCOPE_PRESETS.map((preset) => `<button type="button" class="ux-scope-chip" data-scope-preset="${escapeHtml(preset)}" aria-pressed="false">${escapeHtml(preset)}</button>`).join("")}
+            </div>
+            <textarea id="inspectScopeInput" name="inspectionScope" rows="2" maxlength="400" placeholder="${sw ? "Chagua hapo juu au andika sehemu mahususi (mf. Engine only, Full chassis, Paintwork check)…" : "Select chips above or type specific components to prioritize (e.g., Engine only, Full chassis, Paintwork check)…"}"></textarea>
+          </div>
+
+          <div class="ux-inspect-row">
+            <div class="ux-inspect-field">
+              <label for="inspectCustomerName">${sw ? "Jina Lako" : "Your Name"}</label>
+              <input type="text" id="inspectCustomerName" name="name" autocomplete="name" maxlength="120" placeholder="Jane Mwangi" value="${escapeHtml(defaultName)}" required>
+            </div>
+            <div class="ux-inspect-field">
+              <label for="inspectCustomerPhone">${sw ? "Namba ya Simu / WhatsApp" : "Phone / WhatsApp"}</label>
+              <input type="tel" id="inspectCustomerPhone" name="phone" autocomplete="tel" maxlength="40" placeholder="0712 345 678" value="${escapeHtml(defaultPhone)}" required>
+            </div>
+          </div>
+
+          <div class="ux-inspect-row">
+            <div class="ux-inspect-field">
+              <label for="inspectCustomerEmail">${sw ? "Barua Pepe (hiari)" : "Email (optional)"}</label>
+              <input type="email" id="inspectCustomerEmail" name="email" autocomplete="email" maxlength="254" placeholder="you@example.com" value="${escapeHtml(defaultEmail)}">
+            </div>
+            <div class="ux-inspect-field">
+              <label for="inspectNotes">${sw ? "Eneo la Gari / Maelezo (hiari)" : "Yard Location / Notes (optional)"}</label>
+              <input type="text" id="inspectNotes" name="notes" maxlength="300" placeholder="${escapeHtml(s.location ? `At ${s.location}` : "Yard directions or extra requests…")}" value="${escapeHtml(s.location ? `Vehicle location: ${s.location}` : "")}">
+            </div>
+          </div>
+
+          <p class="ux-inspect-status" id="inspectBookingStatus" role="status" aria-live="polite" hidden></p>
+          <div class="ux-inspect-confirm-links" id="inspectConfirmLinks" hidden></div>
+
+          <div class="ux-inspect-actions">
+            <button type="submit" class="ux-inspect-submit" id="inspectSubmitBtn">${sw ? "Thibitisha Miadi ya Ukaguzi" : "Confirm Inspection Booking"}</button>
+            <a class="ux-inspect-secondary" href="${escapeHtml(garageHref)}">${sw ? "Ukurasa wa Gereji" : "Open Garage Page"}</a>
+          </div>
+        </form>
+      </div>
+    `;
+
+    const calMonthEl = document.getElementById("inspectCalMonthLabel");
+    const calGridEl = document.getElementById("inspectCalGrid");
+    const slotsGridEl = document.getElementById("inspectSlotsGrid");
+    const dateBadgeEl = document.getElementById("inspectSelectedDateBadge");
+    const syncNoteEl = document.getElementById("inspectSlotsSyncNote");
+    const dateHiddenEl = document.getElementById("inspectDate");
+    const slotHiddenEl = document.getElementById("inspectTimeSlot");
+    const scopeInputEl = document.getElementById("inspectScopeInput");
+    const scopeChipsEl = document.getElementById("inspectScopeChips");
+    const statusEl = document.getElementById("inspectBookingStatus");
+    const linksEl = document.getElementById("inspectConfirmLinks");
+
+    const setStatus = (msg, isErr = false) => {
+      if (!statusEl) return;
+      statusEl.textContent = msg;
+      statusEl.classList.toggle("is-error", isErr);
+      statusEl.hidden = !msg;
+    };
+
+    const getSlotsForDate = (iso) => {
+      const bookedSlots = bookedMap[iso] || [];
+      if (logic?.computeAvailableTimeSlots) {
+        return logic.computeAvailableTimeSlots({ dateIso: iso, bookedSlots, nowDate: new Date() });
+      }
+      const d = new Date(iso + "T00:00:00");
+      const isSun = d.getDay() === 0;
+      const set = new Set(bookedSlots.map((x) => String(x).toUpperCase()));
+      return ALL_SLOTS.map((slot) => ({
+        slot,
+        booked: set.has(slot.toUpperCase()),
+        pastCutoff: false,
+        available: !isSun && !set.has(slot.toUpperCase())
+      }));
+    };
+
+    const renderScheduler = () => {
+      const monthName = new Date(viewYear, viewMonth, 1).toLocaleDateString(sw ? "sw-KE" : "en-KE", {
+        month: "long",
+        year: "numeric"
+      });
+      if (calMonthEl) calMonthEl.textContent = monthName;
+
+      const minParts = logic?.parseIsoDateParts?.(minDate);
+      const prevDisabled = minParts && (viewYear < minParts.year || (viewYear === minParts.year && viewMonth <= minParts.monthIndex));
+      const prevBtn = document.getElementById("inspectCalPrev");
+      if (prevBtn) prevBtn.disabled = Boolean(prevDisabled);
+
+      const cells = logic?.buildCalendarMonthMatrix
+        ? logic.buildCalendarMonthMatrix({
+            year: viewYear,
+            monthIndex: viewMonth,
+            minDateIso: minDate,
+            bookedByDate: bookedMap,
+            nowDate: new Date()
+          })
+        : (() => {
+            const out = [];
+            const first = new Date(viewYear, viewMonth, 1);
+            const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+            const offset = (first.getDay() + 6) % 7;
+            for (let i = 0; i < 42; i++) {
+              const dn = i - offset + 1;
+              const dt = new Date(viewYear, viewMonth, dn);
+              const iso = toIso(dt.getFullYear(), dt.getMonth(), dt.getDate());
+              const inMonth = dt.getMonth() === viewMonth && dn >= 1 && dn <= daysInMonth;
+              const isSunday = dt.getDay() === 0;
+              const isPast = iso < minDate;
+              const bookedCount = (bookedMap[iso] || []).length;
+              const availableCount = isSunday || isPast ? 0 : Math.max(0, ALL_SLOTS.length - bookedCount);
+              out.push({
+                iso,
+                day: dt.getDate(),
+                inMonth,
+                isSunday,
+                isPast,
+                isToday: iso === minDate,
+                bookedCount,
+                availableCount,
+                isDisabled: !inMonth || isSunday || isPast || availableCount === 0
+              });
+            }
+            return out.slice(35).some((c) => c.inMonth) ? out : out.slice(0, 35);
+          })();
+
+      if (calGridEl) {
+        calGridEl.innerHTML = cells
+          .map((cell) => {
+            const selected = cell.iso === selectedDate && cell.inMonth;
+            const classes = [
+              "ux-cal-day",
+              !cell.inMonth ? "is-outside" : "",
+              cell.isSunday ? "is-sunday" : "",
+              cell.isPast ? "is-past" : "",
+              cell.isToday ? "is-today" : "",
+              cell.bookedCount > 0 && !cell.isDisabled ? "has-booked" : "",
+              selected ? "is-selected" : ""
+            ]
+              .filter(Boolean)
+              .join(" ");
+            const ariaLabel = cell.inMonth
+              ? `${cell.iso}: ${cell.isSunday ? "Closed on Sunday" : cell.isDisabled ? "Unavailable" : `${cell.availableCount} slots open`}`
+              : "";
+            return `<button type="button" class="${classes}" data-cal-iso="${escapeHtml(cell.iso)}" ${cell.isDisabled ? "disabled" : ""} aria-pressed="${String(selected)}" aria-label="${escapeHtml(ariaLabel)}"><span>${cell.day}</span>${cell.inMonth && !cell.isSunday && !cell.isPast ? `<i class="ux-cal-dot" aria-hidden="true"></i>` : ""}</button>`;
+          })
+          .join("");
+      }
+
+      const slots = getSlotsForDate(selectedDate);
+      if (!slots.some((x) => x.slot === selectedSlot && x.available)) {
+        const firstOpen = slots.find((x) => x.available);
+        selectedSlot = firstOpen ? firstOpen.slot : "";
+      }
+      if (dateHiddenEl) dateHiddenEl.value = selectedDate;
+      if (slotHiddenEl) slotHiddenEl.value = selectedSlot;
+
+      if (dateBadgeEl) {
+        const parsed = logic?.parseIsoDateParts?.(selectedDate);
+        const dtObj = parsed ? new Date(parsed.year, parsed.monthIndex, parsed.day) : new Date(selectedDate + "T00:00:00");
+        dateBadgeEl.textContent = Number.isFinite(dtObj.getTime())
+          ? dtObj.toLocaleDateString(sw ? "sw-KE" : "en-KE", { weekday: "short", month: "short", day: "numeric" })
+          : selectedDate;
+      }
+
+      if (slotsGridEl) {
+        slotsGridEl.innerHTML = slots
+          .map((item) => {
+            const active = item.slot === selectedSlot && item.available;
+            const badge = item.booked
+              ? (sw ? "Imejaa" : "Booked")
+              : item.pastCutoff
+                ? (sw ? "Imepita" : "Passed")
+                : (sw ? "Wazi" : "Open");
+            return `<button type="button" class="ux-slot-btn${active ? " is-selected" : ""}${item.booked ? " is-booked" : ""}" data-slot-val="${escapeHtml(item.slot)}" ${item.available ? "" : "disabled"} role="radio" aria-checked="${String(active)}"><strong>${escapeHtml(item.slot)}</strong><span>${badge}</span></button>`;
+          })
+          .join("");
+      }
+
+      if (syncNoteEl) {
+        const openCount = slots.filter((x) => x.available).length;
+        syncNoteEl.textContent = slotsLoading
+          ? (sw ? "Inahakiki nafasi za moja kwa moja…" : "Checking live garage availability…")
+          : openCount > 0
+            ? (sw ? `Nafasi ${openCount} za ukaguzi zipo wazi tarehe hii.` : `${openCount} of ${ALL_SLOTS.length} inspection slots available on this date.`)
+            : (sw ? "Hakuna nafasi wazi tarehe hii — chagua siku nyingine." : "No open slots on this date — select another day.");
+      }
+    };
+
+    const syncScopeChips = () => {
+      if (!scopeChipsEl || !scopeInputEl) return;
+      const val = scopeInputEl.value || "";
+      scopeChipsEl.querySelectorAll("[data-scope-preset]").forEach((btn) => {
+        const preset = btn.dataset.scopePreset || "";
+        const active = logic?.hasInspectionScopeItem
+          ? logic.hasInspectionScopeItem(val, preset)
+          : val.toLowerCase().includes(preset.toLowerCase());
+        btn.classList.toggle("is-active", active);
+        btn.setAttribute("aria-pressed", String(active));
+      });
+    };
+
+    scopeChipsEl?.addEventListener("click", (e) => {
+      const chip = e.target.closest("[data-scope-preset]");
+      if (!chip || !scopeInputEl) return;
+      const preset = chip.dataset.scopePreset || "";
+      if (logic?.toggleInspectionScopeItem) {
+        scopeInputEl.value = logic.toggleInspectionScopeItem(scopeInputEl.value, preset);
+      } else {
+        const cur = scopeInputEl.value.split(",").map((x) => x.trim()).filter(Boolean);
+        const idx = cur.findIndex((x) => x.toLowerCase() === preset.toLowerCase());
+        if (idx >= 0) cur.splice(idx, 1);
+        else cur.push(preset);
+        scopeInputEl.value = cur.join(", ");
+      }
+      syncScopeChips();
+    });
+    scopeInputEl?.addEventListener("input", syncScopeChips);
+
+    calGridEl?.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-cal-iso]");
+      if (!btn || btn.disabled) return;
+      selectedDate = btn.dataset.calIso || selectedDate;
+      if (statusEl?.classList.contains("is-error")) setStatus("", false);
+      renderScheduler();
+    });
+
+    slotsGridEl?.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-slot-val]");
+      if (!btn || btn.disabled) return;
+      selectedSlot = btn.dataset.slotVal || selectedSlot;
+      if (statusEl?.classList.contains("is-error")) setStatus("", false);
+      renderScheduler();
+    });
+
+    document.getElementById("inspectCalPrev")?.addEventListener("click", () => {
+      if (viewMonth === 0) { viewMonth = 11; viewYear -= 1; } else { viewMonth -= 1; }
+      renderScheduler();
+    });
+    document.getElementById("inspectCalNext")?.addEventListener("click", () => {
+      if (viewMonth === 11) { viewMonth = 0; viewYear += 1; } else { viewMonth += 1; }
+      renderScheduler();
+    });
+
+    document.getElementById("closeInspectModalBtn")?.addEventListener("click", () => dlg.close());
+
+    // Keep callback phone pre-filled when user enters main phone
+    const mainPhoneEl = document.getElementById("inspectCustomerPhone");
+    const cbPhoneEl = document.getElementById("inspectCallbackPhone");
+    const askMechanicBtn = document.getElementById("inspectAskMechanicBtn");
+    const askMechanicPanel = document.getElementById("inspectAskMechanicPanel");
+    const cbQuestionEl = document.getElementById("inspectCallbackQuestion");
+
+    mainPhoneEl?.addEventListener("input", () => {
+      if (cbPhoneEl && !cbPhoneEl.dataset.edited) cbPhoneEl.value = mainPhoneEl.value;
+    });
+    cbPhoneEl?.addEventListener("input", () => { cbPhoneEl.dataset.edited = "1"; });
+
+    askMechanicBtn?.addEventListener("click", () => {
+      if (!askMechanicPanel) return;
+      const willOpen = askMechanicPanel.hidden;
+      askMechanicPanel.hidden = !willOpen;
+      askMechanicBtn.setAttribute("aria-expanded", String(willOpen));
+      document.getElementById("inspectCallbackCard")?.classList.toggle("is-open", willOpen);
+      if (willOpen) {
+        if (cbPhoneEl && !cbPhoneEl.dataset.edited && mainPhoneEl?.value && !cbPhoneEl.value) {
+          cbPhoneEl.value = mainPhoneEl.value;
+        }
+        cbQuestionEl?.focus();
+      }
+    });
+
+    // Pre-booking Ask a Mechanic / technical question submission
+    document.getElementById("inspectCallbackSubmitBtn")?.addEventListener("click", async () => {
+      const cbBtn = document.getElementById("inspectCallbackSubmitBtn");
+      const cbStatus = document.getElementById("inspectCallbackStatus");
+      const cbPhone = (document.getElementById("inspectCallbackPhone")?.value || mainPhoneEl?.value || "").trim();
+      const cbWindow = document.getElementById("inspectCallbackWindow")?.value || "Phone call (ASAP)";
+      const cbQuestion = (cbQuestionEl?.value || "").trim();
+      const cbName = (document.getElementById("inspectCustomerName")?.value || defaultName || "Prospective Buyer").trim();
+      const cbEmail = (document.getElementById("inspectCustomerEmail")?.value || defaultEmail || "mechanic@3pedalsauto.co.ke").trim();
+
+      const setCbStatus = (m, err = false) => {
+        if (!cbStatus) return;
+        cbStatus.textContent = m;
+        cbStatus.classList.toggle("is-error", err);
+        cbStatus.hidden = !m;
+      };
+
+      if (cbQuestion.length < 5) {
+        setCbStatus(sw ? "Andika swali lako la kiufundi kuhusu gari hili." : "Please enter your technical question about this vehicle.", true);
+        cbQuestionEl?.focus();
+        return;
+      }
+      if (cbPhone.replace(/\D/g, "").length < 9) {
+        setCbStatus(sw ? "Weka namba sahihi ya simu ili mekanika akujibu." : "Enter a valid phone or WhatsApp number so our mechanic can reply.", true);
+        cbPhoneEl?.focus();
+        return;
+      }
+
+      if (cbBtn) {
+        cbBtn.disabled = true;
+        cbBtn.textContent = sw ? "Inatuma swali…" : "Sending question…";
+      }
+      setCbStatus("", false);
+      const cbRef = "MECH-" + Math.random().toString(36).slice(2, 7).toUpperCase();
+      let sentRemotely = false;
+
+      if (opts.sb) {
+        try {
+          const { error } = await opts.sb.from("contact_enquiries").insert({
+            name: cbName,
+            email: cbEmail,
+            phone: cbPhone,
+            subject: `Ask a Mechanic (${cbRef}): ${title}`,
+            message: [
+              `Technical vehicle advice requested before inspection for ${title} (${vehicleRef})`,
+              `Preferred advice channel: ${cbWindow}`,
+              `Phone / WhatsApp: ${cbPhone}`,
+              `Technical question: ${cbQuestion}`
+            ].join("\n")
+          });
+          if (!error) sentRemotely = true;
+        } catch (_) {}
+      }
+
+      try {
+        const list = JSON.parse(localStorage.getItem(LOCAL_CALLBACKS_KEY) || "[]");
+        const nextList = Array.isArray(list) ? list : [];
+        nextList.unshift({ ref: cbRef, vehicleId: c.id, vehicle: title, phone: cbPhone, window: cbWindow, question: cbQuestion, createdAt: new Date().toISOString() });
+        localStorage.setItem(LOCAL_CALLBACKS_KEY, JSON.stringify(nextList.slice(0, 20)));
+      } catch (_) {}
+
+      setCbStatus(
+        sentRemotely
+          ? (sw ? `Swali lako la kiufundi (${cbRef}) limepokelewa. Mekanika wa 3 Pedals atawasiliana kupitia ${cbPhone}.` : `Technical question sent (${cbRef}). A 3 Pedals mechanic will advise via ${cbPhone} (${cbWindow.toLowerCase()}).`)
+          : (sw ? `Swali (${cbRef}) limehifadhiwa kwa ${cbPhone}. Unaweza kuendelea na miadi au kusubiri ushauri.` : `Question ${cbRef} logged for a 3 Pedals mechanic (${cbPhone}). You can proceed to confirm your booking whenever ready.`),
+        false
+      );
+      if (cbBtn) {
+        cbBtn.disabled = false;
+        cbBtn.textContent = sw ? "Uliza Swali Jingine" : "Ask Another Question";
+      }
+      if (typeof opts.onNotice === "function") {
+        opts.onNotice(sw ? `Swali limetumwa kwa mekanika (${cbRef})` : `Question sent to mechanic (${cbRef})`, { sub: `${title} · ${cbPhone}` });
+      }
+    });
+
+    // Main Inspection Booking Submission
+    document.getElementById("inspectionBookingForm")?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const serviceType = document.getElementById("inspectServiceType")?.value || "Pre-purchase inspection";
+      const date = selectedDate;
+      const timeSlot = selectedSlot;
+      const scopeText = (scopeInputEl?.value || "").trim();
+      const name = (document.getElementById("inspectCustomerName")?.value || "").trim();
+      const phoneRaw = (document.getElementById("inspectCustomerPhone")?.value || "").trim();
+      const email = (document.getElementById("inspectCustomerEmail")?.value || "").trim();
+      const notes = (document.getElementById("inspectNotes")?.value || "").trim();
+
+      if (!date) {
+        setStatus(sw ? "Tafadhali chagua tarehe kwenye kalenda." : "Please select an inspection date from the calendar.", true);
+        return;
+      }
+      const picked = new Date(date + "T00:00:00");
+      if (!Number.isFinite(picked.getTime()) || date < minDate || picked.getDay() === 0) {
+        setStatus(sw ? "Chagua tarehe wazi (Jumatatu–Jumamosi)." : "Please pick an open Monday–Saturday date.", true);
+        return;
+      }
+      if (!timeSlot) {
+        setStatus(sw ? "Chagua muda unaopatikana." : "Please choose an available time slot.", true);
+        return;
+      }
+      const liveSlotCheck = getSlotsForDate(date).find((x) => x.slot === timeSlot);
+      if (!liveSlotCheck || !liveSlotCheck.available) {
+        setStatus(sw ? "Muda huo tayari umechukuliwa. Chagua muda mwingine." : "That time slot is already booked. Please choose another available slot.", true);
+        renderScheduler();
+        return;
+      }
+      if (name.length < 2) {
+        setStatus(sw ? "Weka jina lako kamili." : "Please enter your full name.", true);
+        document.getElementById("inspectCustomerName")?.focus();
+        return;
+      }
+      if (phoneRaw.replace(/\D/g, "").length < 9) {
+        setStatus(sw ? "Weka namba sahihi ya simu au WhatsApp." : "Please enter a valid phone or WhatsApp number.", true);
+        document.getElementById("inspectCustomerPhone")?.focus();
+        return;
+      }
+      if (email && !(logic?.isValidEmail ? logic.isValidEmail(email) : /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email))) {
+        setStatus(sw ? "Weka anwani sahihi ya barua pepe au acha wazi." : "Please enter a valid email address or leave it blank.", true);
+        document.getElementById("inspectCustomerEmail")?.focus();
+        return;
+      }
+
+      const submitBtn = document.getElementById("inspectSubmitBtn");
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = sw ? "Inahifadhi miadi…" : "Booking inspection…";
+      }
+      setStatus("", false);
+      if (linksEl) linksEl.hidden = true;
+
+      const ref = "3PG-" + Math.random().toString(36).slice(2, 8).toUpperCase();
+      const carDesc = `${title} (${vehicleRef})`;
+      const fullServiceDesc = scopeText ? `${serviceType} — Scope: ${scopeText}`.slice(0, 240) : serviceType;
+      let savedRemotely = false;
+      let slotTaken = false;
+
+      if (opts.sb) {
+        if (opts.user?.id) {
+          try {
+            const { error } = await opts.sb.from("bookings").insert({
+              ref,
+              user_id: opts.user.id,
+              request_type: "garage",
+              service: fullServiceDesc,
+              car: carDesc,
+              date,
+              time_slot: timeSlot,
+              service_status: "scheduled",
+              name,
+              phone: phoneRaw
+            });
+            if (!error) savedRemotely = true;
+            else if (error.code === "23505") slotTaken = true;
+          } catch (_) {}
+        }
+        if (!savedRemotely && !slotTaken) {
+          try {
+            const { error: enqErr } = await opts.sb.from("contact_enquiries").insert({
+              name,
+              email: email || "inspection@3pedalsauto.co.ke",
+              phone: phoneRaw,
+              subject: `Inspection Booking (${ref}): ${title}`,
+              message: [
+                `Inspection request for ${carDesc}`,
+                `Service: ${serviceType}`,
+                scopeText ? `Inspection Scope: ${scopeText}` : "",
+                `Preferred date: ${date} at ${timeSlot}`,
+                `Vehicle price: KES ${fmtNum(c.price)}`,
+                `Seller: ${sellerLabel}${locText}`,
+                notes ? `Notes: ${notes}` : ""
+              ]
+                .filter(Boolean)
+                .join("\n")
+            });
+            if (!enqErr) savedRemotely = true;
+          } catch (_) {}
+        }
+      }
+
+      if (slotTaken) {
+        bookedMap = mergeBookedMaps(bookedMap, { [date]: [timeSlot] });
+        renderScheduler();
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = sw ? "Thibitisha Miadi ya Ukaguzi" : "Confirm Inspection Booking";
+        }
+        setStatus(sw ? "Muda huo tayari umechukuliwa. Chagua muda au tarehe nyingine." : "That time slot was just booked. Please choose another available slot.", true);
+        return;
+      }
+
+      try {
+        const existingLocal = JSON.parse(localStorage.getItem(LOCAL_BOOKINGS_KEY) || "[]");
+        const nextLocal = Array.isArray(existingLocal) ? existingLocal : [];
+        nextLocal.unshift({
+          ref,
+          vehicleId: c.id,
+          vehicle: title,
+          service: serviceType,
+          inspectionScope: scopeText,
+          date,
+          timeSlot,
+          name,
+          phone: phoneRaw,
+          createdAt: new Date().toISOString()
+        });
+        localStorage.setItem(LOCAL_BOOKINGS_KEY, JSON.stringify(nextLocal.slice(0, 30)));
+      } catch (_) {}
+
+      bookedMap = mergeBookedMaps(bookedMap, { [date]: [timeSlot] });
+      renderScheduler();
+      if (email && typeof opts.onAlertEmailSave === "function") opts.onAlertEmailSave(email);
+
+      const waText = encodeURIComponent(
+        `Hello 3 Pedals Garage, I have booked a ${serviceType} (${ref}) for the ${title} (${vehicleRef}) on ${date} at ${timeSlot}.${scopeText ? `\nInspection Scope: ${scopeText}` : ""}\nName: ${name}\nPhone: ${phoneRaw}${notes ? `\nNotes: ${notes}` : ""}`
+      );
+      const waUrl = `https://wa.me/${businessWa}?text=${waText}`;
+      setStatus(
+        savedRemotely
+          ? (sw ? `Miadi imepokelewa (${ref}) kwa ${title} tarehe ${date} saa ${timeSlot}. Timu yetu itawasiliana nawe kuthibitisha.` : `Inspection booked (${ref}) for ${title} on ${date} at ${timeSlot}. Our garage team will confirm shortly.`)
+          : (sw ? `Kumbukumbu ya ukaguzi ${ref} imeandaliwa kwa ${title} (${date}, ${timeSlot}). Thibitisha kupitia WhatsApp hapa chini.` : `Inspection request ${ref} prepared for ${title} (${date} at ${timeSlot}). Send directly on WhatsApp below to lock in your slot.`),
+        false
+      );
+      if (linksEl) {
+        linksEl.innerHTML = `<a class="ux-inspect-submit" style="text-align:center;text-decoration:none;display:inline-flex;align-items:center;justify-content:center" href="${escapeHtml(waUrl)}" target="_blank" rel="noopener">${sw ? "Tuma Kwenye WhatsApp" : "Send via WhatsApp"}</a><button type="button" class="ux-inspect-secondary" id="inspectDoneBtn">${sw ? "Imekamilika" : "Done"}</button>`;
+        linksEl.hidden = false;
+        document.getElementById("inspectDoneBtn")?.addEventListener("click", () => dlg.close());
+      }
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = sw ? "Weka Miadi Nyingine" : "Update Booking";
+      }
+      if (typeof opts.onNotice === "function") {
+        opts.onNotice(sw ? `Ukaguzi umewekwa (${ref})` : `Inspection booked (${ref})`, { sub: `${title} · ${date} · ${timeSlot}` });
+      }
+    });
+
+    renderScheduler();
+    syncScopeChips();
+    if (!dlg.open) dlg.showModal();
+
+    // Fetch live garage bookings asynchronously to prevent double-booking across users
+    if (opts.sb) {
+      opts.sb
+        .from("bookings")
+        .select("date,time_slot")
+        .eq("request_type", "garage")
+        .gte("date", minDate)
+        .neq("service_status", "cancelled")
+        .then(({ data, error }) => {
+          slotsLoading = false;
+          if (!error && Array.isArray(data)) {
+            const remoteMap = {};
+            data.forEach((row) => {
+              if (row && row.date && row.time_slot) {
+                if (!remoteMap[row.date]) remoteMap[row.date] = [];
+                remoteMap[row.date].push(row.time_slot);
+              }
+            });
+            bookedMap = mergeBookedMaps(bookedMap, remoteMap);
+          }
+          if (dlg.open) renderScheduler();
+        })
+        .catch(() => {
+          slotsLoading = false;
+          if (dlg.open) renderScheduler();
+        });
+    } else {
+      slotsLoading = false;
+      renderScheduler();
+    }
+
+    setTimeout(() => {
+      const target = document.getElementById("inspectCustomerName")?.value
+        ? document.getElementById("inspectCustomerPhone")
+        : document.getElementById("inspectCustomerName");
+      target?.focus();
+    }, 40);
   }
 
   // ===== Journal Estimated Reading Time & Recent Reads =====
@@ -1689,11 +2569,14 @@
     getRecentVehicles,
     clearRecentVehicles,
     renderRecentlyViewed,
+    buildVehicleCacheSnapshot,
     calcReadingStats,
     recordRecentArticle,
     getRecentArticles,
     clearRecentArticles,
     renderRecentReads,
+    mountReadingProgress,
+    openInspectionBookingModal,
     generateQrSvg
   };
 

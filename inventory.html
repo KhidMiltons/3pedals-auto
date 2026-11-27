@@ -241,7 +241,7 @@ dialog::backdrop{background:rgba(12,13,14,.58);backdrop-filter:blur(5px)}
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700&display=swap" rel="stylesheet"></noscript>
-<link rel="stylesheet" href="/site-theme.css?v=20261126-up3">
+<link rel="stylesheet" href="/site-theme.css?v=20261127-up1">
 <style id="inventory-dual-theme-shell">
 html:not([data-theme="light"]) body{
   background:transparent!important;
@@ -341,8 +341,8 @@ html[data-theme="light"] .inventory-save-button[aria-pressed="true"]{
   border-color:rgba(158,116,21,.50);
 }
 </style>
-<link rel="stylesheet" href="/site-ux.css?v=20261126-up6">
-<link rel="stylesheet" href="/header-modern.css?v=20261126-up2">
+<link rel="stylesheet" href="/site-ux.css?v=20261127-up1">
+<link rel="stylesheet" href="/header-modern.css?v=20261127-up1">
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
@@ -469,8 +469,8 @@ html[data-theme="light"] .inventory-save-button[aria-pressed="true"]{
 </section>
 <section id="recentlyViewedSection" hidden></section></main><footer class="ux-site-footer no-print"><div class="wrap">© <span data-ux-year>2026</span> 3 Pedals Auto KE.</div></footer>
 <dialog id="dlg"></dialog><aside id="compareTrayBar" class="ux-compare-dock no-print" aria-live="polite" hidden></aside><dialog id="compareModal" aria-label="Side-by-side vehicle comparison"></dialog><dialog id="priceAlertModal" aria-labelledby="priceAlertTitle" aria-modal="true"></dialog><dialog id="quickViewModal" aria-labelledby="quickViewTitle" aria-modal="true"></dialog><dialog id="shareVehicleModal" aria-labelledby="shareVehicleTitle" aria-modal="true"></dialog><dialog id="inspectionBookingModal" aria-labelledby="inspectionBookingTitle" aria-modal="true"></dialog>
-<script src="/lib/auto-logic.js?v=20261126-up2"></script>
-<script defer src="/site-ux.js?v=20261126-up2"></script>
+<script src="/lib/auto-logic.js?v=20261127-up1"></script>
+<script defer src="/site-ux.js?v=20261127-up1"></script>
 <script>
 const $=id=>document.getElementById(id),CFG=window.SB_CONFIG||{};const sb=CFG.url&&window.supabase?window.supabase.createClient(CFG.url,CFG.key):null;let cars=[];
 const inventoryOpenedFromAccount=new URLSearchParams(location.search).get("from")==="account";
@@ -1343,236 +1343,23 @@ function openInspectionBookingModal(carId){
   const c=cars.find(item=>String(item.id)===String(carId));
   const dlg=$("inspectionBookingModal");
   if(!c||!dlg)return;
-  if(c.isSold){
-    showInvNotice(invLang()==="sw"?"Gari hili tayari limeuzwa.":"This vehicle is already marked as sold.",{kind:"error",duration:2800});
-    return;
-  }
   activeInspectionCarId=String(c.id);
   const sw=invLang()==="sw";
-  const s=c.seller||{};
-  const title=`${c.year} ${c.make} ${c.model}`.trim();
-  const photo=(c.photos&&c.photos[0])||"";
-  const vehicleRef=`3PA-${String(c.id||"").replace(/-/g,"").slice(0,8).toUpperCase()}`;
-  const sellerLabel=s.type==="yard"?(s.yard||s.name||(sw?"Yadi ya magari":"Car yard")):(s.name||(sw?"Muuzaji binafsi":"Private seller"));
-  const locText=s.location?` · ${s.location}`:"";
-  const minDate=todayIsoDate();
-  const defaultDate=nextInspectableIsoDate();
-  const defaultName=String(inventoryUser?.user_metadata?.name||inventoryUser?.user_metadata?.full_name||"").trim();
-  const defaultEmail=String(inventoryUser?.email||readSavedAlertEmail()||"").trim();
-  const garageHref=`/garage.html?service=${encodeURIComponent("Pre-purchase inspection")}&car=${encodeURIComponent(title)}#book`;
-  const timeSlots=["08:00 AM","09:00 AM","10:00 AM","11:00 AM","12:00 PM","01:00 PM","02:00 PM","03:00 PM","04:00 PM"];
-  dlg.innerHTML=`
-    <div class="ux-inspect-modal-shell">
-      <div class="ux-inspect-modal-head">
-        <div>
-          <span class="eyebrow">${sw?"UKAGUZI WA 3 PEDALS GARAGE":"3 PEDALS GARAGE INSPECTION"} · ${esc(vehicleRef)}</span>
-          <h2 id="inspectionBookingTitle">${sw?"Weka Miadi ya Ukaguzi":"Book Vehicle Inspection"}</h2>
-        </div>
-        <button type="button" class="ux-inspect-modal-close" id="closeInspectModalBtn" aria-label="${sw?"Funga dirisha la ukaguzi":"Close inspection booking"}">×</button>
-      </div>
-      <div class="ux-inspect-car">
-        ${photo?`<img src="${esc(photo)}" alt="${esc(title)}">`:`<div class="ux-inspect-car-fallback" aria-hidden="true">3P</div>`}
-        <div class="ux-inspect-car-meta">
-          <strong>${esc(title)}</strong>
-          <div class="ux-inspect-car-price">KES ${fmt(c.price)}</div>
-          <span class="ux-inspect-car-sub">${esc(fmt(c.km))} km · ${esc(c.fuel||"Petrol")} · ${esc(sellerLabel+locText)}</span>
-        </div>
-      </div>
-      <form class="ux-inspect-form" id="inspectionBookingForm" novalidate>
-        <div class="ux-inspect-field">
-          <label for="inspectServiceType">${sw?"Aina ya Ukaguzi":"Inspection Type"}</label>
-          <select id="inspectServiceType" name="serviceType">
-            <option value="Pre-purchase inspection">${sw?"Ukaguzi wa Kabla ya Kununua (3 Pedals Garage)":"Pre-purchase inspection (3 Pedals Garage)"}</option>
-            <option value="Mobile yard pre-purchase inspection">${sw?"Ukaguzi wa Moja kwa Moja kwenye Yadi":"Mobile inspection at seller / car yard"}</option>
-          </select>
-        </div>
-        <div class="ux-inspect-row">
-          <div class="ux-inspect-field">
-            <label for="inspectDate">${sw?"Tarehe ya Ukaguzi":"Preferred Date"}</label>
-            <input type="date" id="inspectDate" name="date" min="${esc(minDate)}" value="${esc(defaultDate)}" required>
-          </div>
-          <div class="ux-inspect-field">
-            <label for="inspectTimeSlot">${sw?"Muda":"Time Slot"}</label>
-            <select id="inspectTimeSlot" name="timeSlot" required>
-              ${timeSlots.map((slot,idx)=>`<option value="${esc(slot)}"${idx===1?" selected":""}>${esc(slot)}</option>`).join("")}
-            </select>
-          </div>
-        </div>
-        <div class="ux-inspect-row">
-          <div class="ux-inspect-field">
-            <label for="inspectCustomerName">${sw?"Jina Lako":"Your Name"}</label>
-            <input type="text" id="inspectCustomerName" name="name" autocomplete="name" maxlength="120" placeholder="Jane Mwangi" value="${esc(defaultName)}" required>
-          </div>
-          <div class="ux-inspect-field">
-            <label for="inspectCustomerPhone">${sw?"Namba ya Simu / WhatsApp":"Phone / WhatsApp"}</label>
-            <input type="tel" id="inspectCustomerPhone" name="phone" autocomplete="tel" maxlength="40" placeholder="0712 345 678" required>
-          </div>
-        </div>
-        <div class="ux-inspect-field">
-          <label for="inspectCustomerEmail">${sw?"Barua Pepe (hiari)":"Email (optional)"}</label>
-          <input type="email" id="inspectCustomerEmail" name="email" autocomplete="email" maxlength="254" placeholder="you@example.com" value="${esc(defaultEmail)}">
-        </div>
-        <div class="ux-inspect-field">
-          <label for="inspectNotes">${sw?"Maelezo / Eneo la Gari (hiari)":"Notes / Yard Location (optional)"}</label>
-          <textarea id="inspectNotes" name="notes" maxlength="800" placeholder="${esc(s.location?`Vehicle located at ${s.location}`:(sw?"Ongeza maelezo ya ziada ya ukaguzi…":"Any checks you want prioritised or yard directions…"))}">${esc(s.location?`Vehicle location: ${s.location}`:"")}</textarea>
-        </div>
-        <p class="ux-inspect-hint">${sw?"Tunakagua kuanzia Jumatatu hadi Jumamosi, 8:00 AM – 6:00 PM (OBD-II scan, injini, gia, bodi na majaribio ya barabarani).":"Garage & mobile inspections run Monday–Saturday, 8:00 AM – 6:00 PM (OBD-II scan, engine, chassis & road test)."}</p>
-        <p class="ux-inspect-status" id="inspectBookingStatus" role="status" aria-live="polite" hidden></p>
-        <div class="ux-inspect-confirm-links" id="inspectConfirmLinks" hidden></div>
-        <div class="ux-inspect-actions">
-          <button type="submit" class="ux-inspect-submit" id="inspectSubmitBtn">${sw?"Thibitisha Miadi ya Ukaguzi":"Confirm Inspection Booking"}</button>
-          <a class="ux-inspect-secondary" href="${esc(garageHref)}">${sw?"Fungua Kalenda Kamili":"Open Garage Page"}</a>
-        </div>
-      </form>
-    </div>
-  `;
-  $("closeInspectModalBtn")?.addEventListener("click",()=>dlg.close());
-  const dateInput=$("inspectDate");
-  const statusEl=$("inspectBookingStatus");
-  const linksEl=$("inspectConfirmLinks");
-  const setStatus=(msg,isErr=false)=>{
-    if(!statusEl)return;
-    statusEl.textContent=msg;
-    statusEl.classList.toggle("is-error",isErr);
-    statusEl.hidden=!msg;
-  };
-  dateInput?.addEventListener("change",()=>{
-    const raw=dateInput.value;
-    if(!raw)return;
-    const picked=new Date(raw+"T00:00:00");
-    if(picked.getDay()===0){
-      setStatus(sw?"3 Pedals Garage haifanyi kazi Jumapili. Tafadhali chagua Jumatatu hadi Jumamosi.":"3 Pedals Garage is closed on Sundays. Please pick Monday–Saturday.",true);
-    }else if(statusEl.classList.contains("is-error")){
-      setStatus("",false);
-    }
-  });
-  $("inspectionBookingForm")?.addEventListener("submit",async e=>{
-    e.preventDefault();
-    const serviceType=$("inspectServiceType")?.value||"Pre-purchase inspection";
-    const date=$("inspectDate")?.value||"";
-    const timeSlot=$("inspectTimeSlot")?.value||"09:00 AM";
-    const name=($("inspectCustomerName")?.value||"").trim();
-    const phoneRaw=($("inspectCustomerPhone")?.value||"").trim();
-    const email=($("inspectCustomerEmail")?.value||"").trim();
-    const notes=($("inspectNotes")?.value||"").trim();
-    if(!date){
-      setStatus(sw?"Tafadhali chagua tarehe ya ukaguzi.":"Please select an inspection date.",true);
-      $("inspectDate")?.focus();
-      return;
-    }
-    const picked=new Date(date+"T00:00:00");
-    if(!Number.isFinite(picked.getTime())||date<minDate){
-      setStatus(sw?"Chagua tarehe ya kuanzia leo na kuendelea.":"Please choose today or a future date.",true);
-      $("inspectDate")?.focus();
-      return;
-    }
-    if(picked.getDay()===0){
-      setStatus(sw?"3 Pedals Garage haifanyi kazi Jumapili. Tafadhali chagua Jumatatu hadi Jumamosi.":"3 Pedals Garage is closed on Sundays. Please pick Monday–Saturday.",true);
-      $("inspectDate")?.focus();
-      return;
-    }
-    if(name.length<2){
-      setStatus(sw?"Weka jina lako kamili.":"Please enter your full name.",true);
-      $("inspectCustomerName")?.focus();
-      return;
-    }
-    if(phoneRaw.replace(/\D/g,"").length<9){
-      setStatus(sw?"Weka namba sahihi ya simu au WhatsApp.":"Please enter a valid phone or WhatsApp number.",true);
-      $("inspectCustomerPhone")?.focus();
-      return;
-    }
-    if(email&&!isValidAlertEmail(email)){
-      setStatus(sw?"Weka anwani sahihi ya barua pepe au acha wazi.":"Please enter a valid email address or leave it blank.",true);
-      $("inspectCustomerEmail")?.focus();
-      return;
-    }
-    const submitBtn=$("inspectSubmitBtn");
-    if(submitBtn){
-      submitBtn.disabled=true;
-      submitBtn.textContent=sw?"Inahifadhi miadi…":"Booking inspection…";
-    }
-    setStatus("",false);
-    if(linksEl)linksEl.hidden=true;
-    const ref="3PG-"+Math.random().toString(36).slice(2,8).toUpperCase();
-    const carDesc=`${title} (${vehicleRef})`;
-    let savedRemotely=false;
-    let slotTaken=false;
-    if(sb){
-      if(inventoryUser?.id){
-        const {error}=await sb.from("bookings").insert({
-          ref,
-          user_id:inventoryUser.id,
-          request_type:"garage",
-          service:serviceType,
-          car:carDesc,
-          date,
-          time_slot:timeSlot,
-          service_status:"scheduled",
-          name,
-          phone:phoneRaw
-        });
-        if(!error)savedRemotely=true;
-        else if(error.code==="23505")slotTaken=true;
-        else console.warn("Direct inspection booking insert fallback:",error);
-      }
-      if(!savedRemotely&&!slotTaken){
-        const enquirySubject=`Inspection Booking (${ref}): ${title}`;
-        const enquiryMsg=[
-          `Inspection request for ${carDesc}`,
-          `Service: ${serviceType}`,
-          `Preferred date: ${date} at ${timeSlot}`,
-          `Vehicle price: KES ${fmt(c.price)}`,
-          `Seller: ${sellerLabel}${locText}`,
-          notes?`Notes: ${notes}`:""
-        ].filter(Boolean).join("\n");
-        const {error:enqErr}=await sb.from("contact_enquiries").insert({
-          name,
-          email:email||"inspection@3pedalsauto.co.ke",
-          phone:phoneRaw,
-          subject:enquirySubject,
-          message:enquiryMsg
-        });
-        if(!enqErr)savedRemotely=true;
-        else console.warn("Inspection enquiry insert failed:",enqErr);
-      }
-    }
-    if(slotTaken){
-      if(submitBtn){
-        submitBtn.disabled=false;
-        submitBtn.textContent=sw?"Thibitisha Miadi ya Ukaguzi":"Confirm Inspection Booking";
-      }
-      setStatus(sw?"Muda huo tayari umechukuliwa. Chagua muda au tarehe nyingine.":"That time slot is already taken. Please select another slot or date.",true);
-      $("inspectTimeSlot")?.focus();
-      return;
-    }
-    try{
-      const existingLocal=JSON.parse(localStorage.getItem("3pedals:inspection-bookings:v1")||"[]");
-      const nextLocal=Array.isArray(existingLocal)?existingLocal:[];
-      nextLocal.unshift({ref,vehicleId:c.id,vehicle:title,service:serviceType,date,timeSlot,name,phone:phoneRaw,createdAt:new Date().toISOString()});
-      localStorage.setItem("3pedals:inspection-bookings:v1",JSON.stringify(nextLocal.slice(0,20)));
-    }catch(_){}
-    if(email)writeSavedAlertEmail(email);
-    const waText=encodeURIComponent(`Hello 3 Pedals Garage, I have booked a ${serviceType} (${ref}) for the ${title} (${vehicleRef}) on ${date} at ${timeSlot}.\nName: ${name}\nPhone: ${phoneRaw}${notes?`\nNotes: ${notes}`:""}`);
-    const waUrl=`https://wa.me/254791961807?text=${waText}`;
-    setStatus(
-      savedRemotely
-        ?(sw?`Miadi imepokelewa (${ref}) kwa ${title} tarehe ${date} saa ${timeSlot}. Timu yetu itawasiliana nawe kuthibitisha.`:`Inspection booked (${ref}) for ${title} on ${date} at ${timeSlot}. Our garage team will confirm shortly.`)
-        :(sw?`Kumbukumbu ya ukaguzi ${ref} imeandaliwa kwa ${title} (${date}, ${timeSlot}). Thibitisha moja kwa moja kupitia WhatsApp hapa chini.`:`Inspection request ${ref} prepared for ${title} (${date} at ${timeSlot}). Send directly on WhatsApp below to lock in your slot.`),
-      false
-    );
-    if(linksEl){
-      linksEl.innerHTML=`<a class="ux-inspect-submit" style="text-align:center;text-decoration:none;display:inline-flex;align-items:center;justify-content:center" href="${esc(waUrl)}" target="_blank" rel="noopener">${sw?"Tuma Kwenye WhatsApp":"Send via WhatsApp"}</a><button type="button" class="ux-inspect-secondary" id="inspectDoneBtn">${sw?"Imekamilika":"Done"}</button>`;
-      linksEl.hidden=false;
-      $("inspectDoneBtn")?.addEventListener("click",()=>dlg.close());
-    }
-    if(submitBtn){
-      submitBtn.disabled=false;
-      submitBtn.textContent=sw?"Weka Miadi Nyingine":"Update Booking";
-    }
-    showInvNotice(sw?`Ukaguzi umewekwa (${ref})`:`Inspection booked (${ref})`,{sub:`${title} · ${date} · ${timeSlot}`});
-  });
-  if(!dlg.open)dlg.showModal();
-  setTimeout(()=>($("inspectCustomerName")?.value?$("inspectCustomerPhone"):$("inspectCustomerName"))?.focus(),40);
+  if(window.ThreePedalsUX?.openInspectionBookingModal){
+    window.ThreePedalsUX.openInspectionBookingModal({
+      car:c,
+      dialog:dlg,
+      sb,
+      user:inventoryUser,
+      lang:invLang(),
+      defaultEmail:readSavedAlertEmail(),
+      garageHref:`/garage.html?service=${encodeURIComponent("Pre-purchase inspection")}&car=${encodeURIComponent(`${c.year} ${c.make} ${c.model}`.trim())}#book`,
+      onNotice:(titleText,meta)=>showInvNotice(titleText,meta),
+      onAlertEmailSave:email=>writeSavedAlertEmail(email)
+    });
+    return;
+  }
+  showInvNotice(sw?"Moduli ya ukaguzi inapakia…":"Inspection booking modal is loading…",{kind:"error",duration:2400});
 }
 window.addEventListener("3pedals:lang-changed",()=>{syncFilterSelectLabels();syncEfficiencyFilterLanguage();syncQuickFilterUI();syncSavedFilterUI();syncInspectedFilterUI();syncCompareFilterUI();renderRecentSearches();syncPriceAlertButtons();syncQuickViewButtons();syncShareButtons();syncInspectionButtons();syncMapExplorerLanguage();renderInventoryRecentSection();render();if($("quickViewModal")?.open&&activeQuickViewCarId)openQuickViewModal(activeQuickViewCarId);if($("shareVehicleModal")?.open&&activeShareCarId)openShareVehicleModal(activeShareCarId);if($("inspectionBookingModal")?.open&&activeInspectionCarId)openInspectionBookingModal(activeInspectionCarId)});
 function syncFilterSelectLabels(){
@@ -2405,7 +2192,7 @@ window.addEventListener("storage",e=>{
     else $("compareModal").close();
   }
 });
-function detail(id){const c=cars.find(x=>x.id===id);if(!c)return;const sold=Boolean(c.isSold),saved=!sold&&savedVehicleIds.has(String(c.id)),compared=isInCompare(c.id),alerted=hasPriceAlert(c.id),sw=invLang()==="sw";const d=$("dlg"),s=c.seller,ph=c.photos;const sellerName=s.type==="yard"?(s.yard||s.name||"Car yard"):(s.name||"the seller");const vehicleRef=`3PA-${String(c.id||"").replace(/-/g,"").slice(0,8).toUpperCase()}`;const vehicleUrl=`${location.origin}/vehicle.html?id=${encodeURIComponent(c.id)}`;window.ThreePedalsUX?.recordRecentVehicle({id:c.id,title:`${c.year} ${c.make} ${c.model}`.trim(),price:c.price,km:c.km,fuel:c.fuel,photo:ph[0]||""});renderInventoryRecentSection();const msg=encodeURIComponent(`Hello ${sellerName}, I’m interested in the ${c.year} ${c.make} ${c.model} listed on 3 Pedals Auto KE.\nPrice: KES ${fmt(c.price)}\nMileage: ${fmt(c.km)} km\nFuel: ${c.fuel||"Not specified"}\nFuel efficiency: Class ${c.effClass}\nVehicle reference: ${vehicleRef}\n${s.location?`Location: ${s.location}\n`:""}Could you confirm availability and let me know when I can arrange a viewing?\nVehicle link: ${vehicleUrl}`);const wa=s.whatsapp?`<a class="btn" href="https://wa.me/${normWa(s.whatsapp)}?text=${msg}" target="_blank" rel="noopener">Chat on WhatsApp</a>`:"";const mapLookupQuery=[s.yard,s.location||"Nairobi, Kenya"].filter(Boolean).join(", ");const details=[["Mileage",`${fmt(c.km)} km`],["Fuel",c.fuel||"Not specified"],["Efficiency",`Class ${c.effClass} · ${effTierText(c.effClass)}`],["Listing type",s.type==="yard"?"Car yard":"Private seller"],["Location",s.location||"Not specified"]];if(sold)details.unshift([sw?"Hali":"Status",sw?"Imeuzwa":"Sold"]);if(c.garageChecked)details.push([sw?"Ukaguzi":"Inspection",sw?"Imekaguliwa na 3 Pedals Garage":"Verified 3 Pedals Garage Pre-Purchase Inspection"]);const facts=items=>`<div class="detail-facts">${items.map(([label,value])=>`<div class="detail-fact"><span>${esc(label)}</span><strong>${esc(value)}</strong></div>`).join("")}</div>`;const sellerInfo=s.type==="yard"?[s.contact,s.location,s.phone,s.email].filter(Boolean).map(esc).join(" · "):s.phone?esc(s.phone):"Contact the seller directly about this listing.";const sellerCard=`<div class="seller-card">${s.logo?`<img class="seller-avatar" src="${esc(s.logo)}" alt="${esc(sellerName)} logo">`:`<div class="seller-avatar" aria-hidden="true">${s.type==="yard"?"🏢":"3P"}</div>`}<div><strong>${esc(sellerName)}</strong><p>${sellerInfo}</p></div></div>`;const specs=[...[ ["Year",c.year||"Not specified"],["Make",c.make||"Not specified"],["Model",c.model||"Not specified"],["Mileage",`${fmt(c.km)} km`],["Fuel",c.fuel||"Not specified"],["Efficiency class",`Class ${c.effClass} (${effTierText(c.effClass,true)})`] ]];d.innerHTML=`<div class="detail" data-car-id="${esc(c.id)}"><button class="detail-modal-close" id="close" type="button" aria-label="Close vehicle details">×</button><div class="gallery">${ph.length?`<img id="mainimg" class="mainimg" src="${esc(ph[0])}" alt="${esc(c.make+" "+c.model)} photo 1 of ${ph.length}" fetchpriority="high">${ph.length>1?`<div class="thumbs">${ph.map((p,i)=>`<button type="button" data-i="${i}" aria-label="Show photo ${i+1}" aria-current="${i===0}"><img src="${esc(p)}" alt="" loading="lazy"></button>`).join("")}</div>`:""}`:`<div class="mainimg" style="display:grid;place-items:center;color:var(--gold)">No photos available</div>`}</div><article class="info"><div class="detail-heading"><div><span class="eyebrow">${s.type==="yard"?"Car yard listing":"Private listing"}</span><h2>${esc(c.year)} ${esc(c.make)} ${esc(c.model)}${sold?` <span class="sold-status-pill" style="display:inline-flex;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;vertical-align:middle">${sw?"Imeuzwa":"Sold"}</span>`:""}</h2>${c.garageChecked?`<span class="ux-checked-pill">${CHECKED_SHIELD_SVG}<span>${sw?"Imekaguliwa · Ukaguzi wa 3 Pedals Garage":"Checked · Verified 3 Pedals Garage Pre-Purchase Inspection"}</span></span>`:""}</div><div class="detail-price">KES ${fmt(c.price)}</div></div><p class="detail-ref">Vehicle reference: ${esc(String(c.id).slice(0,8).toUpperCase())}</p>${facts(details)}${sellerCard}<section class="detail-section"><h3>About this car</h3><p>${esc(c.desc||"No description provided by the seller.")}</p></section><details class="detail-disclosure"><summary>Specifications</summary>${facts(specs)}</details><p class="detail-note">For your safety, inspect the vehicle in person, verify ownership documents and complete payment only after you are satisfied with the car and paperwork.</p><div class="actions"><button type="button" class="btn ghost" id="detailSaveVehicle" data-save-vehicle="${esc(c.id)}" aria-pressed="${String(saved)}"${sold?' disabled aria-disabled="true"':""}>${sold?(sw?"Imeuzwa":"Sold"):(saved?"Saved ✓ · Remove":"Save vehicle")}</button><button type="button" class="btn ghost" id="detailCompareVehicle" data-compare-vehicle="${esc(c.id)}" aria-pressed="${String(compared)}">${compared?(sw?"Kwenye linganisho ✓ · Ondoa":"In compare ✓ · Remove"):(sw?"Ongeza kulinganisha":"Compare")}</button><button type="button" class="btn ghost" id="detailPriceAlertBtn" data-price-alert="${esc(c.id)}" aria-pressed="${String(alerted)}">${alerted?(sw?"Arifa ipo ✓":"Alert active ✓"):(sw?"Arifa za Bei":"Get Price Alerts")}</button><button type="button" class="btn ghost" id="detailLocateMapBtn" data-map-lookup="${esc(mapLookupQuery)}">${sw?"Onyesha kwenye Ramani":"Locate on Map"}</button>${wa}${s.phone?`<a class="btn ghost" href="tel:${esc(normWa(s.phone))}">Call seller</a>`:""}<a class="btn ghost" href="/vehicle.html?id=${encodeURIComponent(c.id)}">Full spec &amp; A4</a></div></article></div>`;let photoIndex=0;const showPhoto=index=>{photoIndex=(index+ph.length)%ph.length;const image=d.querySelector("#mainimg"),counter=d.querySelector(".gallery-count");if(image){image.src=ph[photoIndex];image.alt=`${c.make} ${c.model} — photo ${photoIndex+1} of ${ph.length}`}if(counter)counter.textContent=`${photoIndex+1} / ${ph.length}`;d.querySelectorAll(".thumbs button").forEach((button,i)=>button.setAttribute("aria-current",String(i===photoIndex)))};if(ph.length>1){d.querySelector(".gallery").insertAdjacentHTML("beforeend",`<span class="gallery-count">1 / ${ph.length}</span><button class="gallery-step gallery-prev" type="button" data-gallery-step="-1" aria-label="Previous photo">‹</button><button class="gallery-step gallery-next" type="button" data-gallery-step="1" aria-label="Next photo">›</button>`)}if(ph.length){const viewPhoto=()=>{const car=cars.find(item=>String(item.id)===String(d.querySelector(".detail")?.dataset?.carId));if(car)openInventoryViewer(car)};d.querySelector("#mainimg").onclick=viewPhoto}d.showModal();d.querySelectorAll(".thumbs button").forEach(button=>button.onclick=()=>showPhoto(+button.dataset.i));d.querySelectorAll("[data-gallery-step]").forEach(button=>button.onclick=()=>showPhoto(photoIndex+Number(button.dataset.galleryStep)));$("close").onclick=()=>d.close();const saveButton=$("detailSaveVehicle");if(saveButton)saveButton.onclick=()=>toggleInventorySavedVehicle(c.id,saveButton);const compareButton=$("detailCompareVehicle");if(compareButton)compareButton.onclick=()=>toggleCompareVehicle(c);const priceAlertButton=$("detailPriceAlertBtn");if(priceAlertButton)priceAlertButton.onclick=()=>openPriceAlertModal(c.id);const locateBtn=$("detailLocateMapBtn");if(locateBtn)locateBtn.onclick=()=>{const q=locateBtn.dataset.mapLookup||"Car yards in Nairobi";d.close();focusYardOnMap(q)}}
+function detail(id){const c=cars.find(x=>x.id===id);if(!c)return;const sold=Boolean(c.isSold),saved=!sold&&savedVehicleIds.has(String(c.id)),compared=isInCompare(c.id),alerted=hasPriceAlert(c.id),sw=invLang()==="sw";const d=$("dlg"),s=c.seller,ph=c.photos;const sellerName=s.type==="yard"?(s.yard||s.name||"Car yard"):(s.name||"the seller");const vehicleRef=`3PA-${String(c.id||"").replace(/-/g,"").slice(0,8).toUpperCase()}`;const vehicleUrl=`${location.origin}/vehicle.html?id=${encodeURIComponent(c.id)}`;window.ThreePedalsUX?.recordRecentVehicle({id:c.id,title:`${c.year} ${c.make} ${c.model}`.trim(),make:c.make,model:c.model,year:c.year,price:c.price,km:c.km,fuel:c.fuel,desc:c.desc,photo:ph[0]||"",photos:ph,seller:s,status:c.status});renderInventoryRecentSection();const msg=encodeURIComponent(`Hello ${sellerName}, I’m interested in the ${c.year} ${c.make} ${c.model} listed on 3 Pedals Auto KE.\nPrice: KES ${fmt(c.price)}\nMileage: ${fmt(c.km)} km\nFuel: ${c.fuel||"Not specified"}\nFuel efficiency: Class ${c.effClass}\nVehicle reference: ${vehicleRef}\n${s.location?`Location: ${s.location}\n`:""}Could you confirm availability and let me know when I can arrange a viewing?\nVehicle link: ${vehicleUrl}`);const wa=s.whatsapp?`<a class="btn" href="https://wa.me/${normWa(s.whatsapp)}?text=${msg}" target="_blank" rel="noopener">Chat on WhatsApp</a>`:"";const mapLookupQuery=[s.yard,s.location||"Nairobi, Kenya"].filter(Boolean).join(", ");const details=[["Mileage",`${fmt(c.km)} km`],["Fuel",c.fuel||"Not specified"],["Efficiency",`Class ${c.effClass} · ${effTierText(c.effClass)}`],["Listing type",s.type==="yard"?"Car yard":"Private seller"],["Location",s.location||"Not specified"]];if(sold)details.unshift([sw?"Hali":"Status",sw?"Imeuzwa":"Sold"]);if(c.garageChecked)details.push([sw?"Ukaguzi":"Inspection",sw?"Imekaguliwa na 3 Pedals Garage":"Verified 3 Pedals Garage Pre-Purchase Inspection"]);const facts=items=>`<div class="detail-facts">${items.map(([label,value])=>`<div class="detail-fact"><span>${esc(label)}</span><strong>${esc(value)}</strong></div>`).join("")}</div>`;const sellerInfo=s.type==="yard"?[s.contact,s.location,s.phone,s.email].filter(Boolean).map(esc).join(" · "):s.phone?esc(s.phone):"Contact the seller directly about this listing.";const sellerCard=`<div class="seller-card">${s.logo?`<img class="seller-avatar" src="${esc(s.logo)}" alt="${esc(sellerName)} logo">`:`<div class="seller-avatar" aria-hidden="true">${s.type==="yard"?"🏢":"3P"}</div>`}<div><strong>${esc(sellerName)}</strong><p>${sellerInfo}</p></div></div>`;const specs=[...[ ["Year",c.year||"Not specified"],["Make",c.make||"Not specified"],["Model",c.model||"Not specified"],["Mileage",`${fmt(c.km)} km`],["Fuel",c.fuel||"Not specified"],["Efficiency class",`Class ${c.effClass} (${effTierText(c.effClass,true)})`] ]];d.innerHTML=`<div class="detail" data-car-id="${esc(c.id)}"><button class="detail-modal-close" id="close" type="button" aria-label="Close vehicle details">×</button><div class="gallery">${ph.length?`<img id="mainimg" class="mainimg" src="${esc(ph[0])}" alt="${esc(c.make+" "+c.model)} photo 1 of ${ph.length}" fetchpriority="high">${ph.length>1?`<div class="thumbs">${ph.map((p,i)=>`<button type="button" data-i="${i}" aria-label="Show photo ${i+1}" aria-current="${i===0}"><img src="${esc(p)}" alt="" loading="lazy"></button>`).join("")}</div>`:""}`:`<div class="mainimg" style="display:grid;place-items:center;color:var(--gold)">No photos available</div>`}</div><article class="info"><div class="detail-heading"><div><span class="eyebrow">${s.type==="yard"?"Car yard listing":"Private listing"}</span><h2>${esc(c.year)} ${esc(c.make)} ${esc(c.model)}${sold?` <span class="sold-status-pill" style="display:inline-flex;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;vertical-align:middle">${sw?"Imeuzwa":"Sold"}</span>`:""}</h2>${c.garageChecked?`<span class="ux-checked-pill">${CHECKED_SHIELD_SVG}<span>${sw?"Imekaguliwa · Ukaguzi wa 3 Pedals Garage":"Checked · Verified 3 Pedals Garage Pre-Purchase Inspection"}</span></span>`:""}</div><div class="detail-price">KES ${fmt(c.price)}</div></div><p class="detail-ref">Vehicle reference: ${esc(String(c.id).slice(0,8).toUpperCase())}</p>${facts(details)}${sellerCard}<section class="detail-section"><h3>About this car</h3><p>${esc(c.desc||"No description provided by the seller.")}</p></section><details class="detail-disclosure"><summary>Specifications</summary>${facts(specs)}</details><p class="detail-note">For your safety, inspect the vehicle in person, verify ownership documents and complete payment only after you are satisfied with the car and paperwork.</p><div class="actions"><button type="button" class="btn ghost" id="detailSaveVehicle" data-save-vehicle="${esc(c.id)}" aria-pressed="${String(saved)}"${sold?' disabled aria-disabled="true"':""}>${sold?(sw?"Imeuzwa":"Sold"):(saved?"Saved ✓ · Remove":"Save vehicle")}</button><button type="button" class="btn ghost" id="detailCompareVehicle" data-compare-vehicle="${esc(c.id)}" aria-pressed="${String(compared)}">${compared?(sw?"Kwenye linganisho ✓ · Ondoa":"In compare ✓ · Remove"):(sw?"Ongeza kulinganisha":"Compare")}</button><button type="button" class="btn ghost" id="detailPriceAlertBtn" data-price-alert="${esc(c.id)}" aria-pressed="${String(alerted)}">${alerted?(sw?"Arifa ipo ✓":"Alert active ✓"):(sw?"Arifa za Bei":"Get Price Alerts")}</button><button type="button" class="btn ghost" id="detailLocateMapBtn" data-map-lookup="${esc(mapLookupQuery)}">${sw?"Onyesha kwenye Ramani":"Locate on Map"}</button>${wa}${s.phone?`<a class="btn ghost" href="tel:${esc(normWa(s.phone))}">Call seller</a>`:""}<a class="btn ghost" href="/vehicle.html?id=${encodeURIComponent(c.id)}">Full spec &amp; A4</a></div></article></div>`;let photoIndex=0;const showPhoto=index=>{photoIndex=(index+ph.length)%ph.length;const image=d.querySelector("#mainimg"),counter=d.querySelector(".gallery-count");if(image){image.src=ph[photoIndex];image.alt=`${c.make} ${c.model} — photo ${photoIndex+1} of ${ph.length}`}if(counter)counter.textContent=`${photoIndex+1} / ${ph.length}`;d.querySelectorAll(".thumbs button").forEach((button,i)=>button.setAttribute("aria-current",String(i===photoIndex)))};if(ph.length>1){d.querySelector(".gallery").insertAdjacentHTML("beforeend",`<span class="gallery-count">1 / ${ph.length}</span><button class="gallery-step gallery-prev" type="button" data-gallery-step="-1" aria-label="Previous photo">‹</button><button class="gallery-step gallery-next" type="button" data-gallery-step="1" aria-label="Next photo">›</button>`)}if(ph.length){const viewPhoto=()=>{const car=cars.find(item=>String(item.id)===String(d.querySelector(".detail")?.dataset?.carId));if(car)openInventoryViewer(car)};d.querySelector("#mainimg").onclick=viewPhoto}d.showModal();d.querySelectorAll(".thumbs button").forEach(button=>button.onclick=()=>showPhoto(+button.dataset.i));d.querySelectorAll("[data-gallery-step]").forEach(button=>button.onclick=()=>showPhoto(photoIndex+Number(button.dataset.galleryStep)));$("close").onclick=()=>d.close();const saveButton=$("detailSaveVehicle");if(saveButton)saveButton.onclick=()=>toggleInventorySavedVehicle(c.id,saveButton);const compareButton=$("detailCompareVehicle");if(compareButton)compareButton.onclick=()=>toggleCompareVehicle(c);const priceAlertButton=$("detailPriceAlertBtn");if(priceAlertButton)priceAlertButton.onclick=()=>openPriceAlertModal(c.id);const locateBtn=$("detailLocateMapBtn");if(locateBtn)locateBtn.onclick=()=>{const q=locateBtn.dataset.mapLookup||"Car yards in Nairobi";d.close();focusYardOnMap(q)}}
 const inventoryViewer=document.createElement("dialog");inventoryViewer.className="inventory-photo-viewer";inventoryViewer.id="inventoryPhotoViewer";inventoryViewer.setAttribute("aria-label","Full-size vehicle photos");inventoryViewer.innerHTML='<button type="button" class="viewer-close" aria-label="Close full-size photo">×</button><button type="button" class="viewer-step viewer-prev" aria-label="Previous photo">‹</button><span class="viewer-count"></span><img alt=""><button type="button" class="viewer-step viewer-next" aria-label="Next photo">›</button>';document.body.appendChild(inventoryViewer);let viewerPhotos=[],viewerIndex=0;function syncInventoryViewer(){const image=inventoryViewer.querySelector("img");image.src=viewerPhotos[viewerIndex]||"";image.alt="Full-size vehicle photo "+(viewerIndex+1)+" of "+viewerPhotos.length;inventoryViewer.querySelector(".viewer-count").textContent=(viewerIndex+1)+" / "+viewerPhotos.length}function openInventoryViewer(car){viewerPhotos=(car.photos||[]).filter(p=>typeof p==="string"&&p.trim());if(!viewerPhotos.length)return;viewerIndex=0;syncInventoryViewer();inventoryViewer.classList.add("is-open");if(!inventoryViewer.open)inventoryViewer.showModal();inventoryViewer.querySelector(".viewer-close").focus()}function closeInventoryViewer(){inventoryViewer.classList.remove("is-open");if(inventoryViewer.open)inventoryViewer.close();const image=inventoryViewer.querySelector("img");if(image)image.removeAttribute("src");viewerPhotos=[];viewerIndex=0}function openCurrentDetailPhoto(){const id=$("dlg").querySelector(".detail")?.dataset?.carId;const car=cars.find(item=>String(item.id)===String(id));if(car)openInventoryViewer(car)}inventoryViewer.querySelector(".viewer-close").onclick=closeInventoryViewer;inventoryViewer.querySelector(".viewer-prev").onclick=()=>{viewerIndex=(viewerIndex+viewerPhotos.length-1)%viewerPhotos.length;syncInventoryViewer()};inventoryViewer.querySelector(".viewer-next").onclick=()=>{viewerIndex=(viewerIndex+1)%viewerPhotos.length;syncInventoryViewer()};inventoryViewer.addEventListener("click",e=>{if(e.target===inventoryViewer)closeInventoryViewer()});inventoryViewer.addEventListener("cancel",e=>{e.preventDefault();closeInventoryViewer()});document.addEventListener("keydown",e=>{if(!inventoryViewer.classList.contains("is-open"))return;if(e.key==="Escape"){e.preventDefault();closeInventoryViewer();return}if(e.key==="ArrowLeft"){viewerIndex=(viewerIndex+viewerPhotos.length-1)%viewerPhotos.length;syncInventoryViewer()}if(e.key==="ArrowRight"){viewerIndex=(viewerIndex+1)%viewerPhotos.length;syncInventoryViewer()}});document.querySelectorAll("#grid,#featuredGrid").forEach(grid=>{let tapEl=null,tapX=0,tapY=0,tapTimer=0;const clearTap=()=>{clearTimeout(tapTimer);if(tapEl){tapEl.classList.remove("is-tap-soft");tapEl=null}};grid.addEventListener("animationend",e=>{const card=e.target.closest?.(".card");if(card&&e.animationName==="riseIn")card.classList.add("is-float-settled")});grid.addEventListener("pointerenter",e=>{const card=e.target.closest?.(".card");if(card)card.classList.add("is-float-settled")},true);grid.addEventListener("pointerdown",e=>{if(e.pointerType==="mouse")return;const target=e.target.closest(".card-actions-bar button, .card-actions-bar .inventory-compare-check, .card-wishlist-btn")||e.target.closest(".card");if(!target)return;clearTap();tapEl=target;tapX=e.clientX;tapY=e.clientY;target.classList.add("is-tap-soft");tapTimer=setTimeout(clearTap,240)},{passive:true});grid.addEventListener("pointermove",e=>{if(!tapEl)return;if(Math.hypot(e.clientX-tapX,e.clientY-tapY)>9)clearTap()},{passive:true});grid.addEventListener("pointerup",()=>setTimeout(clearTap,110),{passive:true});grid.addEventListener("pointercancel",clearTap,{passive:true});grid.addEventListener("change",e=>{const cmp=e.target.closest("input.inventory-compare-checkbox[data-compare-vehicle]");if(cmp){e.stopPropagation();toggleCompareVehicle(cmp.dataset.compareVehicle)}});grid.addEventListener("click",e=>{const qv=e.target.closest("[data-quick-view]");if(qv){e.preventDefault();e.stopPropagation();openQuickViewModal(qv.dataset.quickView);return}const shareBtn=e.target.closest("[data-share-vehicle]");if(shareBtn){e.preventDefault();e.stopPropagation();handleNativeShareVehicle(shareBtn.dataset.shareVehicle);return}const save=e.target.closest("[data-save-vehicle]");if(save){e.preventDefault();e.stopPropagation();if(save.disabled||save.getAttribute("aria-disabled")==="true"||save.closest(".card.is-sold"))return;toggleInventorySavedVehicle(save.dataset.saveVehicle,save);return}const cmpCheck=e.target.closest(".inventory-compare-check");if(cmpCheck){e.stopPropagation();return}const cmp=e.target.closest("[data-compare-vehicle]");if(cmp){e.preventDefault();e.stopPropagation();toggleCompareVehicle(cmp.dataset.compareVehicle);return}const alertBtn=e.target.closest("[data-price-alert]");if(alertBtn){e.preventDefault();e.stopPropagation();openPriceAlertModal(alertBtn.dataset.priceAlert);return}const inspectBtn=e.target.closest("[data-book-inspection-vehicle]");if(inspectBtn){e.preventDefault();e.stopPropagation();if(inspectBtn.disabled||inspectBtn.getAttribute("aria-disabled")==="true"||inspectBtn.closest(".card.is-sold"))return;openInspectionBookingModal(inspectBtn.dataset.bookInspectionVehicle);return}const card=e.target.closest(".card");if(!card)return;const car=cars.find(item=>String(item.id)===String(card.dataset.id));if(car)detail(car.id)});grid.addEventListener("keydown",e=>{const card=e.target.closest(".card");if(!card||e.target!==card||!["Enter"," "].includes(e.key))return;e.preventDefault();const car=cars.find(item=>String(item.id)===String(card.dataset.id));if(car)detail(car.id)})});
 $("grid").addEventListener("pointermove",e=>{if(e.pointerType!=="mouse")return;const photo=e.target.closest(".photo");if(!photo)return;const r=photo.getBoundingClientRect();photo.style.setProperty("--lens-x",`${((e.clientX-r.left)/r.width)*100}%`);photo.style.setProperty("--lens-y",`${((e.clientY-r.top)/r.height)*100}%`)});
 let recentSearchTimer=0;
