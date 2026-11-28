@@ -1530,8 +1530,8 @@ app.post("/api/chat", async (req, res) => {
     if (isKenyaImportSearch) {
       const preSanitizerReply = finalReply;
       const taxRowDiagnostics = (text) => {
-        const rows = String(text || "").split("\\n").filter((line) =>
-          /\\b(?:value[- ]?added tax|\\bvat\\b|import declaration fee|\\bidf\\b|railway development levy|\\brdl\\b)/i.test(line)
+        const rows = String(text || "").split("\n").filter((line) =>
+          /\b(?:value[- ]?added tax|\bvat\b|import declaration fee|\bidf\b|railway development levy|\brdl\b)/i.test(line)
         );
         return {
           taxRowCount: rows.length,
