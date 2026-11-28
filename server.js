@@ -274,12 +274,17 @@ function sanitizeKenyaTaxAndFaqClaims(text) {
     if (cells.length < 3) return line;
     // Normalize all Unicode hyphen variants before matching model-generated labels.
     const taxName = String(cells[1] || "").trim().replace(/\*+/g, "").replace(/[\u2010-\u2015\u2212]/g, "-");
-    if (!/^(?:VAT|value-?added tax(?:\s*\(VAT\))?|IDF|import declaration fee(?:\s*\(IDF\))?|RDL|railway development levy(?:\s*\(RDL\))?)$/i.test(taxName)) return line;
-    // Some model outputs break the source column onto a following line, so
-    // the tax row may contain only three pipe-delimited cells.
-    cells[2] = " individual tax base not specified in the current KRA procedure ";
-    if (cells.length > 3) cells[3] = " Procedures for Motor Vehicle – KRA ";
-    return cells.join("|");
+    const normalizedName = taxName.toLowerCase().replace(/\s+/g, " ");
+    const taxRows = [
+      { match: /^(?:vat|value-?added tax(?:\s*\(vat\))?)$/, label: "Value-Added Tax (VAT)", rate: "16%" },
+      { match: /^(?:idf|import declaration fee(?:\s*\(idf\))?)$/, label: "Import Declaration Fee (IDF)", rate: "3.5%" },
+      { match: /^(?:rdl|railway development levy(?:\s*\(rdl\))?)$/, label: "Railway Development Levy (RDL)", rate: "2%" }
+    ];
+    const tax = taxRows.find((item) => item.match.test(normalizedName));
+    if (!tax) return line;
+    // Rebuild the entire row so missing or shifted model columns cannot put
+    // the base wording in the rate column or leave a truncated duplicate.
+    return "| " + tax.label + " | **" + tax.rate + "** | individual tax base not specified in the current KRA procedure |";
   }).join("\n");
 
   // Repair partial duplicate wording if the model emitted a truncated phrase
