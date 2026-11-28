@@ -272,8 +272,9 @@ function sanitizeKenyaTaxAndFaqClaims(text) {
   value = value.split("\n").map((line) => {
     const cells = line.split("|");
     if (cells.length < 3) return line;
-    const taxName = String(cells[1] || "").trim().replace(/\*+/g, "");
-    if (!/^(?:VAT|value[-‑–‑ ]added tax(?:\s*\(VAT\))?|IDF|import declaration fee(?:\s*\(IDF\))?|RDL|railway development levy(?:\s*\(RDL\))?)$/i.test(taxName)) return line;
+    // Normalize all Unicode hyphen variants before matching model-generated labels.
+    const taxName = String(cells[1] || "").trim().replace(/\*+/g, "").replace(/[\u2010-\u2015\u2212]/g, "-");
+    if (!/^(?:VAT|value-?added tax(?:\s*\(VAT\))?|IDF|import declaration fee(?:\s*\(IDF\))?|RDL|railway development levy(?:\s*\(RDL\))?)$/i.test(taxName)) return line;
     // Some model outputs break the source column onto a following line, so
     // the tax row may contain only three pipe-delimited cells.
     cells[2] = " individual tax base not specified in the current KRA procedure ";
