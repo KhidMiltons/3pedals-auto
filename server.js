@@ -1535,16 +1535,23 @@ app.post("/api/chat", async (req, res) => {
         );
         return {
           taxRowCount: rows.length,
-          malformedBaseRowCount: rows.filter((line) =>
-            /individual tax base not speindividual tax base not specified in the current KRA procedure/i.test(line)
+          rowsWithBaseText: rows.filter((line) => /individual tax base|base not specified/i.test(line)).length,
+          duplicatedBaseRows: rows.filter((line) =>
+            /individual tax base not speindividual tax base not specified/i.test(line)
+          ).length,
+          partialBaseRows: rows.filter((line) =>
+            /individual tax base not\s+(?:spe|spec|speci|specif)(?:\s|$)/i.test(line)
           ).length,
         };
       };
-      const beforeDiagnostics = taxRowDiagnostics(preSanitizerReply);
+      const stages = {};
+      stages.before = taxRowDiagnostics(finalReply);
       finalReply = sanitizeKenyaRhdClaims(finalReply).text;
+      stages.afterRhdSanitizer = taxRowDiagnostics(finalReply);
       finalReply = enforceKenyaRhdSection(finalReply);
+      stages.afterRhdSection = taxRowDiagnostics(finalReply);
       finalReply = sanitizeKenyaTaxAndFaqClaims(finalReply);
-      const afterDiagnostics = taxRowDiagnostics(finalReply);
+      stages.afterTaxSanitizer = taxRowDiagnostics(finalReply);
       console.info("Kenya import response sanitizer diagnostics:", {
         requestedMode,
         effectiveMode,
@@ -1552,10 +1559,7 @@ app.post("/api/chat", async (req, res) => {
         inputCharacters: preSanitizerReply.length,
         outputCharacters: finalReply.length,
         outputChanged: preSanitizerReply !== finalReply,
-        taxRowsBefore: beforeDiagnostics.taxRowCount,
-        malformedTaxRowsBefore: beforeDiagnostics.malformedBaseRowCount,
-        taxRowsAfter: afterDiagnostics.taxRowCount,
-        malformedTaxRowsAfter: afterDiagnostics.malformedBaseRowCount,
+        taxRowStages: stages,
       });
     }
     if (isKenyaImportSearch) {
