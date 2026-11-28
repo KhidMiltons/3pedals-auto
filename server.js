@@ -273,14 +273,19 @@ function sanitizeKenyaTaxAndFaqClaims(text) {
     const cells = line.split("|");
     if (cells.length < 3) return line;
     // Normalize all Unicode hyphen variants before matching model-generated labels.
-    const taxName = String(cells[1] || "").trim().replace(/\*+/g, "").replace(/[\u2010-\u2015\u2212]/g, "-");
-    const normalizedName = taxName.toLowerCase().replace(/\s+/g, " ");
+    const normalizedCells = cells.map((cell) => String(cell || "").trim()
+      .replace(/\*+/g, "")
+      .replace(/[\u2010-\u2015\u2212]/g, "-")
+      .toLowerCase()
+      .replace(/\s+/g, " "));
     const taxRows = [
-      { match: /^(?:vat|value-?added tax(?:\s*\(vat\))?)$/, label: "Value-Added Tax (VAT)", rate: "16%" },
+      { match: /^(?:vat|value[- ]?added tax(?:\s*\(vat\))?)$/, label: "Value-Added Tax (VAT)", rate: "16%" },
       { match: /^(?:idf|import declaration fee(?:\s*\(idf\))?)$/, label: "Import Declaration Fee (IDF)", rate: "3.5%" },
       { match: /^(?:rdl|railway development levy(?:\s*\(rdl\))?)$/, label: "Railway Development Levy (RDL)", rate: "2%" }
     ];
-    const tax = taxRows.find((item) => item.match.test(normalizedName));
+    // Locate the tax label in any cell; model output sometimes shifts columns
+    // or inserts an extra pipe before the tax name.
+    const tax = taxRows.find((item) => normalizedCells.some((cell) => item.match.test(cell)));
     if (!tax) return line;
     // Rebuild the entire row so missing or shifted model columns cannot put
     // the base wording in the rate column or leave a truncated duplicate.
