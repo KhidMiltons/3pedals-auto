@@ -180,3 +180,146 @@ test("resolveVehicleFromCaches hydrates cold-start vehicle rows from recently vi
   assert.equal(hydrated.year, 2020);
   assert.deepEqual(hydrated.photos, ["https://example.com/harrier.webp"]);
 });
+
+test("filterFaqItemsByCategory filters Inspections, Selling, General, Booking, and All", () => {
+  const items = [
+    { id: 1, category: "inspections" },
+    { id: 2, category: "selling" },
+    { id: 3, category: "general" },
+    { id: 4, category: "booking" },
+    { id: 5, category: "inspections" }
+  ];
+  assert.equal(logic.filterFaqItemsByCategory(items, "all").length, 5);
+  assert.equal(logic.filterFaqItemsByCategory(items, "unknown").length, 5);
+  assert.deepEqual(
+    logic.filterFaqItemsByCategory(items, "Inspections").map((x: { id: number }) => x.id),
+    [1, 5]
+  );
+  assert.deepEqual(
+    logic.filterFaqItemsByCategory(items, "selling").map((x: { id: number }) => x.id),
+    [2]
+  );
+  assert.deepEqual(
+    logic.filterFaqItemsByCategory(items, "general").map((x: { id: number }) => x.id),
+    [3]
+  );
+});
+
+test("computeInspectionBookingProgress tracks steps and percent from 25% to 100%", () => {
+  const initial = logic.computeInspectionBookingProgress({
+    activeStep: "vehicle",
+    scopeText: "",
+    serviceType: "Pre-purchase inspection",
+    date: "2026-05-16",
+    timeSlot: "09:00 AM",
+    name: "",
+    phone: ""
+  });
+  // vehicle (true) + schedule (Saturday + 09:00 AM) => 2 of 4 = 50%
+  assert.equal(initial.completedCount, 2);
+  assert.equal(initial.percent, 50);
+
+  const complete = logic.computeInspectionBookingProgress({
+    activeStep: "details",
+    scopeText: "Engine only, Paintwork check",
+    serviceType: "Pre-purchase inspection",
+    date: "2026-05-16",
+    timeSlot: "09:00 AM",
+    name: "Jane Mwangi",
+    phone: "0712 345 678",
+    email: "jane@example.com"
+  });
+  assert.equal(complete.completedCount, 4);
+  assert.equal(complete.percent, 100);
+  assert.equal(complete.steps[3].active, true);
+});
+
+test("validateMechanicQuestion and validateInspectionBooking return exact per-field errors", () => {
+  const badMech = logic.validateMechanicQuestion({ question: "hi", phone: "123" });
+  assert.equal(badMech.valid, false);
+  assert.ok(badMech.errors.question);
+  assert.ok(badMech.errors.phone);
+  assert.equal(badMech.firstErrorField, "question");
+
+  const goodMech = logic.validateMechanicQuestion({
+    question: "Any timing chain rattle on cold start?",
+    phone: "0712 345 678"
+  });
+  assert.equal(goodMech.valid, true);
+  assert.deepEqual(goodMech.errors, {});
+
+  const badBooking = logic.validateInspectionBooking({
+    date: "2026-05-17", // Sunday
+    minDate: "2026-05-15",
+    slotAvailable: false,
+    timeSlot: "",
+    name: "A",
+    phone: "071",
+    email: "not-an-email"
+  });
+  assert.equal(badBooking.valid, false);
+  assert.ok(badBooking.errors.date);
+  assert.ok(badBooking.errors.timeSlot);
+  assert.ok(badBooking.errors.name);
+  assert.ok(badBooking.errors.phone);
+  assert.ok(badBooking.errors.email);
+  assert.equal(badBooking.firstErrorField, "date");
+
+  const goodBooking = logic.validateInspectionBooking({
+    date: "2026-05-16",
+    minDate: "2026-05-15",
+    slotAvailable: true,
+    timeSlot: "10:00 AM",
+    name: "Jane Mwangi",
+    phone: "0712345678",
+    email: ""
+  });
+  assert.equal(goodBooking.valid, true);
+  assert.equal(goodBooking.firstErrorField, null);
+});
+
+test("computeVehicleDocumentInspectionProgress tracks header fields, 12 checks, and summary", () => {
+  const initial = logic.computeVehicleDocumentInspectionProgress({
+    registration: "",
+    vehicle: "",
+    date: "2026-11-28",
+    inspector: "",
+    checks: new Array(12).fill("Not checked"),
+    notes: new Array(12).fill(""),
+    roadTest: "Not performed",
+    limitations: ""
+  });
+  assert.equal(initial.completedCount, 1);
+  assert.equal(initial.totalCount, 17);
+  assert.equal(initial.percent, 6);
+  assert.equal(initial.isComplete, false);
+
+  const partial = logic.computeVehicleDocumentInspectionProgress({
+    registration: "KDM 421X",
+    vehicle: "2019 Toyota Harrier",
+    date: "2026-11-28",
+    inspector: "Alex Otieno",
+    checks: ["Good at time of inspection", "Not checked", "Attention required", ...new Array(9).fill("Not checked")],
+    notes: ["", "Minor belt squeak", ...new Array(10).fill("")],
+    roadTest: "Not performed"
+  });
+  assert.equal(partial.detailsDone, 4);
+  assert.equal(partial.checksDone, 3);
+  assert.equal(partial.completedCount, 7);
+  assert.equal(partial.percent, 41);
+
+  const complete = logic.computeVehicleDocumentInspectionProgress({
+    registration: "KDM 421X",
+    vehicle: "2019 Toyota Harrier",
+    date: "2026-11-28",
+    inspector: "Alex Otieno",
+    checks: new Array(12).fill("Good at time of inspection"),
+    notes: new Array(12).fill(""),
+    roadTest: "Performed"
+  });
+  assert.equal(complete.completedCount, 17);
+  assert.equal(complete.percent, 100);
+  assert.equal(complete.isComplete, true);
+});
+
+

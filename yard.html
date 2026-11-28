@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
 <script>(function(){try{var t=localStorage.getItem("3pedals:theme")||"dark";document.documentElement.setAttribute("data-theme",t==="light"?"light":"dark");document.documentElement.dataset.ux="1";}catch(e){}})();</script>
-<script src="/consent.js?v=20261107-1"></script>
+<script src="/consent.js?v=20261128-ux1"></script>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="preload" as="image" href="/public/assets/hero-backdrop-mobile.webp" media="(max-width: 760px)" fetchpriority="high">
-<link rel="preload" as="image" href="/public/assets/hero-backdrop.webp" media="(min-width: 761px)" fetchpriority="high">
+<link rel="preload" as="image" href="/public/assets/hero-backdrop-mobile.webp" fetchpriority="high">
 <link rel="preconnect" href="https://dlejmelyeaaxcvelvzia.supabase.co" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -50,14 +49,14 @@ main.wrap { padding-top: clamp(20px, 3vw, 34px); }
   padding: 22px 26px 20px;
   border: 1px solid rgba(255, 255, 255, 0.17);
   border-radius: 18px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.025)), rgba(20, 22, 26, 0.44);
+  background: rgba(20, 22, 26, 0.50);
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.09);
   -webkit-backdrop-filter: blur(18px) saturate(135%);
   backdrop-filter: blur(18px) saturate(135%);
 }
 .hero .eyebrow { display: block; font-size: 10.5px; font-weight: 800; letter-spacing: 0.16em; color: var(--gold); margin: 0 0 6px; }
 .hero h1 { font: 700 clamp(27px, 4vw, 42px)/1.1 "Sora", "Manrope", system-ui, sans-serif; margin: 0 0 8px; letter-spacing: -0.03em; }
-.hero h1::after { content: ""; display: block; width: 72px; height: 3px; margin-top: 12px; border-radius: 99px; background: linear-gradient(90deg, var(--gold), rgba(215, 189, 131, 0.16)); }
+.hero h1::after { content: ""; display: block; width: 72px; height: 3px; margin-top: 12px; border-radius: 99px; background: var(--gold); }
 .hero p { margin: 0; color: var(--mute); font-size: 14px; line-height: 1.6; max-width: 680px; }
 
 .profile { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr); gap: 18px; margin-bottom: 30px; }
@@ -84,6 +83,7 @@ main.wrap { padding-top: clamp(20px, 3vw, 34px); }
   margin: 14px 0 7px; clear: both;
 }
 .detail {
+  display: flex; align-items: center; gap: 8px;
   margin: 6px 0; padding: 9px 11px; border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 10px; background: rgba(255, 255, 255, 0.04); color: var(--mute); overflow-wrap: anywhere; font-size: 13.5px;
 }
@@ -98,7 +98,7 @@ main.wrap { padding-top: clamp(20px, 3vw, 34px); }
   transition: transform 0.2s var(--ease), border-color 0.2s, background 0.2s;
 }
 .btn.primary { background: rgba(255, 255, 255, 0.15); border-color: rgba(215, 189, 131, 0.42); color: #fff; }
-.btn.gold { background: linear-gradient(135deg, #e3c57b, #b7a06a); color: #16140f; border-color: transparent; }
+.btn.gold { background: #d7bd83; color: #16140f; border-color: transparent; }
 .statgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .stat {
   padding: 15px; border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 14px;
@@ -152,7 +152,7 @@ main.wrap { padding-top: clamp(20px, 3vw, 34px); }
   .card[data-yard-car]:hover {
     transform: translate3d(0, var(--ux-card-lift-y, -5px), 0) scale(var(--ux-card-hover-scale, 1.012));
     border-color: var(--ux-card-border-hover, rgba(215, 189, 131, 0.68));
-    box-shadow: var(--ux-card-shadow-hover), var(--ux-card-glow-hover), var(--ux-card-inset-hover);
+    box-shadow: var(--ux-card-shadow-hover), var(--ux-card-inset-hover);
   }
   .card[data-yard-car]:hover .photo img { transform: scale(var(--ux-card-photo-scale, 1.03)); }
 }
@@ -177,8 +177,8 @@ main.wrap { padding-top: clamp(20px, 3vw, 34px); }
 }
 </style>
 <!-- Meta Pixel loads only after explicit optional-cookie consent. -->
-<link rel="stylesheet" href="/site-theme.css?v=20261127-up1">
-<link rel="stylesheet" href="/site-ux.css?v=20261127-up1">
+<link rel="stylesheet" href="/site-theme.css?v=20261128-ux1">
+<link rel="stylesheet" href="/site-ux.css?v=20261128-ux1">
 <style id="yard-dual-theme-shell">
 /* Dual-Theme Daylight (Parchment) Parity for Yard Profile */
 html[data-theme="light"] {
@@ -197,8 +197,8 @@ html[data-theme="light"] body {
 html[data-theme="light"] .hero,
 html[data-theme="light"] .panel,
 html[data-theme="light"] .card[data-yard-car] {
-  background-color: transparent !important;
-  background-image: linear-gradient(180deg, rgba(255, 253, 249, 0.90) 0%, rgba(252, 247, 238, 0.72) 55%, rgba(246, 240, 227, 0.44) 100%) !important;
+  background-color: rgba(255, 252, 246, 0.90) !important;
+  background-image: none !important;
   border: 0 !important;
   color: #171512 !important;
   box-shadow: 0 12px 30px rgba(48, 38, 18, 0.09) !important;
@@ -244,12 +244,12 @@ html[data-theme="light"] .btn.primary {
   color: #fbf8f1 !important;
 }
 html[data-theme="light"] .btn.gold {
-  background: linear-gradient(135deg, #d8c497, #b7a06a) !important;
+  background: #c8ab6c !important;
   color: #1c160c !important;
   border-color: transparent !important;
 }
 </style>
-<link rel="stylesheet" href="/header-modern.css?v=20261127-up1">
+<link rel="stylesheet" href="/header-modern.css?v=20261128-ux1">
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
@@ -261,8 +261,8 @@ html[data-theme="light"] .btn.gold {
 <header class="head"><div class="wrap headin"><a class="logo" href="/" aria-label="3 Pedals Auto KE home">3 Pedals Auto KE</a><nav class="headnav" aria-label="Dealer navigation"><a class="back" href="dealers.html">← Back to dealers</a><a class="back home-link" href="/">Home</a></nav></div></header>
 <main class="wrap">
 <section class="hero"><span class="eyebrow">3 PEDALS AUTO KE · DEALER PROFILE</span><h1 id="title">Car Yard</h1><p>Explore vehicles currently listed by this car yard. Contact the yard directly or open a vehicle to see its full details.</p></section>
-<section id="profile" class="profile"><div class="panel details"><div class="yardmark">🏢</div><h2 id="yardName">Loading…</h2><h3 class="yard-contact-title">Dealer details</h3><div id="contacts"></div><h3 class="yard-actions-title">Contact this yard</h3><div class="actions" id="actions"></div></div><div class="panel"><div class="statgrid"><div class="stat"><b id="vehicleCount">0</b><span>Available vehicles</span></div><div class="stat"><b id="priceRange">—</b><span>Price range</span></div></div><p class="detail" style="margin-top:18px">Every vehicle shown here is an approved listing currently available through 3 Pedals Auto KE.</p></div></section>
-<section><div class="sectionhead"><h2>Vehicles from this yard</h2><span id="countText">Loading inventory…</span></div><div class="yard-inventory-tools"><input id="yardVehicleSearch" type="search" placeholder="Search this yard’s vehicles" aria-label="Search this yard’s vehicles"><select id="yardFuelFilter" aria-label="Filter this yard by fuel type"><option value="">All fuel types</option></select><select id="yardSort" aria-label="Sort this yard’s vehicles"><option value="new">Newest first</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option><option value="km">Lowest mileage</option></select><button class="btn" id="yardClearFilters" type="button">Clear filters</button></div><div id="grid" class="grid"><div class="panel empty">Loading yard inventory…</div></div></section>
+<section id="profile" class="profile"><div class="panel details"><div class="yardmark" aria-hidden="true"><svg class="ux-svg-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 9h1"/><path d="M9 13h1"/><path d="M14 9h1"/><path d="M14 13h1"/></svg></div><h2 id="yardName">Loading…</h2><h3 class="yard-contact-title">Dealer details</h3><div id="contacts"></div><h3 class="yard-actions-title">Contact this yard</h3><div class="actions" id="actions"></div></div><div class="panel"><div class="statgrid"><div class="stat"><b id="vehicleCount">0</b><span>Available vehicles</span></div><div class="stat"><b id="priceRange">—</b><span>Price range</span></div></div><p class="detail" style="margin-top:18px">Every vehicle shown here is an approved listing currently available through 3 Pedals Auto KE.</p></div></section>
+<section><div class="sectionhead"><h2>Vehicles from this yard</h2><span id="countText">Loading inventory…</span></div><div class="yard-inventory-tools"><input id="yardVehicleSearch" type="search" placeholder="Search this yard’s vehicles" aria-label="Search this yard’s vehicles"><select id="yardFuelFilter" aria-label="Filter this yard by fuel type"><option value="">All fuel types</option></select><select id="yardSort" aria-label="Sort this yard’s vehicles"><option value="new">Newest first</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option><option value="km">Lowest mileage</option></select><button class="btn ux-btn-danger" id="yardClearFilters" type="button"><svg class="ux-svg-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/></svg><span>Clear filters</span></button></div><div id="grid" class="grid"><div class="panel empty">Loading yard inventory…</div></div></section>
 </main><footer class="ux-site-footer no-print"><div class="wrap">© <span data-ux-year>2026</span> 3 Pedals Auto KE · Automotive Excellence Reimagined, For Those Who Appreciate the Drive.</div></footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
@@ -530,8 +530,14 @@ async function init(){
   const businessSchema={'@context':'https://schema.org','@type':'AutoDealer',name,url:canonicalUrl.toString(),description:seoDescription,...(phone?{telephone:phone}:{}),...(email?{email}:{}),...(loc?{address:{'@type':'PostalAddress',streetAddress:loc,addressCountry:'KE'}}:{})};
   structured.textContent=JSON.stringify(businessSchema);
   document.getElementById('title').textContent=name;document.getElementById('yardName').textContent=name;
-  document.getElementById('contacts').innerHTML=[contact?`<div class="detail">Contact: <strong>${esc(contact)}</strong></div>`:'',loc?`<div class="detail">📍 <strong>${esc(loc)}</strong></div>`:'',phone?`<div class="detail">📞 <a href="tel:${esc(phone.replace(/\D/g,''))}">${esc(phone)}</a></div>`:'',email?`<div class="detail">✉️ <a href="mailto:${esc(email)}">${esc(email)}</a></div>`:'',web?`<div class="detail">🌐 <a href="${esc(/^https?:\/\//i.test(web)?web:'https://'+web)}" target="_blank" rel="noopener">${esc(web)}</a></div>`:''].join('');
-  const wa=(first.whatsapp||phone||'').replace(/\D/g,'');document.getElementById('actions').innerHTML=[phone?`<a class="btn primary" href="tel:${esc(phone.replace(/\D/g,''))}">📞 Call yard</a>`:'',wa?`<a class="btn gold" href="https://wa.me/${esc(wa)}?text=${encodeURIComponent('Hello '+name+', I found your vehicles on 3 Pedals Auto KE and would like to enquire.') }" target="_blank" rel="noopener">💬 WhatsApp yard</a>`:'',loc?`<a class="btn" href="${esc(mapUrl(loc))}" target="_blank" rel="noopener">📍 Get directions</a>`:'',web?`<a class="btn" href="${esc(/^https?:\/\//i.test(web)?web:'https://'+web)}" target="_blank" rel="noopener">🌐 Visit website</a>`:'',`<button class="btn" type="button" id="shareYardProfile">↗ Share this yard</button>`].join('');
+  const yardSvg=(d)=>`<svg class="ux-svg-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+  const YARD_PIN_SVG=yardSvg('<path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/>');
+  const YARD_PHONE_SVG=yardSvg('<path d="M22 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3.1 5.2 2 2 0 0 1 5.1 3h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.4 2.1l-1.3 1.3a16 16 0 0 0 6.2 6.2l1.3-1.3a2 2 0 0 1 2.1-.4c.8.3 1.7.6 2.6.7a2 2 0 0 1 1.7 2Z"/>');
+  const YARD_MAIL_SVG=yardSvg('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/>');
+  const YARD_GLOBE_SVG=yardSvg('<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a13.5 13.5 0 0 1 0 18"/><path d="M12 3a13.5 13.5 0 0 0 0 18"/>');
+  const YARD_CHAT_SVG=yardSvg('<path d="M20.5 11.8a8.4 8.4 0 0 1-12.4 7.4L3 20l.9-4.9a8.4 8.4 0 1 1 16.6-3.3Z"/>');
+  document.getElementById('contacts').innerHTML=[contact?`<div class="detail">Contact: <strong>${esc(contact)}</strong></div>`:'',loc?`<div class="detail">${YARD_PIN_SVG}<strong>${esc(loc)}</strong></div>`:'',phone?`<div class="detail">${YARD_PHONE_SVG}<a href="tel:${esc(phone.replace(/\D/g,''))}">${esc(phone)}</a></div>`:'',email?`<div class="detail">${YARD_MAIL_SVG}<a href="mailto:${esc(email)}">${esc(email)}</a></div>`:'',web?`<div class="detail">${YARD_GLOBE_SVG}<a href="${esc(/^https?:\/\//i.test(web)?web:'https://'+web)}" target="_blank" rel="noopener">${esc(web)}</a></div>`:''].join('');
+  const wa=(first.whatsapp||phone||'').replace(/\D/g,'');document.getElementById('actions').innerHTML=[phone?`<a class="btn primary" href="tel:${esc(phone.replace(/\D/g,''))}">${YARD_PHONE_SVG}<span>Call yard</span></a>`:'',wa?`<a class="btn gold" href="https://wa.me/${esc(wa)}?text=${encodeURIComponent('Hello '+name+', I found your vehicles on 3 Pedals Auto KE and would like to enquire.') }" target="_blank" rel="noopener">${YARD_CHAT_SVG}<span>WhatsApp yard</span></a>`:'',loc?`<a class="btn" href="${esc(mapUrl(loc))}" target="_blank" rel="noopener">${YARD_PIN_SVG}<span>Get directions</span></a>`:'',web?`<a class="btn" href="${esc(/^https?:\/\//i.test(web)?web:'https://'+web)}" target="_blank" rel="noopener">${YARD_GLOBE_SVG}<span>Visit website</span></a>`:'',`<button class="btn" type="button" id="shareYardProfile">${YARD_SHARE_SVG}<span>Share this yard</span></button>`].join('');
   document.getElementById('shareYardProfile').addEventListener('click',()=>{const shareData={title:name+' | 3 Pedals Auto KE',text:'Explore available vehicles from '+name+' on 3 Pedals Auto KE.',url:window.location.href};if(typeof navigator.share==='function'){navigator.share(shareData).catch(err=>{if(err&&err.name==='AbortError')return;if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(shareData.url).then(()=>showYardNotice('Dealer profile link copied.')).catch(()=>showYardNotice('Share URL: '+shareData.url))}else showYardNotice('Share URL: '+shareData.url)})}else if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(shareData.url).then(()=>showYardNotice('Dealer profile link copied.')).catch(()=>showYardNotice('Share URL: '+shareData.url))}else{showYardNotice('Share URL: '+shareData.url)}});
   const fuelValues=[...new Set(rows.map(r=>String(r.fuel||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
   document.getElementById('yardFuelFilter').innerHTML='<option value="">All fuel types</option>'+fuelValues.map(f=>`<option value="${esc(f.toLowerCase())}">${esc(f)}</option>`).join('');
@@ -644,6 +650,6 @@ document.addEventListener('click', function(event) {
 }
 @media(max-width:760px) and (prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}
 </style>
-<script defer src="/site-ux.js?v=20261127-up1"></script>
+<script defer src="/site-ux.js?v=20261128-ux1"></script>
 </body>
 </html>

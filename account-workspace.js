@@ -146,7 +146,7 @@
           el.setAttribute("aria-label", isSaved ? "Remove from wishlist" : "Add to wishlist");
           el.title = isSaved ? "Remove from wishlist" : "Save to wishlist";
         } else {
-          el.textContent = isSaved ? "Saved ✓" : "Save vehicle";
+          el.textContent = isSaved ? "Saved" : "Save vehicle";
         }
         el.setAttribute("aria-pressed", String(isSaved));
         el.disabled = Boolean(el.closest(".card.is-sold"));

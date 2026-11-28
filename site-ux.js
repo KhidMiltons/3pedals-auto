@@ -149,6 +149,31 @@
     return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>';
   }
 
+  const UX_ICONS = {
+    car: '<path d="M5 13l1.5-4.5A2 2 0 0 1 8.4 7h7.2a2 2 0 0 1 1.9 1.5L19 13"/><rect x="3" y="13" width="18" height="5" rx="2"/><circle cx="7.5" cy="18" r="1.5"/><circle cx="16.5" cy="18" r="1.5"/>',
+    wrench: '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76Z"/>',
+    calendar: '<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+    user: '<circle cx="12" cy="8" r="4"/><path d="M5 20a7 7 0 0 1 14 0"/>',
+    alert: '<circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><circle cx="12" cy="16.5" r=".75" fill="currentColor" stroke="none"/>',
+    trash: '<path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M6 6l1 14h10l1-14"/><path d="M10 11v6M14 11v6"/>',
+    check: '<circle cx="12" cy="12" r="9"/><path d="m9 12 2 2 4-4"/>',
+    search: '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
+    pin: '<path d="M12 21s-6-5.3-6-10a6 6 0 1 1 12 0c0 4.7-6 10-6 10Z"/><circle cx="12" cy="11" r="2.2"/>',
+    layers: '<path d="m12 3 9 4.5-9 4.5-9-4.5L12 3Z"/><path d="m3 12 9 4.5 9-4.5"/><path d="m3 16.5 9 4.5 9-4.5"/>',
+    tag: '<path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82Z"/><circle cx="7" cy="7" r="1.5"/>',
+    info: '<circle cx="12" cy="12" r="9"/><path d="M12 16v-4"/><circle cx="12" cy="8.5" r=".75" fill="currentColor" stroke="none"/>',
+    shield: '<path d="M12 3 4 6.5v5.3c0 4.8 3.4 9 8 10.2 4.6-1.2 8-5.4 8-10.2V6.5L12 3Z"/><path d="m9.5 12 1.8 1.8 3.5-3.6"/>',
+    phone: '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/>',
+    close: '<path d="M18 6 6 18M6 6l12 12"/>',
+    chevLeft: '<path d="m15 18-6-6 6-6"/>',
+    chevRight: '<path d="m9 18 6-6-6-6"/>'
+  };
+
+  function uxIcon(name, size = 18) {
+    const body = UX_ICONS[name] || UX_ICONS.info;
+    return `<svg class="ux-svg-icon" viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${body}</svg>`;
+  }
+
   function homeIconSvg() {
     return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5L12 3l9 7.5"/><path d="M5.5 9.8V19.5A1.5 1.5 0 0 0 7 21h3.5v-5a1.5 1.5 0 0 1 3 0v5H17a1.5 1.5 0 0 0 1.5-1.5V9.8"/></svg>';
   }
@@ -956,7 +981,7 @@
           <h2>${t("recentlyViewedTitle")}</h2>
           <p class="meta" style="margin:3px 0 0">${t("recentlyViewedSub")}</p>
         </div>
-        <button type="button" class="ux-clear-history" data-ux-clear-recent-vehicles>${t("clearHistory")}</button>
+        <button type="button" class="ux-clear-history ux-btn-danger" data-ux-clear-recent-vehicles>${uxIcon("trash", 15)}<span>${t("clearHistory")}</span></button>
       </div>
       <div class="ux-recent-grid">
         ${items
@@ -1122,58 +1147,117 @@
 
     let selectedDate = nextWorkday;
     let selectedSlot = "09:00 AM";
+    let activeStep = "vehicle";
     const selParts = logic?.parseIsoDateParts?.(selectedDate);
     let viewYear = selParts ? selParts.year : now.getFullYear();
     let viewMonth = selParts ? selParts.monthIndex : now.getMonth();
     let bookedMap = readLocalBookingsMap();
     let slotsLoading = Boolean(opts.sb);
 
+    const stepDefs = [
+      { key: "vehicle", icon: "car", label: sw ? "Gari" : "Vehicle details" },
+      { key: "scope", icon: "wrench", label: sw ? "Wigo" : "Inspection Scope" },
+      { key: "schedule", icon: "calendar", label: sw ? "Ratiba" : "Schedule" },
+      { key: "details", icon: "user", label: sw ? "Mawasiliano" : "Your details" }
+    ];
+
+    const serviceOptions = [
+      {
+        value: "Pre-purchase inspection",
+        icon: "wrench",
+        title: sw ? "Ukaguzi kwenye gereji ya 3 Pedals" : "Workshop bay inspection at 3 Pedals Garage",
+        desc: sw
+          ? "Inafanyika Kiambu Road na lifti kamili, ukaguzi wa chini ya gari, injini na mfumo wa breki."
+          : "Full lift access, chassis underbody, compression check, and OBD-II scan at our Kiambu Road bay."
+      },
+      {
+        value: "Mobile yard pre-purchase inspection",
+        icon: "pin",
+        title: sw ? "Mekanika aje kwenye yadi au kwa muuzaji" : "Mobile mechanic at seller or yard",
+        desc: sw
+          ? "Fundi wetu anakwenda alipo muuzaji au yadi kufanya ukaguzi na jaribio la barabarani."
+          : "Our inspector travels directly to the car yard or seller address for on-site diagnostics and road test."
+      }
+    ];
+
+    const mileageFormatted = `${fmtNum(c.km)} km`;
+    const priceFormatted = `KES ${fmtNum(c.price)}`;
+    const vehicleMetaText = sw
+      ? `Mwendo: ${mileageFormatted} · Mafuta: ${c.fuel || "Petrol"} · Inatolewa na: ${sellerLabel}${locText}`
+      : `Mileage: ${mileageFormatted} · Fuel: ${c.fuel || "Petrol"} · Offered by: ${sellerLabel}${locText}`;
+
     dlg.innerHTML = `
       <div class="ux-inspect-modal-shell">
-        <div class="ux-inspect-modal-head">
-          <div>
-            <span class="eyebrow">${sw ? "UKAGUZI WA 3 PEDALS GARAGE" : "3 PEDALS GARAGE INSPECTION"} · ${escapeHtml(vehicleRef)}</span>
-            <h2 id="inspectionBookingTitle">${sw ? "Weka Miadi ya Ukaguzi" : "Book Vehicle Inspection"}</h2>
-          </div>
-          <button type="button" class="ux-inspect-modal-close" id="closeInspectModalBtn" aria-label="${sw ? "Funga dirisha la ukaguzi" : "Close inspection booking"}">×</button>
-        </div>
-
-        <div class="ux-inspect-car">
-          ${photo ? `<img src="${escapeHtml(photo)}" alt="${escapeHtml(title)}">` : `<div class="ux-inspect-car-fallback" aria-hidden="true">3P</div>`}
-          <div class="ux-inspect-car-meta">
-            <strong>${escapeHtml(title)}</strong>
-            <div class="ux-inspect-car-price">KES ${fmtNum(c.price)}</div>
-            <span class="ux-inspect-car-sub">${escapeHtml(fmtNum(c.km))} km · ${escapeHtml(c.fuel || "Petrol")} · ${escapeHtml(sellerLabel + locText)}</span>
-          </div>
-        </div>
-
-        <div class="ux-inspect-callback-card" id="inspectCallbackCard">
-          <div class="ux-inspect-callback-head">
+        <div class="ux-inspect-topbar">
+          <div class="ux-inspect-modal-head">
             <div>
-              <span class="ux-callback-badge">${sw ? "USHAURI WA KITAALAM KABLA YA MIADI" : "Pre-Booking Technical Advice"}</span>
-              <strong>${sw ? "Una swali la kiufundi kuhusu gari hili?" : "Have a technical question before booking?"}</strong>
-              <small>${sw ? `Uliza mekanika wa 3 Pedals moja kwa moja kuhusu ${escapeHtml(title)}.` : `Ask a 3 Pedals mechanic directly about ${escapeHtml(title)} before you finalize.`}</small>
+              <span class="eyebrow">${uxIcon("shield", 14)} <span>${sw ? "UKAGUZI WA 3 PEDALS GARAGE" : "3 PEDALS GARAGE INSPECTION"} · ${escapeHtml(vehicleRef)}</span></span>
+              <h2 id="inspectionBookingTitle">${sw ? "Weka Miadi ya Ukaguzi" : "Book Vehicle Inspection"}</h2>
             </div>
-            <button
-              type="button"
-              class="ux-inspect-callback-toggle"
-              id="inspectAskMechanicBtn"
-              aria-expanded="false"
-              aria-controls="inspectAskMechanicPanel"
-            >${sw ? "Uliza Mekanika" : "Ask a Mechanic"}</button>
+            <button type="button" class="ux-inspect-modal-close" id="closeInspectModalBtn" aria-label="${sw ? "Funga dirisha la ukaguzi" : "Close inspection booking"}">${uxIcon("close", 18)}</button>
           </div>
-          <div class="ux-inspect-callback-body" id="inspectAskMechanicPanel" hidden>
-            <div class="ux-inspect-field">
-              <label for="inspectCallbackQuestion">${sw ? `Swali la Kiufundi Kuhusu ${escapeHtml(title)}` : `Technical Question About ${escapeHtml(title)}`}</label>
-              <textarea id="inspectCallbackQuestion" rows="3" maxlength="600" placeholder="${sw ? "Andika swali lako la kiufundi (mf. injini, gearbox ya CVT, betri ya hybrid, au rekodi za service)…" : "Ask about engine reliability, CVT/transmission health, hybrid battery condition, suspension, or common faults…"}"></textarea>
+
+          <div class="ux-inspect-progress" id="inspectProgressBar" role="region" aria-label="${sw ? "Hatua za kuweka miadi" : "Booking progress"}">
+            <div class="ux-inspect-progress-meta">
+              <span id="inspectProgressStepLabel">${sw ? "Hatua 1 kati ya 4 · Maelezo ya gari" : "Step 1 of 4 · Vehicle details"}</span>
+              <strong id="inspectProgressPct">25%</strong>
             </div>
-            <div class="ux-inspect-row">
+            <div class="ux-inspect-progress-track" aria-hidden="true">
+              <div class="ux-inspect-progress-fill" id="inspectProgressFill" style="width:25%"></div>
+            </div>
+            <div class="ux-inspect-steps" role="tablist" aria-label="${sw ? "Sehemu za fomu" : "Form sections"}">
+              ${stepDefs
+                .map(
+                  (st, i) => `<button type="button" class="ux-inspect-step${i === 0 ? " is-active is-done" : ""}" data-step-key="${st.key}" role="tab" aria-selected="${i === 0 ? "true" : "false"}">${uxIcon(st.icon, 15)}<span>${escapeHtml(st.label)}</span></button>`
+                )
+                .join("")}
+            </div>
+          </div>
+        </div>
+
+        <section class="ux-inspect-group" id="inspectGroupVehicle" data-step-group="vehicle">
+          <div class="ux-inspect-group-head">
+            <div class="ux-inspect-group-title">${uxIcon("car", 18)}<h3>${sw ? "Maelezo ya Gari" : "Vehicle details"}</h3></div>
+            <p class="ux-inspect-group-desc">${sw ? "Hakiki gari unalokagua na uulize mekanika swali lolote la kiufundi kabla ya kuthibitisha." : "Confirm the vehicle you are booking for and ask a mechanic any technical question first."}</p>
+          </div>
+
+          <div class="ux-inspect-car">
+            ${photo ? `<img src="${escapeHtml(photo)}" alt="${escapeHtml(title)}">` : `<div class="ux-inspect-car-fallback" aria-hidden="true">${uxIcon("car", 22)}</div>`}
+            <div class="ux-inspect-car-meta">
+              <strong>${escapeHtml(title)}</strong>
+              <div class="ux-inspect-car-price">${sw ? "Bei iliyoorodheshwa:" : "Listed price:"} ${escapeHtml(priceFormatted)}</div>
+              <span class="ux-inspect-car-sub">${escapeHtml(vehicleMetaText)}</span>
+            </div>
+          </div>
+
+          <div class="ux-inspect-callback-card" id="inspectCallbackCard">
+            <div class="ux-inspect-callback-head">
+              <div>
+                <span class="ux-callback-badge">${uxIcon("phone", 14)} <span>${sw ? "Ushauri wa Mekanika Kabla ya Miadi" : "Pre-Booking Technical Advice"}</span></span>
+                <strong>${sw ? "Una swali la kiufundi kuhusu gari hili?" : "Have a technical question before booking?"}</strong>
+                <small>${sw ? `Uliza mekanika wa 3 Pedals moja kwa moja kuhusu ${escapeHtml(title)}.` : `Ask a 3 Pedals mechanic directly about ${escapeHtml(title)} before you finalize.`}</small>
+              </div>
+              <button
+                type="button"
+                class="ux-inspect-callback-toggle"
+                id="inspectAskMechanicBtn"
+                aria-expanded="false"
+                aria-controls="inspectAskMechanicPanel"
+              >${uxIcon("wrench", 15)}<span>${sw ? "Uliza Mekanika" : "Ask a Mechanic"}</span></button>
+            </div>
+            <div class="ux-inspect-callback-body" id="inspectAskMechanicPanel" hidden>
               <div class="ux-inspect-field">
-                <label for="inspectCallbackPhone">${sw ? "Namba ya Simu / WhatsApp ya Majibu" : "Phone / WhatsApp for Mechanic Reply"}</label>
-                <input type="tel" id="inspectCallbackPhone" maxlength="40" placeholder="0712 345 678" value="${escapeHtml(defaultPhone)}">
+                <label for="inspectCallbackQuestion">${sw ? `Swali la kiufundi kuhusu ${escapeHtml(title)}` : `Technical question about ${escapeHtml(title)}`}</label>
+                <textarea id="inspectCallbackQuestion" rows="3" maxlength="600" placeholder="${sw ? "Andika swali lako la kiufundi (mf. injini, gearbox ya CVT, betri ya hybrid, au rekodi za service)…" : "Ask about engine reliability, CVT/transmission health, hybrid battery condition, suspension, or common faults…"}"></textarea>
+                <p class="ux-field-error" id="errCallbackQuestion" role="alert" hidden></p>
               </div>
               <div class="ux-inspect-field">
-                <label for="inspectCallbackWindow">${sw ? "Njia / Muda wa Majibu" : "Preferred Advice Channel"}</label>
+                <label for="inspectCallbackPhone">${sw ? "Namba ya Simu / WhatsApp ya Majibu" : "Phone / WhatsApp for mechanic reply"}</label>
+                <input type="tel" id="inspectCallbackPhone" maxlength="40" placeholder="0712 345 678" value="${escapeHtml(defaultPhone)}">
+                <p class="ux-field-error" id="errCallbackPhone" role="alert" hidden></p>
+              </div>
+              <div class="ux-inspect-field">
+                <label for="inspectCallbackWindow">${sw ? "Njia / Muda wa Majibu" : "Preferred advice channel"}</label>
                 <select id="inspectCallbackWindow">
                   <option value="Phone call (ASAP)">${sw ? "Simu haraka iwezekanavyo" : "Phone call (ASAP)"}</option>
                   <option value="WhatsApp technical reply">${sw ? "Ujumbe wa kiufundi WhatsApp" : "WhatsApp technical reply"}</option>
@@ -1181,89 +1265,126 @@
                   <option value="Afternoon callback (12 PM – 5 PM)">${sw ? "Simu mchana (12 PM – 5 PM)" : "Afternoon callback (12 PM – 5 PM)"}</option>
                 </select>
               </div>
-            </div>
-            <p class="ux-inspect-status" id="inspectCallbackStatus" role="status" aria-live="polite" hidden></p>
-            <div class="ux-inspect-actions">
-              <button type="button" class="ux-inspect-callback-submit" id="inspectCallbackSubmitBtn">${sw ? "Tuma Swali kwa Mekanika" : "Send Question to Mechanic"}</button>
+              <p class="ux-inspect-status" id="inspectCallbackStatus" role="status" aria-live="polite" hidden></p>
+              <div class="ux-inspect-actions">
+                <button type="button" class="ux-inspect-callback-submit" id="inspectCallbackSubmitBtn">${uxIcon("phone", 16)}<span>${sw ? "Tuma Swali kwa Mekanika" : "Send Question to Mechanic"}</span></button>
+              </div>
             </div>
           </div>
-        </div>
+        </section>
 
         <form class="ux-inspect-form" id="inspectionBookingForm" novalidate>
-          <div class="ux-inspect-field">
-            <label for="inspectServiceType">${sw ? "Aina ya Ukaguzi" : "Inspection Type"}</label>
-            <select id="inspectServiceType" name="serviceType">
-              <option value="Pre-purchase inspection">${sw ? "Ukaguzi wa Kabla ya Kununua (3 Pedals Garage)" : "Pre-purchase inspection (3 Pedals Garage)"}</option>
-              <option value="Mobile yard pre-purchase inspection">${sw ? "Ukaguzi wa Moja kwa Moja kwenye Yadi" : "Mobile inspection at seller / car yard"}</option>
-            </select>
-          </div>
-
-          <div class="ux-inspect-scheduler" id="inspectScheduler">
-            <div class="ux-cal-pane">
-              <div class="ux-cal-header">
-                <button type="button" class="ux-cal-nav" id="inspectCalPrev" aria-label="${sw ? "Mwezi uliopita" : "Previous month"}">‹</button>
-                <strong class="ux-cal-month" id="inspectCalMonthLabel"></strong>
-                <button type="button" class="ux-cal-nav" id="inspectCalNext" aria-label="${sw ? "Mwezi ujao" : "Next month"}">›</button>
-              </div>
-              <div class="ux-cal-weekdays" aria-hidden="true">
-                <span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span>
-              </div>
-              <div class="ux-cal-grid" id="inspectCalGrid" role="grid" aria-label="${sw ? "Chagua tarehe ya ukaguzi" : "Select inspection date"}"></div>
-              <div class="ux-cal-legend">
-                <span><i class="dot dot-open"></i>${sw ? "Inapatikana" : "Open"}</span>
-                <span><i class="dot dot-busy"></i>${sw ? "Baadhi zimejaa" : "Partial"}</span>
-                <span><i class="dot dot-closed"></i>${sw ? "Jumapili imefungwa" : "Sun Closed"}</span>
-              </div>
+          <section class="ux-inspect-group" id="inspectGroupScope" data-step-group="scope">
+            <div class="ux-inspect-group-head">
+              <div class="ux-inspect-group-title">${uxIcon("wrench", 18)}<h3>${sw ? "Aina na Wigo wa Ukaguzi" : "Inspection Scope"}</h3></div>
+              <p class="ux-inspect-group-desc">${sw ? "Chagua mahali ukaguzi ufanyike kisha uonyeshe mifumo unayotaka itiliwe mkazo." : "Pick how the inspection happens and highlight which vehicle components to prioritize."}</p>
             </div>
 
-            <div class="ux-slots-pane">
-              <div class="ux-slots-head">
-                <span class="ux-slots-title">${sw ? "Muda Unaopatikana" : "Available Time Slots"}</span>
-                <span class="ux-slots-date-badge" id="inspectSelectedDateBadge"></span>
-              </div>
-              <div class="ux-slots-grid" id="inspectSlotsGrid" role="radiogroup" aria-label="${sw ? "Chagua muda" : "Select time slot"}"></div>
-              <p class="ux-slots-sync-note" id="inspectSlotsSyncNote"></p>
-            </div>
-            <input type="hidden" id="inspectDate" name="date" value="${escapeHtml(selectedDate)}">
-            <input type="hidden" id="inspectTimeSlot" name="timeSlot" value="${escapeHtml(selectedSlot)}">
-          </div>
-
-          <div class="ux-inspect-field ux-inspect-scope-field">
-            <label for="inspectScopeInput">${sw ? "Wigo wa Ukaguzi (Inspection Scope)" : "Inspection Scope"}</label>
-            <div class="ux-scope-chips" id="inspectScopeChips" role="group" aria-label="${sw ? "Chagua sehemu za kukagua" : "Prioritize inspection components"}">
-              ${SCOPE_PRESETS.map((preset) => `<button type="button" class="ux-scope-chip" data-scope-preset="${escapeHtml(preset)}" aria-pressed="false">${escapeHtml(preset)}</button>`).join("")}
-            </div>
-            <textarea id="inspectScopeInput" name="inspectionScope" rows="2" maxlength="400" placeholder="${sw ? "Chagua hapo juu au andika sehemu mahususi (mf. Engine only, Full chassis, Paintwork check)…" : "Select chips above or type specific components to prioritize (e.g., Engine only, Full chassis, Paintwork check)…"}"></textarea>
-          </div>
-
-          <div class="ux-inspect-row">
             <div class="ux-inspect-field">
-              <label for="inspectCustomerName">${sw ? "Jina Lako" : "Your Name"}</label>
+              <label for="inspectServiceChoices">${sw ? "Mahali pa Ukaguzi" : "Inspection Type"}</label>
+              <div class="ux-service-choices" id="inspectServiceChoices" role="radiogroup" aria-label="${sw ? "Chagua aina ya ukaguzi" : "Choose inspection location"}">
+                ${serviceOptions
+                  .map(
+                    (opt, idx) => `
+                  <button type="button" class="ux-service-choice${idx === 0 ? " is-selected" : ""}" data-service-choice="${escapeHtml(opt.value)}" role="radio" aria-checked="${idx === 0 ? "true" : "false"}">
+                    <span class="ux-service-choice-head">${uxIcon(opt.icon, 16)}<strong>${escapeHtml(opt.title)}</strong></span>
+                    <span class="ux-service-choice-desc">${escapeHtml(opt.desc)}</span>
+                  </button>`
+                  )
+                  .join("")}
+              </div>
+              <select id="inspectServiceType" name="serviceType" hidden aria-hidden="true" tabindex="-1">
+                <option value="Pre-purchase inspection" selected>${sw ? "Ukaguzi wa Kabla ya Kununua (3 Pedals Garage)" : "Pre-purchase inspection (3 Pedals Garage)"}</option>
+                <option value="Mobile yard pre-purchase inspection">${sw ? "Ukaguzi wa Moja kwa Moja kwenye Yadi" : "Mobile inspection at seller / car yard"}</option>
+              </select>
+            </div>
+
+            <div class="ux-inspect-field ux-inspect-scope-field">
+              <label for="inspectScopeInput">${sw ? "Wigo wa Ukaguzi (Inspection Scope)" : "Priority Components (Inspection Scope)"}</label>
+              <div class="ux-scope-chips" id="inspectScopeChips" role="group" aria-label="${sw ? "Chagua sehemu za kukagua" : "Prioritize inspection components"}">
+                ${SCOPE_PRESETS.map((preset) => `<button type="button" class="ux-scope-chip" data-scope-preset="${escapeHtml(preset)}" aria-pressed="false">${escapeHtml(preset)}</button>`).join("")}
+              </div>
+              <textarea id="inspectScopeInput" name="inspectionScope" rows="2" maxlength="400" placeholder="${sw ? "Chagua hapo juu au andika sehemu mahususi (mf. Engine only, Full chassis, Paintwork check)…" : "Select chips above or type specific components to prioritize (e.g., Engine only, Full chassis, Paintwork check)…"}"></textarea>
+              <p class="ux-field-error" id="errInspectScope" role="alert" hidden></p>
+            </div>
+          </section>
+
+          <section class="ux-inspect-group" id="inspectGroupSchedule" data-step-group="schedule">
+            <div class="ux-inspect-group-head">
+              <div class="ux-inspect-group-title">${uxIcon("calendar", 18)}<h3>${sw ? "Ratiba na Muda" : "Schedule"}</h3></div>
+              <p class="ux-inspect-group-desc">${sw ? "Chagua siku ya Jumatatu–Jumamosi kisha chagua saa iliyo wazi ili kuepuka mwingiliano wa miadi." : "Pick a Monday–Saturday date, then choose an open hour slot to prevent double-booking."}</p>
+            </div>
+
+            <div class="ux-inspect-scheduler" id="inspectScheduler">
+              <div class="ux-cal-pane">
+                <div class="ux-cal-header">
+                  <button type="button" class="ux-cal-nav" id="inspectCalPrev" aria-label="${sw ? "Mwezi uliopita" : "Previous month"}">${uxIcon("chevLeft", 16)}</button>
+                  <strong class="ux-cal-month" id="inspectCalMonthLabel"></strong>
+                  <button type="button" class="ux-cal-nav" id="inspectCalNext" aria-label="${sw ? "Mwezi ujao" : "Next month"}">${uxIcon("chevRight", 16)}</button>
+                </div>
+                <div class="ux-cal-weekdays" aria-hidden="true">
+                  <span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span>
+                </div>
+                <div class="ux-cal-grid" id="inspectCalGrid" role="grid" aria-label="${sw ? "Chagua tarehe ya ukaguzi" : "Select inspection date"}"></div>
+                <div class="ux-cal-legend">
+                  <span><i class="dot dot-open"></i>${sw ? "Inapatikana" : "Open"}</span>
+                  <span><i class="dot dot-busy"></i>${sw ? "Baadhi zimejaa" : "Partial"}</span>
+                  <span><i class="dot dot-closed"></i>${sw ? "Jumapili imefungwa" : "Sun Closed"}</span>
+                </div>
+              </div>
+              <p class="ux-field-error" id="errInspectDate" role="alert" hidden></p>
+
+              <div class="ux-slots-pane">
+                <div class="ux-slots-head">
+                  <span class="ux-slots-title">${sw ? "Muda Unaopatikana" : "Available Time Slots"}</span>
+                  <span class="ux-slots-date-badge" id="inspectSelectedDateBadge"></span>
+                </div>
+                <div class="ux-slots-grid" id="inspectSlotsGrid" role="radiogroup" aria-label="${sw ? "Chagua muda" : "Select time slot"}"></div>
+                <p class="ux-slots-sync-note" id="inspectSlotsSyncNote"></p>
+              </div>
+              <p class="ux-field-error" id="errInspectSlot" role="alert" hidden></p>
+
+              <input type="hidden" id="inspectDate" name="date" value="${escapeHtml(selectedDate)}">
+              <input type="hidden" id="inspectTimeSlot" name="timeSlot" value="${escapeHtml(selectedSlot)}">
+            </div>
+          </section>
+
+          <section class="ux-inspect-group" id="inspectGroupDetails" data-step-group="details">
+            <div class="ux-inspect-group-head">
+              <div class="ux-inspect-group-title">${uxIcon("user", 18)}<h3>${sw ? "Maelezo Yako ya Mawasiliano" : "Your details"}</h3></div>
+              <p class="ux-inspect-group-desc">${sw ? "Tutakutumia uthibitisho wa miadi na ripoti ya ukaguzi kupitia namba hii." : "We will send your inspection confirmation and garage report using these details."}</p>
+            </div>
+
+            <div class="ux-inspect-field">
+              <label for="inspectCustomerName">${sw ? "Jina Lako Kamili" : "Your full name"}</label>
               <input type="text" id="inspectCustomerName" name="name" autocomplete="name" maxlength="120" placeholder="Jane Mwangi" value="${escapeHtml(defaultName)}" required>
+              <p class="ux-field-error" id="errInspectName" role="alert" hidden></p>
             </div>
-            <div class="ux-inspect-field">
-              <label for="inspectCustomerPhone">${sw ? "Namba ya Simu / WhatsApp" : "Phone / WhatsApp"}</label>
-              <input type="tel" id="inspectCustomerPhone" name="phone" autocomplete="tel" maxlength="40" placeholder="0712 345 678" value="${escapeHtml(defaultPhone)}" required>
-            </div>
-          </div>
 
-          <div class="ux-inspect-row">
             <div class="ux-inspect-field">
-              <label for="inspectCustomerEmail">${sw ? "Barua Pepe (hiari)" : "Email (optional)"}</label>
-              <input type="email" id="inspectCustomerEmail" name="email" autocomplete="email" maxlength="254" placeholder="you@example.com" value="${escapeHtml(defaultEmail)}">
+              <label for="inspectCustomerPhone">${sw ? "Namba ya Simu / WhatsApp" : "Phone / WhatsApp number"}</label>
+              <input type="tel" id="inspectCustomerPhone" name="phone" autocomplete="tel" maxlength="40" placeholder="0712 345 678" value="${escapeHtml(defaultPhone)}" required>
+              <p class="ux-field-error" id="errInspectPhone" role="alert" hidden></p>
             </div>
+
             <div class="ux-inspect-field">
-              <label for="inspectNotes">${sw ? "Eneo la Gari / Maelezo (hiari)" : "Yard Location / Notes (optional)"}</label>
+              <label for="inspectCustomerEmail">${sw ? "Barua Pepe (hiari)" : "Email address (optional)"}</label>
+              <input type="email" id="inspectCustomerEmail" name="email" autocomplete="email" maxlength="254" placeholder="you@example.com" value="${escapeHtml(defaultEmail)}">
+              <p class="ux-field-error" id="errInspectEmail" role="alert" hidden></p>
+            </div>
+
+            <div class="ux-inspect-field">
+              <label for="inspectNotes">${sw ? "Eneo la Gari / Maelezo ya Ziada (hiari)" : "Yard location / extra notes (optional)"}</label>
               <input type="text" id="inspectNotes" name="notes" maxlength="300" placeholder="${escapeHtml(s.location ? `At ${s.location}` : "Yard directions or extra requests…")}" value="${escapeHtml(s.location ? `Vehicle location: ${s.location}` : "")}">
             </div>
-          </div>
+          </section>
 
           <p class="ux-inspect-status" id="inspectBookingStatus" role="status" aria-live="polite" hidden></p>
           <div class="ux-inspect-confirm-links" id="inspectConfirmLinks" hidden></div>
 
           <div class="ux-inspect-actions">
-            <button type="submit" class="ux-inspect-submit" id="inspectSubmitBtn">${sw ? "Thibitisha Miadi ya Ukaguzi" : "Confirm Inspection Booking"}</button>
-            <a class="ux-inspect-secondary" href="${escapeHtml(garageHref)}">${sw ? "Ukurasa wa Gereji" : "Open Garage Page"}</a>
+            <button type="submit" class="ux-inspect-submit" id="inspectSubmitBtn">${uxIcon("check", 18)}<span>${sw ? "Thibitisha Miadi ya Ukaguzi" : "Confirm Inspection Booking"}</span></button>
+            <a class="ux-inspect-secondary" href="${escapeHtml(garageHref)}">${sw ? "Fungua Ukurasa wa Gereji" : "Open Garage Page"}</a>
           </div>
         </form>
       </div>
@@ -1276,10 +1397,47 @@
     const syncNoteEl = document.getElementById("inspectSlotsSyncNote");
     const dateHiddenEl = document.getElementById("inspectDate");
     const slotHiddenEl = document.getElementById("inspectTimeSlot");
+    const serviceSelectEl = document.getElementById("inspectServiceType");
+    const serviceChoicesEl = document.getElementById("inspectServiceChoices");
     const scopeInputEl = document.getElementById("inspectScopeInput");
     const scopeChipsEl = document.getElementById("inspectScopeChips");
+    const nameInputEl = document.getElementById("inspectCustomerName");
+    const phoneInputEl = document.getElementById("inspectCustomerPhone");
+    const emailInputEl = document.getElementById("inspectCustomerEmail");
+    const notesInputEl = document.getElementById("inspectNotes");
     const statusEl = document.getElementById("inspectBookingStatus");
     const linksEl = document.getElementById("inspectConfirmLinks");
+
+    const setFieldError = (errId, inputEl, message) => {
+      const errEl = document.getElementById(errId);
+      if (errEl) {
+        if (message) {
+          errEl.innerHTML = `${uxIcon("alert", 15)}<span>${escapeHtml(message)}</span>`;
+          errEl.hidden = false;
+        } else {
+          errEl.innerHTML = "";
+          errEl.hidden = true;
+        }
+      }
+      if (inputEl) {
+        if (message) inputEl.setAttribute("aria-invalid", "true");
+        else inputEl.removeAttribute("aria-invalid");
+      }
+    };
+
+    const clearBookingErrors = () => {
+      setFieldError("errInspectDate", calGridEl, "");
+      setFieldError("errInspectSlot", slotsGridEl, "");
+      setFieldError("errInspectScope", scopeInputEl, "");
+      setFieldError("errInspectName", nameInputEl, "");
+      setFieldError("errInspectPhone", phoneInputEl, "");
+      setFieldError("errInspectEmail", emailInputEl, "");
+    };
+
+    const clearCallbackErrors = () => {
+      setFieldError("errCallbackQuestion", document.getElementById("inspectCallbackQuestion"), "");
+      setFieldError("errCallbackPhone", document.getElementById("inspectCallbackPhone"), "");
+    };
 
     const setStatus = (msg, isErr = false) => {
       if (!statusEl) return;
@@ -1287,6 +1445,81 @@
       statusEl.classList.toggle("is-error", isErr);
       statusEl.hidden = !msg;
     };
+
+    const updateProgressBar = () => {
+      const progress = logic?.computeInspectionBookingProgress
+        ? logic.computeInspectionBookingProgress({
+            activeStep,
+            scopeText: scopeInputEl?.value || "",
+            serviceType: serviceSelectEl?.value || "Pre-purchase inspection",
+            date: selectedDate,
+            timeSlot: selectedSlot,
+            name: nameInputEl?.value || "",
+            phone: phoneInputEl?.value || "",
+            email: emailInputEl?.value || ""
+          })
+        : {
+            steps: stepDefs.map((st, index) => ({
+              key: st.key,
+              index,
+              completed: index === 0,
+              active: st.key === activeStep
+            })),
+            activeStep,
+            activeIndex: Math.max(0, stepDefs.findIndex((s) => s.key === activeStep)),
+            completedCount: 1,
+            totalCount: 4,
+            percent: 25
+          };
+
+      const activeDef = stepDefs.find((s) => s.key === progress.activeStep) || stepDefs[0];
+      const stepLabelEl = document.getElementById("inspectProgressStepLabel");
+      const pctEl = document.getElementById("inspectProgressPct");
+      const fillEl = document.getElementById("inspectProgressFill");
+      if (stepLabelEl) {
+        if (progress.percent >= 100) {
+          stepLabelEl.textContent = sw
+            ? "Hatua 4 kati ya 4 · Tayari kuthibitisha"
+            : "Step 4 of 4 · Ready to confirm";
+        } else {
+          stepLabelEl.textContent = sw
+            ? `Hatua ${progress.activeIndex + 1} kati ya ${progress.totalCount} · ${activeDef.label}`
+            : `Step ${progress.activeIndex + 1} of ${progress.totalCount} · ${activeDef.label}`;
+        }
+      }
+      if (pctEl) pctEl.textContent = `${progress.percent}%`;
+      if (fillEl) fillEl.style.width = `${progress.percent}%`;
+
+      dlg.querySelectorAll(".ux-inspect-step[data-step-key]").forEach((btn) => {
+        const stepObj = progress.steps.find((s) => s.key === btn.dataset.stepKey);
+        if (!stepObj) return;
+        btn.classList.toggle("is-active", stepObj.active);
+        btn.classList.toggle("is-done", stepObj.completed);
+        btn.setAttribute("aria-selected", String(stepObj.active));
+      });
+    };
+
+    dlg.querySelectorAll(".ux-inspect-step[data-step-key]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const stepKey = btn.dataset.stepKey || "vehicle";
+        activeStep = stepKey;
+        updateProgressBar();
+        const target = dlg.querySelector(`[data-step-group="${stepKey}"]`);
+        target?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+
+    dlg.querySelectorAll("[data-step-group]").forEach((group) => {
+      const activateGroup = () => {
+        const key = group.dataset.stepGroup;
+        if (key && key !== activeStep) {
+          activeStep = key;
+          updateProgressBar();
+        }
+      };
+      group.addEventListener("focusin", activateGroup);
+      group.addEventListener("click", activateGroup);
+    });
 
     const getSlotsForDate = (iso) => {
       const bookedSlots = bookedMap[iso] || [];
@@ -1414,7 +1647,26 @@
             ? (sw ? `Nafasi ${openCount} za ukaguzi zipo wazi tarehe hii.` : `${openCount} of ${ALL_SLOTS.length} inspection slots available on this date.`)
             : (sw ? "Hakuna nafasi wazi tarehe hii — chagua siku nyingine." : "No open slots on this date — select another day.");
       }
+
+      updateProgressBar();
     };
+
+    const syncServiceChoices = (value) => {
+      if (serviceSelectEl) serviceSelectEl.value = value;
+      serviceChoicesEl?.querySelectorAll("[data-service-choice]").forEach((btn) => {
+        const active = btn.dataset.serviceChoice === value;
+        btn.classList.toggle("is-selected", active);
+        btn.setAttribute("aria-checked", String(active));
+      });
+      updateProgressBar();
+    };
+
+    serviceChoicesEl?.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-service-choice]");
+      if (!btn) return;
+      activeStep = "scope";
+      syncServiceChoices(btn.dataset.serviceChoice || "Pre-purchase inspection");
+    });
 
     const syncScopeChips = () => {
       if (!scopeChipsEl || !scopeInputEl) return;
@@ -1427,11 +1679,13 @@
         btn.classList.toggle("is-active", active);
         btn.setAttribute("aria-pressed", String(active));
       });
+      updateProgressBar();
     };
 
     scopeChipsEl?.addEventListener("click", (e) => {
       const chip = e.target.closest("[data-scope-preset]");
       if (!chip || !scopeInputEl) return;
+      activeStep = "scope";
       const preset = chip.dataset.scopePreset || "";
       if (logic?.toggleInspectionScopeItem) {
         scopeInputEl.value = logic.toggleInspectionScopeItem(scopeInputEl.value, preset);
@@ -1442,14 +1696,21 @@
         else cur.push(preset);
         scopeInputEl.value = cur.join(", ");
       }
+      setFieldError("errInspectScope", scopeInputEl, "");
       syncScopeChips();
     });
-    scopeInputEl?.addEventListener("input", syncScopeChips);
+    scopeInputEl?.addEventListener("input", () => {
+      activeStep = "scope";
+      setFieldError("errInspectScope", scopeInputEl, "");
+      syncScopeChips();
+    });
 
     calGridEl?.addEventListener("click", (e) => {
       const btn = e.target.closest("[data-cal-iso]");
       if (!btn || btn.disabled) return;
+      activeStep = "schedule";
       selectedDate = btn.dataset.calIso || selectedDate;
+      setFieldError("errInspectDate", calGridEl, "");
       if (statusEl?.classList.contains("is-error")) setStatus("", false);
       renderScheduler();
     });
@@ -1457,7 +1718,9 @@
     slotsGridEl?.addEventListener("click", (e) => {
       const btn = e.target.closest("[data-slot-val]");
       if (!btn || btn.disabled) return;
+      activeStep = "schedule";
       selectedSlot = btn.dataset.slotVal || selectedSlot;
+      setFieldError("errInspectSlot", slotsGridEl, "");
       if (statusEl?.classList.contains("is-error")) setStatus("", false);
       renderScheduler();
     });
@@ -1473,17 +1736,37 @@
 
     document.getElementById("closeInspectModalBtn")?.addEventListener("click", () => dlg.close());
 
-    // Keep callback phone pre-filled when user enters main phone
-    const mainPhoneEl = document.getElementById("inspectCustomerPhone");
     const cbPhoneEl = document.getElementById("inspectCallbackPhone");
     const askMechanicBtn = document.getElementById("inspectAskMechanicBtn");
     const askMechanicPanel = document.getElementById("inspectAskMechanicPanel");
     const cbQuestionEl = document.getElementById("inspectCallbackQuestion");
 
-    mainPhoneEl?.addEventListener("input", () => {
-      if (cbPhoneEl && !cbPhoneEl.dataset.edited) cbPhoneEl.value = mainPhoneEl.value;
+    nameInputEl?.addEventListener("input", () => {
+      activeStep = "details";
+      setFieldError("errInspectName", nameInputEl, "");
+      updateProgressBar();
     });
-    cbPhoneEl?.addEventListener("input", () => { cbPhoneEl.dataset.edited = "1"; });
+    phoneInputEl?.addEventListener("input", () => {
+      activeStep = "details";
+      if (cbPhoneEl && !cbPhoneEl.dataset.edited) {
+        cbPhoneEl.value = phoneInputEl.value;
+        setFieldError("errCallbackPhone", cbPhoneEl, "");
+      }
+      setFieldError("errInspectPhone", phoneInputEl, "");
+      updateProgressBar();
+    });
+    emailInputEl?.addEventListener("input", () => {
+      activeStep = "details";
+      setFieldError("errInspectEmail", emailInputEl, "");
+      updateProgressBar();
+    });
+    cbPhoneEl?.addEventListener("input", () => {
+      cbPhoneEl.dataset.edited = "1";
+      setFieldError("errCallbackPhone", cbPhoneEl, "");
+    });
+    cbQuestionEl?.addEventListener("input", () => {
+      setFieldError("errCallbackQuestion", cbQuestionEl, "");
+    });
 
     askMechanicBtn?.addEventListener("click", () => {
       if (!askMechanicPanel) return;
@@ -1492,8 +1775,8 @@
       askMechanicBtn.setAttribute("aria-expanded", String(willOpen));
       document.getElementById("inspectCallbackCard")?.classList.toggle("is-open", willOpen);
       if (willOpen) {
-        if (cbPhoneEl && !cbPhoneEl.dataset.edited && mainPhoneEl?.value && !cbPhoneEl.value) {
-          cbPhoneEl.value = mainPhoneEl.value;
+        if (cbPhoneEl && !cbPhoneEl.dataset.edited && phoneInputEl?.value && !cbPhoneEl.value) {
+          cbPhoneEl.value = phoneInputEl.value;
         }
         cbQuestionEl?.focus();
       }
@@ -1503,11 +1786,11 @@
     document.getElementById("inspectCallbackSubmitBtn")?.addEventListener("click", async () => {
       const cbBtn = document.getElementById("inspectCallbackSubmitBtn");
       const cbStatus = document.getElementById("inspectCallbackStatus");
-      const cbPhone = (document.getElementById("inspectCallbackPhone")?.value || mainPhoneEl?.value || "").trim();
+      const cbPhone = (cbPhoneEl?.value || phoneInputEl?.value || "").trim();
       const cbWindow = document.getElementById("inspectCallbackWindow")?.value || "Phone call (ASAP)";
       const cbQuestion = (cbQuestionEl?.value || "").trim();
-      const cbName = (document.getElementById("inspectCustomerName")?.value || defaultName || "Prospective Buyer").trim();
-      const cbEmail = (document.getElementById("inspectCustomerEmail")?.value || defaultEmail || "mechanic@3pedalsauto.co.ke").trim();
+      const cbName = (nameInputEl?.value || defaultName || "Prospective Buyer").trim();
+      const cbEmail = (emailInputEl?.value || defaultEmail || "mechanic@3pedalsauto.co.ke").trim();
 
       const setCbStatus = (m, err = false) => {
         if (!cbStatus) return;
@@ -1516,20 +1799,33 @@
         cbStatus.hidden = !m;
       };
 
-      if (cbQuestion.length < 5) {
-        setCbStatus(sw ? "Andika swali lako la kiufundi kuhusu gari hili." : "Please enter your technical question about this vehicle.", true);
-        cbQuestionEl?.focus();
-        return;
-      }
-      if (cbPhone.replace(/\D/g, "").length < 9) {
-        setCbStatus(sw ? "Weka namba sahihi ya simu ili mekanika akujibu." : "Enter a valid phone or WhatsApp number so our mechanic can reply.", true);
-        cbPhoneEl?.focus();
+      clearCallbackErrors();
+      const cbValidation = logic?.validateMechanicQuestion
+        ? logic.validateMechanicQuestion({ question: cbQuestion, phone: cbPhone, lang: sw ? "sw" : "en" })
+        : (() => {
+            const errors = {};
+            if (cbQuestion.length < 5) {
+              errors.question = sw ? "Andika swali lako la kiufundi kuhusu gari hili." : "Please enter your technical question about this vehicle.";
+            }
+            if (cbPhone.replace(/\D/g, "").length < 9) {
+              errors.phone = sw ? "Weka namba sahihi ya simu ili mekanika akujibu." : "Enter a valid phone or WhatsApp number so our mechanic can reply.";
+            }
+            const firstErrorField = errors.question ? "question" : errors.phone ? "phone" : null;
+            return { valid: !firstErrorField, errors, firstErrorField };
+          })();
+
+      if (!cbValidation.valid) {
+        if (cbValidation.errors.question) setFieldError("errCallbackQuestion", cbQuestionEl, cbValidation.errors.question);
+        if (cbValidation.errors.phone) setFieldError("errCallbackPhone", cbPhoneEl, cbValidation.errors.phone);
+        setCbStatus(sw ? "Rekebisha sehemu zilizoangaziwa hapa juu." : "Please fix the highlighted fields above before sending.", true);
+        if (cbValidation.firstErrorField === "question") cbQuestionEl?.focus();
+        else if (cbValidation.firstErrorField === "phone") cbPhoneEl?.focus();
         return;
       }
 
       if (cbBtn) {
         cbBtn.disabled = true;
-        cbBtn.textContent = sw ? "Inatuma swali…" : "Sending question…";
+        cbBtn.innerHTML = `${uxIcon("phone", 16)}<span>${sw ? "Inatuma swali…" : "Sending question…"}</span>`;
       }
       setCbStatus("", false);
       const cbRef = "MECH-" + Math.random().toString(36).slice(2, 7).toUpperCase();
@@ -1568,7 +1864,7 @@
       );
       if (cbBtn) {
         cbBtn.disabled = false;
-        cbBtn.textContent = sw ? "Uliza Swali Jingine" : "Ask Another Question";
+        cbBtn.innerHTML = `${uxIcon("phone", 16)}<span>${sw ? "Uliza Swali Jingine" : "Ask Another Question"}</span>`;
       }
       if (typeof opts.onNotice === "function") {
         opts.onNotice(sw ? `Swali limetumwa kwa mekanika (${cbRef})` : `Question sent to mechanic (${cbRef})`, { sub: `${title} · ${cbPhone}` });
@@ -1578,54 +1874,87 @@
     // Main Inspection Booking Submission
     document.getElementById("inspectionBookingForm")?.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const serviceType = document.getElementById("inspectServiceType")?.value || "Pre-purchase inspection";
+      clearBookingErrors();
+      const serviceType = serviceSelectEl?.value || "Pre-purchase inspection";
       const date = selectedDate;
       const timeSlot = selectedSlot;
       const scopeText = (scopeInputEl?.value || "").trim();
-      const name = (document.getElementById("inspectCustomerName")?.value || "").trim();
-      const phoneRaw = (document.getElementById("inspectCustomerPhone")?.value || "").trim();
-      const email = (document.getElementById("inspectCustomerEmail")?.value || "").trim();
-      const notes = (document.getElementById("inspectNotes")?.value || "").trim();
+      const name = (nameInputEl?.value || "").trim();
+      const phoneRaw = (phoneInputEl?.value || "").trim();
+      const email = (emailInputEl?.value || "").trim();
+      const notes = (notesInputEl?.value || "").trim();
 
-      if (!date) {
-        setStatus(sw ? "Tafadhali chagua tarehe kwenye kalenda." : "Please select an inspection date from the calendar.", true);
-        return;
-      }
-      const picked = new Date(date + "T00:00:00");
-      if (!Number.isFinite(picked.getTime()) || date < minDate || picked.getDay() === 0) {
-        setStatus(sw ? "Chagua tarehe wazi (Jumatatu–Jumamosi)." : "Please pick an open Monday–Saturday date.", true);
-        return;
-      }
-      if (!timeSlot) {
-        setStatus(sw ? "Chagua muda unaopatikana." : "Please choose an available time slot.", true);
-        return;
-      }
       const liveSlotCheck = getSlotsForDate(date).find((x) => x.slot === timeSlot);
-      if (!liveSlotCheck || !liveSlotCheck.available) {
-        setStatus(sw ? "Muda huo tayari umechukuliwa. Chagua muda mwingine." : "That time slot is already booked. Please choose another available slot.", true);
-        renderScheduler();
-        return;
-      }
-      if (name.length < 2) {
-        setStatus(sw ? "Weka jina lako kamili." : "Please enter your full name.", true);
-        document.getElementById("inspectCustomerName")?.focus();
-        return;
-      }
-      if (phoneRaw.replace(/\D/g, "").length < 9) {
-        setStatus(sw ? "Weka namba sahihi ya simu au WhatsApp." : "Please enter a valid phone or WhatsApp number.", true);
-        document.getElementById("inspectCustomerPhone")?.focus();
-        return;
-      }
-      if (email && !(logic?.isValidEmail ? logic.isValidEmail(email) : /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email))) {
-        setStatus(sw ? "Weka anwani sahihi ya barua pepe au acha wazi." : "Please enter a valid email address or leave it blank.", true);
-        document.getElementById("inspectCustomerEmail")?.focus();
+      const slotAvailable = Boolean(liveSlotCheck && liveSlotCheck.available);
+
+      const validation = logic?.validateInspectionBooking
+        ? logic.validateInspectionBooking({
+            date,
+            minDate,
+            slotAvailable,
+            timeSlot,
+            name,
+            phone: phoneRaw,
+            email,
+            lang: sw ? "sw" : "en"
+          })
+        : (() => {
+            const errors = {};
+            const picked = new Date(date + "T00:00:00");
+            if (!date || !Number.isFinite(picked.getTime()) || date < minDate || picked.getDay() === 0) {
+              errors.date = sw ? "Chagua tarehe wazi (Jumatatu–Jumamosi)." : "Please pick an open Monday–Saturday date.";
+            }
+            if (!timeSlot || !slotAvailable) {
+              errors.timeSlot = sw ? "Chagua muda unaopatikana." : "Please choose an available time slot.";
+            }
+            if (name.length < 2) errors.name = sw ? "Weka jina lako kamili." : "Please enter your full name.";
+            if (phoneRaw.replace(/\D/g, "").length < 9) {
+              errors.phone = sw ? "Weka namba sahihi ya simu au WhatsApp." : "Please enter a valid phone or WhatsApp number.";
+            }
+            if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+              errors.email = sw ? "Weka anwani sahihi ya barua pepe." : "Please enter a valid email address or leave it blank.";
+            }
+            const firstErrorField = ["date", "timeSlot", "name", "phone", "email"].find((k) => Boolean(errors[k])) || null;
+            return { valid: !firstErrorField, errors, firstErrorField };
+          })();
+
+      if (!validation.valid) {
+        if (validation.errors.date) setFieldError("errInspectDate", calGridEl, validation.errors.date);
+        if (validation.errors.timeSlot) setFieldError("errInspectSlot", slotsGridEl, validation.errors.timeSlot);
+        if (validation.errors.name) setFieldError("errInspectName", nameInputEl, validation.errors.name);
+        if (validation.errors.phone) setFieldError("errInspectPhone", phoneInputEl, validation.errors.phone);
+        if (validation.errors.email) setFieldError("errInspectEmail", emailInputEl, validation.errors.email);
+
+        if (validation.firstErrorField === "date" || validation.firstErrorField === "timeSlot") {
+          activeStep = "schedule";
+        } else {
+          activeStep = "details";
+        }
+        updateProgressBar();
+        setStatus(
+          sw ? "Kagua sehemu zilizo na alama nyekundu kabla ya kuthibitisha." : "Please review the highlighted fields above before confirming.",
+          true
+        );
+
+        const focusMap = {
+          date: calGridEl?.querySelector("[data-cal-iso]:not(:disabled)") || calGridEl,
+          timeSlot: slotsGridEl?.querySelector("[data-slot-val]:not(:disabled)") || slotsGridEl,
+          name: nameInputEl,
+          phone: phoneInputEl,
+          email: emailInputEl
+        };
+        const target = focusMap[validation.firstErrorField];
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth", block: "center" });
+          if (typeof target.focus === "function") target.focus({ preventScroll: true });
+        }
         return;
       }
 
       const submitBtn = document.getElementById("inspectSubmitBtn");
       if (submitBtn) {
         submitBtn.disabled = true;
-        submitBtn.textContent = sw ? "Inahifadhi miadi…" : "Booking inspection…";
+        submitBtn.innerHTML = `${uxIcon("check", 18)}<span>${sw ? "Inahifadhi miadi…" : "Booking inspection…"}</span>`;
       }
       setStatus("", false);
       if (linksEl) linksEl.hidden = true;
@@ -1684,8 +2013,9 @@
         renderScheduler();
         if (submitBtn) {
           submitBtn.disabled = false;
-          submitBtn.textContent = sw ? "Thibitisha Miadi ya Ukaguzi" : "Confirm Inspection Booking";
+          submitBtn.innerHTML = `${uxIcon("check", 18)}<span>${sw ? "Thibitisha Miadi ya Ukaguzi" : "Confirm Inspection Booking"}</span>`;
         }
+        setFieldError("errInspectSlot", slotsGridEl, sw ? "Muda huo tayari umechukuliwa. Chagua muda mwingine." : "That time slot was just booked. Choose another available slot.");
         setStatus(sw ? "Muda huo tayari umechukuliwa. Chagua muda au tarehe nyingine." : "That time slot was just booked. Please choose another available slot.", true);
         return;
       }
@@ -1723,21 +2053,23 @@
         false
       );
       if (linksEl) {
-        linksEl.innerHTML = `<a class="ux-inspect-submit" style="text-align:center;text-decoration:none;display:inline-flex;align-items:center;justify-content:center" href="${escapeHtml(waUrl)}" target="_blank" rel="noopener">${sw ? "Tuma Kwenye WhatsApp" : "Send via WhatsApp"}</a><button type="button" class="ux-inspect-secondary" id="inspectDoneBtn">${sw ? "Imekamilika" : "Done"}</button>`;
+        linksEl.innerHTML = `<a class="ux-inspect-submit" style="text-align:center;text-decoration:none;display:inline-flex;align-items:center;justify-content:center" href="${escapeHtml(waUrl)}" target="_blank" rel="noopener">${uxIcon("phone", 18)}<span>${sw ? "Tuma Kwenye WhatsApp" : "Send via WhatsApp"}</span></a><button type="button" class="ux-inspect-secondary" id="inspectDoneBtn">${sw ? "Imekamilika" : "Done"}</button>`;
         linksEl.hidden = false;
         document.getElementById("inspectDoneBtn")?.addEventListener("click", () => dlg.close());
       }
       if (submitBtn) {
         submitBtn.disabled = false;
-        submitBtn.textContent = sw ? "Weka Miadi Nyingine" : "Update Booking";
+        submitBtn.innerHTML = `${uxIcon("check", 18)}<span>${sw ? "Weka Miadi Nyingine" : "Update Booking"}</span>`;
       }
       if (typeof opts.onNotice === "function") {
         opts.onNotice(sw ? `Ukaguzi umewekwa (${ref})` : `Inspection booked (${ref})`, { sub: `${title} · ${date} · ${timeSlot}` });
       }
     });
 
+    syncServiceChoices(serviceSelectEl?.value || "Pre-purchase inspection");
     renderScheduler();
     syncScopeChips();
+    updateProgressBar();
     if (!dlg.open) dlg.showModal();
     dlg.scrollTop = 0;
     const closeInspectBtn = document.getElementById("closeInspectModalBtn");
@@ -1835,7 +2167,7 @@
           <h3 style="margin:0;font-size:18px">${t("recentReadsTitle")}</h3>
           <p class="meta" style="margin:2px 0 0;font-size:12px">${t("recentReadsSub")}</p>
         </div>
-        <button type="button" class="ux-clear-history" data-ux-clear-recent-articles>${t("clearHistory")}</button>
+        <button type="button" class="ux-clear-history ux-btn-danger" data-ux-clear-recent-articles>${uxIcon("trash", 15)}<span>${t("clearHistory")}</span></button>
       </div>
       <div class="ux-journal-recent-list">
         ${items
@@ -2166,7 +2498,7 @@
         modeLabel: sw ? "Zana" : "Mode",
         clear: sw ? "Futa" : "Clear",
         close: sw ? "Funga" : "Close",
-        locBtn: userLocation ? (sw ? "Eneo ✓" : "GPS ✓") : (sw ? "Tumia eneo" : "Use GPS"),
+        locBtn: userLocation ? (sw ? "GPS Imewashwa" : "GPS On") : (sw ? "Tumia eneo" : "Use GPS"),
         placeholder: sw
           ? "Uliza magari, ushuru au yadi…"
           : "Ask about cars, KRA duty, or yards…",
@@ -2216,9 +2548,9 @@
             <span>${lbl.subtitle}</span>
           </div>
           <div class="ux-chat-head-actions">
-            <button type="button" class="ux-chat-mini-btn" id="uxChatGpsBtn" title="Share current location for nearby OpenStreetMap results">${lbl.locBtn}</button>
-            <button type="button" class="ux-chat-mini-btn" id="uxChatClearBtn">${lbl.clear}</button>
-            <button type="button" class="ux-chat-close-btn" id="uxChatCloseBtn" aria-label="${lbl.close}">×</button>
+            <button type="button" class="ux-chat-mini-btn" id="uxChatGpsBtn" title="Share current location for nearby OpenStreetMap results">${uxIcon("pin", 14)}<span>${lbl.locBtn}</span></button>
+            <button type="button" class="ux-chat-mini-btn ux-btn-danger" id="uxChatClearBtn">${uxIcon("trash", 14)}<span>${lbl.clear}</span></button>
+            <button type="button" class="ux-chat-close-btn" id="uxChatCloseBtn" aria-label="${lbl.close}">${uxIcon("close", 16)}</button>
           </div>
         </div>
         <div class="ux-chat-controls">
@@ -2282,14 +2614,14 @@
       document.getElementById("uxChatGpsBtn")?.addEventListener("click", () => {
         if (!navigator.geolocation) return;
         const btn = document.getElementById("uxChatGpsBtn");
-        if (btn) btn.textContent = "…";
+        if (btn) btn.innerHTML = `${uxIcon("pin", 14)}<span>${getLang() === "sw" ? "Inakagua…" : "Checking…"}</span>`;
         navigator.geolocation.getCurrentPosition(
           (pos) => {
             userLocation = { latitude: pos.coords.latitude, longitude: pos.coords.longitude };
-            if (btn) btn.textContent = chatLabels().locBtn;
+            if (btn) btn.innerHTML = `${uxIcon("pin", 14)}<span>${chatLabels().locBtn}</span>`;
           },
           () => {
-            if (btn) btn.textContent = "GPS ✕";
+            if (btn) btn.innerHTML = `${uxIcon("pin", 14)}<span>${getLang() === "sw" ? "GPS Imezimwa" : "GPS Off"}</span>`;
           },
           { enableHighAccuracy: false, timeout: 7000 }
         );
@@ -2339,7 +2671,7 @@
             ? `<div class="ux-chat-sources">${safeSources
                 .map(
                   (s) =>
-                    `<a class="ux-chat-source-link" href="${escapeHtml(s.uri)}" target="_blank" rel="noopener noreferrer" data-source-type="${escapeHtml(s.type)}">${s.type === "osm" ? "📍" : "🔎"} <span>${escapeHtml(s.title)}</span></a>${
+                    `<a class="ux-chat-source-link" href="${escapeHtml(s.uri)}" target="_blank" rel="noopener noreferrer" data-source-type="${escapeHtml(s.type)}">${s.type === "osm" ? uxIcon("pin", 14) : uxIcon("search", 14)} <span>${escapeHtml(s.title)}</span></a>${
                       Array.isArray(s.snippets) && s.snippets.length
                         ? `<small class="ux-chat-snippet">${escapeHtml(s.snippets[0])}</small>`
                         : ""
@@ -2556,12 +2888,117 @@
     syncFabLabel();
   }
 
+  function initFaqCategoryFilters() {
+    const faqRoot = document.getElementById("aboutFaq");
+    const filterBar = document.getElementById("aboutFaqFilters");
+    if (!faqRoot || !filterBar) return;
+
+    const itemEls = Array.from(faqRoot.querySelectorAll("details.faq-item"));
+    if (!itemEls.length) return;
+
+    const categoryDefs = [
+      { key: "all", icon: "layers", en: "All", sw: "Zote" },
+      { key: "inspections", icon: "wrench", en: "Inspections", sw: "Ukaguzi" },
+      { key: "selling", icon: "tag", en: "Selling", sw: "Kuuza" },
+      { key: "general", icon: "info", en: "General", sw: "Jumla" },
+      { key: "booking", icon: "calendar", en: "Booking", sw: "Miadi" }
+    ];
+
+    const logic = window.ThreePedalsLogic;
+    let activeCategory = "all";
+
+    const getCounts = () => {
+      const counts = { all: itemEls.length, inspections: 0, selling: 0, general: 0, booking: 0 };
+      itemEls.forEach((el) => {
+        const cat = String(el.dataset.faqCategory || "general").toLowerCase();
+        if (Object.prototype.hasOwnProperty.call(counts, cat)) counts[cat] += 1;
+      });
+      return counts;
+    };
+
+    const syncTagIcons = () => {
+      const lang = getLang();
+      itemEls.forEach((el) => {
+        const cat = String(el.dataset.faqCategory || "general").toLowerCase();
+        const def = categoryDefs.find((d) => d.key === cat) || categoryDefs[3];
+        const tagEl = el.querySelector(".faq-item-tag");
+        if (tagEl) {
+          tagEl.innerHTML = `${uxIcon(def.icon, 14)}<span>${escapeHtml(lang === "sw" ? def.sw : def.en)}</span>`;
+        }
+      });
+    };
+
+    const renderFilters = (forceRebuild = false) => {
+      const lang = getLang();
+      const counts = getCounts();
+      const existing = Array.from(filterBar.querySelectorAll("[data-faq-filter]"));
+      if (!forceRebuild && existing.length === categoryDefs.length) {
+        existing.forEach((btn) => {
+          const isActive = btn.dataset.faqFilter === activeCategory;
+          btn.classList.toggle("is-active", isActive);
+          btn.setAttribute("aria-selected", String(isActive));
+        });
+        return;
+      }
+      filterBar.innerHTML = categoryDefs
+        .map((def) => {
+          const isActive = def.key === activeCategory;
+          const label = lang === "sw" ? def.sw : def.en;
+          return `<button type="button" class="faq-filter-btn${isActive ? " is-active" : ""}" role="tab" aria-selected="${String(isActive)}" data-faq-filter="${def.key}">${uxIcon(def.icon, 16)}<span>${escapeHtml(label)}</span><span class="faq-filter-count">${counts[def.key] ?? 0}</span></button>`;
+        })
+        .join("");
+    };
+
+    const applyFilter = (nextCat) => {
+      activeCategory = nextCat || "all";
+      const model = itemEls.map((el, index) => ({
+        index,
+        category: el.dataset.faqCategory || "general"
+      }));
+      const matched = logic?.filterFaqItemsByCategory
+        ? logic.filterFaqItemsByCategory(model, activeCategory)
+        : activeCategory === "all"
+          ? model
+          : model.filter((m) => String(m.category).toLowerCase() === String(activeCategory).toLowerCase());
+      const visibleIndices = new Set(matched.map((m) => m.index));
+
+      let anyVisibleOpen = false;
+      itemEls.forEach((el, index) => {
+        const show = visibleIndices.has(index);
+        el.hidden = !show;
+        if (show && el.open) anyVisibleOpen = true;
+      });
+
+      if (!anyVisibleOpen) {
+        const firstVisible = itemEls.find((el) => !el.hidden);
+        if (firstVisible) firstVisible.open = true;
+      }
+
+      renderFilters(false);
+    };
+
+    filterBar.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-faq-filter]");
+      if (!btn) return;
+      applyFilter(btn.dataset.faqFilter || "all");
+    });
+
+    window.addEventListener("3pedals:lang-changed", () => {
+      syncTagIcons();
+      renderFilters(true);
+    });
+
+    syncTagIcons();
+    applyFilter("all");
+  }
+
   window.ThreePedalsUX = {
     getTheme,
     setTheme: applyTheme,
     getLang,
     setLang: applyLanguage,
     t,
+    uxIcon,
     recordRecentVehicle,
     getRecentVehicles,
     clearRecentVehicles,
@@ -2582,6 +3019,7 @@
     initHeaderControls();
     initFooterNewsletter();
     syncFooterCopyrightYears();
+    initFaqCategoryFilters();
     applyLanguage(getLang());
     const homeRecentHost = document.getElementById("homeRecentViewedSection");
     if (homeRecentHost) renderRecentlyViewed(homeRecentHost);

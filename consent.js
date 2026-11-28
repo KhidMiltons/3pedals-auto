@@ -83,11 +83,27 @@
     links.innerHTML = '<a href="/privacy.html" style="color:#d7bd83;text-decoration:underline">Privacy Policy</a> · <a href="/terms.html" style="color:#d7bd83;text-decoration:underline">Terms of Service</a>';
     const actions = document.createElement("div");
     actions.style.cssText = "display:grid;grid-template-columns:1fr 1fr;gap:10px";
+    const isLight = document.documentElement.getAttribute("data-theme") === "light";
+    if (isLight) {
+      banner.style.cssText = "position:fixed;z-index:2147483000;left:16px;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));max-width:760px;margin:0 auto;padding:20px;border:1px solid rgba(138,114,62,.35);border-radius:18px;background:rgba(253,250,243,.98);color:#171512;box-shadow:0 18px 60px rgba(48,38,18,.18);font:14px/1.6 Manrope,system-ui,sans-serif";
+      title.style.color = "#171512";
+      copy.style.color = "#4f493e";
+      links.innerHTML = '<a href="/privacy.html" style="color:#8c6510;text-decoration:underline">Privacy Policy</a> · <a href="/terms.html" style="color:#8c6510;text-decoration:underline">Terms of Service</a>';
+    }
     const makeButton = (label, accepted) => {
       const button = document.createElement("button");
       button.type = "button";
-      button.textContent = label;
-      button.style.cssText = "min-height:48px;width:100%;border-radius:12px;border:1px solid #d7bd83;padding:11px 16px;font:700 14px Manrope,system-ui,sans-serif;cursor:pointer;background:" + (accepted ? "#d7bd83" : "transparent") + ";color:" + (accepted ? "#111" : "#f7f4ed");
+      const icon = accepted
+        ? '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m20 6-11 11-5-5"/></svg>'
+        : '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m15 9-6 6M9 9l6 6"/></svg>';
+      button.innerHTML = `${icon}<span>${label}</span>`;
+      if (accepted) {
+        button.style.cssText = "min-height:48px;width:100%;display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:12px;border:1px solid #d7bd83;padding:11px 16px;font:700 14px Manrope,system-ui,sans-serif;cursor:pointer;background:#d7bd83;color:#111";
+      } else {
+        button.style.cssText = isLight
+          ? "min-height:48px;width:100%;display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:12px;border:1px solid rgba(180,35,24,.38);padding:11px 16px;font:700 14px Manrope,system-ui,sans-serif;cursor:pointer;background:rgba(180,35,24,.09);color:#b42318"
+          : "min-height:48px;width:100%;display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:12px;border:1px solid rgba(239,98,92,.45);padding:11px 16px;font:700 14px Manrope,system-ui,sans-serif;cursor:pointer;background:rgba(239,98,92,.12);color:#ff9d97";
+      }
       button.addEventListener("click", () => save(accepted ? "accepted" : "rejected"));
       return button;
     };

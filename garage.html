@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
 <script>(function(){try{var t=localStorage.getItem("3pedals:theme")||"dark";document.documentElement.setAttribute("data-theme",t==="light"?"light":"dark");document.documentElement.dataset.ux="1";}catch(e){}})();</script>
-<script src="/consent.js?v=20261107-1"></script>
+<script src="/consent.js?v=20261128-ux1"></script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<link rel="preload" as="image" href="/public/assets/hero-backdrop-mobile.webp" media="(max-width: 760px)" fetchpriority="high">
-<link rel="preload" as="image" href="/public/assets/hero-backdrop.webp" media="(min-width: 761px)" fetchpriority="high">
+<link rel="preload" as="image" href="/public/assets/hero-backdrop-mobile.webp" fetchpriority="high">
 <link rel="preconnect" href="https://dlejmelyeaaxcvelvzia.supabase.co" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <meta name="theme-color" content="#0d0d0d">
@@ -57,7 +56,7 @@
 </script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700&display=swap" rel="stylesheet"></noscript>
-<link rel="stylesheet" href="/site-theme.css?v=20261127-up1">
+<link rel="stylesheet" href="/site-theme.css?v=20261128-ux1">
 <style id="garage-base-layout">
 :root{
   --bg:#0d0e11;--surface:rgba(24,26,30,.78);--surface-2:rgba(30,33,38,.72);--ink:#f4f0e8;--mute:#b3ab9b;--line:rgba(225,203,155,.22);
@@ -85,21 +84,21 @@ main>section[hidden]{display:none!important}
 [hidden]{display:none!important}
 .hero{padding:34px 0 22px;position:relative}
 .hero h1{font-size:clamp(28px,3.2vw,42px);max-width:19em;text-wrap:balance}
-.hero h1::after{content:"";display:block;width:56px;height:3px;border-radius:99px;background:linear-gradient(90deg,var(--gold),rgba(217,189,125,.25));margin-top:12px}
+.hero h1::after{content:"";display:block;width:56px;height:3px;border-radius:99px;background:var(--gold);margin-top:12px}
 .hero p{color:var(--mute);max-width:58ch;margin:10px 0 0;line-height:1.6}
 .garage-hero{border-left:0;border-top:4px solid var(--gold);padding-top:24px}
-input,select,textarea{width:100%;min-height:44px;background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:10px 13px;transition:border-color .18s ease,box-shadow .18s ease}
+input,select,textarea{width:100%;min-height:44px;background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:10px 13px;transition:border-color .18s ease}
 textarea{min-height:92px;resize:vertical}
-input:focus,select:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(217,189,125,.16);outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--gold);outline:2px solid rgba(217,189,125,.35);outline-offset:1px}
 option{background:#171819;color:#f4f0e8}
 html[data-theme="light"] option{background:#fff;color:#171512}
 label{display:block;font-weight:600;font-size:13px;letter-spacing:.01em;margin:12px 0 5px}
 .meta{color:var(--mute);font-size:13.5px}
-.btn{min-height:44px;padding:11px 18px;border-radius:11px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid rgba(229,198,122,.5);background:linear-gradient(135deg,#e5c67a,#b89545);color:#141311;font-size:14px;font-weight:700;text-decoration:none;cursor:pointer;box-shadow:var(--shadow-sm);transition:transform .18s ease,box-shadow .18s ease,background .18s ease,border-color .18s ease}
+.btn{min-height:44px;padding:11px 18px;border-radius:11px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid rgba(229,198,122,.5);background:#d6b25c;color:#141311;font-size:14px;font-weight:700;text-decoration:none;cursor:pointer;box-shadow:var(--shadow-sm);transition:transform .18s ease,box-shadow .18s ease,background .18s ease,border-color .18s ease}
 .btn.ghost{background:rgba(255,255,255,.06);border-color:var(--line);color:var(--ink)}
 html[data-theme="light"] .btn.ghost{background:rgba(255,255,255,.84);color:#171512}
 .btn.alt{background:var(--alt);color:var(--alt-ink)}
-.btn.wa{background:linear-gradient(135deg,#e5c67a,#b89545);color:#141311}
+.btn.wa{background:#d6b25c;color:#141311}
 @media(hover:hover) and (pointer:fine){
   .btn:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
   .btn.ghost:hover{background:rgba(255,255,255,.12);border-color:var(--gold)}
@@ -143,7 +142,7 @@ html[data-theme="light"] .rating-box{background:rgba(138,114,62,.06)}
 .empty-state{padding:32px;border:1px dashed var(--line);border-radius:14px;color:var(--mute);text-align:center}
 @keyframes mechanicIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 #garageFab{display:inline-flex!important;align-items:center!important;justify-content:center!important;width:56px!important;height:56px!important;min-width:56px!important;padding:0!important;position:fixed!important;right:18px!important;bottom:calc(18px + env(safe-area-inset-bottom,0px))!important;border:0!important;outline:0!important;border-radius:0!important;background:transparent!important;color:rgba(235,207,133,.9)!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;text-decoration:none!important;z-index:20!important;opacity:.92!important}
-#garageFab svg{width:40px!important;height:40px!important;display:block!important;fill:none!important;stroke:currentColor!important;stroke-width:1.7!important;stroke-linecap:round!important;stroke-linejoin:round!important;opacity:.92!important;filter:drop-shadow(0 0 4px rgba(215,169,40,.18))}
+#garageFab svg{width:40px!important;height:40px!important;display:block!important;fill:none!important;stroke:currentColor!important;stroke-width:1.7!important;stroke-linecap:round!important;stroke-linejoin:round!important;opacity:.92!important}
 #garageFab:hover,#garageFab:focus,#garageFab:focus-visible{background:transparent!important;border:0!important;outline:0!important;box-shadow:none!important;color:rgba(255,235,183,.98)!important;opacity:1!important}
 html[data-theme="light"] #garageFab{color:#8c6510!important}
 footer{border-top:1px solid var(--line);padding:24px 0 36px;color:var(--mute);font-size:13px}
@@ -158,8 +157,8 @@ footer .wrap{text-align:center}
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
 }
 </style>
-<link rel="stylesheet" href="/site-ux.css?v=20261127-up1">
-<link rel="stylesheet" href="/header-modern.css?v=20261127-up1">
+<link rel="stylesheet" href="/site-ux.css?v=20261128-ux1">
+<link rel="stylesheet" href="/header-modern.css?v=20261128-ux1">
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
@@ -360,7 +359,7 @@ footer .wrap{text-align:center}
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
-<script src="/lib/auto-logic.js?v=20261127-up1"></script>
+<script src="/lib/auto-logic.js?v=20261128-ux1"></script>
 <script>
 // Where the separate cars-for-sale site lives. Change this if it is on another address.
 const CARS_URL="__TPA_CARS_URL__".indexOf("__")===0?"/":"__TPA_CARS_URL__";
@@ -389,6 +388,8 @@ async function loadGarageSettings(){
 const MECHANICS_CACHE_KEY="3pedals:verified-mechanics:v2";
 function readMechanicsCache(){try{const saved=JSON.parse(localStorage.getItem(MECHANICS_CACHE_KEY)||sessionStorage.getItem(MECHANICS_CACHE_KEY)||"null");return saved&&Array.isArray(saved.rows)&&Date.now()-saved.at<30*60*1000?saved.rows:null}catch(_){return null}}
 function writeMechanicsCache(rows){const value=JSON.stringify({at:Date.now(),rows});try{localStorage.setItem(MECHANICS_CACHE_KEY,value);sessionStorage.setItem(MECHANICS_CACHE_KEY,value)}catch(_){}}
+function garageStarSvg(filled){return `<svg class="ux-svg-icon" viewBox="0 0 24 24" width="15" height="15" fill="${filled?"currentColor":"none"}" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`}
+const GARAGE_VERIFIED_SVG='<svg class="ux-svg-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
 function renderPublicMechanics(data){
   const box=$("mechanicDirectory");
   if(!data?.length){box.innerHTML='<div class="empty-state">Our verified mechanics directory is being updated. Contact the garage for help.</div>';return}
@@ -396,9 +397,10 @@ function renderPublicMechanics(data){
     const tags=String(m.vehicle_specialties||"").split(/[,;\n]+/).map(x=>x.trim()).filter(Boolean);
     const photo=m.photo_url?`<img class="mechanic-photo" src="${esc(m.photo_url)}" alt="${esc(m.name)}" loading="lazy" decoding="async">`:"";
     const count=Number(m.rating_count||0),avg=Number(m.rating_average||0);
-    const stars="★".repeat(Math.max(0,Math.min(5,Math.round(avg))))+"☆".repeat(5-Math.max(0,Math.min(5,Math.round(avg))));
+    const filledStars=Math.max(0,Math.min(5,Math.round(avg)));
+    const stars=Array.from({length:5},(_,idx)=>garageStarSvg(idx<filledStars)).join("");
     const rating=count?`<p class="mechanic-rating" aria-label="Rated ${avg.toFixed(1)} out of 5">${stars} <span class="meta">${avg.toFixed(1)} · ${count} ${count===1?"rating":"ratings"}</span></p>`:'<p class="meta">No client ratings yet</p>';
-    return `<article class="mechanic-card">${photo}<span class="verified">✓ Verified mechanic</span><h3>${esc(m.name)}</h3><p><b>${esc(m.specialty)}</b></p>${rating}${tags.length?`<div class="specialty-tags">${tags.map(t=>`<span>${esc(t)}</span>`).join("")}</div>`:""}<p class="meta">Service area: ${esc(m.service_area||"Contact garage")}</p>${m.bio?`<p class="meta">${esc(m.bio)}</p>`:""}${m.phone?`<a class="btn ghost" href="tel:${esc(m.phone.replace(/[^+0-9]/g,""))}">Contact mechanic</a>`:""}</article>`
+    return `<article class="mechanic-card">${photo}<span class="verified">${GARAGE_VERIFIED_SVG}<span>Verified mechanic</span></span><h3>${esc(m.name)}</h3><p><b>${esc(m.specialty)}</b></p>${rating}${tags.length?`<div class="specialty-tags">${tags.map(t=>`<span>${esc(t)}</span>`).join("")}</div>`:""}<p class="meta">Service area: ${esc(m.service_area||"Contact garage")}</p>${m.bio?`<p class="meta">${esc(m.bio)}</p>`:""}${m.phone?`<a class="btn ghost" href="tel:${esc(m.phone.replace(/[^+0-9]/g,""))}">Contact mechanic</a>`:""}</article>`
   }).join("");
 }
 async function loadPublicMechanics(){
@@ -428,7 +430,7 @@ async function renderMine(){
   const {data}=await sb.from("bookings").select("*").eq("user_id",me.id).order("created_at",{ascending:false});
   const list=data||[];$("mineBox").hidden=!list.length;
   const reviewable=list.filter(b=>String(b.status).toLowerCase()==="done"&&b.mechanic_id),ids=reviewable.map(b=>b.id),mechanicIds=[...new Set(reviewable.map(b=>b.mechanic_id))];let reviewed=new Set(),mechanicNames={},progressByBooking={};if(ids.length){const [reviews,mechanics]=await Promise.all([sb.from("mechanic_reviews").select("booking_id,rating").in("booking_id",ids),sb.from("mechanics").select("id,name").in("id",mechanicIds)]);reviewed=new Set((reviews.data||[]).map(r=>String(r.booking_id)));mechanicNames=Object.fromEntries((mechanics.data||[]).map(m=>[String(m.id),m.name]))}if(list.length){const {data:events}=await sb.from("booking_progress_events").select("booking_id,service_status,created_at").in("booking_id",list.map(b=>b.id)).order("created_at",{ascending:true});(events||[]).forEach(ev=>(progressByBooking[String(ev.booking_id)]??=[]).push(ev))}
-  $("mine").innerHTML=list.map(b=>{const done=String(b.status).toLowerCase()==="done",hasMechanic=!!b.mechanic_id,name=mechanicNames[String(b.mechanic_id)]||"your mechanic",history=(progressByBooking[String(b.id)]||[]).map(ev=>`<span>${esc(String(ev.service_status).replaceAll("_"," "))} · ${esc(new Date(ev.created_at).toLocaleString("en-KE"))}</span>`).join("");let rating="";if(done&&hasMechanic)rating=reviewed.has(String(b.id))?'<div class="rating-box"><b>Thank you for rating this mechanic.</b></div>':`<form class="rating-box" data-review-form data-booking="${esc(b.id)}" data-mechanic="${esc(b.mechanic_id)}"><b>Rate ${esc(name)}</b><div class="rating-stars" role="radiogroup" aria-label="Choose a rating">${[1,2,3,4,5].map(n=>`<button type="button" data-star="${n}" aria-label="${n} star${n===1?"":"s"}">★</button>`).join("")}</div><input type="hidden" data-rating-value value=""><textarea rows="2" maxlength="700" placeholder="Optional: share a few words about the service"></textarea><button class="btn alt" type="submit">Submit rating</button><span class="meta" data-rating-error role="alert"></span></form>`;else if(done&&!hasMechanic)rating='<div class="rating-box meta">The garage will make the mechanic available for rating after assigning them to this completed service.</div>';return `<div class="svc"><div><b>${esc(b.service)}</b><span class="meta">${esc(b.date)}${b.time_slot?" · "+esc(b.time_slot):""} · ${esc(b.car||"")} · Ticket ${esc(b.ref)}${b.location?" · "+esc(b.location):""}</span>${history?`<div class="progress-history"><b>Service progress history</b>${history}</div>`:""}${rating}</div><span class="meta">${esc(b.status)}${b.service_status?" · "+esc(b.service_status.replaceAll("_"," ")):""}</span></div>`}).join("");
+  $("mine").innerHTML=list.map(b=>{const done=String(b.status).toLowerCase()==="done",hasMechanic=!!b.mechanic_id,name=mechanicNames[String(b.mechanic_id)]||"your mechanic",history=(progressByBooking[String(b.id)]||[]).map(ev=>`<span>${esc(String(ev.service_status).replaceAll("_"," "))} · ${esc(new Date(ev.created_at).toLocaleString("en-KE"))}</span>`).join("");let rating="";if(done&&hasMechanic)rating=reviewed.has(String(b.id))?'<div class="rating-box"><b>Thank you for rating this mechanic.</b></div>':`<form class="rating-box" data-review-form data-booking="${esc(b.id)}" data-mechanic="${esc(b.mechanic_id)}"><b>Rate ${esc(name)}</b><div class="rating-stars" role="radiogroup" aria-label="Choose a rating">${[1,2,3,4,5].map(n=>`<button type="button" data-star="${n}" aria-label="${n} star${n===1?"":"s"}">${garageStarSvg(false)}</button>`).join("")}</div><input type="hidden" data-rating-value value=""><textarea rows="2" maxlength="700" placeholder="Optional: share a few words about the service"></textarea><button class="btn alt" type="submit">Submit rating</button><span class="meta" data-rating-error role="alert"></span></form>`;else if(done&&!hasMechanic)rating='<div class="rating-box meta">The garage will make the mechanic available for rating after assigning them to this completed service.</div>';return `<div class="svc"><div><b>${esc(b.service)}</b><span class="meta">${esc(b.date)}${b.time_slot?" · "+esc(b.time_slot):""} · ${esc(b.car||"")} · Ticket ${esc(b.ref)}${b.location?" · "+esc(b.location):""}</span>${history?`<div class="progress-history"><b>Service progress history</b>${history}</div>`:""}${rating}</div><span class="meta">${esc(b.status)}${b.service_status?" · "+esc(b.service_status.replaceAll("_"," ")):""}</span></div>`}).join("");
 }
 $("mine").onclick=e=>{const star=e.target.closest("[data-star]");if(!star)return;const form=star.closest("[data-review-form]"),value=Number(star.dataset.star);form.querySelector("[data-rating-value]").value=String(value);form.querySelectorAll("[data-star]").forEach(b=>b.classList.toggle("selected",Number(b.dataset.star)<=value))};
 $("mine").onsubmit=async e=>{const form=e.target.closest("[data-review-form]");if(!form)return;e.preventDefault();const value=Number(form.querySelector("[data-rating-value]").value),msg=form.querySelector("[data-rating-error]"),button=form.querySelector('button[type="submit"]');if(value<1||value>5){msg.textContent="Choose a star rating first.";return}button.disabled=true;const {error}=await sb.from("mechanic_reviews").insert({booking_id:form.dataset.booking,mechanic_id:form.dataset.mechanic,user_id:me.id,rating:value,review:form.querySelector("textarea").value.trim()});button.disabled=false;if(error){msg.textContent=error.code==="23505"?"You have already rated this completed booking.":error.message;return}await Promise.all([renderMine(),loadPublicMechanics()])};
@@ -900,9 +902,9 @@ html body main.wrap {
 #mechanics #mechanicDirectory > article,
 #mechanics #mechanicDirectory > .empty-state {
   box-sizing: border-box !important;
-  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
   border-radius: 18px !important;
-  background: linear-gradient(145deg, rgba(28, 30, 34, 0.42), rgba(16, 18, 21, 0.50)) !important;
+  background: rgba(20, 22, 26, 0.50) !important;
   -webkit-backdrop-filter: blur(18px) saturate(135%) !important;
   backdrop-filter: blur(18px) saturate(135%) !important;
   box-shadow: 0 14px 36px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
@@ -920,7 +922,7 @@ html[data-theme="light"] #roadside > .cols > .panel,
 html[data-theme="light"] #home #garageContactCard.contact,
 html[data-theme="light"] #mechanics #mechanicDirectory > article,
 html[data-theme="light"] #mechanics #mechanicDirectory > .empty-state {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(246, 240, 228, 0.94)) !important;
+  background: rgba(255, 252, 246, 0.92) !important;
   border: 1px solid rgba(138, 114, 62, 0.28) !important;
   color: #171512 !important;
   box-shadow: 0 12px 32px rgba(48, 38, 18, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
@@ -953,7 +955,7 @@ html[data-theme="light"] #mechanics #mechanicDirectory > .empty-state {
   width: 52px !important;
   height: 3px !important;
   margin-top: 12px !important;
-  background: linear-gradient(90deg, #dfc073, rgba(223, 192, 115, 0.25)) !important;
+  background: #dfc073 !important;
 }
 
 .garage-hero p,
@@ -982,7 +984,7 @@ html[data-theme] body main #roadSubmit {
   border-radius: 11px !important;
   font-size: 14px !important;
   font-weight: 700 !important;
-  background: linear-gradient(135deg, #e5c67a, #b89545) !important;
+  background: #d6b25c !important;
   background-color: #d6b25c !important;
   color: #171512 !important;
   -webkit-text-fill-color: #171512 !important;
@@ -1056,7 +1058,7 @@ html[data-theme="light"] .tiles .tile .meta {
   .card:hover {
     transform: translate3d(0, var(--ux-card-lift-y, -4px), 0) scale(var(--ux-card-hover-scale, 1.008)) !important;
     border-color: var(--ux-card-border-hover, rgba(215, 189, 131, 0.48)) !important;
-    box-shadow: var(--ux-card-shadow-hover, 0 18px 42px rgba(0, 0, 0, 0.28)), var(--ux-card-glow-hover, 0 0 0 1px rgba(215, 189, 131, 0.14)), var(--ux-card-inset-hover, inset 0 1px 0 rgba(255, 255, 255, 0.12)) !important;
+    box-shadow: var(--ux-card-shadow-hover, 0 18px 42px rgba(0, 0, 0, 0.28)), var(--ux-card-inset-hover, inset 0 1px 0 rgba(255, 255, 255, 0.12)) !important;
   }
 }
 
@@ -1406,6 +1408,6 @@ html[data-theme="light"] #roadside textarea {
   }
 }
 </style>
-<script defer src="/site-ux.js?v=20261127-up1"></script>
+<script defer src="/site-ux.js?v=20261128-ux1"></script>
 </body>
 </html>

@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
 <script>(function(){try{var t=localStorage.getItem("3pedals:theme")||"dark";document.documentElement.setAttribute("data-theme",t==="light"?"light":"dark");document.documentElement.dataset.ux="1";}catch(e){}})();</script>
-<script src="/consent.js?v=20261107-1"></script>
+<script src="/consent.js?v=20261128-ux1"></script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<link rel="preload" as="image" href="/public/assets/hero-backdrop-mobile.webp" media="(max-width: 760px)" fetchpriority="high">
-<link rel="preload" as="image" href="/public/assets/hero-backdrop.webp" media="(min-width: 761px)" fetchpriority="high">
+<link rel="preload" as="image" href="/public/assets/hero-backdrop-mobile.webp" fetchpriority="high">
 <link rel="preconnect" href="https://dlejmelyeaaxcvelvzia.supabase.co" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <meta name="theme-color" content="#0d0d0d">
@@ -34,17 +33,17 @@ main{padding:28px 0 60px}.eyebrow{color:var(--gold);font-size:11px;font-weight:8
 @media(max-width:850px){.tools{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.tools input{grid-column:auto}.tools .search-label{grid-column:1/-1}}@media(max-width:520px){.wrap{width:calc(100% - 24px)}main{padding-top:20px}.summary{gap:8px}.stat{flex:1 1 135px;padding:11px 13px}.dealer{min-height:112px;padding:15px}.logo{width:46px;height:46px;flex-basis:46px}.tools{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.tools input{grid-column:auto}.tools .search-label{grid-column:1/-1}.tools input,.tools select,.tools .back{min-height:40px;height:40px;padding:7px 9px;font-size:12.5px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
 </style>
-<link rel="stylesheet" href="/site-theme.css?v=20261127-up1">
-<link rel="stylesheet" href="/site-ux.css?v=20261127-up1">
+<link rel="stylesheet" href="/site-theme.css?v=20261128-ux1">
+<link rel="stylesheet" href="/site-ux.css?v=20261128-ux1">
 <!-- Meta Pixel loads only after explicit optional-cookie consent. -->
 <style id="dealers-clean-shell">
 /* Unified dual-theme glass shell for Car Dealers directory (Modern Classic Dark & Light Parchment) */
 html body .dealer,
 html body .stat,
 html body .state {
-  background-color: transparent !important;
-  background-image: linear-gradient(180deg, rgba(18, 22, 28, 0.56) 0%, rgba(16, 18, 24, 0.34) 48%, rgba(12, 14, 18, 0.10) 100%) !important;
-  border: 0 !important;
+  background-color: rgba(16, 18, 24, 0.56) !important;
+  background-image: none !important;
+  border: 1px solid transparent !important;
   box-shadow: 0 18px 46px rgba(0, 0, 0, 0.16) !important;
   -webkit-backdrop-filter: blur(22px) saturate(130%) !important;
   backdrop-filter: blur(22px) saturate(130%) !important;
@@ -53,9 +52,9 @@ html body .state {
 html[data-theme="light"] body .dealer,
 html[data-theme="light"] body .stat,
 html[data-theme="light"] body .state {
-  background-color: transparent !important;
-  background-image: linear-gradient(180deg, rgba(255, 253, 249, 0.90) 0%, rgba(252, 247, 238, 0.72) 55%, rgba(246, 240, 227, 0.44) 100%) !important;
-  border: 0 !important;
+  background-color: rgba(255, 252, 246, 0.88) !important;
+  background-image: none !important;
+  border: 1px solid transparent !important;
   box-shadow: 0 12px 30px rgba(48, 38, 18, 0.08) !important;
   color: #171512 !important;
 }
@@ -95,12 +94,12 @@ html[data-theme="light"] body .tools .back {
   html body .dealer:focus-visible {
     transform: translate3d(0, var(--ux-card-lift-y, -5px), 0) scale(var(--ux-card-hover-scale, 1.012)) !important;
     border-color: var(--ux-card-border-hover, rgba(215, 189, 131, 0.68)) !important;
-    box-shadow: var(--ux-card-shadow-hover), var(--ux-card-glow-hover), var(--ux-card-inset-hover) !important;
+    box-shadow: var(--ux-card-shadow-hover), var(--ux-card-inset-hover) !important;
     outline: none;
   }
 }
 </style>
-<link rel="stylesheet" href="/header-modern.css?v=20261127-up1">
+<link rel="stylesheet" href="/header-modern.css?v=20261128-ux1">
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
@@ -113,7 +112,7 @@ html[data-theme="light"] body .tools .back {
 <main class="wrap">
   <section class="intro"><span class="eyebrow">3 PEDALS AUTO KE · DEALER DIRECTORY</span><h1>Car dealers in Kenya</h1><p>Explore dealer collections, see how many vehicles each dealer has available, and open a dealer’s full inventory.</p></section>
   <div class="summary" aria-live="polite"><div class="stat"><strong id="dealerTotal">—</strong><span>dealers</span></div><div class="stat"><strong id="vehicleTotal">—</strong><span>available vehicles</span></div></div>
-  <div class="tools"><label class="search-label" for="search">Find a car yard</label><input id="search" type="search" placeholder="Search dealer, yard or location…" aria-label="Search dealer, yard or location"><select id="locationFilter" aria-label="Filter dealers by location"><option value="" selected>Select location</option></select><select id="dealerSort" aria-label="Sort dealer directory"><option value="name" selected>Select sort order</option><option value="vehicles">Most vehicles</option></select><button class="back" id="clearDealerFilters" type="button">Clear filters</button></div>
+  <div class="tools"><label class="search-label" for="search">Find a car yard</label><input id="search" type="search" placeholder="Search dealer, yard or location…" aria-label="Search dealer, yard or location"><select id="locationFilter" aria-label="Filter dealers by location"><option value="" selected>Select location</option></select><select id="dealerSort" aria-label="Sort dealer directory"><option value="name" selected>Select sort order</option><option value="vehicles">Most vehicles</option></select><button class="back ux-btn-danger" id="clearDealerFilters" type="button"><svg class="ux-svg-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/></svg><span>Clear filters</span></button></div>
   <div id="count" class="count">Loading dealers…</div>
   <section id="dealerList" class="grid" aria-live="polite"><div class="state">Loading dealer collections…</div></section>
 </main>
@@ -235,6 +234,6 @@ document.addEventListener('click', function(event) {
 })();
 </script>
 
-<script defer src="/site-ux.js?v=20261127-up1"></script>
+<script defer src="/site-ux.js?v=20261128-ux1"></script>
 </body>
 </html>

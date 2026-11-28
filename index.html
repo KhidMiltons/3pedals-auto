@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
 <script>try{const t=localStorage.getItem("3pedals:theme");document.documentElement.setAttribute("data-theme",t==="light"?"light":"dark");document.documentElement.dataset.ux="1"}catch(_){document.documentElement.setAttribute("data-theme","dark");document.documentElement.dataset.ux="1"}</script>
-<script src="/consent.js?v=20261107-1"></script>
+<script src="/consent.js?v=20261128-ux1"></script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<link rel="preload" as="image" href="/public/assets/hero-backdrop-mobile.webp" media="(max-width: 760px)" fetchpriority="high">
-<link rel="preload" as="image" href="/public/assets/hero-backdrop.webp" media="(min-width: 761px)" fetchpriority="high">
+<link rel="preload" as="image" href="/public/assets/hero-backdrop-mobile.webp" fetchpriority="high">
 <link rel="preconnect" href="https://dlejmelyeaaxcvelvzia.supabase.co" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <meta name="theme-color" content="#0d0d0d">
@@ -31,8 +30,8 @@
 <meta name="twitter:title" content="3 Pedals Auto KE | Buy &amp; Sell Cars in Kenya">
 <meta name="twitter:description" content="Discover cars for sale in Kenya on 3 Pedals Auto KE. Browse vehicle listings from private sellers and car yards, compare details, and connect with sellers.">
 <meta name="twitter:image" content="https://3pedalsauto.co.ke/favicon.svg">
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600&family=Sora:wght@600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-<noscript><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600&family=Sora:wght@600;700&display=swap" rel="stylesheet"></noscript>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700&display=swap" rel="stylesheet"></noscript>
 <style id="index-base-layout">
 :root{
   --bg:#f3f1ec;--surface:#fbfaf7;--surface-2:#f6f4ef;--ink:#1a1b1d;--mute:#77746d;--line:#dedbd3;
@@ -60,9 +59,8 @@ button,input,select,textarea{font:inherit;color:inherit}
 .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
 
 .hero{position:relative;padding:54px 0 30px}
-.hero:before{content:"";position:absolute;left:-90px;top:10px;width:300px;height:190px;background:radial-gradient(circle,rgba(212,160,23,.13),transparent 68%);filter:blur(8px);pointer-events:none}
 .hero h1{position:relative;font-size:clamp(40px,6vw,68px);max-width:13em;letter-spacing:-.025em;text-wrap:balance}
-.hero h1::after{content:"";display:block;width:72px;height:3px;background:linear-gradient(90deg,var(--gold),rgba(183,160,106,.18));margin-top:18px;border-radius:99px;box-shadow:0 0 18px rgba(212,160,23,.22);transition:width .6s var(--premium-ease)}
+.hero h1::after{content:"";display:block;width:72px;height:3px;background:var(--gold);margin-top:18px;border-radius:99px;transition:width .6s var(--premium-ease)}
 .hero:hover h1::after{width:104px}
 .hero p{color:var(--mute);max-width:46em;margin:15px 0 0;font-size:17px;line-height:1.65}
 .hero>div[style*="display:flex"]{gap:10px!important;margin-top:24px!important;align-items:center}
@@ -73,7 +71,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 input,select,textarea{width:100%;min-height:44px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 13px;transition:border-color .25s ease,box-shadow .3s ease,background .3s ease,transform .25s ease}
 textarea{min-height:92px;resize:vertical}
 input:hover,select:hover,textarea:hover{border-color:rgba(212,160,23,.45)}
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(183,160,106,.14);transform:translateY(-1px)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:none;transform:translateY(-1px)}
 label{display:block;font-weight:600;font-size:13px;letter-spacing:.02em;margin:15px 0 6px}
 .count{color:var(--mute);margin:8px 0 14px}
 
@@ -110,13 +108,11 @@ label{display:block;font-weight:600;font-size:13px;letter-spacing:.02em;margin:1
 @media(max-width:480px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.swatch{height:clamp(105px,32vw,145px)}.card{min-width:0;overflow:hidden}.card .body{padding:9px}.card h3{font-size:14px;line-height:1.25;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden;overflow-wrap:anywhere}.price{font-size:15px;line-height:1.3}.card .meta,.card .tags{font-size:11px;line-height:1.35}.card .dealer-cardline{font-size:10px;min-width:0}.card img{max-width:100%}}
 
 .btn{position:relative;overflow:hidden;min-height:44px;background:var(--gold);color:var(--gold-ink);border:1px solid transparent;border-radius:12px;padding:11px 18px;font-size:14px;font-weight:700;letter-spacing:.01em;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;box-shadow:0 4px 14px rgba(24,25,27,.07);transition:transform .35s var(--premium-ease),box-shadow .35s var(--premium-ease),background .35s ease,border-color .35s ease;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-.btn:before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 25%,rgba(255,255,255,.22),transparent 70%);transform:translateX(-120%);transition:transform .65s var(--premium-ease);pointer-events:none}
 .btn.alt{background:#1b1c1e;color:#f0eee8}
 .btn.ghost{background:rgba(255,255,255,.55);border-color:var(--line);color:var(--ink)}
 .btn.wa{background:var(--gold);color:#181818}
 @media (hover:hover) and (pointer:fine){
   .btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.15)}
-  .btn:hover:before{transform:translateX(120%)}
   .btn.ghost:hover{border-color:#b8c2ce;background:var(--surface-2)}
   .btn.alt:hover{background:#25282c}
 }
@@ -146,15 +142,13 @@ dialog:not(#accDlg):not(#accActionDlg):not(#sellerEditListingDialog) .in{padding
 .spec-row span{display:inline-block!important;flex:0 0 auto!important;color:var(--mute);font-size:14px}
 .spec-row b{display:inline-block!important;flex:0 1 auto!important;margin:0!important;min-width:0!important;max-width:100%!important;overflow-wrap:anywhere!important;word-break:break-word}
 .specs a{color:var(--blue);font-weight:600;word-break:break-word}
-footer{border-top:1px solid var(--line);padding:28px 0 80px;color:var(--mute);font-size:14px;background:linear-gradient(180deg,transparent,rgba(0,0,0,.035));margin-top:20px}
+footer{border-top:1px solid var(--line);padding:28px 0 80px;color:var(--mute);font-size:14px;background:rgba(0,0,0,.03);margin-top:20px}
 footer .wrap{font-size:13px;text-align:center}
 [hidden]{display:none!important}
 @media(prefers-reduced-motion:no-preference){.note{animation:pop .25s ease-out}@keyframes pop{from{transform:translateY(4px);opacity:0}}}
 
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:10px 0 28px}
-.tile{position:relative;overflow:hidden;min-height:128px;background:linear-gradient(145deg,color-mix(in srgb,var(--surface) 92%,white 8%),var(--surface));border:1px solid var(--line);border-radius:16px;padding:20px 20px 18px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:4px;box-shadow:var(--shadow-sm);transition:transform var(--ux-card-duration,.38s) var(--ux-card-ease,var(--premium-ease)),box-shadow var(--ux-card-duration,.38s) var(--ux-card-ease,var(--premium-ease)),border-color .35s ease}
-.tile:before{content:"";position:absolute;inset:-40%;background:radial-gradient(circle at 30% 20%,rgba(212,160,23,.12),transparent 36%);opacity:0;transition:opacity .45s ease;pointer-events:none}
-.tile:hover:before{opacity:1}
+.tile{position:relative;overflow:hidden;min-height:128px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px 20px 18px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:4px;box-shadow:var(--shadow-sm);transition:transform var(--ux-card-duration,.38s) var(--ux-card-ease,var(--premium-ease)),box-shadow var(--ux-card-duration,.38s) var(--ux-card-ease,var(--premium-ease)),border-color .35s ease}
 .tile h3{font-size:24px}
 .tile .meta{margin-top:5px;max-width:26em}
 a.tile{text-decoration:none;color:inherit}
@@ -171,7 +165,6 @@ a.tile{text-decoration:none;color:inherit}
 .prev{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
 .prev img{width:88px;height:66px;object-fit:cover;border-radius:6px;border:1px solid var(--line)}
 .swatch.has{height:150px;position:relative;isolation:isolate;overflow:hidden;text-shadow:0 1px 5px rgba(0,0,0,.7);background-size:contain!important;background-color:#17191c}
-.swatch.has:before{content:"";position:absolute;z-index:0;inset:0;background:radial-gradient(ellipse at 50% 35%,#30343a 0%,#17191c 72%);pointer-events:none}
 .swatch-photo{position:absolute;z-index:1;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;background:transparent}
 .swatch-year{position:relative;z-index:2}
 .gal .main{width:100%;height:230px;object-fit:cover;display:block}
@@ -199,7 +192,7 @@ a.tile{text-decoration:none;color:inherit}
 .sell-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
 .sell-actions .btn{margin-top:0}
 .promoted-tag{position:absolute;right:12px;top:12px;z-index:3;padding:5px 9px;border:1px solid rgba(227,179,65,.65);border-radius:999px;background:#171513;color:#e3c57b;font:800 11px/1.2 Manrope,system-ui,sans-serif;letter-spacing:.06em}
-.featured-section{margin:34px 0 46px;padding:24px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,var(--surface),var(--surface-2));box-shadow:0 12px 34px rgba(0,0,0,.045)}
+.featured-section{margin:34px 0 46px;padding:24px;border:1px solid var(--line);border-radius:18px;background:var(--surface);box-shadow:0 12px 34px rgba(0,0,0,.045)}
 .featured-section[hidden]{display:none!important}
 .featured-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:18px}
 .featured-heading h2{margin:5px 0 6px;font:600 clamp(24px,3vw,34px)/1.15 "Sora","Manrope",system-ui,sans-serif;letter-spacing:-.025em}
@@ -258,7 +251,7 @@ dialog.wide{max-width:720px}
 dialog.wide .in{max-height:80vh;overflow:auto}
 .st{font-size:12px;font-weight:600;border:1px solid var(--line);border-radius:99px;padding:1px 9px;white-space:nowrap}
 .eyebrow{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.14em;color:var(--blue);margin-bottom:10px}
-.project-intro{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:26px 28px;margin:6px 0 34px;background:linear-gradient(135deg,var(--surface),var(--surface-2));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm)}
+.project-intro{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:26px 28px;margin:6px 0 34px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm)}
 .project-intro h2{font-size:30px;margin-bottom:6px}
 .project-intro p{margin:0;max-width:680px}
 .project-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;padding-bottom:50px}
@@ -271,7 +264,7 @@ dialog.wide .in{max-height:80vh;overflow:auto}
 .project-kicker{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);font-weight:800}
 .project-body h2{font-size:28px;margin:8px 0 10px}
 .project-body p{color:var(--mute);margin:0;line-height:1.65}
-.project-placeholder{min-height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:linear-gradient(135deg,#111827,#263342);color:#fff;text-align:center}
+.project-placeholder{min-height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:#181c22;color:#fff;text-align:center}
 .project-placeholder span{font-size:11px;letter-spacing:.15em;color:#e3b341;font-weight:800}
 .project-placeholder strong{font:700 30px "Sora","Manrope",system-ui,sans-serif}
 .contact-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;padding-bottom:60px}
@@ -308,19 +301,17 @@ dialog.wide .in{max-height:80vh;overflow:auto}
 .project-public-empty{padding:28px;text-align:center;border:1px dashed var(--line);border-radius:12px;background:var(--surface-2)}
 .project-public-empty h3{margin-bottom:6px}
 .project-card .project-image{width:100%;height:100%;object-fit:cover;display:block}
-.project-card .project-article{min-height:230px;padding:24px;display:flex;flex-direction:column;justify-content:flex-end;background:linear-gradient(135deg,var(--surface-2),var(--surface))}
+.project-card .project-article{min-height:230px;padding:24px;display:flex;flex-direction:column;justify-content:flex-end;background:var(--surface-2)}
 
 /* ===== 3 Pedals Journal ===== */
-.journal-intro{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:30px 32px;margin:6px 0 34px;background:linear-gradient(135deg,var(--surface),var(--surface-2));border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-sm);position:relative;overflow:hidden}
-.journal-intro:after{content:"";position:absolute;right:-90px;top:-110px;width:260px;height:260px;border-radius:50%;border:1px solid rgba(183,160,106,.18);box-shadow:0 0 0 24px rgba(183,160,106,.035),0 0 0 48px rgba(183,160,106,.02);pointer-events:none}
+.journal-intro{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:30px 32px;margin:6px 0 34px;background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-sm);position:relative;overflow:hidden}
 .journal-intro h2{font-size:30px;margin-bottom:7px}
 .journal-intro p{margin:0;max-width:760px}
 .journal-hero{padding-bottom:20px}
 .journal-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:18px;padding-bottom:60px}
 .journal-card{display:flex;flex-direction:column;min-height:320px;padding:0;overflow:hidden;text-align:left;background:var(--surface);color:inherit;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow-sm);cursor:pointer;transition:transform .42s var(--premium-ease),box-shadow .42s var(--premium-ease),border-color .28s ease}
 @media (hover:hover) and (pointer:fine){.journal-card:hover{transform:translateY(var(--ux-card-hover-y,-5px));box-shadow:var(--ux-card-hover-shadow,var(--shadow));border-color:var(--ux-card-hover-border,rgba(183,160,106,.42))}}
-.journal-card-top{min-height:145px;padding:22px;background:linear-gradient(145deg,var(--surface-2),var(--surface));display:flex;flex-direction:column;justify-content:flex-end;position:relative}
-.journal-card-top:before{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(circle at 85% 15%,rgba(183,160,106,.13),transparent 36%);pointer-events:none}
+.journal-card-top{min-height:145px;padding:22px;background:var(--surface-2);display:flex;flex-direction:column;justify-content:flex-end;position:relative}
 .journal-number{position:absolute;right:18px;top:16px;font:700 40px/1 "Sora","Manrope",system-ui,sans-serif;color:rgba(183,160,106,.17)}
 .journal-card-body{padding:20px 22px 23px;display:flex;flex-direction:column;flex:1}
 .journal-card-body h2{font-size:24px;line-height:1.1;margin:8px 0 10px}
@@ -333,14 +324,14 @@ dialog.wide .in{max-height:80vh;overflow:auto}
 .journal-modal .article-body p{margin:0 0 1.2em}
 .journal-card-top.has-cover{background:#111;isolation:isolate;color:#fff}
 .journal-cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.76}
-.journal-card-top.has-cover:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,9,10,.94),rgba(8,9,10,.06) 85%);z-index:2;pointer-events:none}
+.journal-card-top.has-cover:after{content:"";position:absolute;inset:0;background:rgba(8,9,10,.55);z-index:2;pointer-events:none}
 .journal-card-top .journal-number,.journal-card-top .project-kicker,.journal-card-top h2{position:relative;z-index:3}
 .journal-card-top.has-cover .project-kicker,.journal-card-top.has-cover h2{color:#fff}
 .journal-entry{margin-bottom:4px}
-.journal-entry-media{position:relative;display:block;text-decoration:none;color:inherit;width:100%;height:100%;min-height:320px;padding:0;border:0;background:linear-gradient(145deg,#191b1e,#282a2d);cursor:pointer;overflow:hidden}
+.journal-entry-media{position:relative;display:block;text-decoration:none;color:inherit;width:100%;height:100%;min-height:320px;padding:0;border:0;background:#191b1e;cursor:pointer;overflow:hidden}
 .journal-entry-media img{width:100%;height:100%;min-height:320px;display:block;object-fit:cover;transition:transform .55s var(--premium-ease)}
 .journal-entry-media:hover img{transform:scale(1.035)}
-.journal-entry-empty{min-height:320px;display:grid;place-items:center;background:radial-gradient(circle at 70% 25%,rgba(183,160,106,.16),transparent 32%),linear-gradient(145deg,#191b1e,#282a2d);color:#d6c28b;font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+.journal-entry-empty{min-height:320px;display:grid;place-items:center;background:#191b1e;color:#d6c28b;font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
 .journal-entry .project-body{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:clamp(24px,4vw,42px)}
 .journal-entry .project-body h2 a{color:inherit;text-decoration:none}
 .journal-entry .project-body h2 a:hover{color:var(--gold)}
@@ -353,7 +344,7 @@ dialog.wide .in{max-height:80vh;overflow:auto}
 .journal-gallery figure:first-child:nth-last-child(odd){grid-column:1/-1}
 .journal-gallery img{width:100%;height:clamp(150px,28vw,300px);display:block;object-fit:cover}
 .journal-gallery figcaption{padding:7px 10px;font-size:11px;color:var(--mute)}
-.journal-upload-box{padding:14px;border:1px solid rgba(183,160,106,.35);border-radius:12px;background:linear-gradient(145deg,rgba(183,160,106,.09),rgba(255,255,255,.025));margin:8px 0 12px}
+.journal-upload-box{padding:14px;border:1px solid rgba(183,160,106,.35);border-radius:12px;background:rgba(183,160,106,.08);margin:8px 0 12px}
 .journal-upload-box strong{display:block;margin-bottom:5px;color:var(--ink)}
 .journal-upload-box .meta{margin:0 0 10px}
 .journal-upload-preview{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:10px}
@@ -381,14 +372,14 @@ dialog.wide .in{max-height:80vh;overflow:auto}
 <style id="auto-quote-rail">
 /*  automotive quote rail */
 .home-with-quote{display:block;margin-top:8px}.home-with-quote>div:last-child{width:100%}.auto-quote-rail{position:relative;left:auto;top:auto;bottom:auto;transform:none;width:248px;max-width:100%;margin:0 0 26px 0;z-index:auto}
-.auto-quote-rail{border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,rgba(255,255,255,.72),rgba(246,244,239,.92));box-shadow:0 18px 45px rgba(24,25,27,.08);overflow:hidden}
+.auto-quote-rail{border:1px solid var(--line);border-radius:18px;background:rgba(246,244,239,.90);box-shadow:0 18px 45px rgba(24,25,27,.08);overflow:hidden}
 .auto-quote-top{padding:16px 18px 10px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:10px}
 .auto-quote-label{font-size:10px;letter-spacing:.16em;font-weight:800;color:var(--gold);text-transform:uppercase}
 .auto-quote-live{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);display:flex;align-items:center;gap:6px}
-.auto-quote-live:before{content:"";width:6px;height:6px;border-radius:50%;background:#78a77d;box-shadow:0 0 0 3px rgba(120,167,125,.12)}
+.auto-quote-live:before{content:"";width:6px;height:6px;border-radius:50%;background:#78a77d}
 .auto-quote-body{padding:20px 18px 18px;min-height:210px;display:flex;flex-direction:column;justify-content:center}
-.auto-quote-mark{font-family:Georgia,serif;font-size:50px;line-height:.6;color:rgba(183,160,106,.55);height:25px}
-.auto-quote-text{font-family:Georgia,'Times New Roman',serif;font-size:20px;line-height:1.42;letter-spacing:-.01em;color:var(--ink);margin:5px 0 16px}
+.auto-quote-mark{font-family:"Sora","Manrope",system-ui,sans-serif;font-size:44px;line-height:.6;color:rgba(183,160,106,.55);height:25px}
+.auto-quote-text{font-family:"Sora","Manrope",system-ui,sans-serif;font-size:19px;line-height:1.42;letter-spacing:-.01em;color:var(--ink);margin:5px 0 16px}
 .auto-quote-author{font-size:12px;font-weight:800;color:var(--ink)}
 .auto-quote-source{font-size:10px;color:var(--mute);margin-top:4px}
 .auto-quote-footer{padding:10px 18px 14px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:8px}
@@ -398,7 +389,7 @@ dialog.wide .in{max-height:80vh;overflow:auto}
 .auto-quote-loading .auto-quote-text{opacity:.45}
 @media(max-width:980px){.home-with-quote{grid-template-columns:1fr}.auto-quote-rail{position:fixed;left:0;top:96px;bottom:auto;transform:none;max-width:calc(100vw - 36px);margin:0;width:205px}.auto-quote-body{min-height:160px}}
 @media(max-width:520px){.auto-quote-text{font-size:18px}.auto-quote-body{min-height:145px}}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .auto-quote-rail{background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.02))}}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .auto-quote-rail{background:rgba(255,255,255,.03)}}
 </style>
 
 <style id="3pedals-performance-responsive">
@@ -483,13 +474,13 @@ dialog:has(.journal-modal){width:min(920px,calc(100vw - 32px));max-width:920px;m
 @media(max-width:760px){.journal-entry{display:block}.journal-entry-media,.journal-entry-media img,.journal-entry-empty{height:auto;min-height:clamp(210px,55vw,360px)}.journal-entry-media img{height:clamp(210px,55vw,360px)}.journal-entry .project-body{padding:clamp(20px,5vw,30px)}}
 @media(max-width:520px){.journal-intro{margin-bottom:22px}.journal-grid{gap:14px;padding-bottom:36px}.journal-entry{border-radius:14px}.journal-entry .project-body h2 a{color:inherit;text-decoration:none}.journal-entry .project-body h2 a:hover{color:var(--gold)}.journal-entry .project-body h2{font-size:clamp(26px,8vw,34px)}.journal-entry .project-body p{font-size:15px;line-height:1.65}.journal-entry .journal-read{min-height:44px;margin-top:18px}.journal-gallery{grid-template-columns:1fr;gap:8px}.journal-gallery img{height:clamp(190px,65vw,270px)}.journal-upload-box{padding:12px}.journal-upload-preview{grid-template-columns:repeat(2,minmax(0,1fr))}dialog:has(.journal-modal){width:calc(100vw - 20px)!important;max-width:calc(100vw - 20px)!important;max-height:calc(100dvh - 24px)!important}dialog:has(.journal-modal) .in{padding:16px!important}.journal-modal .article-head h2{font-size:clamp(28px,8vw,40px);line-height:1.02}.journal-modal .article-body{font-size:16px;line-height:1.72}}
 @media(prefers-reduced-motion:reduce){.journal-entry-media img{transition:none}}
-.journal-gallery{position:relative;display:block;margin:0 0 24px;overflow:hidden;border:1px solid var(--line);border-radius:12px;background:#08090b}.journal-gallery figure{position:relative;margin:0}.journal-gallery img{width:100%;height:auto;aspect-ratio:16/9;max-height:min(62vh,680px);display:block;object-fit:cover;background:#08090b}.journal-gallery figcaption{position:absolute;left:0;right:0;bottom:0;padding:12px 16px;background:linear-gradient(transparent,rgba(0,0,0,.8));color:#fff;font-size:13px}.journal-gallery .gallery-step{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:58px;padding:0;border:0;border-radius:8px;background:rgba(0,0,0,.58);color:#fff;font-size:32px;line-height:1;display:grid;place-items:center;cursor:pointer}.journal-gallery .gallery-step:hover{background:rgba(0,0,0,.82)}.journal-gallery .gallery-prev{left:12px}.journal-gallery .gallery-next{right:12px}.journal-gallery .gallery-count{position:absolute;right:12px;top:12px;padding:6px 9px;border-radius:6px;background:rgba(0,0,0,.65);color:#fff;font-size:13px;font-weight:700}.journal-gallery button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}@media(max-width:600px){.journal-gallery img{height:auto;aspect-ratio:16/9;max-height:none}.journal-gallery .gallery-step{width:40px;height:50px;font-size:28px}.journal-gallery .gallery-prev{left:8px}.journal-gallery .gallery-next{right:8px}}
+.journal-gallery{position:relative;display:block;margin:0 0 24px;overflow:hidden;border:1px solid var(--line);border-radius:12px;background:#08090b}.journal-gallery figure{position:relative;margin:0}.journal-gallery img{width:100%;height:auto;aspect-ratio:16/9;max-height:min(62vh,680px);display:block;object-fit:cover;background:#08090b}.journal-gallery figcaption{position:absolute;left:0;right:0;bottom:0;padding:12px 16px;background:rgba(0,0,0,.74);color:#fff;font-size:13px}.journal-gallery .gallery-step{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:58px;padding:0;border:0;border-radius:8px;background:rgba(0,0,0,.58);color:#fff;font-size:32px;line-height:1;display:grid;place-items:center;cursor:pointer}.journal-gallery .gallery-step:hover{background:rgba(0,0,0,.82)}.journal-gallery .gallery-prev{left:12px}.journal-gallery .gallery-next{right:12px}.journal-gallery .gallery-count{position:absolute;right:12px;top:12px;padding:6px 9px;border-radius:6px;background:rgba(0,0,0,.65);color:#fff;font-size:13px;font-weight:700}.journal-gallery button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}@media(max-width:600px){.journal-gallery img{height:auto;aspect-ratio:16/9;max-height:none}.journal-gallery .gallery-step{width:40px;height:50px;font-size:28px}.journal-gallery .gallery-prev{left:8px}.journal-gallery .gallery-next{right:8px}}
 </style>
 <style>
 /* Wide journal reader on desktop; a single-column flow on compact screens. */
 dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px;max-height:calc(100dvh - 36px)}
 .journal-modal,.journal-modal button,.journal-modal a{font-family:Manrope,system-ui,-apple-system,"Segoe UI",sans-serif}
-.journal-modal .article-head h2{font-family:"Playfair Display",Georgia,serif}
+.journal-modal .article-head h2{font-family:"Sora","Manrope",system-ui,sans-serif}
 .journal-modal .article-body{font-family:Manrope,system-ui,-apple-system,"Segoe UI",sans-serif;font-size:clamp(15px,1.1vw,17px);line-height:1.78;letter-spacing:-.012em}
 .journal-modal .journal-reading-layout{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:clamp(20px,3vw,42px);align-items:start}
 .journal-modal .journal-gallery{position:sticky;top:12px;margin:0}
@@ -523,7 +514,7 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 <style id="vehicle-photo-controls">
 .gal{position:relative;touch-action:pan-y;overscroll-behavior-x:contain}.gal .main{touch-action:pan-y;user-select:none;-webkit-user-drag:none}.gal .vehicle-step{position:absolute;top:calc(50% - 24px);z-index:3;width:44px;height:54px;padding:0;border:1px solid rgba(255,255,255,.24);border-radius:10px;background:rgba(12,13,14,.72);color:#fff;font-size:32px;line-height:1;display:grid;place-items:center;cursor:pointer;backdrop-filter:blur(10px)}.gal .vehicle-prev{left:10px}.gal .vehicle-next{right:10px}.gal .vehicle-count{position:absolute;right:10px;top:10px;z-index:3;padding:5px 8px;border-radius:6px;background:rgba(12,13,14,.72);color:#fff;font-size:12px;font-weight:700}dialog:not(#accDlg):not(#accActionDlg):not(#sellerEditListingDialog){overscroll-behavior:contain;touch-action:pan-y}body{overscroll-behavior-x:none}
 </style>
-<style id="seller-registration-styles">#authSellerUrlWrap{padding:10px 12px 12px;margin:10px 0;border:1px solid var(--line);border-radius:12px;background:linear-gradient(145deg,rgba(87,54,34,.42),rgba(26,27,29,.9))}#authSellerUrlWrap[hidden]{display:none}#authSellerUrlWrap label{display:block;margin:0 0 7px;color:var(--ink);font-weight:700}#authSellerUrlWrap input{width:100%}#authSellerUrlPreview{margin:7px 0 0;color:var(--gold);overflow-wrap:anywhere}.seller-registration #authProfileDetails{display:block}.seller-registration #authProfileDetails>summary{display:none}.seller-registration #authProfileDetails .auth-optional-inner{padding:10px 12px 12px}.seller-registration #authPhoneField{display:none}</style>
+<style id="seller-registration-styles">#authSellerUrlWrap{padding:10px 12px 12px;margin:10px 0;border:1px solid var(--line);border-radius:12px;background:rgba(26,27,29,.88)}#authSellerUrlWrap[hidden]{display:none}#authSellerUrlWrap label{display:block;margin:0 0 7px;color:var(--ink);font-weight:700}#authSellerUrlWrap input{width:100%}#authSellerUrlPreview{margin:7px 0 0;color:var(--gold);overflow-wrap:anywhere}.seller-registration #authProfileDetails{display:block}.seller-registration #authProfileDetails>summary{display:none}.seller-registration #authProfileDetails .auth-optional-inner{padding:10px 12px 12px}.seller-registration #authPhoneField{display:none}</style>
 
 <style id="journal-feed-compact">
 #journalGrid .journal-entry{width:100%;max-width:1000px;max-height:none;min-height:320px;margin-inline:auto;grid-template-columns:minmax(0,1fr) minmax(0,.9fr)}
@@ -591,16 +582,16 @@ dialog:has(.journal-modal){width:min(1440px,calc(100vw - 48px));max-width:1440px
 }
 @media(max-width:380px){#authDlg>.in{padding-left:13px!important;padding-right:13px!important}#authDlg .in>h2{font-size:25px!important}}
 </style>
-<link rel="stylesheet" href="/site-theme.css?v=20261127-up1">
+<link rel="stylesheet" href="/site-theme.css?v=20261128-ux1">
 <style id="account-restore-no-flash">html.account-restoring body{visibility:hidden!important;background:#0c0e12!important}html[data-theme="light"].account-restoring body{background:#f4efe4!important}html.account-restoring #accDlg[open]{visibility:visible!important}html.account-restoring #accDlg[open] #accBody{min-height:100px}#accDlg .account-refresh-status{display:none!important}</style>
 <script>try{if(sessionStorage.getItem("3pedals:account-open")==="1")document.documentElement.classList.add("account-restoring")}catch(_){}</script>
 <!-- Optional Meta Pixel is loaded by consent.js only after explicit acceptance. -->
 
-<link rel="stylesheet" href="/dashboard-glass.css?v=20261122-card-matched">
-<link rel="stylesheet" href="/index-theme.css?v=20261127-up1">
-<link rel="stylesheet" href="/account-panel.css?v=20261123-fix8">
-<link rel="stylesheet" href="/site-ux.css?v=20261127-up1">
-<link rel="stylesheet" href="/header-modern.css?v=20261127-up1">
+<link rel="stylesheet" href="/dashboard-glass.css?v=20261128-ux1">
+<link rel="stylesheet" href="/index-theme.css?v=20261128-ux1">
+<link rel="stylesheet" href="/account-panel.css?v=20261128-ux1">
+<link rel="stylesheet" href="/site-ux.css?v=20261128-ux1">
+<link rel="stylesheet" href="/header-modern.css?v=20261128-ux1">
 </head>
 <body>
 <!-- Meta Pixel Code (noscript) -->
@@ -721,7 +712,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p class="meta">Buyers tap a button to chat with you on this number.</p>
     <input id="hp1" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
     <p id="sErr" class="meta" style="color:var(--err)" role="alert"></p>
-    <div class="sell-actions"><button class="btn" id="sBtn">Proceed with listing</button><button class="btn ghost" type="button" id="sCancel">Cancel listing</button></div>
+    <div class="sell-actions"><button class="btn" id="sBtn">Proceed with listing</button><button class="btn ghost ux-btn-danger" type="button" id="sCancel"><svg class="ux-svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg><span>Cancel listing</span></button></div>
     <div class="note" id="sOk" hidden></div>
   </form></div>
 </section>
@@ -753,15 +744,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <article class="about-glass-card about-approach-card">
       <span class="about-overline">How we work</span>
       <h2>Confidence at every step.</h2>
-      <div class="about-principle"><span class="about-principle-mark">01</span><div><h3>Clear information</h3><p>We encourage open communication so you can ask questions and make informed decisions.</p></div></div>
-      <div class="about-principle"><span class="about-principle-mark">02</span><div><h3>Practical expertise</h3><p>Vehicle needs are different. Our sales and garage services help you consider the details that matter.</p></div></div>
-      <div class="about-principle"><span class="about-principle-mark">03</span><div><h3>People first</h3><p>We aim to make every interaction respectful, responsive and focused on your needs.</p></div></div>
+      <div class="about-principle"><span class="about-principle-icon" aria-hidden="true"><svg class="ux-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4"/><circle cx="12" cy="8.5" r=".75" fill="currentColor" stroke="none"/></svg></span><div><h3>Clear information</h3><p>We encourage open communication so you can ask questions and make informed decisions.</p></div></div>
+      <div class="about-principle"><span class="about-principle-icon" aria-hidden="true"><svg class="ux-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76Z"/></svg></span><div><h3>Practical expertise</h3><p>Vehicle needs are different. Our sales and garage services help you consider the details that matter.</p></div></div>
+      <div class="about-principle"><span class="about-principle-icon" aria-hidden="true"><svg class="ux-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M5 20a7 7 0 0 1 14 0"/></svg></span><div><h3>People first</h3><p>We aim to make every interaction respectful, responsive and focused on your needs.</p></div></div>
     </article>
   </div>
   <div class="about-values" aria-label="What guides us">
-    <article class="about-value-card"><span class="about-value-number">01 / Quality</span><h3>Choose with care</h3><p>Look beyond the badge and focus on condition, suitability and value.</p></article>
-    <article class="about-value-card"><span class="about-value-number">02 / Trust</span><h3>Honest conversations</h3><p>Useful answers and clear expectations help build better automotive decisions.</p></article>
-    <article class="about-value-card"><span class="about-value-number">03 / Service</span><h3>Support that continues</h3><p>Explore vehicle sales alongside servicing, repairs and inspection support through 3 Pedals Garage.</p></article>
+    <article class="about-value-card"><div class="about-value-head"><span class="about-value-icon" aria-hidden="true"><svg class="ux-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6.5v5.3c0 4.8 3.4 9 8 10.2 4.6-1.2 8-5.4 8-10.2V6.5L12 3Z"/><path d="m9.5 12 1.8 1.8 3.5-3.6"/></svg></span><span class="about-value-label">Quality</span></div><h3>Choose with care</h3><p>Look beyond the badge and focus on condition, suitability and value.</p></article>
+    <article class="about-value-card"><div class="about-value-head"><span class="about-value-icon" aria-hidden="true"><svg class="ux-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m9 12 2 2 4-4"/></svg></span><span class="about-value-label">Trust</span></div><h3>Honest conversations</h3><p>Useful answers and clear expectations help build better automotive decisions.</p></article>
+    <article class="about-value-card"><div class="about-value-head"><span class="about-value-icon" aria-hidden="true"><svg class="ux-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76Z"/></svg></span><span class="about-value-label">Service</span></div><h3>Support that continues</h3><p>Explore vehicle sales alongside servicing, repairs and inspection support through 3 Pedals Garage.</p></article>
   </div>
   <div class="about-signoff"><span>3 Pedals Auto KE</span><p>Automotive excellence reimagined, for those who appreciate the drive.</p></div>
   <section class="about-faq" id="aboutFaq" aria-labelledby="aboutFaqHeading">
@@ -773,43 +764,58 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
       <button type="button" class="btn alt" data-book-inspection>Book an inspection</button>
     </div>
+    <div class="faq-filter-bar" id="aboutFaqFilters" role="tablist" aria-label="FAQ categories"></div>
     <div class="faq-accordion-list">
-      <details class="faq-item" open>
+      <details class="faq-item" data-faq-category="inspections" open>
         <summary>What is included in a 3 Pedals pre-purchase vehicle inspection?</summary>
         <div class="faq-item-body">
           <span class="faq-item-tag">Inspections</span>
           <div>Every pre-purchase inspection covers a full OBD-II computer scan, engine and transmission health check, suspension and underbody assessment, braking and tyre measurement, body-paint/accident signs, and a road test — followed by a clear written report before you pay the seller.</div>
         </div>
       </details>
-      <details class="faq-item">
+      <details class="faq-item" data-faq-category="inspections">
         <summary>Can I have an inspection carried out at a car yard or seller’s location?</summary>
         <div class="faq-item-body">
           <span class="faq-item-tag">Inspections</span>
           <div>Yes. You can bring the vehicle to 3 Pedals Garage or request a mobile inspection at Nairobi car yards and private sellers’ locations via our Roadside &amp; Mobile Mechanic team.</div>
         </div>
       </details>
-      <details class="faq-item">
+      <details class="faq-item" data-faq-category="selling">
         <summary>How do I list and sell my car on 3 Pedals Auto KE?</summary>
         <div class="faq-item-body">
           <span class="faq-item-tag">Selling</span>
           <div>Sign in, open <strong>Sell your car</strong>, add your make, model, mileage, price in KES, up to 15 photos, and your WhatsApp number. Listings are reviewed quickly and go live so buyers can contact you directly without hidden middlemen.</div>
         </div>
       </details>
-      <details class="faq-item">
+      <details class="faq-item" data-faq-category="selling">
         <summary>Can dealerships and car yards register multiple vehicles?</summary>
         <div class="faq-item-body">
           <span class="faq-item-tag">Selling</span>
           <div>Yes. Create an <strong>Organization / dealership</strong> account during sign-up to get a dedicated public yard profile page, display your yard logo and location, and manage your entire stock from one dashboard.</div>
         </div>
       </details>
-      <details class="faq-item">
+      <details class="faq-item" data-faq-category="general">
+        <summary>How do I verify a seller or vehicle before paying?</summary>
+        <div class="faq-item-body">
+          <span class="faq-item-tag">General</span>
+          <div>View the car in person during daylight, confirm the NTSA TIMS logbook details match the engine and chassis numbers, and schedule a 3 Pedals pre-purchase inspection before releasing funds.</div>
+        </div>
+      </details>
+      <details class="faq-item" data-faq-category="general">
+        <summary>Does 3 Pedals Auto KE assist buyers and yards outside Nairobi?</summary>
+        <div class="faq-item-body">
+          <span class="faq-item-tag">General</span>
+          <div>Yes. Listings cover private sellers and verified car yards across Kenya, and you can coordinate inspections or chauffeur-driven viewing trips across Nairobi, Mombasa, Nakuru, and surrounding regions.</div>
+        </div>
+      </details>
+      <details class="faq-item" data-faq-category="booking">
         <summary>How do I book an inspection or garage service appointment?</summary>
         <div class="faq-item-body">
           <span class="faq-item-tag">Booking</span>
           <div>Tap <strong>Book an inspection</strong> to reach our enquiry form right away, or visit <a href="/garage.html#book" style="color:var(--gold);text-decoration:underline">3 Pedals Garage booking</a> to pick an open Monday–Saturday time slot (8:00 am – 6:00 pm) and receive a booking reference ticket.</div>
         </div>
       </details>
-      <details class="faq-item">
+      <details class="faq-item" data-faq-category="booking">
         <summary>How quickly do you confirm bookings and inspection reports?</summary>
         <div class="faq-item-body">
           <span class="faq-item-tag">Booking</span>
@@ -820,7 +826,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </section>
 </section>
 
-<section id="contact" hidden><div class="contact-intro-card"><div class="contact-intro-copy"><span class="eyebrow">3 Pedals Auto KE · Contact</span><h1>Let’s move your automotive plans forward.</h1><p>Whether you are buying or selling a vehicle, looking for a trusted inspection, or need professional workshop support, our team is ready to help. Tell us what you need and we will guide you to the right next step.</p><div class="contact-specialties"><span>Vehicle sales &amp; sourcing</span><span>Pre-purchase inspections</span><span>Servicing &amp; repairs</span></div><p class="contact-intro-note">For the quickest response, contact us on WhatsApp. For detailed enquiries and appointments, you can also reach us by email.</p></div></div><form id="publicContactForm" class="contact-form" style="margin:22px auto;max-width:900px;padding:22px" novalidate><div class="contact-inspection-banner" id="contactInspectionBanner" hidden><div><strong>Pre-Purchase Inspection Booking</strong><br><span>Share the car details and preferred date below, or pick an exact slot directly in 3 Pedals Garage.</span></div><a class="btn ghost" href="/garage.html#book">Open Garage Booking</a></div><span class="eyebrow">Send an enquiry</span><h2>How can we help?</h2><p class="contact-intro-note">Send a message directly to our team. We’ll review it and get back to you using the contact details you provide.</p><div class="contact-grid"><label>Name<input name="name" autocomplete="name" maxlength="120" required></label><label>Email<input name="email" type="email" autocomplete="email" maxlength="254" required></label><label>Phone (optional)<input name="phone" type="tel" autocomplete="tel" maxlength="40"></label><label>Subject<input name="subject" maxlength="160" required></label><label style="grid-column:1/-1">Message<textarea name="message" rows="5" minlength="10" maxlength="5000" required></textarea></label></div><div class="contact-form-actions" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:16px"><button class="btn primary" id="sendPublicEnquiry" type="submit">Send enquiry</button><span id="publicContactStatus" role="status" aria-live="polite"></span></div></form><div class="contact-grid"><a class="contact-card" id="publicWhatsapp" href="https://wa.me/254791961807" target="_blank" rel="noopener"><span>💬 WhatsApp</span><strong>Message us</strong><small>Fastest way to reach us</small></a><a class="contact-card" id="publicEmailLink" href="mailto:3pedalsautoke@gmail.com"><span>✉️ Email</span><strong id="publicEmail">3pedalsautoke@gmail.com</strong><small>Appointments and enquiries</small></a><div class="contact-card"><span>📍 Address</span><strong id="publicAddress">P.O. Box 462-00516</strong><small>3 Pedals Auto KE</small></div><a class="contact-card social-card" id="publicInstagram" href="https://instagram.com/3pedalsauto" target="_blank" rel="noopener"><span>📸 Instagram</span><strong>Instagram</strong><small>Open Instagram</small></a><a class="contact-card social-card" id="publicFacebook" href="https://facebook.com/3pedalsauto" target="_blank" rel="noopener"><span>📘 Facebook</span><strong>Facebook</strong><small>Open Facebook</small></a><a class="contact-card social-card" id="publicTwitter" href="https://twitter.com/3pedalsauto" target="_blank" rel="noopener"><span>🐦 X / Twitter</span><strong>X / Twitter</strong><small>Open X / Twitter</small></a><a class="contact-card social-card" id="publicTiktok" href="https://tiktok.com/@3pedalsauto" target="_blank" rel="noopener"><span>🎵 TikTok</span><strong>@3pedalsauto</strong><small>Open TikTok</small></a></div></section>
+<section id="contact" hidden><div class="contact-intro-card"><div class="contact-intro-copy"><span class="eyebrow">3 Pedals Auto KE · Contact</span><h1>Let’s move your automotive plans forward.</h1><p>Whether you are buying or selling a vehicle, looking for a trusted inspection, or need professional workshop support, our team is ready to help. Tell us what you need and we will guide you to the right next step.</p><div class="contact-specialties"><span>Vehicle sales &amp; sourcing</span><span>Pre-purchase inspections</span><span>Servicing &amp; repairs</span></div><p class="contact-intro-note">For the quickest response, contact us on WhatsApp. For detailed enquiries and appointments, you can also reach us by email.</p></div></div><form id="publicContactForm" class="contact-form" style="margin:22px auto;max-width:900px;padding:22px" novalidate><div class="contact-inspection-banner" id="contactInspectionBanner" hidden><div><strong>Pre-Purchase Inspection Booking</strong><br><span>Share the car details and preferred date below, or pick an exact slot directly in 3 Pedals Garage.</span></div><a class="btn ghost" href="/garage.html#book">Open Garage Booking</a></div><span class="eyebrow">Send an enquiry</span><h2>How can we help?</h2><p class="contact-intro-note">Send a message directly to our team. We’ll review it and get back to you using the contact details you provide.</p><div class="contact-grid"><label>Name<input name="name" autocomplete="name" maxlength="120" required></label><label>Email<input name="email" type="email" autocomplete="email" maxlength="254" required></label><label>Phone (optional)<input name="phone" type="tel" autocomplete="tel" maxlength="40"></label><label>Subject<input name="subject" maxlength="160" required></label><label style="grid-column:1/-1">Message<textarea name="message" rows="5" minlength="10" maxlength="5000" required></textarea></label></div><div class="contact-form-actions" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:16px"><button class="btn primary" id="sendPublicEnquiry" type="submit">Send enquiry</button><span id="publicContactStatus" role="status" aria-live="polite"></span></div></form><div class="contact-grid"><a class="contact-card" id="publicWhatsapp" href="https://wa.me/254791961807" target="_blank" rel="noopener"><span class="contact-kicker-row"><svg class="ux-svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"/></svg>WhatsApp</span><strong>Message us</strong><small>Fastest way to reach us</small></a><a class="contact-card" id="publicEmailLink" href="mailto:3pedalsautoke@gmail.com"><span class="contact-kicker-row"><svg class="ux-svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Email</span><strong id="publicEmail">3pedalsautoke@gmail.com</strong><small>Appointments and enquiries</small></a><div class="contact-card"><span class="contact-kicker-row"><svg class="ux-svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6-5.3-6-10a6 6 0 1 1 12 0c0 4.7-6 10-6 10Z"/><circle cx="12" cy="11" r="2.2"/></svg>Address</span><strong id="publicAddress">P.O. Box 462-00516</strong><small>3 Pedals Auto KE</small></div><a class="contact-card social-card" id="publicInstagram" href="https://instagram.com/3pedalsauto" target="_blank" rel="noopener"><span class="contact-kicker-row"><svg class="ux-svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".75" fill="currentColor" stroke="none"/></svg>Instagram</span><strong>Instagram</strong><small>Open Instagram</small></a><a class="contact-card social-card" id="publicFacebook" href="https://facebook.com/3pedalsauto" target="_blank" rel="noopener"><span class="contact-kicker-row"><svg class="ux-svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M2 12h20"/><path d="M12 3a14.5 14.5 0 0 1 0 18"/><path d="M12 3a14.5 14.5 0 0 0 0 18"/></svg>Facebook</span><strong>Facebook</strong><small>Open Facebook</small></a><a class="contact-card social-card" id="publicTwitter" href="https://twitter.com/3pedalsauto" target="_blank" rel="noopener"><span class="contact-kicker-row"><svg class="ux-svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5 15.4 17.5M15.4 6.5 8.6 10.5"/></svg>X / Twitter</span><strong>X / Twitter</strong><small>Open X / Twitter</small></a><a class="contact-card social-card" id="publicTiktok" href="https://tiktok.com/@3pedalsauto" target="_blank" rel="noopener"><span class="contact-kicker-row"><svg class="ux-svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><polygon points="10 8 16 12 10 16 10 8"/></svg>TikTok</span><strong>@3pedalsauto</strong><small>Open TikTok</small></a></div></section>
 
 </main>
 
@@ -837,7 +843,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 /* Shared auth state is stored only on window to avoid lexical TDZ collisions. */
 window.authMode = window.authMode || "register";
 </script>
-<script src="account-panel.js?v=20261122-perf"></script>
+<script src="account-panel.js?v=20261128-ux1"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
@@ -1177,9 +1183,9 @@ window.ThreePedalsAccountHost={
   rerenderInventory:()=>typeof render==="function"?render():undefined
 };
 </script>
-<script src="/account-listings-crud.js?v=20261122-perf"></script>
-<script src="/account-promotions.js?v=20261122-perf"></script>
-<script src="/account-workspace.js?v=20261124-fix16"></script>
+<script src="/account-listings-crud.js?v=20261128-ux1"></script>
+<script src="/account-promotions.js?v=20261128-ux1"></script>
+<script src="/account-workspace.js?v=20261128-ux1"></script>
 <script>
 async function getProjectsAdmin(){
   const {data,error}=await sb.from("projects").select("*").order("created_at",{ascending:false});
@@ -1353,6 +1359,8 @@ const bgOf=c=>c.color||"#17191c";
 const HOME_HEART_SVG='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.6c-.3 0-.6-.1-.8-.3C6.1 16 3 12.9 3 8.9 3 6.1 5.1 4 7.9 4c1.6 0 3.1.8 4.1 2 1-1.2 2.5-2 4.1-2 2.8 0 4.9 2.1 4.9 4.9 0 4-3.1 7.1-8.2 11.4-.2.2-.5.3-.8.3z"/></svg>';
 const HOME_SHARE_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>';
 const HOME_INSPECT_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></svg>';
+const HOME_YARD_SVG='<svg class="ux-svg-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-4h6v4"/></svg>';
+const HOME_PIN_SVG='<svg class="ux-svg-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6-5.3-6-10a6 6 0 1 1 12 0c0 4.7-6 10-6 10Z"/><circle cx="12" cy="11" r="2.2"/></svg>';
 const cardMarkup=(c,i,inMainGrid=false)=>{
   const isYard=c.seller&&c.seller.type==="yard",yardName=c.seller?.name||"Car yard",loc=c.seller?.location||"";
   const vehicleUrl=`vehicle.html?id=${encodeURIComponent(c.id)}`;
@@ -1366,11 +1374,11 @@ const cardMarkup=(c,i,inMainGrid=false)=>{
       <div class="body"><h3><a href="${vehicleUrl}" style="color:inherit;text-decoration:none">${esc(c.year)} ${esc(c.make)} ${esc(c.model)}</a></h3>
       <div class="price">KES ${fmt(c.price)}</div>
       <div class="tags"><span class="tag">${fmt(c.km)} km</span><span class="tag">${esc(c.fuel||"N/A")}</span><span class="tag">${isYard?"Car yard / dealer":"Private seller"}</span></div>
-      ${isYard?`<div class="card-extra"><div class="yard-line">${c.seller.logo?`<img class="yard-logo" src="${esc(c.seller.logo)}" alt="${esc(yardName)} logo" loading="lazy">`:`<span aria-hidden="true">🏢</span>`}<a class="yard-link" href="${yardUrl}">${esc(yardName)}</a></div>${loc?`<div class="yard-line">📍 ${esc(loc)}</div>`:""}<div class="card-reveal"><a class="yard-link" href="${yardUrl}">View dealer profile</a></div></div>`:""}
+      ${isYard?`<div class="card-extra"><div class="yard-line">${c.seller.logo?`<img class="yard-logo" src="${esc(c.seller.logo)}" alt="${esc(yardName)} logo" loading="lazy">`:HOME_YARD_SVG}<a class="yard-link" href="${yardUrl}">${esc(yardName)}</a></div>${loc?`<div class="yard-line">${HOME_PIN_SVG}<span>${esc(loc)}</span></div>`:""}<div class="card-reveal"><a class="yard-link" href="${yardUrl}">View dealer profile</a></div></div>`:""}
       </div>
     </div>
     <div class="account-card-footer">
-      <button type="button" class="account-card-save" data-save-vehicle="${esc(c.id)}" aria-pressed="${String(saved)}"${sold?' disabled aria-disabled="true"':""}>${sold?"Sold":saved?"Saved ✓":"Save vehicle"}</button>
+      <button type="button" class="account-card-save" data-save-vehicle="${esc(c.id)}" aria-pressed="${String(saved)}"${sold?' disabled aria-disabled="true"':""}>${sold?"Sold":saved?"Saved":"Save vehicle"}</button>
       <button type="button" class="card-footer-share-btn" data-share-vehicle="${esc(c.id)}" aria-label="Share ${esc(c.year)} ${esc(c.make)} ${esc(c.model)}" title="Share vehicle">${HOME_SHARE_SVG}<span>Share</span></button>
       ${inspectFooterBtn}
     </div>
@@ -2030,7 +2038,7 @@ loadSiteSettings();
   });
 })();
 </script>
-<script defer src="/lib/auto-logic.js?v=20261127-up1"></script>
-<script defer src="/site-ux.js?v=20261127-up1"></script>
+<script defer src="/lib/auto-logic.js?v=20261128-ux1"></script>
+<script defer src="/site-ux.js?v=20261128-ux1"></script>
 </body>
 </html>

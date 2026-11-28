@@ -72,23 +72,24 @@ html:not([data-theme="light"]) body::before {
   inset: -10px;
   z-index: -1;
   pointer-events: none;
-  background:
-    linear-gradient(110deg, rgba(8, 9, 11, .46), rgba(8, 9, 11, .22) 48%, rgba(8, 9, 11, .46)),
-    url("/public/assets/hero-backdrop.webp") center center / cover no-repeat;
+  background: url("/public/assets/hero-backdrop-mobile.webp") center center / cover no-repeat;
   filter: blur(4px);
   transform: scale(1.025);
 }
 
 html:not([data-theme="light"]) body::after {
-  content: none;
-  display: none;
+  content: "";
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: rgba(8, 9, 11, .40);
 }
 
 @media (max-width: 760px) {
   html:not([data-theme="light"]) body::before {
-    background-image:
-      linear-gradient(110deg, rgba(8, 9, 11, .48), rgba(8, 9, 11, .24) 48%, rgba(8, 9, 11, .48)),
-      url("/public/assets/hero-backdrop-mobile.webp");
+    background-image: url("/public/assets/hero-backdrop-mobile.webp");
   }
 }
 
@@ -135,12 +136,12 @@ html body :is(.price, .amount, .vehicle-price, [data-price], .stat-value, .metri
 }
 
 html body :is(.journal-title, .article-title, .editorial-title, .article-head h2) {
-  font-family: "Playfair Display", Georgia, serif;
+  font-family: "Sora", "Manrope", system-ui, sans-serif;
   font-weight: 600;
-  letter-spacing: -.02em;
+  letter-spacing: -.025em;
 }
 
-/* Storefront Dark Glass Surfaces (Modern Classic borderless edge-lit downward fade) */
+/* Storefront Dark Glass Surfaces (Flat frosted glass with subtle top-edge highlight) */
 html:not([data-theme="light"]) body :is(
   .card, .dealer, .stat, .state, .empty, .error, .panel, .seller-card,
   .info, .gallery, .seller, .spec, .note, .listing, .article-item,
@@ -152,19 +153,14 @@ html:not([data-theme="light"]) body :is(
   .garage-card, .attention-panel, .account-overview-panel
 ):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
   color: var(--p3-ivory);
-  background-color: transparent;
-  background-image: linear-gradient(
-    180deg,
-    rgba(18, 22, 28, 0.56) 0%,
-    rgba(16, 18, 24, 0.34) 48%,
-    rgba(12, 14, 18, 0.10) 100%
-  );
+  background-color: rgba(18, 22, 28, 0.44);
+  background-image: none;
   border: 0;
   border-radius: 20px;
-  box-shadow: 0 18px 46px rgba(0, 0, 0, .16), inset 0 1px 0 0 rgba(255, 255, 255, .15);
+  box-shadow: 0 18px 46px rgba(0, 0, 0, .16), inset 0 1px 0 0 rgba(255, 255, 255, .14);
   -webkit-backdrop-filter: blur(24px) saturate(125%);
   backdrop-filter: blur(24px) saturate(125%);
-  transition: transform .24s var(--p3-ease), background-image .24s ease, box-shadow .24s ease;
+  transition: transform .24s var(--p3-ease), background-color .24s ease, box-shadow .24s ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -174,13 +170,9 @@ html:not([data-theme="light"]) body :is(
     .feature-card, .service-card, .booking-card, .garage-card, .journal-card,
     .seller-card, .dashboard-card
   ):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):hover {
-    background-image: linear-gradient(
-      180deg,
-      rgba(22, 27, 35, 0.66) 0%,
-      rgba(18, 21, 28, 0.42) 52%,
-      rgba(14, 16, 21, 0.14) 100%
-    );
-    box-shadow: 0 22px 48px rgba(0, 0, 0, .24), inset 0 1px 0 0 rgba(229, 185, 111, .38);
+    background-color: rgba(22, 27, 35, 0.54);
+    background-image: none;
+    box-shadow: 0 22px 48px rgba(0, 0, 0, .24), inset 0 1px 0 0 rgba(229, 185, 111, .34);
     transform: translateY(-2px);
   }
 }
@@ -236,7 +228,8 @@ html:not([data-theme="light"]) :is(input, select, textarea, .input)::placeholder
 
 html:not([data-theme="light"]) :is(input, select, textarea, .input):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *):focus {
   border-color: rgba(201, 183, 132, .60);
-  box-shadow: 0 0 0 3px rgba(201, 183, 132, .12);
+  background: rgba(18, 22, 28, .70);
+  box-shadow: inset 0 2px 0 rgba(201, 183, 132, .42);
   outline: none;
 }
 
@@ -318,13 +311,8 @@ html:not([data-theme="light"]) body:has(#app) :is(
   ):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
     -webkit-backdrop-filter: blur(18px) saturate(125%) !important;
     backdrop-filter: blur(18px) saturate(125%) !important;
-    background-color: transparent !important;
-    background-image: linear-gradient(
-      180deg,
-      rgba(18, 22, 28, 0.58) 0%,
-      rgba(16, 18, 24, 0.36) 48%,
-      rgba(12, 14, 18, 0.12) 100%
-    ) !important;
+    background-color: rgba(18, 22, 28, 0.46) !important;
+    background-image: none !important;
     border: 0 !important;
     box-shadow: 0 18px 46px rgba(0, 0, 0, .16), inset 0 1px 0 0 rgba(255, 255, 255, .15) !important;
   }
@@ -339,8 +327,8 @@ html:not([data-theme="light"]) body:has(#app) :is(
   ):not(#accDlg *):not(#accActionDlg *):not(#sellerEditListingDialog *) {
     -webkit-backdrop-filter: blur(14px) saturate(130%) !important;
     backdrop-filter: blur(14px) saturate(130%) !important;
-    background-color: transparent !important;
-    background-image: linear-gradient(180deg, rgba(255, 253, 249, .86) 0%, rgba(252, 247, 238, .66) 55%, rgba(247, 241, 228, .38) 100%) !important;
+    background-color: rgba(252, 247, 238, .72) !important;
+    background-image: none !important;
     border: 0 !important;
     box-shadow: 0 12px 28px rgba(48, 38, 18, .09), inset 0 1px 0 0 rgba(255, 255, 255, .92) !important;
   }
