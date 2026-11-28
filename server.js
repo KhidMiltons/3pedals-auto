@@ -283,6 +283,11 @@ function sanitizeKenyaTaxAndFaqClaims(text) {
   // immediately before the deterministic replacement.
   value = value.replace(/individual tax base not speindividual tax base not specified in the current KRA procedure/gi,
     "individual tax base not specified in the current KRA procedure");
+  // Repair partial words left immediately before the canonical base wording
+  // (for example, "not speindividual tax base not specified...").
+  value = value.replace(/individual tax base not\\s+[a-z]{1,12}(?=individual tax base not specified in the current KRA procedure)/gi, "");
+  value = value.replace(/(?:individual tax base not\\s*){2,}specified in the current KRA procedure/gi,
+    "individual tax base not specified in the current KRA procedure");
 
   // Dated 2021 blog formulas are not proof of current 2026 tax bases.
   value = value.replace(/(?:VAT|value[-‑– ]added tax|IDF|import declaration fee|RDL|railway development levy)[^.!?\n]{0,180}(?:customs value|CIF)[^.!?\n]*/gi,
@@ -380,6 +385,18 @@ function sanitizeKenyaTaxAndFaqClaims(text) {
   // do not broaden it into an unsupported universal CoR rule.
   value = value.replace(/All used motor vehicles must obtain a road[- ]worthiness certificate from a KEBS[- ]appointed inspection agent in the export country\.?/gi,
     "KRA's Procedures for Motor Vehicle states that the vehicle will be subject to roadworthiness inspection by a KEBS-appointed inspection agent in the country of export.");
+
+  // Normalize repeated destination-inspection summaries to one complete,
+  // source-limited sentence, then remove duplicate copies.
+  const fullDestinationCaveat = "The notice describes document validation for vehicles not accompanied by a CoR and states that vehicles with validated import documents will be subjected to destination inspection; it does not establish whether other destination-inspection triggers apply.";
+  value = value.replace(/[^.!?\\n]*(?:the )?(?:KEBS )?notice describes[^.!?\\n]*(?:document[- ]validation|validation process)[^.!?\\n]*(?:destination inspection|destination-inspection triggers?)[^.!?\\n]*[.!?]?/gi,
+    fullDestinationCaveat);
+  let keptFullDestinationCaveat = false;
+  value = value.replace(/The notice describes document validation for vehicles not accompanied by a CoR and states that vehicles with validated import documents will be subjected to destination inspection; it does not establish whether other destination-inspection triggers apply\\./gi, () => {
+    if (keptFullDestinationCaveat) return "";
+    keptFullDestinationCaveat = true;
+    return fullDestinationCaveat;
+  });
 
   // Collapse repeated destination-inspection caveats, including the variant
   // that starts with "The notice describes this validation process".
