@@ -340,9 +340,6 @@ function sanitizeKenyaTaxAndFaqClaims(text) {
   value = value.replace(/[^.!?\n]*\b(?:only|solely|exclusively)\b[^.!?\n]*(?:destination inspection|inspection at destination)[^.!?\n]*[.!?]?/gi,
     "The notice describes document validation for vehicles not accompanied by a CoR and states that vehicles with validated import documents will be subjected to destination inspection; it does not establish whether other triggers apply.");
 
-  value = value.replace(/[^.!?\\n]*\\b(?:only|solely|exclusively)\\b[^.!?\\n]*(?:destination inspection|inspection at destination)[^.!?\\n]*[.!?]?/gi,
-    "The notice describes document validation for vehicles not accompanied by a CoR and states that vehicles with validated import documents will be subjected to destination inspection; it does not establish whether other triggers apply.");
-
   value = value.replace(/(?:\*{1,2})?Only(?:\*{1,2})?\s+(?:(?:used\s+)?motor\s+)?vehicles?[^.!?\n]*(?:validated|validation)[^.!?\n]*(?:destination inspection|inspection at destination)[^.!?\n]*[.!?]?/gi,
     "The notice describes document validation for vehicles not accompanied by a CoR and states that vehicles with validated import documents will be subjected to destination inspection; it does not establish whether other triggers apply.");
   value = value.replace(/[^.!?\n]*destination inspection[^.!?\n]*\bapplies? only (?:when|if)\b[^.!?\n]*\b(?:without|not accompanied by)\s+(?:a )?CoR\b[^.!?\n]*[.!?]?/gi,
