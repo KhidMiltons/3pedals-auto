@@ -389,7 +389,7 @@ function sanitizeKenyaTaxAndFaqClaims(text) {
   // Normalize repeated destination-inspection summaries to one complete,
   // source-limited sentence, then remove duplicate copies.
   const fullDestinationCaveat = "The notice describes document validation for vehicles not accompanied by a CoR and states that vehicles with validated import documents will be subjected to destination inspection; it does not establish whether other destination-inspection triggers apply.";
-  value = value.replace(/[^.!?\n]*(?:the )?(?:KEBS )?notice describes[^.!?\\n]*(?:document[- ]validation|validation process)[^.!?\\n]*(?:destination inspection|destination-inspection triggers?)[^.!?\\n]*[.!?]?/gi,
+  value = value.replace(/[^.!?\n]*(?:the )?(?:KEBS )?notice describes[^.!?\n]*(?:document[- ]validation|validation process)[^.!?\n]*(?:destination inspection|destination-inspection triggers?)[^.!?\n]*[.!?]?/gi,
     fullDestinationCaveat);
   let keptFullDestinationCaveat = false;
   value = value.replace(/The notice describes document validation for vehicles not accompanied by a CoR and states that vehicles with validated import documents will be subjected to destination inspection; it does not establish whether other destination-inspection triggers apply\./gi, () => {
