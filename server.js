@@ -337,7 +337,7 @@ function sanitizeKenyaTaxAndFaqClaims(text) {
   // including variants with "official", "known" or "separate" inserted.
   value = value.replace(/[^.!?\n]*\bno\s+(?:other|additional)\s+(?:(?:official|known|separate|independent)\s+)?(?:destination[- ]inspection\s+)?triggers?\b[^.!?\n]*(?:identified|found|listed|established|exists?)[^.!?\n]*[.!?]?/gi,
     "The notice describes a document-validation process for vehicles not accompanied by a CoR; it does not establish whether other destination-inspection triggers apply.");
-  value = value.replace(/[^.!?\n]*\b(?:only|solely|exclusively)\b[^.!?\n]*(?:destination inspection|inspection at destination)[^.!?\n]*[.!?]?/gi,
+  value = value.replace(/(?:[^.!?\n]*\b(?:only|solely|exclusively)\b[^.!?\n]*(?:destination inspection|inspection at destination)[^.!?\n]*|[^.!?\n]*(?:destination inspection|inspection at destination)[^.!?\n]*\b(?:only|solely|exclusively)\b[^.!?\n]*)[.!?]?/gi,
     "The notice describes document validation for vehicles not accompanied by a CoR and states that vehicles with validated import documents will be subjected to destination inspection; it does not establish whether other triggers apply.");
 
   value = value.replace(/(?:\*{1,2})?Only(?:\*{1,2})?\s+(?:(?:used\s+)?motor\s+)?vehicles?[^.!?\n]*(?:validated|validation)[^.!?\n]*(?:destination inspection|inspection at destination)[^.!?\n]*[.!?]?/gi,
