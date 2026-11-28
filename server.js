@@ -1528,9 +1528,35 @@ app.post("/api/chat", async (req, res) => {
         : "I could not generate a response for that request. Please try again."
     );
     if (isKenyaImportSearch) {
+      const preSanitizerReply = finalReply;
+      const taxRowDiagnostics = (text) => {
+        const rows = String(text || "").split("\\n").filter((line) =>
+          /\\b(?:value[- ]?added tax|\\bvat\\b|import declaration fee|\\bidf\\b|railway development levy|\\brdl\\b)/i.test(line)
+        );
+        return {
+          taxRowCount: rows.length,
+          malformedBaseRowCount: rows.filter((line) =>
+            /individual tax base not speindividual tax base not specified in the current KRA procedure/i.test(line)
+          ).length,
+        };
+      };
+      const beforeDiagnostics = taxRowDiagnostics(preSanitizerReply);
       finalReply = sanitizeKenyaRhdClaims(finalReply).text;
       finalReply = enforceKenyaRhdSection(finalReply);
       finalReply = sanitizeKenyaTaxAndFaqClaims(finalReply);
+      const afterDiagnostics = taxRowDiagnostics(finalReply);
+      console.info("Kenya import response sanitizer diagnostics:", {
+        requestedMode,
+        effectiveMode,
+        kenyaImportGuardMatched: true,
+        inputCharacters: preSanitizerReply.length,
+        outputCharacters: finalReply.length,
+        outputChanged: preSanitizerReply !== finalReply,
+        taxRowsBefore: beforeDiagnostics.taxRowCount,
+        malformedTaxRowsBefore: beforeDiagnostics.malformedBaseRowCount,
+        taxRowsAfter: afterDiagnostics.taxRowCount,
+        malformedTaxRowsAfter: afterDiagnostics.malformedBaseRowCount,
+      });
     }
     if (isKenyaImportSearch) {
       finalReply = removeUnverifiedKenyaMarkdownLinks(finalReply, groundingSources);
