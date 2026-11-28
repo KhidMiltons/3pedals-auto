@@ -209,8 +209,8 @@ function sanitizeKenyaRhdClaims(text) {
   ];
   let changed = false;
   const output = String(text || "").split(/(?<=[.!?])\s+|\n+/).map((sentence) => {
-    const ageClaim = patterns.slice(0, 8).some((pattern) => pattern.test(sentence));
-    const rhdClaim = patterns.slice(8).some((pattern) => pattern.test(sentence));
+    const ageClaim = patterns.slice(0, 11).some((pattern) => pattern.test(sentence));
+    const rhdClaim = patterns.slice(11).some((pattern) => pattern.test(sentence));
     if (ageClaim || rhdClaim) {
       changed = true;
       if (ageClaim) return safeAgeStatement;
