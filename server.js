@@ -259,10 +259,9 @@ function sanitizeKenyaTaxAndFaqClaims(text) {
   value = value.replace(/Importers? (?:not|who are not) accompanied by (?:a )?(?:Certificate of Roadworthiness|CoR)[^.!?\n]*[.!?]?/gi,
     "Vehicles not accompanied by a Certificate of Roadworthiness (CoR) must have the specified import documents submitted to QISJ for validation.");
 
-  // Remove repeated deterministic age wording when it immediately follows
-  // an equivalent explanation in the same section.
-  const safeAge = "KRA's live vehicle-import procedure uses the wording 'less than 8 years old from the year of first registration'; that page does not explain the calculation method or resolve the exact-eight-year boundary.";
-  value = value.replace(/(The KRA page does not explain[^.!?\n]*\.)\s*KRA's live vehicle-import procedure uses the wording 'less than 8 years old from the year of first registration'; that page does not explain the calculation method or resolve the exact-eight-year boundary\\./gi, safeAge);
+  // The age section already states the KRA wording and its limitation.
+  // Remove the later deterministic duplicate rather than repeating it.
+  value = value.replace(/KRA's live vehicle-import procedure uses the wording 'less than 8 years old from the year of first registration'; that page does not explain the calculation method or resolve the exact-eight-year boundary\.?/gi, "");
 
   // Keep pre-export inspection attribution on the KRA procedure page.
   value = value.replace(/Vehicles must undergo a road[- ]worthiness inspection by a KEBS[- ]appointed agent in the export country[^.!?\n]*[.!?]?/gi,
@@ -272,10 +271,13 @@ function sanitizeKenyaTaxAndFaqClaims(text) {
   // Replace the complete base cell, rather than splicing text into its contents.
   value = value.split("\n").map((line) => {
     const cells = line.split("|");
-    if (cells.length < 4) return line;
-    const taxName = String(cells[1] || "").trim();
+    if (cells.length < 3) return line;
+    const taxName = String(cells[1] || "").trim().replace(/\*+/g, "");
     if (!/^(?:VAT|value[-‑–‑ ]added tax(?:\s*\(VAT\))?|IDF|import declaration fee|RDL|railway development levy)$/i.test(taxName)) return line;
-    cells[3] = " individual tax base not specified in the current KRA procedure ";
+    // Some model outputs break the source column onto a following line, so
+    // the tax row may contain only three pipe-delimited cells.
+    cells[2] = " individual tax base not specified in the current KRA procedure ";
+    if (cells.length > 3) cells[3] = " Procedures for Motor Vehicle – KRA ";
     return cells.join("|");
   }).join("\n");
 
